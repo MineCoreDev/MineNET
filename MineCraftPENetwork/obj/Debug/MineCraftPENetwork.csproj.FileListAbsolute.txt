@@ -1,5 +1,0 @@
-D:\MyProject\UDPTest\MineCraftPENetwork\bin\Debug\MineCraftPENetwork.dll
-D:\MyProject\UDPTest\MineCraftPENetwork\bin\Debug\MineCraftPENetwork.pdb
-D:\MyProject\UDPTest\MineCraftPENetwork\obj\Debug\MineCraftPENetwork.csprojResolveAssemblyReference.cache
-D:\MyProject\UDPTest\MineCraftPENetwork\obj\Debug\MineCraftPENetwork.dll
-D:\MyProject\UDPTest\MineCraftPENetwork\obj\Debug\MineCraftPENetwork.pdb

@@ -24,5 +24,13 @@ namespace MineCraftPENetwork.Packets.RakNet
                 throw new InvalidDataException("Magic Buffer Invalid");
             }
         }
+
+        public static BinaryReader ConvertBinaryReader(byte[] buffer)
+        {
+            MemoryStream ms = new MemoryStream(buffer);
+            BinaryReader br = new BinaryReader(ms);
+
+            return br;
+        }
     }
 }

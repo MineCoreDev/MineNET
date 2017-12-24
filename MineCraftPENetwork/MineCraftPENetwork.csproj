@@ -45,9 +45,17 @@
     <Compile Include="Network.cs" />
     <Compile Include="Packets\Data\ServerListFormat.cs" />
     <Compile Include="Packets\MCPE\MCPEPacket.cs" />
-    <Compile Include="Packets\MCPE\PacketCapsule\PacketCapsule_1.cs" />
-    <Compile Include="Packets\MCPE\PacketCapsule\PacketCapsule_0.cs" />
+    <Compile Include="Packets\RakNet\ACKPacket.cs" />
+    <Compile Include="Packets\RakNet\CapsuledPacket\ClientHandShakePacket.cs" />
+    <Compile Include="Packets\RakNet\CapsuledPacket\ServerHandShakePacket.cs" />
+    <Compile Include="Packets\RakNet\DataPacket_0.cs" />
+    <Compile Include="Packets\RakNet\DataPacket.cs" />
+    <Compile Include="Packets\RakNet\PacketCapsule\PacketCapsuleBase.cs" />
+    <Compile Include="Packets\RakNet\PacketCapsule\PacketCapsule_2.cs" />
+    <Compile Include="Packets\RakNet\PacketCapsule\PacketCapsule_1.cs" />
+    <Compile Include="Packets\RakNet\PacketCapsule\PacketCapsule_0.cs" />
     <Compile Include="Packets\Packet.cs" />
+    <Compile Include="Packets\RakNet\CapsuledPacket\ClientConnectPacket.cs" />
     <Compile Include="Packets\RakNet\DataPacket_4.cs" />
     <Compile Include="Packets\RakNet\OpenConnectionReplyPacket_2.cs" />
     <Compile Include="Packets\RakNet\OpenConnectionReplyPacket_1.cs" />
@@ -58,6 +66,7 @@
     <Compile Include="Packets\RakNet\PingOpenConnectionPacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

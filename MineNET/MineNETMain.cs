@@ -10,7 +10,7 @@ using MineNET.Utils;
 
 namespace MineNET
 {
-    class MineNETMain
+    public class MineNETMain
     {
         public MainLogger logger;
         public Network network;
@@ -18,6 +18,7 @@ namespace MineNET
         public MineNETMain()
         {
             logger = new MainLogger();
+            network = new Network(1115);
         }
     }
 }

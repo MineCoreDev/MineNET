@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET", "MineNET\MineNET.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineCraftPENetwork", "MineCraftPENetwork\MineCraftPENetwork.csproj", "{478EC734-31E8-43AD-A111-5FCCDC3D9288}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineMET.Console", "MineMET.Console\MineMET.Console.csproj", "{E8392CD0-AF58-43D4-9079-84E222B779BF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET.GUI", "MineNET.GUI\MineNET.GUI.csproj", "{C0181001-E546-48C5-A3AD-1CA0786F93FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNet.Console", "MineNet.Console\MineNet.Console.csproj", "{76B0D7FF-E8F1-4C31-8172-2F35F98AF5BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,14 @@ Global
 		{478EC734-31E8-43AD-A111-5FCCDC3D9288}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{478EC734-31E8-43AD-A111-5FCCDC3D9288}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{478EC734-31E8-43AD-A111-5FCCDC3D9288}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8392CD0-AF58-43D4-9079-84E222B779BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8392CD0-AF58-43D4-9079-84E222B779BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8392CD0-AF58-43D4-9079-84E222B779BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8392CD0-AF58-43D4-9079-84E222B779BF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C0181001-E546-48C5-A3AD-1CA0786F93FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C0181001-E546-48C5-A3AD-1CA0786F93FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0181001-E546-48C5-A3AD-1CA0786F93FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0181001-E546-48C5-A3AD-1CA0786F93FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76B0D7FF-E8F1-4C31-8172-2F35F98AF5BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76B0D7FF-E8F1-4C31-8172-2F35F98AF5BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76B0D7FF-E8F1-4C31-8172-2F35F98AF5BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76B0D7FF-E8F1-4C31-8172-2F35F98AF5BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

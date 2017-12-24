@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace MineNET.Utils
 {
-    class MainLogger : ILogger
+    public class MainLogger : ILogger
     {
+        private Queue<string> logText;
+
         public void Debug(object message)
         {
             throw new NotImplementedException();
@@ -76,6 +78,11 @@ namespace MineNET.Utils
         public void Warning(string message)
         {
             throw new NotImplementedException();
+        }
+
+        private void AddLogTextQueue(string text)
+        {
+            logText.Enqueue(text);
         }
     }
 }

@@ -18,13 +18,7 @@ namespace MineCraftPENetwork.Packets.RakNet
 
         public override void Decode(BinaryReader reader)
         {
-            BinaryReader br = reader;
-            
-            magic = ReadMagic(br);
-            serverID = br.ReadInt64();
-            clientPort = br.ReadInt16();
-            mtuSize = br.ReadInt16();
-            security = br.ReadByte();
+            throw new NotImplementedException();
         }
 
         public override byte[] Encode()

@@ -6,9 +6,9 @@ using System.IO;
 
 namespace MineCraftPENetwork.Packets.RakNet
 {
-    public class DataPacket_4 : DataPacket
+    public class DataPacket_0 : DataPacket
     {
-        public new const byte ID = 0x84;
+        public new const byte ID = 0x80;
 
         public override byte GetID()
         {

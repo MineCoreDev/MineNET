@@ -10,8 +10,8 @@ using System.Net.Sockets;
 
 using MineCraftPENetwork.Packets.Data;
 using MineCraftPENetwork.Packets.RakNet;
-using MineCraftPENetwork.Packets.MCPE;
-using MineCraftPENetwork.Packets.MCPE.PacketCapsule;
+using MineCraftPENetwork.Packets.RakNet.PacketCapsule;
+using MineCraftPENetwork.Packets.RakNet.CapsuledPacket;
 
 namespace MineCraftPENetwork
 {
@@ -19,6 +19,7 @@ namespace MineCraftPENetwork
     {
 
         public UdpClient udpClient;
+        public IPEndPoint ipData;
         public long serverID = new Random().Next(0, int.MaxValue);
         public string serverName;
 
@@ -26,18 +27,18 @@ namespace MineCraftPENetwork
 
         public Network()
         {
-            IPEndPoint ipPort = new IPEndPoint(IPAddress.Any, 19132);
+            ipData = new IPEndPoint(IPAddress.Any, 19132);
             Console.WriteLine("[Network]UDPポートで開始しています。");
-            udpClient = new UdpClient(ipPort);
+            udpClient = new UdpClient(ipData);
             udpClient.BeginReceive(OnReceive, udpClient);
             Console.WriteLine("[Network]UDPポートで開始しました。");
         }
 
         public Network(int port)
         {
-            IPEndPoint ipPort = new IPEndPoint(IPAddress.Any, port);
+            ipData = new IPEndPoint(IPAddress.Any, port);
             Console.WriteLine("[Network]UDPポートで開始しています。");
-            udpClient = new UdpClient(ipPort);
+            udpClient = new UdpClient(ipData);
             udpClient.BeginReceive(OnReceive, udpClient);
             Console.WriteLine("[Network]UDPポートで開始しました。");
         }
@@ -54,7 +55,7 @@ namespace MineCraftPENetwork
 
             BinaryReader reader = new BinaryReader(new MemoryStream(buffer));
             byte rakNetPacketID = reader.ReadByte();
-            Console.WriteLine("[Send]<id: " + rakNetPacketID +">");
+            Console.WriteLine("[Send]<id: " + rakNetPacketID +"><Length:" + reader.BaseStream.Length + ">");
         }
 
         public void OnReceive(IAsyncResult result)
@@ -110,6 +111,8 @@ namespace MineCraftPENetwork
 
         private void Handle(byte rakNetPacketID, BinaryReader reader, IPEndPoint ipPort)
         {
+            Console.WriteLine("[Handle]<rakID: " + rakNetPacketID + "><Length:" + reader.BaseStream.Length + ">");
+
             switch (rakNetPacketID)
             {
                 case PingOpenPacket.ID:
@@ -121,7 +124,7 @@ namespace MineCraftPENetwork
                     pingRPK.pingID = pingPK.pingID;
                     pingRPK.serverID = serverID;
                     pingRPK.magic = pingPK.magic;
-                    pingRPK.serverName = serverListFormat.ToString();
+                    pingRPK.serverName = "";//serverListFormat.ToString();
 
                     SendPacket(ipPort, pingRPK);
 
@@ -147,8 +150,6 @@ namespace MineCraftPENetwork
                     var request2 = new OpenConnectionRequestPacket_2();
                     request2.Decode(reader);
 
-                    Console.WriteLine("[Debug]<serverID: " + serverID + "><clientID: " + request2.clientID + "><mtu: " + request2.mtuSize + ">");
-
                     var reply2 = new OpenConnectionReplyPacket_2();
                     reply2.magic = request2.magic;
                     reply2.serverID = serverID;
@@ -165,48 +166,70 @@ namespace MineCraftPENetwork
                     var dataPK4 = new DataPacket_4();
                     dataPK4.Decode(reader);
 
-                    var capsulePacket = MCPEPacket.ConvertBinaryReader(dataPK4.payload);
-                    byte capsuleID = capsulePacket.ReadByte();
+                    var capsulePackets = dataPK4.packets;
+                    foreach (var capsulePacket in capsulePackets)
+                    {
+                        var br = RakNetPacket.ConvertBinaryReader(capsulePacket.packet);
+                        byte packetID = br.ReadByte();
 
-                    MCPEHandleInternal(capsuleID, capsulePacket);
+                        CapsuledPacketHandle(packetID, br, ipPort);
+                    }
+
+                    break;
+
+                case ACKPacket.ID:
+
+                    var ack = new ACKPacket();
+                    ack.Decode(reader);
+
+                    SendPacket(ipPort, ack);
+
                     break;
             }
-
-            Console.WriteLine("[Handle]<rakID: " + rakNetPacketID + ">");
+            //Console.WriteLine("[Handle]<packetID: " + rakNetPacketID + "><unkown: " + (reader.BaseStream.Length - reader.BaseStream.Position) + ">");
         }
-        
-        private void MCPEHandleInternal(byte capsuleID, BinaryReader reader)
+
+        private void CapsuledPacketHandle(byte packetTypeID, BinaryReader reader, IPEndPoint ipPort)
         {
-            byte packetTypeID = 0;
-            switch (capsuleID)
+            Console.WriteLine("[Handle]<packetID: " + packetTypeID + "><Length:" + reader.BaseStream.Length + ">");
+
+            switch (packetTypeID)
             {
-                case PacketCapsule_0.CapsuleID:
-                    var cap0 = new PacketCapsule_0();
-                    cap0.Decode(reader);
+                case ClientConnectPacket.ID:
 
-                    var packet0 = MCPEPacket.ConvertBinaryReader(cap0.packet);
-                    packetTypeID = packet0.ReadByte();
+                    var ccp = new ClientConnectPacket();
+                    ccp.Decode(reader);
 
-                    MCPEHandle(packetTypeID, packet0);
+                    var serverHand = new ServerHandShakePacket();
+                    serverHand.ip = ipPort.Address.ToString();
+                    serverHand.port = (byte)ipPort.Port;
+                    serverHand.session = ccp.session;
+                    serverHand.pong = ccp.session;
+
+                    var cap_0 = new PacketCapsule_0();
+                    cap_0.SetLength((int)reader.BaseStream.Length);
+                    cap_0.packet = serverHand.Encode();
+
+                    var dp_0 = new DataPacket_0();
+                    dp_0.packets = new PacketCapsuleBase[1]
+                    {
+                        cap_0
+                    };
+
+                    SendPacket(ipPort, dp_0);
+
                     break;
 
-                case PacketCapsule_1.CapsuleID:
-                    var cap1 = new PacketCapsule_1();
-                    cap1.Decode(reader);
+                case ClientHandShakePacket.ID:
 
-                    var packet1 = MCPEPacket.ConvertBinaryReader(cap1.packet);
-                    packetTypeID = packet1.ReadByte();
+                    var cliendHand = new ClientHandShakePacket();
+                    cliendHand.Decode(reader);
 
-                    MCPEHandle(packetTypeID, packet1);
+                    Console.WriteLine("[Handle]<packetID: " + packetTypeID + "><unkown: " + (reader.BaseStream.Length - reader.BaseStream.Position) + ">");
+                    //Console.WriteLine("[Debug]");
+
                     break;
             }
-
-            Console.WriteLine("[Handle]<capID: " + capsuleID + ">");
-        }
-
-        private void MCPEHandle(byte packetTypeID, BinaryReader reader)
-        {
-            Console.WriteLine("[Handle]<packetID: " + packetTypeID + ">");
         }
     }
 }

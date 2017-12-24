@@ -23,14 +23,7 @@ namespace MineCraftPENetwork.Packets.RakNet
 
         public override byte[] Encode()
         {
-            MemoryStream ms = new MemoryStream();
-            BinaryWriter bw = new BinaryWriter(ms);
-
-            bw.Write(ID);
-            bw.Write(pingID);
-            bw.Write(magic);
-
-            return ms.ToArray();
+            throw new NotImplementedException();
         }
     }
 }
