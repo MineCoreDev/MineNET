@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using MineCraftPENetwork;
+using MineCraftPENetwork.Server;
 
 using MineNET.Utils;
 
@@ -13,12 +13,14 @@ namespace MineNET
     public class MineNETMain
     {
         public MainLogger logger;
-        public Network network;
+
+        public RakNetServer server;
 
         public MineNETMain()
         {
             logger = new MainLogger();
-            network = new Network(1115);
+
+            server = new RakNetServer(1115);
         }
     }
 }

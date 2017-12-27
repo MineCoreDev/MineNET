@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineCraftPENetwork", "MineC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET.GUI", "MineNET.GUI\MineNET.GUI.csproj", "{C0181001-E546-48C5-A3AD-1CA0786F93FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNet.Console", "MineNet.Console\MineNet.Console.csproj", "{76B0D7FF-E8F1-4C31-8172-2F35F98AF5BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET.Console", "MineNET.Console\MineNET.Console.csproj", "{8E96752B-AF18-4C61-9119-7EB6C925DB0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{C0181001-E546-48C5-A3AD-1CA0786F93FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0181001-E546-48C5-A3AD-1CA0786F93FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0181001-E546-48C5-A3AD-1CA0786F93FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76B0D7FF-E8F1-4C31-8172-2F35F98AF5BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76B0D7FF-E8F1-4C31-8172-2F35F98AF5BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76B0D7FF-E8F1-4C31-8172-2F35F98AF5BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76B0D7FF-E8F1-4C31-8172-2F35F98AF5BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E96752B-AF18-4C61-9119-7EB6C925DB0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E96752B-AF18-4C61-9119-7EB6C925DB0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E96752B-AF18-4C61-9119-7EB6C925DB0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E96752B-AF18-4C61-9119-7EB6C925DB0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
