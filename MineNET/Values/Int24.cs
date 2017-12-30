@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineCraftPENetwork.Value
+namespace MineNET.Values
 {
     public struct Int24
     {
