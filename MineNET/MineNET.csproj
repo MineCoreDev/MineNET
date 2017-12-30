@@ -42,8 +42,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\MineNET.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>MineNET.settings</DependentUpon>
+    </Compile>
     <Compile Include="MineNETMain.cs" />
+    <Compile Include="Network\MineNETServerHandler.cs" />
+    <Compile Include="Network\NetworkManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="Properties\Server.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Server.settings</DependentUpon>
+    </Compile>
     <Compile Include="Utils\ILogger.cs" />
     <Compile Include="Utils\MainLogger.cs" />
     <Compile Include="Values\Int24.cs" />
@@ -53,6 +66,20 @@
       <Project>{478ec734-31e8-43ad-a111-5fccdc3d9288}</Project>
       <Name>MineCraftPENetwork</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Network\Packet\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\MineNET.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>MineNET.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\Server.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Server.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

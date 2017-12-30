@@ -16,7 +16,7 @@ namespace MineNET.Console
         {
             var main = new MineNETMain();
 
-            while (!main.server.IsShutdown()) ;
+            while (!main.IsShutdown()) ;
         }
     }
 }
