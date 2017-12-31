@@ -10,13 +10,11 @@ namespace MineNET.Blocks
     {
         public const int AIR = 0;
 
-        public static List<Block> blockFactory = new List<Block>();
+        public static Block[] blockFactory = new Block[256];
 
         public static void Init()
         {
-            blockFactory.Add(new BlockAir());
-
-            blockFactory.Sort();
+            blockFactory[BlockAir.ID] = new BlockAir();
         }
     }
 }
