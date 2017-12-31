@@ -14,7 +14,7 @@ namespace MineNET.Blocks
 
         public static void Init()
         {
-            blockFactory[BlockAir.ID] = new BlockAir();
+            blockFactory[AIR] = new BlockAir();
         }
     }
 }
