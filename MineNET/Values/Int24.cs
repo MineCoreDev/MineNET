@@ -15,17 +15,17 @@ namespace MineNET.Values
 
         public Int24(int value)
         {
-            f_value = CheckInt24(value);
+            this.f_value = CheckInt24(value);
         }
 
         public Int24(byte[] value)
         {
-            f_value = ByteArray3ToInt32(value);
+            this.f_value = ByteArray3ToInt32(value);
         }
 
         public byte[] ToBytes()
         {
-            return Int32ToByteArray3(f_value);
+            return Int32ToByteArray3(this.f_value);
         }
 
         public static Int24 Parse(int value)

@@ -7,8 +7,6 @@ using System.Threading;
 using MineCraftPENetwork.Server;
 using MineCraftPENetwork.Protocol;
 
-using Conf = MineNET.Properties;
-
 namespace MineNET.Network
 {
     public sealed class NetworkManager
@@ -20,16 +18,18 @@ namespace MineNET.Network
 
         public NetworkManager()
         {
-            raknet = new RakNetServer(Conf.Server.Default.ServerPort);
+            this.raknet = new RakNetServer(Server.GetConfig().ServerPort);
 
-            var h = new ServerHandler(raknet, new MineNETServerHandler());
+            Server.GetLogger().Info(Lang.Resources.server_net_started);
 
-            serverNameUpdater = new Timer((obj) =>
+            var h = new ServerHandler(this.raknet, new MineNETServerHandler());
+
+            this.serverNameUpdater = new Timer((obj) =>
             {
-                h.SendOption("name", Encoding.UTF8.GetBytes("MCPE;" + Conf.Server.Default.ServerMotd + ";160;1.2.8;0;20;MineNET;Survival"));
+                h.SendOption("name", Encoding.UTF8.GetBytes("MCPE;" + Server.GetConfig().ServerMotd + ";160;1.2.8;0;20;MineNET;Survival"));
             }, null, 100, 1000);
 
-            serverHandler = new Timer((obj) =>
+            this.serverHandler = new Timer((obj) =>
             {
                 h.HandlePacket();
             }, null, 0, 50);

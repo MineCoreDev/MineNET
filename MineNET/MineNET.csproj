@@ -33,6 +33,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,25 +44,37 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=4.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.4.2.3\lib\net35\YamlDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\MineNET.Designer.cs">
+    <Compile Include="Blocks\Block.cs" />
+    <Compile Include="Blocks\BlockAir.cs" />
+    <Compile Include="Blocks\BlockFactory.cs" />
+    <Compile Include="Items\Item.cs" />
+    <Compile Include="Items\ItemFactory.cs" />
+    <Compile Include="Lang\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>MineNET.settings</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="MineNETConfig.cs" />
     <Compile Include="MineNETMain.cs" />
     <Compile Include="Network\MineNETServerHandler.cs" />
     <Compile Include="Network\NetworkManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
-    <Compile Include="Properties\Server.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Server.settings</DependentUpon>
-    </Compile>
+    <Compile Include="ServerConfig.cs" />
+    <Compile Include="Utils\Config\JsonConfig.cs" />
+    <Compile Include="Utils\Config\JsonStaticConfig.cs" />
+    <Compile Include="Utils\Config\YamlConfig.cs" />
+    <Compile Include="Utils\Config\YamlStaticConfig.cs" />
+    <Compile Include="Utils\IConfig.cs" />
     <Compile Include="Utils\ILogger.cs" />
     <Compile Include="Utils\MainLogger.cs" />
+    <Compile Include="Utils\StringExtension.cs" />
     <Compile Include="Values\Int24.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,18 +84,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Network\Packet\" />
+    <Folder Include="Network\Packets\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Properties\MineNET.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>MineNET.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Properties\Server.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Server.Designer.cs</LastGenOutput>
-    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Lang\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

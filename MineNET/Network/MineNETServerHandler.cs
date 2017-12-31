@@ -20,7 +20,7 @@ namespace MineNET.Network
         {
             try
             {
-                var pk = GetPacket(packet.buffer);
+                var pk = this.GetPacket(packet.buffer);
             }
             catch (Exception e)
             {

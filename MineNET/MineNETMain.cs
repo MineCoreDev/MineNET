@@ -7,31 +7,55 @@ using System.Threading.Tasks;
 
 using MineCraftPENetwork.Server;
 
-using Conf = MineNET.Properties;
 using MineNET.Utils;
 
 namespace MineNET
 {
     public sealed class MineNETMain
     {
-        public Server server;
+        private static MineNETMain instance;
+
+        private MineNETConfig config;
+        private Server server;
 
         public MineNETMain()
         {
-            Conf.MineNET.Default.Reload();
-            Conf.Server.Default.Reload();
+            instance = this;
 
-            if (Conf.MineNET.Default.AutoUpdate)
+            var path = $"{GetPath()}\\MineNETConfig.yml";
+
+            this.server = new Server();
+
+            this.config = MineNETConfig.Load<MineNETConfig>(path);
+            if (this.config.UseAutoUpdate.ToBool())
             {
-
+                var url = this.config.VersionFileURL;
             }
+        }
 
-            server = new Server();
+        public Server GetServer()
+        {
+            return this.server;
         }
 
         public bool IsShutdown()
         {
-            return server.networkManager.raknet.IsShutdown();
+            return this.server.networkManager.raknet.IsShutdown();
+        }
+
+        public static string GetPath()
+        {
+            return Environment.CurrentDirectory;
+        }
+
+        public static MineNETMain GetInstance()
+        {
+            return instance;
+        }
+
+        public static MineNETConfig GetConfig()
+        {
+            return GetInstance().config;
         }
     }
 }
