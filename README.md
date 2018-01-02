@@ -1,7 +1,7 @@
 # MineNET
 MineCraftBE Server SoftWere
 
-## コンセプト
+## 目標
 バニラの実装内容を実装する
 
 ## MineNETで実装予定の要素
