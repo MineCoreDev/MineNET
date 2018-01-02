@@ -10,6 +10,7 @@ namespace MineNET.Blocks
     {
         public static Block Get(int id)
         {
+            //TODO パフォーマンスの改善
             Type type = BlockFactory.blockFactory[id];
             return (Block)Activator.CreateInstance(type);
         }

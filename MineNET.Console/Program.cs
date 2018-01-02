@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 using MineNET;
@@ -18,7 +18,12 @@ namespace MineNET.Console
             var main = new MineNETMain();
 
             BlockFactory.Init();
-            System.Console.WriteLine(Block.Get(0).Name);
+
+            //TestCode
+            /*var s1 = System.Diagnostics.Stopwatch.StartNew();
+            //
+            s1.Stop();
+            System.Console.WriteLine(s1.Elapsed.ToString());*/
 
             while (!main.IsShutdown()) ;
         }

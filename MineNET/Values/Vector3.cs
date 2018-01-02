@@ -57,10 +57,5 @@ namespace MineNET.Values
                 z = value;
             }
         }
-
-        public static explicit operator Vector2(Vector3 v3)
-        {
-            return new Vector2(v3.X, v3.Y);
-        }
     }
 }
