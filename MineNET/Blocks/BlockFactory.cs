@@ -256,11 +256,11 @@ namespace MineNET.Blocks
         public const int OBSERVER = 251;
         public const int STRUCTURE_BLOCK = 252;
 
-        public static Block[] blockFactory = new Block[256];
+        public static Type[] blockFactory = new Type[256];
 
         public static void Init()
         {
-            blockFactory[AIR] = new BlockAir();
+            blockFactory[AIR] = typeof(BlockAir);
         }
     }
 }

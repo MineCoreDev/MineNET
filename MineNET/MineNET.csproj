@@ -76,6 +76,8 @@
     <Compile Include="Utils\MainLogger.cs" />
     <Compile Include="Utils\StringExtension.cs" />
     <Compile Include="Values\Int24.cs" />
+    <Compile Include="Values\Vector2.cs" />
+    <Compile Include="Values\Vector3.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MineCraftPENetwork\MineCraftPENetwork.csproj">

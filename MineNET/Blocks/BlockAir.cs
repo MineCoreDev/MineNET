@@ -8,20 +8,10 @@ namespace MineNET.Blocks
 {
     public class BlockAir : Block
     {
-        public const int ID = BlockFactory.AIR;
-
-        public BlockAir() : base(ID)
+        public BlockAir() : base(BlockFactory.AIR)
         {
-            id = ID;
-            name = Name;
-        }
-
-        public override string Name
-        {
-            get
-            {
-                return "Air";
-            }
+            Name = "Air";
+            IsTransparent = true;
         }
     }
 }
