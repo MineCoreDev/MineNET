@@ -21,9 +21,10 @@ namespace MineNET.Console
 
             //TestCode
             /*var s1 = System.Diagnostics.Stopwatch.StartNew();
-            //
-            s1.Stop();
-            System.Console.WriteLine(s1.Elapsed.ToString());*/
+            for(int i = 0; i < 10000; ++i)
+            {
+            }
+            s1.Stop();*/
 
             while (!main.IsShutdown()) ;
         }

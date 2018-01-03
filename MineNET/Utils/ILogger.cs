@@ -8,7 +8,7 @@ namespace MineNET.Utils
 {
     public interface ILogger
     {
-        void Log(string message);
+        void Log(string message, params object[] args);
         void Log(Exception message);
         void Log(object message);
 
@@ -20,7 +20,7 @@ namespace MineNET.Utils
         void Error(Exception message);
         void Error(object message);
 
-        void Debug(string message);
+        void Debug(string message, params object[] args);
         void Debug(Exception message);
         void Debug(object message);
 

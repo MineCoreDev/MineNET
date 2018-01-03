@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,6 +54,7 @@
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Blocks\BlockAir.cs" />
     <Compile Include="Blocks\BlockFactory.cs" />
+    <Compile Include="Extensions\ObjectExtension.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemFactory.cs" />
     <Compile Include="Lang\Resources.Designer.cs">
@@ -74,7 +76,8 @@
     <Compile Include="Utils\IConfig.cs" />
     <Compile Include="Utils\ILogger.cs" />
     <Compile Include="Utils\MainLogger.cs" />
-    <Compile Include="Utils\StringExtension.cs" />
+    <Compile Include="Utils\MineNETMath.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Values\Int24.cs" />
     <Compile Include="Values\Vector2.cs" />
     <Compile Include="Values\Vector3.cs" />
@@ -94,7 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Lang\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

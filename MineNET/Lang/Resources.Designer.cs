@@ -22,7 +22,7 @@ namespace MineNET.Lang {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace MineNET.Lang {
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MineNET.Lang.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace MineNET.Lang {
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,18 +61,45 @@ namespace MineNET.Lang {
         }
         
         /// <summary>
+        ///   BlockFactoryを初期化しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string server_block_init {
+            get {
+                return ResourceManager.GetString("server_block_init", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ItemFactoryを初期化しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string server_item_init {
+            get {
+                return ResourceManager.GetString("server_item_init", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   PacketHandlerを開始しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string server_net_packetHandlerStart {
+            get {
+                return ResourceManager.GetString("server_net_packetHandlerStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Networkを開始しています... に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string server_net_start {
+        public static string server_net_start {
             get {
                 return ResourceManager.GetString("server_net_start", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Networkを開始しました。 &gt;&gt; Port:  に類似しているローカライズされた文字列を検索します。
+        ///   リスナーをポート {0} で開始しました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string server_net_started {
+        public static string server_net_started {
             get {
                 return ResourceManager.GetString("server_net_started", resourceCulture);
             }
@@ -81,9 +108,18 @@ namespace MineNET.Lang {
         /// <summary>
         ///   MineNETServerを開始しています... に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string server_start {
+        public static string server_start {
             get {
                 return ResourceManager.GetString("server_start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   サーバーが開始されました。　起動時間: {0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string server_started {
+            get {
+                return ResourceManager.GetString("server_started", resourceCulture);
             }
         }
     }

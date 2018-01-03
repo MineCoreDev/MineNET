@@ -6,27 +6,26 @@ using System.Threading.Tasks;
 
 namespace MineNET.Blocks
 {
-    public class Block
+    public abstract class Block
     {
-        public static Block Get(int id)
+        public static Block Get(byte id)
         {
-            //TODO パフォーマンスの改善
-            Type type = BlockFactory.blockFactory[id];
-            return (Block)Activator.CreateInstance(type);
+            Block block = BlockFactory.GetBlock(id);
+            return block;
         }
 
-        public static Block Get(int id, short meta)
+        public static Block Get(byte id, short meta)
         {
             Block block = Get(id);
-            block.DamageID = meta;
+            block.Damage = meta;
 
             return block;
         }
 
-        public static Block Get(int id, short meta, byte count)
+        public static Block Get(byte id, short meta, byte count)
         {
             Block block = Get(id, meta);
-            block.count = count;
+            block.Count = count;
 
             return block;
         }
@@ -38,53 +37,45 @@ namespace MineNET.Blocks
 
         private string name = "";
 
-        private int id = -1;
+        private byte id = 0;
         private short meta = 0;
         private byte count = 1;
 
         private bool isTransparent = false;
 
-        public Block(int id)
+        public Block(byte id)
         {
-            this.BlockID = id;
+            this.id = id;
         }
 
-        public string Name
+        public Block(byte id, short meta) : this(id)
         {
-            get
-            {
-                return name;
-            }
-
-            protected set
-            {
-                name = value;
-            }
+            this.meta = meta;
         }
 
-        public int BlockID
+        public abstract string Name
+        {
+            get;
+        }
+
+        public byte BlockID
         {
             get
             {
                 return id;
             }
-
-            protected set
-            {
-                id = value;
-            }
         }
 
-        public short DamageID
+        public short Damage
         {
             get
             {
-                return meta;
+                return this.meta;
             }
 
-            protected set
+            set
             {
-                meta = value;
+                this.meta = value;
             }
         }
 
@@ -92,25 +83,28 @@ namespace MineNET.Blocks
         {
             get
             {
-                return count;
+                return this.count;
             }
 
-            protected set
+            set
             {
-                count = value;
+                this.count = value;
             }
         }
 
-        public bool IsTransparent
+        public virtual bool IsTransparent
         {
             get
             {
-                return isTransparent;
+                return false;
             }
+        }
 
-            protected set
+        public virtual byte MaxStackSize
+        {
+            get
             {
-                isTransparent = value;
+                return 64;
             }
         }
     }

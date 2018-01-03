@@ -10,8 +10,23 @@ namespace MineNET.Blocks
     {
         public BlockAir() : base(BlockFactory.AIR)
         {
-            Name = "Air";
-            IsTransparent = true;
+
+        }
+
+        public override bool IsTransparent
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "Air";
+            }
         }
     }
 }

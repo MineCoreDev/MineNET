@@ -262,5 +262,24 @@ namespace MineNET.Blocks
         {
             blockFactory[AIR] = typeof(BlockAir);
         }
+
+        public static Type GetBlockType(byte id)
+        {
+            return blockFactory[id];
+        }
+
+        public static Block GetBlock(byte id)
+        {
+            if (id == AIR) return new BlockAir();
+            //else if (id == STONE) return new BlockStone();
+            else return null;
+        }
+
+        [Obsolete("")]
+        public static Block CreateInstance(byte id)
+        {
+            Type t = GetBlockType(id);
+            return (Block)Activator.CreateInstance(t);
+        }
     }
 }

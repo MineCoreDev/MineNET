@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineNET.Utils
+namespace MineNET.Extensions
 {
     public static class StringExtension
     {

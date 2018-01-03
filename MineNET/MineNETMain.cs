@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 using MineCraftPENetwork.Server;
 
-using MineNET.Utils;
+using MineNET.Extensions;
 
 namespace MineNET
 {

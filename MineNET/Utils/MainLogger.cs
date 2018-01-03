@@ -32,10 +32,11 @@ namespace MineNET.Utils
             Console.ResetColor();
         }
 
-        public void Debug(string message)
+        public void Debug(string message, params object[] args)
         {
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("[Debug]" + message);
+            var f = string.Format(message, args);
+            Console.WriteLine("[Debug]" + f);
             Console.ResetColor();
         }
 
@@ -72,9 +73,10 @@ namespace MineNET.Utils
             Console.ResetColor();
         }
 
-        public void Log(string message)
+        public void Log(string message, params object[] args)
         {
-            this.Format("[Log]" + message);
+            var f = string.Format(message, args);
+            this.Format("[Log]" + f);
             Console.ResetColor();
         }
 
@@ -84,9 +86,10 @@ namespace MineNET.Utils
             Console.ResetColor();
         }
 
-        public void Info(string message)
+        public void Info(string message, params object[] args)
         {
-            this.Format("[Info]" + message);
+            var f = string.Format(message, args);
+            this.Format("[Info]" + f);
             Console.ResetColor();
         }
 
@@ -119,14 +122,14 @@ namespace MineNET.Utils
         {
             string[] f = text.Split('§');
             int c = 0;
-            foreach(var s in f)
+            for(int i = 0; i < f.Length; ++i)
             {
                 if (c == 0)
                 {
-                    Console.Write(s);
+                    Console.Write(f[i]);
                     break;
                 }
-                this.FomatColor(s);
+                this.FomatColor(f[i]);
                 c++;
             }
             Console.Write(Environment.NewLine);
@@ -135,91 +138,94 @@ namespace MineNET.Utils
         private void FomatColor(string text)
         {
             var c = text[0];
-            switch (c)
+            if (c == '0')
             {
-                case '0':
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case '1':
-                    Console.ForegroundColor = ConsoleColor.DarkBlue;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case '2':
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case '3':
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case '4':
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case '5':
-                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case '6':
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case '7':
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case '8':
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case '9':
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case 'a':
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case 'b':
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case 'c':
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case 'd':
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case 'e':
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                case 'f':
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(text.Remove(0, 1));
-                    break;
-
-                default:
-                    Console.Write(text);
-                    break;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == '1')
+            {
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == '2')
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == '3')
+            {
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == '4')
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == '5')
+            {
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == '6')
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == '7')
+            {
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == '8')
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == '9')
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == 'a')
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == 'b')
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == 'c')
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == 'd')
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == 'e')
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == 'f')
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(text.Remove(0, 1));
+            }
+            else if (c == 'r')
+            {
+                Console.ResetColor();
+                Console.Write(text.Remove(0, 1));
+            }
+            else
+            {
+                Console.Write(text);
             }
         }
 

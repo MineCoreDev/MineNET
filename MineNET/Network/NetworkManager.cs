@@ -20,7 +20,7 @@ namespace MineNET.Network
         {
             this.raknet = new RakNetServer(Server.GetConfig().ServerPort);
 
-            Server.GetLogger().Info(Lang.Resources.server_net_started);
+            Server.GetLogger().Info(Lang.Resources.server_net_started, Server.GetConfig().ServerPort);
 
             var h = new ServerHandler(this.raknet, new MineNETServerHandler());
 
@@ -33,6 +33,8 @@ namespace MineNET.Network
             {
                 h.HandlePacket();
             }, null, 0, 50);
+
+            Server.GetLogger().Info(Lang.Resources.server_net_packetHandlerStart);
         }
     }
 }

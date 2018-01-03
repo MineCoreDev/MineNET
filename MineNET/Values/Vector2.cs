@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MineNET.Utils;
+
 namespace MineNET.Values
 {
     public struct Vector2
@@ -80,11 +82,22 @@ namespace MineNET.Values
             this.x = x;
             this.y = y;
         }
+
+        public static Vector2 Lerp(Vector2 a, Vector2 b, double t)
+        {
+            t = MineNETMath.ClampZeroOne(t);
+            return new Vector2(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t);
+        }
         
+        public static Vector2 LerpUnclamped(Vector2 a, Vector2 b, double t)
+        {
+            return new Vector2(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t);
+        }
+
         public static Vector2 MoveTowards(Vector2 current, Vector2 target, double maxDistanceDelta)
         {
             Vector2 a = target - current;
-            double magnitude = a.magnitude;
+            double magnitude = a.Magnitude;
             if (magnitude <= maxDistanceDelta || magnitude == 0f)
             {
                 return target;
@@ -105,7 +118,7 @@ namespace MineNET.Values
         
         public void Normalize()
         {
-            double magnitude = this.magnitude;
+            double magnitude = this.Magnitude;
             if (magnitude > 1E-05f)
             {
                 this /= magnitude;
@@ -116,7 +129,7 @@ namespace MineNET.Values
             }
         }
         
-        public Vector2 normalized
+        public Vector2 Normalized
         {
             get
             {
@@ -126,32 +139,29 @@ namespace MineNET.Values
             }
         }
 
-        public double magnitude
+        public double Magnitude
         {
             get
             {
                 return Math.Sqrt(this.x * this.x + this.y * this.y);
             }
         }
-        
-        public double sqrMagnitude
+
+        public static double Angle(Vector2 from, Vector2 to)
         {
-            get
-            {
-                return this.x * this.x + this.y * this.y;
-            }
+            return Math.Acos(MineNETMath.Clamp(Vector2.Dot(from.Normalized, to.Normalized), -1f, 1f)) * 57.29578f;
         }
-        
+
         public static double Distance(Vector2 a, Vector2 b)
         {
-            return (a - b).magnitude;
+            return (a - b).Magnitude;
         }
         
         public static Vector2 ClampMagnitude(Vector2 vector, double maxLength)
         {
-            if (vector.sqrMagnitude > maxLength * maxLength)
+            if (vector.SqrMagnitude() > maxLength * maxLength)
             {
-                return vector.normalized * maxLength;
+                return vector.Normalized * maxLength;
             }
             return vector;
         }

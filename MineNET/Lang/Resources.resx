@@ -117,13 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="server_block_init" xml:space="preserve">
+    <value>BlockFactoryを初期化しました。</value>
+  </data>
+  <data name="server_item_init" xml:space="preserve">
+    <value>ItemFactoryを初期化しました。</value>
+  </data>
+  <data name="server_net_packetHandlerStart" xml:space="preserve">
+    <value>PacketHandlerを開始しました。</value>
+  </data>
   <data name="server_net_start" xml:space="preserve">
     <value>Networkを開始しています...</value>
   </data>
   <data name="server_net_started" xml:space="preserve">
-    <value>Networkを開始しました。 &gt;&gt; Port: </value>
+    <value>リスナーをポート {0} で開始しました。</value>
   </data>
   <data name="server_start" xml:space="preserve">
     <value>MineNETServerを開始しています...</value>
+  </data>
+  <data name="server_started" xml:space="preserve">
+    <value>サーバーが開始されました。　起動時間: {0}</value>
   </data>
 </root>
