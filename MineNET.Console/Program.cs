@@ -17,14 +17,19 @@ namespace MineNET.Console
         {
             var main = new MineNETMain();
 
-            BlockFactory.Init();
-
             //TestCode
             /*var s1 = System.Diagnostics.Stopwatch.StartNew();
-            for(int i = 0; i < 10000; ++i)
+            var b = Block.Get(0);
+            for (int i = 0; i < 10000000; ++i)
             {
+                //new BlockAir();
+                var b2 = (Block)b.Clone();
+                b2.Count = 2;
             }
-            s1.Stop();*/
+            s1.Stop();
+
+            System.Console.WriteLine(b.Count);
+            System.Console.WriteLine(s1.Elapsed.ToString());*/
 
             while (!main.IsShutdown()) ;
         }
