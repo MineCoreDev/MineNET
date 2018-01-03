@@ -120,7 +120,7 @@ namespace MineCraftPENetwork.Server
             if (ACKQueue.Count > 0)
             {
                 var pk = new ACK();
-                pk.packets = ACKQueue.Values.ToArray();
+                pk.packets = ACKQueue;
                 SendPacket(pk);
                 ACKQueue.Clear();
             }
@@ -128,7 +128,7 @@ namespace MineCraftPENetwork.Server
             if (NACKQueue.Count > 0)
             {
                 var pk = new NACK();
-                pk.packets = NACKQueue.Values.ToArray();
+                pk.packets = NACKQueue;
                 SendPacket(pk);
                 NACKQueue.Clear();
             }
@@ -216,7 +216,10 @@ namespace MineCraftPENetwork.Server
 
         private void SendPacket(Packet packet)
         {
-		    sessionManager.SendPacket(packet, IPAddress.Parse(address), port);
+            if (sessionManager != null)
+            {
+                sessionManager.SendPacket(packet, IPAddress.Parse(address), port);
+            }
         }
 
         public void SendQueue()
@@ -554,7 +557,10 @@ namespace MineCraftPENetwork.Server
 
                 foreach (var pk in tc.packets)
                 {
-                    HandleEncapsulatedPacket(pk);
+                    if (pk is EncapsulatedPacket)
+                    {
+                        HandleEncapsulatedPacket((EncapsulatedPacket)pk);
+                    }
                 }
             }
             else
@@ -565,16 +571,16 @@ namespace MineCraftPENetwork.Server
                     tc.Decode();
                     foreach (var seq in tc.packets)
                     {
-                        if (recoveryQueue.ContainsKey(seq))
+                        if (recoveryQueue.ContainsKey(seq.Value))
                         {
-                            foreach (var pk in recoveryQueue[seq].packets)
+                            foreach (var pk in recoveryQueue[seq.Value].packets)
                             {
                                 if (pk is EncapsulatedPacket && pk.needACK && pk.messageIndex != -1)
                                 {
                                     needACK[pk.identifierACK].RemoveAt(pk.messageIndex);
                                 }
                             }
-                            recoveryQueue.Remove(seq);
+                            recoveryQueue.Remove(seq.Value);
                         }
                     }
                 }
@@ -584,11 +590,11 @@ namespace MineCraftPENetwork.Server
                     packet.Decode();
                     foreach (var seq in tc.packets)
                     {
-                        if (recoveryQueue.ContainsKey(seq)) {
-                            var pk = recoveryQueue[seq];
+                        if (recoveryQueue.ContainsKey(seq.Value)) {
+                            var pk = recoveryQueue[seq.Value];
                             pk.seqNumber = sendSeqNumber++;
                             packetToSend.Add(pk);
-                            recoveryQueue.Remove(seq);
+                            recoveryQueue.Remove(seq.Value);
                         }
                     }
                 }

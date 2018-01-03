@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Text;
 
 using MineNET;
+using MineNET.Utils;
 using MineNET.Blocks;
 
 using MineCraftPENetwork.Server;
@@ -30,6 +30,18 @@ namespace MineNET.Console
 
             System.Console.WriteLine(b.Count);
             System.Console.WriteLine(s1.Elapsed.ToString());*/
+
+            var buffer = new byte[0];
+            var p1 = Binary.PutBoolean(buffer, false);
+            var p2 = Binary.PutByte(p1, 0xff);
+            var p3 = Binary.PutSByte(p2, -2);
+            var p4 = Binary.PutShort(p3, -12345);
+            var p5 = Binary.PutUShort(p4, 63456);
+            System.Console.WriteLine(Binary.ReadBoolean(p5, 0));
+            System.Console.WriteLine(Binary.ReadByte(p5, 1));
+            System.Console.WriteLine(Binary.ReadSByte(p5, 2));
+            System.Console.WriteLine(Binary.ReadShort(p5, 3));
+            System.Console.WriteLine(Binary.ReadUShort(p5, 5));
 
             while (!main.IsShutdown()) ;
         }

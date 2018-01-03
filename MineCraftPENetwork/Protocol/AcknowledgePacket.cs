@@ -8,18 +8,20 @@ namespace MineCraftPENetwork.Protocol
 {
     public abstract class AcknowledgePacket : Packet
     {
-        public int[] packets = new int[0];
+        public Dictionary<int, int> packets = new Dictionary<int, int>();
 
         public override void Encode()
         {
             base.Encode();
             var payload = new List<byte>();
+            var pks = new Dictionary<int, int>();
+            for (int i = 0; i < packets.Count; ++i)
+            {
+                pks.Add(i, packets.Values.ToArray()[i]);
+            }
+            packets = pks;
 
-            var s = packets.ToList();
-            s.Sort();
-            packets = s.ToArray();
-
-            var count = packets.Length;
+            var count = packets.Count;
             var records = 0;
 
             if (count > 0) {
@@ -87,11 +89,12 @@ namespace MineCraftPENetwork.Protocol
                     packets.Add(cnt++, ReadLTriad());
                 }
             }
+            this.packets = packets;
         }
 
         public override void Clear()
         {
-            packets = new int[0];
+            packets.Clear();
 
             base.Clear();
         }

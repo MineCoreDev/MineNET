@@ -52,9 +52,8 @@ namespace MineNET.Network
         {
             var pid = buffer[0];
             var ms = new System.IO.MemoryStream(MineCraftPENetwork.RakNet.GetBuffer(buffer, 1));
-            var br = new System.IO.BinaryReader(ms);
 
-            return ms.ToArray();
+            return null;
         }
     }
 }
