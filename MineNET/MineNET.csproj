@@ -80,6 +80,7 @@
     <Compile Include="Utils\MainLogger.cs" />
     <Compile Include="Utils\MineNETMath.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Utils\VarInt.cs" />
     <Compile Include="Values\Int24.cs" />
     <Compile Include="Values\Vector2.cs" />
     <Compile Include="Values\Vector3.cs" />
