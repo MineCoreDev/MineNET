@@ -10,7 +10,6 @@ namespace MineNET.Blocks
     {
         public BlockAir() : base(BlockFactory.AIR)
         {
-
         }
 
         public override bool IsTransparent

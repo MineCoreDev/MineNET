@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Blocks
 {
-    public abstract class Block
+    public abstract class Block : ICloneable
     {
         public static Block Get(byte id)
         {
@@ -33,6 +33,11 @@ namespace MineNET.Blocks
         public static Block Get(string name)
         {
             throw new NotImplementedException();
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
 
         private string name = "";

@@ -8,7 +8,7 @@ namespace MineCraftPENetwork.Protocol
 {
     public abstract class DataPacket : Packet
     {
-        public List<EncapsulatedPacket> packets = new List<EncapsulatedPacket>();
+        public List<object> packets = new List<object>();
 
 	    public int seqNumber;
 
@@ -18,18 +18,32 @@ namespace MineCraftPENetwork.Protocol
 
             WriteLTriad(seqNumber);
 
-            foreach (var packet in packets)
+            for (int i = 0; i < packets.Count; ++i)
             {
-                writer.Write(packet.ToBinary());
+                if (packets[i] is EncapsulatedPacket)
+                {
+                    writer.Write(((EncapsulatedPacket)packets[i]).ToBinary());
+                }
+                else
+                {
+                    writer.Write((byte[])packets[i]);
+                }
             }
         }
 
         public int Length()
         {
             var length = 4;
-            foreach (var packet in packets)
+            for (int i = 0; i < packets.Count; ++i)
             {
-			    length += packet.GetTotalLength();
+                if (packets[i] is EncapsulatedPacket)
+                {
+                    length += ((EncapsulatedPacket)packets[i]).GetTotalLength();
+                }
+                else
+                {
+                    length += ((byte[])packets[i]).Length;
+                }
             }
 
             return length;
@@ -47,7 +61,7 @@ namespace MineCraftPENetwork.Protocol
                 var data = RakNet.GetBuffer(Buffer, (int)reader.BaseStream.Position);
                 var packet = EncapsulatedPacket.FromBinary(data, ref offset, false);
                 reader.BaseStream.Position += offset;
-                if (Buffer.Length < 0)
+                if (Buffer.Length == 0)
                 {
                     break;
                 }
