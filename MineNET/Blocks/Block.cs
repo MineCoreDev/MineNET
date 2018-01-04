@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using MineNET.Items;
-
 namespace MineNET.Blocks
 {
     public abstract class Block
@@ -94,14 +92,6 @@ namespace MineNET.Blocks
             }
         }
 
-        public virtual byte MaxStackSize
-        {
-            get
-            {
-                return 64;
-            }
-        }
-
         public virtual bool IsTransparent
         {
             get
@@ -110,11 +100,11 @@ namespace MineNET.Blocks
             }
         }
 
-        public virtual bool IsSolid
+        public virtual byte MaxStackSize
         {
             get
             {
-                return false;
+                return 64;
             }
         }
     }

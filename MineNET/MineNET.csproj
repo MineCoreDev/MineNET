@@ -54,10 +54,6 @@
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Blocks\BlockAir.cs" />
     <Compile Include="Blocks\BlockFactory.cs" />
-    <Compile Include="Blocks\BlockGrass.cs" />
-    <Compile Include="Blocks\BlockSolid.cs" />
-    <Compile Include="Blocks\BlockStone.cs" />
-    <Compile Include="Blocks\BlockUnknown.cs" />
     <Compile Include="Extensions\ObjectExtension.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemFactory.cs" />
