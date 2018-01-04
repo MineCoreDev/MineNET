@@ -271,8 +271,9 @@ namespace MineNET.Blocks
         public static Block GetBlock(byte id)
         {
             if (id == AIR) return new BlockAir();
-            //else if (id == STONE) return new BlockStone();
-            else return null;
+            else if (id == STONE) return new BlockStone();
+            else if (id == GRASS) return new BlockGrass();
+            else return new BlockUnknown(id);
         }
 
         [Obsolete("")]
