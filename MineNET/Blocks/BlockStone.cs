@@ -13,6 +13,12 @@ namespace MineNET.Blocks
 
         }
 
-        public override 
+        public override string Name
+        {
+            get
+            {
+                return "Stone";
+            }
+        }
     }
 }

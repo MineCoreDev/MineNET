@@ -248,7 +248,7 @@ namespace MineNET.Utils
             return VarInt.ReadSInt32(buffer);
         }
 
-        public static void PutVarUInt(Stream buffer, int value)
+        public static void PutVarSInt(Stream buffer, int value)
         {
             VarInt.WriteSInt32(buffer, value);
         }

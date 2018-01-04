@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace MineNET.Blocks
 {
-    public class BlockAir : BlockTransparent
+    public abstract class BlockTransparent : Block
     {
-        public BlockAir() : base(BlockFactory.AIR)
+        public BlockTransparent(byte id) : base(id)
         {
 
         }
 
-        public override string Name
+        public override bool IsTransparent
         {
             get
             {
-                return "Air";
+                return true;
             }
         }
     }
