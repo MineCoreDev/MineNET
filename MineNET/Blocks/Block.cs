@@ -97,6 +97,14 @@ namespace MineNET.Blocks
             }
         }
 
+        public virtual byte MaxStackSize
+        {
+            get
+            {
+                return 64;
+            }
+        }
+
         public virtual bool IsTransparent
         {
             get
@@ -105,11 +113,11 @@ namespace MineNET.Blocks
             }
         }
 
-        public virtual byte MaxStackSize
+        public virtual bool IsSolid
         {
             get
             {
-                return 64;
+                return false;
             }
         }
     }
