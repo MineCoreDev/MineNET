@@ -66,7 +66,6 @@ namespace MineCraftPENetwork.Protocol
                 }
                 packets.Add(packet);
             }
-            Console.WriteLine(packets.Count);
         }
 
         public override void Clear()

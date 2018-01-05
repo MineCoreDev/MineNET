@@ -343,31 +343,33 @@ namespace MineNET.Utils
             buffer.WriteByte(bytes[7]);
         }
 
-        public static byte[] GetBytes(Stream buffer, int start, int len)
+        public static byte[] GetBytes(MemoryStream buffer, int start, int len)
         {
             List<byte> result = new List<byte>();
-            byte[] raw = ((MemoryStream)buffer).ToArray();
+            byte[] raw = buffer.GetBuffer();
             for (int i = start; i < len; ++i)
             {
-                if (i > buffer.Length) break;
+                if (i > buffer.Length - 1) break;
                 result.Add(raw[i]);
             }
+            buffer.Position += len;
             return result.ToArray();
         }
 
-        public static byte[] GetBytes(Stream buffer, int start)
+        public static byte[] GetBytes(MemoryStream buffer, int start)
         {
             List<byte> result = new List<byte>();
-            byte[] raw = ((MemoryStream)buffer).ToArray();
+            byte[] raw = buffer.ToArray();
             for (int i = start; i < (buffer.Length - start); ++i)
             {
                 if (i > buffer.Length) break;
                 result.Add(raw[i]);
             }
+            buffer.Position += buffer.Length - start;
             return result.ToArray();
         }
 
-        public static byte[][] SplitBytes(Stream buffer, int len)
+        public static byte[][] SplitBytes(MemoryStream buffer, int len)
         {
             byte[][] result = new byte[(buffer.Position + len - 1) / len][];
             int c = 0;

@@ -43,7 +43,7 @@ namespace MineCraftPENetwork.Protocol
             else
             {
                 //Console.WriteLine("[Len]" + Packet.SwapInt16(BitConverter.ToInt16(binary, 1)));
-                Console.WriteLine("[Len]" + (int)Math.Ceiling((double)(Packet.SwapUInt16((ushort)BitConverter.ToInt16(binary, 1)) / 8)));
+                //Console.WriteLine("[Len]" + (int)Math.Ceiling((double)(Packet.SwapUInt16((ushort)BitConverter.ToInt16(binary, 1)) / 8)));
                 length = (int)Math.Ceiling((double)(Packet.SwapUInt16((ushort)BitConverter.ToInt16(binary, 1)) / 8));
                 offset = 3;
                 packet.identifierACK = 0;

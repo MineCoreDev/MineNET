@@ -41,20 +41,31 @@ namespace MineNET.Network.Packets
 
         public async void GetPackets()
         {
-            this.Position = 1;
-            while (!this.ReadOfEnd())
+            var list = new List<byte[]>();
+            var pb = new BinaryStream(this.payload);
+            pb.Position = 0;
+
+
+            while (!pb.ReadOfEnd())
             {
-                var r = await this.GetPacket();
-                Console.WriteLine("[MCPE?]" + r[0]);
+                byte[] b = await this.GetPacket(pb);
+                list.Add(b);
+            }
+
+            foreach(var l in list)
+            {
+                Server.GetLogger().Log("[PEPacketHandle]ID: {0}", l[0]);
             }
         }
 
-        public Task<byte[]> GetPacket()
+        public Task<byte[]> GetPacket(BinaryStream buffer)
         {
-            return new Task<byte[]>(() =>
+            var task = new Task<byte[]>(() =>
             {
-                return this.ReadPacketBuffer();
+                return buffer.ReadPacketBuffer();
             });
+            task.Start();
+            return task;
         }
 
         public byte[] Zlib_Encode(byte[] buffer)

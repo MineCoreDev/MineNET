@@ -121,16 +121,14 @@ namespace MineNET.Utils
         private void Format(string text)
         {
             string[] f = text.Split('§');
-            int c = 0;
             for(int i = 0; i < f.Length; ++i)
             {
-                if (c == 0)
+                if (i == 0)
                 {
                     Console.Write(f[i]);
                     break;
                 }
                 this.FomatColor(f[i]);
-                c++;
             }
             Console.Write(Environment.NewLine);
         }

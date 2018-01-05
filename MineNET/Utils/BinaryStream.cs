@@ -230,7 +230,8 @@ namespace MineNET.Utils
 
         public byte[] ReadPacketBuffer()
         {
-            return this.ReadBytes((int)this.Length, (int)this.ReadVarUInt());
+            var v = (int)VarInt.ReadUInt32(this);
+            return this.ReadBytes((int)this.Position, v);
         }
 
         public void PutPacketBuffer(byte[] buffer)
@@ -264,12 +265,7 @@ namespace MineNET.Utils
 
         public bool ReadOfEnd()
         {
-            return this.Length <= this.Position;
-        }
-
-        public bool ReadOfEnd(int offset)
-        {
-            return this.Length < offset;
+            return this.Position < 0 || this.Position >= this.Length;
         }
     }
 }
