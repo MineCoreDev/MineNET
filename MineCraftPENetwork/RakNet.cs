@@ -158,12 +158,8 @@ namespace MineCraftPENetwork
         public static byte[] GetBuffer(byte[] buffer, int start)
         {
             var rBuffer = new List<byte>();
-            for (int i = start; i < (buffer.Length); i++)
+            for (int i = start; i < buffer.Length; ++i)
             {
-                if (i > buffer.Length - 1)
-                {
-                    break;
-                }
                 rBuffer.Add(buffer[i]);
             }
 

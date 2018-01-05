@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using MineCraftPENetwork.Server;
 using MineCraftPENetwork.Protocol;
 
+using MineNET.Network.Packets;
+
 namespace MineNET.Network
 {
     public class MineNETServerHandler : ServerInstance
@@ -24,7 +26,7 @@ namespace MineNET.Network
             }
             catch (Exception e)
             {
-
+                Server.GetLogger().Error(e);
             }
         }
 
@@ -48,12 +50,24 @@ namespace MineNET.Network
             //throw new NotImplementedException();
         }
 
-        public byte[] GetPacket(byte[] buffer)
+        public Packets.Packet GetPacket(byte[] buffer)
         {
             var pid = buffer[0];
-            var ms = new System.IO.MemoryStream(MineCraftPENetwork.RakNet.GetBuffer(buffer, 1));
+            if (pid != 0xfe)
+            {
+                return null;
+            }
 
-            return null;
+            Console.WriteLine("[Debug]HandleBatchPacket");
+
+            var pk = new BatchPacket();
+            pk.Write(buffer, 0, buffer.Length);
+
+            pk.Decode();
+
+            pk.GetPackets();
+
+            return pk;
         }
     }
 }

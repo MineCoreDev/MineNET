@@ -27,9 +27,9 @@ namespace MineCraftPENetwork.Protocol
 
             var packet = new EncapsulatedPacket();
 
-            var flags = binary[0];
-            var reliability = (flags & 0xE0) >> 5;
-            var hasSplit = (flags & 0x10) > 0;
+            var flags = binary[0] & 0xff;
+            var reliability = ((flags & Convert.ToByte("011100000", 2)) >> 5);
+            var hasSplit = ((flags & Convert.ToByte("00010000", 2)) > 0);
             var length = 0;
 
             packet.reliability = reliability;
@@ -42,7 +42,9 @@ namespace MineCraftPENetwork.Protocol
             }
             else
             {
-                length = (int)Math.Ceiling(Packet.SwapUInt16(BitConverter.ToUInt16(RakNet.GetBuffer(binary, 1, 2), 0)) / (float)8);
+                //Console.WriteLine("[Len]" + Packet.SwapInt16(BitConverter.ToInt16(binary, 1)));
+                Console.WriteLine("[Len]" + (int)Math.Ceiling((double)(Packet.SwapUInt16((ushort)BitConverter.ToInt16(binary, 1)) / 8)));
+                length = (int)Math.Ceiling((double)(Packet.SwapUInt16((ushort)BitConverter.ToInt16(binary, 1)) / 8));
                 offset = 3;
                 packet.identifierACK = 0;
             }
@@ -80,6 +82,8 @@ namespace MineCraftPENetwork.Protocol
                 offset += 4;
             }
 
+            length = RakNet.GetBuffer(binary, offset).Length;
+
             packet.buffer = RakNet.GetBuffer(binary, offset, length);
             offset += length;
 
@@ -95,7 +99,7 @@ namespace MineCraftPENetwork.Protocol
         {
             var ms = new MemoryStream();
             var w = new BinaryWriter(ms);
-            w.Write((byte)((reliability << 5) | (hasSplit ? 0x10 : 0)));
+            w.Write((byte)((reliability << 5) | (hasSplit ? Convert.ToByte("00010000", 2) : 0x00)));
             if (isInternal)
             {
                 w.Write(buffer.Length);
@@ -103,8 +107,7 @@ namespace MineCraftPENetwork.Protocol
             }
             else
             {
-                w.Write((short)-(buffer.Length << 3));
-                //w.Write((short)Packet.SwapUInt16((ushort)(buffer.Length << 3)));
+                w.Write(Packet.SwapUInt16((ushort)(buffer.Length*8)));
             }
 
             if (reliability > PacketReliability.UNRELIABLE)
@@ -134,7 +137,7 @@ namespace MineCraftPENetwork.Protocol
 
         public EncapsulatedPacket Clone()
         {
-            var clone = (EncapsulatedPacket)Activator.CreateInstance(typeof(EncapsulatedPacket));
+            var clone = new EncapsulatedPacket();
             clone.reliability = reliability;
             clone.hasSplit = hasSplit;
             clone.length = length;

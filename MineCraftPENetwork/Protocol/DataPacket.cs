@@ -52,10 +52,9 @@ namespace MineCraftPENetwork.Protocol
         public override void Decode()
         {
             base.Decode();
-
             seqNumber = ReadLTriad();
 
-            while(!RakNet.EndOfBuffer(Buffer, (int)reader.BaseStream.Position))
+            while (!RakNet.EndOfBuffer(Buffer, (int)reader.BaseStream.Position))
             {
                 var offset = 0;
                 var data = RakNet.GetBuffer(Buffer, (int)reader.BaseStream.Position);
@@ -67,6 +66,7 @@ namespace MineCraftPENetwork.Protocol
                 }
                 packets.Add(packet);
             }
+            Console.WriteLine(packets.Count);
         }
 
         public override void Clear()

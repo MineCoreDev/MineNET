@@ -13,6 +13,11 @@ namespace MineNET.Network.Packets
         public byte e1;
         public byte e2;
 
+        public Packet()
+        {
+
+        }
+
         public Packet(byte[] buffer) : base(buffer)
         {
             
@@ -57,6 +62,11 @@ namespace MineNET.Network.Packets
         public virtual void Clear()
         {
             this.Flush();
+        }
+
+        public virtual void Reset()
+        {
+            this.Position = 0;
         }
     }
 }

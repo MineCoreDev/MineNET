@@ -8,7 +8,7 @@ using System.Net;
 
 namespace MineCraftPENetwork.Protocol
 {
-    public abstract class Packet
+    public abstract class Packet : ICloneable
     {
         const int STREAM_TYPE_NONE = -1;
         const int STREAM_TYPE_READ = 0;
@@ -223,16 +223,26 @@ namespace MineCraftPENetwork.Protocol
             }
         }
 
-        public Packet Clone()
+        /*public Packet Clone()
         {
             var clone = (Packet)Activator.CreateInstance(GetType());
             clone.Buffer = Buffer;
             return clone;
-        }
+        }*/
 
         internal static ushort SwapUInt16(ushort v)
         {
             return (ushort)(((v & 0xff) << 8) | ((v >> 8) & 0xff));
+        }
+
+        internal static short SwapInt16(short v)
+        {
+            return (short)(((v & 0xff) << 8) | ((v >> 8) & 0xff));
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }

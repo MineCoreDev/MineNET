@@ -228,6 +228,17 @@ namespace MineNET.Utils
             Binary.PutDouble(this, v);
         }
 
+        public byte[] ReadPacketBuffer()
+        {
+            return this.ReadBytes((int)this.Length, (int)this.ReadVarUInt());
+        }
+
+        public void PutPacketBuffer(byte[] buffer)
+        {
+            this.PutVarUInt((uint)buffer.Length);
+            this.PutBytes(buffer);
+        }
+
         public byte[] ReadBytes(int start)
         {
             return Binary.GetBytes(this, start);
@@ -249,6 +260,16 @@ namespace MineNET.Utils
         public byte[][] ReadSplitBytes(int len)
         {
             return Binary.SplitBytes(this, len);
+        }
+
+        public bool ReadOfEnd()
+        {
+            return this.Length <= this.Position;
+        }
+
+        public bool ReadOfEnd(int offset)
+        {
+            return this.Length < offset;
         }
     }
 }

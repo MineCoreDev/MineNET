@@ -15,7 +15,7 @@ namespace MineNET.Utils
         public MainLogger()
         {
             //this.bufferSize = MineNETMain.GetConfig().LoggerBufferSize;
-            Console.SetBufferSize(this.bufferSize, Console.BufferWidth - 10);
+            //Console.SetBufferSize(this.bufferSize, Console.BufferWidth - 10);
         }
 
         public void Debug(object message)

@@ -72,6 +72,7 @@
     <Compile Include="MineNETMain.cs" />
     <Compile Include="Network\MineNETServerHandler.cs" />
     <Compile Include="Network\NetworkManager.cs" />
+    <Compile Include="Network\Packets\BatchPacket.cs" />
     <Compile Include="Network\Packets\Packet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
