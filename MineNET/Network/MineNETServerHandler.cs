@@ -7,12 +7,19 @@ using System.Threading.Tasks;
 using MineCraftPENetwork.Server;
 using MineCraftPENetwork.Protocol;
 
+using MineNET.Entities;
 using MineNET.Network.Packets;
 
 namespace MineNET.Network
 {
     public class MineNETServerHandler : ServerInstance
     {
+        private Dictionary<string, Player> players = new Dictionary<string, Player>();
+
+        private Dictionary<int, string> identifiers = new Dictionary<int, string>();
+
+        private Dictionary<string, int> identifiersACK = new Dictionary<string, int>();
+
         public void CloseSession(string identifier, string reason)
         {
             //throw new NotImplementedException();
@@ -22,7 +29,7 @@ namespace MineNET.Network
         {
             try
             {
-                var pk = this.GetPacket(packet.buffer);
+                this.GetPacket(packet.buffer);
             }
             catch (Exception e)
             {
@@ -50,12 +57,12 @@ namespace MineNET.Network
             //throw new NotImplementedException();
         }
 
-        public Packets.Packet GetPacket(byte[] buffer)
+        public async void GetPacket(byte[] buffer)
         {
             var pid = buffer[0];
             if (pid != 0xfe)
             {
-                return null;
+                return;
             }
 
             Console.WriteLine("[Debug]HandleBatchPacket");
@@ -65,9 +72,16 @@ namespace MineNET.Network
 
             pk.Decode();
 
-            pk.GetPackets();
+            var packets = await pk.GetPackets();
 
-            return pk;
+            foreach(var p in packets)
+            {
+                if (p is LoginPacket)
+                {
+                    var s = (LoginPacket)p;
+                    s.Decode();
+                }
+            }
         }
     }
 }

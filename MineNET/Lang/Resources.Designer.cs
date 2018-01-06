@@ -106,6 +106,15 @@ namespace MineNET.Lang {
         }
         
         /// <summary>
+        ///   PacketPoolを初期化しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string server_packet_init {
+            get {
+                return ResourceManager.GetString("server_packet_init", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   MineNETServerを開始しています... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string server_start {

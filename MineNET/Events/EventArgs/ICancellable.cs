@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineNET.Entities
+namespace MineNET.Events.EventArgs
 {
-    public abstract class Entity
+    public interface ICancellable
     {
-        public Entity()
+        bool IsCancel
         {
-
+            get;
+            set;
         }
     }
 }

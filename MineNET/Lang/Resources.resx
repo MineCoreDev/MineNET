@@ -132,6 +132,9 @@
   <data name="server_net_started" xml:space="preserve">
     <value>リスナーをポート {0} で開始しました。</value>
   </data>
+  <data name="server_packet_init" xml:space="preserve">
+    <value>PacketPoolを初期化しました。</value>
+  </data>
   <data name="server_start" xml:space="preserve">
     <value>MineNETServerを開始しています...</value>
   </data>

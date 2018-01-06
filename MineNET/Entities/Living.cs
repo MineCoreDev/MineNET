@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Entities
 {
-    public abstract class Entity
+    public class Living : Entity
     {
-        public Entity()
-        {
-
-        }
     }
 }

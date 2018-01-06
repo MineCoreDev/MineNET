@@ -43,18 +43,12 @@ namespace MineNET.Network.Packets
 
         public virtual void Encode()
         {
-            this.PutVarUInt(ID);
             this.PutByte(e1);
             this.PutByte(e2);
         }
 
         public virtual void Decode()
         {
-            if(this.ReadVarUInt() == ID)
-            {
-                return;
-            }
-
             e1 = this.ReadByte();
             e2 = this.ReadByte();
         }

@@ -122,9 +122,6 @@ namespace MineCraftPENetwork.Server
                 try
                 {
                     byte pid = buffer[0];
-
-                    Console.WriteLine("[Handle]<pid>" + pid + "<len>" + buffer.Length);
-
                     var pk = GetPacketFromPool(pid, buffer);
                     if (pk != null)
                     {
@@ -176,19 +173,14 @@ namespace MineCraftPENetwork.Server
             {
                 return;
             }
-
-            Console.WriteLine("[Send]" + len);
         }
 
         public void SendPacket(Packet packet, IPAddress ip, int port)
         {
             IPEndPoint point = new IPEndPoint(ip, port);
             packet.Encode();
-            //Console.WriteLine("[SendTarget]" + ip.ToString() + ":" + port + "-" + packet.Buffer[0]);
             sendBytes += packet.Buffer.Length;
             socket.BeginSend(packet.Buffer, packet.Buffer.Length, point, OnSend, socket);
-            //socket.Send(packet.Buffer, packet.Buffer.Length, point);
-           // Console.WriteLine("[Send]" + packet.Buffer.Length);
         }
 
         public void StreamEncapsulated(Session session, EncapsulatedPacket packet, int flags = RakNet.PRIORITY_NORMAL)

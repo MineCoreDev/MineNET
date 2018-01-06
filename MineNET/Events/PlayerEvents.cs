@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineNET.Entities
+namespace MineNET.Events
 {
-    public abstract class Entity
+    public static class PlayerEvents
     {
-        public Entity()
-        {
-
-        }
+        public delegate void PlayerCreateEventHandler();
     }
 }

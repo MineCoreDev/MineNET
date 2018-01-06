@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using MineNET.Blocks;
 using MineNET.Items;
 using MineNET.Network;
+using MineNET.Network.Packets;
 using MineNET.Utils;
 
 namespace MineNET
@@ -34,17 +35,25 @@ namespace MineNET
             this.logger = new MainLogger();
             this.logger.Info(Lang.Resources.server_start);
 
+            this.Init();
+
+            sw.Stop();
+            this.logger.Info(Lang.Resources.server_started, sw.Elapsed);
+        }
+
+        private void Init()
+        {
             this.logger.Info(Lang.Resources.server_block_init);
             BlockFactory.Init();
 
             this.logger.Info(Lang.Resources.server_item_init);
             //ItemFactory.Init();
 
+            this.logger.Info(Lang.Resources.server_packet_init);
+            PacketPool.Init();
+
             this.logger.Info(Lang.Resources.server_net_start);
             this.networkManager = new NetworkManager();
-
-            sw.Stop();
-            this.logger.Info(Lang.Resources.server_started, sw.Elapsed);
         }
 
         public static Server GetInstance()

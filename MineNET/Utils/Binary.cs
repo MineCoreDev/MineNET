@@ -45,39 +45,39 @@ namespace MineNET.Utils
         {
             int b1 = buffer.ReadByte();
             int b2 = buffer.ReadByte();
-            return (short)(b1 | b2 << 8);
+            return (short)(b1 << 8 | b2);
         }
 
         public static void PutShort(Stream buffer, short value)
         {
-            buffer.WriteByte((byte)value);
             buffer.WriteByte((byte)(value >> 8));
+            buffer.WriteByte((byte)value);
         }
 
         public static ushort ReadUShort(Stream buffer)
         {
             var b1 = buffer.ReadByte();
             var b2 = buffer.ReadByte();
-            return (ushort)(b1 | b2 << 8);
+            return (ushort)(b1 << 8 | b2);
         }
 
         public static void PutUShort(Stream buffer, ushort value)
         {
-            buffer.WriteByte((byte)value);
             buffer.WriteByte((byte)(value >> 8));
+            buffer.WriteByte((byte)value);
         }
 
         public static ushort ReadLShort(Stream buffer)
         {
             int b1 = buffer.ReadByte();
             int b2 = buffer.ReadByte();
-            return (ushort)(b1 << 8 | b2);
+            return (ushort)(b1 | b2 << 8);
         }
 
         public static void PutLShort(Stream buffer, ushort value)
         {
-            buffer.WriteByte((byte)(value >> 8));
             buffer.WriteByte((byte)value);
+            buffer.WriteByte((byte)(value >> 8));
         }
 
         public static Int24 ReadLTriad(Stream buffer)
@@ -128,15 +128,15 @@ namespace MineNET.Utils
             var b2 = buffer.ReadByte();
             var b3 = buffer.ReadByte();
             var b4 = buffer.ReadByte();
-            return (b1 | b2 << 8 | b3 << 16 | b4 << 24);
+            return (b1 << 24 | b2 << 16 | b3 << 8 | b4);
         }
 
         public static void PutInt(Stream buffer, int value)
         {
-            buffer.WriteByte((byte)value);
-            buffer.WriteByte((byte)(value >> 8));
-            buffer.WriteByte((byte)(value >> 16));
             buffer.WriteByte((byte)(value >> 24));
+            buffer.WriteByte((byte)(value >> 16));
+            buffer.WriteByte((byte)(value >> 8));
+            buffer.WriteByte((byte)(value));
         }
 
         public static uint ReadUInt(Stream buffer)
@@ -145,15 +145,15 @@ namespace MineNET.Utils
             var b2 = buffer.ReadByte();
             var b3 = buffer.ReadByte();
             var b4 = buffer.ReadByte();
-            return (uint)(b1 | b2 << 8 | b3 << 16 | b4 << 24);
+            return (uint)(b1 << 24 | b2 << 16 | b3 << 8 | b4);
         }
 
         public static void PutUInt(Stream buffer, uint value)
         {
-            buffer.WriteByte((byte)value);
-            buffer.WriteByte((byte)(value >> 8));
-            buffer.WriteByte((byte)(value >> 16));
             buffer.WriteByte((byte)(value >> 24));
+            buffer.WriteByte((byte)(value >> 16));
+            buffer.WriteByte((byte)(value >> 8));
+            buffer.WriteByte((byte)value);
         }
 
         public static uint ReadLInt(Stream buffer)
@@ -162,15 +162,15 @@ namespace MineNET.Utils
             var b2 = buffer.ReadByte();
             var b3 = buffer.ReadByte();
             var b4 = buffer.ReadByte();
-            return (uint)(b1 << 24 | b2 << 16 | b3 << 8 | b4);
+            return (uint)(b1 | b2 << 8 | b3 << 16 | b4 << 24);
         }
 
         public static void PutLInt(Stream buffer, uint value)
         {
-            buffer.WriteByte((byte)(value >> 24));
-            buffer.WriteByte((byte)(value >> 16));
-            buffer.WriteByte((byte)(value >> 8));
             buffer.WriteByte((byte)value);
+            buffer.WriteByte((byte)(value >> 8));
+            buffer.WriteByte((byte)(value >> 16));
+            buffer.WriteByte((byte)(value >> 24));
         }
 
         public static long ReadLong(Stream buffer)
@@ -183,19 +183,19 @@ namespace MineNET.Utils
             var b6 = buffer.ReadByte();
             var b7 = buffer.ReadByte();
             var b8 = buffer.ReadByte();
-            return (b1 | b2 << 8 | b3 << 16 | b4 << 24 | b1 << 32 | b2 << 40 | b3 << 48 | b4 << 56);
+            return (b1 << 56 | b2 << 48 | b3 << 40 | b4 << 32 | b1 << 24 | b2 << 16 | b3 << 8 | b4);
         }
 
         public static void PutLong(Stream buffer, long value)
         {
-            buffer.WriteByte((byte)value);
-            buffer.WriteByte((byte)(value >> 8));
-            buffer.WriteByte((byte)(value >> 16));
-            buffer.WriteByte((byte)(value >> 24));
-            buffer.WriteByte((byte)(value >> 32));
-            buffer.WriteByte((byte)(value >> 40));
-            buffer.WriteByte((byte)(value >> 48));
             buffer.WriteByte((byte)(value >> 56));
+            buffer.WriteByte((byte)(value >> 48));
+            buffer.WriteByte((byte)(value >> 40));
+            buffer.WriteByte((byte)(value >> 32));
+            buffer.WriteByte((byte)(value >> 24));
+            buffer.WriteByte((byte)(value >> 16));
+            buffer.WriteByte((byte)(value >> 8));
+            buffer.WriteByte((byte)value);
         }
 
         public static ulong ReadULong(Stream buffer)
@@ -208,19 +208,19 @@ namespace MineNET.Utils
             var b6 = buffer.ReadByte();
             var b7 = buffer.ReadByte();
             var b8 = buffer.ReadByte();
-            return (ulong)(b1 | b2 << 8 | b3 << 16 | b4 << 24 | b1 << 32 | b2 << 40 | b3 << 48 | b4 << 56);
+            return (ulong)(b1 << 56 | b2 << 48 | b3 << 40 | b4 << 32 | b1 << 24 | b2 << 16 | b3 << 8 | b4);
         }
 
         public static void PutULong(Stream buffer, ulong value)
         {
-            buffer.WriteByte((byte)value);
-            buffer.WriteByte((byte)(value >> 8));
-            buffer.WriteByte((byte)(value >> 16));
-            buffer.WriteByte((byte)(value >> 24));
-            buffer.WriteByte((byte)(value >> 32));
-            buffer.WriteByte((byte)(value >> 40));
-            buffer.WriteByte((byte)(value >> 48));
             buffer.WriteByte((byte)(value >> 56));
+            buffer.WriteByte((byte)(value >> 48));
+            buffer.WriteByte((byte)(value >> 40));
+            buffer.WriteByte((byte)(value >> 32));
+            buffer.WriteByte((byte)(value >> 24));
+            buffer.WriteByte((byte)(value >> 16));
+            buffer.WriteByte((byte)(value >> 8));
+            buffer.WriteByte((byte)value);
         }
 
         public static int ReadVarInt(Stream buffer)

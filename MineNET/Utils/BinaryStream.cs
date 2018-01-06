@@ -230,7 +230,7 @@ namespace MineNET.Utils
 
         public byte[] ReadPacketBuffer()
         {
-            var v = (int)VarInt.ReadUInt32(this);
+            var v = (int)this.ReadVarUInt();
             return this.ReadBytes((int)this.Position, v);
         }
 

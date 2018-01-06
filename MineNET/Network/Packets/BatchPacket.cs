@@ -10,6 +10,8 @@ namespace MineNET.Network.Packets
 {
     public class BatchPacket : Packet
     {
+        public const byte NETWORK_ID = 0xfe;
+
         public byte[] payload;
 
         protected CompressionLevel compressionLevel = CompressionLevel.Fastest;
@@ -18,7 +20,7 @@ namespace MineNET.Network.Packets
         {
             get
             {
-                return 0xfe;
+                return NETWORK_ID;
             }
         }
 
@@ -39,23 +41,24 @@ namespace MineNET.Network.Packets
             this.payload = this.Zlib_Decode(this.ReadBytes(1));
         }
 
-        public async void GetPackets()
+        public async Task<List<Packet>> GetPackets()
         {
-            var list = new List<byte[]>();
+            var list = new List<Packet>();
             var pb = new BinaryStream(this.payload);
             pb.Position = 0;
-
 
             while (!pb.ReadOfEnd())
             {
                 byte[] b = await this.GetPacket(pb);
-                list.Add(b);
+                Server.GetLogger().Log("§a[PEPacketHandle]ID: {0}", b[0]);
+                var pk = PacketPool.GetPacketByID(b[0]);
+                var bs = new BinaryStream(b);
+                pk.PutBytes(bs.ReadBytes(1));
+                bs.Close();
+                list.Add(pk);
             }
 
-            foreach(var l in list)
-            {
-                Server.GetLogger().Log("[PEPacketHandle]ID: {0}", l[0]);
-            }
+            return list;
         }
 
         public Task<byte[]> GetPacket(BinaryStream buffer)

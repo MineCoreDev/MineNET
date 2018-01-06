@@ -126,7 +126,7 @@ namespace MineNET.Utils
                 if (i == 0)
                 {
                     Console.Write(f[i]);
-                    break;
+                    continue;
                 }
                 this.FomatColor(f[i]);
             }
