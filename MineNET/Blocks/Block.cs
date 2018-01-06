@@ -35,9 +35,9 @@ namespace MineNET.Blocks
             throw new NotImplementedException();
         }
 
-        public object Clone()
+        public Block Clone()
         {
-            return this.MemberwiseClone();
+            return (Block) this.MemberwiseClone();
         }
 
         private string name = "";
@@ -58,6 +58,11 @@ namespace MineNET.Blocks
             this.meta = meta;
         }
 
+        public Block(byte id, short meta, byte count) : this(id, meta)
+        {
+            this.count = count;
+        }
+
         public abstract string Name
         {
             get;
@@ -67,7 +72,7 @@ namespace MineNET.Blocks
         {
             get
             {
-                return id;
+                return this.id;
             }
         }
 

@@ -4,20 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineNET.Blocks
-{
-    public class BlockStone : BlockSolid
-    {
-        public BlockStone() : base(BlockFactory.STONE)
-        {
+using MineNET.Blocks;
 
+namespace MineNET.Items
+{
+    public class ItemBlock : Item
+    {
+        public ItemBlock(Block block) : base(block.BlockID)
+        {
+            this.Block = block;
         }
 
         public override string Name
         {
             get
             {
-                return "Stone";
+                return this.Block.Name;
             }
         }
     }

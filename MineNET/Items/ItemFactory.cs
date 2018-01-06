@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MineNET.Blocks;
+
 namespace MineNET.Items
 {
     public class ItemFactory
@@ -219,5 +221,11 @@ namespace MineNET.Items
         public const int RECORD_WARD = 509;
         public const int RECORD_11 = 510;
         public const int RECORD_WAIT = 511;
+
+        public static Item GetItem(int id)
+        {
+            if (id < 256) return new ItemBlock(Block.Get((byte) id));
+            else return null;
+        }
     }
 }
