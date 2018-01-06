@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 using MineNET.Values;
 
@@ -226,6 +227,18 @@ namespace MineNET.Utils
         public void PutDouble(double v)
         {
             Binary.PutDouble(this, v);
+        }
+
+        public string ReadString()
+        {
+            var v = this.ReadPacketBuffer();
+            return Encoding.UTF8.GetString(v);
+        }
+
+        public void PutString(string v)
+        {
+            var s = Encoding.UTF8.GetBytes(v);
+            this.PutPacketBuffer(s);
         }
 
         public byte[] ReadPacketBuffer()

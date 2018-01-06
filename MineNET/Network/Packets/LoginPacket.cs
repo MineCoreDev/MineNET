@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+
+using MineNET.Utils;
+using Newtonsoft.Json.Linq;
+
 namespace MineNET.Network.Packets
 {
     public class LoginPacket : Packet
@@ -11,6 +16,7 @@ namespace MineNET.Network.Packets
         public const byte NETWORK_ID = 0x01;
 
         private int protocol;
+        private string chainData;
 
         public override byte ID
         {
@@ -25,11 +31,12 @@ namespace MineNET.Network.Packets
             this.Reset();
             base.Decode();
             protocol = this.ReadInt();
-            Console.WriteLine(protocol);
-            /*for (int i = 0; i < 10; ++i)
-            {
-                Console.WriteLine(this.ReadByte());
-            }*/
+
+            var bs = new BinaryStream(this.ReadPacketBuffer());
+            bs.Position = 0;
+
+            chainData = Encoding.UTF8.GetString(bs.ReadBytes(4, (int)bs.ReadLInt() + 4));
+            var obj = JObject.Parse(chainData);//TODO JWT Decode...
         }
     }
 }

@@ -128,6 +128,7 @@ namespace MineNET.Utils
                     Console.Write(f[i]);
                     continue;
                 }
+                if (f[i] == null || f[i] == string.Empty) continue;
                 this.FomatColor(f[i]);
             }
             Console.Write(Environment.NewLine);
