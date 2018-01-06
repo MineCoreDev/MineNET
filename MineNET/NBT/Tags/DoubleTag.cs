@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.NBT.Tags
 {
-    class DoubleTag : Tag
+    public class DoubleTag : Tag
     {
         private double data;
 

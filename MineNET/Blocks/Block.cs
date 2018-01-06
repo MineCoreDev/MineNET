@@ -40,24 +40,24 @@ namespace MineNET.Blocks
             return this.MemberwiseClone();
         }
 
-        private string name = "";
+        private byte id;
+        private short meta;
+        private byte count;
 
-        private byte id = 0;
-        private short meta = 0;
-        private byte count = 1;
+        public Block(byte id) : this(id, 0)
+        {
 
-        public Block(byte id)
+        }
+
+        public Block(byte id, short meta) : this(id, meta, 1)
+        {
+
+        }
+
+        public Block(byte id, short meta, byte count)
         {
             this.id = id;
-        }
-
-        public Block(byte id, short meta) : this(id)
-        {
             this.meta = meta;
-        }
-
-        public Block(byte id, short meta, byte count) : this(id, meta)
-        {
             this.count = count;
         }
 

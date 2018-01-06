@@ -61,9 +61,12 @@
     <Compile Include="Blocks\BlockUnknown.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Extensions\ObjectExtension.cs" />
+    <Compile Include="Items\IronPickaxe.cs" />
+    <Compile Include="Items\IronShovel.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemBlock.cs" />
     <Compile Include="Items\ItemFactory.cs" />
+    <Compile Include="Items\ItemTool.cs" />
     <Compile Include="Lang\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

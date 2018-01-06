@@ -8,7 +8,7 @@ using MineNET.Blocks;
 
 namespace MineNET.Items
 {
-    public abstract class Item
+    public class Item : ICloneable
     {
         public static Item Get(int id)
         {
@@ -31,32 +31,40 @@ namespace MineNET.Items
             return item;
         }
 
-        private string name = "";
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
 
-        private int id = 0;
-        private short meta = 0;
-        private byte count = 1;
+        private int id;
+        private short meta;
+        private byte count;
 
         private Block block = null;
 
-        public Item(int id)
+        public Item(int id) : this(id, 0)
+        {
+
+        }
+
+        public Item(int id, short meta) : this(id, meta, 1)
+        {
+
+        }
+
+        public Item(int id, short meta, byte count)
         {
             this.id = id;
-        }
-
-        public Item(int id, short meta) : this(id)
-        {
             this.meta = meta;
-        }
-
-        public Item(int id, short meta, byte count) : this(id, meta)
-        {
             this.count = count;
         }
 
-        public abstract string Name
+        public virtual string Name
         {
-            get;
+            get
+            {
+                return "Unknown";
+            }
         }
 
         public int ItemID
@@ -118,6 +126,70 @@ namespace MineNET.Items
             get
             {
                 return 64;
+            }
+        }
+
+        public virtual bool IsTool
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool IsArmor
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool IsPickaxe
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool IsAxe
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool IsSword
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool IsShovel
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool IsHoe
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool IsShears
+        {
+            get
+            {
+                return false;
             }
         }
     }

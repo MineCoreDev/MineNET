@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.NBT.Tags
 {
-    class ByteTag : Tag
+    public class ByteTag : Tag
     {
         private byte data;
 

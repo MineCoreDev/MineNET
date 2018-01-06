@@ -8,7 +8,7 @@ namespace MineNET.NBT.Tags
 {
     public class ListTag<T> where T : Tag
     {
-        private List<T> list;
+        private List<T> list = new List<T>();
 
         public ListTag(string name)
         {
