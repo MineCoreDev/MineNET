@@ -509,7 +509,6 @@ namespace MineCraftPENetwork.Server
             else if (state == STATE_CONNECTED)
             {
                 sessionManager.StreamEncapsulated(this, packet);
-                Console.WriteLine("Test");
                 //TODO: stream channels
             } else {
                 //sessionManager.getLogger().notice("Received packet before connection: " . bin2hex(packet.buffer));

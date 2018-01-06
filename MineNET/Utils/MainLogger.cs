@@ -15,7 +15,7 @@ namespace MineNET.Utils
         public MainLogger()
         {
             //this.bufferSize = MineNETMain.GetConfig().LoggerBufferSize;
-            Console.SetBufferSize(this.bufferSize, Console.BufferWidth - 10);
+            //Console.SetBufferSize(this.bufferSize, Console.BufferWidth - 10);
         }
 
         public void Debug(object message)
@@ -121,16 +121,14 @@ namespace MineNET.Utils
         private void Format(string text)
         {
             string[] f = text.Split('§');
-            int c = 0;
             for(int i = 0; i < f.Length; ++i)
             {
-                if (c == 0)
+                if (i == 0)
                 {
                     Console.Write(f[i]);
                     break;
                 }
                 this.FomatColor(f[i]);
-                c++;
             }
             Console.Write(Environment.NewLine);
         }

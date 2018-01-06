@@ -46,8 +46,6 @@ namespace MineNET.Blocks
         private short meta = 0;
         private byte count = 1;
 
-        private bool isTransparent = false;
-
         public Block(byte id)
         {
             this.id = id;

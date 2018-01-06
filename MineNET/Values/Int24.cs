@@ -28,6 +28,11 @@ namespace MineNET.Values
             return Int32ToByteArray3(this.f_value);
         }
 
+        public override string ToString()
+        {
+            return this.f_value.ToString();
+        }
+
         public static Int24 Parse(int value)
         {
             return new Int24(CheckInt24(value));
@@ -55,7 +60,7 @@ namespace MineNET.Values
 
         private static int CheckInt24(int value)
         {
-            if (value >= MinValue && value <= MinValue)
+            if (value >= MinValue && value <= MaxValue)
             {
                 return value;
             }
