@@ -35,9 +35,9 @@ namespace MineNET.Blocks
             throw new NotImplementedException();
         }
 
-        public Block Clone()
+        public object Clone()
         {
-            return (Block) this.MemberwiseClone();
+            return this.MemberwiseClone();
         }
 
         private string name = "";
