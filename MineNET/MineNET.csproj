@@ -71,8 +71,12 @@
     <Compile Include="Events\PlayerEvents.cs" />
     <Compile Include="Events\ServerEvents.cs" />
     <Compile Include="Extensions\ObjectExtension.cs" />
+    <Compile Include="Items\IronPickaxe.cs" />
+    <Compile Include="Items\IronShovel.cs" />
     <Compile Include="Items\Item.cs" />
+    <Compile Include="Items\ItemBlock.cs" />
     <Compile Include="Items\ItemFactory.cs" />
+    <Compile Include="Items\ItemTool.cs" />
     <Compile Include="Lang\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -80,6 +84,13 @@
     </Compile>
     <Compile Include="MineNETConfig.cs" />
     <Compile Include="MineNETMain.cs" />
+    <Compile Include="NBT\Tags\ByteTag.cs" />
+    <Compile Include="NBT\Tags\CompoundTag.cs" />
+    <Compile Include="NBT\Tags\DoubleTag.cs" />
+    <Compile Include="NBT\Tags\FloatTag.cs" />
+    <Compile Include="NBT\Tags\IntTag.cs" />
+    <Compile Include="NBT\Tags\ListTag.cs" />
+    <Compile Include="NBT\Tags\Tag.cs" />
     <Compile Include="Network\MineNETServerHandler.cs" />
     <Compile Include="Network\NetworkManager.cs" />
     <Compile Include="Network\Packets\BatchPacket.cs" />
