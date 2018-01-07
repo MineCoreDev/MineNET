@@ -20,7 +20,7 @@ namespace MineNET.NBT.Tags
 
         }
 
-        public Double Data
+        public double Data
         {
             get
             {
@@ -31,6 +31,11 @@ namespace MineNET.NBT.Tags
             {
                 this.data = value;
             }
+        }
+
+        public override string ToString()
+        {
+            return this.data.ToString();
         }
     }
 }

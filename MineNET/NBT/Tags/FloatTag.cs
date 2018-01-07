@@ -32,5 +32,10 @@ namespace MineNET.NBT.Tags
                 this.data = value;
             }
         }
+
+        public override string ToString()
+        {
+            return this.data.ToString();
+        }
     }
 }
