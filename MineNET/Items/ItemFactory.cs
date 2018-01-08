@@ -225,8 +225,8 @@ namespace MineNET.Items
         public static Item GetItem(int id)
         {
             if (id < 256) return new ItemBlock(Block.Get((byte) id));
-            else if (id == IRON_SHOVEL) return new IronShovel();
-            else if (id == IRON_PICKAXE) return new IronPickaxe();
+            else if (id == IRON_SHOVEL) return new ItemIronShovel();
+            else if (id == IRON_PICKAXE) return new ItemIronPickaxe();
             else return new Item(id);
         }
     }
