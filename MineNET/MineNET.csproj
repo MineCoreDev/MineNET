@@ -71,8 +71,8 @@
     <Compile Include="Events\PlayerEvents.cs" />
     <Compile Include="Events\ServerEvents.cs" />
     <Compile Include="Extensions\ObjectExtension.cs" />
-    <Compile Include="Items\IronPickaxe.cs" />
-    <Compile Include="Items\IronShovel.cs" />
+    <Compile Include="Items\ItemIronPickaxe.cs" />
+    <Compile Include="Items\ItemIronShovel.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemBlock.cs" />
     <Compile Include="Items\ItemFactory.cs" />
