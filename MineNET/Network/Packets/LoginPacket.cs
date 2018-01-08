@@ -36,7 +36,11 @@ namespace MineNET.Network.Packets
             bs.Position = 0;
 
             chainData = Encoding.UTF8.GetString(bs.ReadBytes(4, (int)bs.ReadLInt() + 4));
-            var obj = JObject.Parse(chainData);//TODO JWT Decode...
+            var obj = JObject.Parse(chainData)["chain"];//TODO JWT Decode...
+            foreach (var s in obj)
+            {
+                Console.WriteLine(JObject.Parse(JWT.Decode(s.ToString())).ToString());
+            }
         }
     }
 }

@@ -109,6 +109,7 @@
     <Compile Include="Utils\Config\YamlStaticConfig.cs" />
     <Compile Include="Utils\IConfig.cs" />
     <Compile Include="Utils\ILogger.cs" />
+    <Compile Include="Utils\JWT.cs" />
     <Compile Include="Utils\MainLogger.cs" />
     <Compile Include="Utils\MineNETMath.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
