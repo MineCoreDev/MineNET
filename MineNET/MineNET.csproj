@@ -59,6 +59,7 @@
     <Compile Include="Blocks\BlockStone.cs" />
     <Compile Include="Blocks\BlockTransparent.cs" />
     <Compile Include="Blocks\BlockUnknown.cs" />
+    <Compile Include="Data\LoginExtraData.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Human.cs" />
     <Compile Include="Entities\Living.cs" />
