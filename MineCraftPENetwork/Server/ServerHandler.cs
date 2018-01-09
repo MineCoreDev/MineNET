@@ -21,9 +21,9 @@ namespace MineCraftPENetwork.Server
             this.instance = instance;
         }
 
-        public void SendEncapsulated(Session session, EncapsulatedPacket packet, int flags = RakNet.PRIORITY_NORMAL)
+        public void SendEncapsulated(string identifier, EncapsulatedPacket packet, int flags = RakNet.PRIORITY_NORMAL)
         {
-            var id = session.GetAddress() + ":" + session.GetPort();
+            var id = identifier;
             var ms = new MemoryStream();
             var br = new BinaryWriter(ms);
             br.Write(RakNet.PACKET_ENCAPSULATED);

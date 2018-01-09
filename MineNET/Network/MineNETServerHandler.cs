@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MineCraftPENetwork;
 using MineCraftPENetwork.Server;
 using MineCraftPENetwork.Protocol;
 
@@ -22,18 +23,27 @@ namespace MineNET.Network
 
         public void CloseSession(string identifier, string reason)
         {
-            //throw new NotImplementedException();
+            if (players.ContainsKey(identifier))
+            {
+                identifiers.Remove(players[identifier].GetHashCode());
+                identifiersACK.Remove(identifier);
+                players.Remove(identifier);
+                //TODO Player Close
+            }
         }
 
         public void HandleEncapsulated(string identifier, EncapsulatedPacket packet, int flags)
         {
-            try
+            if (players.ContainsKey(identifier))
             {
-                this.GetPacket(packet.buffer);
-            }
-            catch (Exception e)
-            {
-                Server.GetLogger().Error(e);
+                try
+                {
+                    this.GetPacket(packet.buffer, identifier);
+                }
+                catch (Exception e)
+                {
+                    Server.GetLogger().Error(e);
+                }
             }
         }
 
@@ -54,10 +64,57 @@ namespace MineNET.Network
 
         public void OpenSession(string identifier, string address, int port, long clientID)
         {
-            //throw new NotImplementedException();
+            if (!players.ContainsKey(identifier))
+            {
+                var player = new Player();
+
+                //TODO Event...
+                identifiers.Add(player.GetHashCode(), identifier);
+                identifiersACK.Add(identifier, 0);
+                players.Add(identifier, player);
+            }
         }
 
-        public async void GetPacket(byte[] buffer)
+        public void PutPacket(Player player, Packets.Packet packet, bool needACK = false, bool immediate = true)
+        {
+            EncapsulatedPacket ep = null;
+            int hash = player.GetHashCode();
+            if (this.identifiers.ContainsKey(hash))
+            {
+                string identifier = this.identifiers[hash];
+                if (packet is BatchPacket)
+                {
+                    if (needACK)
+                    {
+                        ep = new EncapsulatedPacket();
+                        ep.identifierACK = this.identifiersACK[identifier]++;
+                        ep.buffer = ((BatchPacket)packet).GetBuffer();
+                        ep.reliability = immediate ? PacketReliability.RELIABLE : PacketReliability.RELIABLE_ORDERED;
+					    ep.orderChannel = 0;
+                    }
+                    else
+                    {
+                        ep = new EncapsulatedPacket();
+                        ep.identifierACK = -1;
+                        ep.buffer = ((BatchPacket)packet).GetBuffer();
+                        ep.reliability = immediate ? PacketReliability.RELIABLE : PacketReliability.RELIABLE_ORDERED;
+                        ep.orderChannel = 0;
+                    }
+                    Server.GetInstance().networkManager.serverHandler.SendEncapsulated(identifier, ep, (needACK == true ? RakNet.FLAG_NEED_ACK : 0) | (immediate == true ? RakNet.PRIORITY_IMMEDIATE : RakNet.PRIORITY_NORMAL));
+                }
+                else
+                {
+                    var batch = new BatchPacket();
+                    
+                    batch.PutPacket(packet);
+                    batch.Encode();
+
+                    this.PutPacket(player, batch, needACK, immediate);
+                }
+            }
+        }
+
+        public async void GetPacket(byte[] buffer, string id)
         {
             var pid = buffer[0];
             if (pid != 0xfe)
@@ -76,11 +133,7 @@ namespace MineNET.Network
 
             foreach(var p in packets)
             {
-                if (p is LoginPacket)
-                {
-                    var s = (LoginPacket)p;
-                    s.Decode();
-                }
+                players[id].HandlePacket(p);
             }
         }
     }

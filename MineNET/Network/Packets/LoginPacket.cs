@@ -32,6 +32,22 @@ namespace MineNET.Network.Packets
             }
         }
 
+        public int Protocol
+        {
+            get
+            {
+                return protocol;
+            }
+        }
+
+        public LoginExtraData ExtraData
+        {
+            get
+            {
+                return extraData;
+            }
+        }
+
         public override void Decode()
         {
             this.Reset();
@@ -62,7 +78,7 @@ namespace MineNET.Network.Packets
             }
 
             this.clientDataJWT = Encoding.UTF8.GetString(bs.ReadBytes((int)bs.Position + 4, (int)bs.ReadLInt() + 4));
-            Console.WriteLine(JObject.Parse(JWT.Decode(this.clientDataJWT)));//Test...
+            //Console.WriteLine(JObject.Parse(JWT.Decode(this.clientDataJWT)));//Test...
         }
     }
 }

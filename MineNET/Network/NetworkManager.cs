@@ -12,9 +12,11 @@ namespace MineNET.Network
     public sealed class NetworkManager
     {
         public RakNetServer raknet;
+        public MineNETServerHandler mineNetServerHandler;
+        public ServerHandler serverHandler;
 
         public Timer serverNameUpdater;
-        public Timer serverHandler;
+        public Timer serverHandlerUpdater;
 
         public NetworkManager()
         {
@@ -22,16 +24,17 @@ namespace MineNET.Network
 
             Server.GetLogger().Info(Lang.Resources.server_net_started, Server.GetConfig().ServerPort);
 
-            var h = new ServerHandler(this.raknet, new MineNETServerHandler());
+            mineNetServerHandler = new MineNETServerHandler();
+            serverHandler = new ServerHandler(this.raknet, this.mineNetServerHandler);
 
             this.serverNameUpdater = new Timer((obj) =>
             {
-                h.SendOption("name", Encoding.UTF8.GetBytes("MCPE;" + Server.GetConfig().ServerMotd + ";160;1.2.8;0;20;MineNET;Survival"));
+                serverHandler.SendOption("name", Encoding.UTF8.GetBytes("MCPE;" + Server.GetConfig().ServerMotd + ";160;1.2.8;0;20;MineNET;Survival"));
             }, null, 100, 1000);
 
-            this.serverHandler = new Timer((obj) =>
+            this.serverHandlerUpdater = new Timer((obj) =>
             {
-                h.HandlePacket();
+                serverHandler.HandlePacket();
             }, null, 0, 50);
 
             Server.GetLogger().Info(Lang.Resources.server_net_packetHandlerStart);
