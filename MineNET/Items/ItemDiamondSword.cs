@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    public class ItemIronShovel : ItemTool
+    public class ItemDiamondSword : ItemTool
     {
-        public ItemIronShovel() : base(ItemFactory.IRON_SHOVEL)
+        public ItemDiamondSword() : base(ItemFactory.DIAMOND_SWORD)
         {
 
         }
@@ -17,11 +17,11 @@ namespace MineNET.Items
         {
             get
             {
-                return "IronShovel";
+                return "DiamondSword";
             }
         }
 
-        public override bool IsShovel
+        public override bool IsSword
         {
             get
             {

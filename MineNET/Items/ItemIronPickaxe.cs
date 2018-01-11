@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    class ItemIronPickaxe : ItemTool
+    public class ItemIronPickaxe : ItemTool
     {
         public ItemIronPickaxe() : base(ItemFactory.IRON_PICKAXE)
         {

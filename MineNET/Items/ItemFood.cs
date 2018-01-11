@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    public abstract class ItemTool : Item
+    public abstract class ItemFood : Item
     {
-        public ItemTool(int id) : base(id)
+        public ItemFood(int id) : base(id)
         {
 
         }
 
-        public override bool IsTool
+        public override bool CanBeConsumed
         {
             get
             {
@@ -21,12 +21,6 @@ namespace MineNET.Items
             }
         }
 
-        public override byte MaxStackSize
-        {
-            get
-            {
-                return 1;
-            }
-        }
+        //TODO public override void OnConsume(Entity entity) EntityEatItemEvent
     }
 }

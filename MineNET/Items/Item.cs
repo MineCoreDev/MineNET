@@ -192,5 +192,37 @@ namespace MineNET.Items
                 return false;
             }
         }
+
+        public virtual bool IsFlintAndSteel
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool CanBeConsumed
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual int FoodRestore
+        {
+            get
+            {
+                return 0;
+            }
+        }
+
+        public virtual float SaturationRestore
+        {
+            get
+            {
+                return 0f;
+            }
+        }
     }
 }
