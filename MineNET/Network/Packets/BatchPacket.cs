@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.IO.Compression;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace MineNET.Network.Packets
     {
         public const byte NETWORK_ID = 0xfe;
 
-        public byte[] payload;
+        public byte[] payload = new byte[0];
 
         protected CompressionLevel compressionLevel = CompressionLevel.Fastest;
 
@@ -27,7 +28,7 @@ namespace MineNET.Network.Packets
         public override void Encode()
         {
             this.PutByte(ID);
-            this.PutBytes(this.Zlib_Encode(payload));
+            this.PutBytes(this.Zlib_Encode(this.payload));
         }
 
         public override void Decode()
@@ -61,6 +62,16 @@ namespace MineNET.Network.Packets
             return list;
         }
 
+        public void PutPacket(Packet pk)
+        {
+            pk.Encode();
+            BinaryStream bs = new BinaryStream();
+            bs.PutPacketBuffer(pk.GetBuffer());
+            var pl = this.payload.ToList();
+            pl.AddRange(bs.GetBuffer());
+            this.payload = pl.ToArray();
+        }
+
         public Task<byte[]> GetPacket(BinaryStream buffer)
         {
             var task = new Task<byte[]>(() =>
@@ -73,13 +84,26 @@ namespace MineNET.Network.Packets
 
         public byte[] Zlib_Encode(byte[] buffer)
         {
-            BinaryStream bs = new BinaryStream(buffer);
-            DeflateStream ds = new DeflateStream(bs, compressionLevel);
-            ds.Close();
-            var result = bs.ToArray();
-            bs.Close();
+            MemoryStream bs = new MemoryStream();
+            bs.WriteByte(0x78);
+            bs.WriteByte(0x9c);//TODO CompressionLevel
+            var sum = 0;
+            using (ZlibStream ds = new ZlibStream(bs, compressionLevel, true))
+            {
+                ds.Write(buffer, 0, buffer.Length);
+                sum = ds.Checksum;
+            }
 
-            return result;
+            Console.WriteLine(sum);
+
+            var checksumBytes = BitConverter.GetBytes(sum);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(checksumBytes);
+            }
+            bs.Write(checksumBytes, 0, checksumBytes.Length);
+
+            return bs.GetBuffer();
         }
 
         public byte[] Zlib_Decode(byte[] buffer)

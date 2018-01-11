@@ -59,6 +59,7 @@
     <Compile Include="Blocks\BlockStone.cs" />
     <Compile Include="Blocks\BlockTransparent.cs" />
     <Compile Include="Blocks\BlockUnknown.cs" />
+    <Compile Include="Data\LoginExtraData.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Human.cs" />
     <Compile Include="Entities\Living.cs" />
@@ -135,6 +136,8 @@
     <Compile Include="Network\Packets\LoginPacket.cs" />
     <Compile Include="Network\Packets\Packet.cs" />
     <Compile Include="Network\Packets\PacketPool.cs" />
+    <Compile Include="Network\Packets\PlayStatusPacket.cs" />
+    <Compile Include="Network\Packets\ProtocolInfo.cs" />
     <Compile Include="Network\Packets\UnknownPacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
@@ -152,6 +155,7 @@
     <Compile Include="Utils\MineNETMath.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Utils\VarInt.cs" />
+    <Compile Include="Utils\ZlibStream.cs" />
     <Compile Include="Values\Int24.cs" />
     <Compile Include="Values\Vector2.cs" />
     <Compile Include="Values\Vector3.cs" />

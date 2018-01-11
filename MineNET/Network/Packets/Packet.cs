@@ -43,6 +43,7 @@ namespace MineNET.Network.Packets
 
         public virtual void Encode()
         {
+            this.PutByte(ID);
             this.PutByte(e1);
             this.PutByte(e2);
         }
