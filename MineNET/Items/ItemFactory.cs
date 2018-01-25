@@ -197,7 +197,7 @@ namespace MineNET.Items
         public const int SHULKER_SHELL = 445;
         public const int BANNER = 446;
 
-        public const int TOTEM_OG_UNDYING = 452;
+        public const int TOTEM = 452;
 
         public const int BEETROOT = 457;
         public const int BEETROOT_SEEDS = 458;
@@ -264,6 +264,10 @@ namespace MineNET.Items
             else if (id == IRON_HOE) return new ItemIronHoe();
             else if (id == DIAMOND_HOE) return new ItemDiamondHoe();
             else if (id == GOLDEN_HOE) return new ItemGoldenHoe();
+            else if (id == WHEAT_SEEDS) return new ItemWheatSeeds();
+            else if (id == WHEAT) return new ItemWheat();
+            else if (id == BREAD) return new ItemBread();
+            else if (id == LEATHER_HELMET) return new ItemLeatherHelmet();
             else return new Item(id);
         }
     }

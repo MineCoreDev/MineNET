@@ -137,14 +137,6 @@ namespace MineNET.Items
             }
         }
 
-        public virtual bool IsArmor
-        {
-            get
-            {
-                return false;
-            }
-        }
-
         public virtual bool IsPickaxe
         {
             get
@@ -194,6 +186,46 @@ namespace MineNET.Items
         }
 
         public virtual bool IsFlintAndSteel
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool IsArmor
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool IsHemlet
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool IsChestplate
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool IsLeggings
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool IsBoots
         {
             get
             {
