@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    public class ItemBrichDoor : Item
+    class ItemGoldNugget : Item
     {
-        public ItemBrichDoor() : base(ItemFactory.BRICK)
+        public ItemGoldNugget() : base(ItemFactory.GOLD_NUGGET)
         {
 
         }
@@ -17,7 +17,7 @@ namespace MineNET.Items
         {
             get
             {
-                return "BrichDoor";
+                return "GoldNugget";
             }
         }
     }

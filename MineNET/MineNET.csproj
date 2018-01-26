@@ -90,7 +90,7 @@
     <Compile Include="Items\ItemBook.cs" />
     <Compile Include="Items\ItemBread.cs" />
     <Compile Include="Items\ItemBrewingStand.cs" />
-    <Compile Include="Items\ItemBrichDoor.cs" />
+    <Compile Include="Items\ItemBirchDoor.cs" />
     <Compile Include="Items\ItemBrick.cs" />
     <Compile Include="Items\ItemBucket.cs" />
     <Compile Include="Items\ItemCake.cs" />
@@ -173,6 +173,7 @@
     <Compile Include="Items\ItemFlintAndSteel.cs" />
     <Compile Include="Items\ItemGoldIngot.cs" />
     <Compile Include="Items\ItemGlownstoneDust.cs" />
+    <Compile Include="Items\ItemGoldNugget.cs" />
     <Compile Include="Items\ItemGunpowder.cs" />
     <Compile Include="Items\ItemHopper.cs" />
     <Compile Include="Items\ItemHopperMinecart.cs" />
