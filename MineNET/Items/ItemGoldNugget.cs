@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    class ItemGoldNugget : Item
+    public class ItemGoldNugget : Item
     {
         public ItemGoldNugget() : base(ItemFactory.GOLD_NUGGET)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    public class ItemArmor : Item
+    public abstract class ItemArmor : Item
     {
         public ItemArmor(int id): base(id)
         {

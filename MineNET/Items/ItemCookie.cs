@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    public class ItemCookie : Item
+    public class ItemCookie : ItemFood
     {
         public ItemCookie() : base(ItemFactory.COOKIE)
         {

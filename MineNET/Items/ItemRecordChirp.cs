@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    class ItemRecordChirp : ItemRecordBase
+    public class ItemRecordChirp : ItemRecordBase
     {
         public ItemRecordChirp() : base(ItemFactory.RECORD_CHIRP)
         {

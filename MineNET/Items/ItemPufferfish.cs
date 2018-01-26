@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    class ItemPufferfish : ItemFood
+    public class ItemPufferfish : ItemFood
     {
         public ItemPufferfish() : base(ItemFactory.PUFFERFISH)
         {

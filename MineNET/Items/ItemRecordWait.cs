@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    class ItemRecordWait : ItemRecordBase
+    public class ItemRecordWait : ItemRecordBase
     {
         public ItemRecordWait() : base(ItemFactory.RECORD_WAIT)
         {

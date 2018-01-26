@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineNET.Items
+namespace MineNET.Blocks
 {
-    public class ItemBeetroot : Item
+    public class BlockPlanks : Block
     {
-        public ItemBeetroot() : base(ItemFactory.BEETROOT)
+        public BlockPlanks() : base(BlockFactory.PLANKS)
         {
 
         }
@@ -17,7 +17,7 @@ namespace MineNET.Items
         {
             get
             {
-                return "Beetroot";
+                return "Planks";
             }
         }
     }

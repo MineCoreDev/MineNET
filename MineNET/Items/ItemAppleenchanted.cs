@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    class ItemAppleenchanted : ItemFood
+    public class ItemAppleenchanted : ItemFood
     {
         public ItemAppleenchanted() : base(ItemFactory.APPLEENCHANTED)
         {

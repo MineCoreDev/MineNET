@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    class ItemRecordWard : ItemRecordBase
+    public class ItemRecordWard : ItemRecordBase
     {
         public ItemRecordWard() : base(ItemFactory.RECORD_WARD)
         {
