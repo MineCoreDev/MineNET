@@ -15,7 +15,10 @@ namespace MineNET.Items
 
         public override string Name
         {
-            return "Cake";
+            get
+            {
+                return "Cake";
+            }
         }
     }
 }

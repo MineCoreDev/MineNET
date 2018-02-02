@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineNET.Items
+namespace MineNET.Blocks
 {
-    public class ItemClock : Item
+    public class BlockBedrock : BlockSolid
     {
-        public ItemClock() : base(ItemFactory.CLOCK)
+        public BlockBedrock() : base(BlockFactory.BEDROCK)
         {
 
         }
@@ -17,7 +17,7 @@ namespace MineNET.Items
         {
             get
             {
-                return "Clock";
+                return "Bedrock";
             }
         }
     }

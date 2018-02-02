@@ -25,7 +25,7 @@ namespace MineNET.Items
         {
             get
             {
-                return return;
+                return true;
             }
         }
     }

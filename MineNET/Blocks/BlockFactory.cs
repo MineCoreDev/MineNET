@@ -38,7 +38,7 @@ namespace MineNET.Blocks
         public const int GOLDEN_RAIL = 27;
         public const int DETECTOR_RAIL = 28;
         public const int STICKY_PISTON = 29;
-        public const int WEB = 30;
+        public const int COBWEB = 30;
         public const int TALLGRASS = 31;
         public const int DEADBUSH = 32;
         public const int PISTON = 33;

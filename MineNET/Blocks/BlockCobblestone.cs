@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Blocks
 {
-    class BlockCobblestone : BlockSolid
+    public class BlockCobblestone : BlockSolid
     {
         public BlockCobblestone() : base(BlockFactory.COBBLESTONE)
         {

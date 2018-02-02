@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineNET.Items
+namespace MineNET.Blocks
 {
-    public class ItemClock : Item
+    public class BlockLeaves : BlockSolid
     {
-        public ItemClock() : base(ItemFactory.CLOCK)
+        public BlockLeaves() : base(BlockFactory.LEAVES)
         {
 
-        }
+        } 
 
         public override string Name
         {
             get
             {
-                return "Clock";
+                return "Leaves";
             }
         }
     }
