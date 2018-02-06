@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MineNET.Blocks
 {
-    public class BlockGrass : BlockTransparent
+    public class BlockObserver : BlockSolid
     {
-        public BlockGrass() : base(BlockFactory.GRASS)
+        public BlockObserver() : base(BlockFactory.OBSERVER)
         {
 
         }
@@ -17,7 +17,7 @@ namespace MineNET.Blocks
         {
             get
             {
-                return "Grass";
+                return "Observer";
             }
         }
     }

@@ -159,7 +159,7 @@ namespace MineNET.Blocks
         public const int HEAVY_WEIGHTED_PRESSURE_PLATE = 148;
         public const int UNPOWERED_COMPARATOR = 149;
         public const int POWERED_COMPARATOR = 150;
-        public const int DAYLIGHT_DEteCTOR = 151;
+        public const int DAYLIGHT_DETECTOR = 151;
         public const int REDSTONE_BLOCK = 152;
         public const int QUARTZ_ORE = 153;
         public const int HOPPER = 154;
@@ -193,7 +193,7 @@ namespace MineNET.Blocks
         public const int STONE_SLAB2 = 182;
         public const int SPRUCE_FENCE_GATE = 183;
         public const int BIRCH_FENCE_GATE = 184;
-        public const int JUNGLE_FENCE_FATE = 185;
+        public const int JUNGLE_FENCE_GATE = 185;
         public const int DARK_OAK_FENCE_GATE = 186;
         public const int ACACIA_FENCE_GATE = 187;
         public const int REPEATING_COMMAND_BLOCK = 188;
@@ -252,7 +252,7 @@ namespace MineNET.Blocks
         public const int NETHERREACTOR = 247;
         public const int INFO_UPDATE = 248;
         public const int INFO_UPDATE2 = 249;
-        public const int MOVINGBLOCK = 250;
+        public const int MOVING_BLOCK = 250;
         public const int OBSERVER = 251;
         public const int STRUCTURE_BLOCK = 252;
 

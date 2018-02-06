@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineNET.Blocks
+namespace MineNET.Items
 {
-    public class BlockGrass : BlockTransparent
+    public class ItemFrame : Item
     {
-        public BlockGrass() : base(BlockFactory.GRASS)
+        public ItemFrame() : base(ItemFactory.ITEM_FRAME)
         {
 
         }
@@ -17,7 +17,7 @@ namespace MineNET.Blocks
         {
             get
             {
-                return "Grass";
+                return "ItemFrame";
             }
         }
     }

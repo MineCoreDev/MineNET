@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineNET.Items
+namespace MineNET.Blocks
 {
-    public class ItemItemFrame : Item
+    public class BlockAcaciaDoor : BlockDoorBase
     {
-        public ItemItemFrame() : base(ItemFactory.ITEM_FRAME)
+        public BlockAcaciaDoor() : base(BlockFactory.ACACIA_DOOR)
         {
 
         }
@@ -17,7 +17,7 @@ namespace MineNET.Items
         {
             get
             {
-                return "ItemFrame";
+                return "AcaciaDoor";
             }
         }
     }

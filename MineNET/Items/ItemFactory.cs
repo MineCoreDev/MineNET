@@ -356,7 +356,7 @@ namespace MineNET.Items
             else if (id == FIREWORK_CHARGE) return new ItemFireCharge();
             else if (id == WRITABLE_BOOK) return new ItemWritableBook();
             else if (id == EMERALD) return new ItemEmerald();
-            else if (id == ITEM_FRAME) return new ItemItemFrame();
+            else if (id == ITEM_FRAME) return new ItemFrame();
             else if (id == FLOWER_POT) return new ItemFlowerPot();
             else if (id == CARROT) return new ItemCarrot();
             else if (id == POTATO) return new ItemPotato();

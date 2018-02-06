@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace MineNET.Blocks
 {
-    public class BlockGrass : BlockTransparent
+    public class BlockGrassPath : BlockSolid
     {
-        public BlockGrass() : base(BlockFactory.GRASS)
+        public BlockGrassPath() : base(BlockFactory.GRASS_PATH)
         {
 
-        }
+        } 
 
         public override string Name
         {
             get
             {
-                return "Grass";
+                return "GrassPath";
             }
         }
     }

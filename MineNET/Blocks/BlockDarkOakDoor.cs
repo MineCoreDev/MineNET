@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MineNET.Blocks
 {
-    public class BlockGrass : BlockTransparent
+    public class BlockDarkOakDoor : BlockDoorBase
     {
-        public BlockGrass() : base(BlockFactory.GRASS)
+        public BlockDarkOakDoor() : base(BlockFactory.DARK_OAK_DOOR)
         {
 
         }
@@ -17,7 +18,7 @@ namespace MineNET.Blocks
         {
             get
             {
-                return "Grass";
+                return "DarkOakDoor";
             }
         }
     }
