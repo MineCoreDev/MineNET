@@ -6,36 +6,29 @@ using System.Threading.Tasks;
 
 namespace MineNET.NBT.Tags
 {
-    public class FloatTag : Tag
+    public class FloatTag : DataTag<float>
     {
-        private float data;
-
         public FloatTag(float data) : this("", data)
         {
 
         }
 
-        public FloatTag(string name, float data) : base(name)
+        public FloatTag(string name, float data) : base(name, data)
         {
-            this.data = data;
+            
         }
 
-        public float Data
+        public override byte TagID
         {
             get
             {
-                return this.data;
-            }
-
-            set
-            {
-                this.data = value;
+                return TAG_FLOAT;
             }
         }
 
         public override string ToString()
         {
-            return this.data.ToString();
+            return $"FloatTag : Name {this.Name}  : Data {this.Data}";
         }
     }
 }

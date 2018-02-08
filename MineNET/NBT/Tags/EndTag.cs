@@ -6,29 +6,24 @@ using System.Threading.Tasks;
 
 namespace MineNET.NBT.Tags
 {
-    public class ByteTag : DataTag<byte>
+    public class EndTag : Tag
     {
-        public ByteTag(byte data) : this("", data)
+        public EndTag() : base(null)
         {
 
-        }
-
-        public ByteTag(string name, byte data) : base(name, data)
-        {
-            
         }
 
         public override byte TagID
         {
             get
             {
-                return TAG_BYTE;
+                return TAG_END;
             }
         }
 
         public override string ToString()
         {
-            return $"ByteTag : Name {this.Name}  : Data {this.Data}";
+            return "EndTag";
         }
     }
 }

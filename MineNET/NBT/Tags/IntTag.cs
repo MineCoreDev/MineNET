@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.NBT.Tags
 {
-    public class IntTag : Tag
+    public class IntTag : DataTag<int>
     {
         private int data;
 
@@ -15,27 +15,22 @@ namespace MineNET.NBT.Tags
             
         }
 
-        public IntTag(string name, int data) : base(name)
+        public IntTag(string name, int data) : base(name, data)
         {
-            this.data = data;
+            
         }
 
-        public int Data
+        public override byte TagID
         {
             get
             {
-                return this.data;
-            }
-
-            set
-            {
-                this.data = value;
+                return TAG_INT;
             }
         }
 
         public override string ToString()
         {
-            return this.data.ToString();
+            return $"IntTag : Name {this.Name}  : Data {this.Data}";
         }
     }
 }

@@ -81,5 +81,18 @@ namespace MineNET.NBT.Tags
                 this.list = value;
             }
         }
+
+        public override byte TagID
+        {
+            get
+            {
+                return TAG_LIST;
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"ListTag : Name {this.Name}  : Data {this.Tags.ToString()}";
+        }
     }
 }

@@ -6,36 +6,29 @@ using System.Threading.Tasks;
 
 namespace MineNET.NBT.Tags
 {
-    public class DoubleTag : Tag
+    public class DoubleTag : DataTag<double>
     {
-        private double data;
-
         public DoubleTag(double data) : this("", data)
         {
 
         }
 
-        public DoubleTag(string name, double data) : base(name)
+        public DoubleTag(string name, double data) : base(name, data)
         {
 
         }
 
-        public double Data
+        public override byte TagID
         {
             get
             {
-                return this.data;
-            }
-
-            set
-            {
-                this.data = value;
+                return TAG_DOUBLE;
             }
         }
 
         public override string ToString()
         {
-            return this.data.ToString();
+            return $"DoubleTag : Name {this.Name}  : Data {this.Data}";
         }
     }
 }

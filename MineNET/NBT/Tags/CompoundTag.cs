@@ -102,5 +102,18 @@ namespace MineNET.NBT.Tags
                 this.tags = value;
             }
         }
+
+        public override byte TagID
+        {
+            get
+            {
+                return TAG_COMPOUND;
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"CompoundTag : Name {this.Name}  : Data {this.Tags}";
+        }
     }
 }

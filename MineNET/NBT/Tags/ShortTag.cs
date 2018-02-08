@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace MineNET.NBT.Tags
 {
-    public class ByteTag : DataTag<byte>
+    public class ShortTag : DataTag<short>
     {
-        public ByteTag(byte data) : this("", data)
+        public ShortTag(short data) : this("", data)
         {
 
         }
 
-        public ByteTag(string name, byte data) : base(name, data)
+        public ShortTag(string name, short data) : base(name, data)
         {
             
         }
@@ -22,13 +22,13 @@ namespace MineNET.NBT.Tags
         {
             get
             {
-                return TAG_BYTE;
+                return TAG_SHORT;
             }
         }
 
         public override string ToString()
         {
-            return $"ByteTag : Name {this.Name}  : Data {this.Data}";
+            return $"ShortTag : Name {this.Name}  : Data {this.Data}";
         }
     }
 }

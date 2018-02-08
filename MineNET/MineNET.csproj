@@ -529,12 +529,19 @@
     </Compile>
     <Compile Include="MineNETConfig.cs" />
     <Compile Include="MineNETMain.cs" />
+    <Compile Include="NBT\Tags\ByteArrayTag.cs" />
     <Compile Include="NBT\Tags\ByteTag.cs" />
     <Compile Include="NBT\Tags\CompoundTag.cs" />
     <Compile Include="NBT\Tags\DoubleTag.cs" />
+    <Compile Include="NBT\Tags\EndTag.cs" />
     <Compile Include="NBT\Tags\FloatTag.cs" />
+    <Compile Include="NBT\Tags\IntArrayTag.cs" />
     <Compile Include="NBT\Tags\IntTag.cs" />
     <Compile Include="NBT\Tags\ListTag.cs" />
+    <Compile Include="NBT\Tags\LongTag.cs" />
+    <Compile Include="NBT\Tags\DataTag.cs" />
+    <Compile Include="NBT\Tags\ShortTag.cs" />
+    <Compile Include="NBT\Tags\StringTag.cs" />
     <Compile Include="NBT\Tags\Tag.cs" />
     <Compile Include="Network\MineNETServerHandler.cs" />
     <Compile Include="Network\NetworkManager.cs" />
