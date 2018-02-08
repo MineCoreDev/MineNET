@@ -8,6 +8,8 @@ namespace MineNET.NBT.Tags
 {
     public class StringTag : DataTag<string>
     {
+        public new const byte ID = TAG_STRING;
+
         public StringTag(String data) : this("", data)
         {
 
@@ -16,14 +18,6 @@ namespace MineNET.NBT.Tags
         public StringTag(String name, String data) : base(name, data)
         {
             
-        }
-
-        public override byte TagID
-        {
-            get
-            {
-                return TAG_STRING;
-            }
         }
 
         public override string ToString()

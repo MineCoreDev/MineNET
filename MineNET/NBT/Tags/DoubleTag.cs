@@ -8,6 +8,8 @@ namespace MineNET.NBT.Tags
 {
     public class DoubleTag : DataTag<double>
     {
+        public new const byte ID = TAG_DOUBLE;
+
         public DoubleTag(double data) : this("", data)
         {
 
@@ -16,14 +18,6 @@ namespace MineNET.NBT.Tags
         public DoubleTag(string name, double data) : base(name, data)
         {
 
-        }
-
-        public override byte TagID
-        {
-            get
-            {
-                return TAG_DOUBLE;
-            }
         }
 
         public override string ToString()

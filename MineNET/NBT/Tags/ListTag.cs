@@ -8,6 +8,8 @@ namespace MineNET.NBT.Tags
 {
     public class ListTag<T> : Tag where T : Tag
     {
+        public new const byte ID = TAG_LIST;
+
         private List<T> list = new List<T>();
 
         public ListTag() : base("")
@@ -79,14 +81,6 @@ namespace MineNET.NBT.Tags
             set
             {
                 this.list = value;
-            }
-        }
-
-        public override byte TagID
-        {
-            get
-            {
-                return TAG_LIST;
             }
         }
 

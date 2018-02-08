@@ -8,6 +8,8 @@ namespace MineNET.NBT.Tags
 {
     public class ShortTag : DataTag<short>
     {
+        public new const byte ID = TAG_SHORT;
+
         public ShortTag(short data) : this("", data)
         {
 
@@ -16,14 +18,6 @@ namespace MineNET.NBT.Tags
         public ShortTag(string name, short data) : base(name, data)
         {
             
-        }
-
-        public override byte TagID
-        {
-            get
-            {
-                return TAG_SHORT;
-            }
         }
 
         public override string ToString()

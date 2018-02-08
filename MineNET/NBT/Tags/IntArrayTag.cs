@@ -8,8 +8,10 @@ namespace MineNET.NBT.Tags
 {
     public class IntArrayTag : Tag
     {
+        public new const byte ID = TAG_INT_ARRAY;
+
         private int[] data;
-    
+
         public IntArrayTag(int[] data) : this("", data)
         {
 
@@ -30,14 +32,6 @@ namespace MineNET.NBT.Tags
             set
             {
                 this.data = value;
-            }
-        }
-
-        public override byte TagID
-        {
-            get
-            {
-                return TAG_INT_ARRAY;
             }
         }
 

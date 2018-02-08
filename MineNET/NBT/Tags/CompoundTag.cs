@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.NBT.Tags
 {
-    public class CompoundTag : Tag
+    public class CompoundTag: Tag
     {
         private Dictionary<string, Tag> tags = new Dictionary<string, Tag>();
 

@@ -25,6 +25,8 @@ namespace MineNET.NBT.Tags
         public const byte TAG_COMPOUND = 10;
         public const byte TAG_INT_ARRAY = 11;
 
+        public const byte ID = 0xff;
+
         private string name = "";
 
         public Tag(string name)
@@ -43,11 +45,6 @@ namespace MineNET.NBT.Tags
             {
                 this.name = value;
             }
-        }
-
-        public abstract byte TagID
-        {
-            get;
         }
     }
 }

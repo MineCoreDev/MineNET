@@ -8,6 +8,8 @@ namespace MineNET.NBT.Tags
 {
     public class LongTag : DataTag<long>
     {
+        public new const byte ID = TAG_LONG;
+
         public LongTag(long data) : this("", data)
         {
 
@@ -16,14 +18,6 @@ namespace MineNET.NBT.Tags
         public LongTag(string name, long data) : base(name, data)
         {
 
-        }
-
-        public override byte TagID
-        {
-            get
-            {
-                return TAG_LONG;
-            }
         }
 
         public override string ToString()
