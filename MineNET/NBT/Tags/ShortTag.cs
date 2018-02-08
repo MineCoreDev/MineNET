@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.NBT.Tags
+﻿namespace MineNET.NBT.Tags
 {
     public class ShortTag : DataTag<short>
     {
@@ -17,7 +11,7 @@ namespace MineNET.NBT.Tags
 
         public ShortTag(string name, short data) : base(name, data)
         {
-            
+
         }
 
         public override string ToString()

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.NBT.Tags
+﻿namespace MineNET.NBT.Tags
 {
     public class ByteTag : DataTag<byte>
     {
@@ -17,7 +11,7 @@ namespace MineNET.NBT.Tags
 
         public ByteTag(string name, byte data) : base(name, data)
         {
-            
+
         }
 
         public override string ToString()

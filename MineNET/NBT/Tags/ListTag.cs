@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MineNET.NBT.Tags
 {
@@ -34,7 +31,8 @@ namespace MineNET.NBT.Tags
             {
                 return this[index];
             }
-            else throw new IndexOutOfRangeException();
+            else
+                throw new IndexOutOfRangeException();
         }
 
         public bool Exist(int index)
@@ -58,7 +56,8 @@ namespace MineNET.NBT.Tags
                 {
                     return list[index];
                 }
-                else throw new IndexOutOfRangeException();
+                else
+                    throw new IndexOutOfRangeException();
             }
 
             set
@@ -67,7 +66,8 @@ namespace MineNET.NBT.Tags
                 {
                     this.list[index] = value;
                 }
-                else throw new IndexOutOfRangeException();
+                else
+                    throw new IndexOutOfRangeException();
             }
         }
 

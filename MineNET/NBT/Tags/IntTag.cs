@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.NBT.Tags
+﻿namespace MineNET.NBT.Tags
 {
     public class IntTag : DataTag<int>
     {
@@ -14,12 +8,12 @@ namespace MineNET.NBT.Tags
 
         public IntTag(int data) : this("", data)
         {
-            
+
         }
 
         public IntTag(string name, int data) : base(name, data)
         {
-            
+
         }
 
         public override string ToString()

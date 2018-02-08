@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MineNET.NBT.Tags
 {
@@ -17,7 +13,7 @@ namespace MineNET.NBT.Tags
 
         public StringTag(String name, String data) : base(name, data)
         {
-            
+
         }
 
         public override string ToString()
