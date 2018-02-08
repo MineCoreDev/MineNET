@@ -145,6 +145,17 @@ namespace MineNET.NBT.Tags
             }
         }
 
+        public CompoundTag PutBool(string name, bool data)
+        {
+            this.tags[name] = new ByteTag(name, data ? (byte) 1 : (byte) 0);
+            return this;
+        }
+
+        public bool GetBool(string name)
+        {
+            return this.GetByte(name) != 0;
+        }
+
         public CompoundTag PutByteArray(string name, byte[] data)
         {
             this.tags[name] = new ByteArrayTag(name, data);
