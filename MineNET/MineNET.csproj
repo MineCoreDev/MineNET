@@ -175,7 +175,7 @@
     <Compile Include="Blocks\BlockLitFurnace.cs" />
     <Compile Include="Blocks\BlockLitPumpkin.cs" />
     <Compile Include="Blocks\BlockLitRedstoneLamp.cs" />
-    <Compile Include="Blocks\BlockLitRedstoneTorch.cs" />
+    <Compile Include="Blocks\BlockLitRedstoneOre.cs" />
     <Compile Include="Blocks\BlockLog.cs" />
     <Compile Include="Blocks\BlockLog2.cs" />
     <Compile Include="Blocks\BlockMagentaGlazedTerracotta.cs" />
@@ -188,6 +188,7 @@
     <Compile Include="Blocks\BlockMovingBlock.cs" />
     <Compile Include="Blocks\BlockMycelium.cs" />
     <Compile Include="Blocks\BlockNetherBrick.cs" />
+    <Compile Include="Blocks\BlockNetherBrickFence.cs" />
     <Compile Include="Blocks\BlockNetherBrickStairs.cs" />
     <Compile Include="Blocks\BlockNetherrack.cs" />
     <Compile Include="Blocks\BlockNetherreactor.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="Blocks\BlockStone.cs" />
     <Compile Include="Blocks\BlockStonebrick.cs" />
     <Compile Include="Blocks\BlockStoneBrickStairs.cs" />
+    <Compile Include="Blocks\BlockStoneButton.cs" />
     <Compile Include="Blocks\BlockStonecutter.cs" />
     <Compile Include="Blocks\BlockStonePressurePlate.cs" />
     <Compile Include="Blocks\BlockStoneSlab.cs" />
@@ -297,6 +299,7 @@
     <Compile Include="Blocks\BlockYellowFlower.cs" />
     <Compile Include="Blocks\BlockObsidian.cs" />
     <Compile Include="Blocks\BlockYellowGlazedTerracotta.cs" />
+    <Compile Include="Blocks\Test.cs" />
     <Compile Include="Data\LoginExtraData.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Human.cs" />

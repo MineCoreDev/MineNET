@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MineNET.Blocks
 {
-    public class BlockLitRedstoneTorch : Block
+    public class BlockLitRedstoneOre : Block
     {
-        public BlockLitRedstoneTorch() : base(BlockFactory.LIT_REDSTONE_TORCH)
+        public BlockLitRedstoneOre() : base(BlockFactory.LIT_REDSTONE_ORE)
         {
 
         } 
