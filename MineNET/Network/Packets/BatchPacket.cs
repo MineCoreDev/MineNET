@@ -94,8 +94,6 @@ namespace MineNET.Network.Packets
                 sum = ds.Checksum;
             }
 
-            Console.WriteLine(sum);
-
             var checksumBytes = BitConverter.GetBytes(sum);
             if (BitConverter.IsLittleEndian)
             {
