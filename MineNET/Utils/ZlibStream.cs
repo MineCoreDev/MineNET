@@ -50,6 +50,10 @@ namespace MineNET.Utils
         {
         }
 
+        public ZlibStream(Stream stream, CompressionMode mode, bool leaveOpen) : base(stream, mode, leaveOpen)
+        {
+        }
+
         public override void Write(byte[] array, int offset, int count)
         {
             adler32 = Update(adler32, array, offset, count);

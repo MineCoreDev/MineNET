@@ -4,8 +4,6 @@
     {
         public new const byte ID = TAG_INT;
 
-        private int data;
-
         public IntTag(int data) : this("", data)
         {
 

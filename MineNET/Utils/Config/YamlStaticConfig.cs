@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Text;
 using System.IO;
-
+using System.Text;
 using YamlDotNet.Serialization;
 
 namespace MineNET.Utils.Config
@@ -17,15 +16,15 @@ namespace MineNET.Utils.Config
                 using (StreamReader r = new StreamReader(filePath, false))
                 {
                     Deserializer s = new Deserializer();
-                    var conv = (YamlStaticConfig)s.Deserialize<T>(r);
+                    YamlStaticConfig conv = (YamlStaticConfig)s.Deserialize<T>(r);
                     conv.filePath = filePath;
                     return (T)Convert.ChangeType(conv, typeof(T));
                 }
             }
             else
             {
-                var ins = Activator.CreateInstance(typeof(T));
-                var conv = (YamlStaticConfig)ins;
+                object ins = Activator.CreateInstance(typeof(T));
+                YamlStaticConfig conv = (YamlStaticConfig)ins;
                 conv.filePath = filePath;
                 conv.Save<T>();
                 return (T)conv;

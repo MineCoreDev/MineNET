@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle("MineNET")]
-[assembly: AssemblyDescription("MineNET Main Library")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("MineNETDevelopmentGroup")]
+[assembly: AssemblyCompany("MineNET Development Group")]
 [assembly: AssemblyProduct("MineNET")]
-[assembly: AssemblyCopyright("Copyright © MineNETDevelopmentGroup 2017")]
+[assembly: AssemblyCopyright("Copyright ©MineNET  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // このプロジェクトが COM に公開される場合、次の GUID が typelib の ID になります
-[assembly: Guid("5912f57e-6fbb-4580-b34f-4fd22224b3a7")]
+[assembly: Guid("1f471258-4c9f-4e08-9515-769957ce1e23")]
 
 // アセンブリのバージョン情報は次の 4 つの値で構成されています:
 //

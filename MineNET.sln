@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET", "MineNET\MineNET.csproj", "{5912F57E-6FBB-4580-B34F-4FD22224B3A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET", "MineNET\MineNET.csproj", "{1F471258-4C9F-4E08-9515-769957CE1E23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineCraftPENetwork", "MineCraftPENetwork\MineCraftPENetwork.csproj", "{478EC734-31E8-43AD-A111-5FCCDC3D9288}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET.GUI", "MineNET.GUI\MineNET.GUI.csproj", "{C0181001-E546-48C5-A3AD-1CA0786F93FE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET.Console", "MineNET.Console\MineNET.Console.csproj", "{8E96752B-AF18-4C61-9119-7EB6C925DB0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET.Console", "MineNET.Console\MineNET.Console.csproj", "{6DD318F1-51C5-48AF-A893-E4A83E81FFE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,22 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5912F57E-6FBB-4580-B34F-4FD22224B3A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5912F57E-6FBB-4580-B34F-4FD22224B3A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5912F57E-6FBB-4580-B34F-4FD22224B3A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5912F57E-6FBB-4580-B34F-4FD22224B3A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{478EC734-31E8-43AD-A111-5FCCDC3D9288}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{478EC734-31E8-43AD-A111-5FCCDC3D9288}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{478EC734-31E8-43AD-A111-5FCCDC3D9288}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{478EC734-31E8-43AD-A111-5FCCDC3D9288}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C0181001-E546-48C5-A3AD-1CA0786F93FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0181001-E546-48C5-A3AD-1CA0786F93FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0181001-E546-48C5-A3AD-1CA0786F93FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0181001-E546-48C5-A3AD-1CA0786F93FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E96752B-AF18-4C61-9119-7EB6C925DB0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E96752B-AF18-4C61-9119-7EB6C925DB0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E96752B-AF18-4C61-9119-7EB6C925DB0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E96752B-AF18-4C61-9119-7EB6C925DB0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F471258-4C9F-4E08-9515-769957CE1E23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F471258-4C9F-4E08-9515-769957CE1E23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F471258-4C9F-4E08-9515-769957CE1E23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F471258-4C9F-4E08-9515-769957CE1E23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DD318F1-51C5-48AF-A893-E4A83E81FFE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DD318F1-51C5-48AF-A893-E4A83E81FFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DD318F1-51C5-48AF-A893-E4A83E81FFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DD318F1-51C5-48AF-A893-E4A83E81FFE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

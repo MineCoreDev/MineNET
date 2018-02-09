@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-
-using MineNET.Values;
+using System.Net;
 
 namespace MineNET.Utils
 {
@@ -16,17 +13,18 @@ namespace MineNET.Utils
 
         public BinaryStream(byte[] buffer)
         {
-            this.Write(buffer, 0, buffer.Length);
+            Binary.WriteBytes(this, buffer);
+            this.Reset();
         }
 
-        public bool ReadBoolean()
+        public bool ReadBool()
         {
-            return Binary.ReadBoolean(this);
+            return Binary.ReadBool(this);
         }
 
-        public void PutBoolean(bool v)
+        public void WriteBool(bool value)
         {
-            Binary.PutBoolean(this, v);
+            Binary.WriteBool(this, value);
         }
 
         public new byte ReadByte()
@@ -34,9 +32,9 @@ namespace MineNET.Utils
             return Binary.ReadByte(this);
         }
 
-        public void PutByte(byte v)
+        public void WirteByte(byte value)
         {
-            Binary.PutByte(this, v);
+            Binary.WriteByte(this, value);
         }
 
         public sbyte ReadSByte()
@@ -44,9 +42,9 @@ namespace MineNET.Utils
             return Binary.ReadSByte(this);
         }
 
-        public void PutSByte(sbyte v)
+        public void WriteSByte(sbyte value)
         {
-            Binary.PutSByte(this, v);
+            Binary.WriteSByte(this, value);
         }
 
         public short ReadShort()
@@ -54,9 +52,9 @@ namespace MineNET.Utils
             return Binary.ReadShort(this);
         }
 
-        public void PutShort(short v)
+        public void WriteShort(short value)
         {
-            Binary.PutShort(this, v);
+            Binary.WriteShort(this, value);
         }
 
         public ushort ReadUShort()
@@ -64,39 +62,39 @@ namespace MineNET.Utils
             return Binary.ReadUShort(this);
         }
 
-        public void PutUShort(ushort v)
+        public void WriteUShort(ushort value)
         {
-            Binary.PutUShort(this, v);
+            Binary.WriteUShort(this, value);
         }
 
-        public ushort ReadLShort()
+        public short ReadLShort()
         {
             return Binary.ReadLShort(this);
         }
 
-        public void PutLShort(ushort v)
+        public void WriteLShort(short value)
         {
-            Binary.PutLShort(this, v);
+            Binary.WriteLShort(this, value);
         }
 
-        public Int24 ReadLTriad()
-        {
-            return Binary.ReadLTriad(this);
-        }
-
-        public void PutLTriad(Int24 v)
-        {
-            Binary.PutLTriad(this, v);
-        }
-
-        public Int24 ReadTriad()
+        public int ReadTriad()
         {
             return Binary.ReadTriad(this);
         }
 
-        public void PutTriad(Int24 v)
+        public void WriteTriad(int value)
         {
-            Binary.PutTriad(this, v);
+            Binary.WriteTriad(this, value);
+        }
+
+        public int ReadLTriad()
+        {
+            return Binary.ReadLTriad(this);
+        }
+
+        public void WriteLTriad(int value)
+        {
+            Binary.WriteLTriad(this, value);
         }
 
         public int ReadInt()
@@ -104,9 +102,9 @@ namespace MineNET.Utils
             return Binary.ReadInt(this);
         }
 
-        public void PutInt(int v)
+        public void WriteInt(int value)
         {
-            Binary.PutInt(this, v);
+            Binary.WriteInt(this, value);
         }
 
         public uint ReadUInt()
@@ -114,19 +112,19 @@ namespace MineNET.Utils
             return Binary.ReadUInt(this);
         }
 
-        public void PutUInt(uint v)
+        public void WriteUIntt(uint value)
         {
-            Binary.PutUInt(this, v);
+            Binary.WriteUInt(this, value);
         }
 
-        public uint ReadLInt()
+        public int ReadLInt()
         {
             return Binary.ReadLInt(this);
         }
 
-        public void PutLInt(uint v)
+        public void WriteLInt(int value)
         {
-            Binary.PutLInt(this, v);
+            Binary.WriteLInt(this, value);
         }
 
         public long ReadLong()
@@ -134,9 +132,9 @@ namespace MineNET.Utils
             return Binary.ReadLong(this);
         }
 
-        public void PutLong(long v)
+        public void WriteLong(long value)
         {
-            Binary.PutLong(this, v);
+            Binary.WriteLong(this, value);
         }
 
         public ulong ReadULong()
@@ -144,79 +142,31 @@ namespace MineNET.Utils
             return Binary.ReadULong(this);
         }
 
-        public void PutULong(ulong v)
+        public void WriteULong(ulong value)
         {
-            Binary.PutULong(this, v);
+            Binary.WriteULong(this, value);
         }
 
-        public int ReadVarInt()
+        public long ReadLLong()
         {
-            return Binary.ReadVarInt(this);
+            return Binary.ReadLLong(this);
         }
 
-        public void PutVarInt(int v)
+        public void WriteLLong(long value)
         {
-            Binary.PutVarInt(this, v);
+            Binary.WriteLLong(this, value);
         }
 
-        public uint ReadVarUInt()
-        {
-            return Binary.ReadVarUInt(this);
-        }
-
-        public void PutVarUInt(uint v)
-        {
-            Binary.PutVarUInt(this, v);
-        }
-
-        public int ReadVarSInt()
-        {
-            return Binary.ReadVarSInt(this);
-        }
-
-        public void PutVarSInt(int v)
-        {
-            Binary.PutVarSInt(this, v);
-        }
-
-        public long ReadVarLong()
-        {
-            return Binary.ReadVarLong(this);
-        }
-
-        public void PutVarLong(long v)
-        {
-            Binary.PutVarLong(this, v);
-        }
-
-        public ulong ReadVarULong()
-        {
-            return Binary.ReadVarULong(this);
-        }
-
-        public void PutVarULong(ulong v)
-        {
-            Binary.PutVarULong(this, v);
-        }
-
-        public long ReadVarSLong()
-        {
-            return Binary.ReadVarSLong(this);
-        }
-
-        public void PutVarSLong(long v)
-        {
-            Binary.PutVarSLong(this, v);
-        }
+        //TODO: VarInt...
 
         public float ReadFloat()
         {
             return Binary.ReadFloat(this);
         }
 
-        public void PutFloat(float v)
+        public void WriteFloat(float value)
         {
-            Binary.PutFloat(this, v);
+            Binary.WriteFloat(this, value);
         }
 
         public double ReadDouble()
@@ -224,61 +174,110 @@ namespace MineNET.Utils
             return Binary.ReadDouble(this);
         }
 
-        public void PutDouble(double v)
+        public void WriteDouble(double value)
         {
-            Binary.PutDouble(this, v);
+            Binary.WriteDouble(this, value);
         }
 
-        public string ReadString()
+        public string ReadFixedString()
         {
-            var v = this.ReadPacketBuffer();
-            return Encoding.UTF8.GetString(v);
+            return Binary.ReadFixedString(this);
         }
 
-        public void PutString(string v)
+        public void WriteFixedString(string value)
         {
-            var s = Encoding.UTF8.GetBytes(v);
-            this.PutPacketBuffer(s);
+            Binary.WriteFixedString(this, value);
         }
 
-        public byte[] ReadPacketBuffer()
-        {
-            var v = (int)this.ReadVarUInt();
-            return this.ReadBytes((int)this.Position, v);
-        }
+        //TODO: String...
 
-        public void PutPacketBuffer(byte[] buffer)
+        public IPEndPoint ReadIPEndPoint()
         {
-            this.PutVarUInt((uint)buffer.Length);
-            this.PutBytes(buffer);
-        }
-
-        public byte[] ReadBytes(int start)
-        {
-            return Binary.GetBytes(this, start);
-        }
-
-        public byte[] ReadBytes(int start, int len)
-        {
-            return Binary.GetBytes(this, start, len);
-        }
-
-        public void PutBytes(byte[] buffer)
-        {
-            for (int i = 0; i < buffer.Length; ++i)
+            byte version = ReadByte();
+            if (version == 4)
             {
-                this.WriteByte(buffer[i]);
+                IPAddress ip = new IPAddress(new byte[]
+                {
+                    (byte)(~ReadByte() & 0xff),
+                    (byte)(~ReadByte() & 0xff),
+                    (byte)(~ReadByte() & 0xff),
+                    (byte)(~ReadByte() & 0xff)
+                });
+                int port = (ushort)ReadLShort();
+                return new IPEndPoint(ip, port);
+            }
+            /*else if (version == 6)
+            {
+                //TODO: Support IPv6...
+                return null;
+            }*/
+            else
+            {
+                throw new NotSupportedException($"IPv{version} Not Support!");
             }
         }
 
-        public byte[][] ReadSplitBytes(int len)
+        public void WriteIPEndPoint(IPEndPoint endPoint)
         {
-            return Binary.SplitBytes(this, len);
+            byte version = 4;
+
+            WriteByte(version);
+            if (version == 4)
+            {
+                WriteBytes(endPoint.Address.GetAddressBytes());
+                WriteLShort((short)endPoint.Port);
+            }
+            else
+            {
+                throw new NotSupportedException($"IPv{version} Not Support!");
+            }
         }
 
-        public bool ReadOfEnd()
+        public byte[] ReadBytes(int start, int length)
         {
-            return this.Position < 0 || this.Position >= this.Length;
+            return Binary.ReadBytes(this, start, length);
+        }
+
+        public byte[] ReadBytes(int length)
+        {
+            return Binary.ReadBytes(this, (int)this.Position, length);
+        }
+
+        public byte[] ReadBytes()
+        {
+            return Binary.ReadBytes(this, (int)this.Position, (int)this.Length - (int)this.Position);
+        }
+
+        public void WriteBytes(byte[] value)
+        {
+            Binary.WriteBytes(this, value);
+        }
+
+        public new byte[] GetBuffer()
+        {
+            return this.GetResult();
+        }
+
+        public void SetBuffer(byte[] buffer)
+        {
+            this.Reset();
+            this.WriteBytes(buffer);
+            this.Reset();
+        }
+
+        public byte[] GetResult()
+        {
+            return this.ToArray();
+        }
+
+        public void Reset()
+        {
+            Binary.Reset(this);
+        }
+
+        public bool EndOfStream(Stream stream)
+        {
+            return Binary.EndOfStream(this);
         }
     }
 }
