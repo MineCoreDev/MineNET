@@ -67,12 +67,12 @@ namespace MineNET.Utils
             Binary.WriteUShort(this, value);
         }
 
-        public short ReadLShort()
+        public ushort ReadLShort()
         {
             return Binary.ReadLShort(this);
         }
 
-        public void WriteLShort(short value)
+        public void WriteLShort(ushort value)
         {
             Binary.WriteLShort(this, value);
         }
@@ -117,12 +117,12 @@ namespace MineNET.Utils
             Binary.WriteUInt(this, value);
         }
 
-        public int ReadLInt()
+        public uint ReadLInt()
         {
             return Binary.ReadLInt(this);
         }
 
-        public void WriteLInt(int value)
+        public void WriteLInt(uint value)
         {
             Binary.WriteLInt(this, value);
         }
@@ -147,17 +147,55 @@ namespace MineNET.Utils
             Binary.WriteULong(this, value);
         }
 
-        public long ReadLLong()
+        public ulong ReadLLong()
         {
             return Binary.ReadLLong(this);
         }
 
-        public void WriteLLong(long value)
+        public void WriteLLong(ulong value)
         {
             Binary.WriteLLong(this, value);
         }
 
-        //TODO: VarInt...
+        public int ReadVarInt()
+        {
+            return Binary.ReadVarInt(this);
+        }
+
+        public void WriteVarInt(int value)
+        {
+            Binary.WriteVarInt(this, value);
+        }
+
+        public uint ReadUVarInt()
+        {
+            return Binary.ReadUVarInt(this);
+        }
+
+        public void WriteUVarInt(uint value)
+        {
+            Binary.WriteUVarInt(this, value);
+        }
+
+        public long ReadVarLong()
+        {
+            return Binary.ReadVarLong(this);
+        }
+
+        public void WriteVarLong(long value)
+        {
+            Binary.WriteVarLong(this, value);
+        }
+
+        public ulong ReadUVarLong()
+        {
+            return Binary.ReadUVarLong(this);
+        }
+
+        public void WriteUVarLong(ulong value)
+        {
+            Binary.WriteUVarLong(this, value);
+        }
 
         public float ReadFloat()
         {
@@ -203,14 +241,17 @@ namespace MineNET.Utils
                     (byte)(~ReadByte() & 0xff),
                     (byte)(~ReadByte() & 0xff)
                 });
-                int port = (ushort)ReadLShort();
+                int port = ReadLShort();
                 return new IPEndPoint(ip, port);
             }
-            /*else if (version == 6)
+            else if (version == 6)
             {
-                //TODO: Support IPv6...
-                return null;
-            }*/
+                ReadShort();
+                int port = ReadLShort();
+                ReadLong();
+                IPAddress ip = new IPAddress(ReadBytes(16));
+                return new IPEndPoint(ip, port);
+            }
             else
             {
                 throw new NotSupportedException($"IPv{version} Not Support!");
@@ -225,7 +266,7 @@ namespace MineNET.Utils
             if (version == 4)
             {
                 WriteBytes(endPoint.Address.GetAddressBytes());
-                WriteLShort((short)endPoint.Port);
+                WriteLShort((ushort)endPoint.Port);
             }
             else
             {
@@ -275,7 +316,7 @@ namespace MineNET.Utils
             Binary.Reset(this);
         }
 
-        public bool EndOfStream(Stream stream)
+        public bool EndOfStream()
         {
             return Binary.EndOfStream(this);
         }

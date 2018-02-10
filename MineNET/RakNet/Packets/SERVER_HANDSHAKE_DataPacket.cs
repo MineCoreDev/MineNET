@@ -39,6 +39,16 @@ namespace MineNET.RakNet.Packets
             new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
             new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
             new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
+            new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
+            new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
+            new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
+            new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
+            new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
+            new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
+            new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
+            new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
+            new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
+            new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0),
             new IPEndPoint(IPAddress.Parse("0.0.0.0"), 0)
         };
         public IPEndPoint[] SystemEndPoint
@@ -87,9 +97,9 @@ namespace MineNET.RakNet.Packets
             base.Encode();
 
             WriteIPEndPoint(endPoint);
-            WriteByte(0);
+            WriteShort(20);
 
-            for (int i = 0; i < 10; ++i)
+            for (int i = 0; i < 20; ++i)
             {
                 WriteIPEndPoint(systemEndPoints[i]);
             }

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Network;
-using MineNET.RakNet;
 using MineNET.Utils;
 
 namespace MineNET
@@ -17,8 +16,6 @@ namespace MineNET
                 return instance;
             }
         }
-
-        RakNetServer server;
 
         ConsoleInput consoleInput;
 
@@ -64,14 +61,15 @@ namespace MineNET
             UpdateLogger();
             Update();//StartUpdate
 
-            networkManager = new NetworkManager();
-            commandManager = new CommandManager();
-
             consoleInput = new ConsoleInput();
 
             Logger.Init();
             Logger.Info(LangManager.GetString("server_start"));
-            server = new RakNetServer(1115);
+
+            networkManager = new NetworkManager();
+            commandManager = new CommandManager();
+
+
         }
 
         async void Update()

@@ -44,6 +44,32 @@
     <ApplicationIcon>
     </ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -319,6 +345,8 @@
     <Compile Include="Commands\ConsoleSender.cs" />
     <Compile Include="Commands\Defaults\StopCommand.cs" />
     <Compile Include="Commands\ICommandHandler.cs" />
+    <Compile Include="Data\LoginData.cs" />
+    <Compile Include="Data\ClientData.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Human.cs" />
     <Compile Include="Entities\Living.cs" />
@@ -550,6 +578,9 @@
     <Compile Include="Network\NetworkManager.cs" />
     <Compile Include="Network\Packets\BatchPacket.cs" />
     <Compile Include="Network\Packets\DataPacket.cs" />
+    <Compile Include="Network\Packets\LoginPacket.cs" />
+    <Compile Include="Network\Packets\PlayStatusPacket.cs" />
+    <Compile Include="Network\Packets\ProtocolInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RakNet\Packets\ACK.cs" />
     <Compile Include="RakNet\Packets\CLIENT_CONNECT_DataPacket.cs" />
@@ -558,6 +589,7 @@
     <Compile Include="RakNet\Packets\DataPacket.cs" />
     <Compile Include="RakNet\Packets\DataPacket_0.cs" />
     <Compile Include="RakNet\Packets\DataPacket_4.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_C.cs" />
     <Compile Include="RakNet\Packets\EncapsulatedPacket.cs" />
     <Compile Include="RakNet\Packets\NACK.cs" />
     <Compile Include="RakNet\Packets\OfflineMessage.cs" />
@@ -586,6 +618,7 @@
     <Compile Include="Utils\LangManager.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\MineNETMath.cs" />
+    <Compile Include="Utils\VarInt.cs" />
     <Compile Include="Utils\ZlibStream.cs" />
     <Compile Include="Values\Vector2.cs" />
     <Compile Include="Values\Vector3.cs" />

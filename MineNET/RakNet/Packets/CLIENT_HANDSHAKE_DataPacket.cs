@@ -58,7 +58,7 @@ namespace MineNET.RakNet.Packets
             List<IPEndPoint> list = new List<IPEndPoint>();
 
             endPoint = ReadIPEndPoint();
-            for (int i = 0; i < 10; ++i)
+            for (int i = 0; i < 20; ++i)
             {
                 list.Add(ReadIPEndPoint());
             }

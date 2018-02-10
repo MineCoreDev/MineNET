@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using MineNET.Commands;
+using MineNET.Network.Packets;
 
 namespace MineNET.Entities
 {
@@ -19,9 +20,48 @@ namespace MineNET.Entities
             }
         }
 
-        public void Close()
+        public void PacketHandle(DataPacket pk)
         {
-            //Server.GetInstance().networkManager.mineNetServerHandler.CloseSession();
+            if (pk is LoginPacket)
+            {
+                LoginPacketHandle((LoginPacket)pk);
+            }
+        }
+
+        public void LoginPacketHandle(LoginPacket pk)
+        {
+            if (pk.Protocol < ProtocolInfo.CLIENT_PROTOCOL)
+            {
+                SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_CLIENT);
+                Close($"This Server Protocol Big! <{ProtocolInfo.CLIENT_PROTOCOL}>");
+                return;
+            }
+            else if (pk.Protocol > ProtocolInfo.CLIENT_PROTOCOL)
+            {
+                SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_SERVER);
+                Close($"Your Client Protocol Big! <{pk.Protocol}>");
+                return;
+            }
+
+            SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
+        }
+
+        public void SendPlayStatus(int status)
+        {
+            PlayStatusPacket pk = new PlayStatusPacket();
+            pk.Status = status;
+
+            SendPacket(pk);
+        }
+
+        public void SendPacket(DataPacket pk)
+        {
+            MineNETServer.Instance.NetworkManager.SendPacket(endPoint, pk);
+        }
+
+        public void Close(string reason)
+        {
+            MineNETServer.Instance.NetworkManager.PlayerClose(endPoint, reason);
         }
     }
 }

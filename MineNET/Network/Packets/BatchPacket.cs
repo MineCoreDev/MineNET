@@ -7,7 +7,7 @@ namespace MineNET.Network.Packets
 {
     public class BatchPacket : DataPacket
     {
-        public const int ID = 0xfe;
+        public const int ID = ProtocolInfo.BATCH_PACKET;
 
         public override byte PacketID
         {
@@ -81,7 +81,6 @@ namespace MineNET.Network.Packets
                 var c = new MemoryStream();
                 ds.CopyTo(c);
                 payload = c.ToArray();
-                Logger.Log("Len: {0}", payload.Length);
                 c.Close();
             }
             bs.Close();

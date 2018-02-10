@@ -45,6 +45,14 @@ namespace MineNET.Utils
             {
                 Console.SetWindowSize(WINDOW_X, WINDOW_Y);
                 Console.SetBufferSize(WINDOW_X, WINDOW_Y);
+
+                int bit = 64;
+                if (BitConverter.IsLittleEndian)
+                {
+                    bit = 32;
+                }
+
+                Console.Title = $"MineNET x{bit}";
             }
         }
 

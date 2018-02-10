@@ -69,10 +69,10 @@ namespace MineNET.RakNet
             this.client.Client.SendBufferSize = int.MaxValue;
             this.client.DontFragment = false;
             this.client.EnableBroadcast = false;
-            /*uint IOC_IN = 0x80000000;
+            uint IOC_IN = 0x80000000;
             uint IOC_VENDOR = 0x18000000;
             uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
-            this.client.Client.IOControl((int)SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);*/
+            this.client.Client.IOControl((int)SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
 
             this.client.BeginReceive(OnReceive, null);
         }
@@ -169,6 +169,11 @@ namespace MineNET.RakNet
                 {
                     this.OfflineMessageHandler(pk, point);
                 }
+            }
+            else
+            {
+                Logger.Log("NotHandlePacket: {0}", pid);
+                return;
             }
         }
 
@@ -324,6 +329,7 @@ namespace MineNET.RakNet
 
             this.RegisterPacket(DataPacket_0.ID, new DataPacket_0());
             this.RegisterPacket(DataPacket_4.ID, new DataPacket_4());
+            this.RegisterPacket(DataPacket_C.ID, new DataPacket_C());
 
             this.RegisterPacket(ACK.ID, new ACK());
             this.RegisterPacket(NACK.ID, new NACK());

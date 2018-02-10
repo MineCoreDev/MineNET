@@ -170,7 +170,7 @@ namespace MineNET.RakNet
             this.timedOut--;
         }
 
-        private void Close(string msg)
+        internal void Close(string msg)
         {
             MineNETServer.Instance.NetworkManager.RemovePlayer(RakNetServer.IPEndPointToID(point));
             this.server.RemoveSession(this.point, msg);

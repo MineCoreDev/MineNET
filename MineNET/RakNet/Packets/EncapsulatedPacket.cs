@@ -81,7 +81,7 @@ namespace MineNET.RakNet.Packets
             }
             else
             {
-                stream.WriteLShort((short)(buffer.Length * 8));
+                stream.WriteLShort((ushort)(buffer.Length * 8));
             }
 
             if (reliability > PacketReliability.UNRELIABLE)

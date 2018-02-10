@@ -81,7 +81,7 @@ namespace MineNET.Utils
             stream.WriteByte(bytes[1]);
         }
 
-        public static short ReadLShort(Stream stream)
+        public static ushort ReadLShort(Stream stream)
         {
             List<byte> bytes = new List<byte>();
 
@@ -90,10 +90,10 @@ namespace MineNET.Utils
 
             bytes.Reverse();
 
-            return BitConverter.ToInt16(bytes.ToArray(), 0);
+            return BitConverter.ToUInt16(bytes.ToArray(), 0);
         }
 
-        public static void WriteLShort(Stream stream, short value)
+        public static void WriteLShort(Stream stream, ushort value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -198,7 +198,7 @@ namespace MineNET.Utils
             stream.WriteByte(bytes[3]);
         }
 
-        public static int ReadLInt(Stream stream)
+        public static uint ReadLInt(Stream stream)
         {
             List<byte> bytes = new List<byte>();
 
@@ -209,10 +209,10 @@ namespace MineNET.Utils
 
             bytes.Reverse();
 
-            return BitConverter.ToInt32(bytes.ToArray(), 0);
+            return BitConverter.ToUInt32(bytes.ToArray(), 0);
         }
 
-        public static void WriteLInt(Stream stream, int value)
+        public static void WriteLInt(Stream stream, uint value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -282,7 +282,7 @@ namespace MineNET.Utils
             stream.WriteByte(bytes[7]);
         }
 
-        public static long ReadLLong(Stream stream)
+        public static ulong ReadLLong(Stream stream)
         {
             List<byte> bytes = new List<byte>();
 
@@ -293,10 +293,10 @@ namespace MineNET.Utils
 
             bytes.Reverse();
 
-            return BitConverter.ToInt64(bytes.ToArray(), 0);
+            return BitConverter.ToUInt64(bytes.ToArray(), 0);
         }
 
-        public static void WriteLLong(Stream stream, long value)
+        public static void WriteLLong(Stream stream, ulong value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -310,11 +310,45 @@ namespace MineNET.Utils
             stream.WriteByte(bytes[0]);
         }
 
-        //TODO: VarInt
-        //TODO: UVarInt
+        public static int ReadVarInt(Stream stream)
+        {
+            return VarInt.ReadInt32(stream);
+        }
 
-        //TODO: VarLong
-        //TODO: UVarLong
+        public static void WriteVarInt(Stream stream, int value)
+        {
+            VarInt.WriteInt32(stream, value);
+        }
+
+        public static uint ReadUVarInt(Stream stream)
+        {
+            return VarInt.ReadUInt32(stream);
+        }
+
+        public static void WriteUVarInt(Stream stream, uint value)
+        {
+            VarInt.WriteUInt32(stream, value);
+        }
+
+        public static long ReadVarLong(Stream stream)
+        {
+            return VarInt.ReadInt64(stream);
+        }
+
+        public static void WriteVarLong(Stream stream, long value)
+        {
+            VarInt.WriteInt64(stream, value);
+        }
+
+        public static ulong ReadUVarLong(Stream stream)
+        {
+            return VarInt.ReadUInt64(stream);
+        }
+
+        public static void WriteUVarLong(Stream stream, ulong value)
+        {
+            VarInt.WriteUInt64(stream, value);
+        }
 
         public static float ReadFloat(Stream stream)
         {
@@ -370,7 +404,7 @@ namespace MineNET.Utils
 
         public static string ReadFixedString(MemoryStream stream)
         {
-            ushort len = (ushort)ReadLShort(stream);
+            ushort len = ReadLShort(stream);
             if (len <= 0) return string.Empty;
             byte[] b = ReadBytes(stream, (int)stream.Position, len);
             Console.WriteLine(b.Length);
@@ -379,7 +413,7 @@ namespace MineNET.Utils
 
         public static void WriteFixedString(MemoryStream stream, string value)
         {
-            WriteLShort(stream, (short)(value.Length));
+            WriteLShort(stream, (ushort)(value.Length));
             WriteBytes(stream, Encoding.UTF8.GetBytes(value));
         }
 
