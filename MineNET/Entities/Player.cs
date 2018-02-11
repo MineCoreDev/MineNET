@@ -54,13 +54,20 @@ namespace MineNET.Entities
             SendPacket(pk);
         }
 
-        public void SendPacket(DataPacket pk)
+        public void SendPacket(DataPacket pk, bool needACK = false, bool immediate = false)
         {
             MineNETServer.Instance.NetworkManager.SendPacket(endPoint, pk);
         }
 
         public void Close(string reason)
         {
+            if (!string.IsNullOrEmpty(reason))
+            {
+                DisconnectPacket pk = new DisconnectPacket();
+                pk.Message = reason;
+
+                SendPacket(pk);
+            }
             MineNETServer.Instance.NetworkManager.PlayerClose(endPoint, reason);
         }
     }

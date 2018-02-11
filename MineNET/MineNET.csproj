@@ -578,6 +578,7 @@
     <Compile Include="Network\NetworkManager.cs" />
     <Compile Include="Network\Packets\BatchPacket.cs" />
     <Compile Include="Network\Packets\DataPacket.cs" />
+    <Compile Include="Network\Packets\DisconnectPacket.cs" />
     <Compile Include="Network\Packets\LoginPacket.cs" />
     <Compile Include="Network\Packets\PlayStatusPacket.cs" />
     <Compile Include="Network\Packets\ProtocolInfo.cs" />

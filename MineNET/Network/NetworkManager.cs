@@ -21,6 +21,7 @@ namespace MineNET.Network
         }
 
         public Dictionary<string, Player> players = new Dictionary<string, Player>();
+        public Dictionary<string, int> identifierACKs = new Dictionary<string, int>();
 
         public Dictionary<int, DataPacket> packetPool = new Dictionary<int, DataPacket>();
 
@@ -49,6 +50,7 @@ namespace MineNET.Network
                 player.EndPoint = point;
 
                 players.Add(id, player);
+                identifierACKs.Add(id, 0);
             }
             else
             {
@@ -60,6 +62,7 @@ namespace MineNET.Network
         {
             if (players.ContainsKey(id))
             {
+                identifierACKs.Remove(id);
                 players.Remove(id);
             }
         }
@@ -83,7 +86,7 @@ namespace MineNET.Network
             }
         }
 
-        public void SendPacket(IPEndPoint point, DataPacket pk)
+        public void SendPacket(IPEndPoint point, DataPacket pk, bool needACK = false, bool immediate = false)
         {
             RakNetSession session = server.GetSession(point);
 
@@ -98,6 +101,19 @@ namespace MineNET.Network
             bp.Encode();
 
             RakNet.Packets.EncapsulatedPacket enc = new RakNet.Packets.EncapsulatedPacket();
+            /*if (needACK)
+            {
+                enc.buffer = bp.GetResult();
+                enc.identifierACK = identifierACKs[RakNetServer.IPEndPointToID(session.EndPoint)]++;
+                enc.reliability = immediate ? RakNet.Packets.PacketReliability.RELIABLE : RakNet.Packets.PacketReliability.RELIABLE_ORDERED;
+                enc.orderChannel = 0;
+            }
+            else
+            {
+                enc.buffer = bp.GetResult();
+                enc.reliability = immediate ? RakNet.Packets.PacketReliability.RELIABLE : RakNet.Packets.PacketReliability.RELIABLE_ORDERED;
+                enc.orderChannel = 0;
+            }*/
             enc.buffer = bp.GetResult();
             enc.reliability = RakNet.Packets.PacketReliability.UNRELIABLE;
 
@@ -120,7 +136,7 @@ namespace MineNET.Network
                 }
                 else
                 {
-                    //Logger.Log("NotHandlePacket {0}", buffer[0]);
+                    Logger.Log("NotHandlePEPacket {0}", buffer[0]);
                 }
             }
         }

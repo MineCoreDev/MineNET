@@ -87,7 +87,7 @@ namespace MineNET.RakNet
             {
                 if (id == CLIENT_DISCONNECT_DataPacket.ID)
                 {
-                    Close("ClientDisconnect");
+                    Close("ClientDisconnect", false);
                 }
                 else if (state == STATE_CONNECTING)
                 {
@@ -170,8 +170,20 @@ namespace MineNET.RakNet
             this.timedOut--;
         }
 
-        internal void Close(string msg)
+        internal void Close(string msg, bool serverClose = true)
         {
+            if (serverClose)
+            {
+                CLIENT_DISCONNECT_DataPacket pk = new CLIENT_DISCONNECT_DataPacket();
+                pk.Encode();
+
+                EncapsulatedPacket ep = new EncapsulatedPacket();
+                ep.buffer = pk.GetResult();
+                ep.reliability = PacketReliability.UNRELIABLE;
+
+                SendPacket(ep);
+            }
+
             MineNETServer.Instance.NetworkManager.RemovePlayer(RakNetServer.IPEndPointToID(point));
             this.server.RemoveSession(this.point, msg);
         }

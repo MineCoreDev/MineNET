@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text;
 
 namespace MineNET.Utils
 {
@@ -227,7 +228,17 @@ namespace MineNET.Utils
             Binary.WriteFixedString(this, value);
         }
 
-        //TODO: String...
+        public string ReadString()
+        {
+            int len = ReadVarInt();
+            return Encoding.UTF8.GetString(ReadBytes(len));
+        }
+
+        public void WriteString(string value)
+        {
+            WriteVarInt(value.Length);
+            WriteBytes(Encoding.UTF8.GetBytes(value));
+        }
 
         public IPEndPoint ReadIPEndPoint()
         {
