@@ -88,12 +88,22 @@ namespace MineNET
         {
             InitConfig();
 
-            UpdateLogger();
+            if (mineNETConfig.EnableConsoleOutput)
+            {
+                UpdateLogger();
+            }
+
             Update();
 
-            consoleInput = new ConsoleInput();
+            if (mineNETConfig.EnableConsoleInput)
+            {
+                consoleInput = new ConsoleInput();
+            }
 
-            Logger.Init();
+            if (mineNETConfig.EnableConsoleOutput)
+            {
+                Logger.Init();
+            }
             Logger.Info(LangManager.GetString("server_start"));
 
             networkManager = new NetworkManager();
@@ -113,7 +123,11 @@ namespace MineNET
             while (!IsShutdown())
             {
                 await Task.Delay(1000 / 20);
-                CommandHandle();
+                if (mineNETConfig.EnableConsoleInput)
+                {
+
+                    CommandHandle();
+                }
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using MineNET.Utils.Config.Yaml;
 using YamlDotNet.Serialization;
 
 namespace MineNET.Utils.Config
@@ -36,7 +37,11 @@ namespace MineNET.Utils.Config
             if (File.Exists(this.filePath))
             {
                 StreamWriter w = new StreamWriter(this.filePath, false, Encoding.UTF8);
-                Serializer s = new Serializer();
+                SerializerBuilder sb = new SerializerBuilder()
+                    .EmitDefaults()
+                    .WithTypeInspector(inner => new CommentTypeInspector(inner))
+                    .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
+                Serializer s = sb.Build();
                 s.Serialize(w, this, typeof(T));
                 w.Close();
             }
@@ -45,7 +50,11 @@ namespace MineNET.Utils.Config
                 var file = File.Create(this.filePath);
                 file.Close();
                 StreamWriter w = new StreamWriter(this.filePath, false, Encoding.UTF8);
-                Serializer s = new Serializer();
+                SerializerBuilder sb = new SerializerBuilder()
+                    .EmitDefaults()
+                    .WithTypeInspector(inner => new CommentTypeInspector(inner))
+                    .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
+                Serializer s = sb.Build();
                 s.Serialize(w, this, typeof(T));
                 w.Close();
             }

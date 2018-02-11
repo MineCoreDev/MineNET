@@ -49,7 +49,7 @@ namespace MineNET.Utils
                 int bit = 64;
                 if (BitConverter.IsLittleEndian)
                 {
-                    bit = 32;
+                    bit = 86;
                 }
 
                 Console.Title = $"MineNET x{bit}";
@@ -280,10 +280,13 @@ namespace MineNET.Utils
 
         static void AddLogText(string text, LoggerLevel level = LoggerLevel.Info)
         {
-            LoggerInfo info = new LoggerInfo();
-            info.level = level;
-            info.text = text;
-            loggerTexts.Enqueue(info);
+            if (Server.Instance.MineNETConfig.EnableConsoleOutput)
+            {
+                LoggerInfo info = new LoggerInfo();
+                info.level = level;
+                info.text = text;
+                loggerTexts.Enqueue(info);
+            }
         }
     }
 }

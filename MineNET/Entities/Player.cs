@@ -33,13 +33,13 @@ namespace MineNET.Entities
             if (pk.Protocol < ProtocolInfo.CLIENT_PROTOCOL)
             {
                 SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_CLIENT);
-                Close($"This Server Protocol Big! <{ProtocolInfo.CLIENT_PROTOCOL}>");
+                Close("disconnectionScreen.outdatedClient");
                 return;
             }
             else if (pk.Protocol > ProtocolInfo.CLIENT_PROTOCOL)
             {
                 SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_SERVER);
-                Close($"Your Client Protocol Big! <{pk.Protocol}>");
+                Close("disconnectionScreen.outdatedServer");
                 return;
             }
 

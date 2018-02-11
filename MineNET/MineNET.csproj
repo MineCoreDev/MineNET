@@ -611,10 +611,16 @@
     <Compile Include="ServerConfig.cs" />
     <Compile Include="Utils\Binary.cs" />
     <Compile Include="Utils\BinaryStream.cs" />
+    <Compile Include="Utils\Config\Yaml\Attributes\YamlDescriptionAttribute.cs" />
     <Compile Include="Utils\Config\JsonConfig.cs" />
     <Compile Include="Utils\Config\JsonStaticConfig.cs" />
     <Compile Include="Utils\Config\YamlConfig.cs" />
     <Compile Include="Utils\Config\YamlStaticConfig.cs" />
+    <Compile Include="Utils\Config\Yaml\Attributes\YamlSpace.cs" />
+    <Compile Include="Utils\Config\Yaml\CommentObjectDescriptor.cs" />
+    <Compile Include="Utils\Config\Yaml\CommentObjectGraphVisitor.cs" />
+    <Compile Include="Utils\Config\Yaml\CommentPropertyDescriptor.cs" />
+    <Compile Include="Utils\Config\Yaml\CommentTypeInspector.cs" />
     <Compile Include="Utils\ConsoleInput.cs" />
     <Compile Include="Utils\IConfig.cs" />
     <Compile Include="Utils\JWT.cs" />

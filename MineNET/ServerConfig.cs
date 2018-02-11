@@ -2,14 +2,16 @@
 
 namespace MineNET
 {
-    public class ServerConfig : YamlStaticConfig
+    public sealed class ServerConfig : YamlStaticConfig
     {
+        [YamlDescription("ServerName - サーバー名")]
         public string ServerMotd
         {
             get;
             set;
         } = "MineNETServer";
 
+        [YamlDescription("ServerPortNumber <1 ~ 65535> - サーバーポート番号 <1 ~ 65535>")]
         public ushort ServerPort
         {
             get;
@@ -50,5 +52,23 @@ namespace MineNET
             get;
             set;
         } = "Default";
+
+        public bool GenerateNether
+        {
+            get;
+            set;
+        } = true;
+
+        public bool GenerateEnd
+        {
+            get;
+            set;
+        } = true;
+
+        public bool OnlineMode
+        {
+            get;
+            set;
+        } = false;
     }
 }
