@@ -112,7 +112,7 @@ namespace MineNET.RakNet
             }
             else if (id == 0xfe && state == STATE_CONNECTED)
             {
-                MineNETServer.Instance.NetworkManager.HandleBatchPacket(this, packet.buffer);
+                Server.Instance.NetworkManager.HandleBatchPacket(this, packet.buffer);
             }
         }
 
@@ -184,7 +184,7 @@ namespace MineNET.RakNet
                 SendPacket(ep);
             }
 
-            MineNETServer.Instance.NetworkManager.RemovePlayer(RakNetServer.IPEndPointToID(point));
+            Server.Instance.NetworkManager.RemovePlayer(RakNetServer.IPEndPointToID(point));
             this.server.RemoveSession(this.point, msg);
         }
     }

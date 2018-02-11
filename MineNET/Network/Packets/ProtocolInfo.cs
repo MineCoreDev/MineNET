@@ -2,6 +2,7 @@
 {
     public sealed class ProtocolInfo
     {
+        public const string CLIENT_VERSION = "1.2.10";
         public const int CLIENT_PROTOCOL = 201;
 
         public const byte LOGIN_PACKET = 0x01;

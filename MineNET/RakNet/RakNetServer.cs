@@ -204,11 +204,18 @@ namespace MineNET.RakNet
             packet.Decode();
             if (packet.PacketID == UNCONNECTED_PING.ID)
             {
+                string motd = Server.Instance.ServerConfig.ServerMotd;
+                int protocol = Network.Packets.ProtocolInfo.CLIENT_PROTOCOL;
+                string version = Network.Packets.ProtocolInfo.CLIENT_VERSION;
+                int maxPlayer = Server.Instance.ServerConfig.MaxPlayer;
+                int player = Server.Instance.NetworkManager.players.Count;
+                string gameMode = Server.Instance.ServerConfig.WorldGameMode;
+
                 UNCONNECTED_PING uping = (UNCONNECTED_PING)packet;
                 UNCONNECTED_PONG upong = new UNCONNECTED_PONG();
                 upong.PingID = uping.PingID;
                 upong.ServerID = GetServerID();
-                upong.ServerName = "MCPE;MineNETServer;160;1.2.8;0;20;MineNET;Survival";
+                upong.ServerName = $"MCPE;{motd};{protocol};{version};{player};{maxPlayer};MineNET;{gameMode}";
 
                 this.SendPacket(upong, point.Address, point.Port);
             }
@@ -261,7 +268,7 @@ namespace MineNET.RakNet
             RakNetSession session = new RakNetSession(this, point, clientID, mtuSize);
             this.sessions.Add(id, session);
 
-            MineNETServer.Instance.NetworkManager.CreatePlayer(point, IPEndPointToID(point));
+            Server.Instance.NetworkManager.CreatePlayer(point, IPEndPointToID(point));
 
             Logger.Info(LangManager.GetString("raknet_sessionCreate"), IPEndPointToID(point), mtuSize);
         }

@@ -83,8 +83,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="YamlDotNet, Version=4.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\YamlDotNet.4.2.3\lib\net35\YamlDotNet.dll</HintPath>
+    <Reference Include="YamlDotNet, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.4.3.0\lib\net45\YamlDotNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -560,7 +560,8 @@
     <Compile Include="Items\ItemWoodenShovel.cs" />
     <Compile Include="Items\ItemWoodenSword.cs" />
     <Compile Include="Items\ItemWritableBook.cs" />
-    <Compile Include="MineNETServer.cs" />
+    <Compile Include="MineNETConfig.cs" />
+    <Compile Include="Server.cs" />
     <Compile Include="NBT\Tags\ByteArrayTag.cs" />
     <Compile Include="NBT\Tags\ByteTag.cs" />
     <Compile Include="NBT\Tags\CompoundTag.cs" />
@@ -607,6 +608,7 @@
     <Compile Include="RakNet\Packets\UNCONNECTED_PONG.cs" />
     <Compile Include="RakNet\RakNetServer.cs" />
     <Compile Include="RakNet\RakNetSession.cs" />
+    <Compile Include="ServerConfig.cs" />
     <Compile Include="Utils\Binary.cs" />
     <Compile Include="Utils\BinaryStream.cs" />
     <Compile Include="Utils\Config\JsonConfig.cs" />

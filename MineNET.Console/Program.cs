@@ -12,7 +12,7 @@ namespace MineNET.Console
     {
         static void Main(string[] args)
         {
-            MineNETServer server = new MineNETServer();
+            Server server = new Server();
             server.Start();
             while (!server.IsShutdown())
             {

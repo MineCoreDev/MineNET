@@ -15,7 +15,7 @@ namespace MineNET.Utils
 
         async void StartTask()
         {
-            while (!MineNETServer.Instance.IsShutdown())
+            while (!Server.Instance.IsShutdown())
             {
                 await Task.Delay(1000 / 20);
                 string cmd = Console.ReadLine();

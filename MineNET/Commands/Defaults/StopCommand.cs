@@ -28,7 +28,7 @@
 
         public override bool Execute(CommandSender sender, params string[] args)
         {
-            MineNETServer.Instance.Stop();
+            Server.Instance.Stop();
             return true;
         }
     }

@@ -1,15 +1,17 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Network;
 using MineNET.Utils;
+using MineNET.Utils.Config;
 
 namespace MineNET
 {
-    public sealed class MineNETServer
+    public sealed class Server
     {
-        static MineNETServer instance;
-        public static MineNETServer Instance
+        static Server instance;
+        public static Server Instance
         {
             get
             {
@@ -17,7 +19,33 @@ namespace MineNET
             }
         }
 
+        public static string ExecutePath
+        {
+            get
+            {
+                return Environment.CurrentDirectory;
+            }
+        }
+
         ConsoleInput consoleInput;
+
+        MineNETConfig mineNETConfig;
+        public MineNETConfig MineNETConfig
+        {
+            get
+            {
+                return mineNETConfig;
+            }
+        }
+
+        ServerConfig serverConfig;
+        public ServerConfig ServerConfig
+        {
+            get
+            {
+                return serverConfig;
+            }
+        }
 
         NetworkManager networkManager;
         public NetworkManager NetworkManager
@@ -58,8 +86,10 @@ namespace MineNET
 
         void Init()
         {
+            InitConfig();
+
             UpdateLogger();
-            Update();//StartUpdate
+            Update();
 
             consoleInput = new ConsoleInput();
 
@@ -68,8 +98,14 @@ namespace MineNET
 
             networkManager = new NetworkManager();
             commandManager = new CommandManager();
+        }
 
-
+        void InitConfig()
+        {
+            string mPath = $"{ExecutePath}\\MineNET.yml";
+            string sPath = $"{ExecutePath}\\ServerProperties.yml";
+            mineNETConfig = YamlStaticConfig.Load<MineNETConfig>(mPath);
+            serverConfig = YamlStaticConfig.Load<ServerConfig>(sPath);
         }
 
         async void Update()
@@ -93,6 +129,8 @@ namespace MineNET
         public void Stop()
         {
             Logger.Info(LangManager.GetString("server_stop"));
+            mineNETConfig.Save<MineNETConfig>();
+            serverConfig.Save<ServerConfig>();
             Kill();
         }
 
