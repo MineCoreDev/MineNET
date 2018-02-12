@@ -19,6 +19,22 @@ namespace MineNET
             }
         }
 
+        public static MineNETConfig MineNETConfig
+        {
+            get
+            {
+                return Instance.mineNETConfig;
+            }
+        }
+
+        public static ServerConfig ServerConfig
+        {
+            get
+            {
+                return Instance.serverConfig;
+            }
+        }
+
         public static string ExecutePath
         {
             get
@@ -30,22 +46,7 @@ namespace MineNET
         ConsoleInput consoleInput;
 
         MineNETConfig mineNETConfig;
-        public MineNETConfig MineNETConfig
-        {
-            get
-            {
-                return mineNETConfig;
-            }
-        }
-
         ServerConfig serverConfig;
-        public ServerConfig ServerConfig
-        {
-            get
-            {
-                return serverConfig;
-            }
-        }
 
         NetworkManager networkManager;
         public NetworkManager NetworkManager

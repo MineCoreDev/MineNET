@@ -280,7 +280,12 @@ namespace MineNET.Utils
 
         static void AddLogText(string text, LoggerLevel level = LoggerLevel.Info)
         {
-            if (Server.Instance.MineNETConfig.EnableConsoleOutput)
+            if (level == LoggerLevel.Log && !Server.MineNETConfig.EnableDebugLog)
+            {
+                return;
+            }
+
+            if (Server.MineNETConfig.EnableConsoleOutput)
             {
                 LoggerInfo info = new LoggerInfo();
                 info.level = level;

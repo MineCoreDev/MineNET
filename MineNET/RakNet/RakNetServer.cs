@@ -205,12 +205,12 @@ namespace MineNET.RakNet
             packet.Decode();
             if (packet.PacketID == UNCONNECTED_PING.ID)
             {
-                string motd = Server.Instance.ServerConfig.ServerMotd;
+                string motd = Server.ServerConfig.ServerMotd;
                 int protocol = Network.Packets.ProtocolInfo.CLIENT_PROTOCOL;
                 string version = Network.Packets.ProtocolInfo.CLIENT_VERSION;
-                int maxPlayer = Server.Instance.ServerConfig.MaxPlayer;
+                int maxPlayer = Server.ServerConfig.MaxPlayer;
                 int player = Server.Instance.NetworkManager.players.Count;
-                string gameMode = Server.Instance.ServerConfig.WorldGameMode;
+                string gameMode = Server.ServerConfig.WorldGameMode;
 
                 UNCONNECTED_PING uping = (UNCONNECTED_PING)packet;
                 UNCONNECTED_PONG upong = new UNCONNECTED_PONG();

@@ -32,7 +32,7 @@ namespace MineNET.Network
 
         void Init()
         {
-            server = new RakNetServer(MineNET.Server.Instance.ServerConfig.ServerPort);
+            server = new RakNetServer(MineNET.Server.ServerConfig.ServerPort);
             RegisterPackets();
         }
 

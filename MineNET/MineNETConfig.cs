@@ -15,5 +15,11 @@ namespace MineNET
             get;
             set;
         } = true;
+
+        public bool EnableDebugLog
+        {
+            get;
+            set;
+        } = true;
     }
 }

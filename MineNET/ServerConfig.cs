@@ -25,18 +25,21 @@ namespace MineNET
             set;
         } = 25;
 
+        [YamlDescription("%server_config_worldGameMode")]
         public string WorldGameMode
         {
             get;
             set;
         } = "Survival";
 
+        [YamlDescription("%server_config_mainWorldName")]
         public string MainWorldName
         {
             get;
             set;
         } = "World";
 
+        [YamlDescription("%server_config_loadWorldNames")]
         public string[] LoadWorldNames
         {
             get;
@@ -48,24 +51,28 @@ namespace MineNET
             "End"
         };*/
 
+        [YamlDescription("%server_config_mainWorldGenerator")]
         public string MainWorldGenerator
         {
             get;
             set;
         } = "Default";
 
+        [YamlDescription("%server_config_generateNether")]
         public bool GenerateNether
         {
             get;
             set;
         } = true;
 
+        [YamlDescription("%server_config_generateEnd")]
         public bool GenerateEnd
         {
             get;
             set;
         } = true;
 
+        [YamlDescription("%server_config_onlineMode")]
         public bool OnlineMode
         {
             get;
