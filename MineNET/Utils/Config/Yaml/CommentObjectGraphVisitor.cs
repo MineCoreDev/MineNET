@@ -16,7 +16,15 @@ namespace MineNET.Utils.Config.Yaml
             CommentObjectDescriptor comment = value as CommentObjectDescriptor;
             if (comment != null && comment.Comment != null)
             {
-                context.Emit(new Comment(comment.Comment, false));
+                if (comment.Comment[0] == '%')
+                {
+                    string msg = LangManager.GetString(comment.Comment.Remove(0, 1));
+                    context.Emit(new Comment(msg, false));
+                }
+                else
+                {
+                    context.Emit(new Comment(comment.Comment, false));
+                }
             }
 
             return base.EnterMapping(key, value, context);

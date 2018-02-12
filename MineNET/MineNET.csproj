@@ -616,7 +616,6 @@
     <Compile Include="Utils\Config\JsonStaticConfig.cs" />
     <Compile Include="Utils\Config\YamlConfig.cs" />
     <Compile Include="Utils\Config\YamlStaticConfig.cs" />
-    <Compile Include="Utils\Config\Yaml\Attributes\YamlSpace.cs" />
     <Compile Include="Utils\Config\Yaml\CommentObjectDescriptor.cs" />
     <Compile Include="Utils\Config\Yaml\CommentObjectGraphVisitor.cs" />
     <Compile Include="Utils\Config\Yaml\CommentPropertyDescriptor.cs" />

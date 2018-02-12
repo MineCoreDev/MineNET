@@ -46,10 +46,11 @@ namespace MineNET.RakNet
         public RakNetServer(ushort port)
         {
             Logger.Info(LangManager.GetString("network_start"));
-            Logger.Info(LangManager.GetString("network_start_port"), port);
 
             this.UDPClientInit(port);
             this.Init();
+
+            Logger.Info(LangManager.GetString("network_start_port"), port);
 
             this.port = port;
 

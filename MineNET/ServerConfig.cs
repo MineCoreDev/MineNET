@@ -4,20 +4,21 @@ namespace MineNET
 {
     public sealed class ServerConfig : YamlStaticConfig
     {
-        [YamlDescription("ServerName - サーバー名")]
+        [YamlDescription("%server_config_serverMotd")]
         public string ServerMotd
         {
             get;
             set;
         } = "MineNETServer";
 
-        [YamlDescription("ServerPortNumber <1 ~ 65535> - サーバーポート番号 <1 ~ 65535>")]
+        [YamlDescription("%server_config_port")]
         public ushort ServerPort
         {
             get;
             set;
         } = 19132;
 
+        [YamlDescription("%server_config_maxPlayer")]
         public int MaxPlayer
         {
             get;

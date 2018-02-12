@@ -165,4 +165,13 @@
   <data name="server_stoped" xml:space="preserve">
     <value>サーバーを停止しました。</value>
   </data>
+  <data name="server_config_maxPlayer" xml:space="preserve">
+    <value>最大プレイヤー数</value>
+  </data>
+  <data name="server_config_port" xml:space="preserve">
+    <value>ポート番号 &lt;1~65535&gt;</value>
+  </data>
+  <data name="server_config_serverMotd" xml:space="preserve">
+    <value>サーバー名</value>
+  </data>
 </root>

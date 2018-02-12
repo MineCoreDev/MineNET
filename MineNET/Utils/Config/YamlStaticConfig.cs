@@ -16,7 +16,8 @@ namespace MineNET.Utils.Config
             {
                 using (StreamReader r = new StreamReader(filePath, false))
                 {
-                    Deserializer s = new Deserializer();
+                    Deserializer s = new DeserializerBuilder()
+                        .Build();
                     YamlStaticConfig conv = (YamlStaticConfig)s.Deserialize<T>(r);
                     conv.filePath = filePath;
                     return (T)Convert.ChangeType(conv, typeof(T));
