@@ -1,6 +1,6 @@
-﻿using System.Net;
-using MineNET.Commands;
+﻿using MineNET.Commands;
 using MineNET.Network.Packets;
+using System.Net;
 
 namespace MineNET.Entities
 {
@@ -11,12 +11,12 @@ namespace MineNET.Entities
         {
             get
             {
-                return endPoint;
+                return this.endPoint;
             }
 
             set
             {
-                endPoint = value;
+                this.endPoint = value;
             }
         }
 
@@ -24,7 +24,7 @@ namespace MineNET.Entities
         {
             if (pk is LoginPacket)
             {
-                LoginPacketHandle((LoginPacket)pk);
+                this.LoginPacketHandle((LoginPacket) pk);
             }
         }
 
@@ -32,18 +32,21 @@ namespace MineNET.Entities
         {
             if (pk.Protocol < ProtocolInfo.CLIENT_PROTOCOL)
             {
-                SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_CLIENT);
-                Close("disconnectionScreen.outdatedClient");
+                this.SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_CLIENT);
+                this.Close("disconnectionScreen.outdatedClient");
                 return;
             }
             else if (pk.Protocol > ProtocolInfo.CLIENT_PROTOCOL)
             {
-                SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_SERVER);
-                Close("disconnectionScreen.outdatedServer");
+                this.SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_SERVER);
+                this.Close("disconnectionScreen.outdatedServer");
                 return;
             }
 
-            SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
+            this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
+
+            ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
+            this.SendPacket(resourcePacksInfoPacket);
         }
 
         public void SendPlayStatus(int status)
@@ -51,12 +54,12 @@ namespace MineNET.Entities
             PlayStatusPacket pk = new PlayStatusPacket();
             pk.Status = status;
 
-            SendPacket(pk);
+            this.SendPacket(pk);
         }
 
         public void SendPacket(DataPacket pk, bool needACK = false, bool immediate = false)
         {
-            Server.Instance.NetworkManager.SendPacket(endPoint, pk);
+            Server.Instance.NetworkManager.SendPacket(this.endPoint, pk);
         }
 
         public void Close(string reason)
@@ -66,9 +69,9 @@ namespace MineNET.Entities
                 DisconnectPacket pk = new DisconnectPacket();
                 pk.Message = reason;
 
-                SendPacket(pk);
+                this.SendPacket(pk);
             }
-            Server.Instance.NetworkManager.PlayerClose(endPoint, reason);
+            Server.Instance.NetworkManager.PlayerClose(this.endPoint, reason);
         }
     }
 }
