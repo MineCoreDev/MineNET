@@ -347,6 +347,7 @@
     <Compile Include="Commands\ICommandHandler.cs" />
     <Compile Include="Data\LoginData.cs" />
     <Compile Include="Data\ClientData.cs" />
+    <Compile Include="Data\ResourcePack.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Human.cs" />
     <Compile Include="Entities\Living.cs" />
@@ -561,6 +562,7 @@
     <Compile Include="Items\ItemWoodenSword.cs" />
     <Compile Include="Items\ItemWritableBook.cs" />
     <Compile Include="MineNETConfig.cs" />
+    <Compile Include="Network\Packets\ResourcePacksInfoPacket.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="NBT\Tags\ByteArrayTag.cs" />
     <Compile Include="NBT\Tags\ByteTag.cs" />
