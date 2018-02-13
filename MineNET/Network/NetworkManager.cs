@@ -138,6 +138,7 @@ namespace MineNET.Network
                 {
                     Logger.Log("NotHandlePEPacket {0}", buffer[0]);
                 }
+                pk.Close();
             }
         }
 
