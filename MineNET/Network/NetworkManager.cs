@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using MineNET.Entities;
+﻿using MineNET.Entities;
 using MineNET.Network.Packets;
 using MineNET.RakNet;
 using MineNET.Utils;
+using System;
+using System.Collections.Generic;
+using System.Net;
 
 namespace MineNET.Network
 {
@@ -16,7 +16,7 @@ namespace MineNET.Network
         {
             get
             {
-                return server;
+                return this.server;
             }
         }
 
@@ -27,13 +27,13 @@ namespace MineNET.Network
 
         public NetworkManager()
         {
-            Init();
+            this.Init();
         }
 
         void Init()
         {
-            server = new RakNetServer(MineNET.Server.ServerConfig.ServerPort);
-            RegisterPackets();
+            this.server = new RakNetServer(MineNET.Server.ServerConfig.ServerPort);
+            this.RegisterPackets();
         }
 
         public void PlayerClose(IPEndPoint point, string reason)
@@ -44,13 +44,13 @@ namespace MineNET.Network
 
         public void CreatePlayer(IPEndPoint point, string id)
         {
-            if (!players.ContainsKey(id))
+            if (!this.players.ContainsKey(id))
             {
                 Player player = new Player();
                 player.EndPoint = point;
 
-                players.Add(id, player);
-                identifierACKs.Add(id, 0);
+                this.players.Add(id, player);
+                this.identifierACKs.Add(id, 0);
             }
             else
             {
@@ -60,17 +60,17 @@ namespace MineNET.Network
 
         public void RemovePlayer(string id)
         {
-            if (players.ContainsKey(id))
+            if (this.players.ContainsKey(id))
             {
-                identifierACKs.Remove(id);
-                players.Remove(id);
+                this.identifierACKs.Remove(id);
+                this.players.Remove(id);
             }
         }
 
         public void HandleBatchPacket(RakNetSession session, byte[] buffer)
         {
             string id = RakNetServer.IPEndPointToID(session.EndPoint);
-            if (players.ContainsKey(id))
+            if (this.players.ContainsKey(id))
             {
                 Player player = players[id];
                 int pkid = buffer[0];
@@ -81,7 +81,7 @@ namespace MineNET.Network
                     batch.SetBuffer(buffer);
                     batch.Decode();
 
-                    GetPackets(batch, player);
+                    this.GetPackets(batch, player);
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace MineNET.Network
             pk.Encode();
 
             BinaryStream st = new BinaryStream();
-            st.WriteVarInt((int)pk.Length);
+            st.WriteVarInt((int) pk.Length);
             st.WriteBytes(pk.GetResult());
 
             BatchPacket bp = new BatchPacket();
@@ -145,27 +145,28 @@ namespace MineNET.Network
         {
             if (packetPool.ContainsKey(id))
             {
-                return (DataPacket)packetPool[id].Clone();
+                return (DataPacket) packetPool[id].Clone();
             }
             return null;
         }
 
         public void RegisterPacket(DataPacket packet)
         {
-            if (packetPool.ContainsKey(packet.PacketID))
+            if (this.packetPool.ContainsKey(packet.PacketID))
             {
-                packetPool[packet.PacketID] = packet;
+                this.packetPool[packet.PacketID] = packet;
             }
             else
             {
-                packetPool.Add(packet.PacketID, packet);
+                this.packetPool.Add(packet.PacketID, packet);
             }
         }
 
         void RegisterPackets()
         {
-            RegisterPacket(new LoginPacket());
-            RegisterPacket(new PlayStatusPacket());
+            this.RegisterPacket(new LoginPacket());
+            this.RegisterPacket(new PlayStatusPacket());
+            this.RegisterPacket(new ResourcePackClientResponsePacket());
         }
     }
 }
