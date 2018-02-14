@@ -1,20 +1,16 @@
-﻿namespace MineNET.Entities
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MineNET.Entities
 {
     public abstract class Entity
     {
-        protected long id;
-
         public Entity()
         {
 
-        }
-
-        public long GetID
-        {
-            get
-            {
-                return this.id;
-            }
         }
     }
 }

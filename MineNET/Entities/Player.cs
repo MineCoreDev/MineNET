@@ -1,6 +1,5 @@
 ﻿using MineNET.Commands;
 using MineNET.Network.Packets;
-using MineNET.Utils;
 using System.Net;
 
 namespace MineNET.Entities
@@ -27,10 +26,6 @@ namespace MineNET.Entities
             {
                 this.LoginPacketHandle((LoginPacket) pk);
             }
-            else if (pk is ResourcePackClientResponsePacket)
-            {
-                this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket) pk);
-            }
         }
 
         public void LoginPacketHandle(LoginPacket pk)
@@ -52,32 +47,6 @@ namespace MineNET.Entities
 
             ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
             this.SendPacket(resourcePacksInfoPacket);
-        }
-
-        public void ResourcePackClientResponsePacketHandle(ResourcePackClientResponsePacket pk)
-        {
-            Logger.Info($"{pk.ResponseStatus}");
-            if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_REFUSED)
-            {
-                this.Close("disconnectionScreen.noReason");
-            }
-            else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_SEND_PACKS)
-            {
-                //TODO
-                //ResourcePackDataInfoPacket
-            }
-            else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_HAVE_ALL_PACKS)
-            {
-                ResourcePackStackPacket resourcePackStackPacket = new ResourcePackStackPacket();
-                this.SendPacket(resourcePackStackPacket);
-            }
-            else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_COMPLETED)
-            {
-                //StartGamePacket
-                ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
-                resourcePacksInfoPacket.MustAccepet = true;
-                this.SendPacket(resourcePacksInfoPacket);
-            }
         }
 
         public void SendPlayStatus(int status)
