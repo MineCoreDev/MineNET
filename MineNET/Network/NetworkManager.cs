@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using MineNET.Entities;
+﻿using MineNET.Entities;
 using MineNET.Network.Packets;
 using MineNET.RakNet;
 using MineNET.Utils;
+using System;
+using System.Collections.Generic;
+using System.Net;
 
 namespace MineNET.Network
 {
@@ -93,7 +93,7 @@ namespace MineNET.Network
             pk.Encode();
 
             BinaryStream st = new BinaryStream();
-            st.WriteVarInt((int)pk.Length);
+            st.WriteVarInt((int) pk.Length);
             st.WriteBytes(pk.GetResult());
 
             BatchPacket bp = new BatchPacket();
@@ -145,7 +145,7 @@ namespace MineNET.Network
         {
             if (packetPool.ContainsKey(id))
             {
-                return (DataPacket)packetPool[id].Clone();
+                return (DataPacket) packetPool[id].Clone();
             }
             return null;
         }
@@ -164,8 +164,9 @@ namespace MineNET.Network
 
         void RegisterPackets()
         {
-            RegisterPacket(new LoginPacket());
-            RegisterPacket(new PlayStatusPacket());
+            this.RegisterPacket(new LoginPacket());
+            this.RegisterPacket(new PlayStatusPacket());
+            this.RegisterPacket(new ResourcePackClientResponsePacket());
         }
     }
 }
