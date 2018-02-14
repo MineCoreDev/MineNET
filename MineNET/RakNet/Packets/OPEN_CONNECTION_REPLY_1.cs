@@ -46,7 +46,7 @@
 
             this.WriteMagic();
             this.WriteLong(serverID);
-            this.WirteByte(0);
+            this.WriteByte(0);
             this.WriteShort(mtuSize);
         }
     }

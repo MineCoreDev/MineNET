@@ -33,7 +33,7 @@ namespace MineNET.Utils
             return Binary.ReadByte(this);
         }
 
-        public void WirteByte(byte value)
+        public new void WriteByte(byte value)
         {
             Binary.WriteByte(this, value);
         }
