@@ -39,5 +39,15 @@
                 this.name = value;
             }
         }
+
+        public virtual void Write(NBTStream stream)
+        {
+
+        }
+
+        public virtual void Read(NBTStream stream)
+        {
+
+        }
     }
 }

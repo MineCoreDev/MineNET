@@ -565,6 +565,7 @@
     <Compile Include="Items\ItemWoodenSword.cs" />
     <Compile Include="Items\ItemWritableBook.cs" />
     <Compile Include="MineNETConfig.cs" />
+    <Compile Include="NBT\NBTEndian.cs" />
     <Compile Include="NBT\NBTFileIO.cs" />
     <Compile Include="NBT\NBTStream.cs" />
     <Compile Include="Network\Packets\ResourcePacksInfoPacket.cs" />
