@@ -20,6 +20,14 @@ namespace MineNET.Utils
                 await Task.Delay(1000 / 20);
                 string cmd = Console.ReadLine();
                 commandQueue.Enqueue(cmd);
+                if (cmd == "scl")
+                {
+                    foreach (string c in commandQueue)
+                    {
+                        Logger.Log(c);
+                    }
+                    commandQueue.Clear();
+                }
             }
         }
 
