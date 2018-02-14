@@ -26,7 +26,7 @@ namespace MineNET.NBT
 
         public NBTStream(byte[] buffer, NBTEndian endian)
         {
-
+            this.endian = endian;
         }
 
         public new byte ReadByte()

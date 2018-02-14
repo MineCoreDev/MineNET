@@ -1,7 +1,7 @@
-﻿using MineNET.Commands;
+﻿using System.Net;
+using MineNET.Commands;
 using MineNET.Network.Packets;
 using MineNET.Utils;
-using System.Net;
 
 namespace MineNET.Entities
 {
@@ -25,11 +25,11 @@ namespace MineNET.Entities
         {
             if (pk is LoginPacket)
             {
-                this.LoginPacketHandle((LoginPacket) pk);
+                this.LoginPacketHandle((LoginPacket)pk);
             }
             else if (pk is ResourcePackClientResponsePacket)
             {
-                this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket) pk);
+                this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket)pk);
             }
         }
 
@@ -59,7 +59,7 @@ namespace MineNET.Entities
             Logger.Info($"{pk.ResponseStatus}");
             if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_REFUSED)
             {
-                this.Close("disconnectionScreen.noReason");
+                this.Close("disconnectionScreen.resourcePackn");
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_SEND_PACKS)
             {
