@@ -151,14 +151,17 @@ namespace MineNET.RakNet
 
         public void SendPacket(EncapsulatedPacket packet)
         {
-            DataPacket_0 pk = new DataPacket_0();
-            pk.SeqNumber = sendSeqNumber++;
-            pk.Packets = new[]
+            if (server != null)
             {
-                packet
-            };
+                DataPacket_0 pk = new DataPacket_0();
+                pk.SeqNumber = sendSeqNumber++;
+                pk.Packets = new[]
+                {
+                    packet
+                };
 
-            server.SendPacket(pk, point.Address, point.Port);
+                server.SendPacket(pk, point.Address, point.Port);
+            }
         }
 
         internal void Update()

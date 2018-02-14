@@ -70,32 +70,55 @@ namespace MineNET.Network.Packets
             clientData = new ClientData();
 
             int len = ReadVarInt();
-            BinaryStream stream = new BinaryStream(ReadBytes(len));
-
-            int chainLen = stream.ReadInt();
-            string chain = Encoding.UTF8.GetString(stream.ReadBytes(chainLen));
-            JObject chainObj = JObject.Parse(chain);
-            chain = chainObj.ToString();
-
-            JToken chainToken = chainObj["chain"];
-            for (int i = 0; i < chainToken.Count(); ++i)
+            using (BinaryStream stream = new BinaryStream(ReadBytes(len)))
             {
-                JObject jwt = JObject.Parse(JWT.Decode(chainToken[i].ToString()));
-                JToken extraData = null;
-                if (jwt.TryGetValue("extraData", out extraData))
-                {
-                    loginData.XUID = extraData["XUID"].ToString();
-                    loginData.DisplayName = extraData["displayName"].ToString();
-                    loginData.ClientUUID = extraData["identity"].ToString();
-                    loginData.IdentityPublicKey = jwt["identityPublicKey"].ToString();
-                }
-            }
 
-            int clientDataLen = stream.ReadInt();
-            string clientDataJson = Encoding.UTF8.GetString(stream.ReadBytes(clientDataLen));
-            JObject clientDataJwt = JObject.Parse(JWT.Decode(clientDataJson));
-            //TODO: ClientDataJWT
-            Logger.Log(clientDataJwt.ToString());
+                int chainLen = stream.ReadInt();
+                string chain = Encoding.UTF8.GetString(stream.ReadBytes(chainLen));
+                JObject chainObj = JObject.Parse(chain);
+                chain = chainObj.ToString();
+
+                JToken chainToken = chainObj["chain"];
+                for (int i = 0; i < chainToken.Count(); ++i)
+                {
+                    JObject jwt = JObject.Parse(JWT.Decode(chainToken[i].ToString()));
+                    JToken extraData = null;
+                    if (jwt.TryGetValue("extraData", out extraData))
+                    {
+                        loginData.XUID = extraData["XUID"].ToString();
+                        loginData.DisplayName = extraData["displayName"].ToString();
+                        loginData.ClientUUID = extraData["identity"].ToString();
+                        loginData.IdentityPublicKey = jwt["identityPublicKey"].ToString();
+                    }
+                }
+
+                int clientDataLen = stream.ReadInt();
+                string clientDataJson = Encoding.UTF8.GetString(stream.ReadBytes(clientDataLen));
+
+                SetClientData(clientDataJson);
+            }
+        }
+
+        void SetClientData(string json)
+        {
+            JObject clientDataJwt = JObject.Parse(JWT.Decode(json));
+
+            clientData.CapeData = clientDataJwt.Value<string>("CapeData");
+            clientData.ClientRandomID = clientDataJwt.Value<string>("ClientRandomId");
+            clientData.CurrentInputMode = clientDataJwt.Value<int>("CurrentInputMode");
+            clientData.DefaultInputMode = clientDataJwt.Value<int>("DefaultInputMode");
+            clientData.DeviceModel = clientDataJwt.Value<string>("DeviceModel");
+            clientData.DeviceOS = clientDataJwt.Value<int>("DeviceOS");
+            clientData.GameVersion = clientDataJwt.Value<string>("GameVersion");
+            clientData.GUIScale = clientDataJwt.Value<int>("GuiScale");
+            clientData.LanguageCode = clientDataJwt.Value<string>("LanguageCode");
+            clientData.ServerAddress = clientDataJwt.Value<string>("ServerAddress");
+            clientData.SkinData = clientDataJwt.Value<string>("SkinData");
+            clientData.SkinGeometry = clientDataJwt.Value<string>("SkinGeometry");
+            clientData.SkinGeometryName = clientDataJwt.Value<string>("SkinGeometryName");
+            clientData.SkinID = clientDataJwt.Value<string>("SkinId");
+            clientData.UIProfile = clientDataJwt.Value<int>("UIProfile");
+
         }
     }
 }
