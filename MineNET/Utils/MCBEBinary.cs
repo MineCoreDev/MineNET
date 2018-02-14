@@ -26,5 +26,34 @@ namespace MineNET.Utils
             this.WriteFloat(value.Y);
             this.WriteFloat(value.Z);
         }
+
+        //TODO : ReadBlockPosition
+
+        public void WriteBlockPosition(int x, int y, int z)
+        {
+            this.WriteVarInt(x);
+            this.WriteUVarInt((uint) y);
+            this.WriteVarInt(z);
+        }
+
+        public long ReadEntityUniqueId()
+        {
+            return this.ReadVarLong();
+        }
+
+        public void WriteEntityUniqueId(long eid)
+        {
+            this.WriteVarLong(eid);
+        }
+
+        public long ReadEntityRuntimeId()
+        {
+            return (long) this.ReadUVarLong();
+        }
+
+        public void WriteEntityRuntimeId(long eid)
+        {
+            this.WriteUVarLong((ulong) eid);
+        }
     }
 }

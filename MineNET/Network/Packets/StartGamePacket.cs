@@ -352,7 +352,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        public bool startWithMap;
+        bool startWithMap;
         public bool StartWithMap
         {
             get
@@ -510,7 +510,40 @@ namespace MineNET.Network.Packets
         {
             base.Encode();
 
-
+            this.WriteEntityUniqueId(this.entityUniqueId);
+            this.WriteEntityRuntimeId(this.EntityRuntimeId);
+            this.WriteVarInt(this.playerGamemode);
+            this.WriteVector3(this.playerPosition);
+            this.WriteVector2(this.direction);
+            this.WriteVarInt(this.seed);
+            this.WriteVarInt(this.dimension);
+            this.WriteVarInt(this.generator);
+            this.WriteVarInt(this.worldGamemode);
+            this.WriteVarInt(this.difficulty);
+            this.WriteBlockPosition(this.spawnX, this.spawnY, this.spawnZ);
+            this.WriteBool(this.hasAchievementsDisabled);
+            this.WriteVarInt(this.dayCycleStopTime);
+            this.WriteBool(this.eduMode);
+            //LFloat
+            //LFloat
+            this.WriteBool(this.multiplayerGame);
+            this.WriteBool(this.broadcastToLAN);
+            this.WriteBool(this.broadcastToXboxLive);
+            this.WriteBool(this.commandsEnabled);
+            this.WriteBool(this.isTexturePacksRequired);
+            //GameRule
+            this.WriteBool(this.bonusChest);
+            this.WriteBool(this.startWithMap);
+            this.WriteBool(this.trustPlayers);
+            this.WriteVarInt(this.permissionLevel);
+            this.WriteVarInt(this.gamePublish);
+            this.WriteLInt((uint) this.serverChunkTickRadius);
+            this.WriteString(this.levelId);
+            this.WriteString(this.worldName);
+            this.WriteString(this.premiumWorldTemplateId);
+            this.WriteBool(this.unknown);
+            this.WriteLLong((ulong) this.currentTick);
+            this.WriteVarInt(this.enchantmentSeed);
         }
     }
 }
