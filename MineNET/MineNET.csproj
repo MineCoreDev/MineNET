@@ -636,6 +636,7 @@
     <Compile Include="Utils\JWT.cs" />
     <Compile Include="Utils\LangManager.cs" />
     <Compile Include="Utils\Logger.cs" />
+    <Compile Include="Utils\MCPEBinary.cs" />
     <Compile Include="Utils\MineNETMath.cs" />
     <Compile Include="Utils\VarInt.cs" />
     <Compile Include="Utils\ZlibStream.cs" />

@@ -146,35 +146,37 @@ namespace MineNET.RakNet
         private void HandlePacket(IPEndPoint point, byte[] buffer)
         {
             byte pid = buffer[0];
-            Packet pk = GetPacketPool(pid, buffer);
-            string id = IPEndPointToID(point);
+            using (Packet pk = GetPacketPool(pid, buffer))
+            {
+                string id = IPEndPointToID(point);
 
-            if (pk is DataPacket)
-            {
-                if (sessions.ContainsKey(id))
+                if (pk is DataPacket)
                 {
-                    sessions[id].DataPacketHandle(pk);
+                    if (sessions.ContainsKey(id))
+                    {
+                        sessions[id].DataPacketHandle(pk);
+                    }
+                    else
+                    {
+                        Logger.Log(LangManager.GetString("raknet_sessionNotCreate"), IPEndPointToID(point));
+                    }
+                }
+                else if (pk is OfflineMessage)
+                {
+                    if (sessions.ContainsKey(id))
+                    {
+                        Logger.Log(LangManager.GetString("raknet_sessionCreated"), IPEndPointToID(point));
+                    }
+                    else
+                    {
+                        this.OfflineMessageHandler(pk, point);
+                    }
                 }
                 else
                 {
-                    Logger.Log(LangManager.GetString("raknet_sessionNotCreate"), IPEndPointToID(point));
+                    Logger.Log("NotHandlePacket: {0}", pid);
+                    return;
                 }
-            }
-            else if (pk is OfflineMessage)
-            {
-                if (sessions.ContainsKey(id))
-                {
-                    Logger.Log(LangManager.GetString("raknet_sessionCreated"), IPEndPointToID(point));
-                }
-                else
-                {
-                    this.OfflineMessageHandler(pk, point);
-                }
-            }
-            else
-            {
-                Logger.Log("NotHandlePacket: {0}", pid);
-                return;
             }
         }
 
@@ -198,6 +200,8 @@ namespace MineNET.RakNet
 
             byte[] bytes = packet.GetResult();
             this.client.BeginSend(bytes, bytes.Length, point, OnSend, null);
+
+            packet.Dispose();
         }
 
         private void OfflineMessageHandler(Packet packet, IPEndPoint point)

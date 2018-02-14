@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using MineNET.Utils;
 
@@ -10,16 +6,16 @@ namespace MineNET.Values
 {
     public struct Vector2
     {
-        private double x;
-        private double y;
+        private float x;
+        private float y;
 
-        public Vector2(double x, double y)
+        public Vector2(float x, float y)
         {
             this.x = x;
             this.y = y;
         }
 
-        public double X
+        public float X
         {
             get
             {
@@ -32,7 +28,7 @@ namespace MineNET.Values
             }
         }
 
-        public double Y
+        public float Y
         {
             get
             {
@@ -45,7 +41,7 @@ namespace MineNET.Values
             }
         }
 
-        public double this[int index]
+        public float this[int index]
         {
             get
             {
@@ -77,48 +73,48 @@ namespace MineNET.Values
             }
         }
 
-        public void Set(double x, double y)
+        public void Set(float x, float y)
         {
             this.x = x;
             this.y = y;
         }
 
-        public static Vector2 Lerp(Vector2 a, Vector2 b, double t)
+        public static Vector2 Lerp(Vector2 a, Vector2 b, float t)
         {
             t = MineNETMath.ClampZeroOne(t);
             return new Vector2(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t);
         }
-        
-        public static Vector2 LerpUnclamped(Vector2 a, Vector2 b, double t)
+
+        public static Vector2 LerpUnclamped(Vector2 a, Vector2 b, float t)
         {
             return new Vector2(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t);
         }
 
-        public static Vector2 MoveTowards(Vector2 current, Vector2 target, double maxDistanceDelta)
+        public static Vector2 MoveTowards(Vector2 current, Vector2 target, float maxDistanceDelta)
         {
             Vector2 a = target - current;
-            double magnitude = a.Magnitude;
+            float magnitude = a.Magnitude;
             if (magnitude <= maxDistanceDelta || magnitude == 0f)
             {
                 return target;
             }
             return current + a / magnitude * maxDistanceDelta;
         }
-        
+
         public static Vector2 Scale(Vector2 a, Vector2 b)
         {
             return new Vector2(a.x * b.x, a.y * b.y);
         }
-        
+
         public void Scale(Vector2 scale)
         {
             this.x *= scale.x;
             this.y *= scale.y;
         }
-        
+
         public void Normalize()
         {
-            double magnitude = this.Magnitude;
+            float magnitude = this.Magnitude;
             if (magnitude > 1E-05f)
             {
                 this /= magnitude;
@@ -128,7 +124,7 @@ namespace MineNET.Values
                 this = Vector2.Zero;
             }
         }
-        
+
         public Vector2 Normalized
         {
             get
@@ -139,25 +135,25 @@ namespace MineNET.Values
             }
         }
 
-        public double Magnitude
+        public float Magnitude
         {
             get
             {
-                return Math.Sqrt(this.x * this.x + this.y * this.y);
+                return (float)Math.Sqrt(this.x * this.x + this.y * this.y);
             }
         }
 
-        public static double Angle(Vector2 from, Vector2 to)
+        public static float Angle(Vector2 from, Vector2 to)
         {
-            return Math.Acos(MineNETMath.Clamp(Vector2.Dot(from.Normalized, to.Normalized), -1f, 1f)) * 57.29578f;
+            return (float)Math.Acos(MineNETMath.Clamp(Vector2.Dot(from.Normalized, to.Normalized), -1f, 1f)) * 57.29578f;
         }
 
-        public static double Distance(Vector2 a, Vector2 b)
+        public static float Distance(Vector2 a, Vector2 b)
         {
             return (a - b).Magnitude;
         }
-        
-        public static Vector2 ClampMagnitude(Vector2 vector, double maxLength)
+
+        public static Vector2 ClampMagnitude(Vector2 vector, float maxLength)
         {
             if (vector.SqrMagnitude() > maxLength * maxLength)
             {
@@ -166,12 +162,12 @@ namespace MineNET.Values
             return vector;
         }
 
-        public static double SqrMagnitude(Vector2 a)
+        public static float SqrMagnitude(Vector2 a)
         {
             return a.x * a.x + a.y * a.y;
         }
-        
-        public double SqrMagnitude()
+
+        public float SqrMagnitude()
         {
             return this.x * this.x + this.y * this.y;
         }
@@ -190,10 +186,10 @@ namespace MineNET.Values
 
         public static Vector2 Reflect(Vector2 inDirection, Vector2 inNormal)
         {
-            return -2d * Dot(inNormal, inDirection) * inNormal + inDirection;
+            return -2f * Dot(inNormal, inDirection) * inNormal + inDirection;
         }
-        
-        public static double Dot(Vector2 lhs, Vector2 rhs)
+
+        public static float Dot(Vector2 lhs, Vector2 rhs)
         {
             return lhs.x * rhs.x + lhs.y * rhs.y;
         }
@@ -202,7 +198,7 @@ namespace MineNET.Values
         {
             return new Vector2(Math.Min(lhs.x, rhs.x), Math.Min(lhs.y, rhs.y));
         }
-        
+
         public static Vector2 Max(Vector2 lhs, Vector2 rhs)
         {
             return new Vector2(Math.Max(lhs.x, rhs.x), Math.Max(lhs.y, rhs.y));
@@ -212,42 +208,42 @@ namespace MineNET.Values
         {
             return new Vector2(a.x + b.x, a.y + b.y);
         }
-        
+
         public static Vector2 operator -(Vector2 a, Vector2 b)
         {
             return new Vector2(a.x - b.x, a.y - b.y);
         }
-        
+
         public static Vector2 operator -(Vector2 a)
         {
             return new Vector2(-a.x, -a.y);
         }
-        
-        public static Vector2 operator *(Vector2 a, double d)
+
+        public static Vector2 operator *(Vector2 a, float d)
         {
             return new Vector2(a.x * d, a.y * d);
         }
-        
-        public static Vector2 operator *(double d, Vector2 a)
+
+        public static Vector2 operator *(float d, Vector2 a)
         {
             return new Vector2(a.x * d, a.y * d);
         }
-        
-        public static Vector2 operator /(Vector2 a, double d)
+
+        public static Vector2 operator /(Vector2 a, float d)
         {
             return new Vector2(a.x / d, a.y / d);
         }
-        
+
         public static bool operator ==(Vector2 lhs, Vector2 rhs)
         {
             return SqrMagnitude(lhs - rhs) < 9.99999944E-11f;
         }
-        
+
         public static bool operator !=(Vector2 lhs, Vector2 rhs)
         {
             return SqrMagnitude(lhs - rhs) >= 9.99999944E-11f;
         }
-        
+
         public static implicit operator Vector2(Vector3 v)
         {
             return new Vector2(v.X, v.Y);
@@ -265,7 +261,7 @@ namespace MineNET.Values
                 return new Vector2(0f, 0f);
             }
         }
-        
+
         public static Vector2 Up
         {
             get
@@ -273,7 +269,7 @@ namespace MineNET.Values
                 return new Vector2(0f, 1f);
             }
         }
-        
+
         public static Vector2 Down
         {
             get
@@ -289,7 +285,7 @@ namespace MineNET.Values
                 return new Vector2(-1f, 0f);
             }
         }
-        
+
         public static Vector2 Right
         {
             get

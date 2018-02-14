@@ -29,7 +29,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((ByteTag) this.tags[name]).Data;
+                return ((ByteTag)this.tags[name]).Data;
             }
             else
             {
@@ -47,7 +47,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((ShortTag) this.tags[name]).Data;
+                return ((ShortTag)this.tags[name]).Data;
             }
             else
             {
@@ -65,7 +65,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((IntTag) this.tags[name]).Data;
+                return ((IntTag)this.tags[name]).Data;
             }
             else
             {
@@ -83,7 +83,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((LongTag) this.tags[name]).Data;
+                return ((LongTag)this.tags[name]).Data;
             }
             else
             {
@@ -101,7 +101,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((FloatTag) this.tags[name]).Data;
+                return ((FloatTag)this.tags[name]).Data;
             }
             else
             {
@@ -119,7 +119,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((DoubleTag) this.tags[name]).Data;
+                return ((DoubleTag)this.tags[name]).Data;
             }
             else
             {
@@ -137,7 +137,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((StringTag) this.tags[name]).Data;
+                return ((StringTag)this.tags[name]).Data;
             }
             else
             {
@@ -147,7 +147,7 @@ namespace MineNET.NBT.Tags
 
         public CompoundTag PutBool(string name, bool data)
         {
-            this.tags[name] = new ByteTag(name, data ? (byte) 1 : (byte) 0);
+            this.tags[name] = new ByteTag(name, data ? (byte)1 : (byte)0);
             return this;
         }
 
@@ -166,7 +166,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((ByteArrayTag) this.tags[name]).Data;
+                return ((ByteArrayTag)this.tags[name]).Data;
             }
             else
             {
@@ -184,7 +184,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((IntArrayTag) this.tags[name]).Data;
+                return ((IntArrayTag)this.tags[name]).Data;
             }
             else
             {
@@ -203,7 +203,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return (ListTag<T>) this.tags[name];
+                return (ListTag<T>)this.tags[name];
             }
             else
             {
@@ -222,7 +222,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return (CompoundTag) this.tags[name];
+                return (CompoundTag)this.tags[name];
             }
             else
             {
@@ -246,7 +246,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return (T) Convert.ChangeType(this[name], typeof(T));
+                return (T)Convert.ChangeType(this[name], typeof(T));
             }
             else
                 throw new IndexOutOfRangeException();
@@ -304,6 +304,16 @@ namespace MineNET.NBT.Tags
         public override string ToString()
         {
             return $"CompoundTag : Name {this.Name}  : Data {this.Tags}";
+        }
+
+        public override void Write(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Read(NBTStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

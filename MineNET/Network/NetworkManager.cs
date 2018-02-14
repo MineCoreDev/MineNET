@@ -1,10 +1,10 @@
-﻿using MineNET.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using MineNET.Entities;
 using MineNET.Network.Packets;
 using MineNET.RakNet;
 using MineNET.Utils;
-using System;
-using System.Collections.Generic;
-using System.Net;
 
 namespace MineNET.Network
 {
@@ -93,7 +93,7 @@ namespace MineNET.Network
             pk.Encode();
 
             BinaryStream st = new BinaryStream();
-            st.WriteVarInt((int) pk.Length);
+            st.WriteVarInt((int)pk.Length);
             st.WriteBytes(pk.GetResult());
 
             BatchPacket bp = new BatchPacket();
@@ -122,21 +122,25 @@ namespace MineNET.Network
 
         void GetPackets(BatchPacket pk, Player player)
         {
-            BinaryStream stream = new BinaryStream(pk.Payload);
-            while (!stream.EndOfStream())
+            using (BinaryStream stream = new BinaryStream(pk.Payload))
             {
-                int len = stream.ReadVarInt();
-                byte[] buffer = stream.ReadBytes(len);
-                DataPacket packet = GetPacket(buffer[0]);
-                if (packet != null)
+                while (!stream.EndOfStream())
                 {
-                    packet.SetBuffer(buffer);
-                    packet.Decode();
-                    player.PacketHandle(packet);
-                }
-                else
-                {
-                    Logger.Log("NotHandlePEPacket {0}", buffer[0]);
+                    int len = stream.ReadVarInt();
+                    byte[] buffer = stream.ReadBytes(len);
+                    using (DataPacket packet = GetPacket(buffer[0]))
+                    {
+                        if (packet != null)
+                        {
+                            packet.SetBuffer(buffer);
+                            packet.Decode();
+                            player.PacketHandle(packet);
+                        }
+                        else
+                        {
+                            Logger.Log("NotHandlePEPacket {0}", buffer[0]);
+                        }
+                    }
                 }
             }
         }
@@ -145,7 +149,7 @@ namespace MineNET.Network
         {
             if (packetPool.ContainsKey(id))
             {
-                return (DataPacket) packetPool[id].Clone();
+                return (DataPacket)packetPool[id].Clone();
             }
             return null;
         }

@@ -1,4 +1,6 @@
-﻿namespace MineNET.NBT.Tags
+﻿using System;
+
+namespace MineNET.NBT.Tags
 {
     public class EndTag : Tag
     {
@@ -9,9 +11,19 @@
 
         }
 
+        public override void Read(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
         public override string ToString()
         {
             return "EndTag";
+        }
+
+        public override void Write(NBTStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -16,9 +16,19 @@ namespace MineNET.NBT.Tags
 
         }
 
+        public override void Read(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
         public override string ToString()
         {
             return $"StringTag : Name {this.Name}  : Data {this.Data}";
+        }
+
+        public override void Write(NBTStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

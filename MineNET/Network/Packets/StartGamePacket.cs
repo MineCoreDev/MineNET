@@ -1,4 +1,6 @@
-﻿namespace MineNET.Network.Packets
+﻿using MineNET.Values;
+
+namespace MineNET.Network.Packets
 {
     public class StartGamePacket : DataPacket
     {
@@ -54,73 +56,31 @@
             }
         }
 
-        float x;
-        public float X
+        Vector3 playerPosition;
+        public Vector3 PlayerPosition
         {
             get
             {
-                return this.x;
+                return this.playerPosition;
             }
 
             set
             {
-                this.x = value;
+                this.playerPosition = value;
             }
         }
 
-        float y;
-        public float Y
+        Vector2 direction;
+        public Vector2 Direction
         {
             get
             {
-                return this.y;
+                return this.direction;
             }
 
             set
             {
-                this.y = value;
-            }
-        }
-
-        float z;
-        public float Z
-        {
-            get
-            {
-                return this.z;
-            }
-
-            set
-            {
-                this.z = value;
-            }
-        }
-
-        float yaw;
-        public float Yaw
-        {
-            get
-            {
-                return this.yaw;
-            }
-
-            set
-            {
-                this.yaw = value;
-            }
-        }
-
-        float pitch;
-        public float Pitch
-        {
-            get
-            {
-                return this.pitch;
-            }
-
-            set
-            {
-                this.pitch = value;
+                this.direction = value;
             }
         }
 
@@ -389,6 +349,20 @@
             set
             {
                 this.bonusChest = value;
+            }
+        }
+
+        public bool startWithMap;
+        public bool StartWithMap
+        {
+            get
+            {
+                return this.startWithMap;
+            }
+
+            set
+            {
+                this.startWithMap = value;
             }
         }
 

@@ -66,6 +66,8 @@ namespace MineNET.RakNet
                         this.EncapsulatedPacketHandle((EncapsulatedPacket)packet.Packets[i]);
                     }
                 }
+
+                packet.Packets = null;
             }
             else
             {

@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Values
+﻿namespace MineNET.Values
 {
     public struct Vector3
     {
-        private double x;
-        private double y;
-        private double z;
+        private float x;
+        private float y;
+        private float z;
 
-        public Vector3(double x, double y, double z)
+        public Vector3(float x, float y, float z)
         {
             this.x = x;
             this.y = y;
             this.z = z;
         }
 
-        public double X
+        public float X
         {
             get
             {
@@ -32,7 +26,7 @@ namespace MineNET.Values
             }
         }
 
-        public double Y
+        public float Y
         {
             get
             {
@@ -45,7 +39,7 @@ namespace MineNET.Values
             }
         }
 
-        public double Z
+        public float Z
         {
             get
             {

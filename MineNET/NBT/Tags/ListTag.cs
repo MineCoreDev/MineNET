@@ -88,5 +88,15 @@ namespace MineNET.NBT.Tags
         {
             return $"ListTag : Name {this.Name}  : Data {this.Tags.ToString()}";
         }
+
+        public override void Write(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Read(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

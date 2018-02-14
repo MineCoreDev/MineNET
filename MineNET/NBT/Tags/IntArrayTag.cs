@@ -1,4 +1,6 @@
-﻿namespace MineNET.NBT.Tags
+﻿using System;
+
+namespace MineNET.NBT.Tags
 {
     public class IntArrayTag : Tag
     {
@@ -29,9 +31,19 @@
             }
         }
 
+        public override void Read(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
         public override string ToString()
         {
             return $"IntArrayTag : Name {this.Name}  : Data {this.Data}";
+        }
+
+        public override void Write(NBTStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

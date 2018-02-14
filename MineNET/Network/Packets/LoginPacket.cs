@@ -85,10 +85,10 @@ namespace MineNET.Network.Packets
                     JToken extraData = null;
                     if (jwt.TryGetValue("extraData", out extraData))
                     {
-                        loginData.XUID = extraData["XUID"].ToString();
-                        loginData.DisplayName = extraData["displayName"].ToString();
-                        loginData.ClientUUID = extraData["identity"].ToString();
-                        loginData.IdentityPublicKey = jwt["identityPublicKey"].ToString();
+                        loginData.XUID = extraData.Value<string>("XUID");
+                        loginData.DisplayName = extraData.Value<string>("displayName");
+                        loginData.ClientUUID = extraData.Value<string>("identity");
+                        loginData.IdentityPublicKey = jwt.Value<string>("identityPublicKey");
                     }
                 }
 
@@ -118,7 +118,14 @@ namespace MineNET.Network.Packets
             clientData.SkinGeometryName = clientDataJwt.Value<string>("SkinGeometryName");
             clientData.SkinID = clientDataJwt.Value<string>("SkinId");
             clientData.UIProfile = clientDataJwt.Value<int>("UIProfile");
+        }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            clientData = null;
+            LoginData = null;
         }
     }
 }

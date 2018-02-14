@@ -40,14 +40,8 @@
             }
         }
 
-        public virtual void Write(NBTStream stream)
-        {
+        public abstract void Write(NBTStream stream);
 
-        }
-
-        public virtual void Read(NBTStream stream)
-        {
-
-        }
+        public abstract void Read(NBTStream stream);
     }
 }

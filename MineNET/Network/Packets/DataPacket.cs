@@ -1,5 +1,6 @@
 ﻿using System;
 using MineNET.Utils;
+using MineNET.Values;
 
 namespace MineNET.Network.Packets
 {
@@ -54,6 +55,26 @@ namespace MineNET.Network.Packets
         public object Clone()
         {
             return this.MemberwiseClone();
+        }
+
+        public Vector2 ReadVector2()
+        {
+            return MCPEBinary.ReadVector2(this);
+        }
+
+        public void WriteVector2(Vector2 value)
+        {
+            MCPEBinary.WriteVector2(this, value);
+        }
+
+        public Vector3 ReadVector3()
+        {
+            return MCPEBinary.ReadVector3(this);
+        }
+
+        public void WriteVector3(Vector3 value)
+        {
+            MCPEBinary.WriteVector3(this, value);
         }
     }
 }
