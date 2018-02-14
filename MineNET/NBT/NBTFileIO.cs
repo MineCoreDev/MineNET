@@ -1,6 +1,6 @@
 namespace MineNET.NBT
 {
-    public class NBTStream
+    public class NBTFileIO
     {
     }
 }
