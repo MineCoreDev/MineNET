@@ -84,40 +84,18 @@ namespace MineNET.Network.Packets
                 JToken extraData = null;
                 if (jwt.TryGetValue("extraData", out extraData))
                 {
-                    loginData.XUID = extraData.Value<string>("XUID");
-                    loginData.DisplayName = extraData.Value<string>("displayName");
-                    loginData.ClientUUID = extraData.Value<string>("identity");
-                    loginData.IdentityPublicKey = jwt.Value<string>("identityPublicKey");
+                    loginData.XUID = extraData["XUID"].ToString();
+                    loginData.DisplayName = extraData["displayName"].ToString();
+                    loginData.ClientUUID = extraData["identity"].ToString();
+                    loginData.IdentityPublicKey = jwt["identityPublicKey"].ToString();
                 }
             }
 
             int clientDataLen = stream.ReadInt();
             string clientDataJson = Encoding.UTF8.GetString(stream.ReadBytes(clientDataLen));
-
-            stream.Close();
-
-            SetClientData(clientDataJson);
-        }
-
-        void SetClientData(string json)
-        {
-            JObject clientDataJwt = JObject.Parse(JWT.Decode(json));
-
-            clientData.CapeData = clientDataJwt.Value<string>("CapeData");
-            clientData.ClientRandomID = clientDataJwt.Value<string>("ClientRandomId");
-            clientData.CurrentInputMode = clientDataJwt.Value<int>("CurrentInputMode");
-            clientData.DefaultInputMode = clientDataJwt.Value<int>("DefaultInputMode");
-            clientData.DeviceModel = clientDataJwt.Value<string>("DeviceModel");
-            clientData.DeviceOS = clientDataJwt.Value<int>("DeviceOS");
-            clientData.GameVersion = clientDataJwt.Value<string>("GameVersion");
-            clientData.GUIScale = clientDataJwt.Value<int>("GuiScale");
-            clientData.LanguageCode = clientDataJwt.Value<string>("LanguageCode");
-            clientData.ServerAddress = clientDataJwt.Value<string>("ServerAddress");
-            clientData.SkinData = clientDataJwt.Value<string>("SkinData");
-            clientData.SkinGeometry = clientDataJwt.Value<string>("SkinGeometry");
-            clientData.SkinGeometryName = clientDataJwt.Value<string>("SkinGeometryName");
-            clientData.SkinID = clientDataJwt.Value<string>("SkinId");
-            clientData.UIProfile = clientDataJwt.Value<int>("UIProfile");
+            JObject clientDataJwt = JObject.Parse(JWT.Decode(clientDataJson));
+            //TODO: ClientDataJWT
+            Logger.Log(clientDataJwt.ToString());
         }
     }
 }
