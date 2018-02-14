@@ -43,7 +43,5 @@ namespace MineNET.NBT
         {
             return Binary.ReadShort(this);
         }
-
-
     }
 }
