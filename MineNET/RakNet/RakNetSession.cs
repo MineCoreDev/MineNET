@@ -158,6 +158,9 @@ namespace MineNET.RakNet
                 packet
             };
 
+            if (server == null)
+                return;
+
             server.SendPacket(pk, point.Address, point.Port);
         }
 
