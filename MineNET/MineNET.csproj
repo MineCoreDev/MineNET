@@ -572,6 +572,8 @@
     <Compile Include="NBT\NBTTagType.cs" />
     <Compile Include="NBT\Tags\ArrayDataTag.cs" />
     <Compile Include="NBT\Tags\LongArrayTag.cs" />
+    <Compile Include="Network\Packets\ChunkRadiusUpdatedPacket.cs" />
+    <Compile Include="Network\Packets\RequestChunkRadiusPacket.cs" />
     <Compile Include="Network\Packets\ResourcePackClientResponsePacket.cs" />
     <Compile Include="Network\Packets\ResourcePacksInfoPacket.cs" />
     <Compile Include="Network\Packets\ResourcePackStackPacket.cs" />

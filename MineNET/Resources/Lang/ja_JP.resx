@@ -195,4 +195,7 @@
   <data name="server_config_worldGameMode" xml:space="preserve">
     <value>ワールドゲームモード</value>
   </data>
+  <data name="server_chunkRadius" xml:space="preserve">
+    <value>チャンク範囲 {0} でリクエストされました。&lt;{1}に変更しました。&gt;</value>
+  </data>
 </root>

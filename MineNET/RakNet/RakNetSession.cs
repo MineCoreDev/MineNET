@@ -19,6 +19,7 @@ namespace MineNET.RakNet
                 return point;
             }
         }
+
         long clientID;
         public long ClientID
         {
@@ -27,6 +28,7 @@ namespace MineNET.RakNet
                 return clientID;
             }
         }
+
         short mtuSize;
         public long MTUSize
         {
@@ -38,6 +40,7 @@ namespace MineNET.RakNet
 
         int state = STATE_CONNECTING;
         int sendSeqNumber = 0;
+        int lastMsg = -1;
 
         int timedOut;
 
@@ -84,6 +87,15 @@ namespace MineNET.RakNet
 
         private void EncapsulatedPacketHandle(EncapsulatedPacket packet)
         {
+            if (packet.messageIndex != -1)
+            {
+                if (packet.messageIndex - lastMsg != 1)
+                {
+                    return;
+                }
+                ++lastMsg;
+            }
+
             int id = packet.buffer[0];
             if (id < 0x80)
             {

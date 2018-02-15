@@ -15,9 +15,27 @@ namespace MineNET.Entities
                 return this.endPoint;
             }
 
-            set
+            internal set
             {
                 this.endPoint = value;
+            }
+        }
+
+        bool packDownloaded;
+        public bool PackDownloaded
+        {
+            get
+            {
+                return this.packDownloaded;
+            }
+        }
+
+        bool packStatusCompleted;
+        public bool PackStatusCompleted
+        {
+            get
+            {
+                return this.packStatusCompleted;
             }
         }
 
@@ -30,6 +48,10 @@ namespace MineNET.Entities
             else if (pk is ResourcePackClientResponsePacket)
             {
                 this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket)pk);
+            }
+            else if (pk is RequestChunkRadiusPacket)
+            {
+                this.RequestChunkRadiusPacket((RequestChunkRadiusPacket)pk);
             }
         }
 
@@ -56,55 +78,59 @@ namespace MineNET.Entities
 
         public void ResourcePackClientResponsePacketHandle(ResourcePackClientResponsePacket pk)
         {
-            Logger.Info($"{pk.ResponseStatus}");
             if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_REFUSED)
             {
                 this.Close("disconnectionScreen.resourcePackn");
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_SEND_PACKS)
             {
-                //TODO
+                //TODO:
                 //ResourcePackDataInfoPacket
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_HAVE_ALL_PACKS)
             {
+                packDownloaded = true;
                 ResourcePackStackPacket resourcePackStackPacket = new ResourcePackStackPacket();
                 this.SendPacket(resourcePackStackPacket);
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_COMPLETED)
             {
-                EntityAttribute[] atts = new EntityAttribute[]
-                {
-                    EntityAttribute.GetAttribute(EntityAttribute.HEALTH),
-                    EntityAttribute.GetAttribute(EntityAttribute.HUNGER),
-                    EntityAttribute.GetAttribute(EntityAttribute.MOVEMENT_SPEED),
-                    EntityAttribute.GetAttribute(EntityAttribute.EXPERIENCE_LEVEL),
-                    EntityAttribute.GetAttribute(EntityAttribute.EXPERIENCE)
-                };
-
-                UpdateAttributesPacket updateAttributesPacket = new UpdateAttributesPacket();
-                updateAttributesPacket.EntityRuntimeId = 1;
-                updateAttributesPacket.Attributes = atts;
-                this.SendPacket(updateAttributesPacket);
-
-                StartGamePacket startGamePacket = new StartGamePacket();
-                startGamePacket.EntityUniqueId = 1;
-                startGamePacket.EntityRuntimeId = 1;
-                startGamePacket.PlayerGamemode = 0;
-                startGamePacket.PlayerPosition = new Values.Vector3(128, 4, 128);
-                startGamePacket.Direction = new Values.Vector2(0, 0);
-                startGamePacket.WorldGamemode = 0;
-                startGamePacket.Difficulty = 1;
-                startGamePacket.SpawnX = 128;
-                startGamePacket.SpawnY = 4;
-                startGamePacket.SpawnZ = 128;
-                startGamePacket.WorldName = "world";
-                this.SendPacket(startGamePacket);
-
-                ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
-                resourcePacksInfoPacket.MustAccepet = true;
-                this.SendPacket(resourcePacksInfoPacket);
+                packStatusCompleted = true;
+                ProcessLogin();
             }
+        }
+
+        public void RequestChunkRadiusPacket(RequestChunkRadiusPacket pk)
+        {
+            ChunkRadiusUpdatedPacket chunkRadiusUpdatedPacket = new ChunkRadiusUpdatedPacket();
+            chunkRadiusUpdatedPacket.Radius = FixRadius(pk.Radius);
+            Logger.Info(LangManager.GetString("server_chunkRadius"), pk.Radius, chunkRadiusUpdatedPacket.Radius);
+            SendPacket(chunkRadiusUpdatedPacket);
+        }
+
+        void ProcessLogin()
+        {
+            StartGamePacket startGamePacket = new StartGamePacket();
+            startGamePacket.EntityUniqueId = 1;
+            startGamePacket.EntityRuntimeId = 1;
+            startGamePacket.PlayerGamemode = 0;
+            startGamePacket.PlayerPosition = new Values.Vector3(128, 4, 128);
+            startGamePacket.Direction = new Values.Vector2(0, 0);
+            startGamePacket.WorldGamemode = 0;
+            startGamePacket.Difficulty = 1;
+            startGamePacket.SpawnX = 128;
+            startGamePacket.SpawnY = 4;
+            startGamePacket.SpawnZ = 128;
+            startGamePacket.WorldName = "world";
+            this.SendPacket(startGamePacket);
+
+            ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
+            this.SendPacket(resourcePacksInfoPacket);
+        }
+
+        int FixRadius(int radius)
+        {
+            return radius;
         }
 
         public void SendPlayStatus(int status)
@@ -113,6 +139,23 @@ namespace MineNET.Entities
             pk.Status = status;
 
             this.SendPacket(pk);
+        }
+
+        void SendPlayerAttribute()
+        {
+            EntityAttribute[] atts = new EntityAttribute[]
+            {
+                EntityAttribute.GetAttribute(EntityAttribute.HEALTH),
+                EntityAttribute.GetAttribute(EntityAttribute.HUNGER),
+                EntityAttribute.GetAttribute(EntityAttribute.MOVEMENT_SPEED),
+                EntityAttribute.GetAttribute(EntityAttribute.EXPERIENCE_LEVEL),
+                EntityAttribute.GetAttribute(EntityAttribute.EXPERIENCE)
+            };
+
+            UpdateAttributesPacket updateAttributesPacket = new UpdateAttributesPacket();
+            updateAttributesPacket.EntityRuntimeId = 1;
+            updateAttributesPacket.Attributes = atts;
+            this.SendPacket(updateAttributesPacket);
         }
 
         public void SendPacket(DataPacket pk, bool needACK = false, bool immediate = false)

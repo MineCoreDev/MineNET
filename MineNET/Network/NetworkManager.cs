@@ -171,6 +171,7 @@ namespace MineNET.Network
             this.RegisterPacket(new LoginPacket());
             this.RegisterPacket(new PlayStatusPacket());
             this.RegisterPacket(new ResourcePackClientResponsePacket());
+            this.RegisterPacket(new RequestChunkRadiusPacket());
         }
     }
 }
