@@ -1,7 +1,7 @@
-﻿using MineNET.Commands;
+﻿using System.Net;
+using MineNET.Commands;
 using MineNET.Network.Packets;
 using MineNET.Utils;
-using System.Net;
 
 namespace MineNET.Entities
 {
@@ -25,11 +25,11 @@ namespace MineNET.Entities
         {
             if (pk is LoginPacket)
             {
-                this.LoginPacketHandle((LoginPacket) pk);
+                this.LoginPacketHandle((LoginPacket)pk);
             }
             else if (pk is ResourcePackClientResponsePacket)
             {
-                this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket) pk);
+                this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket)pk);
             }
         }
 
@@ -73,6 +73,20 @@ namespace MineNET.Entities
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_COMPLETED)
             {
+                EntityAttribute[] atts = new EntityAttribute[]
+                {
+                    EntityAttribute.GetAttribute(EntityAttribute.HEALTH),
+                    EntityAttribute.GetAttribute(EntityAttribute.HUNGER),
+                    EntityAttribute.GetAttribute(EntityAttribute.MOVEMENT_SPEED),
+                    EntityAttribute.GetAttribute(EntityAttribute.EXPERIENCE_LEVEL),
+                    EntityAttribute.GetAttribute(EntityAttribute.EXPERIENCE)
+                };
+
+                UpdateAttributesPacket updateAttributesPacket = new UpdateAttributesPacket();
+                updateAttributesPacket.EntityRuntimeId = 1;
+                updateAttributesPacket.Attributes = atts;
+                this.SendPacket(updateAttributesPacket);
+
                 StartGamePacket startGamePacket = new StartGamePacket();
                 startGamePacket.EntityUniqueId = 1;
                 startGamePacket.EntityRuntimeId = 1;
@@ -86,6 +100,7 @@ namespace MineNET.Entities
                 startGamePacket.SpawnZ = 128;
                 startGamePacket.WorldName = "world";
                 this.SendPacket(startGamePacket);
+
                 ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
                 resourcePacksInfoPacket.MustAccepet = true;
                 this.SendPacket(resourcePacksInfoPacket);

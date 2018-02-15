@@ -1,4 +1,5 @@
-﻿using MineNET.Values;
+﻿using MineNET.Entities;
+using MineNET.Values;
 
 namespace MineNET.Utils
 {
@@ -32,7 +33,7 @@ namespace MineNET.Utils
         public void WriteBlockPosition(int x, int y, int z)
         {
             this.WriteVarInt(x);
-            this.WriteUVarInt((uint) y);
+            this.WriteUVarInt((uint)y);
             this.WriteVarInt(z);
         }
 
@@ -48,12 +49,25 @@ namespace MineNET.Utils
 
         public long ReadEntityRuntimeId()
         {
-            return (long) this.ReadUVarLong();
+            return (long)this.ReadUVarLong();
         }
 
         public void WriteEntityRuntimeId(long eid)
         {
-            this.WriteUVarLong((ulong) eid);
+            this.WriteUVarLong((ulong)eid);
+        }
+
+        public void WriteAttributes(params EntityAttribute[] attributes)
+        {
+            this.WriteUVarInt((uint)attributes.Length);
+            for (int i = 0; i < attributes.Length; ++i)
+            {
+                this.WriteLFloat(attributes[i].MinValue);
+                this.WriteLFloat(attributes[i].MaxValue);
+                this.WriteLFloat(attributes[i].Value);
+                this.WriteLFloat(attributes[i].DefaultValue);
+                this.WriteString(attributes[i].Name);
+            }
         }
     }
 }

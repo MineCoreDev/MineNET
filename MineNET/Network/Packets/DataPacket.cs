@@ -1,6 +1,5 @@
 ﻿using System;
 using MineNET.Utils;
-using MineNET.Values;
 
 namespace MineNET.Network.Packets
 {

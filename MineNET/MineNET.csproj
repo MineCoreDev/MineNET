@@ -352,6 +352,7 @@
     <Compile Include="Data\ClientData.cs" />
     <Compile Include="Data\ResourcePack.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\EntityAttribute.cs" />
     <Compile Include="Entities\Human.cs" />
     <Compile Include="Entities\Living.cs" />
     <Compile Include="Entities\Player.cs" />
@@ -576,6 +577,7 @@
     <Compile Include="Network\Packets\ResourcePackStackPacket.cs" />
     <Compile Include="Network\Packets\SetTimePacket.cs" />
     <Compile Include="Network\Packets\StartGamePacket.cs" />
+    <Compile Include="Network\Packets\UpdateAttributesPacket.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="NBT\Tags\ByteArrayTag.cs" />
     <Compile Include="NBT\Tags\ByteTag.cs" />
@@ -642,6 +644,7 @@
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\MCBEBinary.cs" />
     <Compile Include="Utils\MineNETMath.cs" />
+    <Compile Include="Utils\UUID.cs" />
     <Compile Include="Utils\VarInt.cs" />
     <Compile Include="Utils\ZlibStream.cs" />
     <Compile Include="Values\Vector2.cs" />

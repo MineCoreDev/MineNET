@@ -511,7 +511,7 @@ namespace MineNET.Network.Packets
             base.Encode();
 
             this.WriteEntityUniqueId(this.entityUniqueId);
-            this.WriteEntityRuntimeId(this.EntityRuntimeId);
+            this.WriteEntityRuntimeId(this.entityRuntimeId);
             this.WriteVarInt(this.playerGamemode);
             this.WriteVector3(this.playerPosition);
             this.WriteVector2(this.direction);
@@ -538,12 +538,12 @@ namespace MineNET.Network.Packets
             this.WriteBool(this.trustPlayers);
             this.WriteVarInt(this.permissionLevel);
             this.WriteVarInt(this.gamePublish);
-            this.WriteLInt((uint) this.serverChunkTickRadius);
+            this.WriteLInt((uint)this.serverChunkTickRadius);
             this.WriteString(this.levelId);
             this.WriteString(this.worldName);
             this.WriteString(this.premiumWorldTemplateId);
             this.WriteBool(this.unknown);
-            this.WriteLLong((ulong) this.currentTick);
+            this.WriteLLong((ulong)this.currentTick);
             this.WriteVarInt(this.enchantmentSeed);
         }
     }
