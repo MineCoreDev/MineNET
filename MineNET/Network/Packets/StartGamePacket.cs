@@ -524,8 +524,8 @@ namespace MineNET.Network.Packets
             this.WriteBool(this.hasAchievementsDisabled);
             this.WriteVarInt(this.dayCycleStopTime);
             this.WriteBool(this.eduMode);
-            this.WriteFloat(this.rainLevel);
-            this.WriteFloat(this.lightningLevel);
+            this.WriteLFloat(this.rainLevel);
+            this.WriteLFloat(this.lightningLevel);
             this.WriteBool(this.multiplayerGame);
             this.WriteBool(this.broadcastToLAN);
             this.WriteBool(this.broadcastToXboxLive);
