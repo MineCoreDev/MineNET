@@ -2,38 +2,24 @@
 
 namespace MineNET.NBT.Tags
 {
-    public class ByteArrayTag : Tag
+    public class ByteArrayTag : ArrayDataTag<byte>
     {
-        public new const byte ID = TAG_BYTE_ARRAY;
-
-        private byte[] data;
+        public override NBTTagType TagType
+        {
+            get
+            {
+                return NBTTagType.BYTE_ARRAY;
+            }
+        }
 
         public ByteArrayTag(byte[] data) : this("", data)
         {
 
         }
 
-        public ByteArrayTag(string name, byte[] data) : base(name)
+        public ByteArrayTag(string name, byte[] data) : base(name, data)
         {
-            this.data = data;
-        }
 
-        public byte[] Data
-        {
-            get
-            {
-                return this.data;
-            }
-
-            set
-            {
-                this.data = value;
-            }
-        }
-
-        public override void Read(NBTStream stream)
-        {
-            throw new NotImplementedException();
         }
 
         public override string ToString()
@@ -41,7 +27,41 @@ namespace MineNET.NBT.Tags
             return $"ByteArrayTag : Name {this.Name}  : Data {this.Data}";
         }
 
-        public override void Write(NBTStream stream)
+        internal override void Write(NBTStream stream)
+        {
+            int len = this.Data.Length;
+            stream.WriteInt(len);
+            for (int i = 0; i < len; ++i)
+            {
+                stream.WriteByte(this.Data[i]);
+            }
+        }
+
+        internal override void WriteTag(NBTStream stream)
+        {
+            int len = this.Data.Length;
+            if (Name != null)
+            {
+                stream.WriteByte((byte)TagType);
+                stream.WriteString(Name);
+                stream.WriteInt(len);
+                for (int i = 0; i < len; ++i)
+                {
+                    stream.WriteByte(this.Data[i]);
+                }
+            }
+            else
+            {
+                throw new NullReferenceException("Tag Name Null");
+            }
+        }
+
+        internal override void Read(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void ReadTag(NBTStream stream)
         {
             throw new NotImplementedException();
         }

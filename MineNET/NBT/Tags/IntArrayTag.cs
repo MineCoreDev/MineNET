@@ -2,38 +2,24 @@
 
 namespace MineNET.NBT.Tags
 {
-    public class IntArrayTag : Tag
+    public class IntArrayTag : ArrayDataTag<int>
     {
-        public new const byte ID = TAG_INT_ARRAY;
-
-        private int[] data;
+        public override NBTTagType TagType
+        {
+            get
+            {
+                return NBTTagType.INT_ARRAY;
+            }
+        }
 
         public IntArrayTag(int[] data) : this("", data)
         {
 
         }
 
-        public IntArrayTag(string name, int[] data) : base(name)
+        public IntArrayTag(string name, int[] data) : base(name, data)
         {
-            this.data = data;
-        }
 
-        public int[] Data
-        {
-            get
-            {
-                return this.data;
-            }
-
-            set
-            {
-                this.data = value;
-            }
-        }
-
-        public override void Read(NBTStream stream)
-        {
-            throw new NotImplementedException();
         }
 
         public override string ToString()
@@ -41,7 +27,22 @@ namespace MineNET.NBT.Tags
             return $"IntArrayTag : Name {this.Name}  : Data {this.Data}";
         }
 
-        public override void Write(NBTStream stream)
+        internal override void Write(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void WriteTag(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void Read(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void ReadTag(NBTStream stream)
         {
             throw new NotImplementedException();
         }

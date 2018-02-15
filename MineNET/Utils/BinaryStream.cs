@@ -208,6 +208,16 @@ namespace MineNET.Utils
             Binary.WriteFloat(this, value);
         }
 
+        public float ReadLFloat()
+        {
+            return Binary.ReadLFloat(this);
+        }
+
+        public void WriteLFloat(float value)
+        {
+            Binary.WriteLFloat(this, value);
+        }
+
         public double ReadDouble()
         {
             return Binary.ReadDouble(this);
@@ -216,6 +226,16 @@ namespace MineNET.Utils
         public void WriteDouble(double value)
         {
             Binary.WriteDouble(this, value);
+        }
+
+        public double ReadLDouble()
+        {
+            return Binary.ReadLDouble(this);
+        }
+
+        public void WriteLDouble(double value)
+        {
+            Binary.WriteLDouble(this, value);
         }
 
         public string ReadFixedString()

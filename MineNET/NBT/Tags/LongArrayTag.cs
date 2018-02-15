@@ -2,29 +2,29 @@
 
 namespace MineNET.NBT.Tags
 {
-    public class DoubleTag : DataTag<double>
+    public class LongArrayTag : ArrayDataTag<long>
     {
         public override NBTTagType TagType
         {
             get
             {
-                return NBTTagType.DOUBLE;
+                return NBTTagType.LONG_ARRAY;
             }
         }
 
-        public DoubleTag(double data) : this("", data)
+        public LongArrayTag(long[] data) : this("", data)
         {
 
         }
 
-        public DoubleTag(string name, double data) : base(name, data)
+        public LongArrayTag(string name, long[] data) : base(name, data)
         {
 
         }
 
         public override string ToString()
         {
-            return $"DoubleTag : Name {this.Name}  : Data {this.Data}";
+            return $"ByteArrayTag : Name {this.Name}  : Data {this.Data}";
         }
 
         internal override void Write(NBTStream stream)

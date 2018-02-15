@@ -4,16 +4,17 @@ namespace MineNET.NBT.Tags
 {
     public class EndTag : Tag
     {
-        public new const byte ID = TAG_END;
+        public override NBTTagType TagType
+        {
+            get
+            {
+                return NBTTagType.END;
+            }
+        }
 
         public EndTag() : base(null)
         {
 
-        }
-
-        public override void Read(NBTStream stream)
-        {
-            throw new NotImplementedException();
         }
 
         public override string ToString()
@@ -21,7 +22,22 @@ namespace MineNET.NBT.Tags
             return "EndTag";
         }
 
-        public override void Write(NBTStream stream)
+        internal override void Write(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void WriteTag(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void Read(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void ReadTag(NBTStream stream)
         {
             throw new NotImplementedException();
         }

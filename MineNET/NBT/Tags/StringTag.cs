@@ -4,7 +4,13 @@ namespace MineNET.NBT.Tags
 {
     public class StringTag : DataTag<string>
     {
-        public new const byte ID = TAG_STRING;
+        public override NBTTagType TagType
+        {
+            get
+            {
+                return NBTTagType.STRING;
+            }
+        }
 
         public StringTag(String data) : this("", data)
         {
@@ -16,17 +22,27 @@ namespace MineNET.NBT.Tags
 
         }
 
-        public override void Read(NBTStream stream)
-        {
-            throw new NotImplementedException();
-        }
-
         public override string ToString()
         {
             return $"StringTag : Name {this.Name}  : Data {this.Data}";
         }
 
-        public override void Write(NBTStream stream)
+        internal override void Write(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void WriteTag(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void Read(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void ReadTag(NBTStream stream)
         {
             throw new NotImplementedException();
         }

@@ -372,6 +372,30 @@ namespace MineNET.Utils
             stream.WriteByte(bytes[3]);
         }
 
+        public static float ReadLFloat(Stream stream)
+        {
+            List<byte> bytes = new List<byte>();
+
+            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte)stream.ReadByte());
+
+            bytes.Reverse();
+
+            return BitConverter.ToSingle(bytes.ToArray(), 0);
+        }
+
+        public static void WriteLFloat(Stream stream, float value)
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+
+            stream.WriteByte(bytes[3]);
+            stream.WriteByte(bytes[2]);
+            stream.WriteByte(bytes[1]);
+            stream.WriteByte(bytes[0]);
+        }
+
         public static double ReadDouble(Stream stream)
         {
             List<byte> bytes = new List<byte>();
@@ -400,6 +424,38 @@ namespace MineNET.Utils
             stream.WriteByte(bytes[5]);
             stream.WriteByte(bytes[6]);
             stream.WriteByte(bytes[7]);
+        }
+
+        public static double ReadLDouble(Stream stream)
+        {
+            List<byte> bytes = new List<byte>();
+
+            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte)stream.ReadByte());
+
+            bytes.Reverse();
+
+            return BitConverter.ToDouble(bytes.ToArray(), 0);
+        }
+
+        public static void WriteLDouble(Stream stream, double value)
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+
+            stream.WriteByte(bytes[7]);
+            stream.WriteByte(bytes[6]);
+            stream.WriteByte(bytes[5]);
+            stream.WriteByte(bytes[4]);
+            stream.WriteByte(bytes[3]);
+            stream.WriteByte(bytes[2]);
+            stream.WriteByte(bytes[1]);
+            stream.WriteByte(bytes[0]);
         }
 
         public static string ReadFixedString(MemoryStream stream)

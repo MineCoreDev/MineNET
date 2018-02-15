@@ -4,7 +4,13 @@ namespace MineNET.NBT.Tags
 {
     public class ShortTag : DataTag<short>
     {
-        public new const byte ID = TAG_SHORT;
+        public override NBTTagType TagType
+        {
+            get
+            {
+                return NBTTagType.SHORT;
+            }
+        }
 
         public ShortTag(short data) : this("", data)
         {
@@ -16,17 +22,27 @@ namespace MineNET.NBT.Tags
 
         }
 
-        public override void Read(NBTStream stream)
-        {
-            throw new NotImplementedException();
-        }
-
         public override string ToString()
         {
             return $"ShortTag : Name {this.Name}  : Data {this.Data}";
         }
 
-        public override void Write(NBTStream stream)
+        internal override void Write(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void WriteTag(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void Read(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void ReadTag(NBTStream stream)
         {
             throw new NotImplementedException();
         }

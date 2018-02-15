@@ -5,7 +5,13 @@ namespace MineNET.NBT.Tags
 {
     public class CompoundTag : Tag
     {
-        public new const byte ID = TAG_COMPOUND;
+        public override NBTTagType TagType
+        {
+            get
+            {
+                return NBTTagType.COMPOUND;
+            }
+        }
 
         private Dictionary<string, Tag> tags = new Dictionary<string, Tag>();
 
@@ -306,12 +312,22 @@ namespace MineNET.NBT.Tags
             return $"CompoundTag : Name {this.Name}  : Data {this.Tags}";
         }
 
-        public override void Write(NBTStream stream)
+        internal override void Write(NBTStream stream)
         {
             throw new NotImplementedException();
         }
 
-        public override void Read(NBTStream stream)
+        internal override void WriteTag(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void Read(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void ReadTag(NBTStream stream)
         {
             throw new NotImplementedException();
         }

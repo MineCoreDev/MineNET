@@ -5,7 +5,13 @@ namespace MineNET.NBT.Tags
 {
     public class ListTag<T> : Tag where T : Tag
     {
-        public new const byte ID = TAG_LIST;
+        public override NBTTagType TagType
+        {
+            get
+            {
+                return NBTTagType.LIST;
+            }
+        }
 
         private List<T> list = new List<T>();
 
@@ -89,12 +95,22 @@ namespace MineNET.NBT.Tags
             return $"ListTag : Name {this.Name}  : Data {this.Tags.ToString()}";
         }
 
-        public override void Write(NBTStream stream)
+        internal override void Write(NBTStream stream)
         {
             throw new NotImplementedException();
         }
 
-        public override void Read(NBTStream stream)
+        internal override void WriteTag(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void Read(NBTStream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void ReadTag(NBTStream stream)
         {
             throw new NotImplementedException();
         }
