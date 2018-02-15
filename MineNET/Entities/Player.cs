@@ -1,7 +1,7 @@
-﻿using System.Net;
-using MineNET.Commands;
+﻿using MineNET.Commands;
 using MineNET.Network.Packets;
 using MineNET.Utils;
+using System.Net;
 
 namespace MineNET.Entities
 {
@@ -25,11 +25,11 @@ namespace MineNET.Entities
         {
             if (pk is LoginPacket)
             {
-                this.LoginPacketHandle((LoginPacket)pk);
+                this.LoginPacketHandle((LoginPacket) pk);
             }
             else if (pk is ResourcePackClientResponsePacket)
             {
-                this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket)pk);
+                this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket) pk);
             }
         }
 
@@ -73,7 +73,19 @@ namespace MineNET.Entities
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_COMPLETED)
             {
-                //StartGamePacket
+                StartGamePacket startGamePacket = new StartGamePacket();
+                startGamePacket.EntityUniqueId = 1;
+                startGamePacket.EntityRuntimeId = 1;
+                startGamePacket.PlayerGamemode = 0;
+                startGamePacket.PlayerPosition = new Values.Vector3(128, 4, 128);
+                startGamePacket.Direction = new Values.Vector2(0, 0);
+                startGamePacket.WorldGamemode = 0;
+                startGamePacket.Difficulty = 1;
+                startGamePacket.SpawnX = 128;
+                startGamePacket.SpawnY = 4;
+                startGamePacket.SpawnZ = 128;
+                startGamePacket.WorldName = "world";
+                this.SendPacket(startGamePacket);
                 ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
                 resourcePacksInfoPacket.MustAccepet = true;
                 this.SendPacket(resourcePacksInfoPacket);

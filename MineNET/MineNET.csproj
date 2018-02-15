@@ -571,6 +571,7 @@
     <Compile Include="Network\Packets\ResourcePackClientResponsePacket.cs" />
     <Compile Include="Network\Packets\ResourcePacksInfoPacket.cs" />
     <Compile Include="Network\Packets\ResourcePackStackPacket.cs" />
+    <Compile Include="Network\Packets\SetTimePacket.cs" />
     <Compile Include="Network\Packets\StartGamePacket.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="NBT\Tags\ByteArrayTag.cs" />

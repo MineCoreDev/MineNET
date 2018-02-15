@@ -84,7 +84,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        int seed;
+        int seed = 0;
         public int Seed
         {
             get
@@ -98,7 +98,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        byte dimension;
+        byte dimension = 0;
         public byte Dimension
         {
             get
@@ -112,7 +112,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        int generator;
+        int generator = 1;
         public int Generator
         {
             get
@@ -196,7 +196,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        bool hasAchievementsDisabled;
+        bool hasAchievementsDisabled = true;
         public bool HasAchievementsDisabled
         {
             get
@@ -210,7 +210,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        int dayCycleStopTime;
+        int dayCycleStopTime = -1;
         public int DayCycleStopTime
         {
             get
@@ -224,7 +224,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        bool eduMode;
+        bool eduMode = false;
         public bool EduMode
         {
             get
@@ -238,7 +238,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        float rainLevel;
+        float rainLevel = -1;
         public float RainLevel
         {
             get
@@ -252,7 +252,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        float lightningLevel;
+        float lightningLevel = -1;
         public float LightningLevel
         {
             get
@@ -266,7 +266,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        bool multiplayerGame;
+        bool multiplayerGame = true;
         public bool MultiplayerGame
         {
             get
@@ -280,7 +280,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        bool broadcastToLAN;
+        bool broadcastToLAN = true;
         public bool BroadcastToLAN
         {
             get
@@ -294,7 +294,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        bool broadcastToXboxLive;
+        bool broadcastToXboxLive = false;
         public bool BroadcastToXboxLive
         {
             get
@@ -308,7 +308,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        bool commandsEnabled;
+        bool commandsEnabled = true;
         public bool CommandsEnabled
         {
             get
@@ -322,7 +322,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        bool isTexturePacksRequired;
+        bool isTexturePacksRequired = false;
         public bool IsTexturePacksRequired
         {
             get
@@ -338,7 +338,7 @@ namespace MineNET.Network.Packets
 
         //ruleDatas
 
-        bool bonusChest;
+        bool bonusChest = false;
         public bool BonusChest
         {
             get
@@ -352,7 +352,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        bool startWithMap;
+        bool startWithMap = false;
         public bool StartWithMap
         {
             get
@@ -366,7 +366,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        bool trustPlayers;
+        bool trustPlayers = false;
         public bool TrustPlayers
         {
             get
@@ -380,7 +380,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        int permissionLevel;
+        int permissionLevel = 1;
         public int PermissionLevel
         {
             get
@@ -394,7 +394,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        int gamePublish;
+        int gamePublish = 0;
         public int GamePublish
         {
             get
@@ -408,7 +408,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        int serverChunkTickRadius;
+        int serverChunkTickRadius = 4;
         public int ServerChunkTickRadius
         {
             get
@@ -422,7 +422,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        string levelId;
+        string levelId = "";
         public string LevelId
         {
             get
@@ -450,7 +450,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        string premiumWorldTemplateId;
+        string premiumWorldTemplateId = "";
         public string PremiumWorldTemplateId
         {
             get
@@ -464,7 +464,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        bool unknown;
+        bool unknown = false;
         public bool Unknown
         {
             get
@@ -478,7 +478,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        long currentTick;
+        long currentTick = 0;
         public long CurrentTick
         {
             get
@@ -492,7 +492,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        int enchantmentSeed;
+        int enchantmentSeed = 0;
         public int EnchantmentSeed
         {
             get
@@ -524,13 +524,14 @@ namespace MineNET.Network.Packets
             this.WriteBool(this.hasAchievementsDisabled);
             this.WriteVarInt(this.dayCycleStopTime);
             this.WriteBool(this.eduMode);
-            //LFloat
-            //LFloat
+            this.WriteFloat(this.rainLevel);
+            this.WriteFloat(this.lightningLevel);
             this.WriteBool(this.multiplayerGame);
             this.WriteBool(this.broadcastToLAN);
             this.WriteBool(this.broadcastToXboxLive);
             this.WriteBool(this.commandsEnabled);
             this.WriteBool(this.isTexturePacksRequired);
+            this.WriteUVarInt(0);//GameruleCount
             //GameRule
             this.WriteBool(this.bonusChest);
             this.WriteBool(this.startWithMap);
