@@ -3,7 +3,6 @@ using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Network.Packets;
 using MineNET.Utils;
-using MineNET.Values;
 
 namespace MineNET.Entities
 {
@@ -71,6 +70,7 @@ namespace MineNET.Entities
 
         public void PacketHandle(DataPacket pk)
         {
+            Logger.Info(pk.ToString());
             if (pk is LoginPacket)
             {
                 this.LoginPacketHandle((LoginPacket) pk);
@@ -155,6 +155,31 @@ namespace MineNET.Entities
             startGamePacket.SpawnZ = 128;
             startGamePacket.WorldName = "world";
             this.SendPacket(startGamePacket);
+
+            this.SendPlayerAttribute();
+
+            //AvailableCommands
+            AvailableCommandsPacket availableCommandsPacket = new AvailableCommandsPacket();
+            this.SendPacket(availableCommandsPacket);
+
+            //AdventureSettings
+            AdventureSettingsPacket adventureSettingsPacket = new AdventureSettingsPacket();
+            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, false);
+            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.NO_PVP, false);
+            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.AUTO_JUMP, false);
+            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, false);
+            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
+            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.FLYING, false);
+            adventureSettingsPacket.EntityUniqueId = 1;
+            this.SendPacket(adventureSettingsPacket);
+
+            //SetEntityData
+            //InventoryContent
+            //MobArmorEquipment
+            //inventoryContent
+            //MobEquipment
+            //InventorySlot
+            //PlayerList
         }
 
         int FixRadius(int radius)

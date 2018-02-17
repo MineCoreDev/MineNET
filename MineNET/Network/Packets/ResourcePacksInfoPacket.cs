@@ -63,7 +63,7 @@
 
             this.WriteBool(this.mustAccept);
             this.WriteLShort((ushort) this.behaviourPackEntries.Length);
-            for (int i = 0; i < this.behaviourPackEntries.Length; i++)
+            for (int i = 0; i < this.behaviourPackEntries.Length; ++i)
             {
                 ResourcePack entry = this.behaviourPackEntries[i];
                 this.WriteString(entry.GetPackId());
@@ -73,7 +73,7 @@
                 this.WriteString("");//TODO
             }
             this.WriteLShort((ushort) this.resourcePackEntries.Length);
-            for (int i = 0; i < this.resourcePackEntries.Length; i++)
+            for (int i = 0; i < this.resourcePackEntries.Length; ++i)
             {
                 ResourcePack entry = this.resourcePackEntries[i];
                 this.WriteString(entry.GetPackId());
