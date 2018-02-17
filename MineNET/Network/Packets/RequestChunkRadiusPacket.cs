@@ -25,7 +25,7 @@
         {
             base.Decode();
 
-            this.radius = ReadVarInt();
+            this.radius = ReadSVarInt();
         }
     }
 }

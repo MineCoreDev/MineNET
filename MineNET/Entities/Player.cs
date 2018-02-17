@@ -81,7 +81,7 @@ namespace MineNET.Entities
             }
             else if (pk is RequestChunkRadiusPacket)
             {
-                this.RequestChunkRadiusPacket((RequestChunkRadiusPacket) pk);
+                this.RequestChunkRadiusPacketHandle((RequestChunkRadiusPacket) pk);
             }
         }
 
@@ -130,12 +130,14 @@ namespace MineNET.Entities
             }
         }
 
-        public void RequestChunkRadiusPacket(RequestChunkRadiusPacket pk)
+        public void RequestChunkRadiusPacketHandle(RequestChunkRadiusPacket pk)
         {
             ChunkRadiusUpdatedPacket chunkRadiusUpdatedPacket = new ChunkRadiusUpdatedPacket();
             chunkRadiusUpdatedPacket.Radius = FixRadius(pk.Radius);
             Logger.Info(LangManager.GetString("server_chunkRadius"), pk.Radius, chunkRadiusUpdatedPacket.Radius);
             SendPacket(chunkRadiusUpdatedPacket);
+
+            SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
         }
 
         void ProcessLogin()

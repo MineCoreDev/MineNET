@@ -30,7 +30,7 @@
         {
             base.Encode();
 
-            WriteVarInt(radius);
+            WriteSVarInt(radius);
         }
     }
 }

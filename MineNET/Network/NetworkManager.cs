@@ -125,10 +125,10 @@ namespace MineNET.Network
                     {
                         if (packet != null)
                         {
+                            Logger.Log("HandlePEPacket {0}", buffer[0].ToString("X"));
                             packet.SetBuffer(buffer);
                             packet.Decode();
                             player.PacketHandle(packet);
-                            Logger.Log("HandlePEPacket {0}", buffer[0].ToString("X"));
                         }
                         else
                         {

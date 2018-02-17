@@ -79,6 +79,8 @@ namespace MineNET.Utils
             AddLogText(text, LoggerLevel.Log);
         }
 
+        
+
         public static void Info(string msg, params object[] formats)
         {
             string f = string.Format(msg, formats);
