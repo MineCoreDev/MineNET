@@ -578,6 +578,7 @@
     <Compile Include="Network\Packets\AdventureSettingsPacket.cs" />
     <Compile Include="Network\Packets\AvailableCommandsPacket.cs" />
     <Compile Include="Network\Packets\ChunkRadiusUpdatedPacket.cs" />
+    <Compile Include="Network\Packets\FullChunkDataPacket.cs" />
     <Compile Include="Network\Packets\InventoryContentPacket.cs" />
     <Compile Include="Network\Packets\InventorySlotPacket.cs" />
     <Compile Include="Network\Packets\MobArmorEquipmentPacket.cs" />
