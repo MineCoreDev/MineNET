@@ -51,7 +51,7 @@
 
             this.responseStatus = this.ReadByte();
             this.packIds = new string[this.ReadLShort()];
-            for (int i = 0; i < this.packIds.Length; i++)
+            for (int i = 0; i < this.packIds.Length; ++i)
             {
                 this.packIds[i] = this.ReadString();
             }

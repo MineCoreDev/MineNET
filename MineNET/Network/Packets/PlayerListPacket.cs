@@ -51,7 +51,7 @@ namespace MineNET.Network.Packets
 
             this.WriteByte(this.type);
             this.WriteUVarInt((uint) this.entries.Length);
-            for (int i = 0; i < this.entries.Length; i++)
+            for (int i = 0; i < this.entries.Length; ++i)
             {
                 //this.WriteGuid(this.entries[i].Guid);
                 if (this.type == PlayerListPacket.TYPE_ADD)

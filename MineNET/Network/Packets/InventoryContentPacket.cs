@@ -48,7 +48,7 @@ namespace MineNET.Network.Packets
 
             this.WriteUVarInt(this.inventoryId);
             this.WriteUVarInt((uint) this.items.Length);
-            for (int i = 0; i < this.items.Length; i++)
+            for (int i = 0; i < this.items.Length; ++i)
             {
                 this.WriteItem(this.items[i]);
             }

@@ -61,14 +61,14 @@ namespace MineNET.Network.Packets
 
             this.WriteBool(this.mustAccept);
             this.WriteUVarInt((uint) this.behaviourPackEntries.Length);
-            for (int i = 0; i < this.behaviourPackEntries.Length; i++)
+            for (int i = 0; i < this.behaviourPackEntries.Length; ++i)
             {
                 ResourcePack entry = this.behaviourPackEntries[i];
                 this.WriteString(entry.GetPackId());
                 this.WriteString(entry.GetPackVersion());
             }
             this.WriteUVarInt((uint) this.resourcePackEntries.Length);
-            for (int i = 0; i < this.resourcePackEntries.Length; i++)
+            for (int i = 0; i < this.resourcePackEntries.Length; ++i)
             {
                 ResourcePack entry = this.resourcePackEntries[i];
                 this.WriteString(entry.GetPackId());

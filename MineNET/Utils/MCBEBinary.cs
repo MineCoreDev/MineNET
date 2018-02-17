@@ -112,7 +112,7 @@ namespace MineNET.Utils
             int canPlaceOn = this.ReadVarInt();
             if (canPlaceOn > 0)
             {
-                for (int i = 0; i < canPlaceOn; i++)
+                for (int i = 0; i < canPlaceOn; ++i)
                 {
                     this.ReadString();
                 }
@@ -122,7 +122,7 @@ namespace MineNET.Utils
             int canDestroy = this.ReadVarInt();
             if (canDestroy > 0)
             {
-                for (int i = 0; i < canDestroy; i++)
+                for (int i = 0; i < canDestroy; ++i)
                 {
                     this.ReadString();
                 }
