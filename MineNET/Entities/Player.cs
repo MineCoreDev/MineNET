@@ -1,7 +1,7 @@
-﻿using System.Net;
-using MineNET.Commands;
+﻿using MineNET.Commands;
 using MineNET.Network.Packets;
 using MineNET.Utils;
+using System.Net;
 
 namespace MineNET.Entities
 {
@@ -41,17 +41,18 @@ namespace MineNET.Entities
 
         public void PacketHandle(DataPacket pk)
         {
+            Logger.Info(pk.ToString());
             if (pk is LoginPacket)
             {
-                this.LoginPacketHandle((LoginPacket)pk);
+                this.LoginPacketHandle((LoginPacket) pk);
             }
             else if (pk is ResourcePackClientResponsePacket)
             {
-                this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket)pk);
+                this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket) pk);
             }
             else if (pk is RequestChunkRadiusPacket)
             {
-                this.RequestChunkRadiusPacket((RequestChunkRadiusPacket)pk);
+                this.RequestChunkRadiusPacket((RequestChunkRadiusPacket) pk);
             }
         }
 
@@ -124,8 +125,30 @@ namespace MineNET.Entities
             startGamePacket.WorldName = "world";
             this.SendPacket(startGamePacket);
 
-            ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
-            this.SendPacket(resourcePacksInfoPacket);
+            this.SendPlayerAttribute();
+
+            //AvailableCommands
+            AvailableCommandsPacket availableCommandsPacket = new AvailableCommandsPacket();
+            this.SendPacket(availableCommandsPacket);
+
+            //AdventureSettings
+            AdventureSettingsPacket adventureSettingsPacket = new AdventureSettingsPacket();
+            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, false);
+            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.NO_PVP, false);
+            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.AUTO_JUMP, false);
+            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, false);
+            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
+            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.FLYING, false);
+            adventureSettingsPacket.EntityUniqueId = 1;
+            this.SendPacket(adventureSettingsPacket);
+
+            //SetEntityData
+            //InventoryContent
+            //MobArmorEquipment
+            //inventoryContent
+            //MobEquipment
+            //InventorySlot
+            //PlayerList
         }
 
         int FixRadius(int radius)

@@ -12,8 +12,6 @@
         public const int LOGIN_FAILED_VANILLA_EDU = 5;
         public const int LOGIN_FAILED_EDU_VANILLA = 6;
 
-        private int status;
-
         public override byte PacketID
         {
             get
@@ -22,16 +20,17 @@
             }
         }
 
+        int status;
         public int Status
         {
             get
             {
-                return status;
+                return this.status;
             }
 
             set
             {
-                status = value;
+                this.status = value;
             }
         }
 

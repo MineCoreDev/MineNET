@@ -350,7 +350,10 @@
     <Compile Include="Commands\ICommandHandler.cs" />
     <Compile Include="Data\LoginData.cs" />
     <Compile Include="Data\ClientData.cs" />
+    <Compile Include="Data\PlayerListEntry.cs" />
+    <Compile Include="Data\PlayerPermissions.cs" />
     <Compile Include="Data\ResourcePack.cs" />
+    <Compile Include="Data\Skin.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\EntityAttribute.cs" />
     <Compile Include="Entities\Human.cs" />
@@ -572,7 +575,14 @@
     <Compile Include="NBT\NBTTagType.cs" />
     <Compile Include="NBT\Tags\ArrayDataTag.cs" />
     <Compile Include="NBT\Tags\LongArrayTag.cs" />
+    <Compile Include="Network\Packets\AdventureSettingsPacket.cs" />
+    <Compile Include="Network\Packets\AvailableCommandsPacket.cs" />
     <Compile Include="Network\Packets\ChunkRadiusUpdatedPacket.cs" />
+    <Compile Include="Network\Packets\InventoryContentPacket.cs" />
+    <Compile Include="Network\Packets\InventorySlotPacket.cs" />
+    <Compile Include="Network\Packets\MobArmorEquipmentPacket.cs" />
+    <Compile Include="Network\Packets\MobEquipmentPacket.cs" />
+    <Compile Include="Network\Packets\PlayerListPacket.cs" />
     <Compile Include="Network\Packets\RequestChunkRadiusPacket.cs" />
     <Compile Include="Network\Packets\ResourcePackClientResponsePacket.cs" />
     <Compile Include="Network\Packets\ResourcePacksInfoPacket.cs" />

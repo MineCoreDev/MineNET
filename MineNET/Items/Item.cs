@@ -1,33 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using MineNET.Blocks;
+﻿using MineNET.Blocks;
+using MineNET.NBT.Tags;
+using System;
 
 namespace MineNET.Items
 {
     public class Item : ICloneable
     {
-        public static Item Get(int id)
-        {
-            Item item = ItemFactory.GetItem(id);
-            return item;
-        }
-
-        public static Item Get(int id, short meta)
-        {
-            Item item = Get(id);
-            item.Damage = meta;
-            return item;
-        }
-
-        public static Item Get(int id, short meta, byte count)
+        public static Item Get(int id, short meta = 0, byte count = 1, byte[] tags = null)
         {
             Item item = Get(id);
             item.Damage = meta;
             item.Count = count;
+            if (tags == null)
+            {
+                tags = new byte[0];
+            }
+            item.rawTag = tags;
             return item;
         }
 
@@ -39,20 +27,12 @@ namespace MineNET.Items
         private int id;
         private short meta;
         private byte count;
+        private byte[] rawTag;
+        private CompoundTag namedTag;
 
         private Block block = null;
 
-        public Item(int id) : this(id, 0)
-        {
-
-        }
-
-        public Item(int id, short meta) : this(id, meta, 1)
-        {
-
-        }
-
-        public Item(int id, short meta, byte count)
+        public Item(int id, short meta = 0, byte count = 1)
         {
             this.id = id;
             this.meta = meta;
@@ -98,6 +78,19 @@ namespace MineNET.Items
             set
             {
                 this.count = value;
+            }
+        }
+
+        public byte[] RawTag
+        {
+            get
+            {
+                return this.rawTag;
+            }
+
+            set
+            {
+                this.rawTag = value;
             }
         }
 
