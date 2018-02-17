@@ -178,6 +178,16 @@ namespace MineNET.Utils
             Binary.WriteUVarInt(this, value);
         }
 
+        public int ReadSVarInt()
+        {
+            return VarInt.ReadSInt32(this);
+        }
+
+        public void WriteSVarInt(int value)
+        {
+            VarInt.WriteSInt32(this, value);
+        }
+
         public long ReadVarLong()
         {
             return Binary.ReadVarLong(this);
@@ -196,6 +206,16 @@ namespace MineNET.Utils
         public void WriteUVarLong(ulong value)
         {
             Binary.WriteUVarLong(this, value);
+        }
+
+        public long ReadSVarLong()
+        {
+            return VarInt.ReadSInt64(this);
+        }
+
+        public void WriteSVarLong(long value)
+        {
+            VarInt.WriteSInt64(this, value);
         }
 
         public float ReadFloat()
@@ -297,12 +317,22 @@ namespace MineNET.Utils
             if (version == 4)
             {
                 WriteBytes(endPoint.Address.GetAddressBytes());
-                WriteLShort((ushort)endPoint.Port);
+                WriteLShort((ushort) endPoint.Port);
             }
             else
             {
                 throw new NotSupportedException($"IPv{version} Not Support!");
             }
+        }
+
+        public Guid ReadGUID()
+        {
+            return new Guid(ReadBytes(16));
+        }
+
+        public void WriteGUID(Guid guid)
+        {
+            WriteBytes(guid.ToByteArray());
         }
 
         public byte[] ReadBytes(int start, int length)
@@ -312,12 +342,12 @@ namespace MineNET.Utils
 
         public byte[] ReadBytes(int length)
         {
-            return Binary.ReadBytes(this, (int)this.Position, length);
+            return Binary.ReadBytes(this, (int) this.Position, length);
         }
 
         public byte[] ReadBytes()
         {
-            return Binary.ReadBytes(this, (int)this.Position, (int)this.Length - (int)this.Position);
+            return Binary.ReadBytes(this, (int) this.Position, (int) this.Length - (int) this.Position);
         }
 
         public void WriteBytes(byte[] value)

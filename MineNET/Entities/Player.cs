@@ -1,7 +1,9 @@
 ﻿using System.Net;
 using MineNET.Commands;
+using MineNET.Data;
 using MineNET.Network.Packets;
 using MineNET.Utils;
+using MineNET.Values;
 
 namespace MineNET.Entities
 {
@@ -18,6 +20,34 @@ namespace MineNET.Entities
             internal set
             {
                 this.endPoint = value;
+            }
+        }
+
+        LoginData loginData;
+        public LoginData LoginData
+        {
+            get
+            {
+                return this.loginData;
+            }
+
+            set
+            {
+                this.loginData = value;
+            }
+        }
+
+        ClientData clientData;
+        public ClientData ClientData
+        {
+            get
+            {
+                return this.clientData;
+            }
+
+            set
+            {
+                this.clientData = value;
             }
         }
 
@@ -43,15 +73,15 @@ namespace MineNET.Entities
         {
             if (pk is LoginPacket)
             {
-                this.LoginPacketHandle((LoginPacket)pk);
+                this.LoginPacketHandle((LoginPacket) pk);
             }
             else if (pk is ResourcePackClientResponsePacket)
             {
-                this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket)pk);
+                this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket) pk);
             }
             else if (pk is RequestChunkRadiusPacket)
             {
-                this.RequestChunkRadiusPacket((RequestChunkRadiusPacket)pk);
+                this.RequestChunkRadiusPacket((RequestChunkRadiusPacket) pk);
             }
         }
 
@@ -114,8 +144,8 @@ namespace MineNET.Entities
             startGamePacket.EntityUniqueId = 1;
             startGamePacket.EntityRuntimeId = 1;
             startGamePacket.PlayerGamemode = 0;
-            startGamePacket.PlayerPosition = new Values.Vector3(128, 4, 128);
-            startGamePacket.Direction = new Values.Vector2(0, 0);
+            startGamePacket.PlayerPosition = new Vector3(128, 4, 128);
+            startGamePacket.Direction = new Vector2(0, 0);
             startGamePacket.WorldGamemode = 0;
             startGamePacket.Difficulty = 1;
             startGamePacket.SpawnX = 128;
@@ -123,9 +153,6 @@ namespace MineNET.Entities
             startGamePacket.SpawnZ = 128;
             startGamePacket.WorldName = "world";
             this.SendPacket(startGamePacket);
-
-            ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
-            this.SendPacket(resourcePacksInfoPacket);
         }
 
         int FixRadius(int radius)

@@ -12,8 +12,8 @@ namespace MineNET.Utils
 
         public void WriteVector2(Vector2 value)
         {
-            this.WriteLFloat(value.X);
-            this.WriteLFloat(value.Y);
+            this.WriteFloat(value.X);
+            this.WriteFloat(value.Y);
         }
 
         public Vector3 ReadVector3()
@@ -23,43 +23,43 @@ namespace MineNET.Utils
 
         public void WriteVector3(Vector3 value)
         {
-            this.WriteLFloat(value.X);
-            this.WriteLFloat(value.Y);
-            this.WriteLFloat(value.Z);
+            this.WriteFloat(value.X);
+            this.WriteFloat(value.Y);
+            this.WriteFloat(value.Z);
         }
 
         //TODO : ReadBlockPosition
 
         public void WriteBlockPosition(int x, int y, int z)
         {
-            this.WriteVarInt(x);
-            this.WriteUVarInt((uint)y);
-            this.WriteVarInt(z);
+            this.WriteSVarInt(x);
+            this.WriteUVarInt((uint) y);
+            this.WriteSVarInt(z);
         }
 
         public long ReadEntityUniqueId()
         {
-            return this.ReadVarLong();
+            return this.ReadSVarLong();
         }
 
         public void WriteEntityUniqueId(long eid)
         {
-            this.WriteVarLong(eid);
+            this.WriteSVarLong(eid);
         }
 
         public long ReadEntityRuntimeId()
         {
-            return (long)this.ReadUVarLong();
+            return (long) this.ReadUVarLong();
         }
 
         public void WriteEntityRuntimeId(long eid)
         {
-            this.WriteUVarLong((ulong)eid);
+            this.WriteUVarLong((ulong) eid);
         }
 
         public void WriteAttributes(params EntityAttribute[] attributes)
         {
-            this.WriteUVarInt((uint)attributes.Length);
+            this.WriteUVarInt((uint) attributes.Length);
             for (int i = 0; i < attributes.Length; ++i)
             {
                 this.WriteLFloat(attributes[i].MinValue);

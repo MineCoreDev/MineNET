@@ -573,6 +573,7 @@
     <Compile Include="NBT\Tags\ArrayDataTag.cs" />
     <Compile Include="NBT\Tags\LongArrayTag.cs" />
     <Compile Include="Network\Packets\ChunkRadiusUpdatedPacket.cs" />
+    <Compile Include="Network\Packets\FullChunkDataPacket.cs" />
     <Compile Include="Network\Packets\RequestChunkRadiusPacket.cs" />
     <Compile Include="Network\Packets\ResourcePackClientResponsePacket.cs" />
     <Compile Include="Network\Packets\ResourcePacksInfoPacket.cs" />
@@ -646,7 +647,6 @@
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\MCBEBinary.cs" />
     <Compile Include="Utils\MineNETMath.cs" />
-    <Compile Include="Utils\UUID.cs" />
     <Compile Include="Utils\VarInt.cs" />
     <Compile Include="Utils\ZlibStream.cs" />
     <Compile Include="Values\Vector2.cs" />

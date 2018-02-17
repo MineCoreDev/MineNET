@@ -210,7 +210,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        int dayCycleStopTime = -1;
+        int dayCycleStopTime = 0;
         public int DayCycleStopTime
         {
             get
@@ -238,7 +238,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        float rainLevel = -1;
+        float rainLevel = 0;
         public float RainLevel
         {
             get
@@ -252,7 +252,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        float lightningLevel = -1;
+        float lightningLevel = 0;
         public float LightningLevel
         {
             get
@@ -294,7 +294,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        bool broadcastToXboxLive = false;
+        bool broadcastToXboxLive = true;
         public bool BroadcastToXboxLive
         {
             get
@@ -510,19 +510,20 @@ namespace MineNET.Network.Packets
         {
             base.Encode();
 
+            //TODO: Packet
             this.WriteEntityUniqueId(this.entityUniqueId);
             this.WriteEntityRuntimeId(this.entityRuntimeId);
             this.WriteVarInt(this.playerGamemode);
             this.WriteVector3(this.playerPosition);
             this.WriteVector2(this.direction);
-            this.WriteVarInt(this.seed);
-            this.WriteVarInt(this.dimension);
-            this.WriteVarInt(this.generator);
-            this.WriteVarInt(this.worldGamemode);
-            this.WriteVarInt(this.difficulty);
+            this.WriteSVarInt(this.seed);
+            this.WriteSVarInt(this.dimension);
+            this.WriteSVarInt(this.generator);
+            this.WriteSVarInt(this.worldGamemode);
+            this.WriteSVarInt(this.difficulty);
             this.WriteBlockPosition(this.spawnX, this.spawnY, this.spawnZ);
             this.WriteBool(this.hasAchievementsDisabled);
-            this.WriteVarInt(this.dayCycleStopTime);
+            this.WriteSVarInt(this.dayCycleStopTime);
             this.WriteBool(this.eduMode);
             this.WriteFloat(this.rainLevel);
             this.WriteFloat(this.lightningLevel);
@@ -531,20 +532,20 @@ namespace MineNET.Network.Packets
             this.WriteBool(this.broadcastToXboxLive);
             this.WriteBool(this.commandsEnabled);
             this.WriteBool(this.isTexturePacksRequired);
-            this.WriteUVarInt(0);//GameruleCount
+            this.WriteVarInt(0);//GameruleCount
             //GameRule
             this.WriteBool(this.bonusChest);
             this.WriteBool(this.startWithMap);
             this.WriteBool(this.trustPlayers);
-            this.WriteVarInt(this.permissionLevel);
-            this.WriteVarInt(this.gamePublish);
-            this.WriteLInt((uint)this.serverChunkTickRadius);
+            this.WriteSVarInt(this.permissionLevel);
+            this.WriteSVarInt(this.gamePublish);
+            this.WriteInt(this.serverChunkTickRadius);
             this.WriteString(this.levelId);
             this.WriteString(this.worldName);
             this.WriteString(this.premiumWorldTemplateId);
             this.WriteBool(this.unknown);
-            this.WriteLLong((ulong)this.currentTick);
-            this.WriteVarInt(this.enchantmentSeed);
+            this.WriteLong(this.currentTick);
+            this.WriteSVarInt(this.enchantmentSeed);
         }
     }
 }

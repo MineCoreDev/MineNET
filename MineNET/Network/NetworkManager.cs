@@ -77,11 +77,13 @@ namespace MineNET.Network
 
                 if (pkid == BatchPacket.ID)
                 {
-                    BatchPacket batch = new BatchPacket();
-                    batch.SetBuffer(buffer);
-                    batch.Decode();
+                    using (BatchPacket batch = new BatchPacket())
+                    {
+                        batch.SetBuffer(buffer);
+                        batch.Decode();
 
-                    this.GetPackets(batch, player);
+                        this.GetPackets(batch, player);
+                    }
                 }
             }
         }
@@ -92,28 +94,19 @@ namespace MineNET.Network
 
             pk.Encode();
 
+            byte[] buffer = pk.GetResult();
+            Logger.Log("SendPEPacket {0}", buffer[0].ToString("X"));
+
             BinaryStream st = new BinaryStream();
-            st.WriteVarInt((int)pk.Length);
-            st.WriteBytes(pk.GetResult());
+            st.WriteVarInt((int) pk.Length);
+            st.WriteBytes(buffer);
 
             BatchPacket bp = new BatchPacket();
             bp.Payload = st.GetResult();
             bp.Encode();
 
             RakNet.Packets.EncapsulatedPacket enc = new RakNet.Packets.EncapsulatedPacket();
-            /*if (needACK)
-            {
-                enc.buffer = bp.GetResult();
-                enc.identifierACK = identifierACKs[RakNetServer.IPEndPointToID(session.EndPoint)]++;
-                enc.reliability = immediate ? RakNet.Packets.PacketReliability.RELIABLE : RakNet.Packets.PacketReliability.RELIABLE_ORDERED;
-                enc.orderChannel = 0;
-            }
-            else
-            {
-                enc.buffer = bp.GetResult();
-                enc.reliability = immediate ? RakNet.Packets.PacketReliability.RELIABLE : RakNet.Packets.PacketReliability.RELIABLE_ORDERED;
-                enc.orderChannel = 0;
-            }*/
+
             enc.buffer = bp.GetResult();
             enc.reliability = RakNet.Packets.PacketReliability.UNRELIABLE;
 
@@ -135,10 +128,11 @@ namespace MineNET.Network
                             packet.SetBuffer(buffer);
                             packet.Decode();
                             player.PacketHandle(packet);
+                            Logger.Log("HandlePEPacket {0}", buffer[0].ToString("X"));
                         }
                         else
                         {
-                            Logger.Log("NotHandlePEPacket {0}", buffer[0]);
+                            Logger.Log("NotHandlePEPacket {0}", buffer[0].ToString("X"));
                         }
                     }
                 }
@@ -149,7 +143,7 @@ namespace MineNET.Network
         {
             if (packetPool.ContainsKey(id))
             {
-                return (DataPacket)packetPool[id].Clone();
+                return (DataPacket) packetPool[id].Clone();
             }
             return null;
         }

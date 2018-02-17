@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET", "MineNET\MineNET.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET.Console", "MineNET.Console\MineNET.Console.csproj", "{6DD318F1-51C5-48AF-A893-E4A83E81FFE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNETTests", "MineNETTests\MineNETTests.csproj", "{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{6DD318F1-51C5-48AF-A893-E4A83E81FFE5}.Release|x64.Build.0 = Release|x64
 		{6DD318F1-51C5-48AF-A893-E4A83E81FFE5}.Release|x86.ActiveCfg = Release|x86
 		{6DD318F1-51C5-48AF-A893-E4A83E81FFE5}.Release|x86.Build.0 = Release|x86
+		{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}.Debug|x64.Build.0 = Debug|Any CPU
+		{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}.Debug|x86.Build.0 = Debug|Any CPU
+		{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}.Release|x64.ActiveCfg = Release|Any CPU
+		{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}.Release|x64.Build.0 = Release|Any CPU
+		{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}.Release|x86.ActiveCfg = Release|Any CPU
+		{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
