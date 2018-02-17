@@ -8,5 +8,9 @@ namespace MineNET.Entities
 {
     public class Living : Entity
     {
+        protected override void entityInit()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

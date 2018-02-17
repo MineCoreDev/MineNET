@@ -3,6 +3,7 @@ using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Network.Packets;
 using MineNET.Utils;
+using MineNET.Values;
 
 namespace MineNET.Entities
 {
