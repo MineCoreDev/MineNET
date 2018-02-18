@@ -348,6 +348,7 @@
     <Compile Include="Commands\ConsoleSender.cs" />
     <Compile Include="Commands\Defaults\StopCommand.cs" />
     <Compile Include="Commands\ICommandHandler.cs" />
+    <Compile Include="Data\InventoryId.cs" />
     <Compile Include="Data\LoginData.cs" />
     <Compile Include="Data\ClientData.cs" />
     <Compile Include="Data\PlayerListEntry.cs" />
@@ -359,6 +360,9 @@
     <Compile Include="Entities\Human.cs" />
     <Compile Include="Entities\Living.cs" />
     <Compile Include="Entities\Player.cs" />
+    <Compile Include="Inventories\BaseInventory.cs" />
+    <Compile Include="Inventories\Inventory.cs" />
+    <Compile Include="Inventories\InventoryHolder.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemAcaciaDoor.cs" />
     <Compile Include="Items\ItemApple.cs" />

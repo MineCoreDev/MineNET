@@ -140,7 +140,7 @@ namespace MineNET.Utils
             this.WriteVarInt(item.ItemID);
             int auxValue = (((item.Damage != 0 ? item.Damage : -1) & 0x7fff) << 8) | item.Count;
             this.WriteVarInt(auxValue);
-            byte[] nbt = item.RawTag;
+            byte[] nbt = item.Tag;
             this.WriteLShort((ushort) nbt.Length);
             this.WriteBytes(nbt);
             this.WriteVarInt(0); //TODO

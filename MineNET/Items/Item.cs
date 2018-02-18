@@ -15,7 +15,7 @@ namespace MineNET.Items
             {
                 tags = new byte[0];
             }
-            item.rawTag = tags;
+            item.tags = tags;
             return item;
         }
 
@@ -27,8 +27,8 @@ namespace MineNET.Items
         private int id;
         private short meta;
         private byte count;
-        private byte[] rawTag;
-        private CompoundTag namedTag;
+        private byte[] tags = new byte[0];
+        private CompoundTag cachedNBT = null;
 
         private Block block = null;
 
@@ -81,17 +81,41 @@ namespace MineNET.Items
             }
         }
 
-        public byte[] RawTag
+        public bool HasTag()
+        {
+            return this.tags != null && this.tags.Length > 0;
+        }
+
+        public byte[] Tag
         {
             get
             {
-                return this.rawTag;
+                return this.tags;
             }
 
             set
             {
-                this.rawTag = value;
+                this.tags = value;
+                this.cachedNBT = null;
             }
+        }
+
+        public CompoundTag GetNamedTag()
+        {
+            if (!this.HasTag())
+            {
+                return new CompoundTag();
+            }
+            //TODO : this.tag -> CompoundTag
+            return new CompoundTag();
+        }
+
+        public Item SetNamedTag(CompoundTag nbt)
+        {
+            nbt.Name = null;
+            this.cachedNBT = nbt;
+            //this.tags = nbt;
+            return this;
         }
 
         public Block Block

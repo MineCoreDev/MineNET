@@ -1,9 +1,9 @@
-﻿using System.Net;
-using MineNET.Commands;
+﻿using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Network.Packets;
 using MineNET.Utils;
 using MineNET.Values;
+using System.Net;
 
 namespace MineNET.Entities
 {
@@ -119,14 +119,14 @@ namespace MineNET.Entities
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_HAVE_ALL_PACKS)
             {
-                packDownloaded = true;
+                this.packDownloaded = true;
                 ResourcePackStackPacket resourcePackStackPacket = new ResourcePackStackPacket();
                 this.SendPacket(resourcePackStackPacket);
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_COMPLETED)
             {
-                packStatusCompleted = true;
-                ProcessLogin();
+                this.packStatusCompleted = true;
+                this.ProcessLogin();
             }
         }
 
@@ -137,7 +137,7 @@ namespace MineNET.Entities
             Logger.Info("%server_chunkRadius", pk.Radius, chunkRadiusUpdatedPacket.Radius);
             SendPacket(chunkRadiusUpdatedPacket);
 
-            SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+            this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
         }
 
         void ProcessLogin()

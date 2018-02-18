@@ -13,11 +13,7 @@ namespace MineNET.Entities
         public Entity()
         {
             this.id = Entity.nextEntityId++;
-
-            this.entityInit();
         }
-
-        protected abstract void entityInit();
 
         public long GetId
         {
