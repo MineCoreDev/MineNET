@@ -574,7 +574,7 @@
     <Compile Include="Items\ItemWritableBook.cs" />
     <Compile Include="MineNETConfig.cs" />
     <Compile Include="NBT\NBTEndian.cs" />
-    <Compile Include="NBT\NBTFileIO.cs" />
+    <Compile Include="NBT\NBTIO.cs" />
     <Compile Include="NBT\NBTStream.cs" />
     <Compile Include="NBT\NBTTagType.cs" />
     <Compile Include="NBT\Tags\ArrayDataTag.cs" />
