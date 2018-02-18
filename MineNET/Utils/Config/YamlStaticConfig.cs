@@ -18,18 +18,18 @@ namespace MineNET.Utils.Config
                 {
                     Deserializer s = new DeserializerBuilder()
                         .Build();
-                    YamlStaticConfig conv = (YamlStaticConfig)s.Deserialize<T>(r);
+                    YamlStaticConfig conv = s.Deserialize<T>(r);
                     conv.filePath = filePath;
-                    return (T)Convert.ChangeType(conv, typeof(T));
+                    return (T) Convert.ChangeType(conv, typeof(T));
                 }
             }
             else
             {
                 object ins = Activator.CreateInstance(typeof(T));
-                YamlStaticConfig conv = (YamlStaticConfig)ins;
+                YamlStaticConfig conv = (YamlStaticConfig) ins;
                 conv.filePath = filePath;
                 conv.Save<T>();
-                return (T)conv;
+                return (T) conv;
             }
         }
 

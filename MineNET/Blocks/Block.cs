@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MineNET.Utils;
 
 namespace MineNET.Blocks
 {
-    public abstract class Block : ICloneable
+    public abstract class Block : ICloneable<Block>
     {
         public static Block Get(byte id)
         {
@@ -35,7 +32,12 @@ namespace MineNET.Blocks
             throw new NotImplementedException();
         }
 
-        public object Clone()
+        Block ICloneable<Block>.Clone()
+        {
+            return (Block) this.MemberwiseClone();
+        }
+
+        object ICloneable.Clone()
         {
             return this.MemberwiseClone();
         }

@@ -27,7 +27,7 @@ namespace MineNET.Commands
                 }
                 else
                 {
-                    Logger.Info(LangManager.GetString("command_notFound"), cmd);
+                    Logger.Info("%command_notFound", cmd);
                 }
             }
         }

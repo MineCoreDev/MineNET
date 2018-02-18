@@ -591,6 +591,12 @@
     <Compile Include="Network\Packets\SetTimePacket.cs" />
     <Compile Include="Network\Packets\StartGamePacket.cs" />
     <Compile Include="Network\Packets\UpdateAttributesPacket.cs" />
+    <Compile Include="Plugins\Attributes\CommandAttribute.cs" />
+    <Compile Include="Plugins\Attributes\PluginAttribute.cs" />
+    <Compile Include="Plugins\IPlugin.cs" />
+    <Compile Include="Plugins\PluginBase.cs" />
+    <Compile Include="Plugins\PluginException.cs" />
+    <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="NBT\Tags\ByteArrayTag.cs" />
     <Compile Include="NBT\Tags\ByteTag.cs" />
@@ -651,6 +657,7 @@
     <Compile Include="Utils\Config\Yaml\CommentPropertyDescriptor.cs" />
     <Compile Include="Utils\Config\Yaml\CommentTypeInspector.cs" />
     <Compile Include="Utils\ConsoleInput.cs" />
+    <Compile Include="Utils\ICloneable.cs" />
     <Compile Include="Utils\IConfig.cs" />
     <Compile Include="Utils\JWT.cs" />
     <Compile Include="Utils\LangManager.cs" />

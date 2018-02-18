@@ -45,16 +45,16 @@ namespace MineNET.RakNet
 
         public RakNetServer(ushort port)
         {
-            Logger.Info(LangManager.GetString("network_start"));
+            Logger.Info("%network_start");
 
             this.UDPClientInit(port);
             this.Init();
 
-            Logger.Info(LangManager.GetString("network_start_port"), port);
+            Logger.Info("%network_start_port", port);
 
             this.port = port;
 
-            Logger.Info(LangManager.GetString("network_started"));
+            Logger.Info("%network_started");
         }
 
         ~RakNetServer()
@@ -73,7 +73,7 @@ namespace MineNET.RakNet
             uint IOC_IN = 0x80000000;
             uint IOC_VENDOR = 0x18000000;
             uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
-            this.client.Client.IOControl((int)SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
+            this.client.Client.IOControl((int) SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
 
             this.client.BeginReceive(OnReceive, null);
         }
@@ -158,14 +158,14 @@ namespace MineNET.RakNet
                     }
                     else
                     {
-                        Logger.Log(LangManager.GetString("raknet_sessionNotCreate"), IPEndPointToID(point));
+                        Logger.Log("%raknet_sessionNotCreate", IPEndPointToID(point));
                     }
                 }
                 else if (pk is OfflineMessage)
                 {
                     if (sessions.ContainsKey(id))
                     {
-                        Logger.Log(LangManager.GetString("raknet_sessionCreated"), IPEndPointToID(point));
+                        Logger.Log("%raknet_sessionCreated", IPEndPointToID(point));
                     }
                     else
                     {
@@ -174,7 +174,7 @@ namespace MineNET.RakNet
                 }
                 else
                 {
-                    Logger.Log("NotHandlePacket: {0}", pid);
+                    //Logger.Log("NotHandlePacket: {0}", pid);
                     return;
                 }
             }
@@ -216,7 +216,7 @@ namespace MineNET.RakNet
                 int player = Server.Instance.NetworkManager.players.Count;
                 string gameMode = Server.ServerConfig.WorldGameMode;
 
-                UNCONNECTED_PING uping = (UNCONNECTED_PING)packet;
+                UNCONNECTED_PING uping = (UNCONNECTED_PING) packet;
                 UNCONNECTED_PONG upong = new UNCONNECTED_PONG();
                 upong.PingID = uping.PingID;
                 upong.ServerID = GetServerID();
@@ -226,7 +226,7 @@ namespace MineNET.RakNet
             }
             else if (packet.PacketID == OPEN_CONNECTION_REQUEST_1.ID)
             {
-                OPEN_CONNECTION_REQUEST_1 request1 = (OPEN_CONNECTION_REQUEST_1)packet;
+                OPEN_CONNECTION_REQUEST_1 request1 = (OPEN_CONNECTION_REQUEST_1) packet;
                 OPEN_CONNECTION_REPLY_1 reply1 = new OPEN_CONNECTION_REPLY_1();
                 reply1.ServerID = GetServerID();
                 reply1.MTUSize = request1.MTUSize;
@@ -235,7 +235,7 @@ namespace MineNET.RakNet
             }
             else if (packet.PacketID == OPEN_CONNECTION_REQUEST_2.ID)
             {
-                OPEN_CONNECTION_REQUEST_2 request2 = (OPEN_CONNECTION_REQUEST_2)packet;
+                OPEN_CONNECTION_REQUEST_2 request2 = (OPEN_CONNECTION_REQUEST_2) packet;
                 OPEN_CONNECTION_REPLY_2 reply2 = new OPEN_CONNECTION_REPLY_2();
                 reply2.ServerID = GetServerID();
                 reply2.EndPoint = request2.EndPoint;
@@ -275,15 +275,15 @@ namespace MineNET.RakNet
 
             Server.Instance.NetworkManager.CreatePlayer(point, IPEndPointToID(point));
 
-            Logger.Info(LangManager.GetString("raknet_sessionCreate"), IPEndPointToID(point), mtuSize);
+            Logger.Info("%raknet_sessionCreate", IPEndPointToID(point), mtuSize);
         }
 
         public void RemoveSession(IPEndPoint point, string msg)
         {
             string id = IPEndPointToID(point);
 
-            Logger.Info(LangManager.GetString("raknet_sessionClose"), IPEndPointToID(point));
-            Logger.Log(LangManager.GetString("raknet_sessionClose_reason"), msg);
+            Logger.Info("%raknet_sessionClose", IPEndPointToID(point));
+            Logger.Log("%raknet_sessionClose_reason", msg);
 
             this.sessions.Remove(id);
         }
@@ -296,7 +296,7 @@ namespace MineNET.RakNet
         public void BlockUser(IPEndPoint point, int blockTime)
         {
             this.blockUsers.Add(IPEndPointToID(point), blockTime);
-            Logger.Warning(LangManager.GetString("raknet_userBlock"), IPEndPointToID(point), blockTime / 20);
+            Logger.Warning("%raknet_userBlock", IPEndPointToID(point), blockTime / 20);
         }
 
         public void UnBlockUser(IPEndPoint point)
@@ -314,7 +314,7 @@ namespace MineNET.RakNet
             if (this.packetPool.ContainsKey(id))
             {
                 Packet pk = this.packetPool[id];
-                pk = (Packet)pk.Clone();
+                pk = (Packet) pk.Clone();
                 pk.SetBuffer(buffer);
                 return pk;
             }

@@ -71,7 +71,6 @@ namespace MineNET.Entities
 
         public void PacketHandle(DataPacket pk)
         {
-            Logger.Info(pk.ToString());
             if (pk is LoginPacket)
             {
                 this.LoginPacketHandle((LoginPacket) pk);
@@ -135,7 +134,7 @@ namespace MineNET.Entities
         {
             ChunkRadiusUpdatedPacket chunkRadiusUpdatedPacket = new ChunkRadiusUpdatedPacket();
             chunkRadiusUpdatedPacket.Radius = FixRadius(pk.Radius);
-            Logger.Info(LangManager.GetString("server_chunkRadius"), pk.Radius, chunkRadiusUpdatedPacket.Radius);
+            Logger.Info("%server_chunkRadius", pk.Radius, chunkRadiusUpdatedPacket.Radius);
             SendPacket(chunkRadiusUpdatedPacket);
 
             SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);

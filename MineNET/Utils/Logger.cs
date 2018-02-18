@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MineNET.Utils
 {
-    public static class Logger
+    public class Logger
     {
         const int WINDOW_X = 100;
         const int WINDOW_Y = 25;
@@ -23,8 +23,8 @@ namespace MineNET.Utils
             Fatal
         }
 
-        static bool useGUI = false;
-        public static bool UseGUI
+        bool useGUI = false;
+        public bool UseGUI
         {
             get
             {
@@ -37,9 +37,9 @@ namespace MineNET.Utils
             }
         }
 
-        static Queue<LoggerInfo> loggerTexts = new Queue<LoggerInfo>();
+        Queue<LoggerInfo> loggerTexts = new Queue<LoggerInfo>();
 
-        internal static void Init()
+        internal void Init()
         {
             if (!useGUI)
             {
@@ -69,45 +69,77 @@ namespace MineNET.Utils
 
         public static void Log(string msg, params object[] formats)
         {
+            if (msg[0] == '%')
+            {
+                msg = msg.Remove(0, 1);
+                msg = LangManager.GetString(msg);
+            }
             string f = string.Format(msg, formats);
             Log(f);
         }
 
         public static void Log(string msg)
         {
+            if (msg[0] == '%')
+            {
+                msg = msg.Remove(0, 1);
+                msg = LangManager.GetString(msg);
+            }
             string text = $"§7[Log][{CreateTime()}]{msg}";
-            AddLogText(text, LoggerLevel.Log);
+            Server.Instance.Logger.AddLogText(text, LoggerLevel.Log);
         }
-
-        
 
         public static void Info(string msg, params object[] formats)
         {
+            if (msg[0] == '%')
+            {
+                msg = msg.Remove(0, 1);
+                msg = LangManager.GetString(msg);
+            }
             string f = string.Format(msg, formats);
             Info(f);
         }
 
         public static void Info(string msg)
         {
+            if (msg[0] == '%')
+            {
+                msg = msg.Remove(0, 1);
+                msg = LangManager.GetString(msg);
+            }
             string text = $"§f[Info][{CreateTime()}]{msg}";
-            AddLogText(text);
+            Server.Instance.Logger.AddLogText(text);
         }
 
         public static void Warning(string msg, params object[] formats)
         {
+            if (msg[0] == '%')
+            {
+                msg = msg.Remove(0, 1);
+                msg = LangManager.GetString(msg);
+            }
             string f = string.Format(msg, formats);
             Warning(f);
         }
 
         public static void Warning(string msg)
         {
+            if (msg[0] == '%')
+            {
+                msg = msg.Remove(0, 1);
+                msg = LangManager.GetString(msg);
+            }
             string text = $"§e[Warning][{CreateTime()}]{msg}";
-            AddLogText(text, LoggerLevel.Warning);
-
+            Server.Instance.Logger.AddLogText(text, LoggerLevel.Warning);
         }
 
         public static void Error(string msg, params object[] formats)
         {
+            if (msg[0] == '%')
+            {
+                msg = msg.Remove(0, 1);
+                msg = LangManager.GetString(msg);
+            }
             string f = string.Format(msg, formats);
             Error(f);
         }
@@ -122,23 +154,38 @@ namespace MineNET.Utils
 
         public static void Error(string msg)
         {
+            if (msg[0] == '%')
+            {
+                msg = msg.Remove(0, 1);
+                msg = LangManager.GetString(msg);
+            }
             string text = $"§c[Error][{CreateTime()}]{msg}";
-            AddLogText(text, LoggerLevel.Error);
+            Server.Instance.Logger.AddLogText(text, LoggerLevel.Error);
         }
 
         public static void Fatal(string msg, params object[] formats)
         {
+            if (msg[0] == '%')
+            {
+                msg = msg.Remove(0, 1);
+                msg = LangManager.GetString(msg);
+            }
             string f = string.Format(msg, formats);
             Fatal(f);
         }
 
         public static void Fatal(string msg)
         {
+            if (msg[0] == '%')
+            {
+                msg = msg.Remove(0, 1);
+                msg = LangManager.GetString(msg);
+            }
             string text = $"§4[Fatal][{CreateTime()}]{msg}";
-            AddLogText(text, LoggerLevel.Fatal);
+            Server.Instance.Logger.AddLogText(text, LoggerLevel.Fatal);
         }
 
-        internal static void Update()
+        internal void Update()
         {
             if (!useGUI)
             {
@@ -164,7 +211,7 @@ namespace MineNET.Utils
             }
         }
 
-        internal static void CUIFormat(string text)
+        internal void CUIFormat(string text)
         {
             string[] f = text.Split('§');
             for (int i = 0; i < f.Length; ++i)
@@ -181,7 +228,7 @@ namespace MineNET.Utils
             Console.Write(Environment.NewLine);
         }
 
-        private static void CUIOutputFormatColor(string text)
+        private void CUIOutputFormatColor(string text)
         {
             char c = text[0];
             if (c == '0')
@@ -280,7 +327,7 @@ namespace MineNET.Utils
             return DateTime.Now.ToString("yyyy/M/d H:mm:ss");
         }
 
-        static void AddLogText(string text, LoggerLevel level = LoggerLevel.Info)
+        void AddLogText(string text, LoggerLevel level = LoggerLevel.Info)
         {
             if (level == LoggerLevel.Log && !Server.MineNETConfig.EnableDebugLog)
             {

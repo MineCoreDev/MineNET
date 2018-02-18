@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET", "MineNET\MineNET.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET.Console", "MineNET.Console\MineNET.Console.csproj", "{6DD318F1-51C5-48AF-A893-E4A83E81FFE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNETTests", "MineNETTests\MineNETTests.csproj", "{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineNET.Tests", "MineNETTests\MineNET.Tests.csproj", "{9E763B06-AB38-43CE-AD08-503CAD1CFF0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

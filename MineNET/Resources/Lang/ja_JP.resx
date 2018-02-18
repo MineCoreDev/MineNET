@@ -198,4 +198,25 @@
   <data name="server_chunkRadius" xml:space="preserve">
     <value>チャンク範囲 {0} でリクエストされました。&lt;{1}に変更しました。&gt;</value>
   </data>
+  <data name="server_packet_handle" xml:space="preserve">
+    <value>データパケット {0}を受信しました。</value>
+  </data>
+  <data name="server_packet_notHandle" xml:space="preserve">
+    <value>ハンドルされていないデータパケット {0}を受信しました。</value>
+  </data>
+  <data name="server_packet_send" xml:space="preserve">
+    <value>データパケット {0}を送信しました。</value>
+  </data>
+  <data name="server_plugin_enable" xml:space="preserve">
+    <value>プラグイン&lt;{0}&gt;が有効になりました。</value>
+  </data>
+  <data name="server_plugin_load" xml:space="preserve">
+    <value>プラグイン&lt;{0}&gt;のロード中...</value>
+  </data>
+  <data name="server_plugin_loadError" xml:space="preserve">
+    <value>プラグイン&lt;{0}&gt;のロード中にエラーが発生しました。</value>
+  </data>
+  <data name="server_plugin_notPlugin" xml:space="preserve">
+    <value>アセンブリ&lt;{0}&gt;は、MineNETのプラグインではありません。</value>
+  </data>
 </root>

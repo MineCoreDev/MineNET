@@ -65,6 +65,15 @@ namespace MineNET
             }
         }
 
+        Logger logger;
+        public Logger Logger
+        {
+            get
+            {
+                return logger;
+            }
+        }
+
         bool isShutdown;
         public bool IsShutdown()
         {
@@ -81,8 +90,8 @@ namespace MineNET
             Init();
 
             s.Stop();
-            Logger.Info(LangManager.GetString("server_started"));
-            Logger.Info(LangManager.GetString("server_started2"), s.Elapsed.ToString());
+            Logger.Info("%server_started");
+            Logger.Info("%server_started2", s.Elapsed.ToString());
         }
 
         void Init()
@@ -103,9 +112,10 @@ namespace MineNET
 
             if (mineNETConfig.EnableConsoleOutput)
             {
-                Logger.Init();
+                logger = new Logger();
+                logger.Init();
             }
-            Logger.Info(LangManager.GetString("server_start"));
+            Logger.Info("%server_start");
 
             networkManager = new NetworkManager();
             commandManager = new CommandManager();
@@ -137,13 +147,13 @@ namespace MineNET
             while (!IsShutdown())
             {
                 await Task.Delay(1000 / 20);
-                Logger.Update();
+                logger.Update();
             }
         }
 
         public void Stop()
         {
-            Logger.Info(LangManager.GetString("server_stop"));
+            Logger.Info("%server_stop");
             mineNETConfig.Save<MineNETConfig>();
             serverConfig.Save<ServerConfig>();
             Kill();
@@ -151,7 +161,7 @@ namespace MineNET
 
         public void Kill()
         {
-            Logger.Info(LangManager.GetString("server_stoped"));
+            Logger.Info("%server_stoped");
             Killed();
         }
 
