@@ -42,8 +42,8 @@ namespace MineNET.NBT.Tags
             int len = this.Data.Length;
             if (Name != null)
             {
-                stream.WriteByte((byte)TagType);
-                stream.WriteString(Name);
+                stream.WriteByte((byte) this.TagType);
+                stream.WriteString(this.Name);
                 stream.WriteInt(len);
                 for (int i = 0; i < len; ++i)
                 {
@@ -58,7 +58,12 @@ namespace MineNET.NBT.Tags
 
         internal override void Read(NBTStream stream)
         {
-            throw new NotImplementedException();
+            int len = stream.ReadInt();
+            this.Data = new byte[len];
+            for (int i = 0; i < len; ++i)
+            {
+                this.Data[i] = stream.ReadByte();
+            }
         }
 
         internal override void ReadTag(NBTStream stream)

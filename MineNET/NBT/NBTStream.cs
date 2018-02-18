@@ -20,7 +20,7 @@ namespace MineNET.NBT
 
         Encoding utf8 = new UTF8Encoding(false, true);
 
-        public NBTStream()
+        public NBTStream(NBTEndian endian = NBTEndian.LITTLE_ENDIAN) : this(new byte[0], endian)
         {
 
         }
@@ -33,6 +33,8 @@ namespace MineNET.NBT
         public NBTStream(byte[] buffer, NBTEndian endian)
         {
             this.swap = (IsBigEndian(endian) == BitConverter.IsLittleEndian);
+            this.Write(buffer, 0, buffer.Length);
+            this.Position = 0;
         }
 
         public new byte ReadByte()
@@ -49,7 +51,7 @@ namespace MineNET.NBT
         {
             if (swap)
             {
-                return (short)Binary.ReadLShort(this);
+                return (short) Binary.ReadLShort(this);
             }
             else
             {
@@ -61,7 +63,7 @@ namespace MineNET.NBT
         {
             if (swap)
             {
-                Binary.WriteLShort(this, (ushort)value);
+                Binary.WriteLShort(this, (ushort) value);
             }
             else
             {
@@ -73,7 +75,7 @@ namespace MineNET.NBT
         {
             if (swap)
             {
-                return (int)Binary.ReadLInt(this);
+                return (int) Binary.ReadLInt(this);
             }
             else
             {
@@ -85,7 +87,7 @@ namespace MineNET.NBT
         {
             if (swap)
             {
-                Binary.WriteLInt(this, (uint)value);
+                Binary.WriteLInt(this, (uint) value);
             }
             else
             {
@@ -97,7 +99,7 @@ namespace MineNET.NBT
         {
             if (swap)
             {
-                return (long)Binary.ReadLLong(this);
+                return (long) Binary.ReadLLong(this);
             }
             else
             {
@@ -109,7 +111,7 @@ namespace MineNET.NBT
         {
             if (swap)
             {
-                Binary.WriteLLong(this, (ulong)value);
+                Binary.WriteLLong(this, (ulong) value);
             }
             else
             {
@@ -167,14 +169,14 @@ namespace MineNET.NBT
 
         public string ReadString()
         {
-            ushort len = (ushort)ReadShort();
-            byte[] buffer = Binary.ReadBytes(this, (int)this.Position, len);
+            short len = ReadShort();
+            byte[] buffer = Binary.ReadBytes(this, (int) this.Position, len);
             return utf8.GetString(buffer);
         }
 
         public void WriteString(string value)
         {
-            WriteShort((short)value.Length);
+            WriteShort((short) value.Length);
             Binary.WriteBytes(this, utf8.GetBytes(value));
         }
 

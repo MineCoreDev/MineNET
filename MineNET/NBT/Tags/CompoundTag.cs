@@ -13,7 +13,7 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        private Dictionary<string, Tag> tags = new Dictionary<string, Tag>();
+        readonly Dictionary<string, Tag> tags = new Dictionary<string, Tag>();
 
         public CompoundTag() : base("")
         {
@@ -35,7 +35,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((ByteTag)this.tags[name]).Data;
+                return ((ByteTag) this.tags[name]).Data;
             }
             else
             {
@@ -53,7 +53,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((ShortTag)this.tags[name]).Data;
+                return ((ShortTag) this.tags[name]).Data;
             }
             else
             {
@@ -71,7 +71,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((IntTag)this.tags[name]).Data;
+                return ((IntTag) this.tags[name]).Data;
             }
             else
             {
@@ -89,7 +89,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((LongTag)this.tags[name]).Data;
+                return ((LongTag) this.tags[name]).Data;
             }
             else
             {
@@ -107,7 +107,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((FloatTag)this.tags[name]).Data;
+                return ((FloatTag) this.tags[name]).Data;
             }
             else
             {
@@ -125,7 +125,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((DoubleTag)this.tags[name]).Data;
+                return ((DoubleTag) this.tags[name]).Data;
             }
             else
             {
@@ -143,7 +143,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((StringTag)this.tags[name]).Data;
+                return ((StringTag) this.tags[name]).Data;
             }
             else
             {
@@ -153,7 +153,7 @@ namespace MineNET.NBT.Tags
 
         public CompoundTag PutBool(string name, bool data)
         {
-            this.tags[name] = new ByteTag(name, data ? (byte)1 : (byte)0);
+            this.tags[name] = new ByteTag(name, data ? (byte) 1 : (byte) 0);
             return this;
         }
 
@@ -172,7 +172,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((ByteArrayTag)this.tags[name]).Data;
+                return ((ByteArrayTag) this.tags[name]).Data;
             }
             else
             {
@@ -190,7 +190,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return ((IntArrayTag)this.tags[name]).Data;
+                return ((IntArrayTag) this.tags[name]).Data;
             }
             else
             {
@@ -209,7 +209,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return (ListTag<T>)this.tags[name];
+                return (ListTag<T>) this.tags[name];
             }
             else
             {
@@ -228,7 +228,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return (CompoundTag)this.tags[name];
+                return (CompoundTag) this.tags[name];
             }
             else
             {
@@ -241,18 +241,11 @@ namespace MineNET.NBT.Tags
             this.tags[name] = tag;
         }
 
-        /// <summary>
-        /// この関数を連続的に呼び出すとパフォーマンスが低下する可能性があります。
-        /// 代わりに GetInt(string) などを使用する事をおすすめします。
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="name"></param>
-        /// <returns></returns>
         public T GetTag<T>(string name) where T : Tag
         {
             if (this.Exist(name))
             {
-                return (T)Convert.ChangeType(this[name], typeof(T));
+                return (T) this[name];
             }
             else
                 throw new IndexOutOfRangeException();
@@ -300,11 +293,6 @@ namespace MineNET.NBT.Tags
             {
                 return this.tags;
             }
-
-            set
-            {
-                this.tags = value;
-            }
         }
 
         public override string ToString()
@@ -314,22 +302,62 @@ namespace MineNET.NBT.Tags
 
         internal override void Write(NBTStream stream)
         {
-            throw new NotImplementedException();
+            foreach (Tag t in this.tags.Values)
+            {
+                t.WriteTag(stream);
+            }
+            stream.WriteByte((byte) NBTTagType.END);
         }
 
         internal override void WriteTag(NBTStream stream)
         {
-            throw new NotImplementedException();
+            if (Name != null)
+            {
+                stream.WriteByte((byte) this.TagType);
+                stream.WriteString(this.Name);
+                this.Write(stream);
+            }
         }
 
         internal override void Read(NBTStream stream)
         {
-            throw new NotImplementedException();
+            while (true)
+            {
+                NBTTagType type = (NBTTagType) stream.ReadByte();
+                string tagName = "";
+                int len = 0;
+                switch (type)
+                {
+                    case NBTTagType.BYTE:
+                        tagName = stream.ReadString();
+                        PutByte(tagName, stream.ReadByte());
+                        break;
+
+                    case NBTTagType.BYTE_ARRAY:
+                        tagName = stream.ReadString();
+                        len = stream.ReadInt();
+                        byte[] b = new byte[len];
+                        for (int i = 0; i < len; ++i)
+                        {
+                            b[i] = stream.ReadByte();
+                        }
+                        PutByteArray(tagName, b);
+                        break;
+
+                    case NBTTagType.END:
+                        return;
+
+                    default:
+                        return;
+                }
+            }
         }
 
         internal override void ReadTag(NBTStream stream)
         {
-            throw new NotImplementedException();
+            stream.ReadByte();
+            this.Name = stream.ReadString();
+            this.Read(stream);
         }
     }
 }

@@ -11,11 +11,9 @@ namespace MineNET.Blocks.Tests
         public void GetTest()
         {
             BlockFactory f = new BlockFactory();
-            FieldInfo[] fields = f.GetType().GetFields();
-            foreach (FieldInfo i in fields)
-            {
-                Console.WriteLine(i.GetValue(f));
-            }
+            FieldInfo field = f.GetType().GetField("STONE");
+
+            Console.WriteLine(field.GetValue(f));
 
             Assert.IsTrue(true);
         }

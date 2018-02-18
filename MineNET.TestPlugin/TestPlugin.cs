@@ -9,7 +9,11 @@ namespace MineNET.TestPlugin
     {
         public override void OnLoad()
         {
+            Logger.Log("Hallo World!");
             Logger.Info("Hallo World!");
+            Logger.Warning("Hallo World!");
+            Logger.Error("Hallo World!");
+            Logger.Fatal("Hallo World!");
         }
 
         public override void OnUnLoad()
