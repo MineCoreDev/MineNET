@@ -1,14 +1,15 @@
 ﻿using MineNET.Blocks;
 using MineNET.NBT.Tags;
+using MineNET.Utils;
 using System;
 
 namespace MineNET.Items
 {
-    public class Item : ICloneable
+    public class Item : ICloneable<Item>
     {
         public static Item Get(int id, short meta = 0, byte count = 1, byte[] tags = null)
         {
-            Item item = Get(id);
+            Item item = ItemFactory.GetItem(id);
             item.Damage = meta;
             item.Count = count;
             if (tags == null)
@@ -19,7 +20,54 @@ namespace MineNET.Items
             return item;
         }
 
-        public object Clone()
+        public static Item Get(string name)
+        {
+            string[] data = name.Replace("minecraft:", "").Replace(" ", "_").ToUpper().Split(':');
+            int id = 0;
+            int meta = 0;
+            try
+            {
+                id = int.Parse(data[0]);
+            }
+            catch
+            {
+
+            }
+            try
+            {
+                ItemFactory factory = new ItemFactory();
+                id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
+            }
+            catch
+            {
+                try
+                {
+                    BlockFactory factory = new BlockFactory();
+                    id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
+                }
+                catch
+                {
+
+                }
+            }
+            try
+            {
+                meta = int.Parse(data[1]);
+            }
+            catch
+            {
+
+            }
+            Item item = Item.Get((byte) id, (short) meta);
+            return item;
+        }
+
+        public Item Clone()
+        {
+            return (Item) Clone();
+        }
+
+        object ICloneable.Clone()
         {
             return this.MemberwiseClone();
         }

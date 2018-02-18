@@ -1,35 +1,51 @@
-﻿using System;
-using MineNET.Utils;
+﻿using MineNET.Utils;
+using System;
 
 namespace MineNET.Blocks
 {
     public abstract class Block : ICloneable<Block>
     {
-        public static Block Get(byte id)
+
+        public static Block Get(byte id, short meta = 0)
         {
             Block block = BlockFactory.GetBlock(id);
-            return block;
-        }
-
-        public static Block Get(byte id, short meta)
-        {
-            Block block = Get(id);
             block.Damage = meta;
-
-            return block;
-        }
-
-        public static Block Get(byte id, short meta, byte count)
-        {
-            Block block = Get(id, meta);
-            block.Count = count;
 
             return block;
         }
 
         public static Block Get(string name)
         {
-            throw new NotImplementedException();
+            string[] data = name.Replace("minecraft:", "").Replace(" ", "_").ToUpper().Split(':');
+            int id = 0;
+            int meta = 0;
+            try
+            {
+                id = int.Parse(data[0]);
+            }
+            catch
+            {
+
+            }
+            try
+            {
+                BlockFactory factory = new BlockFactory();
+                id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
+            }
+            catch
+            {
+
+            }
+            try
+            {
+                meta = int.Parse(data[1]);
+            }
+            catch
+            {
+
+            }
+            Block block = Block.Get((byte) id, (short) meta);
+            return block;
         }
 
         public Block Clone()
@@ -44,23 +60,11 @@ namespace MineNET.Blocks
 
         private byte id;
         private short meta;
-        private byte count;
 
-        public Block(byte id) : this(id, 0)
-        {
-
-        }
-
-        public Block(byte id, short meta) : this(id, meta, 1)
-        {
-
-        }
-
-        public Block(byte id, short meta, byte count)
+        public Block(byte id, short meta = 0)
         {
             this.id = id;
             this.meta = meta;
-            this.count = count;
         }
 
         public abstract string Name
@@ -86,19 +90,6 @@ namespace MineNET.Blocks
             set
             {
                 this.meta = value;
-            }
-        }
-
-        public byte Count
-        {
-            get
-            {
-                return this.count;
-            }
-
-            set
-            {
-                this.count = value;
             }
         }
 

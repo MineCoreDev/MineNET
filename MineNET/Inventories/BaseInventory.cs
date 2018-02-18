@@ -17,10 +17,15 @@ namespace MineNET.Inventories
 
         private Dictionary<int, Item> slots = new Dictionary<int, Item>();
 
-        public BaseInventory(InventoryHolder holder, int size, string name)
+        public BaseInventory(InventoryHolder holder, int size, string name, Dictionary<int, Item> items = null)
         {
+            this.holder = holder;
             this.size = size;
             this.name = name;
+            if (items != null)
+            {
+                this.slots = items;
+            }
         }
 
         public int Size
@@ -50,6 +55,7 @@ namespace MineNET.Inventories
 
         public bool SetItem(int index, Item item, bool send = true)
         {
+            item = item.Clone();
             if (index < 0 || this.size <= index)
             {
                 return false;
@@ -71,14 +77,23 @@ namespace MineNET.Inventories
             {
                 if (items[i].ItemID != BlockFactory.AIR && items[i].Count <= 0)
                 {
-                    itemSlots.Add(items[i]);
+                    itemSlots.Add(items[i].Clone());
                 }
             }
 
             List<int> emptySlots = new List<int>();
             for (int i = 0; i < this.size; ++i)
             {
+                Item item = this.GetItem(i);
+                if (item.ItemID == BlockFactory.AIR || item.Count <= 0)
+                {
+                    emptySlots.Add(i);
+                }
 
+                for (int j = 0; j < itemSlots.Count; ++j)
+                {
+
+                }
             }
         }
 
