@@ -8,7 +8,7 @@ namespace MineNET.Plugins
 {
     public class PluginManager
     {
-        public List<IPlugin> plugins;
+        public List<IPlugin> plugins = new List<IPlugin>();
 
         public PluginManager()
         {
@@ -34,6 +34,7 @@ namespace MineNET.Plugins
             {
                 LoadPlugin(pluginFolder[i].Name, pluginFolder[i].FullName);
             }
+            //TODO: zip & plugin & minenet LoadSystem...
         }
 
         public void LoadPlugin(string pluginFileName, string pluginPath)
@@ -58,35 +59,40 @@ namespace MineNET.Plugins
             {
                 Assembly asm = Assembly.LoadFile(dllPath);
                 Type[] types = asm.GetTypes();
+                int count = 0;
                 bool isPlugin = false;
                 for (int i = 0; i < types.Length; ++i)
                 {
                     Type t = types[i];
                     PluginAttribute att = t.GetCustomAttribute<PluginAttribute>();
-                    if (att != null && t is IPlugin)
+                    if (att != null && t.GetInterface("IPlugin", false) != null)
                     {
                         IPlugin plugin = (IPlugin) Activator.CreateInstance(t);
-                        att.FileName = fileName;
-                        att.PluginPath = dllPath;
+                        att.pluginName = fileName;
+                        att.pluginPath = dllPath;
                         plugin.Init(att);
+                        Logger.Info("%server_plugin_load", fileName);
                         plugin.OnLoad();
                         plugins.Add(plugin);
                         isPlugin = true;
+                        count++;
                     }
+                }
+
+                if (count != 1)
+                {
+                    throw new PluginException();
                 }
 
                 if (!isPlugin)
                 {
                     Logger.Error("%server_plugin_notPlugin", fileName);
                 }
-                else
-                {
-                    Logger.Info("%server_plugin_load", fileName);
-                }
             }
-            catch
+            catch (Exception ex)
             {
-                Logger.Info("%server_plugin_loadError", fileName);
+                Logger.Error("%server_plugin_loadError", fileName);
+                Logger.Error(ex);
             }
         }
     }
