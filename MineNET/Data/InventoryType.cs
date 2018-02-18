@@ -1,6 +1,6 @@
 ﻿namespace MineNET.Data
 {
-    public class InventoryId
+    public class InventoryType
     {
         public const int INVENTORY = -1;
         public const int CONTAINER = 0;
