@@ -32,9 +32,9 @@ namespace MineNET.Blocks
             throw new NotImplementedException();
         }
 
-        Block ICloneable<Block>.Clone()
+        public Block Clone()
         {
-            return (Block) this.MemberwiseClone();
+            return (Block) Clone();
         }
 
         object ICloneable.Clone()

@@ -1,6 +1,12 @@
+using MineNET.NBT.Tags;
+
 namespace MineNET.NBT
 {
-    public class NBTFileIO
+    public static class NBTFileIO
     {
+        public static void CreateFile(string filePath, CompoundTag tag)
+        {
+
+        }
     }
 }

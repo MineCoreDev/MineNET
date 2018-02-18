@@ -10,6 +10,12 @@ namespace MineNET.Plugins
     {
         public List<IPlugin> plugins;
 
+        public PluginManager()
+        {
+            this.Init();
+            LoadPlugins();
+        }
+
         public void Init()
         {
             string path = Server.ExecutePath + @"\\plugins";
@@ -48,32 +54,39 @@ namespace MineNET.Plugins
         void LoadDllPluginExecute(string dllPath)
         {
             string fileName = Path.GetFileName(dllPath);
-            Assembly asm = Assembly.LoadFile(dllPath);
-            Type[] types = asm.GetTypes();
-            bool isPlugin = false;
-            for (int i = 0; i < types.Length; ++i)
+            try
             {
-                Type t = types[i];
-                PluginAttribute att = t.GetCustomAttribute<PluginAttribute>();
-                if (att != null && t is IPlugin)
+                Assembly asm = Assembly.LoadFile(dllPath);
+                Type[] types = asm.GetTypes();
+                bool isPlugin = false;
+                for (int i = 0; i < types.Length; ++i)
                 {
-                    IPlugin plugin = (IPlugin) Activator.CreateInstance(t);
-                    att.FileName = fileName;
-                    att.PluginPath = dllPath;
-                    plugin.Init(att);
-                    plugin.OnLoad();
-                    plugins.Add(plugin);
-                    isPlugin = true;
+                    Type t = types[i];
+                    PluginAttribute att = t.GetCustomAttribute<PluginAttribute>();
+                    if (att != null && t is IPlugin)
+                    {
+                        IPlugin plugin = (IPlugin) Activator.CreateInstance(t);
+                        att.FileName = fileName;
+                        att.PluginPath = dllPath;
+                        plugin.Init(att);
+                        plugin.OnLoad();
+                        plugins.Add(plugin);
+                        isPlugin = true;
+                    }
+                }
+
+                if (!isPlugin)
+                {
+                    Logger.Error("%server_plugin_notPlugin", fileName);
+                }
+                else
+                {
+                    Logger.Info("%server_plugin_load", fileName);
                 }
             }
-
-            if (!isPlugin)
+            catch
             {
-                Logger.Error("%server_plugin_notPlugin");
-            }
-            else
-            {
-
+                Logger.Info("%server_plugin_loadError", fileName);
             }
         }
     }

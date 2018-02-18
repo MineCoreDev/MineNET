@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Network;
+using MineNET.Plugins;
 using MineNET.Utils;
 using MineNET.Utils.Config;
 
@@ -64,6 +65,14 @@ namespace MineNET
                 return commandManager;
             }
         }
+        PluginManager pluginManager;
+        public PluginManager PluginManager
+        {
+            get
+            {
+                return pluginManager;
+            }
+        }
 
         Logger logger;
         public Logger Logger
@@ -119,6 +128,7 @@ namespace MineNET
 
             networkManager = new NetworkManager();
             commandManager = new CommandManager();
+            pluginManager = new PluginManager();
         }
 
         void InitConfig()
