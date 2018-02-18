@@ -1,5 +1,5 @@
-﻿using MineNET.Utils;
-using System;
+﻿using System;
+using MineNET.Utils;
 
 namespace MineNET.Blocks
 {
@@ -19,14 +19,18 @@ namespace MineNET.Blocks
             string[] data = name.Replace("minecraft:", "").Replace(" ", "_").ToUpper().Split(':');
             int id = 0;
             int meta = 0;
-            try
-            {
-                id = int.Parse(data[0]);
-            }
-            catch
-            {
 
+            if (data.Length == 1)
+            {
+                int.TryParse(data[0], out id);
             }
+
+            if (data.Length == 2)
+            {
+                int.TryParse(data[0], out id);
+                int.TryParse(data[1], out meta);
+            }
+
             try
             {
                 BlockFactory factory = new BlockFactory();
@@ -36,14 +40,7 @@ namespace MineNET.Blocks
             {
 
             }
-            try
-            {
-                meta = int.Parse(data[1]);
-            }
-            catch
-            {
 
-            }
             Block block = Block.Get((byte) id, (short) meta);
             return block;
         }

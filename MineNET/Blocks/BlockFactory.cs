@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Blocks
+﻿namespace MineNET.Blocks
 {
     public class BlockFactory
     {
@@ -174,7 +168,7 @@ namespace MineNET.Blocks
         public const int ACACIA_STAIRS = 163;
         public const int DARK_OAK_STAIRS = 164;
         public const int SLIME = 165;
-        
+
         public const int IRON_TRAPDOOR = 167;
         public const int PRISMARINE = 168;
         public const int SEA_LANTERN = 169;
@@ -255,18 +249,6 @@ namespace MineNET.Blocks
         public const int MOVING_BLOCK = 250;
         public const int OBSERVER = 251;
         public const int STRUCTURE_BLOCK = 252;
-
-        public static Type[] blockFactory = new Type[256];
-
-        public static void Init()
-        {
-            blockFactory[AIR] = typeof(BlockAir);
-        }
-
-        public static Type GetBlockType(byte id)
-        {
-            return blockFactory[id];
-        }
 
         public static Block GetBlock(byte id)
         {
@@ -519,13 +501,6 @@ namespace MineNET.Blocks
             else if (id == STRUCTURE_BLOCK) return new BlockStructureBlock();
 
             else return new BlockUnknown(id);
-        }
-
-        [Obsolete("")]
-        public static Block CreateInstance(byte id)
-        {
-            Type t = GetBlockType(id);
-            return (Block)Activator.CreateInstance(t);
         }
     }
 }
