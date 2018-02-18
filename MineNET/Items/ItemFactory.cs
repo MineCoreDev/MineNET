@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 using MineNET.Blocks;
 
 namespace MineNET.Items
@@ -224,219 +219,422 @@ namespace MineNET.Items
 
         public static Item GetItem(int id)
         {
-            if (id < 256) return new ItemBlock(Block.Get((byte) id));
-            else if (id == IRON_SHOVEL) return new ItemIronShovel();
-            else if (id == IRON_PICKAXE) return new ItemIronPickaxe();
-            else if (id == IRON_AXE) return new ItemIronAxe();
-            else if (id == FLINT_AND_STEEL) return new ItemFlintAndSteel();
-            else if (id == APPLE) return new ItemApple();
-            else if (id == BOW) return new ItemBow();
-            else if (id == ARROW) return new ItemArrow();
-            else if (id == COAL) return new ItemCoal();
-            else if (id == DIAMOND) return new ItemDiamond();
-            else if (id == IRON_INGOT) return new ItemIronIngot();
-            else if (id == GOLD_INGOT) return new ItemGoldIngot();
-            else if (id == IRON_SWORD) return new ItemIronSword();
-            else if (id == WOODEN_SWORD) return new ItemWoodenSword();
-            else if (id == WOODEN_SHOVEL) return new ItemWoodenShovel();
-            else if (id == WOODEN_PICKAXE) return new ItemWoodenPickaxe();
-            else if (id == WOODEN_AXE) return new ItemWoodenAxe();
-            else if (id == STONE_SWORD) return new ItemStoneSword();
-            else if (id == STONE_SHOVEL) return new ItemStoneShovel();
-            else if (id == STONE_PICKAXE) return new ItemStonePickaxe();
-            else if (id == STONE_AXE) return new ItemStoneAxe();
-            else if (id == DIAMOND_SWORD) return new ItemDiamondSword();
-            else if (id == DIAMOND_SHOVEL) return new ItemDiamondShovel();
-            else if (id == DIAMOND_PICKAXE) return new ItemDiamondPickaxe();
-            else if (id == DIAMOND_AXE) return new ItemDiamondAxe();
-            else if (id == STICK) return new ItemStick();
-            else if (id == BOWL) return new ItemBowl();
-            else if (id == MUSHROOM_STEW) return new ItemMushroomStew();
-            else if (id == GOLDEN_SWORD) return new ItemGoldenSword();
-            else if (id == GOLDEN_SHOVEL) return new ItemGoldenShovel();
-            else if (id == GOLDEN_PICKAXE) return new ItemGoldenPickaxe();
-            else if (id == GOLDEN_AXE) return new ItemGoldenAxe();
-            else if (id == STRING) return new ItemString();
-            else if (id == FEATHER) return new ItemFeather();
-            else if (id == GUNPOWDER) return new ItemGunpowder();
-            else if (id == WOODEN_HOE) return new ItemWoodenHoe();
-            else if (id == STONE_HOE) return new ItemStoneHoe();
-            else if (id == IRON_HOE) return new ItemIronHoe();
-            else if (id == DIAMOND_HOE) return new ItemDiamondHoe();
-            else if (id == GOLDEN_HOE) return new ItemGoldenHoe();
-            else if (id == WHEAT_SEEDS) return new ItemWheatSeeds();
-            else if (id == WHEAT) return new ItemWheat();
-            else if (id == BREAD) return new ItemBread();
-            else if (id == LEATHER_HELMET) return new ItemLeatherHelmet();
-            else if (id == LEATHER_CHESTPLATE) return new ItemLeatherChestplate();
-            else if (id == LEATHER_LEGGINGS) return new ItemLeatherLeggings();
-            else if (id == LEATHER_BOOTS) return new ItemLeatherBoots();
-            else if (id == CHAINMAIL_HELMET) return new ItemChainmailHelmet();
-            else if (id == CHAINMAIL_CHESTPLATE) return new ItemChainmailChestplate();
-            else if (id == CHAINMAIL_LEGGINGS) return new ItemLeatherLeggings();
-            else if (id == CHAINMAIL_BOOTS) return new ItemChainmailBoots();
-            else if (id == IRON_HELMET) return new ItemIronHelmet();
-            else if (id == IRON_CHESTPLATE) return new ItemIronChestplate();
-            else if (id == IRON_LEGGINGS) return new ItemIronLeggings();
-            else if (id == IRON_BOOTS) return new ItemIronBoots();
-            else if (id == DIAMOND_HELMET) return new ItemDiamondHelmet();
-            else if (id == DIAMOND_CHESTPLATE) return new ItemDiamondChestplate();
-            else if (id == DIAMOND_LEGGINGS) return new ItemDiamondLeggings();
-            else if (id == DIAMOND_BOOTS) return new ItemDiamondBoots();
-            else if (id == GOLDEN_HELMET) return new ItemGoldenHelmet();
-            else if (id == GOLDEN_CHESTPLATE) return new ItemGoldenChestplate();
-            else if (id == GOLDEN_LEGGINGS) return new ItemGoldenLeggings();
-            else if (id == GOLDEN_BOOTS) return new ItemGoldenBoots();
-            else if (id == FLINT) return new ItemFlint();
-            else if (id == PORKCHOP) return new ItemPorkchop();
-            else if (id == COOKED_PORKCHOP) return new ItemCookedPorkchop();
-            else if (id == PAINTING) return new ItemPainting();
-            else if (id == GOLDEN_APPLE) return new ItemGoldenApple();
-            else if (id == SIGN) return new ItemSign();
-            else if (id == WOODEN_DOOR) return new ItemWoodenDoor();
-            else if (id == BUCKET) return new ItemBucket();
+            if (id < 256)
+                return new ItemBlock(Block.Get((byte) id));
+            else if (id == IRON_SHOVEL)
+                return new ItemIronShovel();
+            else if (id == IRON_PICKAXE)
+                return new ItemIronPickaxe();
+            else if (id == IRON_AXE)
+                return new ItemIronAxe();
+            else if (id == FLINT_AND_STEEL)
+                return new ItemFlintAndSteel();
+            else if (id == APPLE)
+                return new ItemApple();
+            else if (id == BOW)
+                return new ItemBow();
+            else if (id == ARROW)
+                return new ItemArrow();
+            else if (id == COAL)
+                return new ItemCoal();
+            else if (id == DIAMOND)
+                return new ItemDiamond();
+            else if (id == IRON_INGOT)
+                return new ItemIronIngot();
+            else if (id == GOLD_INGOT)
+                return new ItemGoldIngot();
+            else if (id == IRON_SWORD)
+                return new ItemIronSword();
+            else if (id == WOODEN_SWORD)
+                return new ItemWoodenSword();
+            else if (id == WOODEN_SHOVEL)
+                return new ItemWoodenShovel();
+            else if (id == WOODEN_PICKAXE)
+                return new ItemWoodenPickaxe();
+            else if (id == WOODEN_AXE)
+                return new ItemWoodenAxe();
+            else if (id == STONE_SWORD)
+                return new ItemStoneSword();
+            else if (id == STONE_SHOVEL)
+                return new ItemStoneShovel();
+            else if (id == STONE_PICKAXE)
+                return new ItemStonePickaxe();
+            else if (id == STONE_AXE)
+                return new ItemStoneAxe();
+            else if (id == DIAMOND_SWORD)
+                return new ItemDiamondSword();
+            else if (id == DIAMOND_SHOVEL)
+                return new ItemDiamondShovel();
+            else if (id == DIAMOND_PICKAXE)
+                return new ItemDiamondPickaxe();
+            else if (id == DIAMOND_AXE)
+                return new ItemDiamondAxe();
+            else if (id == STICK)
+                return new ItemStick();
+            else if (id == BOWL)
+                return new ItemBowl();
+            else if (id == MUSHROOM_STEW)
+                return new ItemMushroomStew();
+            else if (id == GOLDEN_SWORD)
+                return new ItemGoldenSword();
+            else if (id == GOLDEN_SHOVEL)
+                return new ItemGoldenShovel();
+            else if (id == GOLDEN_PICKAXE)
+                return new ItemGoldenPickaxe();
+            else if (id == GOLDEN_AXE)
+                return new ItemGoldenAxe();
+            else if (id == STRING)
+                return new ItemString();
+            else if (id == FEATHER)
+                return new ItemFeather();
+            else if (id == GUNPOWDER)
+                return new ItemGunpowder();
+            else if (id == WOODEN_HOE)
+                return new ItemWoodenHoe();
+            else if (id == STONE_HOE)
+                return new ItemStoneHoe();
+            else if (id == IRON_HOE)
+                return new ItemIronHoe();
+            else if (id == DIAMOND_HOE)
+                return new ItemDiamondHoe();
+            else if (id == GOLDEN_HOE)
+                return new ItemGoldenHoe();
+            else if (id == WHEAT_SEEDS)
+                return new ItemWheatSeeds();
+            else if (id == WHEAT)
+                return new ItemWheat();
+            else if (id == BREAD)
+                return new ItemBread();
+            else if (id == LEATHER_HELMET)
+                return new ItemLeatherHelmet();
+            else if (id == LEATHER_CHESTPLATE)
+                return new ItemLeatherChestplate();
+            else if (id == LEATHER_LEGGINGS)
+                return new ItemLeatherLeggings();
+            else if (id == LEATHER_BOOTS)
+                return new ItemLeatherBoots();
+            else if (id == CHAINMAIL_HELMET)
+                return new ItemChainmailHelmet();
+            else if (id == CHAINMAIL_CHESTPLATE)
+                return new ItemChainmailChestplate();
+            else if (id == CHAINMAIL_LEGGINGS)
+                return new ItemLeatherLeggings();
+            else if (id == CHAINMAIL_BOOTS)
+                return new ItemChainmailBoots();
+            else if (id == IRON_HELMET)
+                return new ItemIronHelmet();
+            else if (id == IRON_CHESTPLATE)
+                return new ItemIronChestplate();
+            else if (id == IRON_LEGGINGS)
+                return new ItemIronLeggings();
+            else if (id == IRON_BOOTS)
+                return new ItemIronBoots();
+            else if (id == DIAMOND_HELMET)
+                return new ItemDiamondHelmet();
+            else if (id == DIAMOND_CHESTPLATE)
+                return new ItemDiamondChestplate();
+            else if (id == DIAMOND_LEGGINGS)
+                return new ItemDiamondLeggings();
+            else if (id == DIAMOND_BOOTS)
+                return new ItemDiamondBoots();
+            else if (id == GOLDEN_HELMET)
+                return new ItemGoldenHelmet();
+            else if (id == GOLDEN_CHESTPLATE)
+                return new ItemGoldenChestplate();
+            else if (id == GOLDEN_LEGGINGS)
+                return new ItemGoldenLeggings();
+            else if (id == GOLDEN_BOOTS)
+                return new ItemGoldenBoots();
+            else if (id == FLINT)
+                return new ItemFlint();
+            else if (id == PORKCHOP)
+                return new ItemPorkchop();
+            else if (id == COOKED_PORKCHOP)
+                return new ItemCookedPorkchop();
+            else if (id == PAINTING)
+                return new ItemPainting();
+            else if (id == GOLDEN_APPLE)
+                return new ItemGoldenApple();
+            else if (id == SIGN)
+                return new ItemSign();
+            else if (id == WOODEN_DOOR)
+                return new ItemWoodenDoor();
+            else if (id == BUCKET)
+                return new ItemBucket();
 
-            else if (id == MINECART) return new ItemMinecart();
-            else if (id == SADDLE) return new ItemSaddle();
-            else if (id == IRON_DOOR) return new ItemIronDoor();
-            else if (id == REDSTONE) return new ItemRedstone();
-            else if (id == SNOWBALL) return new ItemSnowball();
-            else if (id == BOAT) return new ItemBoat();
-            else if (id == LEATHER) return new ItemLeather();
+            else if (id == MINECART)
+                return new ItemMinecart();
+            else if (id == SADDLE)
+                return new ItemSaddle();
+            else if (id == IRON_DOOR)
+                return new ItemIronDoor();
+            else if (id == REDSTONE)
+                return new ItemRedstone();
+            else if (id == SNOWBALL)
+                return new ItemSnowball();
+            else if (id == BOAT)
+                return new ItemBoat();
+            else if (id == LEATHER)
+                return new ItemLeather();
 
-            else if (id == BRICK) return new ItemBrick();
-            else if (id == CLAY_BALL) return new ItemClayBall();
-            else if (id == REEDS) return new ItemReeds();
-            else if (id == PAPER) return new ItemPaper();
-            else if (id == BOOK) return new ItemBook();
-            else if (id == SLIME_BALL) return new ItemSlimeBall();
-            else if (id == CHEST_MINECART) return new ItemChestMinecart();
+            else if (id == BRICK)
+                return new ItemBrick();
+            else if (id == CLAY_BALL)
+                return new ItemClayBall();
+            else if (id == REEDS)
+                return new ItemReeds();
+            else if (id == PAPER)
+                return new ItemPaper();
+            else if (id == BOOK)
+                return new ItemBook();
+            else if (id == SLIME_BALL)
+                return new ItemSlimeBall();
+            else if (id == CHEST_MINECART)
+                return new ItemChestMinecart();
 
-            else if (id == EGG) return new ItemEgg();
-            else if (id == COMPASS) return new ItemCompass();
-            else if (id == FISHING_ROD) return new ItemFishingRod();
-            else if (id == CLOCK) return new ItemClock();
-            else if (id == GLOWSTONE_DUST) return new ItemGlownstoneDust();
-            else if (id == FISH) return new ItemFish();
-            else if (id == COOKED_FISH) return new ItemCookedFish();
-            else if (id == DYE) return new ItemDye();
-            else if (id == BONE) return new ItemBone();
-            else if (id == SUGAR) return new ItemSugar();
-            else if (id == CAKE) return new ItemCake();
-            else if (id == BED) return new ItemBed();
-            else if (id == REPEATER) return new ItemRepeater();
-            else if (id == COOKIE) return new ItemCookie();
-            else if (id == FILLED_MAP) return new ItemFilledMap();
-            else if (id == SHEARS) return new ItemShears();
-            else if (id == MELON) return new ItemMelon();
-            else if (id == PUMPKIN_SEEDS) return new ItemPumpkinSeeds();
-            else if (id == MELON_SEEDS) return new ItemMelonSeeds();
-            else if (id == BEEF) return new ItemBeef();
-            else if (id == COOKED_BEEF) return new ItemCookedBeef();
-            else if (id == CHICKEN) return new ItemChicken();
-            else if (id == COOKED_CHICKEN) return new ItemCookedChicken();
-            else if (id == ROTTEN_FLESH) return new ItemRottenFlesh();
-            else if (id == ENDER_PEARL) return new ItemEnderPearl();
-            else if (id == BLAZE_ROD) return new ItemBlazeRod();
-            else if (id == GHAST_TEAR) return new ItemGhastTear();
-            else if (id == GOLD_NUGGET) return new ItemGoldNugget();
-            else if (id == NETHER_WART) return new ItemNetherWart();
-            else if (id == POTION) return new ItemPotion();
-            else if (id == GLASS_BOTTLE) return new ItemGlassBottle();
-            else if (id == SPIDER_EYE) return new ItemSpiderEye();
-            else if (id == FERMENTED_SPIDER_EYE) return new ItemFermentedSpiderEye();
-            else if (id == BLAZE_POWDER) return new ItemBlazePowder();
-            else if (id == MAGMA_CREAM) return new ItemMagmaCream();
-            else if (id == BREWING_STAND) return new ItemBrewingStand();
-            else if (id == CAULDRON) return new ItemCauldron();
-            else if (id == ENDER_EYE) return new ItemEnderEye();
-            else if (id == SPECKLED_MELON) return new ItemSpeckledMelon();
-            else if (id == SPAWN_EGG) return new ItemSpawnEgg();
-            else if (id == EXPERIENCE_BOTTLE) return new ItemExperienceBottle();
-            else if (id == FIREWORK_CHARGE) return new ItemFireCharge();
-            else if (id == WRITABLE_BOOK) return new ItemWritableBook();
-            else if (id == EMERALD) return new ItemEmerald();
-            else if (id == ITEM_FRAME) return new ItemFrame();
-            else if (id == FLOWER_POT) return new ItemFlowerPot();
-            else if (id == CARROT) return new ItemCarrot();
-            else if (id == POTATO) return new ItemPotato();
-            else if (id == BAKED_POTATO) return new ItemBakedPotato();
-            else if (id == POISONOUS_POTATO) return new ItemPoisonousPotato();
-            else if (id == MAP) return new ItemMap();
-            else if (id == GOLDEN_CARROT) return new ItemGoldenCarrot();
-            else if (id == SKULL) return new ItemSkull();
-            else if (id == CARROT_ON_A_STICK) return new ItemCarrotOnAStick();
-            else if (id == NETHER_STAR) return new ItemNetherStar();
-            else if (id == PUMPKIN_PIE) return new ItemPumpkinPie();
-            else if (id == FIREWORKS) return new ItemFireworks();
-            else if (id == FIREWORK_CHARGE) return new ItemFireworkCharge();
-            else if (id == ENCHANTED_BOOK) return new ItemEnchantedBook();
-            else if (id == COMPARATOR) return new ItemComparator();
-            else if (id == NETHERBRICK) return new ItemNetherBrick();
-            else if (id == QUARTZ) return new ItemQuartz();
-            else if (id == TNT_MINECART) return new ItemTntMinecart();
-            else if (id == HOPPER_MINECART) return new ItemHopperMinecart();
-            else if (id == PRISMARINE_SHARD) return new ItemPrismarineShard();
-            else if (id == HOPPER) return new ItemHopper();
-            else if (id == RABBIT) return new ItemRabbit();
-            else if (id == COOKED_RABBIT) return new ItemCookedRabbit();
-            else if (id == RABBIT_STEW) return new ItemRabbitStew();
-            else if (id == RABBIT_FOOT) return new ItemRabbitFoot();
-            else if (id == RABBIT_HIDE) return new ItemRabbitHide();
-            else if (id == LEATHER_HORSE_ARMOR) return new ItemLeatherHorseArmor();
-            else if (id == IRON_HORSE_ARMOR) return new ItemIronHorseArmor();
-            else if (id == GOLDEN_HORSE_ARMOR) return new ItemGoldenHorseArmor();
-            else if (id == DIAMOND_HORSE_ARMOR) return new ItemDiamondHorseArmor();
-            else if (id == LEAD) return new ItemLead();
-            else if (id == NAME_TAG) return new ItemNameTag();
-            else if (id == PRISMARINE_CRYSTALS) return new ItemPrismarineCrystals();
-            else if (id == MUTTON) return new ItemMutton();
-            else if (id == COOKED_MUTTON) return new ItemCookedMutton();
-            else if (id == ARMOR_STAND) return new ItemArmorStand();
-            else if (id == END_CRYSTAL) return new ItemEndCrystal();
-            else if (id == SPRUCE_DOOR) return new ItemSpruceDoor();
-            else if (id == BIRCH_DOOR) return new ItemBirchDoor();
-            else if (id == JUNGLE_DOOR) return new ItemJungleDoor();
-            else if (id == ACACIA_DOOR) return new ItemAcaciaDoor();
-            else if (id == DARK_OAK_DOOR) return new ItemDarkOakDoor();
-            else if (id == CHORUS_FRUIT) return new ItemChorusFruit();
-            else if (id == POPPED_CHORUS_FRUIT) return new ItemPoppedChorusFruit();
+            else if (id == EGG)
+                return new ItemEgg();
+            else if (id == COMPASS)
+                return new ItemCompass();
+            else if (id == FISHING_ROD)
+                return new ItemFishingRod();
+            else if (id == CLOCK)
+                return new ItemClock();
+            else if (id == GLOWSTONE_DUST)
+                return new ItemGlownstoneDust();
+            else if (id == FISH)
+                return new ItemFish();
+            else if (id == COOKED_FISH)
+                return new ItemCookedFish();
+            else if (id == DYE)
+                return new ItemDye();
+            else if (id == BONE)
+                return new ItemBone();
+            else if (id == SUGAR)
+                return new ItemSugar();
+            else if (id == CAKE)
+                return new ItemCake();
+            else if (id == BED)
+                return new ItemBed();
+            else if (id == REPEATER)
+                return new ItemRepeater();
+            else if (id == COOKIE)
+                return new ItemCookie();
+            else if (id == FILLED_MAP)
+                return new ItemFilledMap();
+            else if (id == SHEARS)
+                return new ItemShears();
+            else if (id == MELON)
+                return new ItemMelon();
+            else if (id == PUMPKIN_SEEDS)
+                return new ItemPumpkinSeeds();
+            else if (id == MELON_SEEDS)
+                return new ItemMelonSeeds();
+            else if (id == BEEF)
+                return new ItemBeef();
+            else if (id == COOKED_BEEF)
+                return new ItemCookedBeef();
+            else if (id == CHICKEN)
+                return new ItemChicken();
+            else if (id == COOKED_CHICKEN)
+                return new ItemCookedChicken();
+            else if (id == ROTTEN_FLESH)
+                return new ItemRottenFlesh();
+            else if (id == ENDER_PEARL)
+                return new ItemEnderPearl();
+            else if (id == BLAZE_ROD)
+                return new ItemBlazeRod();
+            else if (id == GHAST_TEAR)
+                return new ItemGhastTear();
+            else if (id == GOLD_NUGGET)
+                return new ItemGoldNugget();
+            else if (id == NETHER_WART)
+                return new ItemNetherWart();
+            else if (id == POTION)
+                return new ItemPotion();
+            else if (id == GLASS_BOTTLE)
+                return new ItemGlassBottle();
+            else if (id == SPIDER_EYE)
+                return new ItemSpiderEye();
+            else if (id == FERMENTED_SPIDER_EYE)
+                return new ItemFermentedSpiderEye();
+            else if (id == BLAZE_POWDER)
+                return new ItemBlazePowder();
+            else if (id == MAGMA_CREAM)
+                return new ItemMagmaCream();
+            else if (id == BREWING_STAND)
+                return new ItemBrewingStand();
+            else if (id == CAULDRON)
+                return new ItemCauldron();
+            else if (id == ENDER_EYE)
+                return new ItemEnderEye();
+            else if (id == SPECKLED_MELON)
+                return new ItemSpeckledMelon();
+            else if (id == SPAWN_EGG)
+                return new ItemSpawnEgg();
+            else if (id == EXPERIENCE_BOTTLE)
+                return new ItemExperienceBottle();
+            else if (id == FIREWORK_CHARGE)
+                return new ItemFireCharge();
+            else if (id == WRITABLE_BOOK)
+                return new ItemWritableBook();
+            else if (id == EMERALD)
+                return new ItemEmerald();
+            else if (id == ITEM_FRAME)
+                return new ItemFrame();
+            else if (id == FLOWER_POT)
+                return new ItemFlowerPot();
+            else if (id == CARROT)
+                return new ItemCarrot();
+            else if (id == POTATO)
+                return new ItemPotato();
+            else if (id == BAKED_POTATO)
+                return new ItemBakedPotato();
+            else if (id == POISONOUS_POTATO)
+                return new ItemPoisonousPotato();
+            else if (id == MAP)
+                return new ItemMap();
+            else if (id == GOLDEN_CARROT)
+                return new ItemGoldenCarrot();
+            else if (id == SKULL)
+                return new ItemSkull();
+            else if (id == CARROT_ON_A_STICK)
+                return new ItemCarrotOnAStick();
+            else if (id == NETHER_STAR)
+                return new ItemNetherStar();
+            else if (id == PUMPKIN_PIE)
+                return new ItemPumpkinPie();
+            else if (id == FIREWORKS)
+                return new ItemFireworks();
+            else if (id == FIREWORK_CHARGE)
+                return new ItemFireworkCharge();
+            else if (id == ENCHANTED_BOOK)
+                return new ItemEnchantedBook();
+            else if (id == COMPARATOR)
+                return new ItemComparator();
+            else if (id == NETHERBRICK)
+                return new ItemNetherBrick();
+            else if (id == QUARTZ)
+                return new ItemQuartz();
+            else if (id == TNT_MINECART)
+                return new ItemTntMinecart();
+            else if (id == HOPPER_MINECART)
+                return new ItemHopperMinecart();
+            else if (id == PRISMARINE_SHARD)
+                return new ItemPrismarineShard();
+            else if (id == HOPPER)
+                return new ItemHopper();
+            else if (id == RABBIT)
+                return new ItemRabbit();
+            else if (id == COOKED_RABBIT)
+                return new ItemCookedRabbit();
+            else if (id == RABBIT_STEW)
+                return new ItemRabbitStew();
+            else if (id == RABBIT_FOOT)
+                return new ItemRabbitFoot();
+            else if (id == RABBIT_HIDE)
+                return new ItemRabbitHide();
+            else if (id == LEATHER_HORSE_ARMOR)
+                return new ItemLeatherHorseArmor();
+            else if (id == IRON_HORSE_ARMOR)
+                return new ItemIronHorseArmor();
+            else if (id == GOLDEN_HORSE_ARMOR)
+                return new ItemGoldenHorseArmor();
+            else if (id == DIAMOND_HORSE_ARMOR)
+                return new ItemDiamondHorseArmor();
+            else if (id == LEAD)
+                return new ItemLead();
+            else if (id == NAME_TAG)
+                return new ItemNameTag();
+            else if (id == PRISMARINE_CRYSTALS)
+                return new ItemPrismarineCrystals();
+            else if (id == MUTTON)
+                return new ItemMutton();
+            else if (id == COOKED_MUTTON)
+                return new ItemCookedMutton();
+            else if (id == ARMOR_STAND)
+                return new ItemArmorStand();
+            else if (id == END_CRYSTAL)
+                return new ItemEndCrystal();
+            else if (id == SPRUCE_DOOR)
+                return new ItemSpruceDoor();
+            else if (id == BIRCH_DOOR)
+                return new ItemBirchDoor();
+            else if (id == JUNGLE_DOOR)
+                return new ItemJungleDoor();
+            else if (id == ACACIA_DOOR)
+                return new ItemAcaciaDoor();
+            else if (id == DARK_OAK_DOOR)
+                return new ItemDarkOakDoor();
+            else if (id == CHORUS_FRUIT)
+                return new ItemChorusFruit();
+            else if (id == POPPED_CHORUS_FRUIT)
+                return new ItemPoppedChorusFruit();
 
-            else if (id == DRAGON_BREATH) return new ItemDragonBreath();
-            else if (id == SPLASH_POTION) return new ItemSplashPotion();
+            else if (id == DRAGON_BREATH)
+                return new ItemDragonBreath();
+            else if (id == SPLASH_POTION)
+                return new ItemSplashPotion();
 
-            else if (id == LINGERING_POTION) return new ItemLingeringPotion();
+            else if (id == LINGERING_POTION)
+                return new ItemLingeringPotion();
 
-            else if (id == COMMAND_BLOCK_MINECART) return new ItemCommandBlockMinecart();
-            else if (id == ELYTRA) return new ItemElytra();
-            else if (id == SHULKER_SHELL) return new ItemShulkerShell();
-            else if (id == BANNER) return new ItemBanner();
+            else if (id == COMMAND_BLOCK_MINECART)
+                return new ItemCommandBlockMinecart();
+            else if (id == ELYTRA)
+                return new ItemElytra();
+            else if (id == SHULKER_SHELL)
+                return new ItemShulkerShell();
+            else if (id == BANNER)
+                return new ItemBanner();
 
-            else if (id == TOTEM) return new ItemTotem();
-            
-            else if (id == BEETROOT) return new ItemBeetroot();
-            else if (id == BEETROOT_SEEDS) return new ItemBeetrootSeed();
-            else if (id == BEETROOT_SOUP) return new ItemBeetrootSoup();
-            else if (id == SALMON) return new ItemSalmon();
-            else if (id == CLOWNFISH) return new ItemClownfish();
-            else if (id == PUFFERFISH) return new ItemPufferfish();
-            else if (id == COOKED_SALMON) return new ItemCookedSalmon();
-            
-            else if (id == APPLEENCHANTED) return new ItemAppleenchanted();
+            else if (id == TOTEM)
+                return new ItemTotem();
 
-            else if (id == RECORD_13) return new ItemRecord13();
-            else if (id == RECORD_CAT) return new ItemRecordCat();
-            else if (id == RECORD_BLOCKS) return new ItemRecordBlocks();
-            else if (id == RECORD_CHIRP) return new ItemRecordChirp();
-            else if (id == RECORD_FAR) return new ItemRecordFar();
-            else if (id == RECORD_MALL) return new ItemRecordMall();
-            else if (id == RECORD_MELLOHI) return new ItemRecordMellohi();
-            else if (id == RECORD_STAL) return new ItemRecordStal();
-            else if (id == RECORD_STRAD) return new ItemRecordStrad();
-            else if (id == RECORD_WARD) return new ItemRecordWard();
-            else if (id == RECORD_11) return new ItemRecord11();
-            else if (id == RECORD_WAIT) return new ItemRecordWait();
-            else return new Item(id);
+            else if (id == BEETROOT)
+                return new ItemBeetroot();
+            else if (id == BEETROOT_SEEDS)
+                return new ItemBeetrootSeed();
+            else if (id == BEETROOT_SOUP)
+                return new ItemBeetrootSoup();
+            else if (id == SALMON)
+                return new ItemSalmon();
+            else if (id == CLOWNFISH)
+                return new ItemClownfish();
+            else if (id == PUFFERFISH)
+                return new ItemPufferfish();
+            else if (id == COOKED_SALMON)
+                return new ItemCookedSalmon();
+
+            else if (id == APPLEENCHANTED)
+                return new ItemAppleenchanted();
+
+            else if (id == RECORD_13)
+                return new ItemRecord13();
+            else if (id == RECORD_CAT)
+                return new ItemRecordCat();
+            else if (id == RECORD_BLOCKS)
+                return new ItemRecordBlocks();
+            else if (id == RECORD_CHIRP)
+                return new ItemRecordChirp();
+            else if (id == RECORD_FAR)
+                return new ItemRecordFar();
+            else if (id == RECORD_MALL)
+                return new ItemRecordMall();
+            else if (id == RECORD_MELLOHI)
+                return new ItemRecordMellohi();
+            else if (id == RECORD_STAL)
+                return new ItemRecordStal();
+            else if (id == RECORD_STRAD)
+                return new ItemRecordStrad();
+            else if (id == RECORD_WARD)
+                return new ItemRecordWard();
+            else if (id == RECORD_11)
+                return new ItemRecord11();
+            else if (id == RECORD_WAIT)
+                return new ItemRecordWait();
+            else
+                return new Item(id);
         }
     }
 }
