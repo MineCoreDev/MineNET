@@ -13,6 +13,12 @@ namespace MineNET.NBT.Tags
             }
         }
 
+        public NBTTagType ListTagType
+        {
+            get;
+            set;
+        }
+
         private List<T> list = new List<T>();
 
         public ListTag() : base("")
@@ -77,7 +83,7 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        internal List<T> Tags
+        public List<T> Tags
         {
             get
             {
@@ -107,12 +113,68 @@ namespace MineNET.NBT.Tags
 
         internal override void Read(NBTStream stream)
         {
-            throw new NotImplementedException();
+            ListTagType = (NBTTagType) stream.ReadByte();
+            int len = stream.ReadInt();
+            for (int i = 0; i < len; ++i)
+            {
+                Tag tag = null;
+                switch (ListTagType)
+                {
+                    case NBTTagType.BYTE:
+                        tag = new ByteTag(0);
+                        break;
+
+                    case NBTTagType.SHORT:
+                        tag = new ShortTag(0);
+                        break;
+
+                    case NBTTagType.INT:
+                        tag = new IntTag(0);
+                        break;
+
+                    case NBTTagType.LONG:
+                        tag = new LongTag(0);
+                        break;
+
+                    case NBTTagType.FLOAT:
+                        tag = new FloatTag(0);
+                        break;
+
+                    case NBTTagType.DOUBLE:
+                        tag = new DoubleTag(0);
+                        break;
+
+                    case NBTTagType.BYTE_ARRAY:
+                        tag = new ByteArrayTag(new byte[0]);
+                        break;
+
+                    case NBTTagType.STRING:
+                        tag = new StringTag("");
+                        break;
+
+                    case NBTTagType.LIST:
+                        tag = new ListTag<Tag>();
+                        break;
+
+                    case NBTTagType.COMPOUND:
+                        tag = new CompoundTag();
+                        break;
+
+                    case NBTTagType.INT_ARRAY:
+                        tag = new IntArrayTag(new int[0]);
+                        break;
+                }
+
+                tag.Read(stream);
+                list.Add((T) tag);
+            }
         }
 
         internal override void ReadTag(NBTStream stream)
         {
-            throw new NotImplementedException();
+            stream.ReadByte();
+            this.Name = stream.ReadString();
+            this.Read(stream);
         }
     }
 }

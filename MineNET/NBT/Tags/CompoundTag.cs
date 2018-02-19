@@ -198,6 +198,24 @@ namespace MineNET.NBT.Tags
             }
         }
 
+        public CompoundTag PutLongArray(string name, long[] data)
+        {
+            this.tags[name] = new LongArrayTag(name, data);
+            return this;
+        }
+
+        public long[] GetLongArray(string name)
+        {
+            if (this.Exist(name))
+            {
+                return ((LongArrayTag) this.tags[name]).Data;
+            }
+            else
+            {
+                return new long[0];
+            }
+        }
+
         public CompoundTag PutList(string name, ListTag<Tag> data)
         {
             data.Name = name;
@@ -287,7 +305,7 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        internal Dictionary<string, Tag> Tags
+        public Dictionary<string, Tag> Tags
         {
             get
             {
@@ -321,16 +339,44 @@ namespace MineNET.NBT.Tags
 
         internal override void Read(NBTStream stream)
         {
-            while (true)
+            while (stream.Position != stream.Length)
             {
                 NBTTagType type = (NBTTagType) stream.ReadByte();
                 string tagName = "";
                 int len = 0;
                 switch (type)
                 {
+                    case NBTTagType.END:
+                        return;
+
                     case NBTTagType.BYTE:
                         tagName = stream.ReadString();
                         PutByte(tagName, stream.ReadByte());
+                        break;
+
+                    case NBTTagType.SHORT:
+                        tagName = stream.ReadString();
+                        PutShort(tagName, stream.ReadShort());
+                        break;
+
+                    case NBTTagType.INT:
+                        tagName = stream.ReadString();
+                        PutInt(tagName, stream.ReadInt());
+                        break;
+
+                    case NBTTagType.LONG:
+                        tagName = stream.ReadString();
+                        PutLong(tagName, stream.ReadLong());
+                        break;
+
+                    case NBTTagType.FLOAT:
+                        tagName = stream.ReadString();
+                        PutFloat(tagName, stream.ReadFloat());
+                        break;
+
+                    case NBTTagType.DOUBLE:
+                        tagName = stream.ReadString();
+                        PutDouble(tagName, stream.ReadDouble());
                         break;
 
                     case NBTTagType.BYTE_ARRAY:
@@ -344,11 +390,49 @@ namespace MineNET.NBT.Tags
                         PutByteArray(tagName, b);
                         break;
 
-                    case NBTTagType.END:
-                        return;
+                    case NBTTagType.STRING:
+                        tagName = stream.ReadString();
+                        PutString(tagName, stream.ReadString());
+                        break;
+
+                    case NBTTagType.LIST:
+                        tagName = stream.ReadString();
+                        ListTag<Tag> listtag = new ListTag<Tag>();
+                        listtag.Read(stream);
+                        PutList(tagName, listtag);
+                        break;
+
+                    case NBTTagType.COMPOUND:
+                        tagName = stream.ReadString();
+                        CompoundTag comp = new CompoundTag();
+                        comp.Read(stream);
+                        PutCompound(tagName, comp);
+                        break;
+
+                    case NBTTagType.INT_ARRAY:
+                        tagName = stream.ReadString();
+                        len = stream.ReadInt();
+                        int[] n = new int[len];
+                        for (int i = 0; i < len; ++i)
+                        {
+                            n[i] = stream.ReadInt();
+                        }
+                        PutIntArray(tagName, n);
+                        break;
+
+                    case NBTTagType.LONG_ARRAY:
+                        tagName = stream.ReadString();
+                        len = stream.ReadInt();
+                        long[] l = new long[len];
+                        for (int i = 0; i < len; ++i)
+                        {
+                            l[i] = stream.ReadLong();
+                        }
+                        PutLongArray(tagName, l);
+                        break;
 
                     default:
-                        return;
+                        throw new FormatException();
                 }
             }
         }
