@@ -58,7 +58,7 @@ namespace MineNET.Items
                 }
             }
 
-            Item item = Item.Get((byte) id, (short) meta);
+            Item item = Item.Get(id, (short) meta);
             return item;
         }
 

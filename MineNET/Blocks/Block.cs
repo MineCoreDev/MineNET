@@ -31,6 +31,8 @@ namespace MineNET.Blocks
                 int.TryParse(data[1], out meta);
             }
 
+            id = id > 255 ? 0 : id;
+
             try
             {
                 BlockFactory factory = new BlockFactory();

@@ -15,8 +15,8 @@ namespace MineNET.Blocks.Tests
             Block b4 = Block.Get("minecraft:null:2");
             Block b5 = Block.Get("98");
             Block b6 = Block.Get("98:1");
-            Block b7 = Block.Get("300");
-            Block b8 = Block.Get("300:1");
+            Block b7 = Block.Get("256");
+            Block b8 = Block.Get("256:1");
 
             Console.WriteLine(b1.BlockID + ":" + b1.Damage);
             Console.WriteLine(b2.BlockID + ":" + b2.Damage);
