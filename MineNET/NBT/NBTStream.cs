@@ -18,7 +18,7 @@ namespace MineNET.NBT
             }
         }
 
-        Encoding utf8 = new UTF8Encoding(false, true);
+        Encoding utf8 = new UTF8Encoding(false, false);
 
         public NBTStream(NBTEndian endian = NBTEndian.LITTLE_ENDIAN) : this(new byte[0], endian)
         {

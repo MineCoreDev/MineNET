@@ -29,22 +29,26 @@ namespace MineNET.NBT.Tags
 
         internal override void Write(NBTStream stream)
         {
-            throw new NotImplementedException();
+            stream.WriteString(this.Data);
         }
 
         internal override void WriteTag(NBTStream stream)
         {
-            throw new NotImplementedException();
+            stream.WriteByte((byte) TagType);
+            stream.WriteString(this.Name);
+            this.Write(stream);
         }
 
         internal override void Read(NBTStream stream)
         {
-            throw new NotImplementedException();
+            this.Data = stream.ReadString();
         }
 
         internal override void ReadTag(NBTStream stream)
         {
-            throw new NotImplementedException();
+            stream.ReadByte();
+            this.Name = stream.ReadString();
+            this.Read(stream);
         }
     }
 }

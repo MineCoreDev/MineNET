@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MineNET.NBT.Tags
+﻿namespace MineNET.NBT.Tags
 {
     public class ShortTag : DataTag<short>
     {
@@ -29,22 +27,26 @@ namespace MineNET.NBT.Tags
 
         internal override void Write(NBTStream stream)
         {
-            throw new NotImplementedException();
+            stream.WriteShort(this.Data);
         }
 
         internal override void WriteTag(NBTStream stream)
         {
-            throw new NotImplementedException();
+            stream.WriteByte((byte) TagType);
+            stream.WriteString(this.Name);
+            this.Write(stream);
         }
 
         internal override void Read(NBTStream stream)
         {
-            throw new NotImplementedException();
+            this.Data = stream.ReadShort();
         }
 
         internal override void ReadTag(NBTStream stream)
         {
-            throw new NotImplementedException();
+            stream.ReadByte();
+            this.Name = stream.ReadString();
+            this.Read(stream);
         }
     }
 }

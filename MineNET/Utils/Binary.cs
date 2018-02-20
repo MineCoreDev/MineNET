@@ -13,7 +13,7 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             return BitConverter.ToBoolean(bytes.ToArray(), 0);
         }
@@ -27,7 +27,7 @@ namespace MineNET.Utils
 
         public static byte ReadByte(Stream stream)
         {
-            return (byte)stream.ReadByte();
+            return (byte) stream.ReadByte();
         }
 
         public static void WriteByte(Stream stream, byte value)
@@ -37,20 +37,20 @@ namespace MineNET.Utils
 
         public static sbyte ReadSByte(Stream stream)
         {
-            return (sbyte)stream.ReadByte();
+            return (sbyte) stream.ReadByte();
         }
 
         public static void WriteSByte(Stream stream, sbyte value)
         {
-            stream.WriteByte((byte)value);
+            stream.WriteByte((byte) value);
         }
 
         public static short ReadShort(Stream stream)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             return BitConverter.ToInt16(bytes.ToArray(), 0);
         }
@@ -67,8 +67,8 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             return BitConverter.ToUInt16(bytes.ToArray(), 0);
         }
@@ -85,8 +85,8 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             bytes.Reverse();
 
@@ -116,9 +116,9 @@ namespace MineNET.Utils
             {
                 throw new OverflowException("Not Int24 Value!");
             }
-            stream.WriteByte((byte)(value >> 16));
-            stream.WriteByte((byte)(value >> 8));
-            stream.WriteByte((byte)value);
+            stream.WriteByte((byte) (value >> 16));
+            stream.WriteByte((byte) (value >> 8));
+            stream.WriteByte((byte) value);
         }
 
         public static int ReadLTriad(Stream stream)
@@ -136,9 +136,9 @@ namespace MineNET.Utils
             {
                 throw new OverflowException("Not Int24 Value!");
             }
-            stream.WriteByte((byte)value);
-            stream.WriteByte((byte)(value >> 8));
-            stream.WriteByte((byte)(value >> 16));
+            stream.WriteByte((byte) value);
+            stream.WriteByte((byte) (value >> 8));
+            stream.WriteByte((byte) (value >> 16));
         }
 
         //TODO: Endian Bug Fix...
@@ -158,10 +158,10 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             return BitConverter.ToInt32(bytes.ToArray(), 0);
         }
@@ -180,10 +180,10 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             return BitConverter.ToUInt32(bytes.ToArray(), 0);
         }
@@ -202,10 +202,10 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             bytes.Reverse();
 
@@ -226,14 +226,14 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             return BitConverter.ToInt64(bytes.ToArray(), 0);
         }
@@ -256,14 +256,14 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             return BitConverter.ToUInt64(bytes.ToArray(), 0);
         }
@@ -286,10 +286,14 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             bytes.Reverse();
 
@@ -354,10 +358,10 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             return BitConverter.ToSingle(bytes.ToArray(), 0);
         }
@@ -376,10 +380,10 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             bytes.Reverse();
 
@@ -400,14 +404,14 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             return BitConverter.ToDouble(bytes.ToArray(), 0);
         }
@@ -430,14 +434,14 @@ namespace MineNET.Utils
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
-            bytes.Add((byte)stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
+            bytes.Add((byte) stream.ReadByte());
 
             bytes.Reverse();
 
@@ -462,14 +466,14 @@ namespace MineNET.Utils
         {
             ushort len = ReadLShort(stream);
             if (len <= 0) return string.Empty;
-            byte[] b = ReadBytes(stream, (int)stream.Position, len);
+            byte[] b = ReadBytes(stream, (int) stream.Position, len);
             Console.WriteLine(b.Length);
             return Encoding.UTF8.GetString(b);
         }
 
         public static void WriteFixedString(MemoryStream stream, string value)
         {
-            WriteLShort(stream, (ushort)(value.Length));
+            WriteLShort(stream, (ushort) (value.Length));
             WriteBytes(stream, Encoding.UTF8.GetBytes(value));
         }
 
