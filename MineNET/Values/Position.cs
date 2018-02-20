@@ -1,16 +1,22 @@
-﻿namespace MineNET.Values
+﻿using MineNET.Worlds;
+
+namespace MineNET.Values
 {
-    public struct Vector3 : IVector3
+    public class Position : IPosition
     {
         private float x;
         private float y;
         private float z;
 
-        public Vector3(float x, float y, float z)
+        private World world;
+
+        public Position(float x, float y, float z, World world)
         {
             this.x = x;
             this.y = y;
             this.z = z;
+
+            this.world = world;
         }
 
         public float X
@@ -49,6 +55,19 @@
             set
             {
                 z = value;
+            }
+        }
+
+        public World World
+        {
+            get
+            {
+                return this.world;
+            }
+
+            set
+            {
+                this.world = value;
             }
         }
     }

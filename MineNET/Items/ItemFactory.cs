@@ -636,5 +636,44 @@ namespace MineNET.Items
             else
                 return new Item(id);
         }
+
+        public static Item GetItem(string name)
+        {
+            string[] data = name.Replace("minecraft:", "").Replace(" ", "_").ToUpper().Split(':');
+            int id = 0;
+            int meta = 0;
+
+            if (data.Length == 1)
+            {
+                int.TryParse(data[0], out id);
+            }
+
+            if (data.Length == 2)
+            {
+                int.TryParse(data[0], out id);
+                int.TryParse(data[1], out meta);
+            }
+
+            try
+            {
+                ItemFactory factory = new ItemFactory();
+                id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
+            }
+            catch
+            {
+                try
+                {
+                    BlockFactory factory = new BlockFactory();
+                    id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
+                }
+                catch
+                {
+
+                }
+            }
+
+            Item item = Item.Get(id, (short) meta);
+            return item;
+        }
     }
 }

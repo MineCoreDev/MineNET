@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Reflection;
 using MineNET.Blocks;
+using MineNET.NBT;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
 
@@ -23,43 +23,7 @@ namespace MineNET.Items
 
         public static Item Get(string name)
         {
-            string[] data = name.Replace("minecraft:", "").Replace(" ", "_").ToUpper().Split(':');
-            int id = 0;
-            int meta = 0;
-
-            if (data.Length == 1)
-            {
-                int.TryParse(data[0], out id);
-            }
-
-            if (data.Length == 2)
-            {
-                int.TryParse(data[0], out id);
-                int.TryParse(data[1], out meta);
-            }
-
-            try
-            {
-                ItemFactory factory = new ItemFactory();
-                FieldInfo info = factory.GetType().GetField(data[0]);
-                id = (int) info.GetValue(factory);
-            }
-            catch
-            {
-                try
-                {
-                    BlockFactory factory = new BlockFactory();
-                    FieldInfo info = factory.GetType().GetField(data[0]);
-                    id = (int) info.GetValue(factory);
-                }
-                catch
-                {
-
-                }
-            }
-
-            Item item = Item.Get(id, (short) meta);
-            return item;
+            return ItemFactory.GetItem(name);
         }
 
         public Item Clone()
@@ -129,12 +93,12 @@ namespace MineNET.Items
             }
         }
 
-        public bool HasTag()
+        public bool HasTags()
         {
             return this.tags != null && this.tags.Length > 0;
         }
 
-        public byte[] Tag
+        public byte[] Tags
         {
             get
             {
@@ -150,19 +114,28 @@ namespace MineNET.Items
 
         public CompoundTag GetNamedTag()
         {
-            if (!this.HasTag())
+            if (!this.HasTags())
             {
                 return new CompoundTag();
             }
-            //TODO : this.tag -> CompoundTag
-            return new CompoundTag();
+
+            if (this.cachedNBT == null)
+            {
+                this.cachedNBT = NBTIO.ReadTag(this.tags);
+            }
+
+            if (this.cachedNBT != null)
+            {
+                this.cachedNBT.Name = "";
+            }
+            return this.cachedNBT;
         }
 
         public Item SetNamedTag(CompoundTag nbt)
         {
             nbt.Name = null;
             this.cachedNBT = nbt;
-            //this.tags = nbt;
+            this.tags = NBTIO.WriteTag(nbt);
             return this;
         }
 
@@ -320,6 +293,151 @@ namespace MineNET.Items
             {
                 return 0f;
             }
+        }
+
+        public string GetCustomName()
+        {
+            if (!this.HasTags())
+            {
+                return "";
+            }
+
+            CompoundTag tag = this.GetNamedTag();
+            if (tag.Exist("display"))
+            {
+                return "";
+            }
+            CompoundTag display = tag.GetCompound("display");
+            if (!display.Exist("name"))
+            {
+                return "";
+            }
+            return display.GetString("name");
+        }
+
+        public Item SetCustomName(string name)
+        {
+            if (name == null || name == "")
+            {
+                this.ClearCustomName();
+            }
+            else
+            {
+                CompoundTag tag;
+                if (this.HasTags())
+                {
+                    tag = this.GetNamedTag();
+                }
+                else
+                {
+                    tag = new CompoundTag();
+                }
+                if (tag.Exist("display"))
+                {
+                    tag.GetCompound("display").PutString("name", name);
+                }
+                else
+                {
+                    tag.PutCompound("display", new CompoundTag("display").PutString("name", name));
+                }
+            }
+            return this;
+        }
+
+        public Item ClearCustomName()
+        {
+            if (!this.HasTags())
+            {
+                return this;
+            }
+
+            CompoundTag tag = this.GetNamedTag();
+            if (!tag.Exist("display"))
+            {
+                return this;
+            }
+            CompoundTag display = tag.GetCompound("display");
+            if (display.Exist("name"))
+            {
+                display.Remove("name");
+            }
+            return this;
+        }
+
+        public string[] GetLore()
+        {
+            if (!this.HasTags())
+            {
+                return new string[0];
+            }
+
+            CompoundTag tag = this.GetNamedTag();
+            if (tag.Exist("display"))
+            {
+                return new string[0];
+            }
+            CompoundTag display = tag.GetCompound("display");
+            if (!display.Exist("lore"))
+            {
+                return new string[0];
+            }
+            ListTag<StringTag> lores = display.GetList<StringTag>("lore");
+            string[] data = new string[lores.Count];
+            for (int i = 0; i < lores.Count; ++i)
+            {
+                data[i] = lores[i].Data;
+            }
+            return data;
+        }
+
+        public Item SetLore(params string[] lores)
+        {
+            if (lores == null || lores.Length < 1)
+            {
+                this.ClearLore();
+            }
+            else
+            {
+                CompoundTag tag;
+                if (this.HasTags())
+                {
+                    tag = this.GetNamedTag();
+                }
+                else
+                {
+                    tag = new CompoundTag();
+                }
+                ListTag<StringTag> list = new ListTag<StringTag>("lore");
+                if (tag.Exist("display"))
+                {
+                    tag.GetCompound("display").PutList(list);
+                }
+                else
+                {
+                    tag.PutCompound("display", new CompoundTag("display").PutList(list));
+                }
+            }
+            return this;
+        }
+
+        public Item ClearLore()
+        {
+            if (!this.HasTags())
+            {
+                return this;
+            }
+
+            CompoundTag tag = this.GetNamedTag();
+            if (!tag.Exist("display"))
+            {
+                return this;
+            }
+            CompoundTag display = tag.GetCompound("display");
+            if (display.Exist("lore"))
+            {
+                display.Remove("lore");
+            }
+            return this;
         }
     }
 }
