@@ -95,7 +95,7 @@ namespace MineNET.Network
             pk.Encode();
 
             byte[] buffer = pk.GetResult();
-            Logger.Log("%server_packet_send", buffer[0].ToString("X"));
+            Logger.Log("%server_packet_send", buffer[0].ToString("X"), buffer.Length);
 
             BinaryStream st = new BinaryStream();
             st.WriteVarInt((int) pk.Length);
@@ -125,14 +125,14 @@ namespace MineNET.Network
                     {
                         if (packet != null)
                         {
-                            Logger.Log("%server_packet_handle", buffer[0].ToString("X"));
+                            Logger.Log("%server_packet_handle", buffer[0].ToString("X"), buffer.Length);
                             packet.SetBuffer(buffer);
                             packet.Decode();
                             player.PacketHandle(packet);
                         }
                         else
                         {
-                            Logger.Log("%server_packet_notHandle", buffer[0].ToString("X"));
+                            Logger.Log("%server_packet_notHandle", buffer[0].ToString("X"), buffer.Length);
                         }
                     }
                 }

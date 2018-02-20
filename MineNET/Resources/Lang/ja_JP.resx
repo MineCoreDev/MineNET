@@ -199,13 +199,13 @@
     <value>チャンク範囲 {0} でリクエストされました。&lt;{1}に変更しました。&gt;</value>
   </data>
   <data name="server_packet_handle" xml:space="preserve">
-    <value>データパケット {0}を受信しました。</value>
+    <value>データパケット {0}を受信しました。&lt;長さ {1}byte&gt;</value>
   </data>
   <data name="server_packet_notHandle" xml:space="preserve">
-    <value>ハンドルされていないデータパケット {0}を受信しました。</value>
+    <value>ハンドルされていないデータパケット {0}を受信しました。&lt;長さ {1}byte&gt;</value>
   </data>
   <data name="server_packet_send" xml:space="preserve">
-    <value>データパケット {0}を送信しました。</value>
+    <value>データパケット {0}を送信しました。&lt;長さ {1}byte&gt;</value>
   </data>
   <data name="server_plugin_enable" xml:space="preserve">
     <value>プラグイン&lt;{0}&gt;が有効になりました。</value>

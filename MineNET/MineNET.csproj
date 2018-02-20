@@ -673,6 +673,8 @@
     <Compile Include="Utils\ZlibStream.cs" />
     <Compile Include="Values\Vector2.cs" />
     <Compile Include="Values\Vector3.cs" />
+    <Compile Include="Worlds\Chunk.cs" />
+    <Compile Include="Worlds\Formats\IChunkFormat.cs" />
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>
   <ItemGroup>

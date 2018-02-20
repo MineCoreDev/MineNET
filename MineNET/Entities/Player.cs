@@ -1,9 +1,10 @@
-﻿using MineNET.Commands;
+﻿using System.Net;
+using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Network.Packets;
 using MineNET.Utils;
 using MineNET.Values;
-using System.Net;
+using MineNET.Worlds;
 
 namespace MineNET.Entities
 {
@@ -130,7 +131,7 @@ namespace MineNET.Entities
             }
         }
 
-        public void RequestChunkRadiusPacketHandle(RequestChunkRadiusPacket pk)
+        public async void RequestChunkRadiusPacketHandle(RequestChunkRadiusPacket pk)
         {
             ChunkRadiusUpdatedPacket chunkRadiusUpdatedPacket = new ChunkRadiusUpdatedPacket();
             chunkRadiusUpdatedPacket.Radius = FixRadius(pk.Radius);
@@ -138,6 +139,8 @@ namespace MineNET.Entities
             SendPacket(chunkRadiusUpdatedPacket);
 
             this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+
+            new Chunk(128 >> 4, 128 >> 4).TestChunkSend(this);
         }
 
         void ProcessLogin()
@@ -157,7 +160,6 @@ namespace MineNET.Entities
             this.SendPacket(startGamePacket);
 
             this.SendPlayerAttribute();
-
             //AvailableCommands
             AvailableCommandsPacket availableCommandsPacket = new AvailableCommandsPacket();
             this.SendPacket(availableCommandsPacket);
@@ -179,7 +181,7 @@ namespace MineNET.Entities
             //inventoryContent
             //MobEquipment
             //InventorySlot
-            //PlayerList
+            //PlayerList*/
         }
 
         int FixRadius(int radius)

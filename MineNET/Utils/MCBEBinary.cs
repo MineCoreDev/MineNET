@@ -64,10 +64,10 @@ namespace MineNET.Utils
             this.WriteUVarInt((uint) attributes.Length);
             for (int i = 0; i < attributes.Length; ++i)
             {
-                this.WriteLFloat(attributes[i].MinValue);
-                this.WriteLFloat(attributes[i].MaxValue);
-                this.WriteLFloat(attributes[i].Value);
-                this.WriteLFloat(attributes[i].DefaultValue);
+                this.WriteFloat(attributes[i].MinValue);
+                this.WriteFloat(attributes[i].MaxValue);
+                this.WriteFloat(attributes[i].Value);
+                this.WriteFloat(attributes[i].DefaultValue);
                 this.WriteString(attributes[i].Name);
             }
         }

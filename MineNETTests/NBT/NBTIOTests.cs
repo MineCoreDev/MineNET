@@ -43,7 +43,7 @@ namespace MineNET.NBT.Tests
         [TestMethod()]
         public void ReadZLIBFileTest()
         {
-            string path = Environment.CurrentDirectory + "\\hiroki19990625.dat";
+            string path = Environment.CurrentDirectory + "\\level.dat";
             CompoundTag tag = NBTIO.ReadGZIPFile(path);
             Console.WriteLine(VarDump.Var_Dump(tag));
         }

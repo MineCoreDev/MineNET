@@ -38,7 +38,7 @@
         {
             base.Encode();
 
-            WriteInt(status);
+            WriteLInt((uint) status);
         }
     }
 }

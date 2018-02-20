@@ -40,8 +40,8 @@
             }
         }
 
-        string data;
-        public string Data
+        byte[] data;
+        public byte[] Data
         {
             get
             {
@@ -52,6 +52,16 @@
             {
                 this.data = value;
             }
+        }
+
+        public override void Encode()
+        {
+            base.Encode();
+
+            WriteSVarInt(this.chunkX);
+            WriteSVarInt(this.chunkY);
+
+            WriteBytes(this.data);
         }
     }
 }
