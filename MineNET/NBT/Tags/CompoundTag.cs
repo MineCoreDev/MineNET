@@ -216,10 +216,9 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public CompoundTag PutList(string name, ListTag<Tag> data)
+        public CompoundTag PutList<T>(ListTag<T> data) where T : Tag
         {
-            data.Name = name;
-            this.tags[name] = data;
+            this.tags[data.Name] = data;
             return this;
         }
 
@@ -267,6 +266,11 @@ namespace MineNET.NBT.Tags
             }
             else
                 throw new IndexOutOfRangeException();
+        }
+
+        public void Remove(string name)
+        {
+            this.tags.Remove(name);
         }
 
         public bool Exist(string name)
@@ -351,32 +355,32 @@ namespace MineNET.NBT.Tags
 
                     case NBTTagType.BYTE:
                         tagName = stream.ReadString();
-                        PutByte(tagName, stream.ReadByte());
+                        this.PutByte(tagName, stream.ReadByte());
                         break;
 
                     case NBTTagType.SHORT:
                         tagName = stream.ReadString();
-                        PutShort(tagName, stream.ReadShort());
+                        this.PutShort(tagName, stream.ReadShort());
                         break;
 
                     case NBTTagType.INT:
                         tagName = stream.ReadString();
-                        PutInt(tagName, stream.ReadInt());
+                        this.PutInt(tagName, stream.ReadInt());
                         break;
 
                     case NBTTagType.LONG:
                         tagName = stream.ReadString();
-                        PutLong(tagName, stream.ReadLong());
+                        this.PutLong(tagName, stream.ReadLong());
                         break;
 
                     case NBTTagType.FLOAT:
                         tagName = stream.ReadString();
-                        PutFloat(tagName, stream.ReadFloat());
+                        this.PutFloat(tagName, stream.ReadFloat());
                         break;
 
                     case NBTTagType.DOUBLE:
                         tagName = stream.ReadString();
-                        PutDouble(tagName, stream.ReadDouble());
+                        this.PutDouble(tagName, stream.ReadDouble());
                         break;
 
                     case NBTTagType.BYTE_ARRAY:
@@ -387,26 +391,27 @@ namespace MineNET.NBT.Tags
                         {
                             b[i] = stream.ReadByte();
                         }
-                        PutByteArray(tagName, b);
+                        this.PutByteArray(tagName, b);
                         break;
 
                     case NBTTagType.STRING:
                         tagName = stream.ReadString();
-                        PutString(tagName, stream.ReadString());
+                        this.PutString(tagName, stream.ReadString());
                         break;
 
                     case NBTTagType.LIST:
                         tagName = stream.ReadString();
                         ListTag<Tag> listtag = new ListTag<Tag>();
                         listtag.Read(stream);
-                        PutList(tagName, listtag);
+                        listtag.Name = tagName;
+                        this.PutList(listtag);
                         break;
 
                     case NBTTagType.COMPOUND:
                         tagName = stream.ReadString();
                         CompoundTag comp = new CompoundTag();
                         comp.Read(stream);
-                        PutCompound(tagName, comp);
+                        this.PutCompound(tagName, comp);
                         break;
 
                     case NBTTagType.INT_ARRAY:
@@ -417,7 +422,7 @@ namespace MineNET.NBT.Tags
                         {
                             n[i] = stream.ReadInt();
                         }
-                        PutIntArray(tagName, n);
+                        this.PutIntArray(tagName, n);
                         break;
 
                     case NBTTagType.LONG_ARRAY:
@@ -428,7 +433,7 @@ namespace MineNET.NBT.Tags
                         {
                             l[i] = stream.ReadLong();
                         }
-                        PutLongArray(tagName, l);
+                        this.PutLongArray(tagName, l);
                         break;
 
                     default:

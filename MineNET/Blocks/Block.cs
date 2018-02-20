@@ -18,35 +18,7 @@ namespace MineNET.Blocks
 
         public static Block Get(string name)
         {
-            string[] data = name.Replace("minecraft:", "").Replace(" ", "_").ToUpper().Split(':');
-            int id = 0;
-            int meta = 0;
-
-            if (data.Length == 1)
-            {
-                int.TryParse(data[0], out id);
-            }
-
-            if (data.Length == 2)
-            {
-                int.TryParse(data[0], out id);
-                int.TryParse(data[1], out meta);
-            }
-
-            id = id > 255 ? 0 : id;
-
-            try
-            {
-                BlockFactory factory = new BlockFactory();
-                id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
-            }
-            catch
-            {
-
-            }
-
-            Block block = Block.Get((byte) id, (short) meta);
-            return block;
+            return BlockFactory.GetBlock(name);
         }
 
         public Block Clone()

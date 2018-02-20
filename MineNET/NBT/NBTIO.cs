@@ -109,5 +109,25 @@ namespace MineNET.NBT
                 return tag;
             }
         }
+
+        public static byte[] WriteTag(CompoundTag tag)
+        {
+            using (NBTStream stream = new NBTStream())
+            {
+                tag.Write(stream);
+                return stream.ToArray();
+            }
+        }
+
+        public static CompoundTag ReadTag(byte[] bytes, NBTEndian endian = NBTEndian.LITTLE_ENDIAN)
+        {
+            CompoundTag tag = new CompoundTag();
+            using (NBTStream stream = new NBTStream(bytes, endian))
+            {
+                tag.Read(stream);
+            }
+
+            return tag;
+        }
     }
 }

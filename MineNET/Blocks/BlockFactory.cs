@@ -252,255 +252,527 @@
 
         public static Block GetBlock(byte id)
         {
-            if (id == AIR) return new BlockAir();
-            else if (id == STONE) return new BlockStone();
-            else if (id == GRASS) return new BlockGrass();
-            else if (id == DIRT) return new BlockDirt();
-            else if (id == COBBLESTONE) return new BlockCobblestone();
-            else if (id == PLANKS) return new BlockPlanks();
-            else if (id == SAPLING) return new BlockSapling();
-            else if (id == BEDROCK) return new BlockBedrock();
-            else if (id == FLOWING_WATER) return new BlockFlowingWater();
-            else if (id == WATER) return new BlockWater();
-            else if (id == FLOWING_LAVA) return new BlockFlowingLava();
-            else if (id == LAVA) return new BlockLava();
-            else if (id == SAND) return new BlockSand();
-            else if (id == GRAVEL) return new BlockGravel();
-            else if (id == GOLD_ORE) return new BlockGoldOre();
-            else if (id == IRON_ORE) return new BlockIronOre();
-            else if (id == COAL_ORE) return new BlockCoalOre();
-            else if (id == LOG) return new BlockLog();
-            else if (id == LEAVES) return new BlockLeaves();
-            else if (id == SPONGE) return new BlockSponge();
-            else if (id == GLASS) return new BlockGlass();
-            else if (id == LAPIS_ORE) return new BlockLapisOre();
-            else if (id == LAPIS_BLOCK) return new BlockLapisBlock();
-            else if (id == DISPENSER) return new BlockDispenser();
-            else if (id == SANDSTONE) return new BlockSandstone();
-            else if (id == NOTEBLOCK) return new BlockNoteBlock();
-            else if (id == BED) return new BlockBed();
-            else if (id == GOLDEN_RAIL) return new BlockGoldenRail();
-            else if (id == DETECTOR_RAIL) return new BlockDetectorRail();
-            else if (id == STICKY_PISTON) return new BlockStickyPiston();
-            else if (id == COBWEB) return new BlockCobweb();
-            else if (id == TALLGRASS) return new BlockTallgrass();
-            else if (id == DEADBUSH) return new BlockDeadbush();
-            else if (id == PISTON) return new BlockPiston();
-            else if (id == PISTON_HEAD) return new BlockPistonHead();
-            else if (id == WOOL) return new BlockWool();
+            if (id == AIR)
+                return new BlockAir();
+            else if (id == STONE)
+                return new BlockStone();
+            else if (id == GRASS)
+                return new BlockGrass();
+            else if (id == DIRT)
+                return new BlockDirt();
+            else if (id == COBBLESTONE)
+                return new BlockCobblestone();
+            else if (id == PLANKS)
+                return new BlockPlanks();
+            else if (id == SAPLING)
+                return new BlockSapling();
+            else if (id == BEDROCK)
+                return new BlockBedrock();
+            else if (id == FLOWING_WATER)
+                return new BlockFlowingWater();
+            else if (id == WATER)
+                return new BlockWater();
+            else if (id == FLOWING_LAVA)
+                return new BlockFlowingLava();
+            else if (id == LAVA)
+                return new BlockLava();
+            else if (id == SAND)
+                return new BlockSand();
+            else if (id == GRAVEL)
+                return new BlockGravel();
+            else if (id == GOLD_ORE)
+                return new BlockGoldOre();
+            else if (id == IRON_ORE)
+                return new BlockIronOre();
+            else if (id == COAL_ORE)
+                return new BlockCoalOre();
+            else if (id == LOG)
+                return new BlockLog();
+            else if (id == LEAVES)
+                return new BlockLeaves();
+            else if (id == SPONGE)
+                return new BlockSponge();
+            else if (id == GLASS)
+                return new BlockGlass();
+            else if (id == LAPIS_ORE)
+                return new BlockLapisOre();
+            else if (id == LAPIS_BLOCK)
+                return new BlockLapisBlock();
+            else if (id == DISPENSER)
+                return new BlockDispenser();
+            else if (id == SANDSTONE)
+                return new BlockSandstone();
+            else if (id == NOTEBLOCK)
+                return new BlockNoteBlock();
+            else if (id == BED)
+                return new BlockBed();
+            else if (id == GOLDEN_RAIL)
+                return new BlockGoldenRail();
+            else if (id == DETECTOR_RAIL)
+                return new BlockDetectorRail();
+            else if (id == STICKY_PISTON)
+                return new BlockStickyPiston();
+            else if (id == COBWEB)
+                return new BlockCobweb();
+            else if (id == TALLGRASS)
+                return new BlockTallgrass();
+            else if (id == DEADBUSH)
+                return new BlockDeadbush();
+            else if (id == PISTON)
+                return new BlockPiston();
+            else if (id == PISTON_HEAD)
+                return new BlockPistonHead();
+            else if (id == WOOL)
+                return new BlockWool();
 
-            else if (id == YELLOW_FLOWER) return new BlockYellowFlower();
-            else if (id == RED_FLOWER) return new BlockRedFlower();
-            else if (id == BROWN_MUSHROOM) return new BlockBrownMushroom();
-            else if (id == RED_MUSHROOM) return new BlockRedMushroom();
-            else if (id == GOLD_BLOCK) return new BlockGoldBlock();
-            else if (id == IRON_BLOCK) return new BlockIronBlock();
-            else if (id == DOUBLE_STONE_SLAB) return new BlockDoubleStoneSlab();
-            else if (id == STONE_SLAB) return new BlockStoneSlab();
-            else if (id == BRICK_BLOCK) return new BlockBrickBlock();
-            else if (id == TNT) return new BlockTnt();
-            else if (id == BOOKSHELF) return new BlockBookshelf();
-            else if (id == MOSSY_COBBLESTONE) return new BlockMossyCobblestone();
-            else if (id == OBSIDIAN) return new BlockObsidian();
-            else if (id == TORCH) return new BlockTorch();
-            else if (id == FIRE) return new BlockFire();
-            else if (id == MOB_SPAWNER) return new BlockMobSpawner();
-            else if (id == OAK_STAIRS) return new BlockOakStairs();
-            else if (id == CHEST) return new BlockChest();
-            else if (id == REDSTONE_WIRE) return new BlockRedstoneWire();
-            else if (id == DIAMOND_ORE) return new BlockDiamondOre();
-            else if (id == DIAMOND_BLOCK) return new BlockDiamondBlock();
-            else if (id == CRAFTING_TABLE) return new BlockCraftingTable();
-            else if (id == WHEAT) return new BlockWheat();
-            else if (id == FARMLAND) return new BlockFarmland();
-            else if (id == FURNACE) return new BlockFurnace();
-            else if (id == LIT_FURNACE) return new BlockLitFurnace();
-            else if (id == STANDING_SIGN) return new BlockStandingSign();
-            else if (id == WOODEN_DOOR) return new BlockWoodenDoor();
-            else if (id == LADDER) return new BlockLadder();
-            else if (id == RAIL) return new BlockRail();
-            else if (id == STONE_STAIRS) return new BlockStoneStairs();
-            else if (id == WALL_SIGN) return new BlockWallSign();
-            else if (id == LEAVES) return new BlockLeaves();
-            else if (id == STONE_PRESSURE_PLATE) return new BlockStonePressurePlate();
-            else if (id == IRON_DOOR) return new BlockIronDoor();
-            else if (id == WOODEN_PRESSURE_PLATE) return new BlockWoodenPressurePlate();
-            else if (id == REDSTONE_ORE) return new BlockRedstoneOre();
-            else if (id == LIT_REDSTONE_ORE) return new BlockLitRedstoneOre();
-            else if (id == UNLIT_REDSTONE_TORCH) return new BlockUnlitRedstoneTorch();
-            else if (id == REDSTONE_TORCH) return new BlockRedstoneTorch();
-            else if (id == STONE_BUTTON) return new BlockStoneButton();
-            else if (id == SNOW_LAYER) return new BlockSnowLayer();
-            else if (id == ICE) return new BlockIce();
-            else if (id == SNOW) return new BlockSnow();
-            else if (id == CACTUS) return new BlockCactus();
-            else if (id == CLAY) return new BlockClay();
-            else if (id == REEDS) return new BlockReeds();
-            else if (id == JUKEBOX) return new BlockJukebox();
-            else if (id == FENCE) return new BlockFence();
-            else if (id == PUMPKIN) return new BlockPumpkin();
-            else if (id == NETHERRACK) return new BlockNetherrack();
-            else if (id == SOUL_SAND) return new BlockSoulSand();
-            else if (id == GLOWSTONE) return new BlockGlowstone();
-            else if (id == PORTAL) return new BlockPortal();
-            else if (id == LIT_PUMPKIN) return new BlockLitPumpkin();
-            else if (id == CAKE) return new BlockCake();
-            else if (id == UNPOWERED_REPEATER) return new BlockUnpoweredRepeater();
-            else if (id == POWERED_REPEATER) return new BlockPoweredRepeater();
-            else if (id == INVISIBLEBEDROCK) return new BlockInvisiblebedrock();
-            else if (id == TRAPDOOR) return new BlockTrapdoor();
-            else if (id == MONSTER_EGG) return new BlockMonsterEgg();
-            else if (id == STONEBRICK) return new BlockStonebrick();
-            else if (id == BROWN_MUSHROOM_BLOCK) return new BlockBrownMushroomBlock();
-            else if (id == RED_MUSHROOM_BLOCK) return new BlockRedMushroomBlock();
-            else if (id == IRON_BARS) return new BlockIronBars();
-            else if (id == GLASS_PANE) return new BlockGlassPane();
-            else if (id == MELON_BLOCK) return new BlockMelonBlock();
-            else if (id == PUMPKIN_STEM) return new BlockPumpkinStem();
-            else if (id == MELON_STEM) return new BlockMelonStem();
-            else if (id == VINE) return new BlockVine();
-            else if (id == FENCE_GATE) return new BlockFenceGate();
-            else if (id == BRICK_STAIRS) return new BlockBrickStairs();
-            else if (id == STONE_BRICK_STAIRS) return new BlockStoneBrickStairs();
-            else if (id == MYCELIUM) return new BlockMycelium();
-            else if (id == WATERLILY) return new BlockWaterlily();
-            else if (id == NETHER_BRICK) return new BlockNetherBrick();
-            else if (id == NETHER_BRICK_FENCE) return new BlockNetherBrickFence();
-            else if (id == NETHER_BRICK_STAIRS) return new BlockNetherBrickStairs();
-            else if (id == NETHER_WART) return new BlockNetherWart();
-            else if (id == ENCHANTING_TABLE) return new BlockEnchantingTable();
-            else if (id == BREWING_STAND) return new BlockBrewingStand();
-            else if (id == CAULDRON) return new BlockCauldron();
-            else if (id == END_PORTAL) return new BlockEndPortal();
-            else if (id == END_PORTAL_FRAME) return new BlockEndPortalFrame();
-            else if (id == END_STONE) return new BlockEndStone();
-            else if (id == DRAGON_EGG) return new BlockDragonEgg();
-            else if (id == REDSTONE_LAMP) return new BlockRedstoneLamp();
-            else if (id == LIT_REDSTONE_LAMP) return new BlockLitRedstoneLamp();
-            else if (id == DROPPER) return new BlockDropper();
-            else if (id == ACTIVATOR_RAIL) return new BlockActivatorRail();
-            else if (id == COCOA) return new BlockCocoa();
-            else if (id == SANDSTONE_SLAB) return new BlockSandstoneSlab();
-            else if (id == EMERALD_ORE) return new BlockEmeraldOre();
-            else if (id == ENDER_CHEST) return new BlockEnderChest();
-            else if (id == TRIPWIRE_HOOK) return new BlockTripwireHook();
-            else if (id == TRIPWIRE) return new BlockTripwire();
-            else if (id == EMERALD_BLOCK) return new BlockEmeraldBlock();
-            else if (id == SPRUCE_STAIRS) return new BlockSpruceStairs();
-            else if (id == BIRCH_STAIRS) return new BlockBirchStairs();
-            else if (id == JUNGLE_STAIRS) return new BlockJungleStairs();
-            else if (id == COMMAND_BLOCK) return new BlockCommandBlock();
-            else if (id == BEACON) return new BlockBeacon();
-            else if (id == COBBLESTONE_WALL) return new BlockCobblestoneWall();
-            else if (id == FLOWER_POT) return new BlockFlowerPot();
-            else if (id == CARROTS) return new BlockCarrots();
-            else if (id == POTATOES) return new BlockPotatoes();
-            else if (id == WOODEN_BUTTON) return new BlockWoodenButton();
-            else if (id == SKULL) return new BlockSkull();
-            else if (id == ANVIL) return new BlockAnvil();
-            else if (id == TRAPPED_CHEST) return new BlockTrappedChest();
-            else if (id == LIGHT_WEIGHTED_PRESSURE_PLATE) return new BlockLightWeightedPressurePlate();
-            else if (id == HEAVY_WEIGHTED_PRESSURE_PLATE) return new BlockHeavyWeightedPressurePlate();
-            else if (id == UNPOWERED_COMPARATOR) return new BlockUnpoweredComparator();
-            else if (id == POWERED_COMPARATOR) return new BlockPoweredComparator();
-            else if (id == DAYLIGHT_DETECTOR) return new BlockDaylightDetector();
-            else if (id == REDSTONE_BLOCK) return new BlockRedstoneBlock();
-            else if (id == QUARTZ_ORE) return new BlockQuartzOre();
-            else if (id == HOPPER) return new BlockHopper();
-            else if (id == QUARTZ_BLOCK) return new BlockQuartzBlock();
-            else if (id == QUARTZ_STAIRS) return new BlockQuartzStairs();
-            else if (id == DOUBLE_WOODEN_SLAB) return new BlockDoubleWoodenSlab();
-            else if (id == WOODEN_SLAB) return new BlockWoodenSlab();
-            else if (id == STAINED_HARDENED_CLAY) return new BlockStainedHardenedClay();
-            else if (id == STAINED_GLASS_PANE) return new BlockStainedGlassPane();
-            else if (id == LEAVES2) return new BlockLeaves2();
-            else if (id == LOG2) return new BlockLog2();
-            else if (id == ACACIA_STAIRS) return new BlockAcaciaStairs();
-            else if (id == DARK_OAK_STAIRS) return new BlockDarkOakStairs();
-            else if (id == SLIME) return new BlockSlime();
+            else if (id == YELLOW_FLOWER)
+                return new BlockYellowFlower();
+            else if (id == RED_FLOWER)
+                return new BlockRedFlower();
+            else if (id == BROWN_MUSHROOM)
+                return new BlockBrownMushroom();
+            else if (id == RED_MUSHROOM)
+                return new BlockRedMushroom();
+            else if (id == GOLD_BLOCK)
+                return new BlockGoldBlock();
+            else if (id == IRON_BLOCK)
+                return new BlockIronBlock();
+            else if (id == DOUBLE_STONE_SLAB)
+                return new BlockDoubleStoneSlab();
+            else if (id == STONE_SLAB)
+                return new BlockStoneSlab();
+            else if (id == BRICK_BLOCK)
+                return new BlockBrickBlock();
+            else if (id == TNT)
+                return new BlockTnt();
+            else if (id == BOOKSHELF)
+                return new BlockBookshelf();
+            else if (id == MOSSY_COBBLESTONE)
+                return new BlockMossyCobblestone();
+            else if (id == OBSIDIAN)
+                return new BlockObsidian();
+            else if (id == TORCH)
+                return new BlockTorch();
+            else if (id == FIRE)
+                return new BlockFire();
+            else if (id == MOB_SPAWNER)
+                return new BlockMobSpawner();
+            else if (id == OAK_STAIRS)
+                return new BlockOakStairs();
+            else if (id == CHEST)
+                return new BlockChest();
+            else if (id == REDSTONE_WIRE)
+                return new BlockRedstoneWire();
+            else if (id == DIAMOND_ORE)
+                return new BlockDiamondOre();
+            else if (id == DIAMOND_BLOCK)
+                return new BlockDiamondBlock();
+            else if (id == CRAFTING_TABLE)
+                return new BlockCraftingTable();
+            else if (id == WHEAT)
+                return new BlockWheat();
+            else if (id == FARMLAND)
+                return new BlockFarmland();
+            else if (id == FURNACE)
+                return new BlockFurnace();
+            else if (id == LIT_FURNACE)
+                return new BlockLitFurnace();
+            else if (id == STANDING_SIGN)
+                return new BlockStandingSign();
+            else if (id == WOODEN_DOOR)
+                return new BlockWoodenDoor();
+            else if (id == LADDER)
+                return new BlockLadder();
+            else if (id == RAIL)
+                return new BlockRail();
+            else if (id == STONE_STAIRS)
+                return new BlockStoneStairs();
+            else if (id == WALL_SIGN)
+                return new BlockWallSign();
+            else if (id == LEAVES)
+                return new BlockLeaves();
+            else if (id == STONE_PRESSURE_PLATE)
+                return new BlockStonePressurePlate();
+            else if (id == IRON_DOOR)
+                return new BlockIronDoor();
+            else if (id == WOODEN_PRESSURE_PLATE)
+                return new BlockWoodenPressurePlate();
+            else if (id == REDSTONE_ORE)
+                return new BlockRedstoneOre();
+            else if (id == LIT_REDSTONE_ORE)
+                return new BlockLitRedstoneOre();
+            else if (id == UNLIT_REDSTONE_TORCH)
+                return new BlockUnlitRedstoneTorch();
+            else if (id == REDSTONE_TORCH)
+                return new BlockRedstoneTorch();
+            else if (id == STONE_BUTTON)
+                return new BlockStoneButton();
+            else if (id == SNOW_LAYER)
+                return new BlockSnowLayer();
+            else if (id == ICE)
+                return new BlockIce();
+            else if (id == SNOW)
+                return new BlockSnow();
+            else if (id == CACTUS)
+                return new BlockCactus();
+            else if (id == CLAY)
+                return new BlockClay();
+            else if (id == REEDS)
+                return new BlockReeds();
+            else if (id == JUKEBOX)
+                return new BlockJukebox();
+            else if (id == FENCE)
+                return new BlockFence();
+            else if (id == PUMPKIN)
+                return new BlockPumpkin();
+            else if (id == NETHERRACK)
+                return new BlockNetherrack();
+            else if (id == SOUL_SAND)
+                return new BlockSoulSand();
+            else if (id == GLOWSTONE)
+                return new BlockGlowstone();
+            else if (id == PORTAL)
+                return new BlockPortal();
+            else if (id == LIT_PUMPKIN)
+                return new BlockLitPumpkin();
+            else if (id == CAKE)
+                return new BlockCake();
+            else if (id == UNPOWERED_REPEATER)
+                return new BlockUnpoweredRepeater();
+            else if (id == POWERED_REPEATER)
+                return new BlockPoweredRepeater();
+            else if (id == INVISIBLEBEDROCK)
+                return new BlockInvisiblebedrock();
+            else if (id == TRAPDOOR)
+                return new BlockTrapdoor();
+            else if (id == MONSTER_EGG)
+                return new BlockMonsterEgg();
+            else if (id == STONEBRICK)
+                return new BlockStonebrick();
+            else if (id == BROWN_MUSHROOM_BLOCK)
+                return new BlockBrownMushroomBlock();
+            else if (id == RED_MUSHROOM_BLOCK)
+                return new BlockRedMushroomBlock();
+            else if (id == IRON_BARS)
+                return new BlockIronBars();
+            else if (id == GLASS_PANE)
+                return new BlockGlassPane();
+            else if (id == MELON_BLOCK)
+                return new BlockMelonBlock();
+            else if (id == PUMPKIN_STEM)
+                return new BlockPumpkinStem();
+            else if (id == MELON_STEM)
+                return new BlockMelonStem();
+            else if (id == VINE)
+                return new BlockVine();
+            else if (id == FENCE_GATE)
+                return new BlockFenceGate();
+            else if (id == BRICK_STAIRS)
+                return new BlockBrickStairs();
+            else if (id == STONE_BRICK_STAIRS)
+                return new BlockStoneBrickStairs();
+            else if (id == MYCELIUM)
+                return new BlockMycelium();
+            else if (id == WATERLILY)
+                return new BlockWaterlily();
+            else if (id == NETHER_BRICK)
+                return new BlockNetherBrick();
+            else if (id == NETHER_BRICK_FENCE)
+                return new BlockNetherBrickFence();
+            else if (id == NETHER_BRICK_STAIRS)
+                return new BlockNetherBrickStairs();
+            else if (id == NETHER_WART)
+                return new BlockNetherWart();
+            else if (id == ENCHANTING_TABLE)
+                return new BlockEnchantingTable();
+            else if (id == BREWING_STAND)
+                return new BlockBrewingStand();
+            else if (id == CAULDRON)
+                return new BlockCauldron();
+            else if (id == END_PORTAL)
+                return new BlockEndPortal();
+            else if (id == END_PORTAL_FRAME)
+                return new BlockEndPortalFrame();
+            else if (id == END_STONE)
+                return new BlockEndStone();
+            else if (id == DRAGON_EGG)
+                return new BlockDragonEgg();
+            else if (id == REDSTONE_LAMP)
+                return new BlockRedstoneLamp();
+            else if (id == LIT_REDSTONE_LAMP)
+                return new BlockLitRedstoneLamp();
+            else if (id == DROPPER)
+                return new BlockDropper();
+            else if (id == ACTIVATOR_RAIL)
+                return new BlockActivatorRail();
+            else if (id == COCOA)
+                return new BlockCocoa();
+            else if (id == SANDSTONE_SLAB)
+                return new BlockSandstoneSlab();
+            else if (id == EMERALD_ORE)
+                return new BlockEmeraldOre();
+            else if (id == ENDER_CHEST)
+                return new BlockEnderChest();
+            else if (id == TRIPWIRE_HOOK)
+                return new BlockTripwireHook();
+            else if (id == TRIPWIRE)
+                return new BlockTripwire();
+            else if (id == EMERALD_BLOCK)
+                return new BlockEmeraldBlock();
+            else if (id == SPRUCE_STAIRS)
+                return new BlockSpruceStairs();
+            else if (id == BIRCH_STAIRS)
+                return new BlockBirchStairs();
+            else if (id == JUNGLE_STAIRS)
+                return new BlockJungleStairs();
+            else if (id == COMMAND_BLOCK)
+                return new BlockCommandBlock();
+            else if (id == BEACON)
+                return new BlockBeacon();
+            else if (id == COBBLESTONE_WALL)
+                return new BlockCobblestoneWall();
+            else if (id == FLOWER_POT)
+                return new BlockFlowerPot();
+            else if (id == CARROTS)
+                return new BlockCarrots();
+            else if (id == POTATOES)
+                return new BlockPotatoes();
+            else if (id == WOODEN_BUTTON)
+                return new BlockWoodenButton();
+            else if (id == SKULL)
+                return new BlockSkull();
+            else if (id == ANVIL)
+                return new BlockAnvil();
+            else if (id == TRAPPED_CHEST)
+                return new BlockTrappedChest();
+            else if (id == LIGHT_WEIGHTED_PRESSURE_PLATE)
+                return new BlockLightWeightedPressurePlate();
+            else if (id == HEAVY_WEIGHTED_PRESSURE_PLATE)
+                return new BlockHeavyWeightedPressurePlate();
+            else if (id == UNPOWERED_COMPARATOR)
+                return new BlockUnpoweredComparator();
+            else if (id == POWERED_COMPARATOR)
+                return new BlockPoweredComparator();
+            else if (id == DAYLIGHT_DETECTOR)
+                return new BlockDaylightDetector();
+            else if (id == REDSTONE_BLOCK)
+                return new BlockRedstoneBlock();
+            else if (id == QUARTZ_ORE)
+                return new BlockQuartzOre();
+            else if (id == HOPPER)
+                return new BlockHopper();
+            else if (id == QUARTZ_BLOCK)
+                return new BlockQuartzBlock();
+            else if (id == QUARTZ_STAIRS)
+                return new BlockQuartzStairs();
+            else if (id == DOUBLE_WOODEN_SLAB)
+                return new BlockDoubleWoodenSlab();
+            else if (id == WOODEN_SLAB)
+                return new BlockWoodenSlab();
+            else if (id == STAINED_HARDENED_CLAY)
+                return new BlockStainedHardenedClay();
+            else if (id == STAINED_GLASS_PANE)
+                return new BlockStainedGlassPane();
+            else if (id == LEAVES2)
+                return new BlockLeaves2();
+            else if (id == LOG2)
+                return new BlockLog2();
+            else if (id == ACACIA_STAIRS)
+                return new BlockAcaciaStairs();
+            else if (id == DARK_OAK_STAIRS)
+                return new BlockDarkOakStairs();
+            else if (id == SLIME)
+                return new BlockSlime();
 
-            else if (id == IRON_TRAPDOOR) return new BlockIronTrapdoor();
-            else if (id == PRISMARINE) return new BlockPrismarine();
-            else if (id == SEA_LANTERN) return new BlockSeaLantern();
-            else if (id == HAY_BLOCK) return new BlockHayBlock();
-            else if (id == CARPET) return new BlockCarpet();
-            else if (id == HARDENED_CLAY) return new BlockHardenedClay();
-            else if (id == COAL_BLOCK) return new BlockCoalBlock();
-            else if (id == PACKED_ICE) return new BlockPackedIce();
-            else if (id == DOUBLE_PLANT) return new BlockDoublePlant();
-            else if (id == STANDING_BANNER) return new BlockStandingBanner();
-            else if (id == WALL_BANNER) return new BlockWallBanner();
-            else if (id == DAYLIGHT_DETECTOR_INVERTED) return new BlockDaylightDetectorInverted();
-            else if (id == RED_SANDSTONE) return new BlockRedSandstone();
-            else if (id == RED_SANDSTONE_STAIRS) return new BlockRedSandstoneStairs();
-            else if (id == DOUBLE_STONE_SLAB2) return new BlockDoubleStoneSlab2();
-            else if (id == STONE_SLAB2) return new BlockStoneSlab2();
-            else if (id == SPRUCE_FENCE_GATE) return new BlockSpruceFenceGate();
-            else if (id == BIRCH_FENCE_GATE) return new BlockBirchFenceGate();
-            else if (id == JUNGLE_FENCE_GATE) return new BlockJungleFenceGate();
-            else if (id == DARK_OAK_FENCE_GATE) return new BlockDarkOakFenceGate();
-            else if (id == ACACIA_FENCE_GATE) return new BlockAcaciaFenceGate();
-            else if (id == REPEATING_COMMAND_BLOCK) return new BlockRepeatingCommandBlock();
-            else if (id == CHAIN_COMMAND_BLOCK) return new BlockChainCommandBlock();
+            else if (id == IRON_TRAPDOOR)
+                return new BlockIronTrapdoor();
+            else if (id == PRISMARINE)
+                return new BlockPrismarine();
+            else if (id == SEA_LANTERN)
+                return new BlockSeaLantern();
+            else if (id == HAY_BLOCK)
+                return new BlockHayBlock();
+            else if (id == CARPET)
+                return new BlockCarpet();
+            else if (id == HARDENED_CLAY)
+                return new BlockHardenedClay();
+            else if (id == COAL_BLOCK)
+                return new BlockCoalBlock();
+            else if (id == PACKED_ICE)
+                return new BlockPackedIce();
+            else if (id == DOUBLE_PLANT)
+                return new BlockDoublePlant();
+            else if (id == STANDING_BANNER)
+                return new BlockStandingBanner();
+            else if (id == WALL_BANNER)
+                return new BlockWallBanner();
+            else if (id == DAYLIGHT_DETECTOR_INVERTED)
+                return new BlockDaylightDetectorInverted();
+            else if (id == RED_SANDSTONE)
+                return new BlockRedSandstone();
+            else if (id == RED_SANDSTONE_STAIRS)
+                return new BlockRedSandstoneStairs();
+            else if (id == DOUBLE_STONE_SLAB2)
+                return new BlockDoubleStoneSlab2();
+            else if (id == STONE_SLAB2)
+                return new BlockStoneSlab2();
+            else if (id == SPRUCE_FENCE_GATE)
+                return new BlockSpruceFenceGate();
+            else if (id == BIRCH_FENCE_GATE)
+                return new BlockBirchFenceGate();
+            else if (id == JUNGLE_FENCE_GATE)
+                return new BlockJungleFenceGate();
+            else if (id == DARK_OAK_FENCE_GATE)
+                return new BlockDarkOakFenceGate();
+            else if (id == ACACIA_FENCE_GATE)
+                return new BlockAcaciaFenceGate();
+            else if (id == REPEATING_COMMAND_BLOCK)
+                return new BlockRepeatingCommandBlock();
+            else if (id == CHAIN_COMMAND_BLOCK)
+                return new BlockChainCommandBlock();
 
-            else if (id == SPRUCE_DOOR) return new BlockSpruceDoor();
-            else if (id == BIRCH_DOOR) return new BlockBirchDoor();
-            else if (id == JUNGLE_DOOR) return new BlockJungleDoor();
-            else if (id == ACACIA_DOOR) return new BlockAcaciaDoor();
-            else if (id == DARK_OAK_DOOR) return new BlockDarkOakDoor();
-            else if (id == GRASS_PATH) return new BlockGrassPath();
-            else if (id == FRAME) return new BlockFrame();
-            else if (id == CHORUS_FLOWER) return new BlockChorusFlower();
-            else if (id == PURPUR_BLOCK) return new BlockPurpurBlock();
-            else if (id == PURPUR_STAIRS) return new BlockPurpurStairs();
+            else if (id == SPRUCE_DOOR)
+                return new BlockSpruceDoor();
+            else if (id == BIRCH_DOOR)
+                return new BlockBirchDoor();
+            else if (id == JUNGLE_DOOR)
+                return new BlockJungleDoor();
+            else if (id == ACACIA_DOOR)
+                return new BlockAcaciaDoor();
+            else if (id == DARK_OAK_DOOR)
+                return new BlockDarkOakDoor();
+            else if (id == GRASS_PATH)
+                return new BlockGrassPath();
+            else if (id == FRAME)
+                return new BlockFrame();
+            else if (id == CHORUS_FLOWER)
+                return new BlockChorusFlower();
+            else if (id == PURPUR_BLOCK)
+                return new BlockPurpurBlock();
+            else if (id == PURPUR_STAIRS)
+                return new BlockPurpurStairs();
 
-            else if (id == UNDYED_SHULKER_BOX) return new BlockUndyedShulkerBox();
-            else if (id == END_BRICKS) return new BlockEndBricks();
-            else if (id == FROSTED_ICE) return new BlockFrostedIce();
-            else if (id == END_ROD) return new BlockEndRod();
-            else if (id == END_GATEWAY) return new BlockEndGateway();
+            else if (id == UNDYED_SHULKER_BOX)
+                return new BlockUndyedShulkerBox();
+            else if (id == END_BRICKS)
+                return new BlockEndBricks();
+            else if (id == FROSTED_ICE)
+                return new BlockFrostedIce();
+            else if (id == END_ROD)
+                return new BlockEndRod();
+            else if (id == END_GATEWAY)
+                return new BlockEndGateway();
 
-            else if (id == MAGMA) return new BlockMagma();
-            else if (id == NETHER_WART_BLOCK) return new BlockNetherWartBlock();
-            else if (id == RED_NETHER_BRICK) return new BlockRedNetherBrick();
-            else if (id == BONE_BLOCK) return new BlockBoneBlock();
+            else if (id == MAGMA)
+                return new BlockMagma();
+            else if (id == NETHER_WART_BLOCK)
+                return new BlockNetherWartBlock();
+            else if (id == RED_NETHER_BRICK)
+                return new BlockRedNetherBrick();
+            else if (id == BONE_BLOCK)
+                return new BlockBoneBlock();
 
-            else if (id == SHULKER_BOX) return new BlockShulkerBox();
-            else if (id == PURPLE_GLAZED_TERRACOTTA) return new BlockPurpleGlazedTerracotta();
-            else if (id == WHITE_GLAZED_TERRACOTTA) return new BlockWhiteGlazedTerracotta();
-            else if (id == ORANGE_GLAZED_TERRACOTTA) return new BlockOrangeGlazedTerracotta();
-            else if (id == MAGENTA_GLAZED_TERRACOTTA) return new BlockMagentaGlazedTerracotta();
-            else if (id == LIGHT_GLAZED_TERRACOTTA) return new BlockLightGlazedTerracotta();
-            else if (id == YELLOW_GLAZED_TERRACOTTA) return new BlockYellowGlazedTerracotta();
-            else if (id == LIME_GLAZED_TERRACOTTA) return new BlockLimeGlazedTerracotta();
-            else if (id == PINK_GLAZED_TERRACOTTA) return new BlockPinkGlazedTerracotta();
-            else if (id == GRAY_GLAZED_TERRACOTTA) return new BlockGrayGlazedTerracotta();
-            else if (id == SILVER_GLAZED_TERRACOTTA) return new BlockSilverGlazedTerracotta();
-            else if (id == CYAN_GLAZED_TERRACOTTA) return new BlockCyanGlazedTerracotta();
+            else if (id == SHULKER_BOX)
+                return new BlockShulkerBox();
+            else if (id == PURPLE_GLAZED_TERRACOTTA)
+                return new BlockPurpleGlazedTerracotta();
+            else if (id == WHITE_GLAZED_TERRACOTTA)
+                return new BlockWhiteGlazedTerracotta();
+            else if (id == ORANGE_GLAZED_TERRACOTTA)
+                return new BlockOrangeGlazedTerracotta();
+            else if (id == MAGENTA_GLAZED_TERRACOTTA)
+                return new BlockMagentaGlazedTerracotta();
+            else if (id == LIGHT_GLAZED_TERRACOTTA)
+                return new BlockLightGlazedTerracotta();
+            else if (id == YELLOW_GLAZED_TERRACOTTA)
+                return new BlockYellowGlazedTerracotta();
+            else if (id == LIME_GLAZED_TERRACOTTA)
+                return new BlockLimeGlazedTerracotta();
+            else if (id == PINK_GLAZED_TERRACOTTA)
+                return new BlockPinkGlazedTerracotta();
+            else if (id == GRAY_GLAZED_TERRACOTTA)
+                return new BlockGrayGlazedTerracotta();
+            else if (id == SILVER_GLAZED_TERRACOTTA)
+                return new BlockSilverGlazedTerracotta();
+            else if (id == CYAN_GLAZED_TERRACOTTA)
+                return new BlockCyanGlazedTerracotta();
 
-            else if (id == BLUE_GLAZED_TERRACOTTA) return new BlockBlueGlazedTerracotta();
-            else if (id == BROWN_GLAZED_TERRACOTTA) return new BlockBrownGlazedTerracotta();
-            else if (id == GREEN_GLAZED_TERRACOTTA) return new BlockGreenGlazedTerracotta();
-            else if (id == RED_GLAZED_TERRACOTTA) return new BlockRedGlazedTerracotta();
-            else if (id == BLACK_GLAZED_TERRACOTTA) return new BlockBlackGlazedTerracotta();
-            else if (id == CONCRETE) return new BlockConcrete();
-            else if (id == CONCRETE_POWDER) return new BlockConcretePowder();
+            else if (id == BLUE_GLAZED_TERRACOTTA)
+                return new BlockBlueGlazedTerracotta();
+            else if (id == BROWN_GLAZED_TERRACOTTA)
+                return new BlockBrownGlazedTerracotta();
+            else if (id == GREEN_GLAZED_TERRACOTTA)
+                return new BlockGreenGlazedTerracotta();
+            else if (id == RED_GLAZED_TERRACOTTA)
+                return new BlockRedGlazedTerracotta();
+            else if (id == BLACK_GLAZED_TERRACOTTA)
+                return new BlockBlackGlazedTerracotta();
+            else if (id == CONCRETE)
+                return new BlockConcrete();
+            else if (id == CONCRETE_POWDER)
+                return new BlockConcretePowder();
 
-            else if (id == CHORUS_PLANT) return new BlockChorusPlant();
-            else if (id == STAINED_GLASS) return new BlockStainedGlass();
+            else if (id == CHORUS_PLANT)
+                return new BlockChorusPlant();
+            else if (id == STAINED_GLASS)
+                return new BlockStainedGlass();
 
-            else if (id == PODZOL) return new BlockPodzol();
-            else if (id == BEETROOT) return new BlockBeetroot();
-            else if (id == STONECUTTER) return new BlockStonecutter();
-            else if (id == GLOWINGOBSIDIAN) return new BlockGlowingobsidian();
-            else if (id == NETHERREACTOR) return new BlockNetherreactor();
-            else if (id == INFO_UPDATE) return new BlockInfoUpdate();
-            else if (id == INFO_UPDATE2) return new BlockInfoUpdate2();
-            else if (id == MOVING_BLOCK) return new BlockMovingBlock();
-            else if (id == OBSERVER) return new BlockObserver();
-            else if (id == STRUCTURE_BLOCK) return new BlockStructureBlock();
+            else if (id == PODZOL)
+                return new BlockPodzol();
+            else if (id == BEETROOT)
+                return new BlockBeetroot();
+            else if (id == STONECUTTER)
+                return new BlockStonecutter();
+            else if (id == GLOWINGOBSIDIAN)
+                return new BlockGlowingobsidian();
+            else if (id == NETHERREACTOR)
+                return new BlockNetherreactor();
+            else if (id == INFO_UPDATE)
+                return new BlockInfoUpdate();
+            else if (id == INFO_UPDATE2)
+                return new BlockInfoUpdate2();
+            else if (id == MOVING_BLOCK)
+                return new BlockMovingBlock();
+            else if (id == OBSERVER)
+                return new BlockObserver();
+            else if (id == STRUCTURE_BLOCK)
+                return new BlockStructureBlock();
 
-            else return new BlockUnknown(id);
+            else
+                return new BlockUnknown(id);
+        }
+
+        public static Block GetBlock(string name)
+        {
+            string[] data = name.Replace("minecraft:", "").Replace(" ", "_").ToUpper().Split(':');
+            int id = 0;
+            int meta = 0;
+
+            if (data.Length == 1)
+            {
+                int.TryParse(data[0], out id);
+            }
+
+            if (data.Length == 2)
+            {
+                int.TryParse(data[0], out id);
+                int.TryParse(data[1], out meta);
+            }
+
+            id = id > 255 ? 0 : id;
+
+            try
+            {
+                BlockFactory factory = new BlockFactory();
+                id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
+            }
+            catch
+            {
+
+            }
+
+            Block block = Block.Get((byte) id, (short) meta);
+            return block;
         }
     }
 }
