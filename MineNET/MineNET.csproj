@@ -671,8 +671,13 @@
     <Compile Include="Utils\VarDump.cs" />
     <Compile Include="Utils\VarInt.cs" />
     <Compile Include="Utils\ZlibStream.cs" />
+    <Compile Include="Values\IVector3.cs" />
     <Compile Include="Values\Vector2.cs" />
     <Compile Include="Values\Vector3.cs" />
+    <Compile Include="Values\ILocation.cs" />
+    <Compile Include="Values\IPosition.cs" />
+    <Compile Include="Values\Location.cs" />
+    <Compile Include="Values\Position.cs" />
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>
   <ItemGroup>

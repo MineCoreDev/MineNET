@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using MineNET.Blocks;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
@@ -41,16 +40,14 @@ namespace MineNET.Items
             try
             {
                 ItemFactory factory = new ItemFactory();
-                FieldInfo info = factory.GetType().GetField(data[0]);
-                id = (int) info.GetValue(factory);
+                id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
             }
             catch
             {
                 try
                 {
                     BlockFactory factory = new BlockFactory();
-                    FieldInfo info = factory.GetType().GetField(data[0]);
-                    id = (int) info.GetValue(factory);
+                    id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
                 }
                 catch
                 {
