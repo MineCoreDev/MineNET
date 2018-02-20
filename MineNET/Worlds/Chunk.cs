@@ -1,4 +1,5 @@
-﻿using MineNET.Entities;
+﻿using System;
+using MineNET.Entities;
 using MineNET.NBT;
 using MineNET.Network.Packets;
 using MineNET.Utils;
@@ -49,28 +50,20 @@ namespace MineNET.Worlds
                 for (int i = 0; i < 16; ++i)
                 {
                     nbt.WriteByte(0);
-                    Binary.WriteBytes(nbt, CreateArray<byte>(0, 16 * 16 * 16));
-                    Binary.WriteBytes(nbt, CreateArray<byte>(0, 16 * 16 * 16));
+                    Binary.WriteBytes(nbt, ArrayUtil.CreateArray<byte>(4096, 1));
+                    Binary.WriteBytes(nbt, ArrayUtil.CreateNibbleArray(4096).ArrayData);
                 }
 
-                Binary.WriteBytes(nbt, CreateArray<byte>(0, 512));
-                Binary.WriteBytes(nbt, CreateArray<byte>(1, 256));
+                short[] b2 = new short[256];
+                byte[] b1 = new byte[512];
+                Buffer.BlockCopy(b2, 0, b1, 0, 512);
+                Binary.WriteBytes(nbt, b1);
+                Binary.WriteBytes(nbt, ArrayUtil.CreateArray<byte>(256, 1));
                 nbt.WriteByte(0);
                 VarInt.WriteSInt32(nbt, 0);
 
                 return nbt.ToArray();
             }
-        }
-
-        public T[] CreateArray<T>(T defaultValue, int length)
-        {
-            T[] array = new T[length];
-            for (int i = 0; i < length; ++i)
-            {
-                array[i] = defaultValue;
-            }
-
-            return array;
         }
     }
 }

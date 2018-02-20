@@ -131,7 +131,7 @@ namespace MineNET.Entities
             }
         }
 
-        public async void RequestChunkRadiusPacketHandle(RequestChunkRadiusPacket pk)
+        public void RequestChunkRadiusPacketHandle(RequestChunkRadiusPacket pk)
         {
             ChunkRadiusUpdatedPacket chunkRadiusUpdatedPacket = new ChunkRadiusUpdatedPacket();
             chunkRadiusUpdatedPacket.Radius = FixRadius(pk.Radius);
