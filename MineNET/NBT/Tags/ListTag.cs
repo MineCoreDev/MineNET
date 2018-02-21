@@ -98,7 +98,7 @@ namespace MineNET.NBT.Tags
 
         public override string ToString()
         {
-            return $"ListTag : Name {this.Name}  : Data {this.Tags.ToString()}";
+            return $"ListTag : Name {this.Name} : Data {this.Tags.ToString()}";
         }
 
         internal override void Write(NBTStream stream)
@@ -175,6 +175,46 @@ namespace MineNET.NBT.Tags
             stream.ReadByte();
             this.Name = stream.ReadString();
             this.Read(stream);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is ListTag<T>))
+            {
+                return false;
+            }
+            ListTag<T> tag = (ListTag<T>) obj;
+            if (this.Name != tag.Name)
+            {
+                return false;
+            }
+            if (this.list.Count != tag.list.Count)
+            {
+                return false;
+            }
+            for (int i = 0; i < this.list.Count; ++i)
+            {
+                if (!this.list[i].Equals(tag.list[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool operator ==(ListTag<T> A, ListTag<T> B)
+        {
+            return A.Equals(B);
+        }
+
+        public static bool operator !=(ListTag<T> A, ListTag<T> B)
+        {
+            return !A.Equals(B);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using MineNET.Blocks;
+﻿using System.Collections.Generic;
+using MineNET.Blocks;
 using MineNET.Entities;
 using MineNET.Items;
-using System.Collections.Generic;
 
 namespace MineNET.Inventories
 {
@@ -92,7 +92,6 @@ namespace MineNET.Inventories
 
                 for (int j = 0; j < itemSlots.Count; ++j)
                 {
-
                 }
             }
         }

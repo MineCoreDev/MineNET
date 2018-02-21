@@ -439,5 +439,45 @@ namespace MineNET.Items
             }
             return this;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Item))
+            {
+                return false;
+            }
+            Item item = (Item) obj;
+            if (this.id != item.id || this.meta != item.meta || this.count != item.count)
+            {
+                return false;
+            }
+            if (this.HasTags() != item.HasTags())
+            {
+                return false;
+            }
+            else
+            {
+                if (this.HasTags() && this.GetNamedTag() != item.GetNamedTag())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool operator ==(Item A, Item B)
+        {
+            return A.Equals(B);
+        }
+
+        public static bool operator !=(Item A, Item B)
+        {
+            return !A.Equals(B);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
