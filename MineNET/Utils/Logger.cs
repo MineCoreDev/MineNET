@@ -201,8 +201,13 @@ namespace MineNET.Utils
                         return;
                     }
 
-                    string log = loggerTexts.Dequeue().text;
-                    CUIFormat(log);
+                    LoggerInfo info = loggerTexts.Dequeue();
+                    if (info != null)
+                    {
+
+                        string log = info.text;
+                        CUIFormat(log);
+                    }
                 }
             }
             else

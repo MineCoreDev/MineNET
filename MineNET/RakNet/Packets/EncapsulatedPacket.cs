@@ -73,7 +73,7 @@ namespace MineNET.RakNet.Packets
         public byte[] ToResult(bool internalCall = false)
         {
             BinaryStream stream = new BinaryStream();
-            stream.WriteByte((byte)(reliability << 5 | (hasSplit ? Convert.ToByte("00010000", 2) : 0x00)));
+            stream.WriteByte((byte) (reliability << 5 | (hasSplit ? Convert.ToByte("00010000", 2) : 0x00)));
             if (internalCall)
             {
                 stream.WriteInt(buffer.Length);
@@ -81,7 +81,7 @@ namespace MineNET.RakNet.Packets
             }
             else
             {
-                stream.WriteLShort((ushort)(buffer.Length * 8));
+                stream.WriteLShort((ushort) (buffer.Length * 8));
             }
 
             if (reliability > PacketReliability.UNRELIABLE)
@@ -93,14 +93,14 @@ namespace MineNET.RakNet.Packets
                 if (reliability <= PacketReliability.RELIABLE_SEQUENCED && reliability != PacketReliability.RELIABLE)
                 {
                     stream.WriteLTriad(orderIndex);
-                    stream.WriteByte((byte)orderChannel);
+                    stream.WriteByte((byte) orderChannel);
                 }
             }
 
             if (hasSplit)
             {
                 stream.WriteInt(splitCount);
-                stream.WriteShort((short)splitID);
+                stream.WriteShort((short) splitID);
                 stream.WriteInt(splitIndex);
             }
 

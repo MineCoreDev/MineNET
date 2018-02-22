@@ -84,6 +84,10 @@ namespace MineNET.Entities
             {
                 this.RequestChunkRadiusPacketHandle((RequestChunkRadiusPacket) pk);
             }
+            else if (pk is MovePlayerPacket)
+            {
+                //this.MovePlayerPacketHandle((MovePlayerPacket) pk);
+            }
         }
 
         public void LoginPacketHandle(LoginPacket pk)
@@ -138,23 +142,29 @@ namespace MineNET.Entities
             Logger.Info("%server_chunkRadius", pk.Radius, chunkRadiusUpdatedPacket.Radius);
             SendPacket(chunkRadiusUpdatedPacket);
 
-            this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+            for (int i = 0; i < 16; ++i)
+            {
+                for (int j = 0; j < 16; ++j)
+                {
+                    new Chunk(i, j).TestChunkSend(this);
+                }
+            }
 
-            new Chunk(128 >> 4, 128 >> 4).TestChunkSend(this);
+            this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
         }
 
         void ProcessLogin()
         {
             StartGamePacket startGamePacket = new StartGamePacket();
-            startGamePacket.EntityUniqueId = 1;
-            startGamePacket.EntityRuntimeId = 1;
-            startGamePacket.PlayerGamemode = 0;
-            startGamePacket.PlayerPosition = new Vector3(128, 4, 128);
+            startGamePacket.EntityUniqueId = this.id;
+            startGamePacket.EntityRuntimeId = this.id;
+            startGamePacket.PlayerGamemode = 1;
+            startGamePacket.PlayerPosition = new Vector3(128, 64, 128);
             startGamePacket.Direction = new Vector2(0, 0);
             startGamePacket.WorldGamemode = 0;
             startGamePacket.Difficulty = 1;
             startGamePacket.SpawnX = 128;
-            startGamePacket.SpawnY = 4;
+            startGamePacket.SpawnY = 64;
             startGamePacket.SpawnZ = 128;
             startGamePacket.WorldName = "world";
             this.SendPacket(startGamePacket);
@@ -184,6 +194,11 @@ namespace MineNET.Entities
             //PlayerList*/
         }
 
+        public void MovePlayerPacketHandle(MovePlayerPacket pk)
+        {
+            this.SendPosition(new Vector3(), new Vector3(), MovePlayerPacket.MODE_RESET);
+        }
+
         int FixRadius(int radius)
         {
             return radius;
@@ -209,9 +224,20 @@ namespace MineNET.Entities
             };
 
             UpdateAttributesPacket updateAttributesPacket = new UpdateAttributesPacket();
-            updateAttributesPacket.EntityRuntimeId = 1;
+            updateAttributesPacket.EntityRuntimeId = this.id;
             updateAttributesPacket.Attributes = atts;
             this.SendPacket(updateAttributesPacket);
+        }
+
+        public void SendPosition(Vector3 pos, Vector2 yawPitch, byte mode)
+        {
+            MovePlayerPacket pk = new MovePlayerPacket();
+            pk.entityRuntimeId = this.id;
+            pk.Pos = pos;
+            pk.YawPitchHead = new Vector3(yawPitch.X, yawPitch.Y, yawPitch.X);
+            pk.Mode = mode;
+
+            SendPacket(pk);
         }
 
         public void SendPacket(DataPacket pk, bool needACK = false, bool immediate = false)

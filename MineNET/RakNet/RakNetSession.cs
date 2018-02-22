@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using MineNET.RakNet.Packets;
 using MineNET.Utils;
 
@@ -40,7 +42,32 @@ namespace MineNET.RakNet
 
         int state = STATE_CONNECTING;
         int sendSeqNumber = 0;
+        int startSeq = -1;
+        int endSeq = 2048;
+        int lastSeqNumber = -1;
+
+        int startMsg = 0;
+        int endMsg = 2048;
         int lastMsg = -1;
+        SortedList<int, EncapsulatedPacket> reliableWindow = new SortedList<int, EncapsulatedPacket>();
+        SortedList<int, int> receivedWindow = new SortedList<int, int>();
+
+        int messageIndex = 0;
+        public int MessageIndex
+        {
+            get
+            {
+                return this.messageIndex;
+            }
+
+            set
+            {
+                this.messageIndex = value;
+            }
+        }
+
+        SortedList<int, int> ackQueue = new SortedList<int, int>();
+        SortedList<int, int> nackQueue = new SortedList<int, int>();
 
         int timedOut;
 
@@ -57,16 +84,50 @@ namespace MineNET.RakNet
         {
             if (pk is DataPacket)
             {
-                DataPacket packet = (DataPacket)pk;
+                DataPacket packet = (DataPacket) pk;
                 packet.Decode();
 
                 this.timedOut = 100;
+
+                if (packet.SeqNumber < startSeq || packet.SeqNumber > endSeq || receivedWindow.ContainsKey(packet.SeqNumber))
+                {
+                    Logger.Log("BlockDataPacket");
+                    return;
+                }
+
+                int diff = packet.SeqNumber - lastSeqNumber;
+
+                if (nackQueue.ContainsKey(packet.SeqNumber))
+                {
+                    nackQueue.Remove(packet.SeqNumber);
+                }
+                receivedWindow[packet.SeqNumber] = packet.SeqNumber;
+
+                if (diff != 1)
+                {
+                    for (int i = lastSeqNumber + 1; i < packet.SeqNumber; ++i)
+                    {
+                        if (!receivedWindow.ContainsKey(i))
+                        {
+                            nackQueue[i] = i;
+                        }
+                    }
+                }
+
+                ackQueue[packet.SeqNumber] = packet.SeqNumber;
+
+                if (diff >= 1)
+                {
+                    lastSeqNumber = packet.SeqNumber;
+                    startSeq += diff;
+                    endSeq += diff;
+                }
 
                 for (int i = 0; i < packet.Packets.Length; ++i)
                 {
                     if (packet.Packets[i] is EncapsulatedPacket)
                     {
-                        this.EncapsulatedPacketHandle((EncapsulatedPacket)packet.Packets[i]);
+                        this.EncapsulatedPacketHandle((EncapsulatedPacket) packet.Packets[i]);
                     }
                 }
 
@@ -76,11 +137,11 @@ namespace MineNET.RakNet
             {
                 if (pk is ACK)
                 {
-                    Logger.Log("Handle ACK");
+                    Logger.Log("§aHandle ACK");
                 }
                 else if (pk is NACK)
                 {
-                    Logger.Log("Handle NACK");
+                    Logger.Log("§cHandle NACK");
                 }
             }
         }
@@ -89,13 +150,60 @@ namespace MineNET.RakNet
         {
             if (packet.messageIndex != -1)
             {
-                if (packet.messageIndex - lastMsg != 1)
+                if (packet.messageIndex < startMsg || packet.messageIndex > endMsg)
                 {
+                    Logger.Log("BlockEncPK{0}:{1}", startMsg, endMsg);
                     return;
                 }
-                ++lastMsg;
-            }
 
+                if ((packet.messageIndex - lastMsg) == 1)
+                {
+                    ++lastMsg;
+                    ++endMsg;
+                    ++startMsg;
+
+                    EncapsulatedPacketHandler(packet);
+
+                    if (reliableWindow.Count > 0)
+                    {
+                        for (int i = 0; i < reliableWindow.Values.Count; ++i)
+                        {
+                            EncapsulatedPacket pk = reliableWindow.Values[i];
+                            if ((pk.messageIndex - lastMsg) != 1)
+                            {
+                                break;
+                            }
+
+                            ++lastMsg;
+                            ++endMsg;
+                            ++startMsg;
+
+                            EncapsulatedPacketHandler(pk);
+                            reliableWindow.Remove(pk.messageIndex);
+                        }
+                    }
+                }
+                else
+                {
+                    /*if (!reliableWindow.ContainsKey(packet.messageIndex))
+                    {
+                        reliableWindow.Add(packet.messageIndex, packet);
+                    }
+                    else
+                    {
+                        reliableWindow[]
+                    }*/
+                    reliableWindow[packet.messageIndex] = packet;
+                }
+            }
+            else
+            {
+                EncapsulatedPacketHandler(packet);
+            }
+        }
+
+        private void EncapsulatedPacketHandler(EncapsulatedPacket packet)
+        {
             int id = packet.buffer[0];
             if (id < 0x80)
             {
@@ -105,7 +213,35 @@ namespace MineNET.RakNet
                 }
                 else if (state == STATE_CONNECTING)
                 {
-                    EncapsulatedPacketHandler(packet, id);
+                    if (id == CLIENT_CONNECT_DataPacket.ID)
+                    {
+                        CLIENT_CONNECT_DataPacket ccd = new CLIENT_CONNECT_DataPacket();
+                        ccd.SetBuffer(packet.buffer);
+                        ccd.Decode();
+
+                        SERVER_HANDSHAKE_DataPacket shd = new SERVER_HANDSHAKE_DataPacket();
+                        shd.EndPoint = point;
+                        shd.SendPing = ccd.SendPing;
+                        shd.SendPong = ccd.SendPing + 1000;
+                        shd.Encode();
+
+                        EncapsulatedPacket enc = new EncapsulatedPacket();
+                        enc.buffer = shd.GetResult();
+                        enc.reliability = PacketReliability.UNRELIABLE;
+
+                        SendPacket(enc);
+                    }
+                    else if (id == CLIENT_HANDSHAKE_DataPacket.ID)
+                    {
+                        CLIENT_HANDSHAKE_DataPacket chd = new CLIENT_HANDSHAKE_DataPacket();
+                        chd.SetBuffer(packet.buffer);
+                        chd.Decode();
+
+                        if (chd.EndPoint.Port == server.GetPort())
+                        {
+                            state = STATE_CONNECTED;
+                        }
+                    }
                 }
                 else if (id == PING_DataPacket.ID)
                 {
@@ -127,39 +263,6 @@ namespace MineNET.RakNet
             else if (id == 0xfe && state == STATE_CONNECTED)
             {
                 Server.Instance.NetworkManager.HandleBatchPacket(this, packet.buffer);
-            }
-        }
-
-        private void EncapsulatedPacketHandler(EncapsulatedPacket packet, int id)
-        {
-            if (id == CLIENT_CONNECT_DataPacket.ID)
-            {
-                CLIENT_CONNECT_DataPacket ccd = new CLIENT_CONNECT_DataPacket();
-                ccd.SetBuffer(packet.buffer);
-                ccd.Decode();
-
-                SERVER_HANDSHAKE_DataPacket shd = new SERVER_HANDSHAKE_DataPacket();
-                shd.EndPoint = point;
-                shd.SendPing = ccd.SendPing;
-                shd.SendPong = ccd.SendPing + 1000;
-                shd.Encode();
-
-                EncapsulatedPacket enc = new EncapsulatedPacket();
-                enc.buffer = shd.GetResult();
-                enc.reliability = PacketReliability.UNRELIABLE;
-
-                SendPacket(enc);
-            }
-            else if (id == CLIENT_HANDSHAKE_DataPacket.ID)
-            {
-                CLIENT_HANDSHAKE_DataPacket chd = new CLIENT_HANDSHAKE_DataPacket();
-                chd.SetBuffer(packet.buffer);
-                chd.Decode();
-
-                if (chd.EndPoint.Port == server.GetPort())
-                {
-                    state = STATE_CONNECTED;
-                }
             }
         }
 
@@ -185,6 +288,24 @@ namespace MineNET.RakNet
                 this.Close("timedout");
             }
             this.timedOut--;
+
+            if (ackQueue.Count > 0)
+            {
+                ACK ack = new ACK();
+                ack.packets = ackQueue.Values.ToArray();
+                server.SendPacket(ack, point.Address, point.Port);
+                ackQueue.Clear();
+            }
+
+            if (nackQueue.Count > 0)
+            {
+                NACK nack = new NACK();
+                nack.packets = ackQueue.Values.ToArray();
+                server.SendPacket(nack, point.Address, point.Port);
+                nackQueue.Clear();
+            }
+
+            //recover pk
         }
 
         internal void Close(string msg, bool serverClose = true)
