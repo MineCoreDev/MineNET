@@ -150,7 +150,7 @@ namespace MineNET.RakNet
             {
                 string id = IPEndPointToID(point);
 
-                if (pk is DataPacket)
+                if (pk is DataPacket || pk is ACK || pk is NACK)
                 {
                     if (sessions.ContainsKey(id))
                     {

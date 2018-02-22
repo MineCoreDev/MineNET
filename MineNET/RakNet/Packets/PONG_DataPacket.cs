@@ -31,6 +31,7 @@
             base.Encode();
 
             WriteLong(pingID);
+            WriteLong(pingID);
         }
     }
 }

@@ -513,7 +513,7 @@ namespace MineNET.Network.Packets
             //TODO: Packet
             this.WriteEntityUniqueId(this.entityUniqueId);
             this.WriteEntityRuntimeId(this.entityRuntimeId);
-            this.WriteVarInt(this.playerGamemode);
+            this.WriteSVarInt(this.playerGamemode);
             this.WriteVector3(this.playerPosition);
             this.WriteVector2(this.direction);
             this.WriteSVarInt(this.seed);

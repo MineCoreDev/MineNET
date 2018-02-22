@@ -108,7 +108,8 @@ namespace MineNET.Network
             RakNet.Packets.EncapsulatedPacket enc = new RakNet.Packets.EncapsulatedPacket();
 
             enc.buffer = bp.GetResult();
-            enc.reliability = RakNet.Packets.PacketReliability.UNRELIABLE;
+            enc.reliability = RakNet.Packets.PacketReliability.RELIABLE;
+            enc.messageIndex = ++session.MessageIndex;
 
             session.SendPacket(enc);
         }
@@ -166,6 +167,7 @@ namespace MineNET.Network
             this.RegisterPacket(new PlayStatusPacket());
             this.RegisterPacket(new ResourcePackClientResponsePacket());
             this.RegisterPacket(new RequestChunkRadiusPacket());
+            this.RegisterPacket(new MovePlayerPacket());
         }
     }
 }

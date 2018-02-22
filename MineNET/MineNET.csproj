@@ -587,6 +587,7 @@
     <Compile Include="Network\Packets\InventorySlotPacket.cs" />
     <Compile Include="Network\Packets\MobArmorEquipmentPacket.cs" />
     <Compile Include="Network\Packets\MobEquipmentPacket.cs" />
+    <Compile Include="Network\Packets\MovePlayerPacket.cs" />
     <Compile Include="Network\Packets\PlayerListPacket.cs" />
     <Compile Include="Network\Packets\RequestChunkRadiusPacket.cs" />
     <Compile Include="Network\Packets\ResourcePackClientResponsePacket.cs" />
@@ -681,6 +682,7 @@
     <Compile Include="Values\Position.cs" />
     <Compile Include="Worlds\Chunk.cs" />
     <Compile Include="Worlds\Formats\IChunkFormat.cs" />
+    <Compile Include="Worlds\SubChunk.cs" />
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,26 +17,30 @@ namespace MineNET.Worlds
             }
         }
 
-        int y;
-        public int Y
+        int z;
+        public int Z
         {
             get
             {
-                return this.y;
+                return this.z;
             }
         }
+
+        SubChunk[] subChunks = ArrayUtil.CreateArray<SubChunk>(16);
 
         public Chunk(int x, int z)
         {
             this.x = x;
-            this.y = z;
+            this.z = z;
+
+            subChunks = ArrayUtil.CreateArray(16, new SubChunk());
         }
 
         public void TestChunkSend(Player player)
         {
             FullChunkDataPacket pk = new FullChunkDataPacket();
             pk.ChunkX = this.x;
-            pk.ChunkY = this.y;
+            pk.ChunkY = this.z;
             pk.Data = this.GetBytes();
 
             player.SendPacket(pk);
@@ -46,19 +50,25 @@ namespace MineNET.Worlds
         {
             using (NBTStream nbt = new NBTStream())
             {
-                nbt.WriteByte(16);
-                for (int i = 0; i < 16; ++i)
+                byte dataChunk = 16;
+
+                for (byte i = 15; i >= 0; --i)
                 {
-                    nbt.WriteByte(0);
-                    Binary.WriteBytes(nbt, ArrayUtil.CreateArray<byte>(4096, 1));
-                    Binary.WriteBytes(nbt, ArrayUtil.CreateNibbleArray(4096).ArrayData);
+                    if (subChunks[i].IsEnpty())
+                        dataChunk = i;
+                    else break;
+                }
+
+                nbt.WriteByte(dataChunk);
+                for (int i = 0; i < dataChunk; ++i)
+                {
+                    Binary.WriteBytes(nbt, subChunks[i].GetBytes());
                 }
 
                 short[] b2 = new short[256];
                 byte[] b1 = new byte[512];
                 Buffer.BlockCopy(b2, 0, b1, 0, 512);
                 Binary.WriteBytes(nbt, b1);
-                Binary.WriteBytes(nbt, ArrayUtil.CreateArray<byte>(256, 1));
                 nbt.WriteByte(0);
                 VarInt.WriteSInt32(nbt, 0);
 
