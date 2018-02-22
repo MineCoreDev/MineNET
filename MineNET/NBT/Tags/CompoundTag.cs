@@ -319,7 +319,7 @@ namespace MineNET.NBT.Tags
 
         public override string ToString()
         {
-            return $"CompoundTag : Name {this.Name}  : Data {this.Tags}";
+            return $"CompoundTag : Name {this.Name} : Data {this.Tags}";
         }
 
         internal override void Write(NBTStream stream)
@@ -447,6 +447,50 @@ namespace MineNET.NBT.Tags
             stream.ReadByte();
             this.Name = stream.ReadString();
             this.Read(stream);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is CompoundTag))
+            {
+                return false;
+            }
+            CompoundTag tag = (CompoundTag) obj;
+            if (this.Name != tag.Name)
+            {
+                return false;
+            }
+            if (this.tags.Count != tag.tags.Count)
+            {
+                return false;
+            }
+            foreach (string key in this.tags.Keys)
+            {
+                if (!tag.tags.ContainsKey(key))
+                {
+                    return false;
+                }
+                if (!this.tags[key].Equals(tag.tags[key]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool operator ==(CompoundTag A, CompoundTag B)
+        {
+            return A.Equals(B);
+        }
+
+        public static bool operator !=(CompoundTag A, CompoundTag B)
+        {
+            return !A.Equals(B);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

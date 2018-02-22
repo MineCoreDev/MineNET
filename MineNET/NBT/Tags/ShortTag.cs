@@ -22,7 +22,7 @@
 
         public override string ToString()
         {
-            return $"ShortTag : Name {this.Name}  : Data {this.Data}";
+            return $"ShortTag : Name {this.Name} : Data {this.Data}";
         }
 
         internal override void Write(NBTStream stream)
@@ -47,6 +47,39 @@
             stream.ReadByte();
             this.Name = stream.ReadString();
             this.Read(stream);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is ShortTag))
+            {
+                return false;
+            }
+            ShortTag tag = (ShortTag) obj;
+            if (this.Name != tag.Name)
+            {
+                return false;
+            }
+            if (this.Data != tag.Data)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool operator ==(ShortTag A, ShortTag B)
+        {
+            return A.Equals(B);
+        }
+
+        public static bool operator !=(ShortTag A, ShortTag B)
+        {
+            return !A.Equals(B);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

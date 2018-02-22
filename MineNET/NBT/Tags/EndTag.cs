@@ -41,5 +41,29 @@ namespace MineNET.NBT.Tags
         {
             throw new NotImplementedException();
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is EndTag))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool operator ==(EndTag A, EndTag B)
+        {
+            return A.Equals(B);
+        }
+
+        public static bool operator !=(EndTag A, EndTag B)
+        {
+            return !A.Equals(B);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

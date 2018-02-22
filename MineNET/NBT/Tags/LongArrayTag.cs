@@ -24,7 +24,7 @@ namespace MineNET.NBT.Tags
 
         public override string ToString()
         {
-            return $"ByteArrayTag : Name {this.Name}  : Data {this.Data}";
+            return $"ByteArrayTag : Name {this.Name} : Data {this.Data}";
         }
 
         internal override void Write(NBTStream stream)
@@ -45,6 +45,46 @@ namespace MineNET.NBT.Tags
         internal override void ReadTag(NBTStream stream)
         {
             throw new NotImplementedException();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is LongArrayTag))
+            {
+                return false;
+            }
+            LongArrayTag tag = (LongArrayTag) obj;
+            if (this.Name != tag.Name)
+            {
+                return false;
+            }
+            if (this.Data.Length != tag.Data.Length)
+            {
+                return false;
+            }
+            for (int i = 0; i < this.Data.Length; ++i)
+            {
+                if (this.Data[i] != tag.Data[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool operator ==(LongArrayTag A, LongArrayTag B)
+        {
+            return A.Equals(B);
+        }
+
+        public static bool operator !=(LongArrayTag A, LongArrayTag B)
+        {
+            return !A.Equals(B);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }
