@@ -340,6 +340,7 @@ namespace MineNET.Items
                 {
                     tag.PutCompound("display", new CompoundTag("display").PutString("name", name));
                 }
+                this.SetNamedTag(tag);
             }
             return this;
         }
@@ -361,6 +362,7 @@ namespace MineNET.Items
             {
                 display.Remove("name");
             }
+            this.SetNamedTag(tag);
             return this;
         }
 
@@ -408,6 +410,10 @@ namespace MineNET.Items
                     tag = new CompoundTag();
                 }
                 ListTag<StringTag> list = new ListTag<StringTag>("lore");
+                for (int i = 0; i < lores.Length; ++i)
+                {
+                    list.Add(new StringTag(lores[i]));
+                }
                 if (tag.Exist("display"))
                 {
                     tag.GetCompound("display").PutList(list);
@@ -416,7 +422,29 @@ namespace MineNET.Items
                 {
                     tag.PutCompound("display", new CompoundTag("display").PutList(list));
                 }
+                this.SetNamedTag(tag);
             }
+            return this;
+        }
+
+        public Item AddLore(params string[] lores)
+        {
+            if (lores == null || lores.Length < 1)
+            {
+                return this;
+            }
+            if (!this.HasTags() || this.GetLore().Length < 1)
+            {
+                this.SetLore(lores);
+                return this;
+            }
+            CompoundTag tag = this.GetNamedTag();
+            ListTag<StringTag> list = tag.GetCompound("display").GetList<StringTag>("lore");
+            for (int i = 0; i < lores.Length; ++i)
+            {
+                list.Add(new StringTag(lores[i]));
+            }
+            this.SetNamedTag(tag);
             return this;
         }
 
@@ -437,6 +465,7 @@ namespace MineNET.Items
             {
                 display.Remove("lore");
             }
+            this.SetNamedTag(tag);
             return this;
         }
 
@@ -457,9 +486,12 @@ namespace MineNET.Items
             }
             else
             {
-                if (this.HasTags() && this.GetNamedTag() != item.GetNamedTag())
+                if (this.HasTags())
                 {
-                    return false;
+                    if (this.GetNamedTag() != item.GetNamedTag())
+                    {
+                        return false;
+                    }
                 }
             }
             return true;
