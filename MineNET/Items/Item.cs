@@ -8,7 +8,7 @@ namespace MineNET.Items
 {
     public class Item : ICloneable<Item>
     {
-        public static Item Get(int id, short meta = 0, byte count = 1, byte[] tags = null)
+        public static Item Get(int id, int meta = 0, int count = 1, byte[] tags = null)
         {
             Item item = ItemFactory.GetItem(id);
             item.Damage = meta;
@@ -37,14 +37,14 @@ namespace MineNET.Items
         }
 
         private int id;
-        private short meta;
-        private byte count;
+        private int meta;
+        private int count;
         private byte[] tags = new byte[0];
         private CompoundTag cachedNBT = null;
 
         private Block block = null;
 
-        public Item(int id, short meta = 0, byte count = 1)
+        public Item(int id, int meta = 0, int count = 1)
         {
             this.id = id;
             this.meta = meta;
@@ -67,7 +67,7 @@ namespace MineNET.Items
             }
         }
 
-        public short Damage
+        public int Damage
         {
             get
             {
@@ -80,7 +80,7 @@ namespace MineNET.Items
             }
         }
 
-        public byte Count
+        public int Count
         {
             get
             {

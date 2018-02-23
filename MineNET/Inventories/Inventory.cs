@@ -1,6 +1,6 @@
-﻿using MineNET.Entities;
+﻿using System.Collections.Generic;
+using MineNET.Entities;
 using MineNET.Items;
-using System.Collections.Generic;
 
 namespace MineNET.Inventories
 {
@@ -20,11 +20,11 @@ namespace MineNET.Inventories
 
         bool SetItem(int index, Item item, bool send);
 
-        void AddItem(params Item[] items);
+        Item[] AddItem(params Item[] items);
 
         bool CanAddItem(Item item);
 
-        void RemoveItem(params Item[] items);
+        Item[] RemoveItem(params Item[] items);
 
         bool Clear(int index, bool send);
 

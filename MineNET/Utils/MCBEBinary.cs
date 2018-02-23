@@ -127,7 +127,7 @@ namespace MineNET.Utils
                     this.ReadString();
                 }
             }
-            return Item.Get(id, (short) data, (byte) cnt, nbt);
+            return Item.Get(id, data, cnt, nbt);
         }
 
         public void WriteItem(Item item)

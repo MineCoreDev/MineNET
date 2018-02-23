@@ -8,7 +8,7 @@ namespace MineNET.Blocks
     public abstract class Block : ICloneable<Block>, IPosition
     {
 
-        public static Block Get(byte id, short meta = 0)
+        public static Block Get(int id, int meta = 0)
         {
             Block block = BlockFactory.GetBlock(id);
             block.Damage = meta;
@@ -88,10 +88,10 @@ namespace MineNET.Blocks
             }
         }
 
-        private byte id;
-        private short meta;
+        private int id;
+        private int meta;
 
-        public Block(byte id, short meta = 0)
+        public Block(int id, int meta = 0)
         {
             this.id = id;
             this.meta = meta;
@@ -102,7 +102,7 @@ namespace MineNET.Blocks
             get;
         }
 
-        public byte BlockID
+        public int BlockID
         {
             get
             {
@@ -110,7 +110,7 @@ namespace MineNET.Blocks
             }
         }
 
-        public short Damage
+        public int Damage
         {
             get
             {

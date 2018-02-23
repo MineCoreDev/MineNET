@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MineNET.Blocks;
 using MineNET.Entities;
 using MineNET.Items;
@@ -70,7 +71,7 @@ namespace MineNET.Inventories
             return true;
         }
 
-        public void AddItem(params Item[] items)
+        public Item[] AddItem(params Item[] items)
         {
             List<Item> itemSlots = new List<Item>();
             for (int i = 0; i < this.size; ++i)
@@ -92,18 +93,112 @@ namespace MineNET.Inventories
 
                 for (int j = 0; j < itemSlots.Count; ++j)
                 {
+                    if (itemSlots[i].Equals(item) && item.Count < item.MaxStackSize)
+                    {
+                        int amount = Math.Min(item.MaxStackSize - item.Count, itemSlots[i].Count);
+                        if (amount > 0)
+                        {
+                            itemSlots[i].Count -= amount;
+                            item.Count -= amount;
+                            this.SetItem(i, item);
+                            if (itemSlots[i].Count <= 0)
+                            {
+                                itemSlots.Remove(itemSlots[i]);
+                            }
+                        }
+                    }
+                }
+                if (itemSlots.Count < 1)
+                {
+                    break;
                 }
             }
+            if (itemSlots.Count > 0 && emptySlots.Count > 0)
+            {
+                for (int i = 0; i < itemSlots.Count; ++i)
+                {
+                    if (emptySlots.Count > 0)
+                    {
+                        Item slot = itemSlots[0];
+                        int amount = Math.Min(slot.MaxStackSize, slot.Count);
+                        slot.Count -= amount;
+                        Item item = slot.Clone();
+                        this.SetItem(i, item);
+                        if (slot.Count <= 0)
+                        {
+                            itemSlots.Remove(slot);
+                        }
+                    }
+                }
+            }
+            return itemSlots.ToArray();
         }
 
         public bool CanAddItem(Item item)
         {
-            return true;
+            item = item.Clone();
+            for (int i = 0; i < this.size; ++i)
+            {
+                Item slot = this.GetItem(i);
+                if (item.Equals(slot))
+                {
+                    int diff;
+                    if ((diff = slot.MaxStackSize - slot.Count) > 0)
+                    {
+                        item.Count -= diff;
+                    }
+                }
+                else if (slot.ItemID == BlockFactory.AIR)
+                {
+                    item.Count -= 64;
+                }
+
+                if (item.Count <= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public void RemoveItem(params Item[] items)
+        public Item[] RemoveItem(params Item[] items)
         {
+            List<Item> itemSlots = new List<Item>();
+            for (int i = 0; i < this.size; ++i)
+            {
+                if (items[i].ItemID != BlockFactory.AIR && items[i].Count > 0)
+                {
+                    itemSlots.Add(items[i].Clone());
+                }
+            }
 
+            for (int i = 0; i < this.size; ++i)
+            {
+                Item item = this.GetItem(i);
+                if (item.ItemID == BlockFactory.AIR || item.Count <= 0)
+                {
+                    continue;
+                }
+                for (int j = 0; j < itemSlots.Count; ++j)
+                {
+                    if (itemSlots[j].Equals(item))
+                    {
+                        int amount = Math.Min(item.Count, itemSlots[i].Count);
+                        itemSlots[i].Count -= amount;
+                        item.Count -= amount;
+                        this.SetItem(i, item);
+                        if (itemSlots[i].Count <= 0)
+                        {
+                            itemSlots.Remove(itemSlots[i]);
+                        }
+                    }
+                }
+                if (itemSlots.Count == 0)
+                {
+                    break;
+                }
+            }
+            return itemSlots.ToArray();
         }
 
         public bool Clear(int index, bool send = true)
@@ -120,7 +215,10 @@ namespace MineNET.Inventories
 
         public void ClearAll()
         {
-
+            for (int i = 0; i < this.size; ++i)
+            {
+                this.Clear(i, true);
+            }
         }
 
         public bool Contains(Item item)
@@ -130,7 +228,10 @@ namespace MineNET.Inventories
 
         public void OnSlotChange(int index, Item item, bool send)
         {
-
+            if (send)
+            {
+                this.SendSlot(index, this.viewers.ToArray());
+            }
         }
 
         public void SendSlot(int index, params Player[] players)
