@@ -89,8 +89,6 @@ namespace MineNET.Worlds
                 bs.WriteBytes(BlockData);
                 bs.WriteBytes(MetaDatas.ArrayData);
 
-                Logger.Log("Len:" + bs.Length);
-
                 return bs.ToArray();
             }
         }

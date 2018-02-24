@@ -33,13 +33,15 @@ namespace MineNET.Worlds
             this.x = x;
             this.z = z;
 
-            SubChunk sub = new SubChunk();
-            for (int i = 0; i < 10; ++i)
+            for (int j = 0; j < 2; ++j)
             {
-                sub.SetBlock(i, i, i, 5);
+                SubChunk sub = new SubChunk();
+                for (int i = 0; i < 10; ++i)
+                {
+                    sub.SetBlock(i, i, i, 1);
+                }
+                subChunks[j] = sub;
             }
-
-            subChunks = ArrayUtils.CreateArray(16, sub);
         }
 
         public void TestChunkSend(Player player)
