@@ -1,4 +1,6 @@
-﻿namespace MineNET.Console
+﻿using System;
+
+namespace MineNET.Console
 {
     class Program
     {
@@ -13,8 +15,9 @@
                 {
                 }
             }
-            catch
+            catch (Exception e)
             {
+                //Logger.Error(e);
                 server.Stop();
             }
         }

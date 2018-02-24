@@ -91,7 +91,6 @@ namespace MineNET.RakNet
 
                 if (packet.SeqNumber < startSeq || packet.SeqNumber > endSeq || receivedWindow.ContainsKey(packet.SeqNumber))
                 {
-                    Logger.Log("BlockDataPacket");
                     return;
                 }
 
@@ -99,6 +98,7 @@ namespace MineNET.RakNet
 
                 if (nackQueue.ContainsKey(packet.SeqNumber))
                 {
+                    Logger.Log("NackRequest");
                     nackQueue.Remove(packet.SeqNumber);
                 }
                 receivedWindow[packet.SeqNumber] = packet.SeqNumber;
@@ -185,14 +185,6 @@ namespace MineNET.RakNet
                 }
                 else
                 {
-                    /*if (!reliableWindow.ContainsKey(packet.messageIndex))
-                    {
-                        reliableWindow.Add(packet.messageIndex, packet);
-                    }
-                    else
-                    {
-                        reliableWindow[]
-                    }*/
                     reliableWindow[packet.messageIndex] = packet;
                 }
             }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using MineNET.Utils;
 using MineNET.Worlds.Formats;
 
@@ -7,7 +6,7 @@ namespace MineNET.Worlds
 {
     public class SubChunk
     {
-        byte[] blockData = ArrayUtil.CreateArray<byte>(4096, 1);
+        byte[] blockData = ArrayUtils.CreateArray<byte>(4096, 0);
         public byte[] BlockData
         {
             get
@@ -21,7 +20,7 @@ namespace MineNET.Worlds
             }
         }
 
-        NibbleArray metaData = ArrayUtil.CreateNibbleArray(4096);
+        NibbleArray metaData = ArrayUtils.CreateNibbleArray(4096, 0);
         public NibbleArray MetaDatas
         {
             get
@@ -84,11 +83,16 @@ namespace MineNET.Worlds
 
         public byte[] GetBytes()
         {
-            List<byte> bytes = new List<byte>();
-            bytes.AddRange(blockData);
-            bytes.AddRange(metaData.ArrayData);
+            using (BinaryStream bs = new BinaryStream())
+            {
+                bs.WriteByte(0);
+                bs.WriteBytes(BlockData);
+                bs.WriteBytes(MetaDatas.ArrayData);
 
-            return bytes.ToArray();
+                Logger.Log("Len:" + bs.Length);
+
+                return bs.ToArray();
+            }
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿namespace MineNET.Utils
+﻿using System;
+
+namespace MineNET.Utils
 {
-    public static class ArrayUtil
+    public static class ArrayUtils
     {
-        public static T[] CreateArray<T>(int size, T defaultValue = default(T))
+        public static T[] CreateArray<T>(int size, T defaultValue)
         {
-            T[] array = new T[size];
+            T[] array = (T[]) Array.CreateInstance(typeof(T), size);
             for (int i = 0; i < size; ++i)
             {
                 array[i] = defaultValue;
@@ -13,9 +15,31 @@
             return array;
         }
 
+        public static T[] CreateArray<T>(int size) where T : new()
+        {
+            T[] array = (T[]) Array.CreateInstance(typeof(T), size);
+            for (int i = 0; i < size; ++i)
+            {
+                array[i] = new T();
+            }
+
+            return array;
+        }
+
         public static NibbleArray CreateNibbleArray(int size)
         {
             return new NibbleArray(size);
+        }
+
+        public static NibbleArray CreateNibbleArray(int size, byte defaultValue)
+        {
+            NibbleArray na = ArrayUtils.CreateNibbleArray(size);
+            for (int i = 0; i < size; ++i)
+            {
+                na[i] = defaultValue;
+            }
+
+            return na;
         }
     }
 

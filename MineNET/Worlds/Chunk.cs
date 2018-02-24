@@ -26,14 +26,20 @@ namespace MineNET.Worlds
             }
         }
 
-        SubChunk[] subChunks = ArrayUtil.CreateArray<SubChunk>(16);
+        SubChunk[] subChunks = ArrayUtils.CreateArray<SubChunk>(16);
 
         public Chunk(int x, int z)
         {
             this.x = x;
             this.z = z;
 
-            subChunks = ArrayUtil.CreateArray(16, new SubChunk());
+            SubChunk sub = new SubChunk();
+            for (int i = 0; i < 10; ++i)
+            {
+                sub.SetBlock(i, i, i, 5);
+            }
+
+            subChunks = ArrayUtils.CreateArray(16, sub);
         }
 
         public void TestChunkSend(Player player)
@@ -50,16 +56,16 @@ namespace MineNET.Worlds
         {
             using (NBTStream nbt = new NBTStream())
             {
-                byte dataChunk = 16;
+                int dataChunk = 16;
 
-                for (byte i = 15; i >= 0; --i)
+                for (int i = 15; i >= 0; i--)
                 {
                     if (subChunks[i].IsEnpty())
                         dataChunk = i;
                     else break;
                 }
 
-                nbt.WriteByte(dataChunk);
+                nbt.WriteByte((byte) dataChunk);
                 for (int i = 0; i < dataChunk; ++i)
                 {
                     Binary.WriteBytes(nbt, subChunks[i].GetBytes());

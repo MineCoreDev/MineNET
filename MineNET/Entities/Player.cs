@@ -182,7 +182,7 @@ namespace MineNET.Entities
             adventureSettingsPacket.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, false);
             adventureSettingsPacket.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
             adventureSettingsPacket.SetFlag(AdventureSettingsPacket.FLYING, false);
-            adventureSettingsPacket.EntityUniqueId = 1;
+            adventureSettingsPacket.EntityUniqueId = this.id;
             this.SendPacket(adventureSettingsPacket);
 
             //SetEntityData

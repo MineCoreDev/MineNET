@@ -264,6 +264,11 @@ namespace MineNET.RakNet
         {
             string id = IPEndPointToID(point);
 
+            if (this.sessions.ContainsKey(id))
+            {
+                return;
+            }
+
             if (this.sessions.Count > 4096)
             {
                 //TODO: SendMessage...
