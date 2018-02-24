@@ -19,7 +19,6 @@ namespace MineNET
                 return instance;
             }
         }
-        //test
 
         public static MineNETConfig MineNETConfig
         {
