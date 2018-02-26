@@ -16,6 +16,16 @@ namespace MineNET.Inventories
             get;
         }
 
+        int MaxStackSize
+        {
+            get;
+        }
+
+        int Type
+        {
+            get;
+        }
+
         Item GetItem(int index);
 
         bool SetItem(int index, Item item, bool send);

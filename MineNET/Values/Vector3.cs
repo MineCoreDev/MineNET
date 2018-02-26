@@ -1,4 +1,6 @@
-﻿namespace MineNET.Values
+﻿using System;
+
+namespace MineNET.Values
 {
     public struct Vector3 : IVector3
     {
@@ -50,6 +52,21 @@
             {
                 z = value;
             }
+        }
+
+        public int GetFloorX()
+        {
+            return (int) Math.Floor(this.x);
+        }
+
+        public int GetFloorY()
+        {
+            return (int) Math.Floor(this.y);
+        }
+
+        public int GetFloorZ()
+        {
+            return (int) Math.Floor(this.z);
         }
     }
 }
