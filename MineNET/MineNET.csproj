@@ -361,8 +361,10 @@
     <Compile Include="Entities\Living.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Inventories\BaseInventory.cs" />
+    <Compile Include="Inventories\ContainerInventory.cs" />
     <Compile Include="Inventories\Inventory.cs" />
     <Compile Include="Inventories\InventoryHolder.cs" />
+    <Compile Include="Inventories\PlayerInventory.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemAcaciaDoor.cs" />
     <Compile Include="Items\ItemApple.cs" />
@@ -582,6 +584,8 @@
     <Compile Include="Network\Packets\AdventureSettingsPacket.cs" />
     <Compile Include="Network\Packets\AvailableCommandsPacket.cs" />
     <Compile Include="Network\Packets\ChunkRadiusUpdatedPacket.cs" />
+    <Compile Include="Network\Packets\ContainerClosePacket.cs" />
+    <Compile Include="Network\Packets\ContainerOpenPacket.cs" />
     <Compile Include="Network\Packets\FullChunkDataPacket.cs" />
     <Compile Include="Network\Packets\InventoryContentPacket.cs" />
     <Compile Include="Network\Packets\InventorySlotPacket.cs" />

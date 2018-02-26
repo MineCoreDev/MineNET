@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using MineNET.Commands;
 using MineNET.Data;
+using MineNET.Inventories;
 using MineNET.Network.Packets;
 using MineNET.Utils;
 using MineNET.Values;
@@ -8,7 +9,7 @@ using MineNET.Worlds;
 
 namespace MineNET.Entities
 {
-    public class Player : Human, CommandSender
+    public class Player : Human, CommandSender, InventoryHolder
     {
         IPEndPoint endPoint;
         public IPEndPoint EndPoint
@@ -255,6 +256,11 @@ namespace MineNET.Entities
                 this.SendPacket(pk);
             }
             Server.Instance.NetworkManager.PlayerClose(this.endPoint, reason);
+        }
+
+        public Inventory GetInventory()
+        {
+            return null;
         }
     }
 }
