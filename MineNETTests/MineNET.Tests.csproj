@@ -59,6 +59,7 @@
     <Compile Include="Utils\BinaryStreamTests.cs" />
     <Compile Include="Utils\VarDumpTests.cs" />
     <Compile Include="Worlds\ChunkTests.cs" />
+    <Compile Include="Worlds\SubChunkTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MineNET\MineNET.csproj">

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using MineNET.NBT.Data;
 using MineNET.Utils;
 
-namespace MineNET.NBT
+namespace MineNET.NBT.IO
 {
     public class NBTStream : MemoryStream
     {

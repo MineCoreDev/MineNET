@@ -1,4 +1,5 @@
 ﻿using System;
+using MineNET.Entities.Data;
 
 namespace MineNET.Data
 {
@@ -6,86 +7,22 @@ namespace MineNET.Data
     {
         public PlayerListEntry(Guid guid)
         {
-            this.guid = guid;
+            this.Guid = guid;
         }
 
         public PlayerListEntry(Guid guid, long entityUniqueId, string name, Skin skin, string xboxUserId)
         {
-            this.guid = guid;
-            this.entityUniqueId = entityUniqueId;
-            this.name = name;
-            this.skin = skin;
-            this.xboxUserId = xboxUserId;
+            this.Guid = guid;
+            this.EntityUniqueId = entityUniqueId;
+            this.Name = name;
+            this.Skin = skin;
+            this.XboxUserId = xboxUserId;
         }
 
-        Guid guid;
-        public Guid Guid
-        {
-            get
-            {
-                return this.guid;
-            }
-
-            set
-            {
-                this.guid = value;
-            }
-        }
-
-        long entityUniqueId;
-        public long EntityUniqueId
-        {
-            get
-            {
-                return this.entityUniqueId;
-            }
-
-            set
-            {
-                this.entityUniqueId = value;
-            }
-        }
-
-        string name;
-        public string Name
-        {
-            get
-            {
-                return this.name;
-            }
-
-            set
-            {
-                this.name = value;
-            }
-        }
-
-        Skin skin;
-        public Skin Skin
-        {
-            get
-            {
-                return this.Skin;
-            }
-
-            set
-            {
-                this.skin = value;
-            }
-        }
-
-        string xboxUserId;
-        public string XboxUserId
-        {
-            get
-            {
-                return this.xboxUserId;
-            }
-
-            set
-            {
-                this.xboxUserId = value;
-            }
-        }
+        public Guid Guid { get; set; }
+        public long EntityUniqueId { get; set; }
+        public string Name { get; set; }
+        public Skin Skin { get; set; }
+        public string XboxUserId { get; set; }
     }
 }

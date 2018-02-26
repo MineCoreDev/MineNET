@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using MineNET.Commands;
+using MineNET.Entities.Attributes;
 using MineNET.Network;
 using MineNET.Plugins;
 using MineNET.Utils;
@@ -126,9 +127,10 @@ namespace MineNET
             }
             Logger.Info("%server_start");
 
-            networkManager = new NetworkManager();
             commandManager = new CommandManager();
             pluginManager = new PluginManager();
+            new EntityAttributePool();
+            networkManager = new NetworkManager();
         }
 
         void InitConfig()

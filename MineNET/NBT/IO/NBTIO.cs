@@ -1,10 +1,11 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
 
-namespace MineNET.NBT
+namespace MineNET.NBT.IO
 {
     public static class NBTIO
     {

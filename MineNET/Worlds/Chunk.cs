@@ -1,6 +1,4 @@
-﻿using System;
-using MineNET.Entities;
-using MineNET.NBT;
+﻿using MineNET.Entities;
 using MineNET.Network.Packets;
 using MineNET.Utils;
 
@@ -33,12 +31,12 @@ namespace MineNET.Worlds
             this.x = x;
             this.z = z;
 
-            for (int j = 0; j < 2; ++j)
+            for (int j = 0; j < 15; ++j)
             {
                 SubChunk sub = new SubChunk();
                 for (int i = 0; i < 10; ++i)
                 {
-                    sub.SetBlock(i, i, i, 1);
+                    sub.SetBlock(i, 0, 0, 1);
                 }
                 subChunks[j] = sub;
             }
@@ -56,7 +54,7 @@ namespace MineNET.Worlds
 
         public byte[] GetBytes()
         {
-            using (NBTStream nbt = new NBTStream())
+            using (BinaryStream stream = new BinaryStream())
             {
                 int dataChunk = 16;
 
@@ -67,20 +65,21 @@ namespace MineNET.Worlds
                     else break;
                 }
 
-                nbt.WriteByte((byte) dataChunk);
+
                 for (int i = 0; i < dataChunk; ++i)
                 {
-                    Binary.WriteBytes(nbt, subChunks[i].GetBytes());
+                    stream.WriteBytes(subChunks[i].GetBytes());
                 }
+                stream.WriteByte((byte) 16);
 
-                short[] b2 = new short[256];
+                /*short[] b2 = new short[256];
                 byte[] b1 = new byte[512];
                 Buffer.BlockCopy(b2, 0, b1, 0, 512);
                 Binary.WriteBytes(nbt, b1);
                 nbt.WriteByte(0);
-                VarInt.WriteSInt32(nbt, 0);
+                VarInt.WriteSInt32(nbt, 0);*/
 
-                return nbt.ToArray();
+                return stream.GetResult();
             }
         }
     }

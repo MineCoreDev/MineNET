@@ -1,5 +1,5 @@
-﻿using MineNET.Data;
-using MineNET.Entities;
+﻿using MineNET.Entities.Attributes;
+using MineNET.Entities.Data;
 using MineNET.Items;
 using MineNET.Values;
 

@@ -5,20 +5,11 @@ namespace MineNET.Commands
 {
     public abstract class Command : ICloneable
     {
-        public abstract string Name
-        {
-            get;
-        }
+        public abstract string Name { get; }
 
-        public abstract string Description
-        {
-            get;
-        }
+        public abstract string Description { get; }
 
-        public abstract string Alias
-        {
-            get;
-        }
+        public abstract string Alias { get; }
 
         public virtual string[] SubAlias
         {

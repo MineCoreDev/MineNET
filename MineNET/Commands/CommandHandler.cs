@@ -1,4 +1,5 @@
-﻿using MineNET.Entities;
+﻿using MineNET.Commands.Data;
+using MineNET.Entities;
 using MineNET.Utils;
 
 namespace MineNET.Commands

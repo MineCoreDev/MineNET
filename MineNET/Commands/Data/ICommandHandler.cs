@@ -1,4 +1,4 @@
-﻿namespace MineNET.Commands
+﻿namespace MineNET.Commands.Data
 {
     public interface ICommandHandler
     {

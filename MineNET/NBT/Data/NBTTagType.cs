@@ -1,4 +1,4 @@
-﻿namespace MineNET.NBT
+﻿namespace MineNET.NBT.Data
 {
     public enum NBTTagType
     {

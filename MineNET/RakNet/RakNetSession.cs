@@ -89,16 +89,17 @@ namespace MineNET.RakNet
 
                 this.timedOut = 100;
 
+                Logger.Log("" + packet.SeqNumber);
+
                 if (packet.SeqNumber < startSeq || packet.SeqNumber > endSeq || receivedWindow.ContainsKey(packet.SeqNumber))
                 {
                     return;
                 }
-
+                
                 int diff = packet.SeqNumber - lastSeqNumber;
 
                 if (nackQueue.ContainsKey(packet.SeqNumber))
                 {
-                    Logger.Log("NackRequest");
                     nackQueue.Remove(packet.SeqNumber);
                 }
                 receivedWindow[packet.SeqNumber] = packet.SeqNumber;
@@ -292,8 +293,9 @@ namespace MineNET.RakNet
             if (nackQueue.Count > 0)
             {
                 NACK nack = new NACK();
-                nack.packets = ackQueue.Values.ToArray();
+                nack.packets = nackQueue.Values.ToArray();
                 server.SendPacket(nack, point.Address, point.Port);
+                Logger.Log("Nack request... " + nackQueue.Values[0] + "/" + nackQueue.Values[nackQueue.Values.Count - 1]);
                 nackQueue.Clear();
             }
 

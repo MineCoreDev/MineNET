@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using MineNET.NBT.Data;
+using MineNET.NBT.IO;
 
 namespace MineNET.NBT.Tags
 {

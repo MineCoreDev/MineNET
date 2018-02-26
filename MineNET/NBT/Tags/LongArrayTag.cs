@@ -1,4 +1,6 @@
 ﻿using System;
+using MineNET.NBT.Data;
+using MineNET.NBT.IO;
 
 namespace MineNET.NBT.Tags
 {

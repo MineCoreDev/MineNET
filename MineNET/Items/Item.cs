@@ -1,6 +1,6 @@
 ﻿using System;
 using MineNET.Blocks;
-using MineNET.NBT;
+using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
 

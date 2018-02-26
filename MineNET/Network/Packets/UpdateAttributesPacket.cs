@@ -1,4 +1,4 @@
-﻿using MineNET.Entities;
+﻿using MineNET.Entities.Attributes;
 
 namespace MineNET.Network.Packets
 {

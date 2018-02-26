@@ -82,8 +82,8 @@ namespace MineNET.Network.Packets
             }
         }
 
-        uint playerPermission = PlayerPermissions.MEMBER;
-        public uint PlayerPermission
+        PlayerPermissions playerPermission = PlayerPermissions.MEMBER;
+        public PlayerPermissions PlayerPermission
         {
             get
             {
@@ -131,7 +131,7 @@ namespace MineNET.Network.Packets
             this.WriteUVarInt(this.flags);
             this.WriteUVarInt(this.commandPermission);
             this.WriteUVarInt(this.flags2);
-            this.WriteUVarInt(this.playerPermission);
+            this.WriteUVarInt((uint) this.playerPermission);
             this.WriteUVarInt(this.customFlags);
             this.WriteLLong((ulong) this.entityUniqueId);
         }

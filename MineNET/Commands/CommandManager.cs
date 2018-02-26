@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MineNET.Commands.Data;
 using MineNET.Commands.Defaults;
 using MineNET.Entities;
 
@@ -84,14 +85,14 @@ namespace MineNET.Commands
         {
             if (!commandList.ContainsKey(command.Alias))
             {
-                commandList.Add(command.Alias, (Command)command.Clone());
+                commandList.Add(command.Alias, (Command) command.Clone());
             }
 
             for (int i = 0; i < command.SubAlias.Length; ++i)
             {
                 if (!commandList.ContainsKey(command.SubAlias[i]))
                 {
-                    commandList.Add(command.SubAlias[i], (Command)command.Clone());
+                    commandList.Add(command.SubAlias[i], (Command) command.Clone());
                 }
             }
         }

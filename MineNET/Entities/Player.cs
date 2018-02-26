@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using MineNET.Commands;
 using MineNET.Data;
+using MineNET.Entities.Attributes;
 using MineNET.Network.Packets;
 using MineNET.Utils;
 using MineNET.Values;
@@ -159,12 +160,12 @@ namespace MineNET.Entities
             startGamePacket.EntityUniqueId = this.id;
             startGamePacket.EntityRuntimeId = this.id;
             startGamePacket.PlayerGamemode = 1;
-            startGamePacket.PlayerPosition = new Vector3(128, 64, 128);
+            startGamePacket.PlayerPosition = new Vector3(128, 4, 128);
             startGamePacket.Direction = new Vector2(0, 0);
             startGamePacket.WorldGamemode = 0;
             startGamePacket.Difficulty = 1;
             startGamePacket.SpawnX = 128;
-            startGamePacket.SpawnY = 64;
+            startGamePacket.SpawnY = 4;
             startGamePacket.SpawnZ = 128;
             startGamePacket.WorldName = "world";
             this.SendPacket(startGamePacket);

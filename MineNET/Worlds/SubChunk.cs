@@ -6,7 +6,7 @@ namespace MineNET.Worlds
 {
     public class SubChunk
     {
-        byte[] blockData = ArrayUtils.CreateArray<byte>(4096, 0);
+        byte[] blockData = ArrayUtils.CreateArray<byte>(4096, 1);
         public byte[] BlockData
         {
             get
@@ -31,6 +31,34 @@ namespace MineNET.Worlds
             set
             {
                 metaData = value;
+            }
+        }
+
+        NibbleArray skyLigth = ArrayUtils.CreateNibbleArray(4096, 0xff);
+        public NibbleArray SkyLights
+        {
+            get
+            {
+                return skyLigth;
+            }
+
+            set
+            {
+                skyLigth = value;
+            }
+        }
+
+        NibbleArray blockLigth = ArrayUtils.CreateNibbleArray(4096, 0);
+        public NibbleArray BlockLigths
+        {
+            get
+            {
+                return blockLigth;
+            }
+
+            set
+            {
+                blockLigth = value;
             }
         }
 
@@ -86,8 +114,8 @@ namespace MineNET.Worlds
             using (BinaryStream bs = new BinaryStream())
             {
                 bs.WriteByte(0);
-                bs.WriteBytes(BlockData);
-                bs.WriteBytes(MetaDatas.ArrayData);
+                bs.WriteBytes(ArrayUtils.CreateArray<byte>(16 * 16 * 16, 1));
+                bs.WriteBytes(ArrayUtils.CreateNibbleArray(2048, 0).ArrayData);
 
                 return bs.ToArray();
             }

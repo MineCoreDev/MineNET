@@ -1,4 +1,7 @@
-﻿namespace MineNET.NBT.Tags
+﻿using MineNET.NBT.Data;
+using MineNET.NBT.IO;
+
+namespace MineNET.NBT.Tags
 {
     public class IntTag : DataTag<int>
     {

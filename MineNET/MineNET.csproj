@@ -340,6 +340,7 @@
     <Compile Include="Blocks\BlockWool.cs" />
     <Compile Include="Blocks\BlockYellowFlower.cs" />
     <Compile Include="Blocks\BlockYellowGlazedTerracotta.cs" />
+    <Compile Include="Blocks\Data\BlockFace.cs" />
     <Compile Include="Blocks\Test.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CommandHandler.cs" />
@@ -347,16 +348,17 @@
     <Compile Include="Commands\CommandSender.cs" />
     <Compile Include="Commands\ConsoleSender.cs" />
     <Compile Include="Commands\Defaults\StopCommand.cs" />
-    <Compile Include="Commands\ICommandHandler.cs" />
-    <Compile Include="Data\InventoryType.cs" />
+    <Compile Include="Commands\Data\ICommandHandler.cs" />
+    <Compile Include="Inventories\Data\InventoryType.cs" />
     <Compile Include="Data\LoginData.cs" />
     <Compile Include="Data\ClientData.cs" />
     <Compile Include="Data\PlayerListEntry.cs" />
     <Compile Include="Data\PlayerPermissions.cs" />
     <Compile Include="Data\ResourcePack.cs" />
-    <Compile Include="Data\Skin.cs" />
+    <Compile Include="Entities\Data\Skin.cs" />
+    <Compile Include="Entities\Attributes\EntityAttributePool.cs" />
     <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Entities\EntityAttribute.cs" />
+    <Compile Include="Entities\Attributes\EntityAttribute.cs" />
     <Compile Include="Entities\Human.cs" />
     <Compile Include="Entities\Living.cs" />
     <Compile Include="Entities\Player.cs" />
@@ -573,10 +575,10 @@
     <Compile Include="Items\ItemWoodenSword.cs" />
     <Compile Include="Items\ItemWritableBook.cs" />
     <Compile Include="MineNETConfig.cs" />
-    <Compile Include="NBT\NBTEndian.cs" />
-    <Compile Include="NBT\NBTIO.cs" />
-    <Compile Include="NBT\NBTStream.cs" />
-    <Compile Include="NBT\NBTTagType.cs" />
+    <Compile Include="NBT\Data\NBTEndian.cs" />
+    <Compile Include="NBT\IO\NBTIO.cs" />
+    <Compile Include="NBT\IO\NBTStream.cs" />
+    <Compile Include="NBT\Data\NBTTagType.cs" />
     <Compile Include="NBT\Tags\ArrayDataTag.cs" />
     <Compile Include="NBT\Tags\LongArrayTag.cs" />
     <Compile Include="Network\Packets\AdventureSettingsPacket.cs" />
@@ -692,6 +694,7 @@
     <EmbeddedResource Include="Resources\Lang\ja_JP.resx" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Items\Data\" />
     <Folder Include="Resources\ClassDiagrams\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

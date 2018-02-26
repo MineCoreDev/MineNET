@@ -1,10 +1,10 @@
 ﻿namespace MineNET.Data
 {
-    public class PlayerPermissions
+    public enum PlayerPermissions
     {
-        public const int VISITOR = 0;
-        public const int MEMBER = 1;
-        public const int OPERATOR = 2;
-        public const int CUSTOM = 4;
+        VISITOR = 0,
+        MEMBER = 1,
+        OPERATOR = 2,
+        CUSTOM = 4
     }
 }
