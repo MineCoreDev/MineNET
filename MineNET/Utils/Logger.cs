@@ -44,7 +44,7 @@ namespace MineNET.Utils
             if (!useGUI)
             {
                 Console.SetWindowSize(WINDOW_X, WINDOW_Y);
-                Console.SetBufferSize(WINDOW_X, WINDOW_Y);
+                Console.SetBufferSize(WINDOW_X, 1000);
 
                 int bit = 64;
                 if (BitConverter.IsLittleEndian)

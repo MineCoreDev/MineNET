@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
 

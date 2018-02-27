@@ -11,6 +11,12 @@ namespace MineNET.RakNet
 {
     public class RakNetServer
     {
+        sealed class ReceiveData
+        {
+            public IPEndPoint Point { get; set; }
+            public byte[] Data { get; set; }
+        }
+
         public static readonly byte[] Magic = new byte[]
         {
             0x00,
@@ -42,6 +48,8 @@ namespace MineNET.RakNet
 
         Dictionary<string, int> blockUsers = new Dictionary<string, int>();
         Dictionary<string, RakNetSession> sessions = new Dictionary<string, RakNetSession>();
+
+        Queue<ReceiveData> receiveDataQueue = new Queue<ReceiveData>();
 
         public RakNetServer(ushort port)
         {
@@ -99,6 +107,15 @@ namespace MineNET.RakNet
 
         private void OnUpdate(object state)
         {
+            if (receiveDataQueue.Count > 0)
+            {
+                for (int i = 0; i < receiveDataQueue.Count; ++i)
+                {
+                    ReceiveData data = receiveDataQueue.Dequeue();
+                    this.HandlePacket(data.Point, data.Data);
+                }
+            }
+
             string[] bl = this.blockUsers.Keys.ToArray();
             for (int i = 0; i < bl.Length; ++i)
             {
@@ -124,8 +141,6 @@ namespace MineNET.RakNet
             {
                 buffer = this.client.EndReceive(result, ref point);
 
-                this.client.BeginReceive(OnReceive, null);
-
                 if (this.blockUsers.ContainsKey(IPEndPointToID(point)))
                 {
                     return;
@@ -133,13 +148,23 @@ namespace MineNET.RakNet
 
                 if (buffer.Length != 0)
                 {
-                    this.HandlePacket(point, buffer);
+                    ReceiveData data = new ReceiveData()
+                    {
+                        Point = point,
+                        Data = buffer
+                    };
+                    
+                    this.receiveDataQueue.Enqueue(data);
                 }
             }
             catch (Exception ex)
             {
                 Logger.Error(ex);
                 this.BlockUser(point, 20 * 5);
+            }
+            finally
+            {
+                this.client.BeginReceive(OnReceive, null);
             }
         }
 

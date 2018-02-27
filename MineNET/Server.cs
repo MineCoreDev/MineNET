@@ -110,6 +110,8 @@ namespace MineNET
 
             if (mineNETConfig.EnableConsoleOutput)
             {
+                logger = new Logger();
+                logger.Init();
                 UpdateLogger();
             }
 
@@ -120,11 +122,6 @@ namespace MineNET
                 consoleInput = new ConsoleInput();
             }
 
-            if (mineNETConfig.EnableConsoleOutput)
-            {
-                logger = new Logger();
-                logger.Init();
-            }
             Logger.Info("%server_start");
 
             commandManager = new CommandManager();

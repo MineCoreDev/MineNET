@@ -49,8 +49,8 @@ namespace MineNET.RakNet
         int startMsg = 0;
         int endMsg = 2048;
         int lastMsg = -1;
-        SortedList<int, EncapsulatedPacket> reliableWindow = new SortedList<int, EncapsulatedPacket>();
-        SortedList<int, int> receivedWindow = new SortedList<int, int>();
+        Dictionary<int, EncapsulatedPacket> reliableWindow = new Dictionary<int, EncapsulatedPacket>();
+        Dictionary<int, int> receivedWindow = new Dictionary<int, int>();
 
         int messageIndex = 0;
         public int MessageIndex
@@ -66,8 +66,10 @@ namespace MineNET.RakNet
             }
         }
 
-        SortedList<int, int> ackQueue = new SortedList<int, int>();
-        SortedList<int, int> nackQueue = new SortedList<int, int>();
+        Dictionary<int, int> ackQueue = new Dictionary<int, int>();
+        Dictionary<int, int> nackQueue = new Dictionary<int, int>();
+
+        Queue<Packet> packetQueue = new Queue<Packet>();
 
         int timedOut;
 
@@ -89,20 +91,27 @@ namespace MineNET.RakNet
 
                 this.timedOut = 100;
 
-                Logger.Log("" + packet.SeqNumber);
-
                 if (packet.SeqNumber < startSeq || packet.SeqNumber > endSeq || receivedWindow.ContainsKey(packet.SeqNumber))
                 {
                     return;
                 }
-                
+
                 int diff = packet.SeqNumber - lastSeqNumber;
 
                 if (nackQueue.ContainsKey(packet.SeqNumber))
                 {
                     nackQueue.Remove(packet.SeqNumber);
                 }
-                receivedWindow[packet.SeqNumber] = packet.SeqNumber;
+
+                if (!receivedWindow.ContainsKey(packet.SeqNumber))
+                {
+                    receivedWindow.Add(packet.SeqNumber, packet.SeqNumber);
+                }
+
+                if (!ackQueue.ContainsKey(packet.SeqNumber))
+                {
+                    ackQueue.Add(packet.SeqNumber, packet.SeqNumber);
+                }
 
                 if (diff != 1)
                 {
@@ -110,12 +119,13 @@ namespace MineNET.RakNet
                     {
                         if (!receivedWindow.ContainsKey(i))
                         {
-                            nackQueue[i] = i;
+                            if (!nackQueue.ContainsKey(i))
+                            {
+                                nackQueue.Add(i, i);
+                            }
                         }
                     }
                 }
-
-                ackQueue[packet.SeqNumber] = packet.SeqNumber;
 
                 if (diff >= 1)
                 {
@@ -153,40 +163,56 @@ namespace MineNET.RakNet
             {
                 if (packet.messageIndex < startMsg || packet.messageIndex > endMsg)
                 {
-                    Logger.Log("BlockEncPK{0}:{1}", startMsg, endMsg);
                     return;
                 }
 
                 if ((packet.messageIndex - lastMsg) == 1)
                 {
-                    ++lastMsg;
-                    ++endMsg;
-                    ++startMsg;
+                    lastMsg++;
+                    endMsg++;
+                    startMsg++;
 
                     EncapsulatedPacketHandler(packet);
 
                     if (reliableWindow.Count > 0)
                     {
-                        for (int i = 0; i < reliableWindow.Values.Count; ++i)
+                        List<KeyValuePair<int, EncapsulatedPacket>> l = new List<KeyValuePair<int, EncapsulatedPacket>>(reliableWindow);
+                        List<int> removeIndex = new List<int>();
+                        l.Sort((a, b) => a.Key - b.Key);
+                        KeyValuePair<int, EncapsulatedPacket>[] pks = l.ToArray();
+                        for (int i = 0; i < reliableWindow.Count; ++i)
                         {
-                            EncapsulatedPacket pk = reliableWindow.Values[i];
+                            EncapsulatedPacket pk = pks[i].Value;
                             if ((pk.messageIndex - lastMsg) != 1)
                             {
                                 break;
                             }
 
-                            ++lastMsg;
-                            ++endMsg;
-                            ++startMsg;
-
                             EncapsulatedPacketHandler(pk);
-                            reliableWindow.Remove(pk.messageIndex);
+
+                            lastMsg++;
+                            endMsg++;
+                            startMsg++;
+
+                            removeIndex.Add(pk.messageIndex);
+                        }
+
+                        for (int i = 0; i < removeIndex.Count; ++i)
+                        {
+                            reliableWindow.Remove(removeIndex[i]);
                         }
                     }
                 }
                 else
                 {
-                    reliableWindow[packet.messageIndex] = packet;
+                    if (!reliableWindow.ContainsKey(packet.messageIndex))
+                    {
+                        reliableWindow.Add(packet.messageIndex, packet);
+                    }
+                    else
+                    {
+                        reliableWindow[packet.messageIndex] = packet;
+                    }
                 }
             }
             else
@@ -259,6 +285,14 @@ namespace MineNET.RakNet
             }
         }
 
+        void SendQueuePackets()
+        {
+            for (int i = 0; i < packetQueue.Count; ++i)
+            {
+                server.SendPacket(packetQueue.Dequeue(), point.Address, point.Port);
+            }
+        }
+
         public void SendPacket(EncapsulatedPacket packet)
         {
             if (server != null)
@@ -270,7 +304,7 @@ namespace MineNET.RakNet
                     packet
                 };
 
-                server.SendPacket(pk, point.Address, point.Port);
+                packetQueue.Enqueue(pk);
             }
         }
 
@@ -295,10 +329,35 @@ namespace MineNET.RakNet
                 NACK nack = new NACK();
                 nack.packets = nackQueue.Values.ToArray();
                 server.SendPacket(nack, point.Address, point.Port);
-                Logger.Log("Nack request... " + nackQueue.Values[0] + "/" + nackQueue.Values[nackQueue.Values.Count - 1]);
-                nackQueue.Clear();
+
+                int[] datas = nackQueue.Values.ToArray();
+                for (int i = 0; i < nackQueue.Count; ++i)
+                {
+                    if (receivedWindow.ContainsKey(datas[i]))
+                    {
+                        nackQueue.Remove(i);
+                    }
+                }
             }
 
+            int[] a = receivedWindow.Values.ToArray();
+            for (int i = 0; i < receivedWindow.Values.Count; ++i)
+            {
+                int seq = a[i];
+                if (seq < startSeq)
+                {
+                    if (receivedWindow.ContainsKey(seq))
+                    {
+                        receivedWindow.Remove(seq);
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            SendQueuePackets();
             //recover pk
         }
 
