@@ -14,96 +14,36 @@ namespace MineNET.Network.Packets
             }
         }
 
-        long entityRuntimeId;
-        public long EntityRuntimeId
-        {
-            get
-            {
-                return this.entityRuntimeId;
-            }
+        public long EntityRuntimeId { get; set; }
 
-            set
-            {
-                this.entityRuntimeId = value;
-            }
-        }
+        public Item Item { get; set; }
 
-        Item item;
-        public Item Item
-        {
-            get
-            {
-                return this.item;
-            }
+        public byte InventorySlot { get; set; }
 
-            set
-            {
-                this.item = value;
-            }
-        }
+        public byte HotbarSlot { get; set; }
 
-        byte inventorySlot;
-        public byte InventorySlot
-        {
-            get
-            {
-                return this.inventorySlot;
-            }
-
-            set
-            {
-                this.inventorySlot = value;
-            }
-        }
-
-        byte hotbarSlot;
-        public byte HotbarSlot
-        {
-            get
-            {
-                return this.hotbarSlot;
-            }
-
-            set
-            {
-                this.hotbarSlot = value;
-            }
-        }
-
-        byte windowId;
-        public byte WindowId
-        {
-            get
-            {
-                return this.windowId;
-            }
-
-            set
-            {
-                this.windowId = value;
-            }
-        }
+        public byte WindowId { get; set; }
 
         public override void Decode()
         {
             base.Decode();
 
-            this.entityRuntimeId = this.ReadEntityRuntimeId();
-            this.item = this.ReadItem();
-            this.inventorySlot = this.ReadByte();
-            this.hotbarSlot = this.ReadByte();
-            this.windowId = this.ReadByte();
+            this.EntityRuntimeId = this.ReadEntityRuntimeId();
+            this.Item = this.ReadItem();
+            this.InventorySlot = this.ReadByte();
+            this.HotbarSlot = this.ReadByte();
+            this.WindowId = this.ReadByte();
         }
 
         public override void Encode()
         {
             base.Encode();
 
-            this.WriteEntityRuntimeId(this.entityRuntimeId);
-            this.WriteItem(this.item);
-            this.WriteByte(this.inventorySlot);
-            this.WriteByte(this.hotbarSlot);
-            this.WriteByte(this.windowId);
+            this.WriteEntityRuntimeId(this.EntityRuntimeId);
+            this.WriteItem(this.Item);
+            this.WriteByte(this.InventorySlot);
+            this.WriteByte(this.HotbarSlot);
+            this.WriteByte(this.WindowId);
         }
     }
 }

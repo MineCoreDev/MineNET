@@ -14,43 +14,19 @@ namespace MineNET.Network.Packets
             }
         }
 
-        long entityRuntimeId;
-        public long EntityRuntimeId
-        {
-            get
-            {
-                return this.entityRuntimeId;
-            }
+        public long EntityRuntimeId { get; set; }
 
-            set
-            {
-                this.entityRuntimeId = value;
-            }
-        }
-
-        Item[] items = new Item[4];
-        public Item[] Items
-        {
-            get
-            {
-                return this.items;
-            }
-
-            set
-            {
-                this.items = value;
-            }
-        }
+        public Item[] Items { get; set; } = new Item[4];
 
         public override void Encode()
         {
             base.Encode();
 
-            this.WriteEntityRuntimeId(this.entityRuntimeId);
-            this.WriteItem(this.items[0]);
-            this.WriteItem(this.items[1]);
-            this.WriteItem(this.items[2]);
-            this.WriteItem(this.items[3]);
+            this.WriteEntityRuntimeId(this.EntityRuntimeId);
+            this.WriteItem(this.Items[0]);
+            this.WriteItem(this.Items[1]);
+            this.WriteItem(this.Items[2]);
+            this.WriteItem(this.Items[3]);
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using MineNET.Blocks;
+﻿using MineNET.Blocks;
 using MineNET.Entities;
 using MineNET.Items;
+using MineNET.Network.Packets;
+using System;
+using System.Collections.Generic;
 
 namespace MineNET.Inventories
 {
@@ -46,7 +47,7 @@ namespace MineNET.Inventories
             get;
         }
 
-        public Item GetItem(int index)
+        public virtual Item GetItem(int index)
         {
             if (!this.slots.ContainsKey(index))
             {
@@ -55,7 +56,7 @@ namespace MineNET.Inventories
             return this.slots[index];
         }
 
-        public bool SetItem(int index, Item item, bool send = true)
+        public virtual bool SetItem(int index, Item item, bool send = true)
         {
             item = item.Clone();
             if (index < 0 || this.Size <= index)
@@ -72,7 +73,7 @@ namespace MineNET.Inventories
             return true;
         }
 
-        public Item[] AddItem(params Item[] items)
+        public virtual Item[] AddItem(params Item[] items)
         {
             List<Item> itemSlots = new List<Item>();
             for (int i = 0; i < this.Size; ++i)
@@ -137,7 +138,7 @@ namespace MineNET.Inventories
             return itemSlots.ToArray();
         }
 
-        public bool CanAddItem(Item item)
+        public virtual bool CanAddItem(Item item)
         {
             item = item.Clone();
             for (int i = 0; i < this.Size; ++i)
@@ -164,7 +165,7 @@ namespace MineNET.Inventories
             return false;
         }
 
-        public Item[] RemoveItem(params Item[] items)
+        public virtual Item[] RemoveItem(params Item[] items)
         {
             List<Item> itemSlots = new List<Item>();
             for (int i = 0; i < this.Size; ++i)
@@ -204,7 +205,7 @@ namespace MineNET.Inventories
             return itemSlots.ToArray();
         }
 
-        public bool Clear(int index, bool send = true)
+        public virtual bool Clear(int index, bool send = true)
         {
             if (!this.slots.ContainsKey(index))
             {
@@ -216,7 +217,7 @@ namespace MineNET.Inventories
             return true;
         }
 
-        public void ClearAll()
+        public virtual void ClearAll()
         {
             for (int i = 0; i < this.Size; ++i)
             {
@@ -224,7 +225,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public bool Contains(Item item)
+        public virtual bool Contains(Item item)
         {
             int count = Math.Max(1, item.Count);
             foreach (Item slot in this.slots.Values)
@@ -241,7 +242,7 @@ namespace MineNET.Inventories
             return false;
         }
 
-        public void OnSlotChange(int index, Item item, bool send)
+        public virtual void OnSlotChange(int index, Item item, bool send)
         {
             if (send)
             {
@@ -249,14 +250,33 @@ namespace MineNET.Inventories
             }
         }
 
-        public void SendSlot(int index, params Player[] players)
+        public virtual void SendSlot(int index, params Player[] players)
         {
-
+            InventorySlotPacket pk = new InventorySlotPacket();
+            pk.Slot = (uint) index;
+            pk.Item = this.GetItem(index);
+            for (int i = 0; i < players.Length; ++i)
+            {
+                Player player = players[i];
+                pk.InventoryId = 1; //TODO
+                player.SendPacket(pk);
+            }
         }
 
-        public void SendContents(params Player[] players)
+        public virtual void SendContents(params Player[] players)
         {
-
+            InventoryContentPacket pk = new InventoryContentPacket();
+            pk.Items = new Item[this.Size];
+            for (int i = 0; i < this.Size; ++i)
+            {
+                pk.Items[i] = this.GetItem(i);
+            }
+            for (int i = 0; i < players.Length; ++i)
+            {
+                Player player = players[i];
+                pk.InventoryId = 1; //TODO
+                player.SendPacket(pk);
+            }
         }
 
         public InventoryHolder Holder
@@ -280,7 +300,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public bool Open(Player player)
+        public virtual bool Open(Player player)
         {
             //TODO : InventoryOpenEvent
             this.OnOpen(player);
@@ -292,7 +312,7 @@ namespace MineNET.Inventories
             this.viewers.Add(player);
         }
 
-        public void Close(Player player)
+        public virtual void Close(Player player)
         {
             //TODO : InventoryCloseEvent
             this.OnClose(player);

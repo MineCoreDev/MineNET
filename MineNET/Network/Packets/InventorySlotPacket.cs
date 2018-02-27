@@ -14,55 +14,19 @@ namespace MineNET.Network.Packets
             }
         }
 
-        uint inventoryId;
-        public uint InventoryId
-        {
-            get
-            {
-                return this.inventoryId;
-            }
+        public uint InventoryId { get; set; }
 
-            set
-            {
-                this.inventoryId = value;
-            }
-        }
+        public uint Slot { get; set; }
 
-        uint slot;
-        public uint Slot
-        {
-            get
-            {
-                return this.slot;
-            }
-
-            set
-            {
-                this.slot = value;
-            }
-        }
-
-        Item item;
-        public Item Item
-        {
-            get
-            {
-                return this.item;
-            }
-
-            set
-            {
-                this.item = value;
-            }
-        }
+        public Item Item { get; set; }
 
         public override void Encode()
         {
             base.Encode();
 
-            this.WriteUVarInt(this.inventoryId);
-            this.WriteUVarInt(this.slot);
-            this.WriteItem(this.item);
+            this.WriteUVarInt(this.InventoryId);
+            this.WriteUVarInt(this.Slot);
+            this.WriteItem(this.Item);
         }
     }
 }
