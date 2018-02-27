@@ -14,43 +14,19 @@ namespace MineNET.Network.Packets
             }
         }
 
-        uint inventoryId;
-        public uint InventoryId
-        {
-            get
-            {
-                return this.inventoryId;
-            }
+        public uint InventoryId { get; set; }
 
-            set
-            {
-                this.inventoryId = value;
-            }
-        }
-
-        Item[] items;
-        public Item[] Items
-        {
-            get
-            {
-                return this.items;
-            }
-
-            set
-            {
-                this.items = value;
-            }
-        }
+        public Item[] Items { get; set; }
 
         public override void Encode()
         {
             base.Encode();
 
-            this.WriteUVarInt(this.inventoryId);
-            this.WriteUVarInt((uint) this.items.Length);
-            for (int i = 0; i < this.items.Length; ++i)
+            this.WriteUVarInt(this.InventoryId);
+            this.WriteUVarInt((uint) this.Items.Length);
+            for (int i = 0; i < this.Items.Length; ++i)
             {
-                this.WriteItem(this.items[i]);
+                this.WriteItem(this.Items[i]);
             }
         }
     }
