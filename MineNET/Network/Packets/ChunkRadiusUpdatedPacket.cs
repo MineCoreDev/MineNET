@@ -8,29 +8,17 @@
         {
             get
             {
-                return ID;
+                return ChunkRadiusUpdatedPacket.ID;
             }
         }
 
-        int radius;
-        public int Radius
-        {
-            get
-            {
-                return radius;
-            }
-
-            set
-            {
-                radius = value;
-            }
-        }
+        public int Radius { get; set; }
 
         public override void Encode()
         {
             base.Encode();
 
-            WriteSVarInt(radius);
+            this.WriteSVarInt(this.Radius);
         }
     }
 }

@@ -16,29 +16,17 @@
         {
             get
             {
-                return ID;
+                return PlayStatusPacket.ID;
             }
         }
 
-        int status;
-        public int Status
-        {
-            get
-            {
-                return this.status;
-            }
-
-            set
-            {
-                this.status = value;
-            }
-        }
+        public int Status { get; set; }
 
         public override void Encode()
         {
             base.Encode();
 
-            WriteLInt((uint) status);
+            this.WriteLInt((uint) this.Status);
         }
     }
 }

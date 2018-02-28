@@ -8,7 +8,7 @@
         {
             get
             {
-                return ID;
+                return ResourcePackClientResponsePacket.ID;
             }
         }
 
@@ -17,43 +17,19 @@
         public const byte STATUS_HAVE_ALL_PACKS = 3;
         public const byte STATUS_COMPLETED = 4;
 
-        byte responseStatus;
-        public byte ResponseStatus
-        {
-            get
-            {
-                return this.responseStatus;
-            }
+        public byte ResponseStatus { get; set; }
 
-            set
-            {
-                this.responseStatus = value;
-            }
-        }
-
-        string[] packIds;
-        public string[] PackIds
-        {
-            get
-            {
-                return this.packIds;
-            }
-
-            set
-            {
-                this.packIds = value;
-            }
-        }
+        public string[] PackIds { get; set; }
 
         public override void Decode()
         {
             base.Decode();
 
-            this.responseStatus = this.ReadByte();
-            this.packIds = new string[this.ReadLShort()];
-            for (int i = 0; i < this.packIds.Length; ++i)
+            this.ResponseStatus = this.ReadByte();
+            this.PackIds = new string[this.ReadLShort()];
+            for (int i = 0; i < this.PackIds.Length; ++i)
             {
-                this.packIds[i] = this.ReadString();
+                this.PackIds[i] = this.ReadString();
             }
         }
     }

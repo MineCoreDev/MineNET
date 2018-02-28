@@ -10,44 +10,20 @@ namespace MineNET.Network.Packets
         {
             get
             {
-                return ID;
+                return UpdateAttributesPacket.ID;
             }
         }
 
-        long entityRuntimeId;
-        public long EntityRuntimeId
-        {
-            get
-            {
-                return entityRuntimeId;
-            }
+        public long EntityRuntimeId { get; set; }
 
-            set
-            {
-                entityRuntimeId = value;
-            }
-        }
-
-        EntityAttribute[] attributes;
-        public EntityAttribute[] Attributes
-        {
-            get
-            {
-                return attributes;
-            }
-
-            set
-            {
-                attributes = value;
-            }
-        }
+        public EntityAttribute[] Attributes { get; set; }
 
         public override void Encode()
         {
             base.Encode();
 
-            WriteEntityRuntimeId(entityRuntimeId);
-            WriteAttributes(attributes);
+            this.WriteEntityRuntimeId(this.EntityRuntimeId);
+            this.WriteAttributes(this.Attributes);
         }
     }
 }

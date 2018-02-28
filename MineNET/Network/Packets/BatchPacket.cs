@@ -1,7 +1,7 @@
-﻿using System;
+﻿using MineNET.Utils;
+using System;
 using System.IO;
 using System.IO.Compression;
-using MineNET.Utils;
 
 namespace MineNET.Network.Packets
 {
@@ -13,64 +13,52 @@ namespace MineNET.Network.Packets
         {
             get
             {
-                return ID;
+                return BatchPacket.ID;
             }
         }
 
-        byte[] payload;
-        public byte[] Payload
-        {
-            get
-            {
-                return payload;
-            }
-
-            set
-            {
-                payload = value;
-            }
-        }
+        public byte[] Payload { get; set; }
 
         public override void Encode()
         {
-            WriteByte(PacketID);
-            Encode_ZLIB();
-            WriteBytes(payload);
+            this.WriteByte(this.PacketID);
+            this.Encode_ZLIB();
+            this.WriteBytes(this.Payload);
         }
 
         public override void Decode()
         {
-            ReadByte();
-            payload = ReadBytes();
-            Decode_ZLIB();
+            this.ReadByte();
+            this.Payload = this.ReadBytes();
+            this.Decode_ZLIB();
         }
 
-        void Encode_ZLIB()
+        private void Encode_ZLIB()
         {
             MemoryStream bs = new MemoryStream();
             bs.WriteByte(0x78);
             bs.WriteByte(0x9c);//TODO: CompressionLevel
-            var sum = 0;
+            int sum = 0;
             using (ZlibStream ds = new ZlibStream(bs, CompressionLevel.Fastest, true))
             {
-                ds.Write(payload, 0, payload.Length);
+                ds.Write(this.Payload, 0, this.Payload.Length);
                 sum = ds.Checksum;
             }
 
-            var checksumBytes = BitConverter.GetBytes(sum);
+            byte[] checksumBytes = BitConverter.GetBytes(sum);
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(checksumBytes);
             }
             bs.Write(checksumBytes, 0, checksumBytes.Length);
 
-            payload = bs.GetBuffer();
+            this.Payload = bs.GetBuffer();
             bs.Close();
         }
 
-        void Decode_ZLIB()
+        private void Decode_ZLIB()
         {
-            MemoryStream bs = new MemoryStream(payload);
+            MemoryStream bs = new MemoryStream(this.Payload);
             if (bs.ReadByte() != 0x78)
             {
                 throw new InvalidDataException("Incorrect ZLib header. Expected 0x78 0x9C");
@@ -78,9 +66,9 @@ namespace MineNET.Network.Packets
             bs.ReadByte();
             using (ZlibStream ds = new ZlibStream(bs, CompressionMode.Decompress, false))
             {
-                var c = new MemoryStream();
+                MemoryStream c = new MemoryStream();
                 ds.CopyTo(c);
-                payload = c.ToArray();
+                this.Payload = c.ToArray();
                 c.Close();
             }
             bs.Close();
