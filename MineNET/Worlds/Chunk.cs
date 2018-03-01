@@ -65,12 +65,11 @@ namespace MineNET.Worlds
                     else break;
                 }
 
-
+                stream.WriteByte((byte) 16);
                 for (int i = 0; i < dataChunk; ++i)
                 {
                     stream.WriteBytes(subChunks[i].GetBytes());
                 }
-                stream.WriteByte((byte) 16);
 
                 /*short[] b2 = new short[256];
                 byte[] b1 = new byte[512];

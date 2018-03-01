@@ -96,6 +96,8 @@ namespace MineNET.RakNet
                     return;
                 }
 
+                Logger.Log("Seq: " + packet.SeqNumber + " ID: " + ((EncapsulatedPacket) packet.Packets[0]).messageIndex + ":" + lastMsg);
+
                 int diff = packet.SeqNumber - lastSeqNumber;
 
                 if (nackQueue.ContainsKey(packet.SeqNumber))
@@ -115,13 +117,14 @@ namespace MineNET.RakNet
 
                 if (diff != 1)
                 {
-                    for (int i = lastSeqNumber + 1; i < packet.SeqNumber; ++i)
+                    for (int i = 0; i < diff; ++i)
                     {
-                        if (!receivedWindow.ContainsKey(i))
+                        if (!receivedWindow.ContainsKey(packet.SeqNumber - i))
                         {
-                            if (!nackQueue.ContainsKey(i))
+                            if (!nackQueue.ContainsKey(packet.SeqNumber - i))
                             {
-                                nackQueue.Add(i, i);
+                                Logger.Log("Nack" + (packet.SeqNumber - i));
+                                nackQueue.Add(packet.SeqNumber - i, packet.SeqNumber - i);
                             }
                         }
                     }

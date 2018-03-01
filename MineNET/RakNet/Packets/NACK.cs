@@ -1,4 +1,5 @@
-﻿using MineNET.Utils;
+﻿using System;
+using MineNET.Utils;
 
 namespace MineNET.RakNet.Packets
 {
@@ -21,6 +22,8 @@ namespace MineNET.RakNet.Packets
             base.Encode();
 
             var payload = new BinaryStream();
+
+            Array.Sort(packets);
 
             var count = packets.Length;
             var records = 0;
