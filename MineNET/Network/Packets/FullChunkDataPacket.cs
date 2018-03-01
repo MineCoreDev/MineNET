@@ -8,60 +8,24 @@
         {
             get
             {
-                return ID;
+                return FullChunkDataPacket.ID;
             }
         }
 
-        int chunkX;
-        public int ChunkX
-        {
-            get
-            {
-                return this.chunkX;
-            }
+        public int ChunkX { get; set; }
 
-            set
-            {
-                this.chunkX = value;
-            }
-        }
+        public int ChunkY { get; set; }
 
-        int chunkY;
-        public int ChunkY
-        {
-            get
-            {
-                return this.chunkY;
-            }
-
-            set
-            {
-                this.chunkY = value;
-            }
-        }
-
-        byte[] data;
-        public byte[] Data
-        {
-            get
-            {
-                return data;
-            }
-
-            set
-            {
-                this.data = value;
-            }
-        }
+        public byte[] Data { get; set; }
 
         public override void Encode()
         {
             base.Encode();
 
-            WriteSVarInt(this.chunkX);
-            WriteSVarInt(this.chunkY);
+            this.WriteSVarInt(this.ChunkX);
+            this.WriteSVarInt(this.ChunkY);
 
-            WriteBytes(this.data);
+            this.WriteBytes(this.Data);
         }
     }
 }

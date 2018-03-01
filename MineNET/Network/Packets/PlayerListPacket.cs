@@ -10,55 +10,31 @@ namespace MineNET.Network.Packets
         {
             get
             {
-                return ID;
+                return PlayerListPacket.ID;
             }
         }
 
         public const byte TYPE_ADD = 0;
         public const byte TYPE_REMOVE = 1;
 
-        byte type;
-        public byte Type
-        {
-            get
-            {
-                return this.type;
-            }
+        public byte Type { get; set; }
 
-            set
-            {
-                this.type = value;
-            }
-        }
-
-        PlayerListEntry[] entries;
-        public PlayerListEntry[] Entries
-        {
-            get
-            {
-                return this.entries;
-            }
-
-            set
-            {
-                this.entries = value;
-            }
-        }
+        public PlayerListEntry[] Entries { get; set; }
 
         public override void Encode()
         {
             base.Encode();
 
-            this.WriteByte(this.type);
-            this.WriteUVarInt((uint) this.entries.Length);
-            for (int i = 0; i < this.entries.Length; ++i)
+            this.WriteByte(this.Type);
+            this.WriteUVarInt((uint) this.Entries.Length);
+            for (int i = 0; i < this.Entries.Length; ++i)
             {
-                this.WriteGUID(this.entries[i].Guid);
-                if (this.type == PlayerListPacket.TYPE_ADD)
+                this.WriteGUID(this.Entries[i].Guid);
+                if (this.Type == PlayerListPacket.TYPE_ADD)
                 {
-                    this.WriteVarLong(this.entries[i].EntityUniqueId);
-                    this.WriteSkin(this.entries[i].Skin);
-                    this.WriteString(this.entries[i].XboxUserId);
+                    this.WriteVarLong(this.Entries[i].EntityUniqueId);
+                    this.WriteSkin(this.Entries[i].Skin);
+                    this.WriteString(this.Entries[i].XboxUserId);
                 }
             }
         }

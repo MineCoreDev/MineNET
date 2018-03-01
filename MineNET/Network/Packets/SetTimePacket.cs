@@ -8,29 +8,17 @@
         {
             get
             {
-                return ID;
+                return SetTimePacket.ID;
             }
         }
 
-        int time;
-        public int Time
-        {
-            get
-            {
-                return this.time;
-            }
-
-            set
-            {
-                this.time = value;
-            }
-        }
+        public int Time { get; set; }
 
         public override void Encode()
         {
             base.Encode();
 
-            this.WriteVarInt(this.time);
+            this.WriteVarInt(this.Time);
         }
     }
 }

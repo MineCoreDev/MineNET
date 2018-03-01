@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using System.Text;
-using MineNET.Data;
+﻿using MineNET.Data;
 using MineNET.Utils;
 using Newtonsoft.Json.Linq;
+using System.Linq;
+using System.Text;
 
 namespace MineNET.Network.Packets
 {
@@ -14,63 +14,27 @@ namespace MineNET.Network.Packets
         {
             get
             {
-                return ID;
+                return LoginPacket.ID;
             }
         }
 
-        int protocol;
-        public int Protocol
-        {
-            get
-            {
-                return protocol;
-            }
+        public int Protocol { get; set; }
 
-            set
-            {
-                protocol = value;
-            }
-        }
+        public LoginData LoginData { get; set; }
 
-        LoginData loginData;
-        public LoginData LoginData
-        {
-            get
-            {
-                return loginData;
-            }
-
-            set
-            {
-                loginData = value;
-            }
-        }
-
-        ClientData clientData;
-        public ClientData CllientData
-        {
-            get
-            {
-                return clientData;
-            }
-
-            set
-            {
-                clientData = value;
-            }
-        }
+        public ClientData ClientData { get; set; }
 
         public override void Decode()
         {
             base.Decode();
 
-            protocol = (int)ReadLInt();
+            this.Protocol = (int) this.ReadLInt();
 
-            loginData = new LoginData();
-            clientData = new ClientData();
+            this.LoginData = new LoginData();
+            this.ClientData = new ClientData();
 
-            int len = ReadVarInt();
-            using (BinaryStream stream = new BinaryStream(ReadBytes(len)))
+            int len = this.ReadVarInt();
+            using (BinaryStream stream = new BinaryStream(this.ReadBytes(len)))
             {
 
                 int chainLen = stream.ReadInt();
@@ -85,47 +49,47 @@ namespace MineNET.Network.Packets
                     JToken extraData = null;
                     if (jwt.TryGetValue("extraData", out extraData))
                     {
-                        loginData.XUID = extraData.Value<string>("XUID");
-                        loginData.DisplayName = extraData.Value<string>("displayName");
-                        loginData.ClientUUID = extraData.Value<string>("identity");
-                        loginData.IdentityPublicKey = jwt.Value<string>("identityPublicKey");
+                        this.LoginData.XUID = extraData.Value<string>("XUID");
+                        this.LoginData.DisplayName = extraData.Value<string>("displayName");
+                        this.LoginData.ClientUUID = extraData.Value<string>("identity");
+                        this.LoginData.IdentityPublicKey = jwt.Value<string>("identityPublicKey");
                     }
                 }
 
                 int clientDataLen = stream.ReadInt();
                 string clientDataJson = Encoding.UTF8.GetString(stream.ReadBytes(clientDataLen));
 
-                SetClientData(clientDataJson);
+                this.SetClientData(clientDataJson);
             }
         }
 
-        void SetClientData(string json)
+        private void SetClientData(string json)
         {
             JObject clientDataJwt = JObject.Parse(JWT.Decode(json));
 
-            clientData.CapeData = clientDataJwt.Value<string>("CapeData");
-            clientData.ClientRandomID = clientDataJwt.Value<string>("ClientRandomId");
-            clientData.CurrentInputMode = clientDataJwt.Value<int>("CurrentInputMode");
-            clientData.DefaultInputMode = clientDataJwt.Value<int>("DefaultInputMode");
-            clientData.DeviceModel = clientDataJwt.Value<string>("DeviceModel");
-            clientData.DeviceOS = clientDataJwt.Value<int>("DeviceOS");
-            clientData.GameVersion = clientDataJwt.Value<string>("GameVersion");
-            clientData.GUIScale = clientDataJwt.Value<int>("GuiScale");
-            clientData.LanguageCode = clientDataJwt.Value<string>("LanguageCode");
-            clientData.ServerAddress = clientDataJwt.Value<string>("ServerAddress");
-            clientData.SkinData = clientDataJwt.Value<string>("SkinData");
-            clientData.SkinGeometry = clientDataJwt.Value<string>("SkinGeometry");
-            clientData.SkinGeometryName = clientDataJwt.Value<string>("SkinGeometryName");
-            clientData.SkinID = clientDataJwt.Value<string>("SkinId");
-            clientData.UIProfile = clientDataJwt.Value<int>("UIProfile");
+            this.ClientData.CapeData = clientDataJwt.Value<string>("CapeData");
+            this.ClientData.ClientRandomID = clientDataJwt.Value<string>("ClientRandomId");
+            this.ClientData.CurrentInputMode = clientDataJwt.Value<int>("CurrentInputMode");
+            this.ClientData.DefaultInputMode = clientDataJwt.Value<int>("DefaultInputMode");
+            this.ClientData.DeviceModel = clientDataJwt.Value<string>("DeviceModel");
+            this.ClientData.DeviceOS = clientDataJwt.Value<int>("DeviceOS");
+            this.ClientData.GameVersion = clientDataJwt.Value<string>("GameVersion");
+            this.ClientData.GUIScale = clientDataJwt.Value<int>("GuiScale");
+            this.ClientData.LanguageCode = clientDataJwt.Value<string>("LanguageCode");
+            this.ClientData.ServerAddress = clientDataJwt.Value<string>("ServerAddress");
+            this.ClientData.SkinData = clientDataJwt.Value<string>("SkinData");
+            this.ClientData.SkinGeometry = clientDataJwt.Value<string>("SkinGeometry");
+            this.ClientData.SkinGeometryName = clientDataJwt.Value<string>("SkinGeometryName");
+            this.ClientData.SkinID = clientDataJwt.Value<string>("SkinId");
+            this.ClientData.UIProfile = clientDataJwt.Value<int>("UIProfile");
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
 
-            clientData = null;
-            LoginData = null;
+            this.ClientData = null;
+            this.LoginData = null;
         }
     }
 }

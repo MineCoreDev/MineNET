@@ -15,116 +15,44 @@ namespace MineNET.Network.Packets
         {
             get
             {
-                return ID;
+                return MovePlayerPacket.ID;
             }
         }
 
-        public long entityRuntimeId;
-        public long EntityRuntimeId
-        {
-            get
-            {
-                return this.entityRuntimeId;
-            }
+        public long EntityRuntimeId { get; set; }
 
-            set
-            {
-                this.entityRuntimeId = value;
-            }
-        }
+        public Vector3 Pos { get; set; }
 
-        Vector3 pos;
-        public Vector3 Pos
-        {
-            get
-            {
-                return this.pos;
-            }
+        public Vector3 YawPitchHead { get; set; }
 
-            set
-            {
-                this.pos = value;
-            }
-        }
+        public byte Mode { get; set; }
 
-        Vector3 yawPitchHead;
-        public Vector3 YawPitchHead
-        {
-            get
-            {
-                return this.yawPitchHead;
-            }
+        public bool OnGround { get; set; }
 
-            set
-            {
-                this.yawPitchHead = value;
-            }
-        }
-
-        byte mode;
-        public byte Mode
-        {
-            get
-            {
-                return this.mode;
-            }
-
-            set
-            {
-                this.mode = value;
-            }
-        }
-
-        bool onGround;
-        public bool OnGround
-        {
-            get
-            {
-                return onGround;
-            }
-
-            set
-            {
-                onGround = true;
-            }
-        }
-
-        long otherEntityRuntimeId;
-        public long OtherEntityRuntimeId
-        {
-            get
-            {
-                return otherEntityRuntimeId;
-            }
-
-            set
-            {
-                otherEntityRuntimeId = value;
-            }
-        }
+        public long OtherEntityRuntimeId { get; set; }
 
         public override void Encode()
         {
             base.Encode();
 
-            this.WriteSVarLong(this.entityRuntimeId);
-            this.WriteVector3(this.pos);
-            this.WriteVector3(this.yawPitchHead);
-            this.WriteByte(this.mode);
-            this.WriteBool(this.onGround);
-            this.WriteSVarLong(this.otherEntityRuntimeId);
+            this.WriteSVarLong(this.EntityRuntimeId);
+            this.WriteVector3(this.Pos);
+            this.WriteVector3(this.YawPitchHead);
+            this.WriteByte(this.Mode);
+            this.WriteBool(this.OnGround);
+            this.WriteSVarLong(this.OtherEntityRuntimeId);
         }
 
         public override void Decode()
         {
             base.Decode();
 
-            this.entityRuntimeId = this.ReadSVarLong();
-            this.pos = this.ReadVector3();
-            this.yawPitchHead = this.ReadVector3();
-            this.mode = this.ReadByte();
-            this.onGround = this.ReadBool();
-            this.otherEntityRuntimeId = this.ReadSVarLong();
+            this.EntityRuntimeId = this.ReadSVarLong();
+            this.Pos = this.ReadVector3();
+            this.YawPitchHead = this.ReadVector3();
+            this.Mode = this.ReadByte();
+            this.OnGround = this.ReadBool();
+            this.OtherEntityRuntimeId = this.ReadSVarLong();
         }
     }
 }

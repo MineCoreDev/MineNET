@@ -1,5 +1,5 @@
-﻿using System;
-using MineNET.Utils;
+﻿using MineNET.Utils;
+using System;
 
 namespace MineNET.Network.Packets
 {
@@ -10,45 +10,22 @@ namespace MineNET.Network.Packets
             get;
         }
 
-        byte e1;
-        public byte Extra1
-        {
-            get
-            {
-                return e1;
-            }
+        public byte Extra1 { get; set; }
 
-            set
-            {
-                e1 = value;
-            }
-        }
-        byte e2;
-        public byte Extra2
-        {
-            get
-            {
-                return e2;
-            }
-
-            set
-            {
-                e2 = value;
-            }
-        }
+        public byte Extra2 { get; set; }
 
         public virtual void Encode()
         {
-            WriteByte(PacketID);
-            WriteByte(e1);
-            WriteByte(e2);
+            this.WriteByte(this.PacketID);
+            this.WriteByte(this.Extra1);
+            this.WriteByte(this.Extra2);
         }
 
         public virtual void Decode()
         {
-            ReadByte();
-            e1 = ReadByte();
-            e2 = ReadByte();
+            this.ReadByte();
+            this.Extra1 = this.ReadByte();
+            this.Extra2 = this.ReadByte();
         }
 
         public object Clone()

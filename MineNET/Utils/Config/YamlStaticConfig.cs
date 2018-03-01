@@ -1,7 +1,7 @@
-﻿using System;
+﻿using MineNET.Utils.Config.Yaml;
+using System;
 using System.IO;
 using System.Text;
-using MineNET.Utils.Config.Yaml;
 using YamlDotNet.Serialization;
 
 namespace MineNET.Utils.Config
@@ -48,7 +48,7 @@ namespace MineNET.Utils.Config
             }
             else
             {
-                var file = File.Create(this.filePath);
+                FileStream file = File.Create(this.filePath);
                 file.Close();
                 StreamWriter w = new StreamWriter(this.filePath, false, Encoding.UTF8);
                 SerializerBuilder sb = new SerializerBuilder()

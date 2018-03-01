@@ -10,7 +10,7 @@ namespace MineNET.Network.Packets
         {
             get
             {
-                return ID;
+                return InventoryContentPacket.ID;
             }
         }
 

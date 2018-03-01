@@ -8,46 +8,22 @@
         {
             get
             {
-                return ID;
+                return DisconnectPacket.ID;
             }
         }
 
-        bool hideDisconnectionScreen = false;
-        public bool HideDisconnectionScreen
-        {
-            get
-            {
-                return hideDisconnectionScreen;
-            }
+        public bool HideDisconnectionScreen { get; set; } = false;
 
-            set
-            {
-                hideDisconnectionScreen = value;
-            }
-        }
-
-        string message;
-        public string Message
-        {
-            get
-            {
-                return message;
-            }
-
-            set
-            {
-                message = value;
-            }
-        }
+        public string Message { get; set; }
 
         public override void Encode()
         {
             base.Encode();
 
-            WriteBool(hideDisconnectionScreen);
-            if (!hideDisconnectionScreen)
+            this.WriteBool(this.HideDisconnectionScreen);
+            if (!this.HideDisconnectionScreen)
             {
-                WriteString(message);
+                this.WriteString(this.Message);
             }
         }
     }

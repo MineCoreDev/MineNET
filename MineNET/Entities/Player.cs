@@ -1,12 +1,12 @@
-﻿using System.Net;
-using MineNET.Commands;
+﻿using MineNET.Commands;
 using MineNET.Data;
-using MineNET.Inventories;
 using MineNET.Entities.Attributes;
+using MineNET.Inventories;
 using MineNET.Network.Packets;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
+using System.Net;
 
 namespace MineNET.Entities
 {
@@ -234,7 +234,7 @@ namespace MineNET.Entities
         public void SendPosition(Vector3 pos, Vector2 yawPitch, byte mode)
         {
             MovePlayerPacket pk = new MovePlayerPacket();
-            pk.entityRuntimeId = this.id;
+            pk.EntityRuntimeId = this.id;
             pk.Pos = pos;
             pk.YawPitchHead = new Vector3(yawPitch.X, yawPitch.Y, yawPitch.X);
             pk.Mode = mode;

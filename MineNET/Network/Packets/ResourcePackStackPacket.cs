@@ -10,67 +10,32 @@ namespace MineNET.Network.Packets
         {
             get
             {
-                return ID;
-            }
-        }
-        bool mustAccept = false;
-        public bool MustAccepet
-        {
-            get
-            {
-                return this.mustAccept;
-            }
-
-            set
-            {
-                this.mustAccept = value;
+                return ResourcePackStackPacket.ID;
             }
         }
 
-        ResourcePack[] behaviourPackEntries = new ResourcePack[0];
-        public ResourcePack[] BehaviourPackEntries
-        {
-            get
-            {
-                return this.behaviourPackEntries;
-            }
+        public bool MustAccept { get; set; } = false;
 
-            set
-            {
-                this.behaviourPackEntries = value;
-            }
-        }
+        public ResourcePack[] BehaviourPackEntries { get; set; } = new ResourcePack[0];
 
-        ResourcePack[] resourcePackEntries = new ResourcePack[0];
-        public ResourcePack[] ResourcePackEntries
-        {
-            get
-            {
-                return this.resourcePackEntries;
-            }
-
-            set
-            {
-                this.resourcePackEntries = value;
-            }
-        }
+        public ResourcePack[] ResourcePackEntries { get; set; } = new ResourcePack[0];
 
         public override void Encode()
         {
             base.Encode();
 
-            this.WriteBool(this.mustAccept);
-            this.WriteUVarInt((uint) this.behaviourPackEntries.Length);
-            for (int i = 0; i < this.behaviourPackEntries.Length; ++i)
+            this.WriteBool(this.MustAccept);
+            this.WriteUVarInt((uint) this.BehaviourPackEntries.Length);
+            for (int i = 0; i < this.BehaviourPackEntries.Length; ++i)
             {
-                ResourcePack entry = this.behaviourPackEntries[i];
+                ResourcePack entry = this.BehaviourPackEntries[i];
                 this.WriteString(entry.GetPackId());
                 this.WriteString(entry.GetPackVersion());
             }
-            this.WriteUVarInt((uint) this.resourcePackEntries.Length);
-            for (int i = 0; i < this.resourcePackEntries.Length; ++i)
+            this.WriteUVarInt((uint) this.ResourcePackEntries.Length);
+            for (int i = 0; i < this.ResourcePackEntries.Length; ++i)
             {
-                ResourcePack entry = this.resourcePackEntries[i];
+                ResourcePack entry = this.ResourcePackEntries[i];
                 this.WriteString(entry.GetPackId());
                 this.WriteString(entry.GetPackVersion());
             }

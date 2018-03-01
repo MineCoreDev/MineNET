@@ -10,7 +10,7 @@ namespace MineNET.Network.Packets
         {
             get
             {
-                return ID;
+                return AdventureSettingsPacket.ID;
             }
         }
 
@@ -40,128 +40,56 @@ namespace MineNET.Network.Packets
         public const int OPERATOR = 0x20 | AdventureSettingsPacket.BITFLAG_SECOND_SET;
         public const int TELEPORT = 0x80 | AdventureSettingsPacket.BITFLAG_SECOND_SET;
 
-        uint flags = 0;
-        public uint Flags
-        {
-            get
-            {
-                return this.flags;
-            }
+        public uint Flags { get; set; } = 0;
 
-            set
-            {
-                this.flags = value;
-            }
-        }
+        public uint CommandPermission { get; set; } = AdventureSettingsPacket.PERMISSION_NORMAL;
 
-        uint commandPermission = AdventureSettingsPacket.PERMISSION_NORMAL;
-        public uint CommandPermission
-        {
-            get
-            {
-                return this.commandPermission;
-            }
+        public uint Flags2 { get; set; } = 0;
 
-            set
-            {
-                this.commandPermission = value;
-            }
-        }
+        public PlayerPermissions PlayerPermission { get; set; } = PlayerPermissions.MEMBER;
 
-        uint flags2 = 0;
-        public uint Flags2
-        {
-            get
-            {
-                return this.flags2;
-            }
+        public uint CustomFlags { get; set; } = 0;
 
-            set
-            {
-                this.flags2 = value;
-            }
-        }
-
-        PlayerPermissions playerPermission = PlayerPermissions.MEMBER;
-        public PlayerPermissions PlayerPermission
-        {
-            get
-            {
-                return this.playerPermission;
-            }
-
-            set
-            {
-                this.playerPermission = value;
-            }
-        }
-
-        uint customFlags = 0;
-        public uint CustpmFlags
-        {
-            get
-            {
-                return this.customFlags;
-            }
-
-            set
-            {
-                this.customFlags = value;
-            }
-        }
-
-        long entityUniqueId;
-        public long EntityUniqueId
-        {
-            get
-            {
-                return this.entityUniqueId;
-            }
-
-            set
-            {
-                this.entityUniqueId = value;
-            }
-        }
+        public long EntityUniqueId { get; set; }
 
         public override void Encode()
         {
             base.Encode();
 
-            this.WriteUVarInt(this.flags);
-            this.WriteUVarInt(this.commandPermission);
-            this.WriteUVarInt(this.flags2);
-            this.WriteUVarInt((uint) this.playerPermission);
-            this.WriteUVarInt(this.customFlags);
-            this.WriteLLong((ulong) this.entityUniqueId);
+            this.WriteUVarInt(this.Flags);
+            this.WriteUVarInt(this.CommandPermission);
+            this.WriteUVarInt(this.Flags2);
+            this.WriteUVarInt((uint) this.PlayerPermission);
+            this.WriteUVarInt(this.CustomFlags);
+            this.WriteLLong((ulong) this.EntityUniqueId);
         }
 
         public bool GetFlag(uint flag)
         {
             if ((flag & AdventureSettingsPacket.BITFLAG_SECOND_SET) != 0)
             {
-                return (this.flags2 & flag) != 0;
+                return (this.Flags2 & flag) != 0;
             }
-            return (this.flags & flag) != 0;
+            return (this.Flags & flag) != 0;
         }
 
         public void SetFlag(uint flag, bool value)
         {
             if ((flag & AdventureSettingsPacket.BITFLAG_SECOND_SET) != 0)
             {
-                this.flags2 |= flag;
+                this.Flags2 |= flag;
             }
             else
             {
-                this.flags |= flag;
+                this.Flags |= flag;
             }
             if (value)
             {
-                this.flags2 &= ~flag;
+                this.Flags2 &= ~flag;
             }
             else
             {
-                this.flags &= ~flag;
+                this.Flags &= ~flag;
             }
         }
     }

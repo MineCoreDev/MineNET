@@ -9,11 +9,11 @@ namespace MineNET.Utils
 
         private const int mod = 65521;//mod
 
-        public int Checksum => (int)adler32;
+        public int Checksum => (int) adler32;
 
         private uint Update(uint adler, byte[] s, int offset, int count)
         {
-            uint l = (ushort)adler;
+            uint l = (ushort) adler;
             ulong h = adler >> 16;
             int p = 0;
             for (; p < (count & 7); ++p)
@@ -24,7 +24,7 @@ namespace MineNET.Utils
 
             for (; p < count; p += 8)
             {
-                var idx = offset + p;
+                int idx = offset + p;
                 l += s[idx];
                 h += l;
                 l += s[idx + 1];
@@ -43,7 +43,7 @@ namespace MineNET.Utils
                 h += l;
             }
 
-            return (uint)(((h % mod) << 16) | (l % mod));
+            return (uint) (((h % mod) << 16) | (l % mod));
         }
 
         public ZlibStream(Stream stream, CompressionLevel level, bool leaveOpen) : base(stream, level, leaveOpen)

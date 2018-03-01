@@ -21,7 +21,7 @@ namespace MineNET.RakNet.Packets
         {
             base.Encode();
 
-            var payload = new BinaryStream();
+            BinaryStream payload = new BinaryStream();
 
             Array.Sort(packets);
 
@@ -30,14 +30,14 @@ namespace MineNET.RakNet.Packets
 
             if (count > 0)
             {
-                var pointer = 1;
-                var start = packets[0];
-                var last = packets[0];
+                int pointer = 1;
+                int start = packets[0];
+                int last = packets[0];
 
                 while (pointer < count)
                 {
-                    var current = packets[pointer++];
-                    var diff = current - last;
+                    int current = packets[pointer++];
+                    int diff = current - last;
                     if (diff == 1)
                     {
                         last = current;

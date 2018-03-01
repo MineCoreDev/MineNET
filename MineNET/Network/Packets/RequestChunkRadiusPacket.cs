@@ -8,24 +8,17 @@
         {
             get
             {
-                return ID;
+                return RequestChunkRadiusPacket.ID;
             }
         }
 
-        int radius;
-        public int Radius
-        {
-            get
-            {
-                return radius;
-            }
-        }
+        public int Radius { get; set; }
 
         public override void Decode()
         {
             base.Decode();
 
-            this.radius = ReadSVarInt();
+            this.Radius = ReadSVarInt();
         }
     }
 }

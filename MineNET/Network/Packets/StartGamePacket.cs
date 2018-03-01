@@ -10,542 +10,122 @@ namespace MineNET.Network.Packets
         {
             get
             {
-                return ID;
+                return StartGamePacket.ID;
             }
         }
 
-        long entityUniqueId;
-        public long EntityUniqueId
-        {
-            get
-            {
-                return this.entityUniqueId;
-            }
+        public long EntityUniqueId { get; set; }
 
-            set
-            {
-                this.entityUniqueId = value;
-            }
-        }
+        public long EntityRuntimeId { get; set; }
 
-        long entityRuntimeId;
-        public long EntityRuntimeId
-        {
-            get
-            {
-                return this.entityRuntimeId;
-            }
+        public int PlayerGamemode { get; set; }
 
-            set
-            {
-                this.entityRuntimeId = value;
-            }
-        }
+        public Vector3 PlayerPosition { get; set; }
 
-        int playerGamemode;
-        public int PlayerGamemode
-        {
-            get
-            {
-                return this.playerGamemode;
-            }
+        public Vector2 Direction { get; set; }
 
-            set
-            {
-                this.playerGamemode = value;
-            }
-        }
+        public int Seed { get; set; } = 0;
 
-        Vector3 playerPosition;
-        public Vector3 PlayerPosition
-        {
-            get
-            {
-                return this.playerPosition;
-            }
+        public byte Dimension { get; set; } = 0;
 
-            set
-            {
-                this.playerPosition = value;
-            }
-        }
+        public int Generator { get; set; } = 1;
 
-        Vector2 direction;
-        public Vector2 Direction
-        {
-            get
-            {
-                return this.direction;
-            }
+        public int WorldGamemode { get; set; }
 
-            set
-            {
-                this.direction = value;
-            }
-        }
+        public int Difficulty { get; set; }
 
-        int seed = 0;
-        public int Seed
-        {
-            get
-            {
-                return this.seed;
-            }
+        public int SpawnX { get; set; }
 
-            set
-            {
-                this.seed = value;
-            }
-        }
+        public int SpawnY { get; set; }
 
-        byte dimension = 0;
-        public byte Dimension
-        {
-            get
-            {
-                return this.dimension;
-            }
+        public int SpawnZ { get; set; }
 
-            set
-            {
-                this.dimension = value;
-            }
-        }
+        public bool HasAchievementsDisabled { get; set; } = true;
 
-        int generator = 1;
-        public int Generator
-        {
-            get
-            {
-                return this.generator;
-            }
+        public int DayCycleStopTime { get; set; } = 0;
 
-            set
-            {
-                this.generator = value;
-            }
-        }
+        public bool EduMode { get; set; } = false;
 
-        int worldGamemode;
-        public int WorldGamemode
-        {
-            get
-            {
-                return this.worldGamemode;
-            }
+        public float RainLevel { get; set; } = 0;
 
-            set
-            {
-                this.worldGamemode = value;
-            }
-        }
+        public float LightningLevel { get; set; } = 0;
 
-        int difficulty;
-        public int Difficulty
-        {
-            get
-            {
-                return this.difficulty;
-            }
+        public bool MultiplayerGame { get; set; } = true;
 
-            set
-            {
-                this.difficulty = value;
-            }
-        }
+        public bool BroadcastToLAN { get; set; } = true;
 
-        int spawnX;
-        public int SpawnX
-        {
-            get
-            {
-                return this.spawnX;
-            }
+        public bool BroadcastToXboxLive { get; set; } = true;
 
-            set
-            {
-                this.spawnX = value;
-            }
-        }
+        public bool CommandsEnabled { get; set; } = true;
 
-        int spawnY;
-        public int SpawnY
-        {
-            get
-            {
-                return this.spawnY;
-            }
-
-            set
-            {
-                this.spawnY = value;
-            }
-        }
-
-        int spawnZ;
-        public int SpawnZ
-        {
-            get
-            {
-                return this.spawnZ;
-            }
-
-            set
-            {
-                this.spawnZ = value;
-            }
-        }
-
-        bool hasAchievementsDisabled = true;
-        public bool HasAchievementsDisabled
-        {
-            get
-            {
-                return this.hasAchievementsDisabled;
-            }
-
-            set
-            {
-                this.hasAchievementsDisabled = value;
-            }
-        }
-
-        int dayCycleStopTime = 0;
-        public int DayCycleStopTime
-        {
-            get
-            {
-                return this.dayCycleStopTime;
-            }
-
-            set
-            {
-                this.dayCycleStopTime = value;
-            }
-        }
-
-        bool eduMode = false;
-        public bool EduMode
-        {
-            get
-            {
-                return this.eduMode;
-            }
-
-            set
-            {
-                this.eduMode = value;
-            }
-        }
-
-        float rainLevel = 0;
-        public float RainLevel
-        {
-            get
-            {
-                return this.rainLevel;
-            }
-
-            set
-            {
-                this.rainLevel = value;
-            }
-        }
-
-        float lightningLevel = 0;
-        public float LightningLevel
-        {
-            get
-            {
-                return this.lightningLevel;
-            }
-
-            set
-            {
-                this.lightningLevel = value;
-            }
-        }
-
-        bool multiplayerGame = true;
-        public bool MultiplayerGame
-        {
-            get
-            {
-                return this.multiplayerGame;
-            }
-
-            set
-            {
-                this.multiplayerGame = value;
-            }
-        }
-
-        bool broadcastToLAN = true;
-        public bool BroadcastToLAN
-        {
-            get
-            {
-                return this.broadcastToLAN;
-            }
-
-            set
-            {
-                this.broadcastToLAN = value;
-            }
-        }
-
-        bool broadcastToXboxLive = true;
-        public bool BroadcastToXboxLive
-        {
-            get
-            {
-                return this.broadcastToXboxLive;
-            }
-
-            set
-            {
-                this.broadcastToXboxLive = value;
-            }
-        }
-
-        bool commandsEnabled = true;
-        public bool CommandsEnabled
-        {
-            get
-            {
-                return this.commandsEnabled;
-            }
-
-            set
-            {
-                this.commandsEnabled = value;
-            }
-        }
-
-        bool isTexturePacksRequired = false;
-        public bool IsTexturePacksRequired
-        {
-            get
-            {
-                return this.isTexturePacksRequired;
-            }
-
-            set
-            {
-                this.isTexturePacksRequired = value;
-            }
-        }
+        public bool IsTexturePacksRequired { get; set; } = false;
 
         //ruleDatas
 
-        bool bonusChest = false;
-        public bool BonusChest
-        {
-            get
-            {
-                return this.bonusChest;
-            }
+        public bool BonusChest { get; set; } = false;
 
-            set
-            {
-                this.bonusChest = value;
-            }
-        }
+        public bool StartWithMap { get; set; } = false;
 
-        bool startWithMap = false;
-        public bool StartWithMap
-        {
-            get
-            {
-                return this.startWithMap;
-            }
+        public bool TrustPlayers { get; set; } = false;
 
-            set
-            {
-                this.startWithMap = value;
-            }
-        }
+        public int PermissionLevel { get; set; } = 1;
 
-        bool trustPlayers = false;
-        public bool TrustPlayers
-        {
-            get
-            {
-                return this.trustPlayers;
-            }
+        public int GamePublish { get; set; } = 0;
 
-            set
-            {
-                this.trustPlayers = value;
-            }
-        }
+        public int ServerChunkTickRadius { get; set; } = 4;
 
-        int permissionLevel = 1;
-        public int PermissionLevel
-        {
-            get
-            {
-                return this.permissionLevel;
-            }
+        public string LevelId { get; set; } = "";
 
-            set
-            {
-                this.permissionLevel = value;
-            }
-        }
+        public string WorldName { get; set; }
 
-        int gamePublish = 0;
-        public int GamePublish
-        {
-            get
-            {
-                return this.gamePublish;
-            }
+        public string PremiumWorldTemplateId { get; set; } = "";
 
-            set
-            {
-                this.gamePublish = value;
-            }
-        }
+        public bool Unknown { get; set; } = false;
 
-        int serverChunkTickRadius = 4;
-        public int ServerChunkTickRadius
-        {
-            get
-            {
-                return this.serverChunkTickRadius;
-            }
+        public long CurrentTick { get; set; } = 0;
 
-            set
-            {
-                this.serverChunkTickRadius = value;
-            }
-        }
-
-        string levelId = "";
-        public string LevelId
-        {
-            get
-            {
-                return this.levelId;
-            }
-
-            set
-            {
-                this.levelId = value;
-            }
-        }
-
-        string worldName;
-        public string WorldName
-        {
-            get
-            {
-                return this.worldName;
-            }
-
-            set
-            {
-                this.worldName = value;
-            }
-        }
-
-        string premiumWorldTemplateId = "";
-        public string PremiumWorldTemplateId
-        {
-            get
-            {
-                return this.premiumWorldTemplateId;
-            }
-
-            set
-            {
-                this.premiumWorldTemplateId = value;
-            }
-        }
-
-        bool unknown = false;
-        public bool Unknown
-        {
-            get
-            {
-                return this.unknown;
-            }
-
-            set
-            {
-                this.unknown = value;
-            }
-        }
-
-        long currentTick = 0;
-        public long CurrentTick
-        {
-            get
-            {
-                return this.currentTick;
-            }
-
-            set
-            {
-                this.currentTick = value;
-            }
-        }
-
-        int enchantmentSeed = 0;
-        public int EnchantmentSeed
-        {
-            get
-            {
-                return this.enchantmentSeed;
-            }
-
-            set
-            {
-                this.enchantmentSeed = value;
-            }
-        }
+        public int EnchantmentSeed { get; set; } = 0;
 
         public override void Encode()
         {
             base.Encode();
 
             //TODO: Packet
-            this.WriteEntityUniqueId(this.entityUniqueId);
-            this.WriteEntityRuntimeId(this.entityRuntimeId);
-            this.WriteSVarInt(this.playerGamemode);
-            this.WriteVector3(this.playerPosition);
-            this.WriteVector2(this.direction);
-            this.WriteSVarInt(this.seed);
-            this.WriteSVarInt(this.dimension);
-            this.WriteSVarInt(this.generator);
-            this.WriteSVarInt(this.worldGamemode);
-            this.WriteSVarInt(this.difficulty);
-            this.WriteBlockPosition(this.spawnX, this.spawnY, this.spawnZ);
-            this.WriteBool(this.hasAchievementsDisabled);
-            this.WriteSVarInt(this.dayCycleStopTime);
-            this.WriteBool(this.eduMode);
-            this.WriteFloat(this.rainLevel);
-            this.WriteFloat(this.lightningLevel);
-            this.WriteBool(this.multiplayerGame);
-            this.WriteBool(this.broadcastToLAN);
-            this.WriteBool(this.broadcastToXboxLive);
-            this.WriteBool(this.commandsEnabled);
-            this.WriteBool(this.isTexturePacksRequired);
+            this.WriteEntityUniqueId(this.EntityUniqueId);
+            this.WriteEntityRuntimeId(this.EntityRuntimeId);
+            this.WriteSVarInt(this.PlayerGamemode);
+            this.WriteVector3(this.PlayerPosition);
+            this.WriteVector2(this.Direction);
+            this.WriteSVarInt(this.Seed);
+            this.WriteSVarInt(this.Dimension);
+            this.WriteSVarInt(this.Generator);
+            this.WriteSVarInt(this.WorldGamemode);
+            this.WriteSVarInt(this.Difficulty);
+            this.WriteBlockPosition(this.SpawnX, this.SpawnY, this.SpawnZ);
+            this.WriteBool(this.HasAchievementsDisabled);
+            this.WriteSVarInt(this.DayCycleStopTime);
+            this.WriteBool(this.EduMode);
+            this.WriteFloat(this.RainLevel);
+            this.WriteFloat(this.LightningLevel);
+            this.WriteBool(this.MultiplayerGame);
+            this.WriteBool(this.BroadcastToLAN);
+            this.WriteBool(this.BroadcastToXboxLive);
+            this.WriteBool(this.CommandsEnabled);
+            this.WriteBool(this.IsTexturePacksRequired);
             this.WriteVarInt(0);//GameruleCount
             //GameRule
-            this.WriteBool(this.bonusChest);
-            this.WriteBool(this.startWithMap);
-            this.WriteBool(this.trustPlayers);
-            this.WriteSVarInt(this.permissionLevel);
-            this.WriteSVarInt(this.gamePublish);
-            this.WriteInt(this.serverChunkTickRadius);
-            this.WriteString(this.levelId);
-            this.WriteString(this.worldName);
-            this.WriteString(this.premiumWorldTemplateId);
-            this.WriteBool(this.unknown);
-            this.WriteLong(this.currentTick);
-            this.WriteSVarInt(this.enchantmentSeed);
+            this.WriteBool(this.BonusChest);
+            this.WriteBool(this.StartWithMap);
+            this.WriteBool(this.TrustPlayers);
+            this.WriteSVarInt(this.PermissionLevel);
+            this.WriteSVarInt(this.GamePublish);
+            this.WriteInt(this.ServerChunkTickRadius);
+            this.WriteString(this.LevelId);
+            this.WriteString(this.WorldName);
+            this.WriteString(this.PremiumWorldTemplateId);
+            this.WriteBool(this.Unknown);
+            this.WriteLong(this.CurrentTick);
+            this.WriteSVarInt(this.EnchantmentSeed);
         }
     }
 }

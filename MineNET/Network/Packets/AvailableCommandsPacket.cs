@@ -10,7 +10,7 @@ namespace MineNET.Network.Packets
         {
             get
             {
-                return ID;
+                return AvailableCommandsPacket.ID;
             }
         }
 
@@ -35,19 +35,7 @@ namespace MineNET.Network.Packets
 
         //TODO : Dictionary<string, CommandData> commands;
 
-        int aliasCommands = 0;
-        public int AliasCommands
-        {
-            get
-            {
-                return this.aliasCommands;
-            }
-
-            set
-            {
-                this.aliasCommands = value;
-            }
-        }
+        public int AliasCommands { get; set; } = 0;
 
         public override void Encode()
         {

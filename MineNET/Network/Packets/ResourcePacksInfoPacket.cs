@@ -11,71 +11,35 @@
         {
             get
             {
-                return ID;
+                return ResourcePacksInfoPacket.ID;
             }
         }
 
-        bool mustAccept = false;
-        public bool MustAccepet
-        {
-            get
-            {
-                return this.mustAccept;
-            }
+        public bool MustAccept { get; set; } = false;
 
-            set
-            {
-                this.mustAccept = value;
-            }
-        }
+        public ResourcePack[] BehaviourPackEntries { get; set; } = new ResourcePack[0];
 
-        ResourcePack[] behaviourPackEntries = new ResourcePack[0];
-        public ResourcePack[] BehaviourPackEntries
-        {
-            get
-            {
-                return this.behaviourPackEntries;
-            }
-
-            set
-            {
-                this.behaviourPackEntries = value;
-            }
-        }
-
-        ResourcePack[] resourcePackEntries = new ResourcePack[0];
-        public ResourcePack[] ResourcePackEntries
-        {
-            get
-            {
-                return this.resourcePackEntries;
-            }
-
-            set
-            {
-                this.resourcePackEntries = value;
-            }
-        }
+        public ResourcePack[] ResourcePackEntries { get; set; } = new ResourcePack[0];
 
         public override void Encode()
         {
             base.Encode();
 
-            this.WriteBool(this.mustAccept);
-            this.WriteLShort((ushort) this.behaviourPackEntries.Length);
-            for (int i = 0; i < this.behaviourPackEntries.Length; ++i)
+            this.WriteBool(this.MustAccept);
+            this.WriteLShort((ushort) this.BehaviourPackEntries.Length);
+            for (int i = 0; i < this.BehaviourPackEntries.Length; ++i)
             {
-                ResourcePack entry = this.behaviourPackEntries[i];
+                ResourcePack entry = this.BehaviourPackEntries[i];
                 this.WriteString(entry.GetPackId());
                 this.WriteString(entry.GetPackVersion());
                 this.WriteLLong((ulong) entry.GetPackSize());
                 this.WriteString("");//TODO
                 this.WriteString("");//TODO
             }
-            this.WriteLShort((ushort) this.resourcePackEntries.Length);
-            for (int i = 0; i < this.resourcePackEntries.Length; ++i)
+            this.WriteLShort((ushort) this.ResourcePackEntries.Length);
+            for (int i = 0; i < this.ResourcePackEntries.Length; ++i)
             {
-                ResourcePack entry = this.resourcePackEntries[i];
+                ResourcePack entry = this.ResourcePackEntries[i];
                 this.WriteString(entry.GetPackId());
                 this.WriteString(entry.GetPackVersion());
                 this.WriteLLong((ulong) entry.GetPackSize());
