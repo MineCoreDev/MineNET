@@ -4,6 +4,7 @@ using System.Net;
 using MineNET.RakNet.Packets;
 using MineNET.Utils;
 
+//TODO: Ack Nack Bug
 namespace MineNET.RakNet
 {
     public sealed class RakNetSession
@@ -96,7 +97,7 @@ namespace MineNET.RakNet
                     return;
                 }
 
-                Logger.Log("Seq: " + packet.SeqNumber + " ID: " + ((EncapsulatedPacket) packet.Packets[0]).messageIndex + ":" + lastMsg);
+                //Logger.Log("Seq: " + packet.SeqNumber + " ID: " + ((EncapsulatedPacket) packet.Packets[0]).messageIndex + ":" + lastMsg);
 
                 int diff = packet.SeqNumber - lastSeqNumber;
 
@@ -123,7 +124,7 @@ namespace MineNET.RakNet
                         {
                             if (!nackQueue.ContainsKey(packet.SeqNumber - i))
                             {
-                                Logger.Log("Nack" + (packet.SeqNumber - i));
+                                //Logger.Log("Nack" + (packet.SeqNumber - i));
                                 nackQueue.Add(packet.SeqNumber - i, packet.SeqNumber - i);
                             }
                         }
@@ -333,14 +334,7 @@ namespace MineNET.RakNet
                 nack.packets = nackQueue.Values.ToArray();
                 server.SendPacket(nack, point.Address, point.Port);
 
-                int[] datas = nackQueue.Values.ToArray();
-                for (int i = 0; i < nackQueue.Count; ++i)
-                {
-                    if (receivedWindow.ContainsKey(datas[i]))
-                    {
-                        nackQueue.Remove(i);
-                    }
-                }
+                nackQueue.Clear();
             }
 
             int[] a = receivedWindow.Values.ToArray();
