@@ -98,7 +98,7 @@ namespace MineNET.RakNet
                     return;
                 }
 
-                //Logger.Log("Seq: " + packet.SeqNumber + " ID: " + ((EncapsulatedPacket) packet.Packets[0]).messageIndex + ":" + lastMsg);
+                Logger.Log("Seq: " + packet.SeqNumber + " ID: " + ((EncapsulatedPacket) packet.Packets[0]).messageIndex + ":" + lastMsg);
 
                 int diff = packet.SeqNumber - lastSeqNumber;
 
@@ -125,7 +125,7 @@ namespace MineNET.RakNet
                         {
                             if (!nackQueue.ContainsKey(packet.SeqNumber - i))
                             {
-                                //Logger.Log("Nack" + (packet.SeqNumber - i));
+                                Logger.Log("Nack" + (packet.SeqNumber - i));
                                 nackQueue.Add(packet.SeqNumber - i, packet.SeqNumber - i);
                             }
                         }
@@ -371,7 +371,6 @@ namespace MineNET.RakNet
                 NACK nack = new NACK();
                 nack.packets = nackQueue.Values.ToArray();
                 server.SendPacket(nack, point.Address, point.Port);
-
                 nackQueue.Clear();
             }
 
