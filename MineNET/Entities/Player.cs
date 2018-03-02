@@ -14,6 +14,11 @@ namespace MineNET.Entities
     {
         private PlayerInventory inventory;
 
+        public Player()
+        {
+            this.inventory = new PlayerInventory(this);
+        }
+
         IPEndPoint endPoint;
         public IPEndPoint EndPoint
         {
@@ -157,7 +162,7 @@ namespace MineNET.Entities
             this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
         }
 
-        void ProcessLogin()
+        private void ProcessLogin()
         {
             StartGamePacket startGamePacket = new StartGamePacket();
             startGamePacket.EntityUniqueId = this.id;
@@ -203,7 +208,7 @@ namespace MineNET.Entities
             this.SendPosition(new Vector3(), new Vector3(), MovePlayerPacket.MODE_RESET);
         }
 
-        int FixRadius(int radius)
+        private int FixRadius(int radius)
         {
             return radius;
         }
@@ -216,7 +221,7 @@ namespace MineNET.Entities
             this.SendPacket(pk);
         }
 
-        void SendPlayerAttribute()
+        public void SendPlayerAttribute()
         {
             EntityAttribute[] atts = new EntityAttribute[]
             {

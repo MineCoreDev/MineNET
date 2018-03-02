@@ -92,6 +92,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlockEntities\BlockEntity.cs" />
+    <Compile Include="BlockEntities\BlockEntitySpawnable.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Blocks\BlockAcaciaDoor.cs" />
     <Compile Include="Blocks\BlockAcaciaFenceGate.cs" />
