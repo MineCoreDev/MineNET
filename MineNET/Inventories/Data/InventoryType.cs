@@ -2,7 +2,6 @@
 {
     public enum InventoryType
     {
-        INVENTORY = -1,
         CONTAINER = 0,
         WORKBENCH = 1,
         FURNACE = 2,

@@ -1,45 +1,41 @@
-﻿using MineNET.Entities;
+﻿using MineNET.Data;
+using MineNET.Entities;
 using MineNET.Items;
 
 namespace MineNET.Inventories
 {
     public class PlayerInventory : BaseInventory
     {
-        public const int SLOT_ARMOR_HEAD = 36;
-        public const int SLOT_ARMOR_CHEST = 37;
-        public const int SLOT_ARMOR_LEGS = 38;
-        public const int SLOT_ARMOR_FEET = 39;
-
-        public const int SLOT_WEAPON_OFFHAND = 40;
-
         private int mainHand = 0;
+
+        private PlayerCursorInventory cursor;
+        private PlayerOffhandInventory offhand;
+        private ArmorInventory armor;
+        private PlayerEnderChestInventory ender;
+
+        private Inventory other;
 
         public PlayerInventory(Player player) : base(player)
         {
-
+            this.cursor = new PlayerCursorInventory(player);
+            this.offhand = new PlayerOffhandInventory(player);
+            this.armor = new ArmorInventory(player);
+            this.ender = new PlayerEnderChestInventory(player);
         }
 
         public override int Size
         {
             get
             {
-                return 36 + 4 + 1;
+                return 36;
             }
         }
 
-        public override string Name
+        public override byte Type
         {
             get
             {
-                return "Player";
-            }
-        }
-
-        public override int Type
-        {
-            get
-            {
-                return -1;
+                return (byte) ContainerIds.INVENTORY;
             }
         }
 
@@ -55,52 +51,110 @@ namespace MineNET.Inventories
 
         public Item GetItemOffHand()
         {
-            return this.GetItem(PlayerInventory.SLOT_WEAPON_OFFHAND);
+            return this.offhand.GetItem();
         }
 
         public bool SetItemOffHand(Item item)
         {
-            return this.SetItem(PlayerInventory.SLOT_WEAPON_OFFHAND, item.Clone());
+            return this.offhand.SetItem(item);
         }
 
         public Item GetHelmet()
         {
-            return this.GetItem(PlayerInventory.SLOT_ARMOR_HEAD);
+            return this.armor.GetHelmet();
         }
 
         public bool SetHelmet(Item item)
         {
-            return this.SetItem(PlayerInventory.SLOT_ARMOR_HEAD, item.Clone());
+            return this.armor.SetHelmet(item);
         }
 
         public Item GetChestPlate()
         {
-            return this.GetItem(PlayerInventory.SLOT_ARMOR_CHEST);
+            return this.armor.GetChestPlate();
         }
 
         public bool SetChestPlate(Item item)
         {
-            return this.SetItem(PlayerInventory.SLOT_ARMOR_CHEST, item.Clone());
+            return this.armor.SetChestPlate(item);
         }
 
         public Item GetLeggings()
         {
-            return this.GetItem(PlayerInventory.SLOT_ARMOR_LEGS);
+            return this.armor.GetLeggings();
         }
 
         public bool SetLeggings(Item item)
         {
-            return this.SetItem(PlayerInventory.SLOT_ARMOR_LEGS, item.Clone());
+            return this.armor.SetLeggings(item);
         }
 
         public Item GetBoots()
         {
-            return this.GetItem(PlayerInventory.SLOT_ARMOR_FEET);
+            return this.armor.GetBoots();
         }
 
         public bool SetBoots(Item item)
         {
-            return this.SetItem(PlayerInventory.SLOT_ARMOR_FEET, item.Clone());
+            return this.armor.SetBoots(item);
+        }
+
+        public void OpenInventory(Inventory inventory)
+        {
+            this.other = inventory;
+        }
+
+        public void CloseInventory()
+        {
+            this.other = null;
+        }
+
+        public Inventory GetInventory(byte id)
+        {
+            if (id == this.Type)
+            {
+                return this;
+            }
+            else if (id == this.cursor.Type)
+            {
+                return this.cursor;
+            }
+            else if (id == this.offhand.Type)
+            {
+                return this.offhand;
+            }
+            else if (id == this.armor.Type)
+            {
+                return this.armor;
+            }
+            else if (id == this.other.Type)
+            {
+                return this.other;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public PlayerCursorInventory GetPlayerCursorInventory()
+        {
+            return this.cursor;
+        }
+
+        public PlayerOffhandInventory GetPlayerOffhandInventory()
+        {
+            return this.offhand;
+        }
+
+        public ArmorInventory GetArmorInventory()
+        {
+            return this.armor;
+        }
+
+        public PlayerEnderChestInventory GetEnderChestInventory()
+        {
+            return this.ender;
         }
     }
 }

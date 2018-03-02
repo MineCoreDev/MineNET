@@ -29,7 +29,7 @@ namespace MineNET.Inventories
             get;
         }
 
-        public abstract string Name
+        public abstract byte Type
         {
             get;
         }
@@ -40,11 +40,6 @@ namespace MineNET.Inventories
             {
                 return 64;
             }
-        }
-
-        public abstract int Type
-        {
-            get;
         }
 
         public virtual Item GetItem(int index)
@@ -258,7 +253,7 @@ namespace MineNET.Inventories
             for (int i = 0; i < players.Length; ++i)
             {
                 Player player = players[i];
-                pk.InventoryId = 1; //TODO
+                pk.InventoryId = this.Type;
                 player.SendPacket(pk);
             }
         }
@@ -274,7 +269,7 @@ namespace MineNET.Inventories
             for (int i = 0; i < players.Length; ++i)
             {
                 Player player = players[i];
-                pk.InventoryId = 1; //TODO
+                pk.InventoryId = Type;
                 player.SendPacket(pk);
             }
         }

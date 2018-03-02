@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using MineNET.Entities;
+﻿using MineNET.Entities;
 using MineNET.Items;
+using System.Collections.Generic;
 
 namespace MineNET.Inventories
 {
@@ -11,17 +11,12 @@ namespace MineNET.Inventories
             get;
         }
 
-        string Name
+        byte Type
         {
             get;
         }
 
         int MaxStackSize
-        {
-            get;
-        }
-
-        int Type
         {
             get;
         }
