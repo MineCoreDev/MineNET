@@ -1,9 +1,9 @@
-﻿using MineNET.Blocks;
+﻿using System;
+using System.Collections.Generic;
+using MineNET.Blocks;
 using MineNET.Entities;
 using MineNET.Items;
 using MineNET.Network.Packets;
-using System;
-using System.Collections.Generic;
 
 namespace MineNET.Inventories
 {

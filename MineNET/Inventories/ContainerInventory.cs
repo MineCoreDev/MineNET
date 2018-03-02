@@ -1,4 +1,6 @@
-﻿using MineNET.Entities;
+﻿using System.Collections.Generic;
+using MineNET.Entities;
+using MineNET.Items;
 using MineNET.Network.Packets;
 using MineNET.Values;
 
@@ -6,7 +8,7 @@ namespace MineNET.Inventories
 {
     public abstract class ContainerInventory : BaseInventory
     {
-        public ContainerInventory(InventoryHolder holder) : base(holder)
+        public ContainerInventory(InventoryHolder holder, Dictionary<int, Item> items = null) : base(holder, items)
         {
 
         }

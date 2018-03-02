@@ -7,4 +7,12 @@
         OPERATOR = 2,
         CUSTOM = 4
     }
+
+    public static class PlayerPermissionExtensions
+    {
+        public static int GetIndex(this PlayerPermissions permission)
+        {
+            return (int) permission;
+        }
+    }
 }

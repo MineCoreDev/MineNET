@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using MineNET.Items;
 using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
@@ -129,6 +130,35 @@ namespace MineNET.NBT.IO
             }
 
             return tag;
+        }
+
+        public static CompoundTag WriteItem(Item item, int slot = -1)
+        {
+            CompoundTag nbt = new CompoundTag()
+                .PutShort("id", (short) item.ItemID)
+                .PutShort("damage", (short) item.Damage)
+                .PutByte("count", (byte) item.Count);
+            if (slot != -1)
+            {
+                nbt.PutByte("slot", (byte) slot);
+            }
+            if (item.HasTags())
+            {
+                nbt.PutCompound("tag", item.GetNamedTag());
+            }
+            return nbt;
+        }
+
+        public static Item ReadItem(CompoundTag nbt)
+        {
+            Item item = Item.Get(nbt.GetShort("id"), nbt.GetShort("damage"), nbt.GetByte("count"));
+            if (nbt.Equals("tag"))
+            {
+                CompoundTag tag = nbt.GetCompound("tag"); //TODO : clone
+                tag.Name = "";
+                item.SetNamedTag(tag);
+            }
+            return item;
         }
     }
 }

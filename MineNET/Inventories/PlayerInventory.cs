@@ -11,7 +11,6 @@ namespace MineNET.Inventories
         private PlayerCursorInventory cursor;
         private PlayerOffhandInventory offhand;
         private ArmorInventory armor;
-        private PlayerEnderChestInventory ender;
 
         private Inventory other;
 
@@ -20,7 +19,6 @@ namespace MineNET.Inventories
             this.cursor = new PlayerCursorInventory(player);
             this.offhand = new PlayerOffhandInventory(player);
             this.armor = new ArmorInventory(player);
-            this.ender = new PlayerEnderChestInventory(player);
         }
 
         public override int Size
@@ -150,11 +148,6 @@ namespace MineNET.Inventories
         public ArmorInventory GetArmorInventory()
         {
             return this.armor;
-        }
-
-        public PlayerEnderChestInventory GetEnderChestInventory()
-        {
-            return this.ender;
         }
     }
 }
