@@ -497,6 +497,24 @@ namespace MineNET.Utils
             }
         }
 
+        public static byte[][] SplitBytes(byte[] buffer, int length)
+        {
+            List<byte[]> splits = new List<byte[]>();
+            int count = 0;
+            while (count != buffer.Length)
+            {
+                List<byte> split = new List<byte>();
+                for (int i = count; i < length; ++i)
+                {
+                    split.Add(buffer[i]);
+                    count++;
+                }
+                splits.Add(split.ToArray());
+            }
+
+            return splits.ToArray();
+        }
+
         public static void Reset(Stream stream)
         {
             stream.Position = 0;

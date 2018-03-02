@@ -25,8 +25,8 @@ namespace MineNET.RakNet.Packets
 
             Array.Sort(packets);
 
-            var count = packets.Length;
-            var records = 0;
+            int count = packets.Length;
+            int records = 0;
 
             if (count > 0)
             {

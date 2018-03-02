@@ -1,4 +1,5 @@
-﻿using MineNET.Commands;
+﻿using System.Net;
+using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Inventories;
@@ -6,7 +7,7 @@ using MineNET.Network.Packets;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
-using System.Net;
+using MineNET.Worlds.Data;
 
 namespace MineNET.Entities
 {
@@ -146,20 +147,28 @@ namespace MineNET.Entities
 
         public void RequestChunkRadiusPacketHandle(RequestChunkRadiusPacket pk)
         {
+            int chunkSize = FixRadius(pk.Radius);
             ChunkRadiusUpdatedPacket chunkRadiusUpdatedPacket = new ChunkRadiusUpdatedPacket();
-            chunkRadiusUpdatedPacket.Radius = FixRadius(pk.Radius);
+            chunkRadiusUpdatedPacket.Radius = chunkSize;
             Logger.Info("%server_chunkRadius", pk.Radius, chunkRadiusUpdatedPacket.Radius);
             SendPacket(chunkRadiusUpdatedPacket);
 
-            for (int i = 0; i < 16; ++i)
+            for (int i = (128 >> 4) - chunkSize; i < (128 >> 4) + chunkSize; ++i)
             {
-                for (int j = 0; j < 16; ++j)
+                for (int j = (128 >> 4) - chunkSize; j < (128 >> 4) + chunkSize; ++j)
                 {
                     new Chunk(i, j).TestChunkSend(this);
                 }
             }
 
             this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+
+            GameRules rules = new GameRules();
+            rules.Add(new GameRule<bool>("ShowCoordinates", true));
+
+            GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
+            gameRulesChangedPacket.GameRules = rules;
+            this.SendPacket(gameRulesChangedPacket);
         }
 
         private void ProcessLogin()
@@ -168,7 +177,7 @@ namespace MineNET.Entities
             startGamePacket.EntityUniqueId = this.id;
             startGamePacket.EntityRuntimeId = this.id;
             startGamePacket.PlayerGamemode = 1;
-            startGamePacket.PlayerPosition = new Vector3(128, 4, 128);
+            startGamePacket.PlayerPosition = new Vector3(128, 6, 128);
             startGamePacket.Direction = new Vector2(0, 0);
             startGamePacket.WorldGamemode = 0;
             startGamePacket.Difficulty = 1;
@@ -200,7 +209,7 @@ namespace MineNET.Entities
             //inventoryContent
             //MobEquipment
             //InventorySlot
-            //PlayerList*/
+            //PlayerList
         }
 
         public void MovePlayerPacketHandle(MovePlayerPacket pk)

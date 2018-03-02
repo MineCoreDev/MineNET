@@ -2,6 +2,7 @@
 using MineNET.Entities.Data;
 using MineNET.Items;
 using MineNET.Values;
+using MineNET.Worlds.Data;
 
 namespace MineNET.Utils
 {
@@ -9,7 +10,7 @@ namespace MineNET.Utils
     {
         public Vector2 ReadVector2()
         {
-            return new Vector2(this.ReadLFloat(), this.ReadLFloat());
+            return new Vector2(this.ReadFloat(), this.ReadFloat());
         }
 
         public void WriteVector2(Vector2 value)
@@ -20,7 +21,7 @@ namespace MineNET.Utils
 
         public Vector3 ReadVector3()
         {
-            return new Vector3(this.ReadLFloat(), this.ReadLFloat(), this.ReadLFloat());
+            return new Vector3(this.ReadFloat(), this.ReadFloat(), this.ReadFloat());
         }
 
         public void WriteVector3(Vector3 value)
@@ -69,6 +70,39 @@ namespace MineNET.Utils
                 this.WriteFloat(attributes[i].Value);
                 this.WriteFloat(attributes[i].DefaultValue);
                 this.WriteString(attributes[i].Name);
+            }
+        }
+
+        public void WriteGameRules(GameRules rules)
+        {
+            if (rules == null)
+            {
+                this.WriteVarInt(0);
+                return;
+            }
+
+            this.WriteVarInt(rules.Count);
+            for (int i = 0; i < rules.Count; ++i)
+            {
+                this.WriteString(rules[i].Name.ToLower());
+                if (rules[i] is GameRule<bool>)
+                {
+                    GameRule<bool> boolRule = (GameRule<bool>) rules[i];
+                    this.WriteByte(1);
+                    this.WriteBool(boolRule.Value);
+                }
+                else if (rules[i] is GameRule<int>)
+                {
+                    GameRule<int> intRule = (GameRule<int>) rules[i];
+                    this.WriteByte(2);
+                    this.WriteVarInt(intRule.Value);
+                }
+                else if (rules[i] is GameRule<float>)
+                {
+                    GameRule<float> floatValue = (GameRule<float>) rules[i];
+                    this.WriteByte(3);
+                    this.WriteFloat(floatValue.Value);
+                }
             }
         }
 

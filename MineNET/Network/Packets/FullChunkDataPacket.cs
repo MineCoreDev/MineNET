@@ -25,6 +25,7 @@
             this.WriteSVarInt(this.ChunkX);
             this.WriteSVarInt(this.ChunkY);
 
+            this.WriteUVarInt((uint) this.Data.Length);
             this.WriteBytes(this.Data);
         }
     }

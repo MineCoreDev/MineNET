@@ -1,4 +1,5 @@
 ﻿using MineNET.Values;
+using MineNET.Worlds.Data;
 
 namespace MineNET.Network.Packets
 {
@@ -60,7 +61,7 @@ namespace MineNET.Network.Packets
 
         public bool IsTexturePacksRequired { get; set; } = false;
 
-        //ruleDatas
+        public GameRules GameRules { get; set; }
 
         public bool BonusChest { get; set; } = false;
 
@@ -112,8 +113,7 @@ namespace MineNET.Network.Packets
             this.WriteBool(this.BroadcastToXboxLive);
             this.WriteBool(this.CommandsEnabled);
             this.WriteBool(this.IsTexturePacksRequired);
-            this.WriteVarInt(0);//GameruleCount
-            //GameRule
+            this.WriteGameRules(this.GameRules);
             this.WriteBool(this.BonusChest);
             this.WriteBool(this.StartWithMap);
             this.WriteBool(this.TrustPlayers);

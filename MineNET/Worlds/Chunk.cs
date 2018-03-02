@@ -1,4 +1,5 @@
-﻿using MineNET.Entities;
+﻿using System;
+using MineNET.Entities;
 using MineNET.Network.Packets;
 using MineNET.Utils;
 
@@ -31,15 +32,31 @@ namespace MineNET.Worlds
             this.x = x;
             this.z = z;
 
-            for (int j = 0; j < 15; ++j)
+            //TODO: remove...
+            SubChunk flat = new SubChunk();
+            for (int i = 0; i < 16; ++i)//X
             {
-                SubChunk sub = new SubChunk();
-                for (int i = 0; i < 10; ++i)
+                for (int j = 0; j < 16; ++j)//Z
                 {
-                    sub.SetBlock(i, 0, 0, 1);
+                    for (int k = 0; k < 16; ++k)//Y
+                    {
+                        if (k == 0)
+                        {
+                            flat.SetBlock(i, k, j, 7);
+                        }
+                        else if (k == 1 || k == 2)
+                        {
+                            flat.SetBlock(i, k, j, 3);
+                        }
+                        else if (k == 3)
+                        {
+                            flat.SetBlock(i, k, j, 2);
+                        }
+                    }
                 }
-                subChunks[j] = sub;
             }
+
+            subChunks[0] = flat;
         }
 
         public void TestChunkSend(Player player)
@@ -56,27 +73,27 @@ namespace MineNET.Worlds
         {
             using (BinaryStream stream = new BinaryStream())
             {
-                int dataChunk = 16;
+                int sendChunk = 16;
 
                 for (int i = 15; i >= 0; i--)
                 {
                     if (subChunks[i].IsEnpty())
-                        dataChunk = i;
+                        sendChunk = i;
                     else break;
                 }
 
-                stream.WriteByte((byte) 16);
-                for (int i = 0; i < dataChunk; ++i)
+                stream.WriteByte((byte) sendChunk);
+                for (int i = 0; i < sendChunk; ++i)
                 {
                     stream.WriteBytes(subChunks[i].GetBytes());
                 }
 
-                /*short[] b2 = new short[256];
+                short[] b2 = new short[256];
                 byte[] b1 = new byte[512];
                 Buffer.BlockCopy(b2, 0, b1, 0, 512);
-                Binary.WriteBytes(nbt, b1);
-                nbt.WriteByte(0);
-                VarInt.WriteSInt32(nbt, 0);*/
+                stream.WriteBytes(b1);
+                stream.WriteByte(0);
+                stream.WriteSVarInt(0);
 
                 return stream.GetResult();
             }

@@ -15,6 +15,17 @@ namespace MineNET.Utils
             return array;
         }
 
+        public static byte[] CreateRandomByteArray(int size, byte max, byte min)
+        {
+            byte[] array = (byte[]) Array.CreateInstance(typeof(byte), size);
+            for (int i = 0; i < size; ++i)
+            {
+                array[i] = (byte)new Random().Next(min, max);
+            }
+
+            return array;
+        }
+
         public static T[] CreateArray<T>(int size) where T : new()
         {
             T[] array = (T[]) Array.CreateInstance(typeof(T), size);
