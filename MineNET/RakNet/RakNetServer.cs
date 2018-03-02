@@ -153,7 +153,7 @@ namespace MineNET.RakNet
                         Point = point,
                         Data = buffer
                     };
-                    
+
                     this.receiveDataQueue.Enqueue(data);
                 }
             }
@@ -220,6 +220,9 @@ namespace MineNET.RakNet
         public void SendPacket(Packet packet, IPAddress ip, int port)
         {
             IPEndPoint point = new IPEndPoint(ip, port);
+
+            if (packet == null)
+                return;
 
             packet.Encode();
 

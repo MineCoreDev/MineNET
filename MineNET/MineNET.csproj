@@ -353,6 +353,11 @@
     <Compile Include="Commands\Defaults\StopCommand.cs" />
     <Compile Include="Commands\Data\ICommandHandler.cs" />
     <Compile Include="Data\ContainerIds.cs" />
+    <Compile Include="Events\ICancellable.cs" />
+    <Compile Include="Events\ServerEvents\ServerEventArgs.cs" />
+    <Compile Include="Events\ServerEvents\ServerEvents.cs" />
+    <Compile Include="Events\ServerEvents\ServerStartEventArgs.cs" />
+    <Compile Include="Events\ServerEvents\ServerStopEventArgs.cs" />
     <Compile Include="Inventories\ArmorInventory.cs" />
     <Compile Include="Inventories\ChestInventory.cs" />
     <Compile Include="Inventories\Data\InventoryType.cs" />

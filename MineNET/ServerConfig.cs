@@ -72,6 +72,12 @@ namespace MineNET
             set;
         } = true;
 
+        public int MaxChunkRadius
+        {
+            get;
+            set;
+        } = 5;
+
         [YamlDescription("%server_config_onlineMode")]
         public bool OnlineMode
         {

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Entities.Attributes;
+using MineNET.Events.ServerEvents;
 using MineNET.Network;
 using MineNET.Plugins;
 using MineNET.Utils;
@@ -102,20 +103,31 @@ namespace MineNET
             s.Stop();
             Logger.Info("%server_started");
             Logger.Info("%server_started2", s.Elapsed.ToString());
+
+            ServerEvents.OnServerStart(new ServerStartEventArgs());
         }
 
         void Init()
         {
             InitConfig();
 
-            if (mineNETConfig.EnableConsoleOutput)
+            try
             {
-                logger = new Logger();
-                logger.Init();
-                UpdateLogger();
+
+                if (mineNETConfig.EnableConsoleOutput)
+                {
+                    logger = new Logger();
+                    logger.Init();
+                    UpdateLogger();
+                }
+
+                Update();
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
 
-            Update();
 
             if (mineNETConfig.EnableConsoleInput)
             {
@@ -165,6 +177,9 @@ namespace MineNET
             Logger.Info("%server_stop");
             mineNETConfig.Save<MineNETConfig>();
             serverConfig.Save<ServerConfig>();
+
+            ServerEvents.OnServerStop(new ServerStopEventArgs());
+
             Kill();
         }
 
