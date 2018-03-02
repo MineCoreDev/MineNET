@@ -43,6 +43,7 @@ namespace MineNET.RakNet
 
         int state = STATE_CONNECTING;
         int sendSeqNumber = 0;
+        int splitID = 0;
         int startSeq = -1;
         int endSeq = 2048;
         int lastSeqNumber = -1;
@@ -301,14 +302,51 @@ namespace MineNET.RakNet
         {
             if (server != null)
             {
-                DataPacket_0 pk = new DataPacket_0();
-                pk.SeqNumber = sendSeqNumber++;
-                pk.Packets = new[]
+                if (packet.buffer.Length + 4 > this.mtuSize)
                 {
-                    packet
-                };
+                    byte[][] buffers = Binary.SplitBytes(packet.buffer, this.mtuSize - 60);
+                    int splitID = ++this.splitID % 65536;
+                    for (int i = 0; i < buffers.Length; ++i)
+                    {
+                        EncapsulatedPacket pk = new EncapsulatedPacket();
+                        pk.splitID = splitID;
+                        pk.hasSplit = true;
+                        pk.splitCount = buffers.Length;
+                        pk.reliability = packet.reliability;
+                        pk.splitIndex = i;
+                        if (i > 0)
+                        {
+                            pk.messageIndex = this.messageIndex++;
+                        }
+                        else
+                        {
+                            pk.messageIndex = this.messageIndex;
+                        }
 
-                packetQueue.Enqueue(pk);
+                        DataPacket_0 dp = new DataPacket_0();
+                        dp.SeqNumber = sendSeqNumber++;
+                        dp.Packets = new[]
+                        {
+                            pk
+                        };
+
+                        this.server.SendPacket(dp, point.Address, point.Port);
+
+                        Logger.Log("Split");
+                    }
+
+                }
+                else
+                {
+                    DataPacket_0 pk = new DataPacket_0();
+                    pk.SeqNumber = sendSeqNumber++;
+                    pk.Packets = new[]
+                    {
+                        packet
+                    };
+
+                    packetQueue.Enqueue(pk);
+                }
             }
         }
 

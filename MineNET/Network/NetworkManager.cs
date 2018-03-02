@@ -92,6 +92,9 @@ namespace MineNET.Network
         {
             RakNetSession session = server.GetSession(point);
 
+            if (session == null)
+                return;
+
             pk.Encode();
 
             byte[] buffer = pk.GetResult();

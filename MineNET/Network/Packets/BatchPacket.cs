@@ -1,7 +1,7 @@
-﻿using MineNET.Utils;
-using System;
+﻿using System;
 using System.IO;
 using System.IO.Compression;
+using MineNET.Utils;
 
 namespace MineNET.Network.Packets
 {
@@ -18,6 +18,7 @@ namespace MineNET.Network.Packets
         }
 
         public byte[] Payload { get; set; }
+        public CompressionLevel CompressionLevel { get; set; } = CompressionLevel.Fastest;
 
         public override void Encode()
         {
@@ -37,9 +38,11 @@ namespace MineNET.Network.Packets
         {
             MemoryStream bs = new MemoryStream();
             bs.WriteByte(0x78);
-            bs.WriteByte(0x9c);//TODO: CompressionLevel
+
+            WriteCompressionLevel(bs);
+
             int sum = 0;
-            using (ZlibStream ds = new ZlibStream(bs, CompressionLevel.Fastest, true))
+            using (ZlibStream ds = new ZlibStream(bs, CompressionLevel, true))
             {
                 ds.Write(this.Payload, 0, this.Payload.Length);
                 sum = ds.Checksum;
@@ -72,6 +75,22 @@ namespace MineNET.Network.Packets
                 c.Close();
             }
             bs.Close();
+        }
+
+        void WriteCompressionLevel(MemoryStream stream)
+        {
+            if (CompressionLevel == CompressionLevel.NoCompression)
+            {
+                stream.WriteByte(0x01);
+            }
+            else if (CompressionLevel == CompressionLevel.Fastest)
+            {
+                stream.WriteByte(0x9C);
+            }
+            else if (CompressionLevel == CompressionLevel.Optimal)
+            {
+                stream.WriteByte(0xda);
+            }
         }
     }
 }
