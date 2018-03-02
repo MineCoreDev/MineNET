@@ -1,6 +1,8 @@
-﻿namespace MineNET.Inventories
+﻿using MineNET.Values;
+
+namespace MineNET.Inventories
 {
-    public interface InventoryHolder
+    public interface InventoryHolder : IVector3
     {
         Inventory GetInventory();
     }

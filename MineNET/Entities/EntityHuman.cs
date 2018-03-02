@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Entities
 {
-    public class Human : Living
+    public class EntityHuman : EntityLiving
     {
     }
 }

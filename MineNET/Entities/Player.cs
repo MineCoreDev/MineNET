@@ -10,8 +10,10 @@ using System.Net;
 
 namespace MineNET.Entities
 {
-    public class Player : Human, CommandSender, InventoryHolder
+    public class Player : EntityHuman, CommandSender
     {
+        private PlayerInventory inventory;
+
         IPEndPoint endPoint;
         public IPEndPoint EndPoint
         {
@@ -259,9 +261,21 @@ namespace MineNET.Entities
             Server.Instance.NetworkManager.PlayerClose(this.endPoint, reason);
         }
 
-        public Inventory GetInventory()
+        public new PlayerInventory GetInventory()
         {
-            return null;
+            return this.inventory;
+        }
+
+        public void OpenInventory(Inventory inventory)
+        {
+            inventory.Open(this);
+            this.inventory.OpenInventory(inventory);
+        }
+
+        public void CloseInventory(Inventory inventory)
+        {
+            inventory.Close(this);
+            this.inventory.CloseInventory();
         }
     }
 }

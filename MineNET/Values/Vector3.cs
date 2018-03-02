@@ -4,69 +4,30 @@ namespace MineNET.Values
 {
     public struct Vector3 : IVector3
     {
-        private float x;
-        private float y;
-        private float z;
-
         public Vector3(float x, float y, float z)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
         }
 
-        public float X
-        {
-            get
-            {
-                return x;
-            }
-
-            set
-            {
-                x = value;
-            }
-        }
-
-        public float Y
-        {
-            get
-            {
-                return y;
-            }
-
-            set
-            {
-                y = value;
-            }
-        }
-
-        public float Z
-        {
-            get
-            {
-                return z;
-            }
-
-            set
-            {
-                z = value;
-            }
-        }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
 
         public int GetFloorX()
         {
-            return (int) Math.Floor(this.x);
+            return (int) Math.Floor(this.X);
         }
 
         public int GetFloorY()
         {
-            return (int) Math.Floor(this.y);
+            return (int) Math.Floor(this.Y);
         }
 
         public int GetFloorZ()
         {
-            return (int) Math.Floor(this.z);
+            return (int) Math.Floor(this.Z);
         }
     }
 }
