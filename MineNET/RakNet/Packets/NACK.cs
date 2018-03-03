@@ -53,7 +53,6 @@ namespace MineNET.RakNet.Packets
 
             acks.Sort();
 
-
             for (int i = 1; i < acks.Count; i++)
             {
                 bool last = i + 1 == acks.Count;

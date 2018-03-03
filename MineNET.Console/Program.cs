@@ -1,5 +1,4 @@
 ﻿using System;
-using MineNET.Utils;
 
 namespace MineNET.Console
 {
@@ -18,7 +17,7 @@ namespace MineNET.Console
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                server.ErrorStop(e);
                 server.Stop();
             }
         }

@@ -86,7 +86,7 @@ namespace MineNET.Utils
                 msg = LangManager.GetString(msg);
             }
             string text = $"§7[Log][{CreateTime()}]{msg}";
-            Server.Instance.Logger.AddLogText(text, LoggerLevel.Log);
+            Server.Instance.Logger?.AddLogText(text, LoggerLevel.Log);
         }
 
         public static void Info(string msg, params object[] formats)
@@ -108,7 +108,7 @@ namespace MineNET.Utils
                 msg = LangManager.GetString(msg);
             }
             string text = $"§f[Info][{CreateTime()}]{msg}";
-            Server.Instance.Logger.AddLogText(text);
+            Server.Instance.Logger?.AddLogText(text);
         }
 
         public static void Warning(string msg, params object[] formats)
@@ -130,7 +130,7 @@ namespace MineNET.Utils
                 msg = LangManager.GetString(msg);
             }
             string text = $"§e[Warning][{CreateTime()}]{msg}";
-            Server.Instance.Logger.AddLogText(text, LoggerLevel.Warning);
+            Server.Instance.Logger?.AddLogText(text, LoggerLevel.Warning);
         }
 
         public static void Error(string msg, params object[] formats)
@@ -160,7 +160,7 @@ namespace MineNET.Utils
                 msg = LangManager.GetString(msg);
             }
             string text = $"§c[Error][{CreateTime()}]{msg}";
-            Server.Instance.Logger.AddLogText(text, LoggerLevel.Error);
+            Server.Instance.Logger?.AddLogText(text, LoggerLevel.Error);
         }
 
         public static void Fatal(string msg, params object[] formats)
@@ -182,7 +182,7 @@ namespace MineNET.Utils
                 msg = LangManager.GetString(msg);
             }
             string text = $"§4[Fatal][{CreateTime()}]{msg}";
-            Server.Instance.Logger.AddLogText(text, LoggerLevel.Fatal);
+            Server.Instance.Logger?.AddLogText(text, LoggerLevel.Fatal);
         }
 
         internal void Update()

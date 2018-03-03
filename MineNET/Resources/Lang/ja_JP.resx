@@ -219,4 +219,7 @@
   <data name="server_plugin_notPlugin" xml:space="preserve">
     <value>アセンブリ&lt;{0}&gt;は、MineNETのプラグインではありません。</value>
   </data>
+  <data name="server_stop_error" xml:space="preserve">
+    <value>リカバリー不可能なエラーが発生しました。</value>
+  </data>
 </root>

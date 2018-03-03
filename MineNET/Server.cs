@@ -113,7 +113,6 @@ namespace MineNET
 
             try
             {
-
                 if (mineNETConfig.EnableConsoleOutput)
                 {
                     logger = new Logger();
@@ -174,6 +173,20 @@ namespace MineNET
 
         public void Stop()
         {
+            Logger.Info("%server_stop");
+            mineNETConfig.Save<MineNETConfig>();
+            serverConfig.Save<ServerConfig>();
+
+            ServerEvents.OnServerStop(new ServerStopEventArgs());
+
+            Kill();
+        }
+
+        public void ErrorStop(Exception e)
+        {
+            this.logger = new Logger();
+            Logger.Fatal(e.ToString());
+            Logger.Error("%server_stop_error");
             Logger.Info("%server_stop");
             mineNETConfig.Save<MineNETConfig>();
             serverConfig.Save<ServerConfig>();

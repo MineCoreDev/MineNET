@@ -48,8 +48,6 @@ namespace MineNET.RakNet
         int endSeq = 2048;
         int lastSeqNumber = -1;
 
-        int startMsg = 0;
-        int endMsg = 2048;
         int lastMsg = -1;
         Dictionary<int, EncapsulatedPacket> reliableWindow = new Dictionary<int, EncapsulatedPacket>();
         Dictionary<int, int> receivedWindow = new Dictionary<int, int>();
@@ -164,66 +162,7 @@ namespace MineNET.RakNet
 
         private void EncapsulatedPacketHandle(EncapsulatedPacket packet)
         {
-            if (packet.messageIndex != -1)
-            {
-                if (packet.messageIndex < startMsg || packet.messageIndex > endMsg)
-                {
-                    return;
-                }
-
-                if ((packet.messageIndex - lastMsg) == 1)
-                {
-                    lastMsg++;
-                    endMsg++;
-                    startMsg++;
-
-                    EncapsulatedPacketHandler(packet);
-
-                    if (reliableWindow.Count > 0)
-                    {
-                        List<KeyValuePair<int, EncapsulatedPacket>> l = new List<KeyValuePair<int, EncapsulatedPacket>>(reliableWindow);
-                        List<int> removeIndex = new List<int>();
-                        l.Sort((a, b) => a.Key - b.Key);
-                        KeyValuePair<int, EncapsulatedPacket>[] pks = l.ToArray();
-                        for (int i = 0; i < reliableWindow.Count; ++i)
-                        {
-                            EncapsulatedPacket pk = pks[i].Value;
-                            if ((pk.messageIndex - lastMsg) != 1)
-                            {
-                                break;
-                            }
-
-                            EncapsulatedPacketHandler(pk);
-
-                            lastMsg++;
-                            endMsg++;
-                            startMsg++;
-
-                            removeIndex.Add(pk.messageIndex);
-                        }
-
-                        for (int i = 0; i < removeIndex.Count; ++i)
-                        {
-                            reliableWindow.Remove(removeIndex[i]);
-                        }
-                    }
-                }
-                else
-                {
-                    if (!reliableWindow.ContainsKey(packet.messageIndex))
-                    {
-                        reliableWindow.Add(packet.messageIndex, packet);
-                    }
-                    else
-                    {
-                        reliableWindow[packet.messageIndex] = packet;
-                    }
-                }
-            }
-            else
-            {
-                EncapsulatedPacketHandler(packet);
-            }
+            EncapsulatedPacketHandler(packet);
         }
 
         private void EncapsulatedPacketHandler(EncapsulatedPacket packet)

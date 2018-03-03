@@ -11,6 +11,8 @@ namespace MineNET.RakNet
 {
     public class RakNetServer
     {
+        public const int UPDATE_TICK = 200;
+
         sealed class ReceiveData
         {
             public IPEndPoint Point { get; set; }
@@ -128,7 +130,7 @@ namespace MineNET.RakNet
                     sl[i].Update();
                 }
 
-                await Task.Delay(1000 / 200);
+                await Task.Delay(1000 / UPDATE_TICK);
             }
         }
 
@@ -159,7 +161,7 @@ namespace MineNET.RakNet
             catch (Exception ex)
             {
                 Logger.Error(ex);
-                this.BlockUser(point, 20 * 5);
+                this.BlockUser(point, UPDATE_TICK * 5);
             }
             finally
             {
@@ -328,7 +330,7 @@ namespace MineNET.RakNet
         public void BlockUser(IPEndPoint point, int blockTime)
         {
             this.blockUsers.Add(IPEndPointToID(point), blockTime);
-            Logger.Warning("%raknet_userBlock", IPEndPointToID(point), blockTime / 20);
+            Logger.Warning("%raknet_userBlock", IPEndPointToID(point), blockTime / UPDATE_TICK);
         }
 
         public void UnBlockUser(IPEndPoint point)
