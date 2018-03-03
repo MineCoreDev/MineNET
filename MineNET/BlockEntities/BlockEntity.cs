@@ -1,9 +1,9 @@
-﻿using MineNET.NBT.Tags;
+﻿using System;
+using System.Collections.Generic;
+using MineNET.NBT.Tags;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
-using System;
-using System.Collections.Generic;
 
 namespace MineNET.BlockEntities
 {
@@ -39,11 +39,11 @@ namespace MineNET.BlockEntities
             if (nbt == null)
             {
                 nbt = new CompoundTag();
-                nbt.PutInt("x", (int) this.X);
-                nbt.PutInt("y", (int) this.Y);
-                nbt.PutInt("z", (int) this.Z);
-
             }
+            nbt.PutInt("x", (int) this.X);
+            nbt.PutInt("y", (int) this.Y);
+            nbt.PutInt("z", (int) this.Z);
+            this.namedTag = nbt;
         }
 
         public BlockEntity(World world, CompoundTag nbt)

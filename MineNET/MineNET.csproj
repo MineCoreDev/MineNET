@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockEntities\BlockEntity.cs" />
+    <Compile Include="BlockEntities\BlockEntityChest.cs" />
     <Compile Include="BlockEntities\BlockEntitySpawnable.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Blocks\BlockAcaciaDoor.cs" />
@@ -358,6 +359,7 @@
     <Compile Include="Events\ServerEvents\ServerStartEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerStopEventArgs.cs" />
     <Compile Include="Inventories\ArmorInventory.cs" />
+    <Compile Include="Inventories\ChestInventory.cs" />
     <Compile Include="Inventories\Data\InventoryType.cs" />
     <Compile Include="Data\LoginData.cs" />
     <Compile Include="Data\ClientData.cs" />

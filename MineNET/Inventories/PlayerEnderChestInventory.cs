@@ -5,11 +5,9 @@ namespace MineNET.Inventories
 {
     public class PlayerEnderChestInventory : ContainerInventory
     {
-        private Player player;
-
-        public PlayerEnderChestInventory(Player player) : base(null)
+        public PlayerEnderChestInventory(InventoryHolder holder) : base(holder)
         {
-            this.player = player;
+
         }
 
         public override int Size
@@ -28,20 +26,18 @@ namespace MineNET.Inventories
             }
         }
 
-        public void OnOpen(Player player, InventoryHolder holder)
+        public override void OnOpen(Player player)
         {
-            this.Holder = holder;
-
             base.OnOpen(player);
+
+            //TODO
         }
 
         public override void OnClose(Player player)
         {
-            if (this.Holder != null)
-            {
-                this.Holder = null;
-            }
             base.OnClose(player);
+
+            //TODO
         }
     }
 }

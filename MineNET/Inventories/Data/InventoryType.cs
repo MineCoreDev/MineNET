@@ -20,4 +20,12 @@
         COMMAND_BLOCK = 16,
         JUKEBOX = 17
     }
+
+    public static class TinventoryTypeExtensions
+    {
+        public static byte GetIndex(this InventoryType type)
+        {
+            return (byte) type;
+        }
+    }
 }

@@ -11,7 +11,7 @@ using MineNET.Worlds.Data;
 
 namespace MineNET.Entities
 {
-    public class Player : EntityHuman, CommandSender
+    public class Player : EntityHuman, CommandSender, InventoryHolder
     {
         private PlayerInventory inventory;
 

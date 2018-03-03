@@ -13,4 +13,12 @@
         FIXED_INVENTORY = 123,
         CURSOR = 124,
     }
+
+    public static class ContainerIdsExtensions
+    {
+        public static byte GetIndex(this ContainerIds ids)
+        {
+            return (byte) ids;
+        }
+    }
 }

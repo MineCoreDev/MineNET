@@ -1,6 +1,6 @@
-﻿using MineNET.Entities;
+﻿using System.Collections.Generic;
+using MineNET.Entities;
 using MineNET.Items;
-using System.Collections.Generic;
 
 namespace MineNET.Inventories
 {
