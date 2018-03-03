@@ -14,7 +14,7 @@ namespace MineNET
     public sealed class Server
     {
         static Server instance;
-        public static Server Instance
+        public static Server Instance//test
         {
             get
             {
