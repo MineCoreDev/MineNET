@@ -716,6 +716,7 @@
     <EmbeddedResource Include="Resources\Lang\ja_JP.resx" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Events\PlayerEvents\" />
     <Folder Include="Items\Data\" />
     <Folder Include="Resources\ClassDiagrams\" />
   </ItemGroup>

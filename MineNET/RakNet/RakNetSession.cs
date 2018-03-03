@@ -213,6 +213,19 @@ namespace MineNET.RakNet
                     if (!reliableWindow.ContainsKey(packet.messageIndex))
                     {
                         reliableWindow.Add(packet.messageIndex, packet);
+                        /*if ((packet.messageIndex - lastMsg) > 100)
+                        {
+                            endMsg++;
+                            startMsg++;
+                            lastMsg++;
+                            if (receivedWindow.ContainsKey(lastMsg))
+                            {
+                                endMsg++;
+                                startMsg++;
+                                lastMsg++;
+                                EncapsulatedPacketHandler(reliableWindow[lastMsg]);
+                            }
+                        }*/
                     }
                     else
                     {
