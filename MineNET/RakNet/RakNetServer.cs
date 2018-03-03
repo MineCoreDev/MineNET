@@ -109,11 +109,8 @@ namespace MineNET.RakNet
         {
             if (receiveDataQueue.Count > 0)
             {
-                for (int i = 0; i < receiveDataQueue.Count; ++i)
-                {
-                    ReceiveData data = receiveDataQueue.Dequeue();
-                    this.HandlePacket(data.Point, data.Data);
-                }
+                ReceiveData data = receiveDataQueue.Dequeue();
+                this.HandlePacket(data.Point, data.Data);
             }
 
             string[] bl = this.blockUsers.Keys.ToArray();

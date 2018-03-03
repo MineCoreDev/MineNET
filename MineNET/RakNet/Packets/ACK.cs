@@ -1,5 +1,5 @@
 ﻿using System;
-using MineNET.Utils;
+using System.Collections.Generic;
 
 namespace MineNET.RakNet.Packets
 {
@@ -21,62 +21,80 @@ namespace MineNET.RakNet.Packets
         {
             base.Encode();
 
-            BinaryStream payload = new BinaryStream();
-            
-            Array.Sort(packets);
+            List<Tuple<int, int>> ranges = Slize(new List<int>(packets));
 
-            int count = packets.Length;
-            int records = 0;
+            WriteLShort((ushort) ranges.Count);
 
-            if (count > 0)
+            foreach (var range in ranges)
             {
-                int pointer = 1;
-                int start = packets[0];
-                int last = packets[0];
+                byte singleEntry = (byte) (range.Item1 == range.Item2 ? 0x01 : 0);
 
-                while (pointer < count)
-                {
-                    int current = packets[pointer++];
-                    int diff = current - last;
-                    if (diff == 1)
-                    {
-                        last = current;
-                    }
-                    else if (diff > 1)
-                    { //Forget about duplicated packets (bad queues?)
-                        if (start == last)
-                        {
-                            payload.WriteByte(1);
-                            payload.WriteLTriad(start);
-                            start = last = current;
-                        }
-                        else
-                        {
-                            payload.WriteByte(0);
-                            payload.WriteLTriad(start);
-                            payload.WriteLTriad(last);
-                            start = last = current;
-                        }
-                        ++records;
-                    }
-                }
+                WriteByte(singleEntry);
+                WriteLTriad(range.Item1);
+                if (singleEntry == 0)
+                    WriteLTriad(range.Item2);
+            }
+        }
 
-                if (start == last)
-                {
-                    payload.WriteByte(1);
-                    payload.WriteLTriad(start);
-                }
-                else
-                {
-                    payload.WriteByte(0);
-                    payload.WriteLTriad(start);
-                    payload.WriteLTriad(last);
-                }
-                ++records;
+        public static List<Tuple<int, int>> Slize(List<int> acks)
+        {
+            List<Tuple<int, int>> ranges = new List<Tuple<int, int>>();
+
+            if (acks.Count == 0) return ranges;
+
+            int start = acks[0];
+            int prev = start;
+
+            if (acks.Count == 1)
+            {
+                ranges.Add(new Tuple<int, int>(start, start));
+                return ranges;
             }
 
-            WriteLShort((ushort) records);
-            WriteBytes(payload.ToArray());
+            acks.Sort();
+
+
+            for (int i = 1; i < acks.Count; i++)
+            {
+                bool last = i + 1 == acks.Count;
+                int current = acks[i];
+
+                if (current - prev == 1 && !last)
+                {
+                    prev = current;
+                    continue;
+                }
+
+                if (current - prev > 1 && !last)
+                {
+                    ranges.Add(new Tuple<int, int>(start, prev));
+
+                    start = current;
+                    prev = current;
+                    continue;
+                }
+
+                if (current - prev == 1 && last)
+                {
+                    ranges.Add(new Tuple<int, int>(start, current));
+                }
+
+                if (current - prev > 1 && last)
+                {
+                    if (prev == start)
+                    {
+                        ranges.Add(new Tuple<int, int>(start, current));
+                    }
+
+                    if (prev != start)
+                    {
+                        ranges.Add(new Tuple<int, int>(start, prev));
+                        ranges.Add(new Tuple<int, int>(current, current));
+                    }
+                }
+            }
+
+            return ranges;
         }
     }
 }
