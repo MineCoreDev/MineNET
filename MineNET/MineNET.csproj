@@ -690,7 +690,7 @@
     <Compile Include="Utils\LangManager.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\MCBEBinary.cs" />
-    <Compile Include="Utils\MineNETMath.cs" />
+    <Compile Include="Utils\Math.cs" />
     <Compile Include="Utils\ArrayUtils.cs" />
     <Compile Include="Utils\VarDump.cs" />
     <Compile Include="Utils\VarInt.cs" />

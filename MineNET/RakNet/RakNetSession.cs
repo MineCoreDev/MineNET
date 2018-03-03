@@ -48,7 +48,6 @@ namespace MineNET.RakNet
         int endSeq = 2048;
         int lastSeqNumber = -1;
 
-        int lastMsg = -1;
         Dictionary<int, EncapsulatedPacket> reliableWindow = new Dictionary<int, EncapsulatedPacket>();
         Dictionary<int, int> receivedWindow = new Dictionary<int, int>();
 
@@ -96,8 +95,6 @@ namespace MineNET.RakNet
                     return;
                 }
 
-                Logger.Log("Seq: " + packet.SeqNumber + " ID: " + ((EncapsulatedPacket) packet.Packets[0]).messageIndex + ":" + lastMsg);
-
                 int diff = packet.SeqNumber - lastSeqNumber;
 
                 if (nackQueue.ContainsKey(packet.SeqNumber))
@@ -123,7 +120,6 @@ namespace MineNET.RakNet
                         {
                             if (!nackQueue.ContainsKey(packet.SeqNumber - i))
                             {
-                                Logger.Log("Nack" + (packet.SeqNumber - i));
                                 nackQueue.Add(packet.SeqNumber - i, packet.SeqNumber - i);
                             }
                         }
@@ -293,7 +289,7 @@ namespace MineNET.RakNet
         {
             if (this.timedOut <= 0)
             {
-                this.Close("timedout");
+                this.Close("disconnect.timeout");
             }
             this.timedOut--;
 

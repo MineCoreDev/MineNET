@@ -15,6 +15,46 @@ namespace MineNET.Values
         public float Y { get; set; }
         public float Z { get; set; }
 
+        public float this[int index]
+        {
+            get
+            {
+                if (index == 0)
+                {
+                    return this.X;
+                }
+                if (index == 1)
+                {
+                    return this.Y;
+                }
+                if (index != 2)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                return this.Y;
+            }
+
+            set
+            {
+                if (index != 0)
+                {
+                    if (index == 1)
+                    {
+                        this.Y = value;
+                    }
+                    if (index != 2)
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+                    this.Y = value;
+                }
+                else
+                {
+                    this.X = value;
+                }
+            }
+        }
+
         public int GetFloorX()
         {
             return (int) Math.Floor(this.X);
@@ -28,6 +68,11 @@ namespace MineNET.Values
         public int GetFloorZ()
         {
             return (int) Math.Floor(this.Z);
+        }
+
+        public override string ToString()
+        {
+            return $"X: {this.X} Y: {this.Y} Z: {this.Z}";
         }
     }
 }
