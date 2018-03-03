@@ -33,7 +33,7 @@ namespace MineNET.Inventories
         {
             get
             {
-                return (byte) ContainerIds.INVENTORY;
+                return ContainerIds.INVENTORY.GetIndex();
             }
         }
 

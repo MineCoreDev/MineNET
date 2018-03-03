@@ -22,7 +22,7 @@ namespace MineNET.Inventories
         {
             get
             {
-                return (byte) InventoryType.CONTAINER;
+                return InventoryType.CONTAINER.GetIndex();
             }
         }
 

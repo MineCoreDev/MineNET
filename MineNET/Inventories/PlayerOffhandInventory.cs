@@ -23,7 +23,7 @@ namespace MineNET.Inventories
         {
             get
             {
-                return (byte) ContainerIds.OFFHAND;
+                return ContainerIds.OFFHAND.GetIndex();
             }
         }
 
