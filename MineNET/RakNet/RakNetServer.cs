@@ -239,9 +239,9 @@ namespace MineNET.RakNet
                 string motd = Server.ServerConfig.ServerMotd;
                 int protocol = Network.Packets.ProtocolInfo.CLIENT_PROTOCOL;
                 string version = Network.Packets.ProtocolInfo.CLIENT_VERSION;
-                int maxPlayer = Server.ServerConfig.MaxPlayer;
+                int maxPlayer = Server.ServerConfig.MaxPlayers;
                 int player = Server.Instance.NetworkManager.players.Count;
-                string gameMode = Server.ServerConfig.WorldGameMode;
+                string gameMode = Server.ServerConfig.GameMode;
 
                 UNCONNECTED_PING uping = (UNCONNECTED_PING) packet;
                 UNCONNECTED_PONG upong = new UNCONNECTED_PONG();

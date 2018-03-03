@@ -22,7 +22,7 @@ namespace MineNET.Inventories
         {
             get
             {
-                return (byte) ContainerIds.CURSOR;
+                return ContainerIds.CURSOR.GetIndex();
             }
         }
     }

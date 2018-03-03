@@ -219,10 +219,8 @@ namespace MineNET.Entities
 
         private int FixRadius(int radius)
         {
-            int maxRequest = Server.ServerConfig.MaxChunkRadius;
-            if (radius > maxRequest)
-                radius = maxRequest;
-
+            int maxRequest = Server.ServerConfig.ViewDistance;
+            if (radius > maxRequest) radius = maxRequest;
             return radius;
         }
 
