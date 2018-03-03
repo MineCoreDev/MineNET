@@ -96,7 +96,7 @@ namespace MineNET.Entities
             }
             else if (pk is MovePlayerPacket)
             {
-                //this.MovePlayerPacketHandle((MovePlayerPacket) pk);
+                this.MovePlayerPacketHandle((MovePlayerPacket) pk);
             }
         }
 
@@ -214,7 +214,14 @@ namespace MineNET.Entities
 
         public void MovePlayerPacketHandle(MovePlayerPacket pk)
         {
-            this.SendPosition(new Vector3(), new Vector3(), MovePlayerPacket.MODE_RESET);
+            Vector3 pos = pk.Pos;
+            this.X = pos.X;
+            this.Y = pos.Y;
+            this.Z = pos.Z;
+            Vector3 direction = pk.Direction;
+            this.Pitch = direction.X;
+            this.Yaw = direction.Y;
+            //this.SendPosition(new Vector3(), new Vector3(), MovePlayerPacket.MODE_RESET);
         }
 
         private int FixRadius(int radius)
@@ -256,7 +263,7 @@ namespace MineNET.Entities
             MovePlayerPacket pk = new MovePlayerPacket();
             pk.EntityRuntimeId = this.id;
             pk.Pos = pos;
-            pk.YawPitchHead = new Vector3(yawPitch.X, yawPitch.Y, yawPitch.X);
+            pk.Direction = new Vector3(yawPitch.X, yawPitch.Y, yawPitch.X);
             pk.Mode = mode;
 
             SendPacket(pk);
