@@ -2,6 +2,7 @@
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
+using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
 using MineNET.Network.Packets;
 using MineNET.Utils;
@@ -20,65 +21,15 @@ namespace MineNET.Entities
             this.inventory = new PlayerInventory(this);
         }
 
-        IPEndPoint endPoint;
-        public IPEndPoint EndPoint
-        {
-            get
-            {
-                return this.endPoint;
-            }
+        public IPEndPoint EndPoint { get; internal set; }
 
-            internal set
-            {
-                this.endPoint = value;
-            }
-        }
+        public LoginData LoginData { get; internal set; }
 
-        LoginData loginData;
-        public LoginData LoginData
-        {
-            get
-            {
-                return this.loginData;
-            }
+        public ClientData ClientData { get; internal set; }
 
-            set
-            {
-                this.loginData = value;
-            }
-        }
+        public bool PackDownloaded { get; internal set; } = false;
 
-        ClientData clientData;
-        public ClientData ClientData
-        {
-            get
-            {
-                return this.clientData;
-            }
-
-            set
-            {
-                this.clientData = value;
-            }
-        }
-
-        bool packDownloaded;
-        public bool PackDownloaded
-        {
-            get
-            {
-                return this.packDownloaded;
-            }
-        }
-
-        bool packStatusCompleted;
-        public bool PackStatusCompleted
-        {
-            get
-            {
-                return this.packStatusCompleted;
-            }
-        }
+        public bool PackStatusCompleted { get; internal set; } = false;
 
         public void PacketHandle(DataPacket pk)
         {
@@ -96,7 +47,7 @@ namespace MineNET.Entities
             }
             else if (pk is MovePlayerPacket)
             {
-                //this.MovePlayerPacketHandle((MovePlayerPacket) pk);
+                this.MovePlayerPacketHandle((MovePlayerPacket) pk);
             }
         }
 
@@ -112,6 +63,14 @@ namespace MineNET.Entities
             {
                 this.SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_SERVER);
                 this.Close("disconnectionScreen.outdatedServer");
+                return;
+            }
+
+            PlayerPreLoginEventArgs playerPreLoginEvent = new PlayerPreLoginEventArgs(this, "");
+            PlayerEvents.OnPlayerPreLogin(playerPreLoginEvent);
+            if (playerPreLoginEvent.IsCancel)
+            {
+                this.Close(playerPreLoginEvent.KickMessage);
                 return;
             }
 
@@ -134,13 +93,13 @@ namespace MineNET.Entities
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_HAVE_ALL_PACKS)
             {
-                this.packDownloaded = true;
+                this.PackDownloaded = true;
                 ResourcePackStackPacket resourcePackStackPacket = new ResourcePackStackPacket();
                 this.SendPacket(resourcePackStackPacket);
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_COMPLETED)
             {
-                this.packStatusCompleted = true;
+                this.PackStatusCompleted = true;
                 this.ProcessLogin();
             }
         }
@@ -169,6 +128,18 @@ namespace MineNET.Entities
             GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
             gameRulesChangedPacket.GameRules = rules;
             this.SendPacket(gameRulesChangedPacket);
+        }
+
+        public void MovePlayerPacketHandle(MovePlayerPacket pk)
+        {
+            Vector3 pos = pk.Pos;
+            Vector3 direction = pk.Direction;
+            this.X = pos.X;
+            this.Y = pos.Y;
+            this.Z = pos.Z;
+            this.Pitch = direction.X;
+            this.Yaw = direction.Y;
+            //this.SendPosition(pos, direction, MovePlayerPacket.MODE_RESET);
         }
 
         private void ProcessLogin()
@@ -212,11 +183,6 @@ namespace MineNET.Entities
             //PlayerList
         }
 
-        public void MovePlayerPacketHandle(MovePlayerPacket pk)
-        {
-            this.SendPosition(new Vector3(), new Vector3(), MovePlayerPacket.MODE_RESET);
-        }
-
         private int FixRadius(int radius)
         {
             int maxRequest = Server.ServerConfig.ViewDistance;
@@ -254,7 +220,7 @@ namespace MineNET.Entities
             MovePlayerPacket pk = new MovePlayerPacket();
             pk.EntityRuntimeId = this.id;
             pk.Pos = pos;
-            pk.YawPitchHead = new Vector3(yawPitch.X, yawPitch.Y, yawPitch.X);
+            pk.Direction = new Vector3(yawPitch.X, yawPitch.Y, yawPitch.X);
             pk.Mode = mode;
 
             SendPacket(pk);
@@ -262,7 +228,7 @@ namespace MineNET.Entities
 
         public void SendPacket(DataPacket pk, bool needACK = false, bool immediate = false)
         {
-            Server.Instance.NetworkManager.SendPacket(this.endPoint, pk);
+            Server.Instance.NetworkManager.SendPacket(this.EndPoint, pk);
         }
 
         public void Close(string reason)
@@ -274,7 +240,7 @@ namespace MineNET.Entities
 
                 this.SendPacket(pk);
             }
-            Server.Instance.NetworkManager.PlayerClose(this.endPoint, reason);
+            Server.Instance.NetworkManager.PlayerClose(this.EndPoint, reason);
         }
 
         public new PlayerInventory GetInventory()

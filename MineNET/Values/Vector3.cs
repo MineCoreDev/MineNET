@@ -29,5 +29,10 @@ namespace MineNET.Values
         {
             return (int) Math.Floor(this.Z);
         }
+
+        public Vector3i ToVector3i()
+        {
+            return new Vector3i(this.GetFloorX(), this.GetFloorY(), this.GetFloorZ());
+        }
     }
 }

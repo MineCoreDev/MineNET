@@ -2,24 +2,11 @@
 {
     public abstract class DataTag<T> : Tag
     {
-        private T data;
-
         public DataTag(string name, T data) : base(name)
         {
-            this.data = data;
+            this.Data = data;
         }
 
-        public T Data
-        {
-            get
-            {
-                return this.data;
-            }
-
-            set
-            {
-                this.data = value;
-            }
-        }
+        public T Data { get; set; }
     }
 }

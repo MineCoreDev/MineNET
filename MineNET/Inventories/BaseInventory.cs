@@ -58,7 +58,7 @@ namespace MineNET.Inventories
             {
                 return false;
             }
-            else if (item.ItemID == BlockFactory.AIR)
+            else if (item.ID == BlockFactory.AIR)
             {
                 return this.Clear(index, send);
             }
@@ -73,7 +73,7 @@ namespace MineNET.Inventories
             List<Item> itemSlots = new List<Item>();
             for (int i = 0; i < this.Size; ++i)
             {
-                if (items[i].ItemID != BlockFactory.AIR && items[i].Count <= 0)
+                if (items[i].ID != BlockFactory.AIR && items[i].Count <= 0)
                 {
                     itemSlots.Add(items[i].Clone());
                 }
@@ -83,7 +83,7 @@ namespace MineNET.Inventories
             for (int i = 0; i < this.Size; ++i)
             {
                 Item item = this.GetItem(i);
-                if (item.ItemID == BlockFactory.AIR || item.Count <= 0)
+                if (item.ID == BlockFactory.AIR || item.Count <= 0)
                 {
                     emptySlots.Add(i);
                 }
@@ -147,7 +147,7 @@ namespace MineNET.Inventories
                         item.Count -= diff;
                     }
                 }
-                else if (slot.ItemID == BlockFactory.AIR)
+                else if (slot.ID == BlockFactory.AIR)
                 {
                     item.Count -= this.MaxStackSize;
                 }
@@ -165,7 +165,7 @@ namespace MineNET.Inventories
             List<Item> itemSlots = new List<Item>();
             for (int i = 0; i < this.Size; ++i)
             {
-                if (items[i].ItemID != BlockFactory.AIR && items[i].Count > 0)
+                if (items[i].ID != BlockFactory.AIR && items[i].Count > 0)
                 {
                     itemSlots.Add(items[i].Clone());
                 }
@@ -174,7 +174,7 @@ namespace MineNET.Inventories
             for (int i = 0; i < this.Size; ++i)
             {
                 Item item = this.GetItem(i);
-                if (item.ItemID == BlockFactory.AIR || item.Count <= 0)
+                if (item.ID == BlockFactory.AIR || item.Count <= 0)
                 {
                     continue;
                 }

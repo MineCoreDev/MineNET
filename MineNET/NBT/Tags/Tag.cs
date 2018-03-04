@@ -1,9 +1,11 @@
-﻿using MineNET.NBT.Data;
+﻿using System;
+using MineNET.NBT.Data;
 using MineNET.NBT.IO;
+using MineNET.Utils;
 
 namespace MineNET.NBT.Tags
 {
-    public abstract class Tag
+    public abstract class Tag : ICloneable<Tag>
     {
         private string name = "";
 
@@ -28,6 +30,16 @@ namespace MineNET.NBT.Tags
             {
                 this.name = value;
             }
+        }
+
+        public Tag Clone()
+        {
+            return (Tag) Clone();
+        }
+
+        object ICloneable.Clone()
+        {
+            return this.MemberwiseClone();
         }
 
         internal abstract void Write(NBTStream stream);

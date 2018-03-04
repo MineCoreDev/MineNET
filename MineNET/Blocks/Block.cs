@@ -31,70 +31,18 @@ namespace MineNET.Blocks
             return this.MemberwiseClone();
         }
 
-        private int x;
-        private int y;
-        private int z;
+        public float X { get; set; }
 
-        private World world = null;
+        public float Y { get; set; }
 
-        public float X
-        {
-            get
-            {
-                return this.x;
-            }
+        public float Z { get; set; }
 
-            set
-            {
-                this.x = (int) value;
-            }
-        }
-
-        public float Y
-        {
-            get
-            {
-                return this.y;
-            }
-
-            set
-            {
-                this.y = (int) value;
-            }
-        }
-
-        public float Z
-        {
-            get
-            {
-                return this.z;
-            }
-
-            set
-            {
-                this.z = (int) value;
-            }
-        }
-        public World World
-        {
-            get
-            {
-                return this.world;
-            }
-
-            set
-            {
-                this.world = value;
-            }
-        }
-
-        private int id;
-        private int meta;
+        public World World { get; set; }
 
         public Block(int id, int meta = 0)
         {
-            this.id = id;
-            this.meta = meta;
+            this.ID = id;
+            this.Damage = meta;
         }
 
         public abstract string Name
@@ -102,26 +50,9 @@ namespace MineNET.Blocks
             get;
         }
 
-        public int BlockID
-        {
-            get
-            {
-                return this.id;
-            }
-        }
+        public int ID { get; }
 
-        public int Damage
-        {
-            get
-            {
-                return this.meta;
-            }
-
-            set
-            {
-                this.meta = value;
-            }
-        }
+        public int Damage { get; set; }
 
         public virtual byte MaxStackSize
         {
