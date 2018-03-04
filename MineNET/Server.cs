@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Entities;
 using MineNET.Events.ServerEvents;
@@ -98,7 +97,7 @@ namespace MineNET
             ServerEvents.OnServerStart(new ServerStartEventArgs());
         }
 
-        public async void Stop()
+        public void Stop()
         {
             Logger.Info("%server_stop");
             mineNETConfig.Save<MineNETConfig>();
@@ -110,14 +109,12 @@ namespace MineNET
                 players[i].Close("disconnect.closed");//TODO: Option Add
             }
 
-            await Task.Delay(1000);
-
             ServerEvents.OnServerStop(new ServerStopEventArgs());
 
             Kill();
         }
 
-        public async void ErrorStop(Exception e)
+        public void ErrorStop(Exception e)
         {
             this.logger = new Logger();
             Logger.Fatal(e.ToString());
@@ -132,8 +129,6 @@ namespace MineNET
             {
                 players[i].Close("disconnect.closed");//TODO: Option Add
             }
-
-            await Task.Delay(1000);
 
             ServerEvents.OnServerStop(new ServerStopEventArgs());
 

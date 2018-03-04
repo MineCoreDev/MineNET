@@ -117,112 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="network_start" xml:space="preserve">
-    <value>ネットワーク、リスナーを開始しています...</value>
+  <data name="app_language_key_error" xml:space="preserve">
+    <value>Keyが見つかりませんでした。</value>
   </data>
-  <data name="network_started" xml:space="preserve">
-    <value>ネットワーク、リスナーを開始しました。</value>
+  <data name="start_lang_setup" xml:space="preserve">
+    <value>言語を設定中...</value>
   </data>
-  <data name="network_start_port" xml:space="preserve">
-    <value>リスナーを Port {0} で開始しています...</value>
+  <data name="start_load" xml:space="preserve">
+    <value>ロード中...</value>
   </data>
-  <data name="raknet_sessionCreate" xml:space="preserve">
-    <value>セッションが作成されました。&lt;{0}&gt; mtuSize: {1}</value>
-  </data>
-  <data name="raknet_sessionCreated" xml:space="preserve">
-    <value>{0} は既にセッションが作成されています。</value>
-  </data>
-  <data name="raknet_sessionNotCreate" xml:space="preserve">
-    <value>{0} はセッションが作成されていません。</value>
-  </data>
-  <data name="raknet_userBlock" xml:space="preserve">
-    <value>{0} はRakNetによって{1}秒間ブロックされました。</value>
-  </data>
-  <data name="server_start" xml:space="preserve">
-    <value>MineNETサーバを起動しています...</value>
-  </data>
-  <data name="server_started" xml:space="preserve">
-    <value>サーバーが開始しました。</value>
-  </data>
-  <data name="raknet_sessionClose" xml:space="preserve">
-    <value>セッション&lt;{0}&gt;がクローズしました。</value>
-  </data>
-  <data name="raknet_sessionClose_reason" xml:space="preserve">
-    <value>理由: &lt;{0}&gt;</value>
-  </data>
-  <data name="command_notFound" xml:space="preserve">
-    <value>§cコマンド &lt;{0}&gt; は見つかりませんでした。 helpで確認して下さい。</value>
-  </data>
-  <data name="command_default_stopCommand_description" xml:space="preserve">
-    <value>サーバーを安全に終了する事が出来るコマンド</value>
-  </data>
-  <data name="server_started2" xml:space="preserve">
-    <value>helpでコマンド確認して下さい。 起動時間: &lt;{0}&gt;</value>
-  </data>
-  <data name="server_stop" xml:space="preserve">
-    <value>サーバーを終了しています...</value>
-  </data>
-  <data name="server_stoped" xml:space="preserve">
-    <value>サーバーを停止しました。</value>
-  </data>
-  <data name="server_config_maxPlayer" xml:space="preserve">
-    <value>最大プレイヤー数</value>
-  </data>
-  <data name="server_config_port" xml:space="preserve">
-    <value>ポート番号 &lt;1~65535&gt;</value>
-  </data>
-  <data name="server_config_serverMotd" xml:space="preserve">
-    <value>サーバー名</value>
-  </data>
-  <data name="server_config_generateEnd" xml:space="preserve">
-    <value>エンドを生成</value>
-  </data>
-  <data name="server_config_generateNether" xml:space="preserve">
-    <value>ネザーを生成</value>
-  </data>
-  <data name="server_config_loadWorldNames" xml:space="preserve">
-    <value>読み込む サブワールド名 &lt;複数可&gt;</value>
-  </data>
-  <data name="server_config_mainWorldGenerator" xml:space="preserve">
-    <value>メインワールドのジェネレータ &lt;Default / Flat&gt;</value>
-  </data>
-  <data name="server_config_mainWorldName" xml:space="preserve">
-    <value>読み込む/生成する メインワールド名</value>
-  </data>
-  <data name="server_config_onlineMode" xml:space="preserve">
-    <value>Xboxアカウントを使用した認証</value>
-  </data>
-  <data name="server_config_worldGameMode" xml:space="preserve">
-    <value>ワールドゲームモード</value>
-  </data>
-  <data name="server_chunkRadius" xml:space="preserve">
-    <value>チャンク範囲 {0} でリクエストされました。&lt;{1}に変更しました。&gt;</value>
-  </data>
-  <data name="server_packet_handle" xml:space="preserve">
-    <value>データパケット {0}を受信しました。&lt;長さ {1}byte&gt;</value>
-  </data>
-  <data name="server_packet_notHandle" xml:space="preserve">
-    <value>ハンドルされていないデータパケット {0}を受信しました。&lt;長さ {1}byte&gt;</value>
-  </data>
-  <data name="server_packet_send" xml:space="preserve">
-    <value>データパケット {0}を送信しました。&lt;長さ {1}byte&gt;</value>
-  </data>
-  <data name="server_plugin_enable" xml:space="preserve">
-    <value>プラグイン&lt;{0}&gt;が有効になりました。</value>
-  </data>
-  <data name="server_plugin_load" xml:space="preserve">
-    <value>プラグイン&lt;{0}&gt;のロード中...</value>
-  </data>
-  <data name="server_plugin_loadError" xml:space="preserve">
-    <value>プラグイン&lt;{0}&gt;のロード中にエラーが発生しました。</value>
-  </data>
-  <data name="server_plugin_notPlugin" xml:space="preserve">
-    <value>アセンブリ&lt;{0}&gt;は、MineNETのプラグインではありません。</value>
-  </data>
-  <data name="server_stop_error" xml:space="preserve">
-    <value>リカバリー不可能なエラーが発生しました。</value>
-  </data>
-  <data name="server_language_key_error" xml:space="preserve">
-    <value>&lt;{0}&gt;というキーは見つかりませんでした。</value>
+  <data name="start_loaded" xml:space="preserve">
+    <value>ロード完了!</value>
   </data>
 </root>
