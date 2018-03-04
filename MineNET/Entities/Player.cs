@@ -138,6 +138,7 @@ namespace MineNET.Entities
 
         public void MovePlayerPacketHandle(MovePlayerPacket pk)
         {
+            //TODO: MoveCheck...
             Vector3 pos = pk.Pos;
             Vector3 direction = pk.Direction;
             this.X = pos.X;
@@ -192,17 +193,6 @@ namespace MineNET.Entities
             //MobEquipment
             //InventorySlot
             //PlayerList
-        }
-
-        public void MovePlayerPacketHandle(MovePlayerPacket pk)
-        {
-            //TODO: MoveCheck...
-            this.X = pk.Pos.X;
-            this.Y = pk.Pos.Y;
-            this.Z = pk.Pos.Z;
-
-            this.Yaw = pk.Direction.X;
-            this.Pitch = pk.Direction.Y;
         }
 
         private int FixRadius(int radius)
