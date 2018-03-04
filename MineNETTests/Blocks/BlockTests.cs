@@ -18,14 +18,14 @@ namespace MineNET.Blocks.Tests
             Block b7 = Block.Get("256");
             Block b8 = Block.Get("256:1");
 
-            Console.WriteLine(b1.BlockID + ":" + b1.Damage);
-            Console.WriteLine(b2.BlockID + ":" + b2.Damage);
-            Console.WriteLine(b3.BlockID + ":" + b3.Damage);
-            Console.WriteLine(b4.BlockID + ":" + b4.Damage);
-            Console.WriteLine(b5.BlockID + ":" + b5.Damage);
-            Console.WriteLine(b6.BlockID + ":" + b6.Damage);
-            Console.WriteLine(b7.BlockID + ":" + b7.Damage);
-            Console.WriteLine(b8.BlockID + ":" + b8.Damage);
+            Console.WriteLine(b1.ID + ":" + b1.Damage);
+            Console.WriteLine(b2.ID + ":" + b2.Damage);
+            Console.WriteLine(b3.ID + ":" + b3.Damage);
+            Console.WriteLine(b4.ID + ":" + b4.Damage);
+            Console.WriteLine(b5.ID + ":" + b5.Damage);
+            Console.WriteLine(b6.ID + ":" + b6.Damage);
+            Console.WriteLine(b7.ID + ":" + b7.Damage);
+            Console.WriteLine(b8.ID + ":" + b8.Damage);
         }
     }
 }

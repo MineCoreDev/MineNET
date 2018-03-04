@@ -22,18 +22,18 @@ namespace MineNET.Items.Tests
             Item i11 = Item.Get("600");
             Item i12 = Item.Get("600:1");
 
-            Console.WriteLine(i1.ItemID + ":" + i1.Damage);//1:0
-            Console.WriteLine(i2.ItemID + ":" + i2.Damage);//1:1
-            Console.WriteLine(i3.ItemID + ":" + i3.Damage);//6:0?
-            Console.WriteLine(i4.ItemID + ":" + i4.Damage);//6:1?
-            Console.WriteLine(i5.ItemID + ":" + i5.Damage);//0:0
-            Console.WriteLine(i6.ItemID + ":" + i6.Damage);//0:1
-            Console.WriteLine(i7.ItemID + ":" + i7.Damage);//5:0
-            Console.WriteLine(i8.ItemID + ":" + i8.Damage);//5:1
-            Console.WriteLine(i9.ItemID + ":" + i9.Damage);//45:0?
-            Console.WriteLine(i10.ItemID + ":" + i10.Damage);//45:1?
-            Console.WriteLine(i11.ItemID + ":" + i11.Damage);//88:0?
-            Console.WriteLine(i12.ItemID + ":" + i12.Damage);//88:1?
+            Console.WriteLine(i1.ID + ":" + i1.Damage);//1:0
+            Console.WriteLine(i2.ID + ":" + i2.Damage);//1:1
+            Console.WriteLine(i3.ID + ":" + i3.Damage);//6:0?
+            Console.WriteLine(i4.ID + ":" + i4.Damage);//6:1?
+            Console.WriteLine(i5.ID + ":" + i5.Damage);//0:0
+            Console.WriteLine(i6.ID + ":" + i6.Damage);//0:1
+            Console.WriteLine(i7.ID + ":" + i7.Damage);//5:0
+            Console.WriteLine(i8.ID + ":" + i8.Damage);//5:1
+            Console.WriteLine(i9.ID + ":" + i9.Damage);//45:0?
+            Console.WriteLine(i10.ID + ":" + i10.Damage);//45:1?
+            Console.WriteLine(i11.ID + ":" + i11.Damage);//88:0?
+            Console.WriteLine(i12.ID + ":" + i12.Damage);//88:1?
 
         }
     }
