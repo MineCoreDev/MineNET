@@ -1,7 +1,8 @@
-﻿using MineNET.NBT.Tags;
+﻿using System.Collections.Generic;
+using MineNET.NBT.Tags;
+using MineNET.Network.Packets;
 using MineNET.Values;
 using MineNET.Worlds;
-using System.Collections.Generic;
 
 namespace MineNET.Entities
 {
@@ -9,28 +10,65 @@ namespace MineNET.Entities
     {
         private static long nextEntityId = 0;
 
-        protected long id;
-
-        private List<Player> viewers = new List<Player>();
+        protected List<Player> viewers = new List<Player>();
 
         public CompoundTag namedTag;
 
         public Entity()
         {
-            this.id = Entity.nextEntityId++;
+            this.EntityID = Entity.nextEntityId++;
         }
 
-        public long GetId
+        public long EntityID { get; }
+
+        public bool IsPlayer { get; protected set; }
+
+        public abstract string Name { get; protected set; }
+
+        string displayName;
+        public string DisplayName
         {
             get
             {
-                return this.id;
+                return displayName;
+            }
+
+            set
+            {
+                displayName = value;
+                //TODO: SendEntityData
             }
         }
 
-        public List<Player> GetViewers()
+        public Player[] GetViewers()
         {
-            return this.viewers;
+            return this.viewers.ToArray();
+        }
+
+        public void SendPacketViewers(DataPacket pk)
+        {
+            Player[] players = this.GetViewers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (players[i].HasSpawned)
+                {
+                    players[i].SendPacket(pk);
+                }
+            }
+        }
+
+        public virtual void SetMotion(Vector3 motion)
+        {
+            SetEntityMotionPacket pk = new SetEntityMotionPacket();
+            pk.EntityRuntimeId = this.EntityID;
+            pk.Motion = motion;
+
+            this.SendPacketViewers(pk);
+        }
+
+        internal virtual void OnUpdate()
+        {
+
         }
 
         public float X { get; set; }

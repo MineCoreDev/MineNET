@@ -4,7 +4,7 @@ namespace MineNET.Events.ServerEvents
 {
     public abstract class ServerEventArgs : EventArgs
     {
-        public Server Server { get; set; }
+        public Server Server { get; }
 
         public ServerEventArgs()
         {

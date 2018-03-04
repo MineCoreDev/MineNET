@@ -13,74 +13,26 @@ namespace MineNET.Entities
 {
     public class Player : EntityHuman, CommandSender, InventoryHolder
     {
+        public const float GRAVITY = 9.8f;
+
         private PlayerInventory inventory;
 
         public Player()
         {
+            this.IsPlayer = true;
             this.inventory = new PlayerInventory(this);
         }
 
-        IPEndPoint endPoint;
-        public IPEndPoint EndPoint
-        {
-            get
-            {
-                return this.endPoint;
-            }
+        public override string Name { get; protected set; }
 
-            internal set
-            {
-                this.endPoint = value;
-            }
-        }
+        public IPEndPoint EndPoint { get; internal set; }
 
-        LoginData loginData;
-        public LoginData LoginData
-        {
-            get
-            {
-                return this.loginData;
-            }
+        public LoginData LoginData { get; set; }
+        public ClientData ClientData { get; set; }
 
-            set
-            {
-                this.loginData = value;
-            }
-        }
+        public bool HasSpawned { get; private set; }
 
-        ClientData clientData;
-        public ClientData ClientData
-        {
-            get
-            {
-                return this.clientData;
-            }
-
-            set
-            {
-                this.clientData = value;
-            }
-        }
-
-        bool packDownloaded;
-        public bool PackDownloaded
-        {
-            get
-            {
-                return this.packDownloaded;
-            }
-        }
-
-        bool packStatusCompleted;
-        public bool PackStatusCompleted
-        {
-            get
-            {
-                return this.packStatusCompleted;
-            }
-        }
-
-        public void PacketHandle(DataPacket pk)
+        internal void PacketHandle(DataPacket pk)
         {
             if (pk is LoginPacket)
             {
@@ -115,6 +67,11 @@ namespace MineNET.Entities
                 return;
             }
 
+            this.LoginData = pk.LoginData;
+            this.Name = pk.LoginData.DisplayName;
+
+            this.ClientData = pk.ClientData;
+
             this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
 
             ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
@@ -133,13 +90,11 @@ namespace MineNET.Entities
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_HAVE_ALL_PACKS)
             {
-                this.packDownloaded = true;
                 ResourcePackStackPacket resourcePackStackPacket = new ResourcePackStackPacket();
                 this.SendPacket(resourcePackStackPacket);
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_COMPLETED)
             {
-                this.packStatusCompleted = true;
                 this.ProcessLogin();
             }
         }
@@ -162,6 +117,8 @@ namespace MineNET.Entities
 
             this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
 
+            this.HasSpawned = true;
+
             GameRules rules = new GameRules();
             rules.Add(new GameRule<bool>("ShowCoordinates", true));
 
@@ -178,8 +135,8 @@ namespace MineNET.Entities
             this.Z = 128;
 
             StartGamePacket startGamePacket = new StartGamePacket();
-            startGamePacket.EntityUniqueId = this.id;
-            startGamePacket.EntityRuntimeId = this.id;
+            startGamePacket.EntityUniqueId = this.EntityID;
+            startGamePacket.EntityRuntimeId = this.EntityID;
             startGamePacket.PlayerGamemode = 1;
             startGamePacket.PlayerPosition = new Vector3(this.X, this.Y, this.Z);
             startGamePacket.Direction = new Vector2(this.Yaw, this.Pitch);
@@ -204,7 +161,7 @@ namespace MineNET.Entities
             adventureSettingsPacket.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, false);
             adventureSettingsPacket.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
             adventureSettingsPacket.SetFlag(AdventureSettingsPacket.FLYING, false);
-            adventureSettingsPacket.EntityUniqueId = this.id;
+            adventureSettingsPacket.EntityUniqueId = this.EntityID;
             this.SendPacket(adventureSettingsPacket);
 
             //SetEntityData
@@ -254,7 +211,7 @@ namespace MineNET.Entities
             };
 
             UpdateAttributesPacket updateAttributesPacket = new UpdateAttributesPacket();
-            updateAttributesPacket.EntityRuntimeId = this.id;
+            updateAttributesPacket.EntityRuntimeId = this.EntityID;
             updateAttributesPacket.Attributes = atts;
             this.SendPacket(updateAttributesPacket);
         }
@@ -262,7 +219,7 @@ namespace MineNET.Entities
         public void SendPosition(Vector3 pos, Vector2 yawPitch, byte mode)
         {
             MovePlayerPacket pk = new MovePlayerPacket();
-            pk.EntityRuntimeId = this.id;
+            pk.EntityRuntimeId = this.EntityID;
             pk.Pos = pos;
             pk.Direction = new Vector3(yawPitch.X, yawPitch.Y, yawPitch.X);
             pk.Mode = mode;
@@ -272,19 +229,19 @@ namespace MineNET.Entities
 
         public void SendPacket(DataPacket pk, bool needACK = false, bool immediate = false)
         {
-            Server.Instance.NetworkManager.SendPacket(this.endPoint, pk);
+            Server.Instance.NetworkManager.SendPacket(this, pk);
         }
 
         public void Close(string reason)
         {
             if (!string.IsNullOrEmpty(reason))
             {
-                DisconnectPacket pk = new DisconnectPacket();
+                DisconnectPacket pk = new DisconnectPacket();//TODO NotQueue Send...
                 pk.Message = reason;
 
                 this.SendPacket(pk);
             }
-            Server.Instance.NetworkManager.PlayerClose(this.endPoint, reason);
+            Server.Instance.NetworkManager.PlayerClose(this.EndPoint, reason);
         }
 
         public new PlayerInventory GetInventory()
@@ -302,6 +259,22 @@ namespace MineNET.Entities
         {
             inventory.Close(this);
             this.inventory.CloseInventory();
+        }
+
+        public override void SetMotion(Vector3 motion)
+        {
+            SetEntityMotionPacket pk = new SetEntityMotionPacket();
+            pk.EntityRuntimeId = this.EntityID;
+            pk.Motion = motion;
+
+            SendPacket(pk);
+
+            base.SetMotion(motion);
+        }
+
+        internal override void OnUpdate()
+        {
+            this.SetMotion(new Vector3(0, -0.05f, 0));
         }
     }
 }

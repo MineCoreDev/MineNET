@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using MineNET.Entities;
+using MineNET.Events.ServerEvents;
 using MineNET.Network.Packets;
 using MineNET.RakNet;
 using MineNET.Utils;
@@ -88,11 +89,17 @@ namespace MineNET.Network
             }
         }
 
-        public void SendPacket(IPEndPoint point, DataPacket pk, bool needACK = false, bool immediate = false)
+        public void SendPacket(Player player, DataPacket pk, bool needACK = false, bool immediate = false)
         {
-            RakNetSession session = server.GetSession(point);
+            RakNetSession session = server.GetSession(player.EndPoint);
 
             if (session == null)
+                return;
+
+            DataPacketSendArgs args = new DataPacketSendArgs(player, pk);
+            ServerEvents.OnPacketSend(args);
+
+            if (args.IsCancel)
                 return;
 
             pk.Encode();
@@ -132,6 +139,13 @@ namespace MineNET.Network
                             Logger.Log("%server_packet_handle", buffer[0].ToString("X"), buffer.Length);
                             packet.SetBuffer(buffer);
                             packet.Decode();
+
+                            DataPacketReceiveArgs args = new DataPacketReceiveArgs(player, pk);
+                            ServerEvents.OnPacketReceive(args);
+
+                            if (args.IsCancel)
+                                return;
+
                             player.PacketHandle(packet);
                         }
                         else

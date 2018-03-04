@@ -4,18 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Entities;
-using MineNET.Entities.Attributes;
 using MineNET.Events.ServerEvents;
 using MineNET.Network;
 using MineNET.Plugins;
 using MineNET.Utils;
-using MineNET.Utils.Config;
 
 namespace MineNET
 {
-    public sealed class Server
+    public sealed partial class Server
     {
-        static Server instance;
         public static Server Instance
         {
             get
@@ -48,12 +45,6 @@ namespace MineNET
             }
         }
 
-        ConsoleInput consoleInput;
-
-        MineNETConfig mineNETConfig;
-        ServerConfig serverConfig;
-
-        NetworkManager networkManager;
         public NetworkManager NetworkManager
         {
             get
@@ -61,7 +52,7 @@ namespace MineNET
                 return networkManager;
             }
         }
-        CommandManager commandManager;
+
         public CommandManager CommandManager
         {
             get
@@ -69,7 +60,7 @@ namespace MineNET
                 return commandManager;
             }
         }
-        PluginManager pluginManager;
+
         public PluginManager PluginManager
         {
             get
@@ -78,7 +69,6 @@ namespace MineNET
             }
         }
 
-        Logger logger;
         public Logger Logger
         {
             get
@@ -87,7 +77,6 @@ namespace MineNET
             }
         }
 
-        bool isShutdown;
         public bool IsShutdown()
         {
             return isShutdown;
@@ -109,71 +98,7 @@ namespace MineNET
             ServerEvents.OnServerStart(new ServerStartEventArgs());
         }
 
-        void Init()
-        {
-            InitConfig();
-
-            try
-            {
-                if (mineNETConfig.EnableConsoleOutput)
-                {
-                    logger = new Logger();
-                    logger.Init();
-                    UpdateLogger();
-                }
-
-                Update();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-
-
-            if (mineNETConfig.EnableConsoleInput)
-            {
-                consoleInput = new ConsoleInput();
-            }
-
-            Logger.Info("%server_start");
-
-            commandManager = new CommandManager();
-            pluginManager = new PluginManager();
-            new EntityAttributePool();
-            networkManager = new NetworkManager();
-        }
-
-        void InitConfig()
-        {
-            string mPath = $"{ExecutePath}\\MineNET.yml";
-            string sPath = $"{ExecutePath}\\ServerProperties.yml";
-            mineNETConfig = YamlStaticConfig.Load<MineNETConfig>(mPath);
-            serverConfig = YamlStaticConfig.Load<ServerConfig>(sPath);
-        }
-
-        async void Update()
-        {
-            while (!IsShutdown())
-            {
-                await Task.Delay(1000 / 20);
-                if (mineNETConfig.EnableConsoleInput)
-                {
-
-                    CommandHandle();
-                }
-            }
-        }
-
-        async void UpdateLogger()
-        {
-            while (!IsShutdown())
-            {
-                await Task.Delay(1000 / 20);
-                logger.Update();
-            }
-        }
-
-        public void Stop()
+        public async void Stop()
         {
             Logger.Info("%server_stop");
             mineNETConfig.Save<MineNETConfig>();
@@ -185,12 +110,14 @@ namespace MineNET
                 players[i].Close("disconnect.closed");//TODO: Option Add
             }
 
+            await Task.Delay(1000);
+
             ServerEvents.OnServerStop(new ServerStopEventArgs());
 
             Kill();
         }
 
-        public void ErrorStop(Exception e)
+        public async void ErrorStop(Exception e)
         {
             this.logger = new Logger();
             Logger.Fatal(e.ToString());
@@ -206,15 +133,11 @@ namespace MineNET
                 players[i].Close("disconnect.closed");//TODO: Option Add
             }
 
+            await Task.Delay(1000);
+
             ServerEvents.OnServerStop(new ServerStopEventArgs());
 
             Kill();
-        }
-
-        public void Kill()
-        {
-            Logger.Info("%server_stoped");
-            Killed();
         }
 
         public Player[] GetPlayers()
@@ -222,19 +145,16 @@ namespace MineNET
             return networkManager?.players.Values.ToArray();
         }
 
-        async void Killed()
+        public Player GetPlayer(string name)
         {
-            await Task.Delay(1000);
-            isShutdown = true;
-        }
-
-        void CommandHandle()
-        {
-            string cmd = consoleInput.GetCommand();
-            if (!string.IsNullOrEmpty(cmd))
+            Player[] players = this.GetPlayers();
+            for (int i = 0; i < players.Length; ++i)
             {
-                commandManager.HandleConsoleCommand(cmd);
+                if (players[i].Name == name)
+                    return players[i];
             }
+
+            return null;
         }
     }
 }

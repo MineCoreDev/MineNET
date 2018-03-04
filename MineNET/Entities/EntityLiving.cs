@@ -2,7 +2,7 @@
 
 namespace MineNET.Entities
 {
-    public class EntityLiving : Entity, InventoryHolder
+    public abstract class EntityLiving : Entity, InventoryHolder
     {
         public virtual Inventory GetInventory()
         {

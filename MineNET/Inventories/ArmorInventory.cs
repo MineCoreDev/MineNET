@@ -38,7 +38,7 @@ namespace MineNET.Inventories
             if (send)
             {
                 this.SendSlot(index, this.Viewers.ToArray());
-                this.SendArmorContents(((EntityLiving) this.Holder).GetViewers().ToArray());
+                this.SendArmorContents(((EntityLiving) this.Holder).GetViewers());
             }
         }
 
@@ -57,7 +57,7 @@ namespace MineNET.Inventories
             for (int i = 0; i < players.Length; ++i)
             {
                 MobArmorEquipmentPacket pk = new MobArmorEquipmentPacket();
-                pk.EntityRuntimeId = players[i].GetId;
+                pk.EntityRuntimeId = players[i].EntityID;
                 pk.Items = this.GetArmorContents();
                 players[i].SendPacket(pk);
             }

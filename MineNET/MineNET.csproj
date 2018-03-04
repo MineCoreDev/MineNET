@@ -355,8 +355,10 @@
     <Compile Include="Data\ContainerIds.cs" />
     <Compile Include="Events\MineNETEvents.cs" />
     <Compile Include="Events\ICancellable.cs" />
+    <Compile Include="Events\ServerEvents\DataPacketReceiveArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerEvents.cs" />
+    <Compile Include="Events\ServerEvents\DataPacketSendArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerStartEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerStopEventArgs.cs" />
     <Compile Include="Inventories\ArmorInventory.cs" />
@@ -615,9 +617,11 @@
     <Compile Include="Network\Packets\ResourcePackClientResponsePacket.cs" />
     <Compile Include="Network\Packets\ResourcePacksInfoPacket.cs" />
     <Compile Include="Network\Packets\ResourcePackStackPacket.cs" />
+    <Compile Include="Network\Packets\SetEntityMotionPacket.cs" />
     <Compile Include="Network\Packets\SetTimePacket.cs" />
     <Compile Include="Network\Packets\StartGamePacket.cs" />
     <Compile Include="Network\Packets\UpdateAttributesPacket.cs" />
+    <Compile Include="PartialServer.cs" />
     <Compile Include="Plugins\Attributes\CommandAttribute.cs" />
     <Compile Include="Plugins\Attributes\PluginAttribute.cs" />
     <Compile Include="Plugins\IPlugin.cs" />

@@ -13,5 +13,17 @@
         {
             ServerStop?.Invoke(args);
         }
+
+        public static event EventHandler<DataPacketSendArgs> PacketSend;
+        public static void OnPacketSend(DataPacketSendArgs args)
+        {
+            PacketSend?.Invoke(args);
+        }
+
+        public static event EventHandler<DataPacketReceiveArgs> PacketReceive;
+        public static void OnPacketReceive(DataPacketReceiveArgs args)
+        {
+            PacketReceive?.Invoke(args);
+        }
     }
 }
