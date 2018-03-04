@@ -74,5 +74,10 @@ namespace MineNET.Values
         {
             return $"X: {this.X} Y: {this.Y} Z: {this.Z}";
         }
+
+        public Vector3i ToVector3i()
+        {
+            return new Vector3i(this.GetFloorX(), this.GetFloorY(), this.GetFloorZ());
+        }
     }
 }

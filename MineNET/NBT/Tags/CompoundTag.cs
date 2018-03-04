@@ -27,12 +27,6 @@ namespace MineNET.NBT.Tags
 
         }
 
-        public CompoundTag PutByte(string name, byte data)
-        {
-            this.tags[name] = new ByteTag(name, data);
-            return this;
-        }
-
         public byte GetByte(string name)
         {
             if (this.Exist(name))
@@ -45,9 +39,9 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public CompoundTag PutShort(string name, short data)
+        public CompoundTag PutByte(string name, byte data)
         {
-            this.tags[name] = new ShortTag(name, data);
+            this.tags[name] = new ByteTag(name, data);
             return this;
         }
 
@@ -63,9 +57,9 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public CompoundTag PutInt(string name, int data)
+        public CompoundTag PutShort(string name, short data)
         {
-            this.tags[name] = new IntTag(name, data);
+            this.tags[name] = new ShortTag(name, data);
             return this;
         }
 
@@ -81,9 +75,9 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public CompoundTag PutLong(string name, long data)
+        public CompoundTag PutInt(string name, int data)
         {
-            this.tags[name] = new LongTag(name, data);
+            this.tags[name] = new IntTag(name, data);
             return this;
         }
 
@@ -99,9 +93,9 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public CompoundTag PutFloat(string name, float data)
+        public CompoundTag PutLong(string name, long data)
         {
-            this.tags[name] = new FloatTag(name, data);
+            this.tags[name] = new LongTag(name, data);
             return this;
         }
 
@@ -117,9 +111,9 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public CompoundTag PutDouble(string name, double data)
+        public CompoundTag PutFloat(string name, float data)
         {
-            this.tags[name] = new DoubleTag(name, data);
+            this.tags[name] = new FloatTag(name, data);
             return this;
         }
 
@@ -135,9 +129,9 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public CompoundTag PutString(string name, string data)
+        public CompoundTag PutDouble(string name, double data)
         {
-            this.tags[name] = new StringTag(name, data);
+            this.tags[name] = new DoubleTag(name, data);
             return this;
         }
 
@@ -153,9 +147,9 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public CompoundTag PutBool(string name, bool data)
+        public CompoundTag PutString(string name, string data)
         {
-            this.tags[name] = new ByteTag(name, data ? (byte) 1 : (byte) 0);
+            this.tags[name] = new StringTag(name, data);
             return this;
         }
 
@@ -164,9 +158,9 @@ namespace MineNET.NBT.Tags
             return this.GetByte(name) != 0;
         }
 
-        public CompoundTag PutByteArray(string name, byte[] data)
+        public CompoundTag PutBool(string name, bool data)
         {
-            this.tags[name] = new ByteArrayTag(name, data);
+            this.tags[name] = new ByteTag(name, data ? (byte) 1 : (byte) 0);
             return this;
         }
 
@@ -182,9 +176,9 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public CompoundTag PutIntArray(string name, int[] data)
+        public CompoundTag PutByteArray(string name, byte[] data)
         {
-            this.tags[name] = new IntArrayTag(name, data);
+            this.tags[name] = new ByteArrayTag(name, data);
             return this;
         }
 
@@ -200,9 +194,9 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public CompoundTag PutLongArray(string name, long[] data)
+        public CompoundTag PutIntArray(string name, int[] data)
         {
-            this.tags[name] = new LongArrayTag(name, data);
+            this.tags[name] = new IntArrayTag(name, data);
             return this;
         }
 
@@ -218,9 +212,9 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public CompoundTag PutList<T>(ListTag<T> data) where T : Tag
+        public CompoundTag PutLongArray(string name, long[] data)
         {
-            this.tags[data.Name] = data;
+            this.tags[name] = new LongArrayTag(name, data);
             return this;
         }
 
@@ -236,10 +230,9 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public CompoundTag PutCompound(string name, CompoundTag data)
+        public CompoundTag PutList<T>(ListTag<T> data) where T : Tag
         {
-            data.Name = name;
-            this.tags[name] = data;
+            this.tags[data.Name] = data;
             return this;
         }
 
@@ -255,19 +248,28 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public void PutTag(string name, Tag tag)
+        public CompoundTag PutCompound(string name, CompoundTag data)
         {
-            this.tags[name] = tag;
+            data.Name = name;
+            this.tags[name] = data;
+            return this;
         }
 
-        public T GetTag<T>(string name) where T : Tag
+        public Tag GetTag(string name)
         {
             if (this.Exist(name))
             {
-                return (T) this[name];
+                return this[name];
             }
             else
-                throw new IndexOutOfRangeException();
+            {
+                throw new NullReferenceException();
+            }
+        }
+
+        public void PutTag(string name, Tag tag)
+        {
+            this.tags[name] = tag;
         }
 
         public void Remove(string name)

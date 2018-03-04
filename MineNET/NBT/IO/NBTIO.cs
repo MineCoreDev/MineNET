@@ -135,7 +135,7 @@ namespace MineNET.NBT.IO
         public static CompoundTag WriteItem(Item item, int slot = -1)
         {
             CompoundTag nbt = new CompoundTag()
-                .PutShort("id", (short) item.ItemID)
+                .PutShort("id", (short) item.ID)
                 .PutShort("damage", (short) item.Damage)
                 .PutByte("count", (byte) item.Count);
             if (slot != -1)
@@ -154,7 +154,7 @@ namespace MineNET.NBT.IO
             Item item = Item.Get(nbt.GetShort("id"), nbt.GetShort("damage"), nbt.GetByte("count"));
             if (nbt.Equals("tag"))
             {
-                CompoundTag tag = nbt.GetCompound("tag"); //TODO : clone
+                CompoundTag tag = (CompoundTag) nbt.GetCompound("tag").Clone();
                 tag.Name = "";
                 item.SetNamedTag(tag);
             }

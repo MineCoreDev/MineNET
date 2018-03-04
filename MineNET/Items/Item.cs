@@ -36,9 +36,6 @@ namespace MineNET.Items
             return this.MemberwiseClone();
         }
 
-        private int id;
-        private int meta;
-        private int count;
         private byte[] tags = new byte[0];
         private CompoundTag cachedNBT = null;
 
@@ -46,9 +43,9 @@ namespace MineNET.Items
 
         public Item(int id, int meta = 0, int count = 1)
         {
-            this.id = id;
-            this.meta = meta;
-            this.count = count;
+            this.ID = id;
+            this.Damage = meta;
+            this.Count = count;
         }
 
         public virtual string Name
@@ -59,39 +56,11 @@ namespace MineNET.Items
             }
         }
 
-        public int ItemID
-        {
-            get
-            {
-                return this.id;
-            }
-        }
+        public int ID { get; }
 
-        public int Damage
-        {
-            get
-            {
-                return this.meta;
-            }
+        public int Damage { get; set; }
 
-            set
-            {
-                this.meta = value;
-            }
-        }
-
-        public int Count
-        {
-            get
-            {
-                return this.count;
-            }
-
-            set
-            {
-                this.count = value;
-            }
-        }
+        public int Count { get; set; }
 
         public bool HasTags()
         {
@@ -476,7 +445,7 @@ namespace MineNET.Items
                 return false;
             }
             Item item = (Item) obj;
-            if (this.id != item.id || this.meta != item.meta || this.count != item.count)
+            if (this.ID != item.ID || this.Damage != item.Damage || this.Count != item.Count)
             {
                 return false;
             }

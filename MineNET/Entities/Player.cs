@@ -2,6 +2,7 @@
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
+using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
 using MineNET.Network.Packets;
 using MineNET.Utils;
@@ -67,6 +68,14 @@ namespace MineNET.Entities
                 return;
             }
 
+            PlayerPreLoginEventArgs playerPreLoginEvent = new PlayerPreLoginEventArgs(this, "");
+            PlayerEvents.OnPlayerPreLogin(playerPreLoginEvent);
+            if (playerPreLoginEvent.IsCancel)
+            {
+                this.Close(playerPreLoginEvent.KickMessage);
+                return;
+            }
+
             this.LoginData = pk.LoginData;
             this.Name = pk.LoginData.DisplayName;
 
@@ -125,6 +134,18 @@ namespace MineNET.Entities
             GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
             gameRulesChangedPacket.GameRules = rules;
             this.SendPacket(gameRulesChangedPacket);
+        }
+
+        public void MovePlayerPacketHandle(MovePlayerPacket pk)
+        {
+            Vector3 pos = pk.Pos;
+            Vector3 direction = pk.Direction;
+            this.X = pos.X;
+            this.Y = pos.Y;
+            this.Z = pos.Z;
+            this.Pitch = direction.X;
+            this.Yaw = direction.Y;
+            //this.SendPosition(pos, direction, MovePlayerPacket.MODE_RESET);
         }
 
         private void ProcessLogin()
