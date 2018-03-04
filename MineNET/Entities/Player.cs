@@ -88,8 +88,7 @@ namespace MineNET.Entities
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_SEND_PACKS)
             {
-                //TODO:
-                //ResourcePackDataInfoPacket
+                //TODO: ResourcePackDataInfoPacket
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_HAVE_ALL_PACKS)
             {
@@ -112,9 +111,9 @@ namespace MineNET.Entities
             Logger.Info("%server_chunkRadius", pk.Radius, chunkRadiusUpdatedPacket.Radius);
             SendPacket(chunkRadiusUpdatedPacket);
 
-            for (int i = (128 >> 4) - chunkSize; i < (128 >> 4) + chunkSize; ++i)
+            for (int i = ((int) this.X >> 4) - chunkSize; i < ((int) this.X >> 4) + chunkSize; ++i)
             {
-                for (int j = (128 >> 4) - chunkSize; j < (128 >> 4) + chunkSize; ++j)
+                for (int j = ((int) this.Z >> 4) - chunkSize; j < ((int) this.Z >> 4) + chunkSize; ++j)
                 {
                     new Chunk(i, j).TestChunkSend(this);
                 }
@@ -144,16 +143,21 @@ namespace MineNET.Entities
 
         private void ProcessLogin()
         {
+            //TODO: PlayerDataLoad
+            this.X = 128;
+            this.Y = 6;
+            this.Z = 128;
+
             StartGamePacket startGamePacket = new StartGamePacket();
             startGamePacket.EntityUniqueId = this.id;
             startGamePacket.EntityRuntimeId = this.id;
             startGamePacket.PlayerGamemode = 1;
-            startGamePacket.PlayerPosition = new Vector3(128, 6, 128);
-            startGamePacket.Direction = new Vector2(0, 0);
+            startGamePacket.PlayerPosition = new Vector3(this.X, this.Y, this.Z);
+            startGamePacket.Direction = new Vector2(this.Yaw, this.Pitch);
             startGamePacket.WorldGamemode = 0;
             startGamePacket.Difficulty = 1;
             startGamePacket.SpawnX = 128;
-            startGamePacket.SpawnY = 4;
+            startGamePacket.SpawnY = 6;
             startGamePacket.SpawnZ = 128;
             startGamePacket.WorldName = "world";
             this.SendPacket(startGamePacket);
@@ -181,6 +185,17 @@ namespace MineNET.Entities
             //MobEquipment
             //InventorySlot
             //PlayerList
+        }
+
+        public void MovePlayerPacketHandle(MovePlayerPacket pk)
+        {
+            //TODO: MoveCheck...
+            this.X = pk.Pos.X;
+            this.Y = pk.Pos.Y;
+            this.Z = pk.Pos.Z;
+
+            this.Yaw = pk.Direction.X;
+            this.Pitch = pk.Direction.Y;
         }
 
         private int FixRadius(int radius)

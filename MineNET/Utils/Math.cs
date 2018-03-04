@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Utils
 {
-    public static class MineNETMath
+    public static class Math
     {
         public static float Clamp(float value, float min, float max)
         {

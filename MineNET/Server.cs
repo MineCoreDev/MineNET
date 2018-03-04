@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using MineNET.Commands;
+using MineNET.Entities;
 using MineNET.Entities.Attributes;
 using MineNET.Events.ServerEvents;
 using MineNET.Network;
@@ -177,6 +179,12 @@ namespace MineNET
             mineNETConfig.Save<MineNETConfig>();
             serverConfig.Save<ServerConfig>();
 
+            Player[] players = this.GetPlayers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].Close("disconnect.closed");//TODO: Option Add
+            }
+
             ServerEvents.OnServerStop(new ServerStopEventArgs());
 
             Kill();
@@ -188,8 +196,15 @@ namespace MineNET
             Logger.Fatal(e.ToString());
             Logger.Error("%server_stop_error");
             Logger.Info("%server_stop");
-            mineNETConfig.Save<MineNETConfig>();
-            serverConfig.Save<ServerConfig>();
+
+            mineNETConfig?.Save<MineNETConfig>();
+            serverConfig?.Save<ServerConfig>();
+
+            Player[] players = this.GetPlayers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].Close("disconnect.closed");//TODO: Option Add
+            }
 
             ServerEvents.OnServerStop(new ServerStopEventArgs());
 
@@ -200,6 +215,11 @@ namespace MineNET
         {
             Logger.Info("%server_stoped");
             Killed();
+        }
+
+        public Player[] GetPlayers()
+        {
+            return networkManager?.players.Values.ToArray();
         }
 
         async void Killed()
