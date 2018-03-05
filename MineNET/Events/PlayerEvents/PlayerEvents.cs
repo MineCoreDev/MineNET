@@ -13,5 +13,12 @@
         {
             PlayerLogin?.Invoke(args);
         }
+
+
+        public static event EventHandler<PlayerQuitEventArgs> PlayerQuit;
+        public static void OnPlayerQuit(PlayerQuitEventArgs args)
+        {
+            PlayerQuit?.Invoke(args);
+        }
     }
 }
