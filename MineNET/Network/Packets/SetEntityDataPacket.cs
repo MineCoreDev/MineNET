@@ -23,7 +23,7 @@ namespace MineNET.Network.Packets
             base.Encode();
 
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
-            //TODO : EntityMetadataManager
+            this.WriteEntityMetadata(this.EntityData);
         }
     }
 }

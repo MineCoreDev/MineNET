@@ -7,5 +7,11 @@
         {
             PlayerPreLogin?.Invoke(args);
         }
+
+        public static event EventHandler<PlayerLoginEventArgs> PlayerLogin;
+        public static void OnPlayerLogin(PlayerLoginEventArgs args)
+        {
+            PlayerLogin?.Invoke(args);
+        }
     }
 }

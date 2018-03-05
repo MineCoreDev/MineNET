@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Entities;
@@ -12,35 +13,36 @@ namespace MineNET
 {
     public sealed partial class Server
     {
-        static Server instance;
+        private static Server instance;
 
-        ConsoleInput consoleInput;
+        private ConsoleInput consoleInput;
 
-        MineNETConfig mineNETConfig;
-        ServerConfig serverConfig;
+        private MineNETConfig mineNETConfig;
+        private ServerConfig serverConfig;
 
-        NetworkManager networkManager;
-        CommandManager commandManager;
-        PluginManager pluginManager;
+        private NetworkManager networkManager;
+        private CommandManager commandManager;
+        private PluginManager pluginManager;
 
-        Logger logger;
+        private Logger logger;
 
-        bool isShutdown;
+        private bool isShutdown;
 
-        void Init()
+        private void Init()
         {
-            InitConfig();
+            this.InitConfig();
+            this.InitFolder();
 
             try
             {
-                if (mineNETConfig.EnableConsoleOutput)
+                if (this.mineNETConfig.EnableConsoleOutput)
                 {
-                    logger = new Logger();
-                    logger.Init();
-                    UpdateLogger();
+                    this.logger = new Logger();
+                    this.logger.Init();
+                    this.UpdateLogger();
                 }
 
-                Update();
+                this.Update();
             }
             catch (Exception e)
             {
@@ -50,33 +52,47 @@ namespace MineNET
 
             if (mineNETConfig.EnableConsoleInput)
             {
-                consoleInput = new ConsoleInput();
+                this.consoleInput = new ConsoleInput();
             }
 
             Logger.Info("%server_start");
 
-            commandManager = new CommandManager();
-            pluginManager = new PluginManager();
+            this.commandManager = new CommandManager();
+            this.pluginManager = new PluginManager();
             new EntityAttributePool();
-            networkManager = new NetworkManager();
+            this.networkManager = new NetworkManager();
         }
 
-        void InitConfig()
+        private void InitConfig()
         {
             string mPath = $"{ExecutePath}\\MineNET.yml";
             string sPath = $"{ExecutePath}\\ServerProperties.yml";
-            mineNETConfig = YamlStaticConfig.Load<MineNETConfig>(mPath);
-            serverConfig = YamlStaticConfig.Load<ServerConfig>(sPath);
+            this.mineNETConfig = YamlStaticConfig.Load<MineNETConfig>(mPath);
+            this.serverConfig = YamlStaticConfig.Load<ServerConfig>(sPath);
         }
 
-        async void Update()
+        private void InitFolder()
+        {
+            string wPath = $"{Server.ExecutePath}\\worlds";
+            if (!Directory.Exists(wPath))
+            {
+                Directory.CreateDirectory(wPath);
+            }
+            string pPath = $"{Server.ExecutePath}\\players";
+            if (!Directory.Exists(pPath))
+            {
+                Directory.CreateDirectory(pPath);
+            }
+        }
+
+        private async void Update()
         {
             while (!IsShutdown())
             {
                 await Task.Delay(1000 / 20);
-                if (mineNETConfig.EnableConsoleInput)
+                if (this.mineNETConfig.EnableConsoleInput)
                 {
-                    CommandHandle();
+                    this.CommandHandle();
                 }
 
                 Player[] players = this.GetPlayers();
@@ -90,34 +106,34 @@ namespace MineNET
             }
         }
 
-        async void UpdateLogger()
+        private async void UpdateLogger()
         {
             while (!IsShutdown())
             {
                 await Task.Delay(1000 / 20);
-                logger.Update();
+                this.logger.Update();
             }
         }
 
-        void CommandHandle()
+        private void CommandHandle()
         {
-            string cmd = consoleInput.GetCommand();
+            string cmd = this.consoleInput.GetCommand();
             if (!string.IsNullOrEmpty(cmd))
             {
-                commandManager.HandleConsoleCommand(cmd);
+                this.commandManager.HandleConsoleCommand(cmd);
             }
         }
 
-        void Kill()
+        private void Kill()
         {
             Logger.Info("%server_stoped");
-            Killed();
+            this.Killed();
         }
 
-        async void Killed()
+        private async void Killed()
         {
             await Task.Delay(1000);
-            isShutdown = true;
+            this.isShutdown = true;
         }
     }
 }
