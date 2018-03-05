@@ -1,9 +1,13 @@
-﻿using System.Net;
+﻿using System.IO;
+using System.Net;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
+using MineNET.NBT.Data;
+using MineNET.NBT.IO;
+using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Utils;
 using MineNET.Values;
@@ -28,8 +32,8 @@ namespace MineNET.Entities
 
         public IPEndPoint EndPoint { get; internal set; }
 
-        public LoginData LoginData { get; set; }
-        public ClientData ClientData { get; set; }
+        public LoginData LoginData { get; internal set; }
+        public ClientData ClientData { get; internal set; }
 
         public bool HasSpawned { get; private set; }
 
@@ -53,7 +57,7 @@ namespace MineNET.Entities
             }
         }
 
-        public void LoginPacketHandle(LoginPacket pk)
+        private void LoginPacketHandle(LoginPacket pk)
         {
             if (pk.Protocol < ProtocolInfo.CLIENT_PROTOCOL)
             {
@@ -81,13 +85,22 @@ namespace MineNET.Entities
 
             this.ClientData = pk.ClientData;
 
+            Player[] players = Server.Instance.GetPlayers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (players[i] != this)
+                {
+                    //TODO
+                }
+            }
+
             this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
 
             ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
             this.SendPacket(resourcePacksInfoPacket);
         }
 
-        public void ResourcePackClientResponsePacketHandle(ResourcePackClientResponsePacket pk)
+        private void ResourcePackClientResponsePacketHandle(ResourcePackClientResponsePacket pk)
         {
             if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_REFUSED)
             {
@@ -108,9 +121,9 @@ namespace MineNET.Entities
             }
         }
 
-        public void RequestChunkRadiusPacketHandle(RequestChunkRadiusPacket pk)
+        private void RequestChunkRadiusPacketHandle(RequestChunkRadiusPacket pk)
         {
-            int chunkSize = FixRadius(pk.Radius);
+            int chunkSize = this.FixRadius(pk.Radius);
             ChunkRadiusUpdatedPacket chunkRadiusUpdatedPacket = new ChunkRadiusUpdatedPacket();
             chunkRadiusUpdatedPacket.Radius = chunkSize;
             Logger.Info("%server_chunkRadius", pk.Radius, chunkRadiusUpdatedPacket.Radius);
@@ -136,7 +149,7 @@ namespace MineNET.Entities
             this.SendPacket(gameRulesChangedPacket);
         }
 
-        public void MovePlayerPacketHandle(MovePlayerPacket pk)
+        private void MovePlayerPacketHandle(MovePlayerPacket pk)
         {
             //TODO: MoveCheck...
             Vector3 pos = pk.Pos;
@@ -152,6 +165,16 @@ namespace MineNET.Entities
         private void ProcessLogin()
         {
             //TODO: PlayerDataLoad
+            this.InitPlayerData();
+
+            PlayerLoginEventArgs playerLoginEvent = new PlayerLoginEventArgs(this, "");
+            PlayerEvents.OnPlayerLogin(playerLoginEvent);
+            if (playerLoginEvent.IsCancel)
+            {
+                this.Close(playerLoginEvent.KickMessage);
+                return;
+            }
+
             this.X = 128;
             this.Y = 6;
             this.Z = 128;
@@ -193,6 +216,17 @@ namespace MineNET.Entities
             //MobEquipment
             //InventorySlot
             //PlayerList
+        }
+
+        private void InitPlayerData()
+        {
+            string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
+            if (!File.Exists(path))
+            {
+                //File.Create(path);
+            }
+            CompoundTag nbt = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
+            Logger.Info(nbt.ToString());
         }
 
         private int FixRadius(int radius)

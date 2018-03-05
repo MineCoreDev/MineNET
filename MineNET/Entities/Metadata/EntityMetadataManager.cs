@@ -123,6 +123,17 @@ namespace MineNET.Entities.Metadata
             return this;
         }
 
+        public bool GetBool(int id)
+        {
+            return this.GetByte(id) == 1;
+        }
+
+        public EntityMetadataManager PutBool(int id, bool data)
+        {
+            this.PutByte(id, data ? (byte) 1 : (byte) 0);
+            return this;
+        }
+
         public bool Exists(int id)
         {
             return this.entityData.ContainsKey(id);

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MineNET.Entities.Metadata;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Values;
@@ -9,6 +10,8 @@ namespace MineNET.Entities
     public abstract class Entity : ILocation
     {
         private static long nextEntityId = 0;
+
+        private EntityMetadataManager dataProperties = new EntityMetadataManager();
 
         protected List<Player> viewers = new List<Player>();
 
@@ -64,6 +67,17 @@ namespace MineNET.Entities
             pk.Motion = motion;
 
             this.SendPacketViewers(pk);
+        }
+
+        public void sendData(params Player[] players)
+        {
+            for (int i = 0; i < players.Length; ++i)
+            {
+                SetEntityDataPacket pk = new SetEntityDataPacket();
+                pk.EntityRuntimeId = this.EntityID;
+                pk.EntityData = this.dataProperties;
+                players[i].SendPacket(pk);
+            }
         }
 
         internal virtual void OnUpdate()

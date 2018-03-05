@@ -353,6 +353,7 @@
     <Compile Include="Commands\Defaults\StopCommand.cs" />
     <Compile Include="Commands\Data\ICommandHandler.cs" />
     <Compile Include="Data\ContainerIds.cs" />
+    <Compile Include="Entities\Data\EntityFlags.cs" />
     <Compile Include="Entities\Metadata\EntityDataLong.cs" />
     <Compile Include="Entities\Metadata\EntityDataPos.cs" />
     <Compile Include="Entities\Metadata\EntityDataSlot.cs" />
@@ -370,6 +371,7 @@
     <Compile Include="Events\ICancellable.cs" />
     <Compile Include="Events\PlayerEvents\PlayerEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerEvents.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerLoginEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerPreLoginEventArgs.cs" />
     <Compile Include="Events\ServerEvents\DataPacketReceiveArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerEventArgs.cs" />
