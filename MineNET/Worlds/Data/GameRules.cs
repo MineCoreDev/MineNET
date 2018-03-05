@@ -84,12 +84,12 @@ namespace MineNET.Worlds.Data
         {
             get
             {
-                return gameRules[index];
+                return this.gameRules[index];
             }
 
             set
             {
-                gameRules[index] = value;
+                this.gameRules[index] = value;
             }
         }
     }

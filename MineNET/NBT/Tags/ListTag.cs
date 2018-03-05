@@ -35,7 +35,7 @@ namespace MineNET.NBT.Tags
 
         public ListTag<T> Add(T tag)
         {
-            list.Add(tag);
+            this.list.Add(tag);
             return this;
         }
 
@@ -68,7 +68,7 @@ namespace MineNET.NBT.Tags
             {
                 if (this.Exist(index))
                 {
-                    return list[index];
+                    return this.list[index];
                 }
                 else
                     throw new IndexOutOfRangeException();
@@ -115,12 +115,12 @@ namespace MineNET.NBT.Tags
 
         internal override void Read(NBTStream stream)
         {
-            ListTagType = (NBTTagType) stream.ReadByte();
+            this.ListTagType = (NBTTagType) stream.ReadByte();
             int len = stream.ReadInt();
             for (int i = 0; i < len; ++i)
             {
                 Tag tag = null;
-                switch (ListTagType)
+                switch (this.ListTagType)
                 {
                     case NBTTagType.BYTE:
                         tag = new ByteTag(0);
@@ -168,7 +168,7 @@ namespace MineNET.NBT.Tags
                 }
 
                 tag.Read(stream);
-                list.Add((T) tag);
+                this.list.Add((T) tag);
             }
         }
 

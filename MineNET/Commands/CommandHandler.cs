@@ -10,12 +10,12 @@ namespace MineNET.Commands
 
         public CommandHandler(CommandManager mgr)
         {
-            manager = mgr;
+            this.manager = mgr;
         }
 
         public void CommandHandle(CommandSender sender, string cmd, params string[] args)
         {
-            Command command = manager.GetCommand(cmd);
+            Command command = this.manager.GetCommand(cmd);
             if (command != null)
             {
                 command.Execute(sender, args);

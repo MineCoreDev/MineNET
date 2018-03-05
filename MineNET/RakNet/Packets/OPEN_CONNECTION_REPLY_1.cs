@@ -17,12 +17,12 @@
         {
             get
             {
-                return serverID;
+                return this.serverID;
             }
 
             set
             {
-                serverID = value;
+                this.serverID = value;
             }
         }
 
@@ -31,12 +31,12 @@
         {
             get
             {
-                return mtuSize;
+                return this.mtuSize;
             }
 
             set
             {
-                mtuSize = value;
+                this.mtuSize = value;
             }
         }
 
@@ -45,9 +45,9 @@
             base.Encode();
 
             this.WriteMagic();
-            this.WriteLong(serverID);
+            this.WriteLong(this.serverID);
             this.WriteByte(0);
-            this.WriteShort(mtuSize);
+            this.WriteShort(this.mtuSize);
         }
     }
 }

@@ -29,12 +29,12 @@ namespace MineNET.Utils
         {
             get
             {
-                return useGUI;
+                return this.useGUI;
             }
 
             set
             {
-                useGUI = value;
+                this.useGUI = value;
             }
         }
 
@@ -42,7 +42,7 @@ namespace MineNET.Utils
 
         internal void Init()
         {
-            if (!useGUI)
+            if (!this.useGUI)
             {
                 Console.SetWindowSize(WINDOW_X, WINDOW_Y);
                 Console.SetBufferSize(WINDOW_X, 1000);
@@ -188,21 +188,21 @@ namespace MineNET.Utils
 
         internal void Update()
         {
-            if (!useGUI)
+            if (!this.useGUI)
             {
-                if (loggerTexts.Count == 0)
+                if (this.loggerTexts.Count == 0)
                 {
                     return;
                 }
 
                 for (int i = 0; i < 10; ++i)
                 {
-                    if (loggerTexts.Count == 0)
+                    if (this.loggerTexts.Count == 0)
                     {
                         return;
                     }
 
-                    LoggerInfo info = loggerTexts.Dequeue();
+                    LoggerInfo info = this.loggerTexts.Dequeue();
                     if (info != null)
                     {
                         string log = info.text;
@@ -350,7 +350,7 @@ namespace MineNET.Utils
                 LoggerInfo info = new LoggerInfo();
                 info.level = level;
                 info.text = text;
-                loggerTexts.Enqueue(info);
+                this.loggerTexts.Enqueue(info);
             }
         }
 

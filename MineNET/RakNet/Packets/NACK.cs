@@ -21,7 +21,7 @@ namespace MineNET.RakNet.Packets
         {
             base.Encode();
 
-            List<Tuple<int, int>> ranges = Slize(new List<int>(packets));
+            List<Tuple<int, int>> ranges = Slize(new List<int>(this.packets));
 
             WriteLShort((ushort) ranges.Count);
 

@@ -29,7 +29,7 @@
         public override void Encode()
         {
             base.Encode();
-            this.WriteLong(pingID);
+            this.WriteLong(this.pingID);
             this.WriteMagic();
         }
 

@@ -13,7 +13,7 @@ namespace MineNET.RakNet.Packets
 
         public virtual void Encode()
         {
-            WriteByte(PacketID);
+            WriteByte(this.PacketID);
         }
 
         public virtual void Decode()

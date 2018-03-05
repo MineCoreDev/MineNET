@@ -35,7 +35,7 @@ namespace MineNET.NBT.Tags
 
         internal override void WriteTag(NBTStream stream)
         {
-            stream.WriteByte((byte) TagType);
+            stream.WriteByte((byte) this.TagType);
             stream.WriteString(this.Name);
             this.Write(stream);
         }

@@ -73,38 +73,38 @@ namespace MineNET.RakNet.Packets
         public byte[] ToResult(bool internalCall = false)
         {
             BinaryStream stream = new BinaryStream();
-            stream.WriteByte((byte) (reliability << 5 | (hasSplit ? Convert.ToByte("00010000", 2) : 0x00)));
+            stream.WriteByte((byte) (this.reliability << 5 | (this.hasSplit ? Convert.ToByte("00010000", 2) : 0x00)));
             if (internalCall)
             {
-                stream.WriteInt(buffer.Length);
-                stream.WriteInt(identifierACK);
+                stream.WriteInt(this.buffer.Length);
+                stream.WriteInt(this.identifierACK);
             }
             else
             {
-                stream.WriteLShort((ushort) (buffer.Length * 8));
+                stream.WriteLShort((ushort) (this.buffer.Length * 8));
             }
 
-            if (reliability > PacketReliability.UNRELIABLE)
+            if (this.reliability > PacketReliability.UNRELIABLE)
             {
-                if (reliability >= PacketReliability.RELIABLE && reliability != PacketReliability.UNRELIABLE_WITH_ACK_RECEIPT)
+                if (this.reliability >= PacketReliability.RELIABLE && this.reliability != PacketReliability.UNRELIABLE_WITH_ACK_RECEIPT)
                 {
-                    stream.WriteLTriad(messageIndex);
+                    stream.WriteLTriad(this.messageIndex);
                 }
-                if (reliability <= PacketReliability.RELIABLE_SEQUENCED && reliability != PacketReliability.RELIABLE)
+                if (this.reliability <= PacketReliability.RELIABLE_SEQUENCED && this.reliability != PacketReliability.RELIABLE)
                 {
-                    stream.WriteLTriad(orderIndex);
-                    stream.WriteByte((byte) orderChannel);
+                    stream.WriteLTriad(this.orderIndex);
+                    stream.WriteByte((byte) this.orderChannel);
                 }
             }
 
-            if (hasSplit)
+            if (this.hasSplit)
             {
-                stream.WriteInt(splitCount);
-                stream.WriteShort((short) splitID);
-                stream.WriteInt(splitIndex);
+                stream.WriteInt(this.splitCount);
+                stream.WriteShort((short) this.splitID);
+                stream.WriteInt(this.splitIndex);
             }
 
-            stream.WriteBytes(buffer);
+            stream.WriteBytes(this.buffer);
 
             return stream.GetResult();
         }

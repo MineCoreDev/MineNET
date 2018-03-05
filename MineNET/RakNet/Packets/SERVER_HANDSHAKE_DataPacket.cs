@@ -19,12 +19,12 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return endPoint;
+                return this.endPoint;
             }
 
             set
             {
-                endPoint = value;
+                this.endPoint = value;
             }
         }
 
@@ -55,12 +55,12 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return systemEndPoints;
+                return this.systemEndPoints;
             }
 
             set
             {
-                systemEndPoints = value;
+                this.systemEndPoints = value;
             }
         }
 
@@ -69,12 +69,12 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return sendPing;
+                return this.sendPing;
             }
 
             set
             {
-                sendPing = value;
+                this.sendPing = value;
             }
         }
 
@@ -83,12 +83,12 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return sendPong;
+                return this.sendPong;
             }
 
             set
             {
-                sendPong = value;
+                this.sendPong = value;
             }
         }
 
@@ -96,16 +96,16 @@ namespace MineNET.RakNet.Packets
         {
             base.Encode();
 
-            WriteIPEndPoint(endPoint);
+            WriteIPEndPoint(this.endPoint);
             WriteShort(20);
 
             for (int i = 0; i < 20; ++i)
             {
-                WriteIPEndPoint(systemEndPoints[i]);
+                WriteIPEndPoint(this.systemEndPoints[i]);
             }
 
-            WriteLong(sendPing);
-            WriteLong(sendPong);
+            WriteLong(this.sendPing);
+            WriteLong(this.sendPong);
         }
     }
 }

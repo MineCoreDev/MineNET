@@ -50,7 +50,7 @@ namespace MineNET
             }
 
 
-            if (mineNETConfig.EnableConsoleInput)
+            if (this.mineNETConfig.EnableConsoleInput)
             {
                 this.consoleInput = new ConsoleInput();
             }

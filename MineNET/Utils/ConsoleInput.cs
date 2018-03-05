@@ -19,15 +19,15 @@ namespace MineNET.Utils
             {
                 await Task.Delay(1000 / 20);
                 string cmd = Console.ReadLine();
-                commandQueue.Enqueue(cmd);
+                this.commandQueue.Enqueue(cmd);
             }
         }
 
         public string GetCommand()
         {
-            if (commandQueue.Count != 0)
+            if (this.commandQueue.Count != 0)
             {
-                return commandQueue.Dequeue();
+                return this.commandQueue.Dequeue();
             }
             else
             {

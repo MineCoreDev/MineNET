@@ -19,7 +19,7 @@ namespace MineNET.RakNet
         {
             get
             {
-                return point;
+                return this.point;
             }
         }
 
@@ -28,7 +28,7 @@ namespace MineNET.RakNet
         {
             get
             {
-                return clientID;
+                return this.clientID;
             }
         }
 
@@ -37,7 +37,7 @@ namespace MineNET.RakNet
         {
             get
             {
-                return mtuSize;
+                return this.mtuSize;
             }
         }
 
@@ -90,37 +90,37 @@ namespace MineNET.RakNet
 
                 this.timedOut = 1000;
 
-                if (packet.SeqNumber < startSeq || packet.SeqNumber > endSeq || receivedWindow.ContainsKey(packet.SeqNumber))
+                if (packet.SeqNumber < this.startSeq || packet.SeqNumber > this.endSeq || this.receivedWindow.ContainsKey(packet.SeqNumber))
                 {
                     return;
                 }
 
-                int diff = packet.SeqNumber - lastSeqNumber;
+                int diff = packet.SeqNumber - this.lastSeqNumber;
 
-                if (nackQueue.ContainsKey(packet.SeqNumber))
+                if (this.nackQueue.ContainsKey(packet.SeqNumber))
                 {
-                    nackQueue.Remove(packet.SeqNumber);
+                    this.nackQueue.Remove(packet.SeqNumber);
                 }
 
-                if (!receivedWindow.ContainsKey(packet.SeqNumber))
+                if (!this.receivedWindow.ContainsKey(packet.SeqNumber))
                 {
-                    receivedWindow.Add(packet.SeqNumber, packet.SeqNumber);
+                    this.receivedWindow.Add(packet.SeqNumber, packet.SeqNumber);
                 }
 
-                if (!ackQueue.ContainsKey(packet.SeqNumber))
+                if (!this.ackQueue.ContainsKey(packet.SeqNumber))
                 {
-                    ackQueue.Add(packet.SeqNumber, packet.SeqNumber);
+                    this.ackQueue.Add(packet.SeqNumber, packet.SeqNumber);
                 }
 
                 if (diff != 1)
                 {
                     for (int i = 0; i < diff; ++i)
                     {
-                        if (!receivedWindow.ContainsKey(packet.SeqNumber - i))
+                        if (!this.receivedWindow.ContainsKey(packet.SeqNumber - i))
                         {
-                            if (!nackQueue.ContainsKey(packet.SeqNumber - i))
+                            if (!this.nackQueue.ContainsKey(packet.SeqNumber - i))
                             {
-                                nackQueue.Add(packet.SeqNumber - i, packet.SeqNumber - i);
+                                this.nackQueue.Add(packet.SeqNumber - i, packet.SeqNumber - i);
                             }
                         }
                     }
@@ -128,9 +128,9 @@ namespace MineNET.RakNet
 
                 if (diff >= 1)
                 {
-                    lastSeqNumber = packet.SeqNumber;
-                    startSeq += diff;
-                    endSeq += diff;
+                    this.lastSeqNumber = packet.SeqNumber;
+                    this.startSeq += diff;
+                    this.endSeq += diff;
                 }
 
                 for (int i = 0; i < packet.Packets.Length; ++i)
@@ -170,7 +170,7 @@ namespace MineNET.RakNet
                 {
                     Close("ClientDisconnect", false);
                 }
-                else if (state == STATE_CONNECTING)
+                else if (this.state == STATE_CONNECTING)
                 {
                     if (id == CLIENT_CONNECT_DataPacket.ID)
                     {
@@ -179,7 +179,7 @@ namespace MineNET.RakNet
                         ccd.Decode();
 
                         SERVER_HANDSHAKE_DataPacket shd = new SERVER_HANDSHAKE_DataPacket();
-                        shd.EndPoint = point;
+                        shd.EndPoint = this.point;
                         shd.SendPing = ccd.SendPing;
                         shd.SendPong = ccd.SendPing + 1000;
                         shd.Encode();
@@ -196,9 +196,9 @@ namespace MineNET.RakNet
                         chd.SetBuffer(packet.buffer);
                         chd.Decode();
 
-                        if (chd.EndPoint.Port == server.GetPort())
+                        if (chd.EndPoint.Port == this.server.GetPort())
                         {
-                            state = STATE_CONNECTED;
+                            this.state = STATE_CONNECTED;
                         }
                     }
                 }
@@ -219,7 +219,7 @@ namespace MineNET.RakNet
                     SendPacket(enc);
                 }
             }
-            else if (id == 0xfe && state == STATE_CONNECTED)
+            else if (id == 0xfe && this.state == STATE_CONNECTED)
             {
                 Server.Instance.NetworkManager.HandleBatchPacket(this, packet.buffer);
             }
@@ -227,15 +227,15 @@ namespace MineNET.RakNet
 
         void SendQueuePackets()
         {
-            for (int i = 0; i < packetQueue.Count; ++i)
+            for (int i = 0; i < this.packetQueue.Count; ++i)
             {
-                server.SendPacket(packetQueue.Dequeue(), point.Address, point.Port);
+                this.server.SendPacket(this.packetQueue.Dequeue(), this.point.Address, this.point.Port);
             }
         }
 
         public void SendPacket(EncapsulatedPacket packet)
         {
-            if (server != null)
+            if (this.server != null)
             {
                 if (packet.buffer.Length + 4 > this.mtuSize)
                 {
@@ -259,13 +259,13 @@ namespace MineNET.RakNet
                         }
 
                         DataPacket_0 dp = new DataPacket_0();
-                        dp.SeqNumber = sendSeqNumber++;
+                        dp.SeqNumber = this.sendSeqNumber++;
                         dp.Packets = new[]
                         {
                             pk
                         };
 
-                        this.server.SendPacket(dp, point.Address, point.Port);
+                        this.server.SendPacket(dp, this.point.Address, this.point.Port);
 
                         Logger.Log("Split");
                     }
@@ -274,13 +274,13 @@ namespace MineNET.RakNet
                 else
                 {
                     DataPacket_0 pk = new DataPacket_0();
-                    pk.SeqNumber = sendSeqNumber++;
+                    pk.SeqNumber = this.sendSeqNumber++;
                     pk.Packets = new[]
                     {
                         packet
                     };
 
-                    packetQueue.Enqueue(pk);
+                    this.packetQueue.Enqueue(pk);
                 }
             }
         }
@@ -293,31 +293,31 @@ namespace MineNET.RakNet
             }
             this.timedOut--;
 
-            if (ackQueue.Count > 0)
+            if (this.ackQueue.Count > 0)
             {
                 ACK ack = new ACK();
-                ack.packets = ackQueue.Values.ToArray();
-                server.SendPacket(ack, point.Address, point.Port);
-                ackQueue.Clear();
+                ack.packets = this.ackQueue.Values.ToArray();
+                this.server.SendPacket(ack, this.point.Address, this.point.Port);
+                this.ackQueue.Clear();
             }
 
-            if (nackQueue.Count > 0)
+            if (this.nackQueue.Count > 0)
             {
                 NACK nack = new NACK();
-                nack.packets = nackQueue.Values.ToArray();
-                server.SendPacket(nack, point.Address, point.Port);
-                nackQueue.Clear();
+                nack.packets = this.nackQueue.Values.ToArray();
+                this.server.SendPacket(nack, this.point.Address, this.point.Port);
+                this.nackQueue.Clear();
             }
 
-            int[] a = receivedWindow.Values.ToArray();
-            for (int i = 0; i < receivedWindow.Values.Count; ++i)
+            int[] a = this.receivedWindow.Values.ToArray();
+            for (int i = 0; i < this.receivedWindow.Values.Count; ++i)
             {
                 int seq = a[i];
-                if (seq < startSeq)
+                if (seq < this.startSeq)
                 {
-                    if (receivedWindow.ContainsKey(seq))
+                    if (this.receivedWindow.ContainsKey(seq))
                     {
-                        receivedWindow.Remove(seq);
+                        this.receivedWindow.Remove(seq);
                     }
                 }
                 else
@@ -344,7 +344,7 @@ namespace MineNET.RakNet
                 SendPacket(ep);
             }
 
-            Server.Instance.NetworkManager.RemovePlayer(RakNetServer.IPEndPointToID(point));
+            Server.Instance.NetworkManager.RemovePlayer(RakNetServer.IPEndPointToID(this.point));
             this.server.RemoveSession(this.point, msg);
         }
     }

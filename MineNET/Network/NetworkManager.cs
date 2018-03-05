@@ -39,7 +39,7 @@ namespace MineNET.Network
 
         public void PlayerClose(IPEndPoint point, string reason)
         {
-            RakNetSession session = server.GetSession(point);
+            RakNetSession session = this.server.GetSession(point);
             session.Close(reason);
         }
 
@@ -73,7 +73,7 @@ namespace MineNET.Network
             string id = RakNetServer.IPEndPointToID(session.EndPoint);
             if (this.players.ContainsKey(id))
             {
-                Player player = players[id];
+                Player player = this.players[id];
                 int pkid = buffer[0];
 
                 if (pkid == BatchPacket.ID)
@@ -91,7 +91,7 @@ namespace MineNET.Network
 
         public void SendPacket(Player player, DataPacket pk, bool needACK = false, bool immediate = false)
         {
-            RakNetSession session = server.GetSession(player.EndPoint);
+            RakNetSession session = this.server.GetSession(player.EndPoint);
 
             if (session == null)
                 return;
@@ -159,9 +159,9 @@ namespace MineNET.Network
 
         DataPacket GetPacket(int id)
         {
-            if (packetPool.ContainsKey(id))
+            if (this.packetPool.ContainsKey(id))
             {
-                return (DataPacket) packetPool[id].Clone();
+                return (DataPacket) this.packetPool[id].Clone();
             }
             return null;
         }

@@ -17,12 +17,12 @@
         {
             get
             {
-                return pingID;
+                return this.pingID;
             }
 
             set
             {
-                pingID = value;
+                this.pingID = value;
             }
         }
 
@@ -30,8 +30,8 @@
         {
             base.Encode();
 
-            WriteLong(pingID);
-            WriteLong(pingID);
+            WriteLong(this.pingID);
+            WriteLong(this.pingID);
         }
     }
 }

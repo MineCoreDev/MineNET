@@ -17,7 +17,7 @@
         {
             get
             {
-                return clientID;
+                return this.clientID;
             }
         }
 
@@ -26,7 +26,7 @@
         {
             get
             {
-                return sendPing;
+                return this.sendPing;
             }
         }
 
@@ -35,7 +35,7 @@
         {
             get
             {
-                return useSecurity;
+                return this.useSecurity;
             }
         }
 
@@ -43,9 +43,9 @@
         {
             base.Decode();
 
-            clientID = ReadLong();
-            sendPing = ReadLong();
-            useSecurity = ReadBool();
+            this.clientID = ReadLong();
+            this.sendPing = ReadLong();
+            this.useSecurity = ReadBool();
         }
     }
 }

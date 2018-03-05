@@ -19,12 +19,12 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return serverID;
+                return this.serverID;
             }
 
             set
             {
-                serverID = value;
+                this.serverID = value;
             }
         }
 
@@ -33,12 +33,12 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return endPoint;
+                return this.endPoint;
             }
 
             set
             {
-                endPoint = value;
+                this.endPoint = value;
             }
         }
 
@@ -47,12 +47,12 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return mtuSize;
+                return this.mtuSize;
             }
 
             set
             {
-                mtuSize = value;
+                this.mtuSize = value;
             }
         }
 
@@ -61,9 +61,9 @@ namespace MineNET.RakNet.Packets
             base.Encode();
 
             WriteMagic();
-            WriteLong(serverID);
-            WriteIPEndPoint(endPoint);
-            WriteShort(mtuSize);
+            WriteLong(this.serverID);
+            WriteIPEndPoint(this.endPoint);
+            WriteShort(this.mtuSize);
             WriteByte(0);
         }
     }

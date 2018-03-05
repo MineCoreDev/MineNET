@@ -19,7 +19,7 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return endPoint;
+                return this.endPoint;
             }
         }
 
@@ -28,7 +28,7 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return mtuSize;
+                return this.mtuSize;
             }
         }
 
@@ -37,7 +37,7 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return clientID;
+                return this.clientID;
             }
         }
 
@@ -46,9 +46,9 @@ namespace MineNET.RakNet.Packets
             base.Decode();
 
             ReadMagic();
-            endPoint = ReadIPEndPoint();
-            mtuSize = ReadShort();
-            clientID = ReadLong();
+            this.endPoint = ReadIPEndPoint();
+            this.mtuSize = ReadShort();
+            this.clientID = ReadLong();
         }
     }
 }

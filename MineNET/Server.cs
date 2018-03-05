@@ -48,7 +48,7 @@ namespace MineNET
         {
             get
             {
-                return networkManager;
+                return this.networkManager;
             }
         }
 
@@ -56,7 +56,7 @@ namespace MineNET
         {
             get
             {
-                return commandManager;
+                return this.commandManager;
             }
         }
 
@@ -64,7 +64,7 @@ namespace MineNET
         {
             get
             {
-                return pluginManager;
+                return this.pluginManager;
             }
         }
 
@@ -72,13 +72,13 @@ namespace MineNET
         {
             get
             {
-                return logger;
+                return this.logger;
             }
         }
 
         public bool IsShutdown()
         {
-            return isShutdown;
+            return this.isShutdown;
         }
 
         public void Start()
@@ -100,8 +100,8 @@ namespace MineNET
         public void Stop()
         {
             Logger.Info("%server_stop");
-            mineNETConfig.Save<MineNETConfig>();
-            serverConfig.Save<ServerConfig>();
+            this.mineNETConfig.Save<MineNETConfig>();
+            this.serverConfig.Save<ServerConfig>();
 
             Player[] players = this.GetPlayers();
             for (int i = 0; i < players.Length; ++i)
@@ -121,8 +121,8 @@ namespace MineNET
             Logger.Error("%server_stop_error");
             Logger.Info("%server_stop");
 
-            mineNETConfig?.Save<MineNETConfig>();
-            serverConfig?.Save<ServerConfig>();
+            this.mineNETConfig?.Save<MineNETConfig>();
+            this.serverConfig?.Save<ServerConfig>();
 
             Player[] players = this.GetPlayers();
             for (int i = 0; i < players.Length; ++i)
@@ -137,7 +137,7 @@ namespace MineNET
 
         public Player[] GetPlayers()
         {
-            return networkManager?.players.Values.ToArray();
+            return this.networkManager?.players.Values.ToArray();
         }
 
         public Player GetPlayer(string name)

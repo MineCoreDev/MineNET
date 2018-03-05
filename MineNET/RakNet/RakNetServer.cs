@@ -82,7 +82,7 @@ namespace MineNET.RakNet
             uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
             this.client.Client.IOControl((int) SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
 
-            this.client.BeginReceive(OnReceive, null);
+            this.client.BeginReceive(this.OnReceive, null);
         }
 
         private void Init()
@@ -108,9 +108,9 @@ namespace MineNET.RakNet
         {
             while (!Server.Instance.IsShutdown())
             {
-                if (receiveDataQueue.Count > 0)
+                if (this.receiveDataQueue.Count > 0)
                 {
-                    ReceiveData data = receiveDataQueue.Dequeue();
+                    ReceiveData data = this.receiveDataQueue.Dequeue();
                     this.HandlePacket(data.Point, data.Data);
                 }
 
@@ -165,7 +165,7 @@ namespace MineNET.RakNet
             }
             finally
             {
-                this.client.BeginReceive(OnReceive, null);
+                this.client.BeginReceive(this.OnReceive, null);
             }
         }
 
@@ -178,9 +178,9 @@ namespace MineNET.RakNet
 
                 if (pk is DataPacket || pk is ACK || pk is NACK)
                 {
-                    if (sessions.ContainsKey(id))
+                    if (this.sessions.ContainsKey(id))
                     {
-                        sessions[id].DataPacketHandle(pk);
+                        this.sessions[id].DataPacketHandle(pk);
                     }
                     else
                     {
@@ -189,7 +189,7 @@ namespace MineNET.RakNet
                 }
                 else if (pk is OfflineMessage)
                 {
-                    if (sessions.ContainsKey(id))
+                    if (this.sessions.ContainsKey(id))
                     {
                         Logger.Log("%raknet_sessionCreated", IPEndPointToID(point));
                     }
@@ -228,7 +228,7 @@ namespace MineNET.RakNet
             packet.Encode();
 
             byte[] bytes = packet.GetResult();
-            this.client.BeginSend(bytes, bytes.Length, point, OnSend, null);
+            this.client.BeginSend(bytes, bytes.Length, point, this.OnSend, null);
 
             packet.Dispose();
         }
@@ -282,9 +282,9 @@ namespace MineNET.RakNet
         public RakNetSession GetSession(IPEndPoint point)
         {
             string id = IPEndPointToID(point);
-            if (sessions.ContainsKey(id))
+            if (this.sessions.ContainsKey(id))
             {
-                return sessions[id];
+                return this.sessions[id];
             }
             return null;
         }

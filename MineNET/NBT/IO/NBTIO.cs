@@ -10,9 +10,9 @@ namespace MineNET.NBT.IO
 {
     public static class NBTIO
     {
-        public static void WriteRawFile(string fileName, CompoundTag tag)
+        public static void WriteRawFile(string fileName, CompoundTag tag, NBTEndian endian = NBTEndian.LITTLE_ENDIAN)
         {
-            using (NBTStream stream = new NBTStream())
+            using (NBTStream stream = new NBTStream(endian))
             {
                 tag.Write(stream);
                 File.WriteAllBytes(fileName, stream.ToArray());
@@ -31,9 +31,9 @@ namespace MineNET.NBT.IO
             return tag;
         }
 
-        public static void WriteZLIBFile(string fileName, CompoundTag tag)
+        public static void WriteZLIBFile(string fileName, CompoundTag tag, NBTEndian endian = NBTEndian.LITTLE_ENDIAN)
         {
-            using (NBTStream stream = new NBTStream())
+            using (NBTStream stream = new NBTStream(endian))
             {
                 tag.Write(stream);
 
@@ -89,9 +89,9 @@ namespace MineNET.NBT.IO
             }
         }
 
-        public static void WriteGZIPFile(string fileName, CompoundTag tag)
+        public static void WriteGZIPFile(string fileName, CompoundTag tag, NBTEndian endian = NBTEndian.LITTLE_ENDIAN)
         {
-            using (NBTStream stream = new NBTStream())
+            using (NBTStream stream = new NBTStream(endian))
             {
                 tag.Write(stream);
 

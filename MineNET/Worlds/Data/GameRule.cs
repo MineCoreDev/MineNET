@@ -6,7 +6,7 @@
 
         public GameRule(string ruleName, T value) : base(ruleName)
         {
-            Value = value;
+            this.Value = value;
         }
     }
 }

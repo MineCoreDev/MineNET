@@ -17,7 +17,7 @@
         {
             get
             {
-                return pingID;
+                return this.pingID;
             }
         }
 
@@ -25,7 +25,7 @@
         {
             base.Decode();
 
-            pingID = ReadLong();
+            this.pingID = ReadLong();
         }
     }
 }
