@@ -7,8 +7,8 @@ namespace MineNET.Utils.Config
     {
         public YamlDescriptionAttribute(string description)
         {
-            Description = description;
-            IsInline = false;
+            this.Description = description;
+            this.IsInline = false;
         }
 
         public string Description

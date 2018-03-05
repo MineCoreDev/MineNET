@@ -15,7 +15,7 @@ namespace MineNET.NBT.IO
         {
             get
             {
-                return swap;
+                return this.swap;
             }
         }
 
@@ -50,7 +50,7 @@ namespace MineNET.NBT.IO
 
         public short ReadShort()
         {
-            if (swap)
+            if (this.swap)
             {
                 return (short) Binary.ReadLShort(this);
             }
@@ -62,7 +62,7 @@ namespace MineNET.NBT.IO
 
         public void WriteShort(short value)
         {
-            if (swap)
+            if (this.swap)
             {
                 Binary.WriteLShort(this, (ushort) value);
             }
@@ -74,7 +74,7 @@ namespace MineNET.NBT.IO
 
         public int ReadInt()
         {
-            if (swap)
+            if (this.swap)
             {
                 return (int) Binary.ReadLInt(this);
             }
@@ -86,7 +86,7 @@ namespace MineNET.NBT.IO
 
         public void WriteInt(int value)
         {
-            if (swap)
+            if (this.swap)
             {
                 Binary.WriteLInt(this, (uint) value);
             }
@@ -98,7 +98,7 @@ namespace MineNET.NBT.IO
 
         public long ReadLong()
         {
-            if (swap)
+            if (this.swap)
             {
                 return (long) Binary.ReadLLong(this);
             }
@@ -110,7 +110,7 @@ namespace MineNET.NBT.IO
 
         public void WriteLong(long value)
         {
-            if (swap)
+            if (this.swap)
             {
                 Binary.WriteLLong(this, (ulong) value);
             }
@@ -122,7 +122,7 @@ namespace MineNET.NBT.IO
 
         public float ReadFloat()
         {
-            if (swap)
+            if (this.swap)
             {
                 return Binary.ReadLFloat(this);
             }
@@ -134,7 +134,7 @@ namespace MineNET.NBT.IO
 
         public void WriteFloat(float value)
         {
-            if (swap)
+            if (this.swap)
             {
                 Binary.WriteLFloat(this, value);
             }
@@ -146,7 +146,7 @@ namespace MineNET.NBT.IO
 
         public double ReadDouble()
         {
-            if (swap)
+            if (this.swap)
             {
                 return Binary.ReadLDouble(this);
             }
@@ -158,7 +158,7 @@ namespace MineNET.NBT.IO
 
         public void WriteDouble(double value)
         {
-            if (swap)
+            if (this.swap)
             {
                 Binary.WriteLDouble(this, value);
             }
@@ -172,13 +172,13 @@ namespace MineNET.NBT.IO
         {
             short len = ReadShort();
             byte[] buffer = Binary.ReadBytes(this, (int) this.Position, len);
-            return utf8.GetString(buffer);
+            return this.utf8.GetString(buffer);
         }
 
         public void WriteString(string value)
         {
             WriteShort((short) value.Length);
-            Binary.WriteBytes(this, utf8.GetBytes(value));
+            Binary.WriteBytes(this, this.utf8.GetBytes(value));
         }
 
         static bool IsBigEndian(NBTEndian e)

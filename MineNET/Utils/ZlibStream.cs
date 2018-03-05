@@ -9,7 +9,7 @@ namespace MineNET.Utils
 
         private const int mod = 65521;//mod
 
-        public int Checksum => (int) adler32;
+        public int Checksum => (int) this.adler32;
 
         private uint Update(uint adler, byte[] s, int offset, int count)
         {
@@ -56,7 +56,7 @@ namespace MineNET.Utils
 
         public override void Write(byte[] array, int offset, int count)
         {
-            adler32 = Update(adler32, array, offset, count);
+            this.adler32 = Update(this.adler32, array, offset, count);
             base.Write(array, offset, count);
         }
     }

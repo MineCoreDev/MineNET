@@ -4,7 +4,7 @@
     {
         public void WriteMagic()
         {
-            WriteBytes(RakNetServer.Magic);
+            this.WriteBytes(RakNetServer.Magic);
         }
 
         public byte[] ReadMagic()

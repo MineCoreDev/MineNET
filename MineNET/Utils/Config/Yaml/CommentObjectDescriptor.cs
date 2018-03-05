@@ -31,7 +31,7 @@ namespace MineNET.Utils.Config.Yaml
         {
             get
             {
-                return innerDescriptor.ScalarStyle;
+                return this.innerDescriptor.ScalarStyle;
             }
         }
 
@@ -39,7 +39,7 @@ namespace MineNET.Utils.Config.Yaml
         {
             get
             {
-                return innerDescriptor.StaticType;
+                return this.innerDescriptor.StaticType;
             }
         }
 
@@ -47,7 +47,7 @@ namespace MineNET.Utils.Config.Yaml
         {
             get
             {
-                return innerDescriptor.Type;
+                return this.innerDescriptor.Type;
             }
         }
 
@@ -55,7 +55,7 @@ namespace MineNET.Utils.Config.Yaml
         {
             get
             {
-                return innerDescriptor.Value;
+                return this.innerDescriptor.Value;
             }
         }
     }

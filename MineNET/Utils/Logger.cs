@@ -355,7 +355,7 @@ namespace MineNET.Utils
                 LoggerInfo info = new LoggerInfo();
                 info.level = level;
                 info.text = text;
-                loggerTexts.Enqueue(info);
+                this.loggerTexts.Enqueue(info);
             }
         }
 

@@ -42,7 +42,7 @@ namespace MineNET.Network.Packets
             WriteCompressionLevel(bs);
 
             int sum = 0;
-            using (ZlibStream ds = new ZlibStream(bs, CompressionLevel, true))
+            using (ZlibStream ds = new ZlibStream(bs, this.CompressionLevel, true))
             {
                 ds.Write(this.Payload, 0, this.Payload.Length);
                 sum = ds.Checksum;
@@ -79,15 +79,15 @@ namespace MineNET.Network.Packets
 
         void WriteCompressionLevel(MemoryStream stream)
         {
-            if (CompressionLevel == CompressionLevel.NoCompression)
+            if (this.CompressionLevel == CompressionLevel.NoCompression)
             {
                 stream.WriteByte(0x01);
             }
-            else if (CompressionLevel == CompressionLevel.Fastest)
+            else if (this.CompressionLevel == CompressionLevel.Fastest)
             {
                 stream.WriteByte(0x9C);
             }
-            else if (CompressionLevel == CompressionLevel.Optimal)
+            else if (this.CompressionLevel == CompressionLevel.Optimal)
             {
                 stream.WriteByte(0xda);
             }

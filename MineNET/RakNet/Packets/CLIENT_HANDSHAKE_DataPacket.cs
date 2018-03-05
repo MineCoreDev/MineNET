@@ -20,7 +20,7 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return endPoint;
+                return this.endPoint;
             }
         }
 
@@ -29,7 +29,7 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return systemEndPoints;
+                return this.systemEndPoints;
             }
         }
 
@@ -38,7 +38,7 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return sendPing;
+                return this.sendPing;
             }
         }
 
@@ -47,7 +47,7 @@ namespace MineNET.RakNet.Packets
         {
             get
             {
-                return sendPong;
+                return this.sendPong;
             }
         }
 
@@ -57,16 +57,16 @@ namespace MineNET.RakNet.Packets
 
             List<IPEndPoint> list = new List<IPEndPoint>();
 
-            endPoint = ReadIPEndPoint();
+            this.endPoint = ReadIPEndPoint();
             for (int i = 0; i < 20; ++i)
             {
                 list.Add(ReadIPEndPoint());
             }
 
-            systemEndPoints = list.ToArray();
+            this.systemEndPoints = list.ToArray();
 
-            sendPing = ReadLong();
-            sendPong = ReadLong();
+            this.sendPing = ReadLong();
+            this.sendPong = ReadLong();
         }
     }
 }

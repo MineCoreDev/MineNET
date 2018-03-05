@@ -323,7 +323,12 @@ namespace MineNET.NBT.Tags
 
         public override string ToString()
         {
-            return $"CompoundTag : Name {this.Name} : Data {this.Tags}";
+            string data = "";
+            foreach (Tag tag in this.tags.Values)
+            {
+                data = $"{data}\n{tag.ToString()}";
+            }
+            return $"CompoundTag : Name {this.Name} : Data {data}";
         }
 
         internal override void Write(NBTStream stream)
@@ -337,7 +342,7 @@ namespace MineNET.NBT.Tags
 
         internal override void WriteTag(NBTStream stream)
         {
-            if (Name != null)
+            if (this.Name != null)
             {
                 stream.WriteByte((byte) this.TagType);
                 stream.WriteString(this.Name);

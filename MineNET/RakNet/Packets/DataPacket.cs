@@ -36,17 +36,17 @@ namespace MineNET.RakNet.Packets
         {
             base.Encode();
 
-            WriteLTriad(seqNumber);
-            for (int i = 0; i < packets.Length; ++i)
+            WriteLTriad(this.seqNumber);
+            for (int i = 0; i < this.packets.Length; ++i)
             {
-                object obj = packets[i];
+                object obj = this.packets[i];
                 if (obj is EncapsulatedPacket)
                 {
-                    WriteBytes(((EncapsulatedPacket)obj).ToResult());
+                    WriteBytes(((EncapsulatedPacket) obj).ToResult());
                 }
                 else
                 {
-                    WriteBytes((byte[])obj);
+                    WriteBytes((byte[]) obj);
                 }
             }
         }
@@ -57,20 +57,20 @@ namespace MineNET.RakNet.Packets
 
             List<object> list = new List<object>();
 
-            seqNumber = ReadLTriad();
+            this.seqNumber = ReadLTriad();
             byte[] bytes = ReadBytes();
             while (bytes.Length != 0)
             {
                 list.Add(EncapsulatedPacket.ToEncapsulatedPacket(ref bytes));
             }
 
-            packets = list.ToArray();
+            this.packets = list.ToArray();
         }
 
         public void Clear()
         {
-            seqNumber = 0;
-            packets = null;
+            this.seqNumber = 0;
+            this.packets = null;
         }
     }
 }

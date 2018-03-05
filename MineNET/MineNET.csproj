@@ -373,6 +373,7 @@
     <Compile Include="Events\PlayerEvents\PlayerEvents.cs" />
     <Compile Include="Events\PlayerEvents\PlayerLoginEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerPreLoginEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerQuitEventArgs.cs" />
     <Compile Include="Events\ServerEvents\DataPacketReceiveArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerEvents.cs" />

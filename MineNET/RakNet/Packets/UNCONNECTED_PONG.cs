@@ -57,10 +57,10 @@
         public override void Encode()
         {
             base.Encode();
-            this.WriteLong(pingID);
-            this.WriteLong(serverID);
+            this.WriteLong(this.pingID);
+            this.WriteLong(this.serverID);
             this.WriteMagic();
-            this.WriteFixedString(serverName);
+            this.WriteFixedString(this.serverName);
         }
 
         public override void Decode()

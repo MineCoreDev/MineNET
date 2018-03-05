@@ -33,12 +33,12 @@ namespace MineNET.Entities
         {
             get
             {
-                return displayName;
+                return this.displayName;
             }
 
             set
             {
-                displayName = value;
+                this.displayName = value;
                 //TODO: SendEntityData
             }
         }
@@ -81,6 +81,11 @@ namespace MineNET.Entities
         }
 
         internal virtual void OnUpdate()
+        {
+
+        }
+
+        public virtual void Close()
         {
 
         }

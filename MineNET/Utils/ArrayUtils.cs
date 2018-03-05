@@ -20,7 +20,7 @@ namespace MineNET.Utils
             byte[] array = (byte[]) Array.CreateInstance(typeof(byte), size);
             for (int i = 0; i < size; ++i)
             {
-                array[i] = (byte)new Random().Next(min, max);
+                array[i] = (byte) new Random().Next(min, max);
             }
 
             return array;
@@ -61,12 +61,12 @@ namespace MineNET.Utils
         {
             get
             {
-                return arrayData;
+                return this.arrayData;
             }
 
             set
             {
-                arrayData = value;
+                this.arrayData = value;
             }
         }
 
@@ -82,15 +82,15 @@ namespace MineNET.Utils
         {
             get
             {
-                return (byte) (arrayData[index >> 1] >> ((index & 1) * 4) & 0xf);
+                return (byte) (this.arrayData[index >> 1] >> ((index & 1) * 4) & 0xf);
             }
 
             set
             {
                 value &= 0xf;
                 int idx = index >> 1;
-                arrayData[idx] &= (byte) (0xf << (((index + 1) & 1) * 4));
-                arrayData[idx] |= (byte) (value << ((index & 1) * 4));
+                this.arrayData[idx] &= (byte) (0xf << (((index + 1) & 1) * 4));
+                this.arrayData[idx] |= (byte) (value << ((index & 1) * 4));
             }
         }
 

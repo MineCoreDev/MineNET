@@ -11,7 +11,7 @@ namespace MineNET.Utils.Config.Yaml
         public CommentPropertyDescriptor(IPropertyDescriptor baseDescriptor)
         {
             this.baseDescriptor = baseDescriptor;
-            Name = baseDescriptor.Name;
+            this.Name = baseDescriptor.Name;
         }
 
         public string Name
@@ -24,7 +24,7 @@ namespace MineNET.Utils.Config.Yaml
         {
             get
             {
-                return baseDescriptor.Type;
+                return this.baseDescriptor.Type;
             }
         }
 
@@ -32,12 +32,12 @@ namespace MineNET.Utils.Config.Yaml
         {
             get
             {
-                return baseDescriptor.TypeOverride;
+                return this.baseDescriptor.TypeOverride;
             }
 
             set
             {
-                baseDescriptor.TypeOverride = value;
+                this.baseDescriptor.TypeOverride = value;
             }
         }
 
@@ -51,12 +51,12 @@ namespace MineNET.Utils.Config.Yaml
         {
             get
             {
-                return baseDescriptor.ScalarStyle;
+                return this.baseDescriptor.ScalarStyle;
             }
 
             set
             {
-                baseDescriptor.ScalarStyle = value;
+                this.baseDescriptor.ScalarStyle = value;
             }
         }
 
@@ -64,13 +64,13 @@ namespace MineNET.Utils.Config.Yaml
         {
             get
             {
-                return baseDescriptor.CanWrite;
+                return this.baseDescriptor.CanWrite;
             }
         }
 
         public void Write(object target, object value)
         {
-            baseDescriptor.Write(target, value);
+            this.baseDescriptor.Write(target, value);
         }
 
         public T GetCustomAttribute<T>() where T : Attribute
@@ -80,8 +80,8 @@ namespace MineNET.Utils.Config.Yaml
 
         public IObjectDescriptor Read(object target)
         {
-            YamlDescriptionAttribute att = baseDescriptor.GetCustomAttribute<YamlDescriptionAttribute>();
-            return att != null ? new CommentObjectDescriptor(baseDescriptor.Read(target), att.Description, att.IsInline) : baseDescriptor.Read(target);
+            YamlDescriptionAttribute att = this.baseDescriptor.GetCustomAttribute<YamlDescriptionAttribute>();
+            return att != null ? new CommentObjectDescriptor(this.baseDescriptor.Read(target), att.Description, att.IsInline) : this.baseDescriptor.Read(target);
         }
     }
 }

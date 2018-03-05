@@ -43,7 +43,7 @@ namespace MineNET
             this.Update();
 
 
-            if (mineNETConfig.EnableConsoleInput)
+            if (this.mineNETConfig.EnableConsoleInput)
             {
                 this.consoleInput = new ConsoleInput();
             }

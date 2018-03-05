@@ -12,12 +12,12 @@ namespace MineNET.Commands
         {
             get
             {
-                return commandHandler;
+                return this.commandHandler;
             }
 
             set
             {
-                commandHandler = value;
+                this.commandHandler = value;
             }
         }
 
@@ -31,7 +31,7 @@ namespace MineNET.Commands
         void Init()
         {
             RegisterCommands();
-            commandHandler = new CommandHandler(this);
+            this.commandHandler = new CommandHandler(this);
         }
 
         public void HandleConsoleCommand(string msg)
@@ -50,7 +50,7 @@ namespace MineNET.Commands
                 args = new string[0];
             }
 
-            commandHandler.CommandHandle(new ConsoleSender(), cmd, args);
+            this.commandHandler.CommandHandle(new ConsoleSender(), cmd, args);
         }
 
         internal void HandlePlayerCommand(Player player, string msg)
@@ -69,45 +69,45 @@ namespace MineNET.Commands
                 args = new string[0];
             }
 
-            commandHandler.CommandHandle(player, cmd, args);
+            this.commandHandler.CommandHandle(player, cmd, args);
         }
 
         public Command GetCommand(string cmd)
         {
-            if (commandList.ContainsKey(cmd))
+            if (this.commandList.ContainsKey(cmd))
             {
-                return commandList[cmd];
+                return this.commandList[cmd];
             }
             return null;
         }
 
         public void RegisterCommand(Command command)
         {
-            if (!commandList.ContainsKey(command.Alias))
+            if (!this.commandList.ContainsKey(command.Alias))
             {
-                commandList.Add(command.Alias, (Command) command.Clone());
+                this.commandList.Add(command.Alias, (Command) command.Clone());
             }
 
             for (int i = 0; i < command.SubAlias.Length; ++i)
             {
-                if (!commandList.ContainsKey(command.SubAlias[i]))
+                if (!this.commandList.ContainsKey(command.SubAlias[i]))
                 {
-                    commandList.Add(command.SubAlias[i], (Command) command.Clone());
+                    this.commandList.Add(command.SubAlias[i], (Command) command.Clone());
                 }
             }
         }
 
         public void RemoveCommand(string alias)
         {
-            if (commandList.ContainsKey(alias))
+            if (this.commandList.ContainsKey(alias))
             {
-                commandList.Remove(alias);
+                this.commandList.Remove(alias);
             }
         }
 
         public void RemoveAllCommand()
         {
-            commandList.Clear();
+            this.commandList.Clear();
         }
 
         void RegisterCommands()

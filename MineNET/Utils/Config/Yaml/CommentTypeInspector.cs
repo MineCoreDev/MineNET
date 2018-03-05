@@ -16,12 +16,12 @@ namespace MineNET.Utils.Config.Yaml
             {
                 throw new ArgumentNullException();
             }
-            innerTypeDescriptor = inspector;
+            this.innerTypeDescriptor = inspector;
         }
 
         public override IEnumerable<IPropertyDescriptor> GetProperties(Type type, object container)
         {
-            return innerTypeDescriptor
+            return this.innerTypeDescriptor
                 .GetProperties(type, container)
                 .Select(d => new CommentPropertyDescriptor(d));
         }

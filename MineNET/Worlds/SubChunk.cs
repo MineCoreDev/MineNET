@@ -11,12 +11,12 @@ namespace MineNET.Worlds
         {
             get
             {
-                return blockData;
+                return this.blockData;
             }
 
             set
             {
-                blockData = value;
+                this.blockData = value;
             }
         }
 
@@ -25,12 +25,12 @@ namespace MineNET.Worlds
         {
             get
             {
-                return metaData;
+                return this.metaData;
             }
 
             set
             {
-                metaData = value;
+                this.metaData = value;
             }
         }
 
@@ -39,12 +39,12 @@ namespace MineNET.Worlds
         {
             get
             {
-                return skyLigth;
+                return this.skyLigth;
             }
 
             set
             {
-                skyLigth = value;
+                this.skyLigth = value;
             }
         }
 
@@ -53,12 +53,12 @@ namespace MineNET.Worlds
         {
             get
             {
-                return blockLigth;
+                return this.blockLigth;
             }
 
             set
             {
-                blockLigth = value;
+                this.blockLigth = value;
             }
         }
 
@@ -67,18 +67,18 @@ namespace MineNET.Worlds
         {
             get
             {
-                return format;
+                return this.format;
             }
 
             set
             {
-                format = value;
+                this.format = value;
             }
         }
 
         public bool IsEnpty()
         {
-            return blockData.All(b =>
+            return this.blockData.All(b =>
             {
                 return b == 0;
             });
@@ -91,22 +91,22 @@ namespace MineNET.Worlds
 
         public byte GetBlock(int x, int y, int z)
         {
-            return blockData[GetArrayIndex(x, y, z)];
+            return this.blockData[GetArrayIndex(x, y, z)];
         }
 
         public void SetBlock(int x, int y, int z, byte id)
         {
-            blockData[GetArrayIndex(x, y, z)] = id;
+            this.blockData[GetArrayIndex(x, y, z)] = id;
         }
 
         public byte GetMetaData(int x, int y, int z)
         {
-            return metaData[GetArrayIndex(x, y, z)];
+            return this.metaData[GetArrayIndex(x, y, z)];
         }
 
         public void SetMetaData(int x, int y, int z, byte meta)
         {
-            metaData[GetArrayIndex(x, y, z)] = meta;
+            this.metaData[GetArrayIndex(x, y, z)] = meta;
         }
 
         public byte[] GetBytes()

@@ -84,7 +84,7 @@ namespace MineNET.Entities
                 return;
             }
 
-            IsPreLogined = true;
+            this.IsPreLogined = true;
 
             this.LoginData = pk.LoginData;
             this.Name = pk.LoginData.DisplayName;
@@ -121,11 +121,11 @@ namespace MineNET.Entities
                 ResourcePackStackPacket resourcePackStackPacket = new ResourcePackStackPacket();
                 this.SendPacket(resourcePackStackPacket);
 
-                HaveAllPacks = true;
+                this.HaveAllPacks = true;
             }
-            else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_COMPLETED && HaveAllPacks)
+            else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_COMPLETED && this.HaveAllPacks)
             {
-                PackSyncCompleted = true;
+                this.PackSyncCompleted = true;
 
                 this.ProcessLogin();
             }
@@ -233,10 +233,9 @@ namespace MineNET.Entities
             string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
             if (!File.Exists(path))
             {
-                File.Create(path).Close();
+                NBTIO.WriteGZIPFile(path, new CompoundTag(), NBTEndian.BIG_ENDIAN);
             }
-            CompoundTag nbt = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
-            Logger.Info(nbt.ToString());
+            this.namedTag = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
         }
 
         private int FixRadius(int radius)
@@ -289,6 +288,9 @@ namespace MineNET.Entities
 
         public void Close(string reason)
         {
+            PlayerQuitEventArgs playerQuitEvent = new PlayerQuitEventArgs(this, "", reason);
+            PlayerEvents.OnPlayerQuit(playerQuitEvent);
+            reason = playerQuitEvent.Reason;
             if (!string.IsNullOrEmpty(reason))
             {
                 DisconnectPacket pk = new DisconnectPacket();//TODO NotQueue Send...
@@ -296,7 +298,14 @@ namespace MineNET.Entities
 
                 this.SendPacket(pk);
             }
+            this.Save();
             Server.Instance.NetworkManager.PlayerClose(this.EndPoint, reason);
+        }
+
+        public void Save()
+        {
+            string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
+            NBTIO.WriteGZIPFile(path, this.namedTag, NBTEndian.BIG_ENDIAN);
         }
 
         public new PlayerInventory GetInventory()

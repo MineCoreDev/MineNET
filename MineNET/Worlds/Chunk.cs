@@ -56,7 +56,7 @@ namespace MineNET.Worlds
                 }
             }
 
-            subChunks[0] = flat;
+            this.subChunks[0] = flat;
         }
 
         public void TestChunkSend(Player player)
@@ -77,7 +77,7 @@ namespace MineNET.Worlds
 
                 for (int i = 15; i >= 0; i--)
                 {
-                    if (subChunks[i].IsEnpty())
+                    if (this.subChunks[i].IsEnpty())
                         sendChunk = i;
                     else break;
                 }
@@ -85,7 +85,7 @@ namespace MineNET.Worlds
                 stream.WriteByte((byte) sendChunk);
                 for (int i = 0; i < sendChunk; ++i)
                 {
-                    stream.WriteBytes(subChunks[i].GetBytes());
+                    stream.WriteBytes(this.subChunks[i].GetBytes());
                 }
 
                 short[] b2 = new short[256];

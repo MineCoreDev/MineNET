@@ -73,7 +73,7 @@ namespace MineNET.Plugins
                         plugin.Init(att);
                         Logger.Info("%server_plugin_load", fileName);
                         plugin.OnLoad();
-                        plugins.Add(plugin);
+                        this.plugins.Add(plugin);
                         isPlugin = true;
                         count++;
                     }
