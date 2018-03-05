@@ -24,25 +24,14 @@ namespace MineNET.Utils
             Fatal
         }
 
-        bool useGUI = false;
-        public bool UseGUI
-        {
-            get
-            {
-                return useGUI;
-            }
-
-            set
-            {
-                useGUI = value;
-            }
-        }
+        public bool UseGUI { get; set; }
 
         Queue<LoggerInfo> loggerTexts = new Queue<LoggerInfo>();
+        public Queue<string> GuiLoggerTexts { get; } = new Queue<string>();
 
         internal void Init()
         {
-            if (!useGUI)
+            if (!UseGUI)
             {
                 Console.SetWindowSize(WINDOW_X, WINDOW_Y);
                 Console.SetBufferSize(WINDOW_X, 1000);
@@ -188,32 +177,37 @@ namespace MineNET.Utils
 
         internal void Update()
         {
-            if (!useGUI)
+            if (loggerTexts.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < 10; ++i)
             {
                 if (loggerTexts.Count == 0)
                 {
                     return;
                 }
 
-                for (int i = 0; i < 10; ++i)
+                LoggerInfo info = loggerTexts.Dequeue();
+                if (info != null)
                 {
-                    if (loggerTexts.Count == 0)
+                    string log = info.text;
+                    if (!UseGUI)
                     {
-                        return;
+                        CUIFormat(log);
+                    }
+                    else
+                    {
+                        RemoveColorCode(ref log);
+                        GuiLoggerTexts.Enqueue(log);
                     }
 
-                    LoggerInfo info = loggerTexts.Dequeue();
-                    if (info != null)
+                    if (info.level != LoggerLevel.Log)
                     {
-                        string log = info.text;
-                        CUIFormat(log);
                         WriteLog(log);
                     }
                 }
-            }
-            else
-            {
-
             }
         }
 
@@ -338,6 +332,17 @@ namespace MineNET.Utils
             return DateTime.Now.ToString("yyyy-M-d");
         }
 
+        static void RemoveColorCode(ref string text)
+        {
+            int seqIndex = text.IndexOf("§");
+            if (seqIndex == -1)
+            {
+                return;
+            }
+            text = text.Remove(seqIndex, 2);
+            RemoveColorCode(ref text);
+        }
+
         void AddLogText(string text, LoggerLevel level = LoggerLevel.Info)
         {
             if (level == LoggerLevel.Log && !Server.MineNETConfig.EnableDebugLog)
@@ -354,13 +359,15 @@ namespace MineNET.Utils
             }
         }
 
-        public async void WriteLog(string text)
+        internal async void WriteLog(string text)
         {
             string path = $"{Server.ExecutePath}\\logs";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
+
+            RemoveColorCode(ref text);
 
             string filePath = $"{path}\\{CreateDay()}.log";
             if (!File.Exists(filePath))

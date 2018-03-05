@@ -61,6 +61,12 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Items\InputOutput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Items\InputOutput.Designer.cs">
+      <DependentUpon>InputOutput.cs</DependentUpon>
+    </Compile>
     <Compile Include="Items\PlayerList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Items\InputOutput.resx">
+      <DependentUpon>InputOutput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Items\PlayerList.resx">
       <DependentUpon>PlayerList.cs</DependentUpon>

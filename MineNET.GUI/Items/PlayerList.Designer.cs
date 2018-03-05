@@ -36,7 +36,7 @@
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(3, 29);
+            this.listBox1.Location = new System.Drawing.Point(3, 15);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(120, 88);
             this.listBox1.TabIndex = 0;
@@ -44,7 +44,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 14);
+            this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(56, 12);
             this.label1.TabIndex = 1;
@@ -57,7 +57,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listBox1);
             this.Name = "PlayerList";
-            this.Size = new System.Drawing.Size(126, 122);
+            this.Size = new System.Drawing.Size(126, 105);
             this.ResumeLayout(false);
             this.PerformLayout();
 

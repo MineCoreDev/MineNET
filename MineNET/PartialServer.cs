@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Entities;
@@ -28,26 +27,20 @@ namespace MineNET
 
         private bool isShutdown;
 
-        private void Init()
+        private void Init(bool gui)
         {
             this.InitConfig();
             this.InitFolder();
 
-            try
+            if (this.mineNETConfig.EnableConsoleOutput)
             {
-                if (this.mineNETConfig.EnableConsoleOutput)
-                {
-                    this.logger = new Logger();
-                    this.logger.Init();
-                    this.UpdateLogger();
-                }
+                this.logger = new Logger();
+                this.logger.UseGUI = gui;
+                this.logger.Init();
+                this.UpdateLogger();
+            }
 
-                this.Update();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            this.Update();
 
 
             if (mineNETConfig.EnableConsoleInput)

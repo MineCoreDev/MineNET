@@ -81,14 +81,14 @@ namespace MineNET
             return isShutdown;
         }
 
-        public void Start()
+        public void Start(bool gui = false)
         {
             instance = this;
 
             Stopwatch s = new Stopwatch();
             s.Start();
 
-            Init();
+            Init(gui);
 
             s.Stop();
             Logger.Info("%server_started");

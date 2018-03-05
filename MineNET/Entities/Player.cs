@@ -233,7 +233,7 @@ namespace MineNET.Entities
             string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
             if (!File.Exists(path))
             {
-                //File.Create(path);
+                File.Create(path).Close();
             }
             CompoundTag nbt = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
             Logger.Info(nbt.ToString());
