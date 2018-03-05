@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Icon\App.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,6 +55,18 @@
     <Compile Include="Forms\LoadForm.Designer.cs">
       <DependentUpon>LoadForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Items\PlayerList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Items\PlayerList.Designer.cs">
+      <DependentUpon>PlayerList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Items\StatusAndProgress.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -63,6 +78,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\LoadForm.resx">
       <DependentUpon>LoadForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Items\PlayerList.resx">
+      <DependentUpon>PlayerList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Items\StatusAndProgress.resx">
       <DependentUpon>StatusAndProgress.cs</DependentUpon>

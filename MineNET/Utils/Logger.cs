@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MineNET.Utils
 {
@@ -204,9 +205,9 @@ namespace MineNET.Utils
                     LoggerInfo info = loggerTexts.Dequeue();
                     if (info != null)
                     {
-
                         string log = info.text;
                         CUIFormat(log);
+                        WriteLog(log);
                     }
                 }
             }
@@ -332,6 +333,11 @@ namespace MineNET.Utils
             return DateTime.Now.ToString("yyyy/M/d H:mm:ss");
         }
 
+        static string CreateDay()
+        {
+            return DateTime.Now.ToString("yyyy-M-d");
+        }
+
         void AddLogText(string text, LoggerLevel level = LoggerLevel.Info)
         {
             if (level == LoggerLevel.Log && !Server.MineNETConfig.EnableDebugLog)
@@ -345,6 +351,31 @@ namespace MineNET.Utils
                 info.level = level;
                 info.text = text;
                 loggerTexts.Enqueue(info);
+            }
+        }
+
+        public async void WriteLog(string text)
+        {
+            string path = $"{Server.ExecutePath}\\logs";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            string filePath = $"{path}\\{CreateDay()}.log";
+            if (!File.Exists(filePath))
+            {
+                using (StreamWriter sr = File.CreateText(filePath))
+                {
+                    await sr.WriteLineAsync(text);
+                }
+            }
+            else
+            {
+                using (StreamWriter sr = File.AppendText(filePath))
+                {
+                    await sr.WriteLineAsync(text);
+                }
             }
         }
     }

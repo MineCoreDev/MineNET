@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MineNET.Utils.Config;
 
 namespace MineNET.GUI.Forms
 {
@@ -8,7 +9,7 @@ namespace MineNET.GUI.Forms
     {
         public LoadForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void LoadForm_Load(object sender, EventArgs e)
@@ -19,14 +20,21 @@ namespace MineNET.GUI.Forms
         private async void LoadProgress()
         {
             this.statusAndProgress1.Text = "SetupLanguage...";
-            //TODO: Language Setup...
-            await Task.Delay(500);
+
+            string mPath = $"{Server.ExecutePath}\\MineNET.yml";
+            MineNETConfig conf = YamlStaticConfig.Load<MineNETConfig>(mPath);
+            LangManager.Language = conf.Language;
+
             this.statusAndProgress1.Text = LangManager.GetString("start_lang_setup");
             this.statusAndProgress1.ProgressBar.Value = 25;
+
             await Task.Delay(200);
+
             this.statusAndProgress1.Text = LangManager.GetString("start_load");
             this.statusAndProgress1.ProgressBar.Value = 50;
+
             await Task.Delay(200);
+
             this.statusAndProgress1.Text = LangManager.GetString("start_loaded");
             this.statusAndProgress1.ProgressBar.Value = 100;
 
@@ -35,7 +43,10 @@ namespace MineNET.GUI.Forms
 
         private void Loaded()
         {
+            this.Visible = false;
 
+            MainForm form = new MainForm(this);
+            form.Show();
         }
     }
 }

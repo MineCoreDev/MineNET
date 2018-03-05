@@ -18,7 +18,7 @@ namespace MineNET.Plugins
 
         public void Init()
         {
-            string path = Server.ExecutePath + @"\\plugins";
+            string path = $"{Server.ExecutePath}\\plugins";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -27,7 +27,7 @@ namespace MineNET.Plugins
 
         public void LoadPlugins()
         {
-            string path = Server.ExecutePath + @"\\plugins";
+            string path = $"{Server.ExecutePath}\\plugins";
             DirectoryInfo dir = new DirectoryInfo(path);
             DirectoryInfo[] pluginFolder = dir.GetDirectories();
             for (int i = 0; i < pluginFolder.Length; ++i)
@@ -39,7 +39,7 @@ namespace MineNET.Plugins
 
         public void LoadPlugin(string pluginFileName, string pluginPath)
         {
-            string dllPath = pluginPath + @"\\" + pluginFileName + ".dll";
+            string dllPath = $"{pluginPath}\\{pluginFileName}.dll";
             //string exePath = pluginPath + @"\\" + pluginFileName + ".exe";
 
             if (File.Exists(dllPath))

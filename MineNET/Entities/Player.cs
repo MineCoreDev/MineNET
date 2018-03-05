@@ -31,6 +31,10 @@ namespace MineNET.Entities
         public LoginData LoginData { get; set; }
         public ClientData ClientData { get; set; }
 
+        public bool IsPreLogined { get; private set; }
+        public bool IsLogined { get; private set; }
+        public bool HaveAllPacks { get; private set; }
+        public bool PackSyncCompleted { get; private set; }
         public bool HasSpawned { get; private set; }
 
         internal void PacketHandle(DataPacket pk)
@@ -76,6 +80,8 @@ namespace MineNET.Entities
                 return;
             }
 
+            IsPreLogined = true;
+
             this.LoginData = pk.LoginData;
             this.Name = pk.LoginData.DisplayName;
 
@@ -101,9 +107,13 @@ namespace MineNET.Entities
             {
                 ResourcePackStackPacket resourcePackStackPacket = new ResourcePackStackPacket();
                 this.SendPacket(resourcePackStackPacket);
+
+                HaveAllPacks = true;
             }
-            else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_COMPLETED)
+            else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_COMPLETED && HaveAllPacks)
             {
+                PackSyncCompleted = true;
+
                 this.ProcessLogin();
             }
         }

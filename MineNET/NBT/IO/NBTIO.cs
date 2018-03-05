@@ -89,6 +89,23 @@ namespace MineNET.NBT.IO
             }
         }
 
+        public static void WriteGZIPFile(string fileName, CompoundTag tag)
+        {
+            using (NBTStream stream = new NBTStream())
+            {
+                tag.Write(stream);
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (GZipStream gs = new GZipStream(ms, CompressionMode.Compress, true))
+                    {
+                        gs.Write(stream.ToArray(), 0, (int) stream.Length);
+                        File.WriteAllBytes(fileName, ms.ToArray());
+                    }
+                }
+            }
+        }
+
         public static CompoundTag ReadGZIPFile(string fileName, NBTEndian endian = NBTEndian.LITTLE_ENDIAN)
         {
             byte[] bytes = File.ReadAllBytes(fileName);

@@ -4,22 +4,11 @@ namespace MineNET
 {
     public class MineNETConfig : YamlStaticConfig
     {
-        public bool EnableConsoleInput
-        {
-            get;
-            set;
-        } = true;
+        public string Language { get; set; } = "ja_JP";
 
-        public bool EnableConsoleOutput
-        {
-            get;
-            set;
-        } = true;
+        public bool EnableConsoleInput { get; set; } = true;
+        public bool EnableConsoleOutput { get; set; } = true;
 
-        public bool EnableDebugLog
-        {
-            get;
-            set;
-        } = true;
+        public bool EnableDebugLog { get; set; } = true;
     }
 }
