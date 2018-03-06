@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using MineNET.Commands;
 using MineNET.Data;
@@ -34,6 +35,8 @@ namespace MineNET.Entities
 
         public LoginData LoginData { get; internal set; }
         public ClientData ClientData { get; internal set; }
+
+        public PlayerListEntry PlayerListEntry { get; private set; }
 
         public bool IsPreLogined { get; private set; }
         public bool IsLogined { get; private set; }
@@ -175,8 +178,6 @@ namespace MineNET.Entities
         private void ProcessLogin()
         {
             //TODO: PlayerDataLoad
-            this.InitPlayerData();
-
             PlayerLoginEventArgs playerLoginEvent = new PlayerLoginEventArgs(this, "");
             PlayerEvents.OnPlayerLogin(playerLoginEvent);
             if (playerLoginEvent.IsCancel)
@@ -184,6 +185,30 @@ namespace MineNET.Entities
                 this.Close(playerLoginEvent.KickMessage);
                 return;
             }
+
+            this.IsLogined = true;
+
+            this.InitPlayerData();
+
+            this.PlayerListEntry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.Skin, this.LoginData.XUID);
+            Player[] players = Server.Instance.GetPlayers();
+            List<PlayerListEntry> entries = new List<PlayerListEntry>();
+            //entries.Add(this.PlayerListEntry);
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (players[i] != this && players[i].IsLogined)
+                {
+                    PlayerListPacket playerListPacket = new PlayerListPacket();
+                    playerListPacket.Type = PlayerListPacket.TYPE_ADD;
+                    playerListPacket.Entries = new PlayerListEntry[] { this.PlayerListEntry };
+                    players[i].SendPacket(playerListPacket);
+                    entries.Add(players[i].PlayerListEntry);
+                }
+            }
+            /*PlayerListPacket listPacket = new PlayerListPacket();
+            listPacket.Type = PlayerListPacket.TYPE_ADD;
+            listPacket.Entries = entries.ToArray();
+            this.SendPacket(listPacket);*/
 
             this.X = 128;
             this.Y = 6;
@@ -338,7 +363,7 @@ namespace MineNET.Entities
 
         internal override void OnUpdate()
         {
-            this.SetMotion(new Vector3(0, -0.05f, 0));
+            //this.SetMotion(new Vector3(0, -0.05f, 0));
         }
     }
 }

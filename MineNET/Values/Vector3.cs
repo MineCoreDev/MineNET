@@ -79,5 +79,15 @@ namespace MineNET.Values
         {
             return new Vector3i(this.GetFloorX(), this.GetFloorY(), this.GetFloorZ());
         }
+
+        public static Vector3 operator +(Vector3 A, Vector3 B)
+        {
+            return new Vector3(A.X + B.X, A.Y + B.Y, A.Z + B.Z);
+        }
+
+        public static Vector3 operator -(Vector3 A, Vector3 B)
+        {
+            return new Vector3(A.X - B.X, A.Y - B.Y, A.Z - B.Z);
+        }
     }
 }

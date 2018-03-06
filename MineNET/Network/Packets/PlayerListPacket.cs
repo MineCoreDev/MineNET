@@ -26,15 +26,16 @@ namespace MineNET.Network.Packets
             base.Encode();
 
             this.WriteByte(this.Type);
-            this.WriteUVarInt((uint) this.Entries.Length);
+            this.WriteSVarLong(this.Entries.Length);
             for (int i = 0; i < this.Entries.Length; ++i)
             {
                 this.WriteGUID(this.Entries[i].Guid);
                 if (this.Type == PlayerListPacket.TYPE_ADD)
                 {
-                    this.WriteVarLong(this.Entries[i].EntityUniqueId);
-                    this.WriteSkin(this.Entries[i].Skin);
-                    this.WriteString(this.Entries[i].XboxUserId);
+                    this.WriteEntityUniqueId(this.Entries[i].EntityUniqueId);
+                    this.WriteString(this.Entries[i].Name);
+                    //this.WriteSkin(this.Entries[i].Skin);
+                    //this.WriteString(this.Entries[i].XboxUserId);
                 }
             }
         }
