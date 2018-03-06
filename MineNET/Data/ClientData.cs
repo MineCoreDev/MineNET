@@ -1,8 +1,9 @@
-﻿namespace MineNET.Data
+﻿using MineNET.Entities.Data;
+
+namespace MineNET.Data
 {
     public sealed class ClientData
     {
-        public string CapeData { get; set; }
         public string ClientRandomID { get; set; }
         public int CurrentInputMode { get; set; }
         public int DefaultInputMode { get; set; }
@@ -12,10 +13,7 @@
         public int GUIScale { get; set; }
         public string LanguageCode { get; set; }
         public string ServerAddress { get; set; }
-        public string SkinData { get; set; }
-        public string SkinGeometry { get; set; }
-        public string SkinGeometryName { get; set; }
-        public string SkinID { get; set; }
+        public Skin Skin { get; set; }
         public int UIProfile { get; set; }
     }
 }

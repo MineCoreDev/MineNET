@@ -1,4 +1,7 @@
 ﻿using System;
+using MineNET.Blocks.Data;
+using MineNET.Entities;
+using MineNET.Items;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
@@ -21,23 +24,17 @@ namespace MineNET.Blocks
             return BlockFactory.GetBlock(name);
         }
 
-        public Block Clone()
-        {
-            return (Block) Clone();
-        }
-
-        object ICloneable.Clone()
-        {
-            return this.MemberwiseClone();
-        }
-
         public float X { get; set; }
 
         public float Y { get; set; }
 
         public float Z { get; set; }
 
-        public World World { get; set; }
+        public World World { get; set; } = null;
+
+        public int ID { get; }
+
+        public int Damage { get; set; }
 
         public Block(int id, int meta = 0)
         {
@@ -50,9 +47,42 @@ namespace MineNET.Blocks
             get;
         }
 
-        public int ID { get; }
+        public virtual bool Place(Block target, Block side, BlockFace face, Vector3 clickPos, Player player, Item item)
+        {
+            this.World.SetBlock(this.ToVector3(), this);
+            return true;
+        }
 
-        public int Damage { get; set; }
+        public virtual bool Break(Player player, Item item)
+        {
+            this.World.SetBlock(this.ToVector3(), new BlockAir());
+            return true;
+        }
+
+        public virtual bool Activate(Player player, Item item)
+        {
+            return false;
+        }
+
+        public virtual void Update(int type)
+        {
+
+        }
+
+        public virtual Item[] GetDrops()
+        {
+            return new Item[] { this.ToItem() };
+        }
+
+        public virtual Item ToItem()
+        {
+            return Item.Get(this.ID, this.Damage);
+        }
+
+        public virtual int GetDropExp()
+        {
+            return 0;
+        }
 
         public virtual byte MaxStackSize
         {
@@ -76,6 +106,74 @@ namespace MineNET.Blocks
             {
                 return false;
             }
+        }
+
+        public Block GetSideBlock(BlockFace face)
+        {
+            if (this.HasPosition())
+            {
+                return this.World.GetBlock(this.ToVector3() + face.GetPosition());
+            }
+            return null;
+        }
+
+        public Vector3 ToVector3()
+        {
+            return new Vector3(this.X, this.Y, this.Z);
+        }
+
+        public Position ToPosition()
+        {
+            return new Position(this.X, this.Y, this.Z, this.World);
+        }
+
+        public bool HasPosition()
+        {
+            return this.World != null;
+        }
+
+        public virtual Block Clone()
+        {
+            return (Block) Clone();
+        }
+
+        object ICloneable.Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+        public override string ToString()
+        {
+            return $"Name : {this.Name} | ID : {this.ID} | Damage : {this.Damage}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Block))
+            {
+                return false;
+            }
+            Block block = (Block) obj;
+            if (this.ID != block.ID || this.Damage != block.Damage)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool operator ==(Block A, Block B)
+        {
+            return A.Equals(B);
+        }
+
+        public static bool operator !=(Block A, Block B)
+        {
+            return !A.Equals(B);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

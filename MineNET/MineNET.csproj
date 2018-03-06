@@ -403,6 +403,7 @@
     <Compile Include="Inventories\PlayerEnderChestInventory.cs" />
     <Compile Include="Inventories\PlayerInventory.cs" />
     <Compile Include="Inventories\PlayerOffhandInventory.cs" />
+    <Compile Include="Items\Data\ToolType.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemAcaciaDoor.cs" />
     <Compile Include="Items\ItemApple.cs" />
@@ -740,7 +741,6 @@
     <EmbeddedResource Include="Resources\Lang\ja_JP.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Items\Data\" />
     <Folder Include="Resources\ClassDiagrams\" />
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,7 @@ namespace MineNET.Worlds
 {
     public class World
     {
-        public Block GetBlock()
+        public Block GetBlock(Vector3 pos)
         {
             //TODO
             return Block.Get(0);
