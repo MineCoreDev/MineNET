@@ -34,8 +34,8 @@
             this.closeEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.playerList1 = new MineNET.GUI.Items.PlayerList();
             this.inputOutput1 = new MineNET.GUI.Items.InputOutput();
+            this.playerList1 = new MineNET.GUI.Items.PlayerList();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,20 +82,27 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Stop";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // inputOutput1
+            // 
+            this.inputOutput1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.inputOutput1.Location = new System.Drawing.Point(144, 27);
+            this.inputOutput1.Name = "inputOutput1";
+            this.inputOutput1.Size = new System.Drawing.Size(428, 277);
+            this.inputOutput1.TabIndex = 4;
             // 
             // playerList1
             // 
+            this.playerList1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.playerList1.Location = new System.Drawing.Point(12, 27);
             this.playerList1.Name = "playerList1";
             this.playerList1.Size = new System.Drawing.Size(126, 105);
             this.playerList1.TabIndex = 1;
-            // 
-            // inputOutput1
-            // 
-            this.inputOutput1.Location = new System.Drawing.Point(220, 40);
-            this.inputOutput1.Name = "inputOutput1";
-            this.inputOutput1.Size = new System.Drawing.Size(352, 277);
-            this.inputOutput1.TabIndex = 4;
             // 
             // MainForm
             // 

@@ -9,16 +9,17 @@ namespace MineNET.Utils
         const int WINDOW_X = 100;
         const int WINDOW_Y = 25;
 
-        internal class LoggerInfo
+        public class LoggerInfo
         {
             public string text;
             public LoggerLevel level;
         }
 
-        internal enum LoggerLevel
+        public enum LoggerLevel
         {
             Log,
             Info,
+            Notice,
             Warning,
             Error,
             Fatal
@@ -27,22 +28,26 @@ namespace MineNET.Utils
         public bool UseGUI { get; set; }
 
         Queue<LoggerInfo> loggerTexts = new Queue<LoggerInfo>();
-        public Queue<string> GuiLoggerTexts { get; } = new Queue<string>();
+        public Queue<LoggerInfo> GuiLoggerTexts { get; } = new Queue<LoggerInfo>();
 
         internal void Init()
         {
-            if (!UseGUI)
+            try
             {
                 Console.SetWindowSize(WINDOW_X, WINDOW_Y);
                 Console.SetBufferSize(WINDOW_X, 1000);
 
-                int bit = 64;
-                if (BitConverter.IsLittleEndian)
+                int bit = 32;
+                if (Environment.Is64BitOperatingSystem)
                 {
-                    bit = 86;
+                    bit = 64;
                 }
 
                 Console.Title = $"MineNET x{bit}";
+            }
+            catch
+            {
+                this.UseGUI = true;
             }
         }
 
@@ -99,6 +104,28 @@ namespace MineNET.Utils
             }
             string text = $"§f[Info][{CreateTime()}]{msg}";
             Server.Instance.Logger?.AddLogText(text);
+        }
+
+        public static void Notice(string msg, params object[] formats)
+        {
+            if (msg[0] == '%')
+            {
+                msg = msg.Remove(0, 1);
+                msg = LangManager.GetString(msg);
+            }
+            string f = string.Format(msg, formats);
+            Notice(f);
+        }
+
+        public static void Notice(string msg)
+        {
+            if (msg[0] == '%')
+            {
+                msg = msg.Remove(0, 1);
+                msg = LangManager.GetString(msg);
+            }
+            string text = $"§b[Notice][{CreateTime()}]{msg}";
+            Server.Instance.Logger?.AddLogText(text, LoggerLevel.Notice);
         }
 
         public static void Warning(string msg, params object[] formats)
@@ -164,6 +191,14 @@ namespace MineNET.Utils
             Fatal(f);
         }
 
+        public static void Fatal(Exception exception)
+        {
+            string f = exception.Message;
+            f += Environment.NewLine;
+            f += exception.StackTrace;
+            Fatal(f);
+        }
+
         public static void Fatal(string msg)
         {
             if (msg[0] == '%')
@@ -193,14 +228,15 @@ namespace MineNET.Utils
                 if (info != null)
                 {
                     string log = info.text;
-                    if (!UseGUI)
+                    if (!this.UseGUI)
                     {
                         CUIFormat(log);
                     }
                     else
                     {
                         RemoveColorCode(ref log);
-                        GuiLoggerTexts.Enqueue(log);
+                        info.text = log;
+                        GuiLoggerTexts.Enqueue(info);
                     }
 
                     if (info.level != LoggerLevel.Log)

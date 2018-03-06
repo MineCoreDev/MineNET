@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MineNET.Events.ServerEvents;
 
 namespace MineNET.GUI.Forms
 {
@@ -13,6 +14,7 @@ namespace MineNET.GUI.Forms
         {
             this.InitializeComponent();
             this.BaseForm = form;
+            this.button2.Enabled = false;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -27,11 +29,19 @@ namespace MineNET.GUI.Forms
 
         private async void ServerStart()
         {
+            ServerEvents.ServerStop += ServerEvents_ServerStop;
+
             Server = new Server();
-            Server.Start(true);
+            Server.Start();
             Server.Logger.UseGUI = true;
             inputOutput1.OnUpdate();
             await Task.Delay(100);
+        }
+
+        private void ServerEvents_ServerStop(ServerStopEventArgs args)
+        {
+            this.button1.Enabled = true;
+            this.button2.Enabled = false;
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -52,8 +62,24 @@ namespace MineNET.GUI.Forms
             }
 
             this.button1.Enabled = false;
+            this.button2.Enabled = true;
 
             ServerStart();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (Server == null)
+            {
+                return;
+            }
+
+            Server.Stop();
+
+            this.button1.Enabled = true;
+            this.button2.Enabled = false;
+
+            Server = null;
         }
     }
 }

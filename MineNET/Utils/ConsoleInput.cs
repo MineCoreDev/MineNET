@@ -17,9 +17,16 @@ namespace MineNET.Utils
         {
             while (!Server.Instance.IsShutdown())
             {
-                await Task.Delay(1000 / 20);
-                string cmd = Console.ReadLine();
-                this.commandQueue.Enqueue(cmd);
+                if (!Server.Instance.Logger.UseGUI)
+                {
+                    await Task.Delay(1000 / 20);
+                    string cmd = Console.ReadLine();
+                    this.commandQueue.Enqueue(cmd);
+                }
+                else
+                {
+                    return;
+                }
             }
         }
 

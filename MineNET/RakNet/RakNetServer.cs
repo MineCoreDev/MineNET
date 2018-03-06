@@ -40,6 +40,7 @@ namespace MineNET.RakNet
         };
 
         UdpClient client;
+        bool clientClosed;
 
         Dictionary<byte, Packet> packetPool = new Dictionary<byte, Packet>();
 
@@ -83,6 +84,12 @@ namespace MineNET.RakNet
             this.client.Client.IOControl((int) SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
 
             this.client.BeginReceive(this.OnReceive, null);
+        }
+
+        public void UDPClientClose()
+        {
+            this.clientClosed = true;
+            this.client.Close();
         }
 
         private void Init()
@@ -140,6 +147,9 @@ namespace MineNET.RakNet
             byte[] buffer = null;
             try
             {
+                if (this.clientClosed)
+                    return;
+
                 buffer = this.client.EndReceive(result, ref point);
 
                 if (this.blockUsers.ContainsKey(IPEndPointToID(point)))
@@ -165,7 +175,10 @@ namespace MineNET.RakNet
             }
             finally
             {
-                this.client.BeginReceive(this.OnReceive, null);
+                if (!this.clientClosed)
+                {
+                    this.client.BeginReceive(this.OnReceive, null);
+                }
             }
         }
 
@@ -210,6 +223,9 @@ namespace MineNET.RakNet
         {
             try
             {
+                if (this.clientClosed)
+                    return;
+
                 int length = this.client.EndSend(result);
             }
             catch (Exception ex)

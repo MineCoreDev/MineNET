@@ -27,7 +27,7 @@ namespace MineNET
 
         private bool isShutdown;
 
-        private void Init(bool gui)
+        private void Init()
         {
             this.InitConfig();
             this.InitFolder();
@@ -35,7 +35,6 @@ namespace MineNET
             if (this.mineNETConfig.EnableConsoleOutput)
             {
                 this.logger = new Logger();
-                this.logger.UseGUI = gui;
                 this.logger.Init();
                 this.UpdateLogger();
             }

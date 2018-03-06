@@ -81,14 +81,14 @@ namespace MineNET
             return this.isShutdown;
         }
 
-        public void Start(bool gui = false)
+        public void Start()
         {
             instance = this;
 
             Stopwatch s = new Stopwatch();
             s.Start();
 
-            Init(gui);
+            Init();
 
             s.Stop();
             Logger.Info("%server_started");
@@ -108,6 +108,8 @@ namespace MineNET
             {
                 players[i].Close("disconnect.closed");//TODO: Option Add
             }
+
+            this.NetworkManager.Server.UDPClientClose();
 
             ServerEvents.OnServerStop(new ServerStopEventArgs());
 
@@ -129,6 +131,8 @@ namespace MineNET
             {
                 players[i].Close("disconnect.closed");//TODO: Option Add
             }
+
+            this.NetworkManager.Server.UDPClientClose();
 
             ServerEvents.OnServerStop(new ServerStopEventArgs());
 
