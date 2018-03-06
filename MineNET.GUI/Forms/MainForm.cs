@@ -35,6 +35,7 @@ namespace MineNET.GUI.Forms
             Server.Start();
             Server.Logger.UseGUI = true;
             inputOutput1.OnUpdate();
+            playerList1.OnUpdate();
             await Task.Delay(100);
         }
 

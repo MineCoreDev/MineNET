@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Forms;
+using MineNET.Entities;
 
 namespace MineNET.GUI.Items
 {
@@ -15,6 +9,24 @@ namespace MineNET.GUI.Items
         public PlayerList()
         {
             InitializeComponent();
+        }
+
+        public async void OnUpdate()
+        {
+            while (!Server.Instance.IsShutdown())
+            {
+                Player[] players = Server.Instance.GetPlayers();
+                listBox1.Items.Clear();
+                for (int i = 0; i < players.Length; ++i)
+                {
+                    if (players[i].Name != null)
+                    {
+                        listBox1.Items.Add(players[i].Name);
+                    }
+                }
+
+                await Task.Delay(2000);
+            }
         }
     }
 }

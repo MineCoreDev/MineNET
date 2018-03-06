@@ -258,7 +258,7 @@ namespace MineNET.RakNet
                 int protocol = Network.Packets.ProtocolInfo.CLIENT_PROTOCOL;
                 string version = Network.Packets.ProtocolInfo.CLIENT_VERSION;
                 int maxPlayer = Server.ServerConfig.MaxPlayers;
-                int player = Server.Instance.NetworkManager.players.Count;
+                int? player = Server.Instance.NetworkManager?.players.Count;
                 string gameMode = Server.ServerConfig.GameMode;
 
                 UNCONNECTED_PING uping = (UNCONNECTED_PING) packet;

@@ -90,10 +90,7 @@ namespace MineNET
                 Player[] players = this.GetPlayers();
                 for (int i = 0; i < players?.Length; ++i)
                 {
-                    if (players[i].HasSpawned)
-                    {
-                        players[i].OnUpdate();
-                    }
+                    players[i].OnUpdate();
                 }
             }
         }

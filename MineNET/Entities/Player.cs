@@ -44,6 +44,8 @@ namespace MineNET.Entities
         public bool PackSyncCompleted { get; private set; }
         public bool HasSpawned { get; private set; }
 
+        public int RequestChunkRadius = 5;
+
         internal void PacketHandle(DataPacket pk)
         {
             if (pk is LoginPacket)
@@ -139,27 +141,9 @@ namespace MineNET.Entities
             int chunkSize = this.FixRadius(pk.Radius);
             ChunkRadiusUpdatedPacket chunkRadiusUpdatedPacket = new ChunkRadiusUpdatedPacket();
             chunkRadiusUpdatedPacket.Radius = chunkSize;
+            this.RequestChunkRadius = chunkSize;
             Logger.Info("%server_chunkRadius", pk.Radius, chunkRadiusUpdatedPacket.Radius);
             SendPacket(chunkRadiusUpdatedPacket);
-
-            for (int i = ((int) this.X >> 4) - chunkSize; i < ((int) this.X >> 4) + chunkSize; ++i)
-            {
-                for (int j = ((int) this.Z >> 4) - chunkSize; j < ((int) this.Z >> 4) + chunkSize; ++j)
-                {
-                    new Chunk(i, j).TestChunkSend(this);
-                }
-            }
-
-            this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
-
-            this.HasSpawned = true;
-
-            GameRules rules = new GameRules();
-            rules.Add(new GameRule<bool>("ShowCoordinates", true));
-
-            GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
-            gameRulesChangedPacket.GameRules = rules;
-            this.SendPacket(gameRulesChangedPacket);
         }
 
         private void MovePlayerPacketHandle(MovePlayerPacket pk)
@@ -251,6 +235,25 @@ namespace MineNET.Entities
             //MobEquipment
             //InventorySlot
             //PlayerList
+
+            for (int i = ((int) this.X >> 4) - this.RequestChunkRadius; i < ((int) this.X >> 4) + this.RequestChunkRadius; ++i)
+            {
+                for (int j = ((int) this.Z >> 4) - this.RequestChunkRadius; j < ((int) this.Z >> 4) + this.RequestChunkRadius; ++j)
+                {
+                    new Chunk(i, j).TestChunkSend(this);
+                }
+            }
+
+            this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+
+            this.HasSpawned = true;
+
+            GameRules rules = new GameRules();
+            rules.Add(new GameRule<bool>("ShowCoordinates", true));
+
+            GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
+            gameRulesChangedPacket.GameRules = rules;
+            this.SendPacket(gameRulesChangedPacket);
         }
 
         private void InitPlayerData()
