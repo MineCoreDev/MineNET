@@ -188,7 +188,7 @@ namespace MineNET.Entities
 
             this.IsLogined = true;
 
-            this.InitPlayerData();
+            this.LoadData();
 
             this.PlayerListEntry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.Skin, this.LoginData.XUID);
             Player[] players = Server.Instance.GetPlayers();
@@ -196,8 +196,10 @@ namespace MineNET.Entities
             //entries.Add(this.PlayerListEntry);
             for (int i = 0; i < players.Length; ++i)
             {
-                if (players[i] != this && players[i].IsLogined)
+                Logger.Info($"{players.Length}");
+                if (players[i].Name != this.Name && players[i].IsLogined)
                 {
+                    Logger.Info($"{players.Length}");
                     PlayerListPacket playerListPacket = new PlayerListPacket();
                     playerListPacket.Type = PlayerListPacket.TYPE_ADD;
                     playerListPacket.Entries = new PlayerListEntry[] { this.PlayerListEntry };
@@ -205,10 +207,6 @@ namespace MineNET.Entities
                     entries.Add(players[i].PlayerListEntry);
                 }
             }
-            /*PlayerListPacket listPacket = new PlayerListPacket();
-            listPacket.Type = PlayerListPacket.TYPE_ADD;
-            listPacket.Entries = entries.ToArray();
-            this.SendPacket(listPacket);*/
 
             this.X = 128;
             this.Y = 6;
@@ -251,9 +249,13 @@ namespace MineNET.Entities
             //MobEquipment
             //InventorySlot
             //PlayerList
+            /*PlayerListPacket listPacket = new PlayerListPacket();
+            listPacket.Type = PlayerListPacket.TYPE_ADD;
+            listPacket.Entries = entries.ToArray();
+            this.SendPacket(listPacket);*/
         }
 
-        private void InitPlayerData()
+        private void LoadData()
         {
             string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
             if (!File.Exists(path))

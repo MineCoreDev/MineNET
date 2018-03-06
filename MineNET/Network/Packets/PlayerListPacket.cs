@@ -34,8 +34,8 @@ namespace MineNET.Network.Packets
                 {
                     this.WriteEntityUniqueId(this.Entries[i].EntityUniqueId);
                     this.WriteString(this.Entries[i].Name);
-                    //this.WriteSkin(this.Entries[i].Skin);
-                    //this.WriteString(this.Entries[i].XboxUserId);
+                    this.WriteSkin(this.Entries[i].Skin);
+                    this.WriteString(this.Entries[i].XboxUserId);
                 }
             }
         }
