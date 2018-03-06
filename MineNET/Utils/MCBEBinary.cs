@@ -120,14 +120,18 @@ namespace MineNET.Utils
 
         public Skin ReadSkin()
         {
-            return new Skin(this.ReadString(), this.ReadString(), this.ReadString(), this.ReadString(), this.ReadString());
+            return new Skin(this.ReadString(), this.ReadBytes((int) this.ReadUVarInt()), this.ReadBytes((int) this.ReadUVarInt()), this.ReadString(), this.ReadString());
         }
 
         public void WriteSkin(Skin skin)
         {
             this.WriteString(skin.SkinId);
-            this.WriteString(skin.SkinData);
-            this.WriteString(skin.CapeData);
+
+            this.WriteUVarInt((uint) skin.SkinData.Length);
+            this.WriteBytes(skin.SkinData);
+            this.WriteUVarInt((uint) skin.CapeData.Length);
+            this.WriteBytes(skin.CapeData);
+
             this.WriteString(skin.GeometryName);
             this.WriteString(skin.GeometryData);
         }
