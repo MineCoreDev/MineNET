@@ -113,7 +113,7 @@ namespace MineNET
 
             ServerEvents.OnServerStop(new ServerStopEventArgs());
 
-            Kill();
+            this.Kill();
         }
 
         public void ErrorStop(Exception e)
@@ -136,7 +136,7 @@ namespace MineNET
 
             ServerEvents.OnServerStop(new ServerStopEventArgs());
 
-            Kill();
+            this.Kill();
         }
 
         public Player[] GetPlayers()

@@ -352,6 +352,7 @@
     <Compile Include="Commands\ConsoleSender.cs" />
     <Compile Include="Commands\Defaults\StopCommand.cs" />
     <Compile Include="Commands\Data\ICommandHandler.cs" />
+    <Compile Include="Data\AdventureSettingsEntry.cs" />
     <Compile Include="Data\ContainerIds.cs" />
     <Compile Include="Entities\Data\EntityFlags.cs" />
     <Compile Include="Entities\Metadata\EntityDataLong.cs" />
@@ -633,6 +634,7 @@
     <Compile Include="Network\Packets\MobEquipmentPacket.cs" />
     <Compile Include="Network\Packets\MovePlayerPacket.cs" />
     <Compile Include="Network\Packets\PlayerListPacket.cs" />
+    <Compile Include="Network\Packets\PlayerSkinPacket.cs" />
     <Compile Include="Network\Packets\RequestChunkRadiusPacket.cs" />
     <Compile Include="Network\Packets\ResourcePackClientResponsePacket.cs" />
     <Compile Include="Network\Packets\ResourcePacksInfoPacket.cs" />

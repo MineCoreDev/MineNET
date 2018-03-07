@@ -31,7 +31,7 @@ namespace MineNET.Network
             this.Init();
         }
 
-        void Init()
+        private void Init()
         {
             this.server = new RakNetServer(MineNET.Server.ServerConfig.ServerPort);
             this.RegisterPackets();
@@ -94,13 +94,17 @@ namespace MineNET.Network
             RakNetSession session = this.server.GetSession(player.EndPoint);
 
             if (session == null)
+            {
                 return;
+            }
 
             DataPacketSendArgs args = new DataPacketSendArgs(player, pk);
             ServerEvents.OnPacketSend(args);
 
             if (args.IsCancel)
+            {
                 return;
+            }
 
             pk.Encode();
 
@@ -124,7 +128,7 @@ namespace MineNET.Network
             session.SendPacket(enc);
         }
 
-        void GetPackets(BatchPacket pk, Player player)
+        private void GetPackets(BatchPacket pk, Player player)
         {
             using (BinaryStream stream = new BinaryStream(pk.Payload))
             {
@@ -144,7 +148,9 @@ namespace MineNET.Network
                             ServerEvents.OnPacketReceive(args);
 
                             if (args.IsCancel)
+                            {
                                 return;
+                            }
 
                             player.PacketHandle(packet);
                         }
@@ -178,7 +184,7 @@ namespace MineNET.Network
             }
         }
 
-        void RegisterPackets()
+        private void RegisterPackets()
         {
             this.RegisterPacket(new LoginPacket());
             this.RegisterPacket(new PlayStatusPacket());
