@@ -233,6 +233,7 @@ namespace MineNET.Utils
             using (MCBEBinary stream = new MCBEBinary())
             {
                 Dictionary<int, EntityData> entityDatas = data.GetEntityDatas();
+                stream.WriteUVarInt((uint) entityDatas.Count);
                 foreach (int id in entityDatas.Keys)
                 {
                     EntityData entityData = entityDatas[id];
@@ -249,7 +250,7 @@ namespace MineNET.Utils
                     }
                     else if (type == EntityMetadataType.DATA_TYPE_INT)
                     {
-                        stream.WriteVarInt(data.GetInt(id));
+                        stream.WriteSVarInt(data.GetInt(id));
                     }
                     else if (type == EntityMetadataType.DATA_TYPE_FLOAT)
                     {
@@ -265,7 +266,7 @@ namespace MineNET.Utils
                     }
                     else if (type == EntityMetadataType.DATA_TYPE_LONG)
                     {
-                        stream.WriteVarLong(data.GetLong(id));
+                        stream.WriteSVarLong(data.GetLong(id));
                     }
                     else if (type == EntityMetadataType.DATA_TYPE_VECTOR)
                     {

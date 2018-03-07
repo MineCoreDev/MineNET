@@ -42,6 +42,22 @@ namespace MineNET.Entities
         public bool PackSyncCompleted { get; private set; }
         public bool HasSpawned { get; private set; }
 
+        public override float WIDTH
+        {
+            get
+            {
+                return 0.60f;
+            }
+        }
+
+        public override float HEIGHT
+        {
+            get
+            {
+                return 1.80f;
+            }
+        }
+
         public int RequestChunkRadius = 5;
 
         internal void PacketHandle(DataPacket pk)
@@ -220,7 +236,6 @@ namespace MineNET.Entities
             //inventoryContent
             //MobEquipment
             //InventorySlot
-            //PlayerList
 
             SendFastChunk();
         }
@@ -247,9 +262,9 @@ namespace MineNET.Entities
                 GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
                 gameRulesChangedPacket.GameRules = rules;
                 this.SendPacket(gameRulesChangedPacket);
+
+                this.SendData(this);
             });
-
-
         }
 
         private void LoadData()
