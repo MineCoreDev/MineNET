@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using MineNET.Entities;
 using MineNET.Events.ServerEvents;
 using MineNET.Network.Packets;
@@ -89,7 +90,7 @@ namespace MineNET.Network
             }
         }
 
-        public void SendPacket(Player player, DataPacket pk, bool needACK = false, bool immediate = false)
+        public void SendPacket(Player player, DataPacket pk, bool immediate = false)
         {
             RakNetSession session = this.server.GetSession(player.EndPoint);
 
@@ -121,40 +122,43 @@ namespace MineNET.Network
             enc.reliability = RakNet.Packets.PacketReliability.RELIABLE;
             enc.messageIndex = ++session.MessageIndex;
 
-            session.SendPacket(enc);
+            session.SendPacket(enc, immediate);
         }
 
-        void GetPackets(BatchPacket pk, Player player)
+        async void GetPackets(BatchPacket pk, Player player)
         {
-            using (BinaryStream stream = new BinaryStream(pk.Payload))
+            await Task.Run(() =>
             {
-                while (!stream.EndOfStream())
+                using (BinaryStream stream = new BinaryStream(pk.Payload))
                 {
-                    int len = stream.ReadVarInt();
-                    byte[] buffer = stream.ReadBytes(len);
-                    using (DataPacket packet = GetPacket(buffer[0]))
+                    while (!stream.EndOfStream())
                     {
-                        if (packet != null)
+                        int len = stream.ReadVarInt();
+                        byte[] buffer = stream.ReadBytes(len);
+                        using (DataPacket packet = GetPacket(buffer[0]))
                         {
-                            Logger.Log("%server_packet_handle", buffer[0].ToString("X"), buffer.Length);
-                            packet.SetBuffer(buffer);
-                            packet.Decode();
+                            if (packet != null)
+                            {
+                                Logger.Log("%server_packet_handle", buffer[0].ToString("X"), buffer.Length);
+                                packet.SetBuffer(buffer);
+                                packet.Decode();
 
-                            DataPacketReceiveArgs args = new DataPacketReceiveArgs(player, pk);
-                            ServerEvents.OnPacketReceive(args);
+                                DataPacketReceiveArgs args = new DataPacketReceiveArgs(player, pk);
+                                ServerEvents.OnPacketReceive(args);
 
-                            if (args.IsCancel)
-                                return;
+                                if (args.IsCancel)
+                                    return;
 
-                            player.PacketHandle(packet);
-                        }
-                        else
-                        {
-                            Logger.Log("%server_packet_notHandle", buffer[0].ToString("X"), buffer.Length);
+                                player.PacketHandle(packet);
+                            }
+                            else
+                            {
+                                Logger.Log("%server_packet_notHandle", buffer[0].ToString("X"), buffer.Length);
+                            }
                         }
                     }
                 }
-            }
+            });
         }
 
         DataPacket GetPacket(int id)

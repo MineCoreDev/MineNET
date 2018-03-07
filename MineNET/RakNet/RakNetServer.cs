@@ -238,7 +238,7 @@ namespace MineNET.RakNet
         {
             IPEndPoint point = new IPEndPoint(ip, port);
 
-            if (packet == null)
+            if (packet == null || this.clientClosed)
                 return;
 
             packet.Encode();

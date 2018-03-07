@@ -51,5 +51,10 @@ namespace MineNET.GUI.Items
             int t = (int) level;
             return checkedListBox1.GetItemChecked(t);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            textBox1.Clear();
+        }
     }
 }

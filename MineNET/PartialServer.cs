@@ -1,9 +1,12 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using MineNET.Commands;
+using MineNET.Data;
 using MineNET.Entities;
 using MineNET.Entities.Attributes;
 using MineNET.Network;
+using MineNET.Network.Packets;
 using MineNET.Plugins;
 using MineNET.Utils;
 using MineNET.Utils.Config;
@@ -22,6 +25,8 @@ namespace MineNET
         private NetworkManager networkManager;
         private CommandManager commandManager;
         private PluginManager pluginManager;
+
+        private List<PlayerListEntry> playerListEntries = new List<PlayerListEntry>();
 
         private Logger logger;
 
@@ -123,6 +128,36 @@ namespace MineNET
         {
             await Task.Delay(1000);
             this.isShutdown = true;
+        }
+
+        private async void SendAddPlayerLists(Player sender)
+        {
+            Player[] players = this.GetPlayers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (sender.Name != players[i].Name)
+                {
+                    PlayerListPacket playerListPacket = new PlayerListPacket();
+                    playerListPacket.Type = PlayerListPacket.TYPE_ADD;
+                    playerListPacket.Entries = playerListEntries.ToArray();
+                    await Task.Run(() =>
+                    {
+                        players[i].SendPacket(playerListPacket);
+                    });
+                }
+            }
+        }
+
+        private void SendRemovePlayerLists(PlayerListEntry entry)
+        {
+            Player[] players = this.GetPlayers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                PlayerListPacket playerListPacket = new PlayerListPacket();
+                playerListPacket.Type = PlayerListPacket.TYPE_REMOVE;
+                playerListPacket.Entries = new PlayerListEntry[] { entry };
+                players[i].SendPacket(playerListPacket);
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Data;
 using MineNET.Entities.Metadata;
 using MineNET.Items;
+using MineNET.Network.Packets;
 using MineNET.Values;
 using MineNET.Worlds.Data;
 
@@ -118,6 +120,23 @@ namespace MineNET.Utils
             }
         }
 
+        public void WritePlayerListEntries(PlayerListEntry[] entries, byte type)
+        {
+            this.WriteByte(type);
+            this.WriteUVarLong((uint) entries.Length);
+            for (int i = 0; i < entries.Length; ++i)
+            {
+                this.WriteGUID(entries[i].Guid);
+                if (type == PlayerListPacket.TYPE_ADD)
+                {
+                    this.WriteEntityUniqueId(entries[i].EntityUniqueId);
+                    this.WriteString(entries[i].Name);
+                    this.WriteSkin(entries[i].Skin);
+                    this.WriteString(entries[i].XboxUserId);
+                }
+            }
+        }
+
         public Skin ReadSkin()
         {
             return new Skin(this.ReadString(), this.ReadBytes((int) this.ReadUVarInt()), this.ReadBytes((int) this.ReadUVarInt()), this.ReadString(), this.ReadString());
@@ -125,15 +144,25 @@ namespace MineNET.Utils
 
         public void WriteSkin(Skin skin)
         {
-            this.WriteString(skin.SkinId);
-
-            this.WriteUVarInt((uint) skin.SkinData.Length);
-            this.WriteBytes(skin.SkinData);
-            this.WriteUVarInt((uint) skin.CapeData.Length);
-            this.WriteBytes(skin.CapeData);
+            /*this.WriteString(skin.SkinId);
+            this.WriteString(Convert.ToBase64String(skin.SkinData));
+            this.WriteString(Convert.ToBase64String(skin.CapeData));
 
             this.WriteString(skin.GeometryName);
-            this.WriteString(skin.GeometryData);
+            this.WriteString(skin.GeometryData);*/
+            this.WriteString(skin.SkinId);
+            this.WriteUVarInt(0);
+            this.WriteUVarInt(0);
+
+            this.WriteString(skin.GeometryName);
+            this.WriteUVarInt(0);
+        }
+
+        public void WrileByteAndLen(byte[] buffer)
+        {
+            int len = buffer.Length;
+            this.WriteUVarInt((uint) len);
+            this.WriteBytes(buffer);
         }
 
         public Item ReadItem()

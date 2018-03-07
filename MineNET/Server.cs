@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using MineNET.Commands;
+using MineNET.Data;
 using MineNET.Entities;
 using MineNET.Events.ServerEvents;
 using MineNET.Network;
@@ -137,6 +138,27 @@ namespace MineNET
             ServerEvents.OnServerStop(new ServerStopEventArgs());
 
             Kill();
+        }
+
+        public void AddPlayerList(Player sender, PlayerListEntry entry)
+        {
+            if (!this.playerListEntries.Contains(entry))
+            {
+                this.playerListEntries.Add(entry);
+                this.SendAddPlayerLists(sender);
+            }
+        }
+
+        public void RemovePlayerList(string name)
+        {
+            Player player = this.GetPlayer(name);
+            PlayerListEntry entry = this.playerListEntries.Find((a) =>
+            {
+                return a.Name == name;
+            });
+            this.playerListEntries.Remove(entry);
+
+            this.SendRemovePlayerLists(entry);
         }
 
         public Player[] GetPlayers()

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
@@ -36,8 +36,6 @@ namespace MineNET.Entities
         public LoginData LoginData { get; internal set; }
         public ClientData ClientData { get; internal set; }
 
-        public PlayerListEntry PlayerListEntry { get; private set; }
-
         public bool IsPreLogined { get; private set; }
         public bool IsLogined { get; private set; }
         public bool HaveAllPacks { get; private set; }
@@ -68,6 +66,9 @@ namespace MineNET.Entities
 
         private void LoginPacketHandle(LoginPacket pk)
         {
+            if (this.IsPreLogined)
+                return;
+
             if (pk.Protocol < ProtocolInfo.CLIENT_PROTOCOL)
             {
                 this.SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_CLIENT);
@@ -161,6 +162,8 @@ namespace MineNET.Entities
 
         private void ProcessLogin()
         {
+            if (this.IsLogined)
+                return;
             //TODO: PlayerDataLoad
             PlayerLoginEventArgs playerLoginEvent = new PlayerLoginEventArgs(this, "");
             PlayerEvents.OnPlayerLogin(playerLoginEvent);
@@ -174,23 +177,8 @@ namespace MineNET.Entities
 
             this.LoadData();
 
-            this.PlayerListEntry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.Skin, this.LoginData.XUID);
-            Player[] players = Server.Instance.GetPlayers();
-            List<PlayerListEntry> entries = new List<PlayerListEntry>();
-            //entries.Add(this.PlayerListEntry);
-            for (int i = 0; i < players.Length; ++i)
-            {
-                Logger.Info($"{players.Length}");
-                if (players[i].Name != this.Name && players[i].IsLogined)
-                {
-                    Logger.Info($"{players.Length}");
-                    PlayerListPacket playerListPacket = new PlayerListPacket();
-                    playerListPacket.Type = PlayerListPacket.TYPE_ADD;
-                    playerListPacket.Entries = new PlayerListEntry[] { this.PlayerListEntry };
-                    players[i].SendPacket(playerListPacket);
-                    entries.Add(players[i].PlayerListEntry);
-                }
-            }
+            PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.Skin, this.LoginData.XUID);
+            Server.Instance.AddPlayerList(this, entry);
 
             this.X = 128;
             this.Y = 6;
@@ -234,24 +222,34 @@ namespace MineNET.Entities
             //InventorySlot
             //PlayerList
 
-            for (int i = ((int) this.X >> 4) - this.RequestChunkRadius; i < ((int) this.X >> 4) + this.RequestChunkRadius; ++i)
+            SendFastChunk();
+        }
+
+        private async void SendFastChunk()
+        {
+            await Task.Run(() =>
             {
-                for (int j = ((int) this.Z >> 4) - this.RequestChunkRadius; j < ((int) this.Z >> 4) + this.RequestChunkRadius; ++j)
+                for (int i = ((int) this.X >> 4) - this.RequestChunkRadius; i < ((int) this.X >> 4) + this.RequestChunkRadius; ++i)
                 {
-                    new Chunk(i, j).TestChunkSend(this);
+                    for (int j = ((int) this.Z >> 4) - this.RequestChunkRadius; j < ((int) this.Z >> 4) + this.RequestChunkRadius; ++j)
+                    {
+                        new Chunk(i, j).TestChunkSend(this);
+                    }
                 }
-            }
 
-            this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+                this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
 
-            this.HasSpawned = true;
+                this.HasSpawned = true;
 
-            GameRules rules = new GameRules();
-            rules.Add(new GameRule<bool>("ShowCoordinates", true));
+                GameRules rules = new GameRules();
+                rules.Add(new GameRule<bool>("ShowCoordinates", true));
 
-            GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
-            gameRulesChangedPacket.GameRules = rules;
-            this.SendPacket(gameRulesChangedPacket);
+                GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
+                gameRulesChangedPacket.GameRules = rules;
+                this.SendPacket(gameRulesChangedPacket);
+            });
+
+
         }
 
         private void LoadData()
@@ -307,9 +305,9 @@ namespace MineNET.Entities
             SendPacket(pk);
         }
 
-        public void SendPacket(DataPacket pk, bool needACK = false, bool immediate = false)
+        public void SendPacket(DataPacket pk, bool immediate = false)
         {
-            Server.Instance.NetworkManager.SendPacket(this, pk);
+            Server.Instance.NetworkManager.SendPacket(this, pk, immediate);
         }
 
         public void Close(string reason)
@@ -322,9 +320,10 @@ namespace MineNET.Entities
                 DisconnectPacket pk = new DisconnectPacket();//TODO NotQueue Send...
                 pk.Message = reason;
 
-                this.SendPacket(pk);
+                this.SendPacket(pk, true);
             }
             this.Save();
+            Server.Instance.RemovePlayerList(this.Name);
             Server.Instance.NetworkManager.PlayerClose(this.EndPoint, reason);
         }
 

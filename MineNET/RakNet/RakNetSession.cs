@@ -233,10 +233,23 @@ namespace MineNET.RakNet
             }
         }
 
-        public void SendPacket(EncapsulatedPacket packet)
+        public void SendPacket(EncapsulatedPacket packet, bool notQueue = false)
         {
             if (this.server != null)
             {
+                if (notQueue)
+                {
+                    DataPacket_0 pk = new DataPacket_0();
+                    pk.SeqNumber = this.sendSeqNumber++;
+                    pk.Packets = new[]
+                    {
+                        packet
+                    };
+
+                    this.server.SendPacket(pk, this.point.Address, this.point.Port);
+                    return;
+                }
+
                 if (packet.buffer.Length + 4 > this.mtuSize)
                 {
                     byte[][] buffers = Binary.SplitBytes(packet.buffer, this.mtuSize - 60);
@@ -269,7 +282,6 @@ namespace MineNET.RakNet
 
                         Logger.Log("Split");
                     }
-
                 }
                 else
                 {
