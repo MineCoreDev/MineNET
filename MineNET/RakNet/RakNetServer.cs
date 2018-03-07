@@ -148,7 +148,9 @@ namespace MineNET.RakNet
             try
             {
                 if (this.clientClosed)
+                {
                     return;
+                }
 
                 buffer = this.client.EndReceive(result, ref point);
 
@@ -224,7 +226,9 @@ namespace MineNET.RakNet
             try
             {
                 if (this.clientClosed)
+                {
                     return;
+                }
 
                 int length = this.client.EndSend(result);
             }
@@ -239,10 +243,11 @@ namespace MineNET.RakNet
             IPEndPoint point = new IPEndPoint(ip, port);
 
             if (packet == null || this.clientClosed)
+            {
                 return;
+            }
 
             packet.Encode();
-
             byte[] bytes = packet.GetResult();
             this.client.BeginSend(bytes, bytes.Length, point, this.OnSend, null);
 
