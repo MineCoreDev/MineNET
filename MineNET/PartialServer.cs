@@ -26,7 +26,7 @@ namespace MineNET
         private CommandManager commandManager;
         private PluginManager pluginManager;
 
-        private List<PlayerListEntry> playerListEntries = new List<PlayerListEntry>();
+        private Dictionary<long, PlayerListEntry> playerListEntries = new Dictionary<long, PlayerListEntry>();
 
         private Logger logger;
 
@@ -130,16 +130,16 @@ namespace MineNET
             this.isShutdown = true;
         }
 
-        private async void SendAddPlayerLists(Player sender)
+        private async void AddPlayerList(Player player, PlayerListEntry entry)
         {
             Player[] players = this.GetPlayers();
             for (int i = 0; i < players.Length; ++i)
             {
-                if (sender.Name != players[i].Name)
+                if (players[i].HasSpawned)
                 {
                     PlayerListPacket playerListPacket = new PlayerListPacket();
                     playerListPacket.Type = PlayerListPacket.TYPE_ADD;
-                    playerListPacket.Entries = playerListEntries.ToArray();
+                    playerListPacket.Entries = new PlayerListEntry[] { entry };
                     await Task.Run(() =>
                     {
                         players[i].SendPacket(playerListPacket);
@@ -148,7 +148,7 @@ namespace MineNET
             }
         }
 
-        private void SendRemovePlayerLists(PlayerListEntry entry)
+        private void RemovePlayerList(PlayerListEntry entry)
         {
             Player[] players = this.GetPlayers();
             for (int i = 0; i < players.Length; ++i)

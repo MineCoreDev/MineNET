@@ -6,6 +6,7 @@ using MineNET.Data;
 using MineNET.Entities;
 using MineNET.Events.ServerEvents;
 using MineNET.Network;
+using MineNET.Network.Packets;
 using MineNET.Plugins;
 using MineNET.Utils;
 
@@ -140,25 +141,30 @@ namespace MineNET
             this.Kill();
         }
 
-        public void AddPlayerList(Player sender, PlayerListEntry entry)
+        public void AddPlayer(Player player, PlayerListEntry entry)
         {
-            if (!this.playerListEntries.Contains(entry))
+            if (!this.playerListEntries.ContainsValue(entry))
             {
-                this.playerListEntries.Add(entry);
-                this.SendAddPlayerLists(sender);
+                this.playerListEntries[player.EntityID] = entry;
+                this.SendPlayerLists(player);
+                this.AddPlayerList(player, entry);
             }
         }
 
-        public void RemovePlayerList(string name)
+        public void RemovePlayer(long entityID)
         {
-            Player player = this.GetPlayer(name);
-            PlayerListEntry entry = this.playerListEntries.Find((a) =>
-            {
-                return a.Name == name;
-            });
-            this.playerListEntries.Remove(entry);
+            PlayerListEntry entry = this.playerListEntries[entityID];
+            this.playerListEntries.Remove(entityID);
 
-            this.SendRemovePlayerLists(entry);
+            this.RemovePlayerList(entry);
+        }
+
+        public void SendPlayerLists(Player player)
+        {
+            PlayerListPacket pk = new PlayerListPacket();
+            pk.Type = PlayerListPacket.TYPE_ADD;
+            pk.Entries = this.playerListEntries.Values.ToArray();
+            player.SendPacket(pk);
         }
 
         public Player[] GetPlayers()
@@ -168,14 +174,28 @@ namespace MineNET
 
         public Player GetPlayer(string name)
         {
+            Player found = null;
             Player[] players = this.GetPlayers();
+            int delta = 100;
+            name = name.ToLower();
             for (int i = 0; i < players.Length; ++i)
             {
-                if (players[i].Name == name)
-                    return players[i];
+                if (players[i].Name.ToLower().StartsWith(name))
+                {
+                    int curDelta = players[i].Name.Length - name.Length;
+                    if (curDelta < delta)
+                    {
+                        found = players[i];
+                        delta = curDelta;
+                    }
+                    if (curDelta == 0)
+                    {
+                        break;
+                    }
+                }
             }
 
-            return null;
+            return found;
         }
     }
 }

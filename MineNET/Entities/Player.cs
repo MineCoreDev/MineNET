@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
+using MineNET.Entities.Data;
 using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
 using MineNET.NBT.Data;
@@ -177,8 +178,7 @@ namespace MineNET.Entities
 
             this.LoadData();
 
-            PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.Skin, this.LoginData.XUID);
-            Server.Instance.AddPlayerList(this, entry);
+
 
             this.X = 128;
             this.Y = 6;
@@ -238,18 +238,18 @@ namespace MineNET.Entities
                 }
 
                 this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
-
-                this.HasSpawned = true;
-
-                GameRules rules = new GameRules();
-                rules.Add(new GameRule<bool>("ShowCoordinates", true));
-
-                GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
-                gameRulesChangedPacket.GameRules = rules;
-                this.SendPacket(gameRulesChangedPacket);
             });
 
+            this.HasSpawned = true;
 
+            GameRules rules = new GameRules();
+            rules.Add(new GameRule<bool>("ShowCoordinates", true));
+
+            GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
+            gameRulesChangedPacket.GameRules = rules;
+            this.SendPacket(gameRulesChangedPacket);
+            PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, new Skin("", new byte[0], new byte[0], "", ""), this.LoginData.XUID);
+            Server.Instance.AddPlayer(this, entry);
         }
 
         private void LoadData()
@@ -323,7 +323,7 @@ namespace MineNET.Entities
                 this.SendPacket(pk, true);
             }
             this.Save();
-            Server.Instance.RemovePlayerList(this.Name);
+            Server.Instance.RemovePlayer(this.EntityID);
             Server.Instance.NetworkManager.PlayerClose(this.EndPoint, reason);
         }
 

@@ -123,7 +123,7 @@ namespace MineNET.Utils
         public void WritePlayerListEntries(PlayerListEntry[] entries, byte type)
         {
             this.WriteByte(type);
-            this.WriteUVarLong((uint) entries.Length);
+            this.WriteUVarInt((uint) entries.Length);
             for (int i = 0; i < entries.Length; ++i)
             {
                 this.WriteGUID(entries[i].Guid);
@@ -131,8 +131,11 @@ namespace MineNET.Utils
                 {
                     this.WriteEntityUniqueId(entries[i].EntityUniqueId);
                     this.WriteString(entries[i].Name);
+                    this.WriteString("");
+                    this.WriteSVarInt(entries[i].PlatForm);
                     this.WriteSkin(entries[i].Skin);
                     this.WriteString(entries[i].XboxUserId);
+                    this.WriteString("");
                 }
             }
         }
@@ -153,7 +156,6 @@ namespace MineNET.Utils
             this.WriteString(skin.SkinId);
             this.WriteUVarInt(0);
             this.WriteUVarInt(0);
-
             this.WriteString(skin.GeometryName);
             this.WriteUVarInt(0);
         }
