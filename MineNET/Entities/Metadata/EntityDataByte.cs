@@ -9,6 +9,11 @@ namespace MineNET.Entities.Metadata
 
         }
 
+        public EntityDataByte(int id, bool data) : base(id, data ? (byte) 0 : (byte) 1)
+        {
+
+        }
+
         public override EntityMetadataType Type
         {
             get

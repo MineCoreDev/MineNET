@@ -1,4 +1,5 @@
-﻿using MineNET.Values;
+﻿using MineNET.Data;
+using MineNET.Values;
 using MineNET.Worlds.Data;
 
 namespace MineNET.Network.Packets
@@ -69,15 +70,15 @@ namespace MineNET.Network.Packets
 
         public bool TrustPlayers { get; set; } = false;
 
-        public int PermissionLevel { get; set; } = 1;
+        public PlayerPermissions PermissionLevel { get; set; } = PlayerPermissions.MEMBER;
 
-        public int GamePublish { get; set; } = 0;
+        public int GamePublish { get; set; } = 3;
 
         public int ServerChunkTickRadius { get; set; } = 4;
 
         public string LevelId { get; set; } = "";
 
-        public string WorldName { get; set; }
+        public string WorldName { get; set; } = "";
 
         public string PremiumWorldTemplateId { get; set; } = "";
 
@@ -117,7 +118,7 @@ namespace MineNET.Network.Packets
             this.WriteBool(this.BonusChest);
             this.WriteBool(this.StartWithMap);
             this.WriteBool(this.TrustPlayers);
-            this.WriteSVarInt(this.PermissionLevel);
+            this.WriteSVarInt((int) this.PermissionLevel);
             this.WriteSVarInt(this.GamePublish);
             this.WriteInt(this.ServerChunkTickRadius);
             this.WriteString(this.LevelId);

@@ -28,6 +28,11 @@ namespace MineNET.Entities
         {
             this.IsPlayer = true;
             this.inventory = new PlayerInventory(this);
+
+            this.ShowNameTag = true;
+            this.AlwaysShowNameTag = true;
+
+            this.SetFlag(EntityFlags.DATA_FLAGS, EntityFlags.DATA_FLAG_CAN_CLIMB);
         }
 
         public override string Name { get; protected set; }
@@ -42,6 +47,22 @@ namespace MineNET.Entities
         public bool HaveAllPacks { get; private set; }
         public bool PackSyncCompleted { get; private set; }
         public bool HasSpawned { get; private set; }
+
+        public override float WIDTH
+        {
+            get
+            {
+                return 0.60f;
+            }
+        }
+
+        public override float HEIGHT
+        {
+            get
+            {
+                return 1.80f;
+            }
+        }
 
         public int RequestChunkRadius = 5;
 
@@ -95,6 +116,7 @@ namespace MineNET.Entities
 
             this.LoginData = pk.LoginData;
             this.Name = pk.LoginData.DisplayName;
+            this.DisplayName = this.Name;
 
             this.ClientData = pk.ClientData;
 
@@ -220,7 +242,6 @@ namespace MineNET.Entities
             //inventoryContent
             //MobEquipment
             //InventorySlot
-            //PlayerList
 
             SendFastChunk();
         }
@@ -248,6 +269,7 @@ namespace MineNET.Entities
             GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
             gameRulesChangedPacket.GameRules = rules;
             this.SendPacket(gameRulesChangedPacket);
+            this.SendDataProperties();
             PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, new Skin("", new byte[0], new byte[0], "", ""), this.LoginData.XUID);
             Server.Instance.AddPlayer(this, entry);
         }
