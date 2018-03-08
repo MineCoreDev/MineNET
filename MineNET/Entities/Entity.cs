@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MineNET.Entities.Data;
 using MineNET.Entities.Metadata;
 using MineNET.NBT.Tags;
@@ -29,7 +30,7 @@ namespace MineNET.Entities
             this.SetDataProperty(new EntityDataShort(EntityFlags.DATA_MAX_AIR, 400));
             this.SetDataProperty(new EntityDataString(EntityFlags.DATA_NAMETAG, ""));
             this.SetDataProperty(new EntityDataLong(EntityFlags.DATA_LEAD_HOLDER_EID, -1));
-            this.SetDataProperty(new EntityDataLong(EntityFlags.DATA_TRADING_PLAYER_EID, -1));
+            this.SetDataProperty(new EntityDataLong(EntityFlags.DATA_TARGET_EID, -1));
             this.SetDataProperty(new EntityDataFloat(EntityFlags.DATA_SCALE, 1.0f));
             this.SetDataProperty(new EntityDataFloat(EntityFlags.DATA_BOUNDING_BOX_WIDTH, this.WIDTH));
             this.SetDataProperty(new EntityDataFloat(EntityFlags.DATA_BOUNDING_BOX_HEIGHT, this.HEIGHT));
@@ -49,7 +50,7 @@ namespace MineNET.Entities
         public abstract string Name { get; protected set; }
 
         string displayName;
-        public string DisplayName
+        public virtual string DisplayName
         {
             get
             {
@@ -59,7 +60,52 @@ namespace MineNET.Entities
             set
             {
                 this.displayName = value;
-                //TODO: SendEntityData
+                this.SetDataProperty(new EntityDataString(EntityFlags.DATA_NAMETAG, value), true);
+            }
+        }
+
+        bool showNameTag;
+        public bool ShowNameTag
+        {
+            get
+            {
+                return this.showNameTag;
+            }
+
+            set
+            {
+                this.showNameTag = value;
+                this.SetFlag(EntityFlags.DATA_FLAGS, EntityFlags.DATA_FLAG_CAN_SHOW_NAMETAG, value, true);
+            }
+        }
+
+        bool alwaysShowNameTag;
+        public bool AlwaysShowNameTag
+        {
+            get
+            {
+                return this.alwaysShowNameTag;
+            }
+
+            set
+            {
+                this.alwaysShowNameTag = value;
+                this.SetFlag(EntityFlags.DATA_FLAGS, EntityFlags.DATA_FLAG_ALWAYS_SHOW_NAMETAG, value, true);
+            }
+        }
+
+        string interactiveTag;
+        public string InteractiveTag
+        {
+            get
+            {
+                return this.interactiveTag;
+            }
+
+            set
+            {
+                this.interactiveTag = value;
+                this.SetDataProperty(new EntityDataString(EntityFlags.DATA_INTERACTIVE_TAG, value));
             }
         }
 
@@ -80,13 +126,40 @@ namespace MineNET.Entities
             }
         }
 
+        public async void AsyncSendPacketViewers(DataPacket pk)
+        {
+            await Task.Run(() =>
+            {
+                this.SendPacketViewers(pk);
+            });
+        }
+
+        public void SendPacketPlayers(DataPacket pk, params Player[] players)
+        {
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (players[i].HasSpawned)
+                {
+                    players[i].SendPacket(pk);
+                }
+            }
+        }
+
+        public async void AsyncSendPacketPlayers(DataPacket pk, params Player[] players)
+        {
+            await Task.Run(() =>
+            {
+                this.SendPacketPlayers(pk, players);
+            });
+        }
+
         public virtual void SetMotion(Vector3 motion)
         {
             SetEntityMotionPacket pk = new SetEntityMotionPacket();
             pk.EntityRuntimeId = this.EntityID;
             pk.Motion = motion;
 
-            this.SendPacketViewers(pk);
+            this.AsyncSendPacketViewers(pk);
         }
 
         public bool GetFlag(int id, int flagID)
@@ -102,7 +175,7 @@ namespace MineNET.Entities
             return false;
         }
 
-        public void SetFlag(int id, int flagID, bool value = true)
+        public void SetFlag(int id, int flagID, bool value = true, bool send = false)
         {
             EntityData data = this.GetDataProperty(id);
             if (data is EntityDataLong)
@@ -115,7 +188,7 @@ namespace MineNET.Entities
                 byte[] result = new byte[8];
                 flags.CopyTo(result, 0);
 
-                this.SetDataProperty(new EntityDataLong(id, BitConverter.ToInt64(result, 0)));
+                this.SetDataProperty(new EntityDataLong(id, BitConverter.ToInt64(result, 0)), send);
             }
         }
 
@@ -129,7 +202,7 @@ namespace MineNET.Entities
             this.dataProperties.PutEntityData(data);
             if (send)
             {
-                SendDataAll();
+                this.SendDataProperties();
             }
         }
 
@@ -138,7 +211,7 @@ namespace MineNET.Entities
             this.dataProperties.Remove(id);
             if (send)
             {
-                SendDataAll();
+                this.SendDataProperties();
             }
         }
 
@@ -147,19 +220,23 @@ namespace MineNET.Entities
             return this.dataProperties.GetEntityDatas();
         }
 
-        public void SendDataAll()
-        {
-            this.SendData(this.GetViewers());
-        }
 
-        public void SendData(params Player[] players)
+
+        public void SendDataProperties()
         {
-            for (int i = 0; i < players.Length; ++i)
+            SetEntityDataPacket pk = new SetEntityDataPacket();
+            pk.EntityRuntimeId = this.EntityID;
+            pk.EntityData = this.dataProperties;
+
+            if (this.IsPlayer)
             {
-                SetEntityDataPacket pk = new SetEntityDataPacket();
-                pk.EntityRuntimeId = this.EntityID;
-                pk.EntityData = this.dataProperties;
-                players[i].SendPacket(pk);
+                List<Player> players = new List<Player>(this.GetViewers());
+                players.Add((Player) this);
+                this.AsyncSendPacketPlayers(pk, players.ToArray());
+            }
+            else
+            {
+                this.AsyncSendPacketPlayers(pk, this.GetViewers());
             }
         }
 

@@ -246,7 +246,7 @@ namespace MineNET.Utils
                     }
                     else if (type == EntityMetadataType.DATA_TYPE_SHORT)
                     {
-                        stream.WriteLShort((ushort) data.GetShort(id));
+                        stream.WriteShort(data.GetShort(id));
                     }
                     else if (type == EntityMetadataType.DATA_TYPE_INT)
                     {
@@ -254,7 +254,7 @@ namespace MineNET.Utils
                     }
                     else if (type == EntityMetadataType.DATA_TYPE_FLOAT)
                     {
-                        stream.WriteLFloat(data.GetFloat(id));
+                        stream.WriteFloat(data.GetFloat(id));
                     }
                     else if (type == EntityMetadataType.DATA_TYPE_STRING)
                     {

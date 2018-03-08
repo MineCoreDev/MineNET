@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
+using MineNET.Entities.Data;
 using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
 using MineNET.NBT.Data;
@@ -27,6 +28,11 @@ namespace MineNET.Entities
         {
             this.IsPlayer = true;
             this.inventory = new PlayerInventory(this);
+
+            this.ShowNameTag = true;
+            this.AlwaysShowNameTag = true;
+
+            this.SetFlag(EntityFlags.DATA_FLAGS, EntityFlags.DATA_FLAG_CAN_CLIMB);
         }
 
         public override string Name { get; protected set; }
@@ -110,6 +116,7 @@ namespace MineNET.Entities
 
             this.LoginData = pk.LoginData;
             this.Name = pk.LoginData.DisplayName;
+            this.DisplayName = this.Name;
 
             this.ClientData = pk.ClientData;
 
@@ -263,7 +270,7 @@ namespace MineNET.Entities
                 gameRulesChangedPacket.GameRules = rules;
                 this.SendPacket(gameRulesChangedPacket);
 
-                this.SendData(this);
+                this.SendDataProperties();
             });
         }
 
