@@ -1,5 +1,5 @@
 ﻿using MineNET.Commands.Data;
-using MineNET.Entities;
+using MineNET.Entities.Players;
 using MineNET.Utils;
 
 namespace MineNET.Commands

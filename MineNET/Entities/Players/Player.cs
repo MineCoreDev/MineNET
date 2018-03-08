@@ -1,19 +1,13 @@
-﻿using System.IO;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Net;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
-using MineNET.Entities.Data;
 using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
 using MineNET.NBT.Data;
 using MineNET.NBT.IO;
-using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Values;
-using MineNET.Worlds;
-using MineNET.Worlds.Data;
 
 namespace MineNET.Entities.Players
 {
@@ -50,51 +44,6 @@ namespace MineNET.Entities.Players
             {
                 return 1.80f;
             }
-        }
-
-        private async void SendFastChunk()
-        {
-            await Task.Run(() =>
-            {
-                for (int i = ((int) this.X >> 4) - this.RequestChunkRadius; i < ((int) this.X >> 4) + this.RequestChunkRadius; ++i)
-                {
-                    for (int j = ((int) this.Z >> 4) - this.RequestChunkRadius; j < ((int) this.Z >> 4) + this.RequestChunkRadius; ++j)
-                    {
-                        new Chunk(i, j).TestChunkSend(this);
-                    }
-                }
-
-                this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
-            });
-
-            this.HasSpawned = true;
-
-            GameRules rules = new GameRules();
-            rules.Add(new GameRule<bool>("ShowCoordinates", true));
-
-            GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
-            gameRulesChangedPacket.GameRules = rules;
-            this.SendPacket(gameRulesChangedPacket);
-            this.SendDataProperties();
-            PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, new Skin("", new byte[0], new byte[0], "", ""), this.LoginData.XUID);
-            Server.Instance.AddPlayer(this, entry);
-        }
-
-        private void LoadData()
-        {
-            string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
-            if (!File.Exists(path))
-            {
-                NBTIO.WriteGZIPFile(path, new CompoundTag(), NBTEndian.BIG_ENDIAN);
-            }
-            this.namedTag = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
-        }
-
-        private int FixRadius(int radius)
-        {
-            int maxRequest = Server.ServerConfig.ViewDistance;
-            if (radius > maxRequest) radius = maxRequest;
-            return radius;
         }
 
         public void SendPlayStatus(int status)
@@ -187,11 +136,6 @@ namespace MineNET.Entities.Players
             SendPacket(pk);
 
             base.SetMotion(motion);
-        }
-
-        internal override void OnUpdate()
-        {
-
         }
     }
 }

@@ -153,10 +153,13 @@ namespace MineNET
 
         public void RemovePlayer(long entityID)
         {
-            PlayerListEntry entry = this.playerListEntries[entityID];
-            this.playerListEntries.Remove(entityID);
+            if (this.playerListEntries.ContainsKey(entityID))
+            {
+                PlayerListEntry entry = this.playerListEntries[entityID];
+                this.playerListEntries.Remove(entityID);
 
-            this.RemovePlayerList(entry);
+                this.RemovePlayerList(entry);
+            }
         }
 
         public void SendPlayerLists(Player player)

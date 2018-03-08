@@ -14,6 +14,11 @@
             PlayerLogin?.Invoke(args);
         }
 
+        public static event EventHandler<PlayerJoinEventArgs> PlayerJoin;
+        public static void OnPlayerJoin(PlayerJoinEventArgs args)
+        {
+            PlayerJoin?.Invoke(args);
+        }
 
         public static event EventHandler<PlayerQuitEventArgs> PlayerQuit;
         public static void OnPlayerQuit(PlayerQuitEventArgs args)

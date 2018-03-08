@@ -1,6 +1,11 @@
-﻿using MineNET.Events.PlayerEvents;
+﻿using System.Threading.Tasks;
+using MineNET.Data;
+using MineNET.Entities.Data;
+using MineNET.Events.PlayerEvents;
 using MineNET.Network.Packets;
 using MineNET.Values;
+using MineNET.Worlds;
+using MineNET.Worlds.Data;
 
 namespace MineNET.Entities.Players
 {
@@ -184,6 +189,41 @@ namespace MineNET.Entities.Players
             //InventorySlot
 
             SendFastChunk();
+        }
+
+        private async void SendFastChunk()
+        {
+            await Task.Run(() =>
+            {
+                for (int i = ((int) this.X >> 4) - this.RequestChunkRadius; i < ((int) this.X >> 4) + this.RequestChunkRadius; ++i)
+                {
+                    for (int j = ((int) this.Z >> 4) - this.RequestChunkRadius; j < ((int) this.Z >> 4) + this.RequestChunkRadius; ++j)
+                    {
+                        new Chunk(i, j).TestChunkSend(this);
+                    }
+                }
+                PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, "", "");
+                PlayerEvents.OnPlayerJoin(playerJoinEvent);
+                if (playerJoinEvent.IsCancel)
+                {
+                    this.Close(playerJoinEvent.KickMessage);
+                    return;
+                }
+
+                //this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+            });
+
+            this.HasSpawned = true;
+
+            GameRules rules = new GameRules();
+            rules.Add(new GameRule<bool>("ShowCoordinates", true));
+
+            GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
+            gameRulesChangedPacket.GameRules = rules;
+            this.SendPacket(gameRulesChangedPacket);
+            this.SendDataProperties();
+            PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, new Skin("", new byte[0], new byte[0], "", ""), this.LoginData.XUID);
+            Server.Instance.AddPlayer(this, entry);
         }
     }
 }
