@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using MineNET.Commands.Data;
 using MineNET.Commands.Defaults;
-using MineNET.Entities;
+using MineNET.Entities.Players;
 
 namespace MineNET.Commands
 {

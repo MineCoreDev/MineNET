@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MineNET.Entities.Data;
 using MineNET.Entities.Metadata;
+using MineNET.Entities.Players;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Values;
@@ -11,7 +11,7 @@ using MineNET.Worlds;
 
 namespace MineNET.Entities
 {
-    public abstract class Entity : ILocation
+    public abstract partial class Entity : ILocation
     {
         private static long nextEntityId = 0;
 
@@ -25,19 +25,19 @@ namespace MineNET.Entities
         {
             this.EntityID = Entity.nextEntityId++;
 
-            this.SetDataProperty(new EntityDataLong(EntityFlags.DATA_FLAGS, 0));
-            this.SetDataProperty(new EntityDataShort(EntityFlags.DATA_AIR, 400));
-            this.SetDataProperty(new EntityDataShort(EntityFlags.DATA_MAX_AIR, 400));
-            this.SetDataProperty(new EntityDataString(EntityFlags.DATA_NAMETAG, ""));
-            this.SetDataProperty(new EntityDataLong(EntityFlags.DATA_LEAD_HOLDER_EID, -1));
-            this.SetDataProperty(new EntityDataLong(EntityFlags.DATA_TARGET_EID, -1));
-            this.SetDataProperty(new EntityDataFloat(EntityFlags.DATA_SCALE, 1.0f));
-            this.SetDataProperty(new EntityDataFloat(EntityFlags.DATA_BOUNDING_BOX_WIDTH, this.WIDTH));
-            this.SetDataProperty(new EntityDataFloat(EntityFlags.DATA_BOUNDING_BOX_HEIGHT, this.HEIGHT));
+            this.SetDataProperty(new EntityDataLong(Entity.DATA_FLAGS, 0));
+            this.SetDataProperty(new EntityDataShort(Entity.DATA_AIR, 400));
+            this.SetDataProperty(new EntityDataShort(Entity.DATA_MAX_AIR, 400));
+            this.SetDataProperty(new EntityDataString(Entity.DATA_NAMETAG, ""));
+            this.SetDataProperty(new EntityDataLong(Entity.DATA_LEAD_HOLDER_EID, -1));
+            this.SetDataProperty(new EntityDataLong(Entity.DATA_TARGET_EID, -1));
+            this.SetDataProperty(new EntityDataFloat(Entity.DATA_SCALE, 1.0f));
+            this.SetDataProperty(new EntityDataFloat(Entity.DATA_BOUNDING_BOX_WIDTH, this.WIDTH));
+            this.SetDataProperty(new EntityDataFloat(Entity.DATA_BOUNDING_BOX_HEIGHT, this.HEIGHT));
 
-            this.SetFlag(EntityFlags.DATA_FLAGS, EntityFlags.DATA_FLAG_HAS_COLLISION);
-            this.SetFlag(EntityFlags.DATA_FLAGS, EntityFlags.DATA_FLAG_AFFECTED_BY_GRAVITY);
-            //this.SetFlag(EntityFlags.DATA_FLAGS, EntityFlags.);
+            this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_HAS_COLLISION);
+            this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_AFFECTED_BY_GRAVITY);
+            //this.SetFlag(Entity.DATA_FLAGS, Entity.);
         }
 
         public long EntityID { get; }
@@ -45,69 +45,9 @@ namespace MineNET.Entities
         public abstract float WIDTH { get; }
         public abstract float HEIGHT { get; }
 
-        public bool IsPlayer { get; protected set; }
+        public virtual bool IsPlayer { get { return false; } }
 
         public abstract string Name { get; protected set; }
-
-        string displayName;
-        public virtual string DisplayName
-        {
-            get
-            {
-                return this.displayName;
-            }
-
-            set
-            {
-                this.displayName = value;
-                this.SetDataProperty(new EntityDataString(EntityFlags.DATA_NAMETAG, value), true);
-            }
-        }
-
-        bool showNameTag;
-        public bool ShowNameTag
-        {
-            get
-            {
-                return this.showNameTag;
-            }
-
-            set
-            {
-                this.showNameTag = value;
-                this.SetFlag(EntityFlags.DATA_FLAGS, EntityFlags.DATA_FLAG_CAN_SHOW_NAMETAG, value, true);
-            }
-        }
-
-        bool alwaysShowNameTag;
-        public bool AlwaysShowNameTag
-        {
-            get
-            {
-                return this.alwaysShowNameTag;
-            }
-
-            set
-            {
-                this.alwaysShowNameTag = value;
-                this.SetFlag(EntityFlags.DATA_FLAGS, EntityFlags.DATA_FLAG_ALWAYS_SHOW_NAMETAG, value, true);
-            }
-        }
-
-        string interactiveTag;
-        public string InteractiveTag
-        {
-            get
-            {
-                return this.interactiveTag;
-            }
-
-            set
-            {
-                this.interactiveTag = value;
-                this.SetDataProperty(new EntityDataString(EntityFlags.DATA_INTERACTIVE_TAG, value));
-            }
-        }
 
         public Player[] GetViewers()
         {

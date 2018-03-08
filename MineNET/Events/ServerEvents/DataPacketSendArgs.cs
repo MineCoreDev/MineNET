@@ -1,4 +1,4 @@
-﻿using MineNET.Entities;
+﻿using MineNET.Entities.Players;
 using MineNET.Network.Packets;
 
 namespace MineNET.Events.ServerEvents

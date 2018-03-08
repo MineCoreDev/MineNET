@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MineNET.Blocks;
-using MineNET.Entities;
+using MineNET.Entities.Players;
 using MineNET.Items;
 using MineNET.Network.Packets;
 
@@ -269,7 +269,7 @@ namespace MineNET.Inventories
             for (int i = 0; i < players.Length; ++i)
             {
                 Player player = players[i];
-                pk.InventoryId = Type;
+                pk.InventoryId = this.Type;
                 player.SendPacket(pk);
             }
         }

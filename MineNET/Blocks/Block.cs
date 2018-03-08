@@ -1,6 +1,6 @@
 ﻿using System;
 using MineNET.Blocks.Data;
-using MineNET.Entities;
+using MineNET.Entities.Players;
 using MineNET.Items;
 using MineNET.Utils;
 using MineNET.Values;

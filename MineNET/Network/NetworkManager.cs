@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using MineNET.Entities;
+using MineNET.Entities.Players;
 using MineNET.Events.ServerEvents;
 using MineNET.Network.Packets;
 using MineNET.RakNet;
@@ -150,10 +150,10 @@ namespace MineNET.Network
                                 DataPacketReceiveArgs args = new DataPacketReceiveArgs(player, pk);
                                 ServerEvents.OnPacketReceive(args);
 
-                            if (args.IsCancel)
-                            {
-                                return;
-                            }
+                                if (args.IsCancel)
+                                {
+                                    return;
+                                }
 
                                 player.PacketHandle(packet);
                             }

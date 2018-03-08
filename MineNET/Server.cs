@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using MineNET.Commands;
 using MineNET.Data;
-using MineNET.Entities;
+using MineNET.Entities.Players;
 using MineNET.Events.ServerEvents;
 using MineNET.Network;
 using MineNET.Network.Packets;

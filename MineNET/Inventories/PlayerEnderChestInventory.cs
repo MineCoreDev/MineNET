@@ -1,4 +1,4 @@
-﻿using MineNET.Entities;
+﻿using MineNET.Entities.Players;
 using MineNET.Inventories.Data;
 
 namespace MineNET.Inventories

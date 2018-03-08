@@ -1,5 +1,5 @@
 ﻿using System;
-using MineNET.Entities;
+using MineNET.Entities.Players;
 
 namespace MineNET.Events.PlayerEvents
 {

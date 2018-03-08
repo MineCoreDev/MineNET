@@ -1,6 +1,8 @@
-﻿namespace MineNET.Entities.Data
+﻿using MineNET.Entities.Metadata;
+
+namespace MineNET.Entities
 {
-    public static class EntityFlags
+    public partial class Entity
     {
         public const int DATA_FLAGS = 0;
         public const int DATA_HEALTH = 1; //int (minecart/boat)
@@ -131,5 +133,57 @@
         public const int DATA_FLAG_AFFECTED_BY_GRAVITY = 46;
         public const int DATA_FLAG_FIRE_IMMUNE = 47;
         public const int DATA_FLAG_DANCING = 48;
+
+        public virtual string DisplayName
+        {
+            get
+            {
+                return ((EntityDataString) this.GetDataProperty(Entity.DATA_NAMETAG)).Data;
+            }
+
+            set
+            {
+                this.SetDataProperty(new EntityDataString(Entity.DATA_NAMETAG, value), true);
+            }
+        }
+
+        public bool ShowNameTag
+        {
+            get
+            {
+                return this.GetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_CAN_SHOW_NAMETAG);
+            }
+
+            set
+            {
+                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_CAN_SHOW_NAMETAG, value, true);
+            }
+        }
+
+        public bool AlwaysShowNameTag
+        {
+            get
+            {
+                return this.GetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ALWAYS_SHOW_NAMETAG);
+            }
+
+            set
+            {
+                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ALWAYS_SHOW_NAMETAG, value, true);
+            }
+        }
+
+        public string InteractiveTag //カーソルを合わせたときに出るボタン
+        {
+            get
+            {
+                return ((EntityDataString) this.GetDataProperty(Entity.DATA_INTERACTIVE_TAG)).Data;
+            }
+
+            set
+            {
+                this.SetDataProperty(new EntityDataString(Entity.DATA_INTERACTIVE_TAG, value));
+            }
+        }
     }
 }

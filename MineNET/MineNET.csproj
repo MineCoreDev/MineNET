@@ -354,7 +354,6 @@
     <Compile Include="Commands\Data\ICommandHandler.cs" />
     <Compile Include="Data\AdventureSettingsEntry.cs" />
     <Compile Include="Data\ContainerIds.cs" />
-    <Compile Include="Entities\Data\EntityFlags.cs" />
     <Compile Include="Entities\Metadata\EntityDataLong.cs" />
     <Compile Include="Entities\Metadata\EntityDataPos.cs" />
     <Compile Include="Entities\Metadata\EntityDataSlot.cs" />
@@ -368,6 +367,9 @@
     <Compile Include="Entities\Metadata\EntityDataShort.cs" />
     <Compile Include="Entities\Metadata\EntityDataVector.cs" />
     <Compile Include="Entities\Metadata\EntityMetadataManager.cs" />
+    <Compile Include="Entities\PartialEntity.cs" />
+    <Compile Include="Entities\Players\PartialPacketHandlePlayer.cs" />
+    <Compile Include="Entities\Players\PartialPlayer.cs" />
     <Compile Include="Events\MineNETEvents.cs" />
     <Compile Include="Events\ICancellable.cs" />
     <Compile Include="Events\PlayerEvents\PlayerEventArgs.cs" />
@@ -395,7 +397,7 @@
     <Compile Include="Entities\Attributes\EntityAttribute.cs" />
     <Compile Include="Entities\EntityHuman.cs" />
     <Compile Include="Entities\EntityLiving.cs" />
-    <Compile Include="Entities\Player.cs" />
+    <Compile Include="Entities\Players\Player.cs" />
     <Compile Include="Inventories\BaseInventory.cs" />
     <Compile Include="Inventories\ContainerInventory.cs" />
     <Compile Include="Inventories\Inventory.cs" />
