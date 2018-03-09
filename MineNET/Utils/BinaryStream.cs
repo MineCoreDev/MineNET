@@ -4,9 +4,10 @@ using System.Net;
 
 namespace MineNET.Utils
 {
-    public class BinaryStream : IDisposable
+    public class BinaryStream : IDisposable, ICloneable<BinaryStream>
     {
         List<byte> buffer = new List<byte>();
+        byte[] _buffer;
 
         public int Offset { get; set; }
 
@@ -60,6 +61,7 @@ namespace MineNET.Utils
         {
             this.Offset += 1;
             Binary.WriteBool(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public byte ReadByte()
@@ -73,6 +75,7 @@ namespace MineNET.Utils
         {
             this.Offset += 1;
             Binary.WriteByte(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public sbyte ReadSByte()
@@ -86,6 +89,7 @@ namespace MineNET.Utils
         {
             this.Offset += 1;
             Binary.WriteSByte(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public short ReadShort()
@@ -99,6 +103,7 @@ namespace MineNET.Utils
         {
             this.Offset += 2;
             Binary.WriteShort(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public ushort ReadUShort()
@@ -112,6 +117,7 @@ namespace MineNET.Utils
         {
             this.Offset += 2;
             Binary.WriteUShort(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public ushort ReadLShort()
@@ -125,6 +131,7 @@ namespace MineNET.Utils
         {
             this.Offset += 2;
             Binary.WriteLShort(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public int ReadTriad()
@@ -138,6 +145,7 @@ namespace MineNET.Utils
         {
             this.Offset += 3;
             Binary.WriteTriad(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public int ReadLTriad()
@@ -151,6 +159,7 @@ namespace MineNET.Utils
         {
             this.Offset += 3;
             Binary.WriteLTriad(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public int ReadInt()
@@ -164,6 +173,7 @@ namespace MineNET.Utils
         {
             this.Offset += 4;
             Binary.WriteInt(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public uint ReadUInt()
@@ -177,6 +187,7 @@ namespace MineNET.Utils
         {
             this.Offset += 4;
             Binary.WriteUInt(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public uint ReadLInt()
@@ -190,6 +201,7 @@ namespace MineNET.Utils
         {
             this.Offset += 4;
             Binary.WriteLInt(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public long ReadLong()
@@ -203,6 +215,7 @@ namespace MineNET.Utils
         {
             this.Offset += 8;
             Binary.WriteLong(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public ulong ReadULong()
@@ -216,6 +229,7 @@ namespace MineNET.Utils
         {
             this.Offset += 8;
             Binary.WriteULong(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public ulong ReadLLong()
@@ -229,6 +243,7 @@ namespace MineNET.Utils
         {
             this.Offset += 8;
             Binary.WriteLLong(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public int ReadVarInt()
@@ -244,6 +259,7 @@ namespace MineNET.Utils
             int offset = this.Offset;
             Binary.WriteVarInt(this.buffer, value, out offset);
             this.Offset = offset + this.Offset;
+            _buffer = this.buffer.ToArray();
         }
 
         public uint ReadUVarInt()
@@ -259,6 +275,7 @@ namespace MineNET.Utils
             int offset = this.Offset;
             Binary.WriteUVarInt(this.buffer, value, out offset);
             this.Offset = offset + this.Offset;
+            _buffer = this.buffer.ToArray();
         }
 
         public int ReadSVarInt()
@@ -274,6 +291,7 @@ namespace MineNET.Utils
             int offset = this.Offset;
             Binary.WriteSVarInt(this.buffer, value, out offset);
             this.Offset = offset + this.Offset;
+            _buffer = this.buffer.ToArray();
         }
 
         public long ReadVarLong()
@@ -289,6 +307,7 @@ namespace MineNET.Utils
             int offset = this.Offset;
             Binary.WriteVarLong(this.buffer, value, out offset);
             this.Offset = offset + this.Offset;
+            _buffer = this.buffer.ToArray();
         }
 
         public ulong ReadUVarLong()
@@ -304,6 +323,7 @@ namespace MineNET.Utils
             int offset = this.Offset;
             Binary.WriteUVarLong(this.buffer, value, out offset);
             this.Offset = offset + this.Offset;
+            _buffer = this.buffer.ToArray();
         }
 
         public long ReadSVarLong()
@@ -319,6 +339,7 @@ namespace MineNET.Utils
             int offset = this.Offset;
             Binary.WriteSVarLong(this.buffer, value, out offset);
             this.Offset = offset + this.Offset;
+            _buffer = this.buffer.ToArray();
         }
 
         public float ReadFloat()
@@ -332,6 +353,7 @@ namespace MineNET.Utils
         {
             this.Offset += 4;
             Binary.WriteFloat(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public float ReadLFloat()
@@ -345,6 +367,7 @@ namespace MineNET.Utils
         {
             this.Offset += 4;
             Binary.WriteLFloat(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public double ReadDouble()
@@ -358,6 +381,7 @@ namespace MineNET.Utils
         {
             this.Offset += 8;
             Binary.WriteDouble(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public double ReadLDouble()
@@ -371,6 +395,7 @@ namespace MineNET.Utils
         {
             this.Offset += 8;
             Binary.WriteLDouble(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public string ReadFixedString()
@@ -384,6 +409,7 @@ namespace MineNET.Utils
         {
             this.Offset += value.Length + 2;
             Binary.WriteFixedString(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public string ReadString()
@@ -399,6 +425,7 @@ namespace MineNET.Utils
             int offset = this.Offset;
             Binary.WriteString(this.buffer, value, out offset);
             this.Offset += value.Length + offset;
+            _buffer = this.buffer.ToArray();
         }
 
         public IPEndPoint ReadIPEndPoint()
@@ -435,6 +462,7 @@ namespace MineNET.Utils
             this.WriteByte(4);
             this.WriteBytes(point.Address.GetAddressBytes());
             this.WriteUShort((ushort) point.Port);
+            _buffer = this.buffer.ToArray();
         }
 
         public Guid ReadGuid()
@@ -445,6 +473,7 @@ namespace MineNET.Utils
         public void WriteGuid(Guid guid)
         {
             this.WriteBytes(guid.ToByteArray());
+            _buffer = this.buffer.ToArray();
         }
 
         public byte[] ReadBytes()
@@ -472,6 +501,7 @@ namespace MineNET.Utils
         {
             this.Offset += value.Length;
             Binary.WriteBytes(this.buffer, value);
+            _buffer = this.buffer.ToArray();
         }
 
         public void SetBuffer(byte[] buffer)
@@ -479,6 +509,7 @@ namespace MineNET.Utils
             this.buffer = new List<byte>();
             this.Reset();
             this.WriteBytes(buffer);
+            _buffer = this.buffer.ToArray();
             this.Reset();
         }
 
@@ -489,12 +520,22 @@ namespace MineNET.Utils
 
         public byte[] ToArray()
         {
-            return this.buffer.ToArray();
+            return this._buffer;
         }
 
         public virtual void Dispose()
         {
             this.buffer = null;
+        }
+
+        public BinaryStream Clone()
+        {
+            return new BinaryStream(this.ToArray());
+        }
+
+        object ICloneable.Clone()
+        {
+            return new BinaryStream(this.ToArray());
         }
 
         #endregion

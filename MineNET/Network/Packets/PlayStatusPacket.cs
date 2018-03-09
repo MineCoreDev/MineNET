@@ -26,7 +26,7 @@
         {
             base.Encode();
 
-            this.WriteLInt((uint) this.Status);
+            this.WriteInt(this.Status);
         }
     }
 }

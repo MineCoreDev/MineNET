@@ -107,6 +107,7 @@ namespace MineNET.Network
                 return;
             }
 
+            pk = pk.Clone();
             pk.Encode();
 
             byte[] buffer = pk.ToArray();
@@ -150,10 +151,10 @@ namespace MineNET.Network
                                 DataPacketReceiveArgs args = new DataPacketReceiveArgs(player, pk);
                                 ServerEvents.OnPacketReceive(args);
 
-                            if (args.IsCancel)
-                            {
-                                return;
-                            }
+                                if (args.IsCancel)
+                                {
+                                    return;
+                                }
 
                                 player.PacketHandle(packet);
                             }
@@ -171,7 +172,7 @@ namespace MineNET.Network
         {
             if (this.packetPool.ContainsKey(id))
             {
-                return (DataPacket) this.packetPool[id].Clone();
+                return (DataPacket) this.packetPool[id];
             }
             return null;
         }

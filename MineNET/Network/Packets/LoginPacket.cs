@@ -30,7 +30,7 @@ namespace MineNET.Network.Packets
         {
             base.Decode();
 
-            this.Protocol = (int) this.ReadLInt();
+            this.Protocol = this.ReadInt();
 
             this.LoginData = new LoginData();
             this.ClientData = new ClientData();
@@ -39,7 +39,7 @@ namespace MineNET.Network.Packets
             using (BinaryStream stream = new BinaryStream(this.ReadBytes(len)))
             {
 
-                int chainLen = stream.ReadInt();
+                int chainLen = (int) stream.ReadLInt();
                 string chain = Encoding.UTF8.GetString(stream.ReadBytes(chainLen));
                 JObject chainObj = JObject.Parse(chain);
                 chain = chainObj.ToString();
@@ -58,7 +58,7 @@ namespace MineNET.Network.Packets
                     }
                 }
 
-                int clientDataLen = stream.ReadInt();
+                int clientDataLen = (int) stream.ReadLInt();
                 string clientDataJson = Encoding.UTF8.GetString(stream.ReadBytes(clientDataLen));
 
                 this.SetClientData(clientDataJson);

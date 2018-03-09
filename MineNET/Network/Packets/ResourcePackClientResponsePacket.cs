@@ -26,7 +26,7 @@
             base.Decode();
 
             this.ResponseStatus = this.ReadByte();
-            this.PackIds = new string[this.ReadLShort()];
+            this.PackIds = new string[this.ReadShort()];
             for (int i = 0; i < this.PackIds.Length; ++i)
             {
                 this.PackIds[i] = this.ReadString();

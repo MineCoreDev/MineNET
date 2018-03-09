@@ -21,7 +21,7 @@ namespace MineNET.RakNet.Packets
             ReadByte();
         }
 
-        public object Clone()
+        public new object Clone()
         {
             return this.MemberwiseClone();
         }

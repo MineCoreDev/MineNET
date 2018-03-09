@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MineNET.Utils.Tests
@@ -10,11 +11,11 @@ namespace MineNET.Utils.Tests
         [TestMethod()]
         public void WriteBytesTest()
         {
-            BinaryStream bs = new BinaryStream();
+            /*BinaryStream bs = new BinaryStream();
             for (int i = 0; i < 200000; ++i)
             {
                 bs.WriteByte(0xa3);
-            }
+            }*/
         }
 
         [TestMethod()]
@@ -89,6 +90,7 @@ namespace MineNET.Utils.Tests
             Console.WriteLine("Offset" + bs.Offset);
 
             bs = new BinaryStream(bs.ToArray());
+            //Move();
 
             Console.WriteLine(bs.ReadBoolean());
             Console.WriteLine(bs.ReadByte());
@@ -116,6 +118,12 @@ namespace MineNET.Utils.Tests
             Console.WriteLine(bs.ReadIPEndPoint());
             Console.WriteLine(bs.ReadGuid());
             Console.WriteLine("Offset" + bs.Offset);
+        }
+
+        async void Move()
+        {
+            await Task.Delay(1000);
+            new BinaryStream();
         }
     }
 }

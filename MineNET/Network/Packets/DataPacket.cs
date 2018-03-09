@@ -1,9 +1,9 @@
-﻿using MineNET.Utils;
-using System;
+﻿using System;
+using MineNET.Utils;
 
 namespace MineNET.Network.Packets
 {
-    public abstract class DataPacket : MCBEBinary, ICloneable
+    public abstract class DataPacket : MCBEBinary, ICloneable<DataPacket>
     {
         public abstract byte PacketID
         {
@@ -28,7 +28,12 @@ namespace MineNET.Network.Packets
             this.Extra2 = this.ReadByte();
         }
 
-        public object Clone()
+        public new DataPacket Clone()
+        {
+            return (DataPacket) this.MemberwiseClone();
+        }
+
+        object ICloneable.Clone()
         {
             return this.MemberwiseClone();
         }

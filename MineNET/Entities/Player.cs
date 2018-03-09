@@ -351,8 +351,11 @@ namespace MineNET.Entities
 
         public void Save()
         {
-            string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
-            NBTIO.WriteGZIPFile(path, this.namedTag, NBTEndian.BIG_ENDIAN);
+            if (this.HasSpawned)
+            {
+                string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
+                NBTIO.WriteGZIPFile(path, this.namedTag, NBTEndian.BIG_ENDIAN);
+            }
         }
 
         public new PlayerInventory GetInventory()
