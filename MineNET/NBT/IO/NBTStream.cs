@@ -1,12 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Text;
 using MineNET.NBT.Data;
 using MineNET.Utils;
 
 namespace MineNET.NBT.IO
 {
-    public class NBTStream : MemoryStream
+    public class NBTStream : BinaryStream
     {
         public const int MAX_CHUNK_SIZE = 512 * 1024 * 1024;
 
@@ -34,151 +33,148 @@ namespace MineNET.NBT.IO
         public NBTStream(byte[] buffer, NBTEndian endian)
         {
             this.swap = (IsBigEndian(endian) == BitConverter.IsLittleEndian);
-            this.Write(buffer, 0, buffer.Length);
-            this.Position = 0;
+            this.WriteBytes(buffer);
+            this.Reset();
         }
 
         public new byte ReadByte()
         {
-            return Binary.ReadByte(this);
+            return this.ReadByte();
         }
 
         public new void WriteByte(byte value)
         {
-            Binary.WriteByte(this, value);
+            this.WriteByte(value);
         }
 
-        public short ReadShort()
+        public new short ReadShort()
         {
             if (this.swap)
             {
-                return (short) Binary.ReadLShort(this);
+                return (short) this.ReadLShort();
             }
             else
             {
-                return Binary.ReadShort(this);
+                return this.ReadShort();
             }
         }
 
-        public void WriteShort(short value)
+        public new void WriteShort(short value)
         {
             if (this.swap)
             {
-                Binary.WriteLShort(this, (ushort) value);
+                this.WriteLShort((ushort) value);
             }
             else
             {
-                Binary.WriteShort(this, value);
+                this.WriteShort(value);
             }
         }
 
-        public int ReadInt()
+        public new int ReadInt()
         {
             if (this.swap)
             {
-                return (int) Binary.ReadLInt(this);
+                return (int) this.ReadLInt();
             }
             else
             {
-                return Binary.ReadInt(this);
+                return this.ReadInt();
             }
         }
 
-        public void WriteInt(int value)
+        public new void WriteInt(int value)
         {
             if (this.swap)
             {
-                Binary.WriteLInt(this, (uint) value);
+                this.WriteLInt((uint) value);
             }
             else
             {
-                Binary.WriteInt(this, value);
+                this.WriteInt(value);
             }
         }
 
-        public long ReadLong()
+        public new long ReadLong()
         {
             if (this.swap)
             {
-                return (long) Binary.ReadLLong(this);
+                return (long) this.ReadLLong();
             }
             else
             {
-                return Binary.ReadLong(this);
+                return this.ReadLong();
             }
         }
 
-        public void WriteLong(long value)
+        public new void WriteLong(long value)
         {
             if (this.swap)
             {
-                Binary.WriteLLong(this, (ulong) value);
+                this.WriteLLong((ulong) value);
             }
             else
             {
-                Binary.WriteLong(this, value);
+                this.WriteLong(value);
             }
         }
 
-        public float ReadFloat()
+        public new float ReadFloat()
         {
             if (this.swap)
             {
-                return Binary.ReadLFloat(this);
+                return this.ReadLFloat();
             }
             else
             {
-                return Binary.ReadShort(this);
+                return this.ReadShort();
             }
         }
 
-        public void WriteFloat(float value)
+        public new void WriteFloat(float value)
         {
             if (this.swap)
             {
-                Binary.WriteLFloat(this, value);
+                this.WriteLFloat(value);
             }
             else
             {
-                Binary.WriteFloat(this, value);
+                this.WriteFloat(value);
             }
         }
 
-        public double ReadDouble()
+        public new double ReadDouble()
         {
             if (this.swap)
             {
-                return Binary.ReadLDouble(this);
+                return this.ReadLDouble();
             }
             else
             {
-                return Binary.ReadDouble(this);
+                return this.ReadDouble();
             }
         }
 
-        public void WriteDouble(double value)
+        public new void WriteDouble(double value)
         {
             if (this.swap)
             {
-                Binary.WriteLDouble(this, value);
+                this.WriteLDouble(value);
             }
             else
             {
-                Binary.WriteDouble(this, value);
+                this.WriteDouble(value);
             }
         }
 
-        public string ReadString()
+        public new string ReadString()
         {
-            short len = ReadShort();
-            byte[] buffer = Binary.ReadBytes(this, (int) this.Position, len);
-            return this.utf8.GetString(buffer);
+            return this.ReadFixedString();
         }
 
-        public void WriteString(string value)
+        public new void WriteString(string value)
         {
-            WriteShort((short) value.Length);
-            Binary.WriteBytes(this, this.utf8.GetBytes(value));
+            this.WriteFixedString(value);
         }
 
         static bool IsBigEndian(NBTEndian e)

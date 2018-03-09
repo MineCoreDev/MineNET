@@ -190,7 +190,6 @@ namespace MineNET.RakNet
             using (Packet pk = GetPacketPool(pid, buffer))
             {
                 string id = IPEndPointToID(point);
-
                 if (pk is DataPacket || pk is ACK || pk is NACK)
                 {
                     if (this.sessions.ContainsKey(id))
@@ -212,11 +211,6 @@ namespace MineNET.RakNet
                     {
                         this.OfflineMessageHandler(pk, point);
                     }
-                }
-                else
-                {
-                    //Logger.Log("NotHandlePacket: {0}", pid);
-                    return;
                 }
             }
         }
@@ -248,7 +242,7 @@ namespace MineNET.RakNet
             }
 
             packet.Encode();
-            byte[] bytes = packet.GetResult();
+            byte[] bytes = packet.ToArray();
             this.client.BeginSend(bytes, bytes.Length, point, this.OnSend, null);
 
             packet.Dispose();

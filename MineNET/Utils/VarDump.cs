@@ -19,6 +19,7 @@ namespace MineNET.Utils
             StringBuilder builder = new StringBuilder();
             Type t = data.GetType();
             PropertyInfo[] props = t.GetProperties();
+            FieldInfo[] fields = t.GetFields();
 
             if (stackSize < Max_Stack_Size)
             {
@@ -70,6 +71,61 @@ namespace MineNET.Utils
                         else
                         {
                             builder.AppendFormat("{0}{1} = {2}" + Environment.NewLine, indent, p.Name, "null");
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                foreach (FieldInfo f in fields)
+                {
+                    try
+                    {
+                        object value = f.GetValue(data);
+                        string indent = string.Empty;
+                        string space = "|   ";
+                        string trail = "|...";
+
+                        if (stackSize > 0)
+                        {
+                            indent = new StringBuilder(trail).Insert(0, space, stackSize - 1).ToString();
+                        }
+
+                        if (value != null)
+                        {
+                            string display = value.ToString();
+                            if (value is string)
+                                display = string.Concat("", display, "");
+                            builder.AppendFormat("{0}{1} = {2}" + Environment.NewLine, indent, f.Name, display);
+                            try
+                            {
+                                if (!(value is ICollection))
+                                {
+                                    builder.Append(VarDump.Var_Dump(value, stackSize + 1));
+                                }
+                                else
+                                {
+                                    int count = 0;
+                                    foreach (object obj in (ICollection) value)
+                                    {
+                                        string objName = string.Format("{0}[{1}]", f.Name, count);
+                                        indent = new StringBuilder(trail).Insert(0, space, stackSize).ToString();
+                                        builder.AppendFormat("{0}{1} = {2}" + Environment.NewLine, indent, objName, obj.ToString());
+                                        builder.Append(VarDump.Var_Dump(obj, stackSize + 2));
+                                        count++;
+                                    }
+
+                                    //builder.Append(VarDump.Var_Dump(value, stackSize + 1));
+                                }
+                            }
+                            catch
+                            {
+                            }
+                        }
+                        else
+                        {
+                            builder.AppendFormat("{0}{1} = {2}" + Environment.NewLine, indent, f.Name, "null");
                         }
                     }
                     catch

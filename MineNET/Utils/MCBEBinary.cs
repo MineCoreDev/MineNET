@@ -103,7 +103,7 @@ namespace MineNET.Utils
                 {
                     GameRule<bool> boolRule = (GameRule<bool>) rules[i];
                     this.WriteByte(1);
-                    this.WriteBool(boolRule.Value);
+                    this.WriteBoolean(boolRule.Value);
                 }
                 else if (rules[i] is GameRule<int>)
                 {
@@ -126,7 +126,7 @@ namespace MineNET.Utils
             this.WriteUVarLong((uint) entries.Length);
             for (int i = 0; i < entries.Length; ++i)
             {
-                this.WriteGUID(entries[i].Guid);
+                this.WriteGuid(entries[i].Guid);
                 if (type == PlayerListPacket.TYPE_ADD)
                 {
                     this.WriteEntityUniqueId(entries[i].EntityUniqueId);
@@ -273,7 +273,7 @@ namespace MineNET.Utils
                         stream.WriteVector3(data.GetVector(id));
                     }
                 }
-                this.WriteBytes(stream.GetResult());
+                this.WriteBytes(stream.ToArray());
             }
         }
     }

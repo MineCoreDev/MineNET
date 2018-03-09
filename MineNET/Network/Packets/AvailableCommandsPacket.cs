@@ -45,7 +45,7 @@ namespace MineNET.Network.Packets
             this.WriteUVarInt(0);
             this.WriteUVarInt(0);
             this.WriteUVarInt(0);
-            this.WriteBytes(new BinaryStream().GetBuffer());//TODO
+            this.WriteBytes(new BinaryStream().ToArray());//TODO
         }
     }
 }

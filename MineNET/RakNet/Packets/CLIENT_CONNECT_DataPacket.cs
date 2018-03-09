@@ -45,7 +45,7 @@
 
             this.clientID = ReadLong();
             this.sendPing = ReadLong();
-            this.useSecurity = ReadBool();
+            this.useSecurity = ReadBoolean();
         }
     }
 }

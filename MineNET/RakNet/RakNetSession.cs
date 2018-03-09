@@ -185,7 +185,7 @@ namespace MineNET.RakNet
                         shd.Encode();
 
                         EncapsulatedPacket enc = new EncapsulatedPacket();
-                        enc.buffer = shd.GetResult();
+                        enc.buffer = shd.ToArray();
                         enc.reliability = PacketReliability.UNRELIABLE;
 
                         SendPacket(enc);
@@ -213,7 +213,7 @@ namespace MineNET.RakNet
                     pong.Encode();
 
                     EncapsulatedPacket enc = new EncapsulatedPacket();
-                    enc.buffer = pong.GetResult();
+                    enc.buffer = pong.ToArray();
                     enc.reliability = PacketReliability.UNRELIABLE;
 
                     SendPacket(enc);
@@ -350,7 +350,7 @@ namespace MineNET.RakNet
                 pk.Encode();
 
                 EncapsulatedPacket ep = new EncapsulatedPacket();
-                ep.buffer = pk.GetResult();
+                ep.buffer = pk.ToArray();
                 ep.reliability = PacketReliability.UNRELIABLE;
 
                 SendPacket(ep);

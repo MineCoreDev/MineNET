@@ -24,7 +24,7 @@ namespace MineNET.Network.Packets
         {
             base.Encode();
 
-            this.WriteBool(this.MustAccept);
+            this.WriteBoolean(this.MustAccept);
             this.WriteUVarInt((uint) this.BehaviourPackEntries.Length);
             for (int i = 0; i < this.BehaviourPackEntries.Length; ++i)
             {

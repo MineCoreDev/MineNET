@@ -88,9 +88,9 @@ namespace MineNET.Network.Packets
             this.ClientData.UIProfile = clientDataJwt.Value<int>("UIProfile");
         }
 
-        protected override void Dispose(bool disposing)
+        public override void Dispose()
         {
-            base.Dispose(disposing);
+            base.Dispose();
 
             this.ClientData = null;
             this.LoginData = null;

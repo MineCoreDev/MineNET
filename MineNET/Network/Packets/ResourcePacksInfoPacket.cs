@@ -25,7 +25,7 @@
         {
             base.Encode();
 
-            this.WriteBool(this.MustAccept);
+            this.WriteBoolean(this.MustAccept);
             this.WriteLShort((ushort) this.BehaviourPackEntries.Length);
             for (int i = 0; i < this.BehaviourPackEntries.Length; ++i)
             {

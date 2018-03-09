@@ -95,7 +95,7 @@ namespace MineNET.Worlds
                 stream.WriteByte(0);
                 stream.WriteSVarInt(0);
 
-                return stream.GetResult();
+                return stream.ToArray();
             }
         }
     }

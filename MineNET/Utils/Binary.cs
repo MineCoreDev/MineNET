@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 
 namespace MineNET.Utils
@@ -9,491 +8,538 @@ namespace MineNET.Utils
     {
         public const int Int24_Max = 16777215;
 
-        public static bool ReadBool(Stream stream)
+        public static bool ReadBool(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
+            bytes.Add(buffer[offset]);
 
             return BitConverter.ToBoolean(bytes.ToArray(), 0);
         }
 
-        public static void WriteBool(Stream stream, bool value)
+        public static void WriteBool(List<byte> buffer, bool value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
+            buffer.AddRange(bytes);
         }
 
-        public static byte ReadByte(Stream stream)
+        public static byte ReadByte(List<byte> buffer, int offset)
         {
-            return (byte) stream.ReadByte();
+            return buffer[offset];
         }
 
-        public static void WriteByte(Stream stream, byte value)
+        public static void WriteByte(List<byte> buffer, byte value)
         {
-            stream.WriteByte(value);
+            buffer.Add(value);
         }
 
-        public static sbyte ReadSByte(Stream stream)
+        public static sbyte ReadSByte(List<byte> buffer, int offset)
         {
-            return (sbyte) stream.ReadByte();
+            return (sbyte) buffer[offset];
         }
 
-        public static void WriteSByte(Stream stream, sbyte value)
+        public static void WriteSByte(List<byte> buffer, sbyte value)
         {
-            stream.WriteByte((byte) value);
+            buffer.Add((byte) value);
         }
 
-        public static short ReadShort(Stream stream)
+        public static short ReadShort(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 2));
+
+            if (BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToInt16(bytes.ToArray(), 0);
         }
 
-        public static void WriteShort(Stream stream, short value)
+        public static void WriteShort(List<byte> buffer, short value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static ushort ReadUShort(Stream stream)
+        public static ushort ReadUShort(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 2));
+
+            if (BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToUInt16(bytes.ToArray(), 0);
         }
 
-        public static void WriteUShort(Stream stream, ushort value)
+        public static void WriteUShort(List<byte> buffer, ushort value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static ushort ReadLShort(Stream stream)
+        public static ushort ReadLShort(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 2));
 
-            bytes.Reverse();
+            if (!BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToUInt16(bytes.ToArray(), 0);
         }
 
-        public static void WriteLShort(Stream stream, ushort value)
+        public static void WriteLShort(List<byte> buffer, ushort value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[0]);
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static int ReadTriad(Stream stream)
+        public static int ReadTriad(List<byte> buffer, int offset)
         {
-            int b0 = stream.ReadByte();
-            int b1 = stream.ReadByte();
-            int b2 = stream.ReadByte();
+            List<byte> bytes = new List<byte>();
 
-            return (b0 << 16 | b1 << 8 | b2);
+            bytes.AddRange(buffer.GetRange(offset, 3));
+
+            return (bytes[0] << 16 | bytes[1] << 8 | bytes[2]);
         }
 
-        public static void WriteTriad(Stream stream, int value)
+        public static void WriteTriad(List<byte> buffer, int value)
         {
             if (value > Int24_Max)
             {
                 throw new OverflowException("Not Int24 Value!");
             }
-            stream.WriteByte((byte) (value >> 16));
-            stream.WriteByte((byte) (value >> 8));
-            stream.WriteByte((byte) value);
+
+            List<byte> bytes = new List<byte>();
+
+            bytes.Add((byte) (value >> 16));
+            bytes.Add((byte) (value >> 8));
+            bytes.Add((byte) value);
+
+            buffer.AddRange(bytes);
         }
 
-        public static int ReadLTriad(Stream stream)
+        public static int ReadLTriad(List<byte> buffer, int offset)
         {
-            int b0 = stream.ReadByte();
-            int b1 = stream.ReadByte();
-            int b2 = stream.ReadByte();
+            List<byte> bytes = new List<byte>();
 
-            return (b0 | b1 << 8 | b2 << 16);
+            bytes.AddRange(buffer.GetRange(offset, 3));
+
+            return (bytes[0] | bytes[1] << 8 | bytes[2] << 16);
         }
 
-        public static void WriteLTriad(Stream stream, int value)
+        public static void WriteLTriad(List<byte> buffer, int value)
         {
             if (value > Int24_Max)
             {
                 throw new OverflowException("Not Int24 Value!");
             }
-            stream.WriteByte((byte) value);
-            stream.WriteByte((byte) (value >> 8));
-            stream.WriteByte((byte) (value >> 16));
+
+            List<byte> bytes = new List<byte>();
+
+            bytes.Add((byte) value);
+            bytes.Add((byte) (value >> 8));
+            bytes.Add((byte) (value >> 16));
+
+            buffer.AddRange(bytes);
         }
 
-        //TODO: Endian Bug Fix...
-        /*public static int ReadTriad(Stream stream)
-        {
-            if(BitConverter.IsLittleEndian)
-            {
-                return _ReadLTriad(stream);
-            }
-            else
-            {
-                return _WriteTriad(stream);
-            }
-        }*/
-
-        public static int ReadInt(Stream stream)
+        public static int ReadInt(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 4));
+
+            if (BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToInt32(bytes.ToArray(), 0);
         }
 
-        public static void WriteInt(Stream stream, int value)
+        public static void WriteInt(List<byte> buffer, int value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[3]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static uint ReadUInt(Stream stream)
+        public static uint ReadUInt(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 4));
+
+            if (BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToUInt32(bytes.ToArray(), 0);
         }
 
-        public static void WriteUInt(Stream stream, uint value)
+        public static void WriteUInt(List<byte> buffer, uint value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[3]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static uint ReadLInt(Stream stream)
+        public static uint ReadLInt(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 4));
 
-            bytes.Reverse();
+            if (!BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToUInt32(bytes.ToArray(), 0);
         }
 
-        public static void WriteLInt(Stream stream, uint value)
+        public static void WriteLInt(List<byte> buffer, uint value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[0]);
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static long ReadLong(Stream stream)
+        public static long ReadLong(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 8));
+
+            if (BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToInt64(bytes.ToArray(), 0);
         }
 
-        public static void WriteLong(Stream stream, long value)
+        public static void WriteLong(List<byte> buffer, long value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[4]);
-            stream.WriteByte(bytes[5]);
-            stream.WriteByte(bytes[6]);
-            stream.WriteByte(bytes[7]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static ulong ReadULong(Stream stream)
+        public static ulong ReadULong(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 8));
+
+            if (BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToUInt64(bytes.ToArray(), 0);
         }
 
-        public static void WriteULong(Stream stream, ulong value)
+        public static void WriteULong(List<byte> buffer, ulong value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[4]);
-            stream.WriteByte(bytes[5]);
-            stream.WriteByte(bytes[6]);
-            stream.WriteByte(bytes[7]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static ulong ReadLLong(Stream stream)
+        public static ulong ReadLLong(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 8));
 
-            bytes.Reverse();
+            if (!BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToUInt64(bytes.ToArray(), 0);
         }
 
-        public static void WriteLLong(Stream stream, ulong value)
+        public static void WriteLLong(List<byte> buffer, ulong value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[7]);
-            stream.WriteByte(bytes[6]);
-            stream.WriteByte(bytes[5]);
-            stream.WriteByte(bytes[4]);
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[0]);
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static int ReadVarInt(Stream stream)
+        public static int ReadVarInt(List<byte> buffer, ref int offset)
         {
-            return VarInt.ReadInt32(stream);
+            return VarInt.ReadInt32(buffer, ref offset);
         }
 
-        public static void WriteVarInt(Stream stream, int value)
+        public static void WriteVarInt(List<byte> buffer, int value, out int moveOffset)
         {
-            VarInt.WriteInt32(stream, value);
+            VarInt.WriteInt32(buffer, value, out moveOffset);
         }
 
-        public static uint ReadUVarInt(Stream stream)
+        public static uint ReadUVarInt(List<byte> buffer, ref int offset)
         {
-            return VarInt.ReadUInt32(stream);
+            return VarInt.ReadUInt32(buffer, ref offset);
         }
 
-        public static void WriteUVarInt(Stream stream, uint value)
+        public static void WriteUVarInt(List<byte> buffer, uint value, out int moveOffset)
         {
-            VarInt.WriteUInt32(stream, value);
+            VarInt.WriteUInt32(buffer, value, out moveOffset);
         }
 
-        public static long ReadVarLong(Stream stream)
+        public static int ReadSVarInt(List<byte> buffer, ref int offset)
         {
-            return VarInt.ReadInt64(stream);
+            return VarInt.ReadSInt32(buffer, ref offset);
         }
 
-        public static void WriteVarLong(Stream stream, long value)
+        public static void WriteSVarInt(List<byte> buffer, int value, out int moveOffset)
         {
-            VarInt.WriteInt64(stream, value);
+            VarInt.WriteSInt32(buffer, value, out moveOffset);
         }
 
-        public static ulong ReadUVarLong(Stream stream)
+        public static long ReadVarLong(List<byte> buffer, ref int offset)
         {
-            return VarInt.ReadUInt64(stream);
+            return VarInt.ReadInt64(buffer, ref offset);
         }
 
-        public static void WriteUVarLong(Stream stream, ulong value)
+        public static void WriteVarLong(List<byte> buffer, long value, out int moveOffset)
         {
-            VarInt.WriteUInt64(stream, value);
+            VarInt.WriteInt64(buffer, value, out moveOffset);
         }
 
-        public static float ReadFloat(Stream stream)
+        public static ulong ReadUVarLong(List<byte> buffer, ref int offset)
+        {
+            return VarInt.ReadUInt64(buffer, ref offset);
+        }
+
+        public static void WriteUVarLong(List<byte> buffer, ulong value, out int moveOffset)
+        {
+            VarInt.WriteUInt64(buffer, value, out moveOffset);
+        }
+
+        public static long ReadSVarLong(List<byte> buffer, ref int offset)
+        {
+            return VarInt.ReadSInt64(buffer, ref offset);
+        }
+
+        public static void WriteSVarLong(List<byte> buffer, long value, out int moveOffset)
+        {
+            VarInt.WriteSInt64(buffer, value, out moveOffset);
+        }
+
+        public static float ReadFloat(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 4));
+
+            if (BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToSingle(bytes.ToArray(), 0);
         }
 
-        public static void WriteFloat(Stream stream, float value)
+        public static void WriteFloat(List<byte> buffer, float value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[3]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static float ReadLFloat(Stream stream)
+        public static float ReadLFloat(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 4));
 
-            bytes.Reverse();
+            if (!BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToSingle(bytes.ToArray(), 0);
         }
 
-        public static void WriteLFloat(Stream stream, float value)
+        public static void WriteLFloat(List<byte> buffer, float value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[0]);
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static double ReadDouble(Stream stream)
+        public static double ReadDouble(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 8));
+
+            if (BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToDouble(bytes.ToArray(), 0);
         }
 
-        public static void WriteDouble(Stream stream, double value)
+        public static void WriteDouble(List<byte> buffer, double value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[4]);
-            stream.WriteByte(bytes[5]);
-            stream.WriteByte(bytes[6]);
-            stream.WriteByte(bytes[7]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static double ReadLDouble(Stream stream)
+        public static double ReadLDouble(List<byte> buffer, int offset)
         {
             List<byte> bytes = new List<byte>();
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            bytes.AddRange(buffer.GetRange(offset, 8));
 
-            bytes.Reverse();
+            if (!BitConverter.IsLittleEndian)
+            {
+                bytes.Reverse();
+            }
 
             return BitConverter.ToDouble(bytes.ToArray(), 0);
         }
 
-        public static void WriteLDouble(Stream stream, double value)
+        public static void WriteLDouble(List<byte> buffer, double value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[7]);
-            stream.WriteByte(bytes[6]);
-            stream.WriteByte(bytes[5]);
-            stream.WriteByte(bytes[4]);
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[0]);
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            buffer.AddRange(bytes);
         }
 
-        public static string ReadFixedString(MemoryStream stream)
+        public static string ReadFixedString(List<byte> buffer, int offset)
         {
-            ushort len = ReadLShort(stream);
-            if (len <= 0) return string.Empty;
-            byte[] b = ReadBytes(stream, (int) stream.Position, len);
-            Console.WriteLine(b.Length);
+            short len = ReadShort(buffer, offset);
+            if (len <= 0)
+                return string.Empty;
+
+            byte[] b = ReadBytes(buffer, offset + 2, len);
             return Encoding.UTF8.GetString(b);
         }
 
-        public static void WriteFixedString(MemoryStream stream, string value)
+        public static void WriteFixedString(List<byte> buffer, string value)
         {
-            WriteLShort(stream, (ushort) (value.Length));
-            WriteBytes(stream, Encoding.UTF8.GetBytes(value));
+            WriteShort(buffer, (short) value.Length);
+            WriteBytes(buffer, Encoding.UTF8.GetBytes(value));
         }
 
-        public static byte[] ReadBytes(MemoryStream stream, int start, int length)
+        public static string ReadString(List<byte> buffer, ref int offset)
+        {
+            uint len = ReadUVarInt(buffer, ref offset);
+            if (len <= 0)
+                return string.Empty;
+
+            byte[] b = ReadBytes(buffer, offset, (int) len);
+            return Encoding.UTF8.GetString(b);
+        }
+
+        public static void WriteString(List<byte> buffer, string value, out int moveOffset)
+        {
+            WriteUVarInt(buffer, (uint) value.Length, out moveOffset);
+            WriteBytes(buffer, Encoding.UTF8.GetBytes(value));
+        }
+
+        public static byte[] ReadBytes(List<byte> buffer, int start, int length)
         {
             List<byte> result = new List<byte>();
-            byte[] raw = stream.ToArray();
+            byte[] raw = buffer.ToArray();
             for (int i = start; i < start + length; ++i)
             {
                 result.Add(raw[i]);
             }
-            stream.Position += length;
             return result.ToArray();
         }
 
-        public static void WriteBytes(MemoryStream stream, byte[] value)
+        public static void WriteBytes(List<byte> buffer, byte[] value)
         {
             for (int i = 0; i < value.Length; ++i)
             {
-                stream.WriteByte(value[i]);
+                buffer.Add(value[i]);
             }
         }
 
@@ -513,16 +559,6 @@ namespace MineNET.Utils
             }
 
             return splits.ToArray();
-        }
-
-        public static void Reset(Stream stream)
-        {
-            stream.Position = 0;
-        }
-
-        public static bool EndOfStream(Stream stream)
-        {
-            return stream.Position >= stream.Length;
         }
     }
 }
