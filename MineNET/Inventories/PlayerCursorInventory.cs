@@ -1,5 +1,6 @@
 ﻿using MineNET.Data;
 using MineNET.Entities.Players;
+using MineNET.Network.Packets.Data;
 
 namespace MineNET.Inventories
 {

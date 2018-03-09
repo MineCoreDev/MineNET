@@ -1,4 +1,4 @@
-﻿using MineNET.Data;
+﻿using MineNET.Network.Packets.Data;
 
 namespace MineNET.Network.Packets
 {

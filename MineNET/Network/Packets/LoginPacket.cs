@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using MineNET.Data;
 using MineNET.Entities.Data;
+using MineNET.Network.Packets.Data;
 using MineNET.Utils;
 using Newtonsoft.Json.Linq;
 

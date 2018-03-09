@@ -72,7 +72,7 @@ namespace MineNET.BlockEntities
 
         public BlockEntity Clone()
         {
-            return (BlockEntity) Clone();
+            return (BlockEntity) this.MemberwiseClone();
         }
 
         object ICloneable.Clone()

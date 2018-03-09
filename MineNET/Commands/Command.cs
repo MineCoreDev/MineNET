@@ -3,7 +3,7 @@ using MineNET.Utils;
 
 namespace MineNET.Commands
 {
-    public abstract class Command : ICloneable
+    public abstract class Command : ICloneable<Command>
     {
         public abstract string Name { get; }
 
@@ -21,7 +21,12 @@ namespace MineNET.Commands
 
         public abstract bool Execute(CommandSender sender, params string[] args);
 
-        public object Clone()
+        public Command Clone()
+        {
+            return (Command) this.MemberwiseClone();
+        }
+
+        object ICloneable.Clone()
         {
             return this.MemberwiseClone();
         }

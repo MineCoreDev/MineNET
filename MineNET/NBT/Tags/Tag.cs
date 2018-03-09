@@ -34,7 +34,7 @@ namespace MineNET.NBT.Tags
 
         public Tag Clone()
         {
-            return (Tag) Clone();
+            return (Tag) this.MemberwiseClone();
         }
 
         object ICloneable.Clone()

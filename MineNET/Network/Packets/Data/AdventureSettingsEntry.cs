@@ -1,6 +1,6 @@
-﻿using MineNET.Network.Packets;
+﻿using MineNET.Data;
 
-namespace MineNET.Data
+namespace MineNET.Network.Packets.Data
 {
     public class AdventureSettingsEntry
     {

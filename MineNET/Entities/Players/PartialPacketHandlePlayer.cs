@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
-using MineNET.Data;
 using MineNET.Entities.Data;
 using MineNET.Events.PlayerEvents;
 using MineNET.Network.Packets;
+using MineNET.Network.Packets.Data;
+using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
 using MineNET.Worlds.Data;
@@ -28,6 +29,10 @@ namespace MineNET.Entities.Players
             else if (pk is MovePlayerPacket)
             {
                 this.MovePlayerPacketHandle((MovePlayerPacket) pk);
+            }
+            else if (pk is TextPacket)
+            {
+                this.TextPacketHandle((TextPacket) pk);
             }
         }
 
@@ -128,6 +133,24 @@ namespace MineNET.Entities.Players
             //this.SendPosition(pos, direction, MovePlayerPacket.MODE_RESET);
         }
 
+        private void TextPacketHandle(TextPacket pk)
+        {
+            if (pk.Type == TextPacket.TYPE_CHAT)
+            {
+                pk.Message = pk.Message.Trim();
+                if (pk.Message != "" && pk.Message.Length < 256)
+                {
+                    pk.Message = $"<{this.Name}§f> {pk.Message}§f";
+                    Logger.Info(pk.Message);
+                    Player[] players = Server.Instance.GetPlayers();
+                    for (int i = 0; i < players.Length; ++i)
+                    {
+                        players[i].SendMessage(pk.Message);
+                    }
+                }
+            }
+        }
+
         private void ProcessLogin()
         {
             if (this.IsLogined)
@@ -210,7 +233,7 @@ namespace MineNET.Entities.Players
                     return;
                 }
 
-                //this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+                this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
             });
 
             this.HasSpawned = true;

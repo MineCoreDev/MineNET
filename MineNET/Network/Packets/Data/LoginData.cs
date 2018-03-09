@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MineNET.Data
+namespace MineNET.Network.Packets.Data
 {
     public sealed class LoginData
     {

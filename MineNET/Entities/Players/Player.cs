@@ -1,12 +1,12 @@
 ﻿using System.Net;
 using MineNET.Commands;
-using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
 using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.Network.Packets;
+using MineNET.Network.Packets.Data;
 using MineNET.Values;
 
 namespace MineNET.Entities.Players
@@ -136,6 +136,14 @@ namespace MineNET.Entities.Players
             SendPacket(pk);
 
             base.SetMotion(motion);
+        }
+
+        public void SendMessage(string message)
+        {
+            TextPacket pk = new TextPacket();
+            pk.Type = TextPacket.TYPE_RAW;
+            pk.Message = message;
+            this.SendPacket(pk);
         }
     }
 }

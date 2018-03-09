@@ -1,6 +1,6 @@
 ﻿using MineNET.Entities.Data;
 
-namespace MineNET.Data
+namespace MineNET.Network.Packets.Data
 {
     public sealed class ClientData
     {

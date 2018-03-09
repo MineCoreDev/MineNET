@@ -1,4 +1,4 @@
-﻿namespace MineNET.Data
+﻿namespace MineNET.Network.Packets.Data
 {
     public enum ContainerIds
     {

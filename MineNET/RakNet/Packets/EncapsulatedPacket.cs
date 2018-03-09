@@ -4,7 +4,7 @@ using MineNET.Utils;
 
 namespace MineNET.RakNet.Packets
 {
-    public class EncapsulatedPacket : ICloneable
+    public class EncapsulatedPacket : ICloneable<EncapsulatedPacket>
     {
         public int reliability;
         public bool hasSplit = false;
@@ -109,7 +109,12 @@ namespace MineNET.RakNet.Packets
             return stream.GetResult();
         }
 
-        public object Clone()
+        public EncapsulatedPacket Clone()
+        {
+            return (EncapsulatedPacket) this.MemberwiseClone();
+        }
+
+        object ICloneable.Clone()
         {
             return this.MemberwiseClone();
         }

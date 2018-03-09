@@ -4,7 +4,7 @@ using MineNET.Utils;
 
 namespace MineNET.RakNet.Packets
 {
-    public abstract class Packet : BinaryStream, ICloneable
+    public abstract class Packet : BinaryStream, ICloneable<Packet>
     {
         public abstract byte PacketID
         {
@@ -21,7 +21,12 @@ namespace MineNET.RakNet.Packets
             ReadByte();
         }
 
-        public object Clone()
+        public virtual Packet Clone()
+        {
+            return (Packet) this.MemberwiseClone();
+        }
+
+        object ICloneable.Clone()
         {
             return this.MemberwiseClone();
         }

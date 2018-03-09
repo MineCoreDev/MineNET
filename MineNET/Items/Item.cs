@@ -28,7 +28,7 @@ namespace MineNET.Items
 
         public Item Clone()
         {
-            return (Item) Clone();
+            return (Item) this.MemberwiseClone();
         }
 
         object ICloneable.Clone()

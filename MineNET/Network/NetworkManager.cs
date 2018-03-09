@@ -167,11 +167,11 @@ namespace MineNET.Network
             });
         }
 
-        DataPacket GetPacket(int id)
+        private DataPacket GetPacket(int id)
         {
             if (this.packetPool.ContainsKey(id))
             {
-                return (DataPacket) this.packetPool[id].Clone();
+                return this.packetPool[id].Clone();
             }
             return null;
         }
@@ -195,6 +195,7 @@ namespace MineNET.Network
             this.RegisterPacket(new ResourcePackClientResponsePacket());
             this.RegisterPacket(new RequestChunkRadiusPacket());
             this.RegisterPacket(new MovePlayerPacket());
+            this.RegisterPacket(new TextPacket());
         }
     }
 }

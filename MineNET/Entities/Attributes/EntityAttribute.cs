@@ -1,8 +1,9 @@
 ﻿using System;
+using MineNET.Utils;
 
 namespace MineNET.Entities.Attributes
 {
-    public class EntityAttribute : ICloneable
+    public class EntityAttribute : ICloneable<EntityAttribute>
     {
         public const int ABSORPTION = 0;
         public const int SATURATION = 1;
@@ -104,7 +105,12 @@ namespace MineNET.Entities.Attributes
 
         public bool ShouldSend { get; }
 
-        public object Clone()
+        public EntityAttribute Clone()
+        {
+            return (EntityAttribute) this.MemberwiseClone();
+        }
+
+        object ICloneable.Clone()
         {
             return this.MemberwiseClone();
         }

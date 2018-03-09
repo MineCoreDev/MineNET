@@ -2,11 +2,11 @@
 using System.Diagnostics;
 using System.Linq;
 using MineNET.Commands;
-using MineNET.Data;
 using MineNET.Entities.Players;
 using MineNET.Events.ServerEvents;
 using MineNET.Network;
 using MineNET.Network.Packets;
+using MineNET.Network.Packets.Data;
 using MineNET.Plugins;
 using MineNET.Utils;
 
@@ -199,6 +199,18 @@ namespace MineNET
             }
 
             return found;
+        }
+
+        public void BroadcastPacket(DataPacket pk, Player[] players = null)
+        {
+            if (players == null)
+            {
+                players = this.GetPlayers();
+            }
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendPacket(pk);
+            }
         }
     }
 }

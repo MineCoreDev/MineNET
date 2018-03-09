@@ -352,8 +352,11 @@
     <Compile Include="Commands\ConsoleSender.cs" />
     <Compile Include="Commands\Defaults\StopCommand.cs" />
     <Compile Include="Commands\Data\ICommandHandler.cs" />
-    <Compile Include="Data\AdventureSettingsEntry.cs" />
-    <Compile Include="Data\ContainerIds.cs" />
+    <Compile Include="Network\Packets\Data\AdventureSettingsEntry.cs" />
+    <Compile Include="Network\Packets\Data\ClientData.cs" />
+    <Compile Include="Network\Packets\Data\ContainerIds.cs" />
+    <Compile Include="Network\Packets\Data\LoginData.cs" />
+    <Compile Include="Network\Packets\Data\PlayerPermissions.cs" />
     <Compile Include="Entities\Metadata\EntityDataLong.cs" />
     <Compile Include="Entities\Metadata\EntityDataPos.cs" />
     <Compile Include="Entities\Metadata\EntityDataSlot.cs" />
@@ -387,10 +390,7 @@
     <Compile Include="Inventories\ArmorInventory.cs" />
     <Compile Include="Inventories\ChestInventory.cs" />
     <Compile Include="Inventories\Data\InventoryType.cs" />
-    <Compile Include="Data\LoginData.cs" />
-    <Compile Include="Data\ClientData.cs" />
-    <Compile Include="Data\PlayerListEntry.cs" />
-    <Compile Include="Data\PlayerPermissions.cs" />
+    <Compile Include="Network\Packets\Data\PlayerListEntry.cs" />
     <Compile Include="Data\ResourcePack.cs" />
     <Compile Include="Entities\Data\Skin.cs" />
     <Compile Include="Entities\Attributes\EntityAttributePool.cs" />
@@ -646,6 +646,7 @@
     <Compile Include="Network\Packets\SetEntityDataPacket.cs" />
     <Compile Include="Network\Packets\SetTimePacket.cs" />
     <Compile Include="Network\Packets\StartGamePacket.cs" />
+    <Compile Include="Network\Packets\TextPacket.cs" />
     <Compile Include="Network\Packets\UpdateAttributesPacket.cs" />
     <Compile Include="PartialServer.cs" />
     <Compile Include="Plugins\Attributes\CommandAttribute.cs" />

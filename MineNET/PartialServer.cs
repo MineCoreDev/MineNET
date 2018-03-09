@@ -2,11 +2,11 @@
 using System.IO;
 using System.Threading.Tasks;
 using MineNET.Commands;
-using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Players;
 using MineNET.Network;
 using MineNET.Network.Packets;
+using MineNET.Network.Packets.Data;
 using MineNET.Plugins;
 using MineNET.Utils;
 using MineNET.Utils.Config;

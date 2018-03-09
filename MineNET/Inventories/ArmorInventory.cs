@@ -3,6 +3,7 @@ using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.Items;
 using MineNET.Network.Packets;
+using MineNET.Network.Packets.Data;
 
 namespace MineNET.Inventories
 {

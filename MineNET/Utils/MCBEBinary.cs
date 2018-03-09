@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Data;
 using MineNET.Entities.Metadata;
 using MineNET.Items;
 using MineNET.Network.Packets;
+using MineNET.Network.Packets.Data;
 using MineNET.Values;
 using MineNET.Worlds.Data;
 
