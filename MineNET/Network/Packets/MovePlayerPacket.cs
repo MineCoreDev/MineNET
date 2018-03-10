@@ -39,7 +39,7 @@ namespace MineNET.Network.Packets
             this.WriteVector3(this.Pos);
             this.WriteVector3(this.Direction);
             this.WriteByte(this.Mode);
-            this.WriteBoolean(this.OnGround);
+            this.WriteBool(this.OnGround);
             this.WriteSVarLong(this.OtherEntityRuntimeId);
         }
 
@@ -51,7 +51,7 @@ namespace MineNET.Network.Packets
             this.Pos = this.ReadVector3();
             this.Direction = this.ReadVector3();
             this.Mode = this.ReadByte();
-            this.OnGround = this.ReadBoolean();
+            this.OnGround = this.ReadBool();
             this.OtherEntityRuntimeId = this.ReadSVarLong();
         }
     }

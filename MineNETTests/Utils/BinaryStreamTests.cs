@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MineNET.Utils.Tests
@@ -19,6 +18,15 @@ namespace MineNET.Utils.Tests
         }
 
         [TestMethod()]
+        public void MemorySpanTest()
+        {
+            MemorySpan span = new MemorySpan(new byte[0]);
+            span.WriteBytes(new byte[1] { 20 });
+            //span.Offset = 0;
+            //Console.WriteLine(span.ReadBytes().Length);
+        }
+
+        [TestMethod()]
         public void WriteReadTest()
         {
             byte[] ipbyte = new byte[]
@@ -31,7 +39,7 @@ namespace MineNET.Utils.Tests
 
             BinaryStream bs = new BinaryStream();
             Console.WriteLine("Offset" + bs.Offset);
-            bs.WriteBoolean(true);
+            bs.WriteBool(true);
             Console.WriteLine("Offset" + bs.Offset);
             bs.WriteByte(10);
             Console.WriteLine("Offset" + bs.Offset);
@@ -88,11 +96,20 @@ namespace MineNET.Utils.Tests
             Console.WriteLine("Offset" + bs.Offset);
             bs.WriteGuid(Guid.NewGuid());
             Console.WriteLine("Offset" + bs.Offset);
+            bs.WriteBytes(new byte[]
+           {
+                0x00,
+                0x00,
+                0x23,
+                0x45,
+                0x67
+           });
+            Console.WriteLine("Offset" + bs.Offset);
 
             bs = new BinaryStream(bs.ToArray());
             //Move();
 
-            Console.WriteLine(bs.ReadBoolean());
+            Console.WriteLine(bs.ReadBool());
             Console.WriteLine(bs.ReadByte());
             Console.WriteLine(bs.ReadSByte());
             Console.WriteLine(bs.ReadShort());
@@ -114,16 +131,11 @@ namespace MineNET.Utils.Tests
             Console.WriteLine(bs.ReadSVarLong());
             Console.WriteLine(bs.ReadFixedString());
             Console.WriteLine(bs.ReadString());
-            Console.WriteLine(bs.ReadBytes(5));
+            Console.WriteLine(bs.ReadBytes(5).Length);
             Console.WriteLine(bs.ReadIPEndPoint());
             Console.WriteLine(bs.ReadGuid());
+            Console.WriteLine(bs.ReadBytes().Length);
             Console.WriteLine("Offset" + bs.Offset);
-        }
-
-        async void Move()
-        {
-            await Task.Delay(1000);
-            new BinaryStream();
         }
     }
 }

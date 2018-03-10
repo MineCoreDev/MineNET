@@ -20,7 +20,7 @@
         {
             base.Encode();
 
-            this.WriteBoolean(this.HideDisconnectionScreen);
+            this.WriteBool(this.HideDisconnectionScreen);
             if (!this.HideDisconnectionScreen)
             {
                 this.WriteString(this.Message);

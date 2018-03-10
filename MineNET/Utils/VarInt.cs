@@ -27,7 +27,7 @@ namespace MineNET.Utils
             return (long) (n >> 1) ^ -(long) (n & 1);
         }
 
-        private static uint ReadRawVarInt32(List<byte> buffer, ref int offset, int maxSize)
+        private static uint ReadRawVarInt32(ref MemorySpan span, int maxSize)
         {
             uint result = 0;
             int j = 0;
@@ -35,7 +35,7 @@ namespace MineNET.Utils
 
             do
             {
-                b0 = buffer[offset];
+                b0 = span.ReadByte();
                 if (b0 < 0) throw new EndOfStreamException("Not enough bytes for VarInt");
 
                 result |= (uint) (b0 & 0x7f) << j++ * 7;
@@ -44,13 +44,12 @@ namespace MineNET.Utils
                 {
                     throw new OverflowException("VarInt too big");
                 }
-                offset++;
             } while ((b0 & 0x80) == 0x80);
 
             return result;
         }
 
-        private static ulong ReadRawVarInt64(List<byte> buffer, ref int offset, int maxSize)
+        private static ulong ReadRawVarInt64(ref MemorySpan span, int maxSize)
         {
             List<byte> bytes = new List<byte>();
 
@@ -60,7 +59,7 @@ namespace MineNET.Utils
 
             do
             {
-                b0 = buffer[offset];
+                b0 = span.ReadByte();
                 bytes.Add((byte) b0);
                 if (b0 < 0) throw new EndOfStreamException("Not enough bytes for VarInt");
 
@@ -70,7 +69,6 @@ namespace MineNET.Utils
                 {
                     throw new OverflowException("VarInt too big");
                 }
-                offset++;
             } while ((b0 & 0x80) == 0x80);
 
             byte[] byteArray = bytes.ToArray();
@@ -78,92 +76,86 @@ namespace MineNET.Utils
             return result;
         }
 
-        private static void WriteRawVarInt32(List<byte> buffer, uint value, out int moveOffset)
+        private static void WriteRawVarInt32(ref MemorySpan span, uint value)
         {
-            moveOffset = 0;
             while ((value & -128) != 0)
             {
-                buffer.Add((byte) ((value & 0x7F) | 0x80));
+                span.WriteByte((byte) ((value & 0x7F) | 0x80));
                 value >>= 7;
-                moveOffset++;
             }
 
-            buffer.Add((byte) value);
-            moveOffset++;
+            span.WriteByte((byte) value);
         }
 
-        private static void WriteRawVarInt64(List<byte> buffer, ulong value, out int moveOffset)
+        private static void WriteRawVarInt64(ref MemorySpan span, ulong value)
         {
-            moveOffset = 0;
             while ((value & 0xFFFFFFFFFFFFFF80) != 0)
             {
-                buffer.Add((byte) ((value & 0x7F) | 0x80));
+                span.WriteByte((byte) ((value & 0x7F) | 0x80));
                 value >>= 7;
-                moveOffset++;
             }
 
-            buffer.Add((byte) value);
-            moveOffset++;
+            span.WriteByte((byte) value);
         }
 
-        public static void WriteInt32(List<byte> buffer, int value, out int moveOffset)
+        public static void WriteInt32(ref MemorySpan span, int value)
         {
-            WriteRawVarInt32(buffer, (uint) value, out moveOffset);
+            WriteRawVarInt32(ref span, (uint) value);
         }
 
-        public static int ReadInt32(List<byte> buffer, ref int offset)
+        public static int ReadInt32(ref MemorySpan span)
         {
-            return (int) ReadRawVarInt32(buffer, ref offset, 5);
+            return (int) ReadRawVarInt32(ref span, 5);
         }
 
-        public static void WriteSInt32(List<byte> buffer, int value, out int moveOffset)
+        public static void WriteSInt32(ref MemorySpan span, int value)
         {
-            WriteRawVarInt32(buffer, EncodeZigZag32(value), out moveOffset);
+            WriteRawVarInt32(ref span, EncodeZigZag32(value));
         }
 
-        public static int ReadSInt32(List<byte> buffer, ref int offset)
+        public static int ReadSInt32(ref MemorySpan span)
         {
-            return DecodeZigZag32(ReadRawVarInt32(buffer, ref offset, 5));
+            return DecodeZigZag32(ReadRawVarInt32(ref span, 5));
         }
 
-        public static void WriteUInt32(List<byte> buffer, uint value, out int moveOffset)
+        public static void WriteUInt32(ref MemorySpan span, uint value)
         {
-            WriteRawVarInt32(buffer, value, out moveOffset);
+            WriteRawVarInt32(ref span, value);
         }
 
-        public static uint ReadUInt32(List<byte> buffer, ref int offset)
+        public static uint ReadUInt32(ref MemorySpan span)
         {
-            return ReadRawVarInt32(buffer, ref offset, 5);
+            return ReadRawVarInt32(ref span, 5);
         }
 
-        public static void WriteInt64(List<byte> buffer, long value, out int moveOffset)
+        public static void WriteInt64(ref MemorySpan span, long value)
         {
-            WriteRawVarInt64(buffer, (ulong) value, out moveOffset);
+            WriteRawVarInt64(ref span, (ulong) value);
         }
 
-        public static long ReadInt64(List<byte> buffer, ref int offset)
+        public static long ReadInt64(ref MemorySpan span)
         {
-            return (long) ReadRawVarInt64(buffer, ref offset, 10);
+            return (long) ReadRawVarInt64(ref span, 10);
         }
 
-        public static void WriteSInt64(List<byte> buffer, long value, out int moveOffset)
+        public static void WriteSInt64(ref MemorySpan span, long value)
         {
-            WriteRawVarInt64(buffer, EncodeZigZag64(value), out moveOffset);
+            WriteRawVarInt64(ref span, EncodeZigZag64(value));
         }
 
-        public static long ReadSInt64(List<byte> buffer, ref int offset)
+        public static long ReadSInt64(ref MemorySpan span)
         {
-            return DecodeZigZag64(ReadRawVarInt64(buffer, ref offset, 10));
+            return DecodeZigZag64(ReadRawVarInt64(ref span, 10));
         }
 
-        public static void WriteUInt64(List<byte> buffer, ulong value, out int moveOffset)
+        public static void WriteUInt64(ref MemorySpan span, ulong value)
         {
-            WriteRawVarInt64(buffer, value, out moveOffset);
+            WriteRawVarInt64(ref span, value);
         }
 
-        public static ulong ReadUInt64(List<byte> buffer, ref int offset)
+        public static ulong ReadUInt64(ref MemorySpan span)
         {
-            return ReadRawVarInt64(buffer, ref offset, 10);
+            return ReadRawVarInt64(ref span, 10);
         }
     }
 }

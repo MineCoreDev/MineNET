@@ -132,12 +132,16 @@ namespace MineNET.Entities
             this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
 
             ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
-            this.SendPacket(resourcePacksInfoPacket);
+            //this.SendPacket(resourcePacksInfoPacket);
         }
 
         private void ResourcePackClientResponsePacketHandle(ResourcePackClientResponsePacket pk)
         {
-            if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_REFUSED)
+            if (this.PackSyncCompleted)
+            {
+                return;
+            }
+            else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_REFUSED)
             {
                 this.Close("disconnectionScreen.resourcePackn");
             }
@@ -329,7 +333,7 @@ namespace MineNET.Entities
 
         public void SendPacket(DataPacket pk, bool immediate = false)
         {
-            Server.Instance.NetworkManager.SendPacket(this, pk, immediate);
+            Server.Instance.NetworkManager.SendPacket(this, pk.Clone(), immediate);
         }
 
         public void Close(string reason)

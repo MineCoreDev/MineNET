@@ -1,21 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 
 namespace MineNET.Utils
 {
     public class BinaryStream : IDisposable, ICloneable<BinaryStream>
     {
-        List<byte> buffer = new List<byte>();
-        byte[] _buffer;
+        MemorySpan buffer = new MemorySpan(new byte[0]);
 
-        public int Offset { get; set; }
+        public int Offset
+        {
+            get
+            {
+                return this.buffer.Offset;
+            }
+
+            set
+            {
+                this.buffer.Offset = value;
+            }
+        }
 
         public int Length
         {
             get
             {
-                return this.buffer.Count;
+                return this.buffer.Length;
             }
         }
 
@@ -31,15 +40,11 @@ namespace MineNET.Utils
 
         public BinaryStream()
         {
-            this.Reset();
-            this.buffer = new List<byte>();
         }
 
         public BinaryStream(byte[] buffer, bool reset = true)
         {
-            this.Reset();
-            this.buffer = new List<byte>();
-            this.WriteBytes(buffer);
+            this.buffer = new MemorySpan(buffer);
             if (reset)
             {
                 this.Reset();
@@ -50,382 +55,264 @@ namespace MineNET.Utils
 
         #region Public Method
 
-        public bool ReadBoolean()
+        public bool ReadBool()
         {
-            bool v = Binary.ReadBool(this.buffer, this.Offset);
-            this.Offset += 1;
-            return v;
+            return Binary.ReadBool(ref this.buffer);
         }
 
-        public void WriteBoolean(bool value)
+        public void WriteBool(bool value)
         {
-            this.Offset += 1;
-            Binary.WriteBool(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteBool(ref this.buffer, value);
         }
 
         public byte ReadByte()
         {
-            byte v = Binary.ReadByte(this.buffer, this.Offset);
-            this.Offset += 1;
-            return v;
+            return Binary.ReadByte(ref this.buffer);
         }
 
         public void WriteByte(byte value)
         {
-            this.Offset += 1;
-            Binary.WriteByte(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteByte(ref this.buffer, value);
         }
 
         public sbyte ReadSByte()
         {
-            sbyte v = Binary.ReadSByte(this.buffer, this.Offset);
-            this.Offset += 1;
-            return v;
+            return Binary.ReadSByte(ref this.buffer);
         }
 
         public void WriteSByte(sbyte value)
         {
-            this.Offset += 1;
-            Binary.WriteSByte(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteSByte(ref this.buffer, value);
         }
 
         public short ReadShort()
         {
-            short v = Binary.ReadShort(this.buffer, this.Offset);
-            this.Offset += 2;
-            return v;
+            return Binary.ReadShort(ref this.buffer);
         }
 
         public void WriteShort(short value)
         {
-            this.Offset += 2;
-            Binary.WriteShort(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteShort(ref this.buffer, value);
         }
 
         public ushort ReadUShort()
         {
-            ushort v = Binary.ReadUShort(this.buffer, this.Offset);
-            this.Offset += 2;
-            return v;
+            return Binary.ReadUShort(ref this.buffer);
         }
 
         public void WriteUShort(ushort value)
         {
-            this.Offset += 2;
-            Binary.WriteUShort(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteUShort(ref this.buffer, value);
         }
 
         public ushort ReadLShort()
         {
-            ushort v = Binary.ReadLShort(this.buffer, this.Offset);
-            this.Offset += 2;
-            return v;
+            return Binary.ReadLShort(ref this.buffer);
         }
 
         public void WriteLShort(ushort value)
         {
-            this.Offset += 2;
-            Binary.WriteLShort(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteLShort(ref this.buffer, value);
         }
 
         public int ReadTriad()
         {
-            int v = Binary.ReadTriad(this.buffer, this.Offset);
-            this.Offset += 3;
-            return v;
+            return Binary.ReadTriad(ref this.buffer);
         }
 
         public void WriteTriad(int value)
         {
-            this.Offset += 3;
-            Binary.WriteTriad(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteTriad(ref this.buffer, value);
         }
 
         public int ReadLTriad()
         {
-            int v = Binary.ReadLTriad(this.buffer, this.Offset);
-            this.Offset += 3;
-            return v;
+            return Binary.ReadLTriad(ref this.buffer);
         }
 
         public void WriteLTriad(int value)
         {
-            this.Offset += 3;
-            Binary.WriteLTriad(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteLTriad(ref this.buffer, value);
         }
 
         public int ReadInt()
         {
-            int v = Binary.ReadInt(this.buffer, this.Offset);
-            this.Offset += 4;
-            return v;
+            return Binary.ReadInt(ref this.buffer);
         }
 
         public void WriteInt(int value)
         {
-            this.Offset += 4;
-            Binary.WriteInt(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteInt(ref this.buffer, value);
         }
 
         public uint ReadUInt()
         {
-            uint v = Binary.ReadUInt(this.buffer, this.Offset);
-            this.Offset += 4;
-            return v;
+            return Binary.ReadUInt(ref this.buffer);
         }
 
         public void WriteUInt(uint value)
         {
-            this.Offset += 4;
-            Binary.WriteUInt(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteUInt(ref this.buffer, value);
         }
 
         public uint ReadLInt()
         {
-            uint v = Binary.ReadLInt(this.buffer, this.Offset);
-            this.Offset += 4;
-            return v;
+            return Binary.ReadLInt(ref this.buffer);
         }
 
         public void WriteLInt(uint value)
         {
-            this.Offset += 4;
-            Binary.WriteLInt(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteLInt(ref this.buffer, value);
         }
 
         public long ReadLong()
         {
-            long v = Binary.ReadLong(this.buffer, this.Offset);
-            this.Offset += 8;
-            return v;
+            return Binary.ReadLong(ref this.buffer);
         }
 
         public void WriteLong(long value)
         {
-            this.Offset += 8;
-            Binary.WriteLong(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteLong(ref this.buffer, value);
         }
 
         public ulong ReadULong()
         {
-            ulong v = Binary.ReadULong(this.buffer, this.Offset);
-            this.Offset += 8;
-            return v;
+            return Binary.ReadULong(ref this.buffer);
         }
 
         public void WriteULong(ulong value)
         {
-            this.Offset += 8;
-            Binary.WriteULong(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteULong(ref this.buffer, value);
         }
 
         public ulong ReadLLong()
         {
-            ulong v = Binary.ReadLLong(this.buffer, this.Offset);
-            this.Offset += 8;
-            return v;
+            return Binary.ReadLLong(ref this.buffer);
         }
 
         public void WriteLLong(ulong value)
         {
-            this.Offset += 8;
-            Binary.WriteLLong(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteLLong(ref this.buffer, value);
         }
 
         public int ReadVarInt()
         {
-            int offset = this.Offset;
-            int v = Binary.ReadVarInt(this.buffer, ref offset);
-            this.Offset = offset;
-            return v;
+            return Binary.ReadVarInt(ref this.buffer);
         }
 
         public void WriteVarInt(int value)
         {
-            int offset = this.Offset;
-            Binary.WriteVarInt(this.buffer, value, out offset);
-            this.Offset = offset + this.Offset;
-            _buffer = this.buffer.ToArray();
+            Binary.WriteVarInt(ref this.buffer, value);
         }
 
         public uint ReadUVarInt()
         {
-            int offset = this.Offset;
-            uint v = Binary.ReadUVarInt(this.buffer, ref offset);
-            this.Offset = offset;
-            return v;
+            return Binary.ReadUVarInt(ref this.buffer);
         }
 
         public void WriteUVarInt(uint value)
         {
-            int offset = this.Offset;
-            Binary.WriteUVarInt(this.buffer, value, out offset);
-            this.Offset = offset + this.Offset;
-            _buffer = this.buffer.ToArray();
+            Binary.WriteUVarInt(ref this.buffer, value);
         }
 
         public int ReadSVarInt()
         {
-            int offset = this.Offset;
-            int v = Binary.ReadSVarInt(this.buffer, ref offset);
-            this.Offset = offset;
-            return v;
+            return Binary.ReadSVarInt(ref this.buffer);
         }
 
         public void WriteSVarInt(int value)
         {
-            int offset = this.Offset;
-            Binary.WriteSVarInt(this.buffer, value, out offset);
-            this.Offset = offset + this.Offset;
-            _buffer = this.buffer.ToArray();
+            Binary.WriteSVarInt(ref this.buffer, value);
         }
 
         public long ReadVarLong()
         {
-            int offset = this.Offset;
-            long v = Binary.ReadVarLong(this.buffer, ref offset);
-            this.Offset = offset;
-            return v;
+            return Binary.ReadVarLong(ref this.buffer);
         }
 
         public void WriteVarLong(int value)
         {
-            int offset = this.Offset;
-            Binary.WriteVarLong(this.buffer, value, out offset);
-            this.Offset = offset + this.Offset;
-            _buffer = this.buffer.ToArray();
+            Binary.WriteVarLong(ref this.buffer, value);
         }
 
         public ulong ReadUVarLong()
         {
-            int offset = this.Offset;
-            ulong v = Binary.ReadUVarLong(this.buffer, ref offset);
-            this.Offset = offset;
-            return v;
+            return Binary.ReadUVarLong(ref this.buffer);
         }
 
         public void WriteUVarLong(ulong value)
         {
-            int offset = this.Offset;
-            Binary.WriteUVarLong(this.buffer, value, out offset);
-            this.Offset = offset + this.Offset;
-            _buffer = this.buffer.ToArray();
+            Binary.WriteUVarLong(ref this.buffer, value);
         }
 
         public long ReadSVarLong()
         {
-            int offset = this.Offset;
-            long v = Binary.ReadSVarLong(this.buffer, ref offset);
-            this.Offset = offset;
-            return v;
+            return Binary.ReadSVarLong(ref this.buffer);
         }
 
         public void WriteSVarLong(long value)
         {
-            int offset = this.Offset;
-            Binary.WriteSVarLong(this.buffer, value, out offset);
-            this.Offset = offset + this.Offset;
-            _buffer = this.buffer.ToArray();
+            Binary.WriteSVarLong(ref this.buffer, value);
         }
 
         public float ReadFloat()
         {
-            float v = Binary.ReadFloat(this.buffer, this.Offset);
-            this.Offset += 4;
-            return v;
+            return Binary.ReadFloat(ref this.buffer);
         }
 
         public void WriteFloat(float value)
         {
-            this.Offset += 4;
-            Binary.WriteFloat(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteFloat(ref this.buffer, value);
         }
 
         public float ReadLFloat()
         {
-            float v = Binary.ReadLFloat(this.buffer, this.Offset);
-            this.Offset += 4;
-            return v;
+            return Binary.ReadLFloat(ref this.buffer);
         }
 
         public void WriteLFloat(float value)
         {
-            this.Offset += 4;
-            Binary.WriteLFloat(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteLFloat(ref this.buffer, value);
         }
 
         public double ReadDouble()
         {
-            double v = Binary.ReadDouble(this.buffer, this.Offset);
-            this.Offset += 8;
-            return v;
+            return Binary.ReadDouble(ref this.buffer);
         }
 
         public void WriteDouble(double value)
         {
-            this.Offset += 8;
-            Binary.WriteDouble(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteDouble(ref this.buffer, value);
         }
 
         public double ReadLDouble()
         {
-            double v = Binary.ReadLDouble(this.buffer, this.Offset);
-            this.Offset += 8;
-            return v;
+            return Binary.ReadLDouble(ref this.buffer);
         }
 
         public void WriteLDouble(double value)
         {
-            this.Offset += 8;
-            Binary.WriteLDouble(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteLDouble(ref this.buffer, value);
         }
 
         public string ReadFixedString()
         {
-            string v = Binary.ReadFixedString(this.buffer, this.Offset);
-            this.Offset += v.Length + 2;
-            return v;
+            return Binary.ReadFixedString(ref this.buffer);
         }
 
         public void WriteFixedString(string value)
         {
-            this.Offset += value.Length + 2;
-            Binary.WriteFixedString(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteFixedString(ref this.buffer, value);
         }
 
         public string ReadString()
         {
-            int offset = this.Offset;
-            string v = Binary.ReadString(this.buffer, ref offset);
-            this.Offset += v.Length + (offset - this.Offset);
-            return v;
+            return Binary.ReadString(ref this.buffer);
         }
 
         public void WriteString(string value)
         {
-            int offset = this.Offset;
-            Binary.WriteString(this.buffer, value, out offset);
-            this.Offset += value.Length + offset;
-            _buffer = this.buffer.ToArray();
+            Binary.WriteString(ref this.buffer, value);
         }
 
         public IPEndPoint ReadIPEndPoint()
@@ -433,13 +320,7 @@ namespace MineNET.Utils
             byte version = this.ReadByte();
             if (version == 4)
             {
-                IPAddress ip = new IPAddress(new byte[]
-                {
-                    (byte) (~ReadByte() & 0xff),
-                    (byte) (~ReadByte() & 0xff),
-                    (byte) (~ReadByte() & 0xff),
-                    (byte) (~ReadByte() & 0xff)
-                });
+                IPAddress ip = new IPAddress(ReadBytes(4));
                 int port = this.ReadUShort();
                 return new IPEndPoint(ip, port);
             }
@@ -462,7 +343,6 @@ namespace MineNET.Utils
             this.WriteByte(4);
             this.WriteBytes(point.Address.GetAddressBytes());
             this.WriteUShort((ushort) point.Port);
-            _buffer = this.buffer.ToArray();
         }
 
         public Guid ReadGuid()
@@ -473,43 +353,31 @@ namespace MineNET.Utils
         public void WriteGuid(Guid guid)
         {
             this.WriteBytes(guid.ToByteArray());
-            _buffer = this.buffer.ToArray();
         }
 
         public byte[] ReadBytes()
         {
-            byte[] v = Binary.ReadBytes(this.buffer, this.Offset, this.Length - this.Offset);
-            this.Offset = this.Length;
-            return v;
+            return Binary.ReadBytes(ref this.buffer);
         }
 
         public byte[] ReadBytes(int length)
         {
-            byte[] v = Binary.ReadBytes(this.buffer, this.Offset, length);
-            this.Offset += length;
-            return v;
+            return Binary.ReadBytes(ref this.buffer, length);
         }
 
         public byte[] ReadBytes(int offset, int length)
         {
-            byte[] v = Binary.ReadBytes(this.buffer, offset, length);
-            this.Offset = offset + length;
-            return v;
+            return Binary.ReadBytes(ref this.buffer, offset, length);
         }
 
         public void WriteBytes(byte[] value)
         {
-            this.Offset += value.Length;
-            Binary.WriteBytes(this.buffer, value);
-            _buffer = this.buffer.ToArray();
+            Binary.WriteBytes(ref this.buffer, value);
         }
 
         public void SetBuffer(byte[] buffer)
         {
-            this.buffer = new List<byte>();
-            this.Reset();
-            this.WriteBytes(buffer);
-            _buffer = this.buffer.ToArray();
+            this.buffer = new MemorySpan(buffer);
             this.Reset();
         }
 
@@ -520,12 +388,12 @@ namespace MineNET.Utils
 
         public byte[] ToArray()
         {
-            return this._buffer;
+            return this.buffer.ToArray();
         }
 
         public virtual void Dispose()
         {
-            this.buffer = null;
+            this.buffer.Dispose();
         }
 
         public BinaryStream Clone()

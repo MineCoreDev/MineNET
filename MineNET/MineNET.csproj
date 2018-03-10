@@ -719,6 +719,7 @@
     <Compile Include="Utils\MCBEBinary.cs" />
     <Compile Include="Utils\Math.cs" />
     <Compile Include="Utils\ArrayUtils.cs" />
+    <Compile Include="Utils\MemorySpan.cs" />
     <Compile Include="Utils\VarDump.cs" />
     <Compile Include="Utils\VarInt.cs" />
     <Compile Include="Utils\ZlibStream.cs" />

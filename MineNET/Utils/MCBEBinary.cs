@@ -103,7 +103,7 @@ namespace MineNET.Utils
                 {
                     GameRule<bool> boolRule = (GameRule<bool>) rules[i];
                     this.WriteByte(1);
-                    this.WriteBoolean(boolRule.Value);
+                    this.WriteBool(boolRule.Value);
                 }
                 else if (rules[i] is GameRule<int>)
                 {

@@ -25,8 +25,8 @@
         {
             base.Encode();
 
-            this.WriteBoolean(this.MustAccept);
-            this.WriteShort((short)this.BehaviourPackEntries.Length);
+            this.WriteBool(this.MustAccept);
+            this.WriteShort((short) this.BehaviourPackEntries.Length);
             for (int i = 0; i < this.BehaviourPackEntries.Length; ++i)
             {
                 ResourcePack entry = this.BehaviourPackEntries[i];
@@ -36,7 +36,7 @@
                 this.WriteString("");//TODO
                 this.WriteString("");//TODO
             }
-            this.WriteShort((short)this.ResourcePackEntries.Length);
+            this.WriteShort((short) this.ResourcePackEntries.Length);
             for (int i = 0; i < this.ResourcePackEntries.Length; ++i)
             {
                 ResourcePack entry = this.ResourcePackEntries[i];

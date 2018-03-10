@@ -107,11 +107,9 @@ namespace MineNET.Network
                 return;
             }
 
-            pk = pk.Clone();
             pk.Encode();
 
             byte[] buffer = pk.ToArray();
-            Logger.Log("%server_packet_send", buffer[0].ToString("X"), buffer.Length);
 
             BinaryStream st = new BinaryStream();
             st.WriteVarInt((int) pk.Length);
@@ -126,6 +124,8 @@ namespace MineNET.Network
             enc.buffer = bp.ToArray();
             enc.reliability = RakNet.Packets.PacketReliability.RELIABLE;
             enc.messageIndex = ++session.MessageIndex;
+
+            Logger.Log("%server_packet_send", buffer[0].ToString("X"), buffer.Length);
 
             session.SendPacket(enc, immediate);
         }

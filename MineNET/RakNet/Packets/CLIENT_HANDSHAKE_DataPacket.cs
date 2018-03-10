@@ -65,8 +65,8 @@ namespace MineNET.RakNet.Packets
 
             this.systemEndPoints = list.ToArray();
 
-            this.sendPing = ReadLong();
-            this.sendPong = ReadLong();
+            this.sendPing = (long) ReadLLong();
+            this.sendPong = (long) ReadLLong();
         }
     }
 }

@@ -242,6 +242,7 @@ namespace MineNET.RakNet
             }
 
             packet.Encode();
+
             byte[] bytes = packet.ToArray();
             this.client.BeginSend(bytes, bytes.Length, point, this.OnSend, null);
 

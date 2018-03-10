@@ -8,57 +8,53 @@ namespace MineNET.Utils
     {
         public const int Int24_Max = 16777215;
 
-        public static bool ReadBool(List<byte> buffer, int offset)
+        public static bool ReadBool(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = span.ReadBytes(1);
 
-            bytes.Add(buffer[offset]);
-
-            return BitConverter.ToBoolean(bytes.ToArray(), 0);
+            return BitConverter.ToBoolean(bytes, 0);
         }
 
-        public static void WriteBool(List<byte> buffer, bool value)
+        public static void WriteBool(ref MemorySpan span, bool value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static byte ReadByte(List<byte> buffer, int offset)
+        public static byte ReadByte(ref MemorySpan span)
         {
-            return buffer[offset];
+            return span.ReadByte();
         }
 
-        public static void WriteByte(List<byte> buffer, byte value)
+        public static void WriteByte(ref MemorySpan span, byte value)
         {
-            buffer.Add(value);
+            span.WriteByte(value);
         }
 
-        public static sbyte ReadSByte(List<byte> buffer, int offset)
+        public static sbyte ReadSByte(ref MemorySpan span)
         {
-            return (sbyte) buffer[offset];
+            return (sbyte) span.ReadByte();
         }
 
-        public static void WriteSByte(List<byte> buffer, sbyte value)
+        public static void WriteSByte(ref MemorySpan span, sbyte value)
         {
-            buffer.Add((byte) value);
+            span.WriteByte((byte) value);
         }
 
-        public static short ReadShort(List<byte> buffer, int offset)
+        public static short ReadShort(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 2));
+            byte[] bytes = span.ReadBytes(2);
 
             if (BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToInt16(bytes.ToArray(), 0);
+            return BitConverter.ToInt16(bytes, 0);
         }
 
-        public static void WriteShort(List<byte> buffer, short value)
+        public static void WriteShort(ref MemorySpan span, short value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -67,24 +63,22 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static ushort ReadUShort(List<byte> buffer, int offset)
+        public static ushort ReadUShort(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 2));
+            byte[] bytes = span.ReadBytes(2);
 
             if (BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToUInt16(bytes.ToArray(), 0);
+            return BitConverter.ToUInt16(bytes, 0);
         }
 
-        public static void WriteUShort(List<byte> buffer, ushort value)
+        public static void WriteUShort(ref MemorySpan span, ushort value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -93,24 +87,22 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static ushort ReadLShort(List<byte> buffer, int offset)
+        public static ushort ReadLShort(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 2));
+            byte[] bytes = span.ReadBytes(2);
 
             if (!BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToUInt16(bytes.ToArray(), 0);
+            return BitConverter.ToUInt16(bytes, 0);
         }
 
-        public static void WriteLShort(List<byte> buffer, ushort value)
+        public static void WriteLShort(ref MemorySpan span, ushort value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -119,74 +111,70 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static int ReadTriad(List<byte> buffer, int offset)
+        public static int ReadTriad(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 3));
+            byte[] bytes = span.ReadBytes(3);
 
             return (bytes[0] << 16 | bytes[1] << 8 | bytes[2]);
         }
 
-        public static void WriteTriad(List<byte> buffer, int value)
+        public static void WriteTriad(ref MemorySpan span, int value)
         {
             if (value > Int24_Max)
             {
                 throw new OverflowException("Not Int24 Value!");
             }
 
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = new byte[]
+            {
+                ((byte) (value >> 16)),
+                ((byte) (value >> 8)),
+                ((byte)value)
+            };
 
-            bytes.Add((byte) (value >> 16));
-            bytes.Add((byte) (value >> 8));
-            bytes.Add((byte) value);
-
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static int ReadLTriad(List<byte> buffer, int offset)
+        public static int ReadLTriad(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 3));
+            byte[] bytes = span.ReadBytes(3);
 
             return (bytes[0] | bytes[1] << 8 | bytes[2] << 16);
         }
 
-        public static void WriteLTriad(List<byte> buffer, int value)
+        public static void WriteLTriad(ref MemorySpan span, int value)
         {
             if (value > Int24_Max)
             {
                 throw new OverflowException("Not Int24 Value!");
             }
 
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = new byte[3]
+            {
+                (byte) value,
+                ((byte) (value << 8)),
+                ((byte) (value << 16))
+            };
 
-            bytes.Add((byte) value);
-            bytes.Add((byte) (value >> 8));
-            bytes.Add((byte) (value >> 16));
-
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static int ReadInt(List<byte> buffer, int offset)
+        public static int ReadInt(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 4));
+            byte[] bytes = span.ReadBytes(4);
 
             if (BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToInt32(bytes.ToArray(), 0);
+            return BitConverter.ToInt32(bytes, 0);
         }
 
-        public static void WriteInt(List<byte> buffer, int value)
+        public static void WriteInt(ref MemorySpan span, int value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -195,24 +183,22 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static uint ReadUInt(List<byte> buffer, int offset)
+        public static uint ReadUInt(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 4));
+            byte[] bytes = span.ReadBytes(4);
 
             if (BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToUInt32(bytes.ToArray(), 0);
+            return BitConverter.ToUInt32(bytes, 0);
         }
 
-        public static void WriteUInt(List<byte> buffer, uint value)
+        public static void WriteUInt(ref MemorySpan span, uint value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -221,24 +207,22 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static uint ReadLInt(List<byte> buffer, int offset)
+        public static uint ReadLInt(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 4));
+            byte[] bytes = span.ReadBytes(4);
 
             if (!BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToUInt32(bytes.ToArray(), 0);
+            return BitConverter.ToUInt32(bytes, 0);
         }
 
-        public static void WriteLInt(List<byte> buffer, uint value)
+        public static void WriteLInt(ref MemorySpan span, uint value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -247,24 +231,22 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static long ReadLong(List<byte> buffer, int offset)
+        public static long ReadLong(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 8));
+            byte[] bytes = span.ReadBytes(8);
 
             if (BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToInt64(bytes.ToArray(), 0);
+            return BitConverter.ToInt64(bytes, 0);
         }
 
-        public static void WriteLong(List<byte> buffer, long value)
+        public static void WriteLong(ref MemorySpan span, long value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -273,24 +255,22 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static ulong ReadULong(List<byte> buffer, int offset)
+        public static ulong ReadULong(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 8));
+            byte[] bytes = span.ReadBytes(8);
 
             if (BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToUInt64(bytes.ToArray(), 0);
+            return BitConverter.ToUInt64(bytes, 0);
         }
 
-        public static void WriteULong(List<byte> buffer, ulong value)
+        public static void WriteULong(ref MemorySpan span, ulong value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -299,24 +279,22 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static ulong ReadLLong(List<byte> buffer, int offset)
+        public static ulong ReadLLong(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 8));
+            byte[] bytes = span.ReadBytes(8);
 
             if (!BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToUInt64(bytes.ToArray(), 0);
+            return BitConverter.ToUInt64(bytes, 0);
         }
 
-        public static void WriteLLong(List<byte> buffer, ulong value)
+        public static void WriteLLong(ref MemorySpan span, ulong value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -325,84 +303,82 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static int ReadVarInt(List<byte> buffer, ref int offset)
+        public static int ReadVarInt(ref MemorySpan span)
         {
-            return VarInt.ReadInt32(buffer, ref offset);
+            return VarInt.ReadInt32(ref span);
         }
 
-        public static void WriteVarInt(List<byte> buffer, int value, out int moveOffset)
+        public static void WriteVarInt(ref MemorySpan span, int value)
         {
-            VarInt.WriteInt32(buffer, value, out moveOffset);
+            VarInt.WriteInt32(ref span, value);
         }
 
-        public static uint ReadUVarInt(List<byte> buffer, ref int offset)
+        public static uint ReadUVarInt(ref MemorySpan span)
         {
-            return VarInt.ReadUInt32(buffer, ref offset);
+            return VarInt.ReadUInt32(ref span);
         }
 
-        public static void WriteUVarInt(List<byte> buffer, uint value, out int moveOffset)
+        public static void WriteUVarInt(ref MemorySpan span, uint value)
         {
-            VarInt.WriteUInt32(buffer, value, out moveOffset);
+            VarInt.WriteUInt32(ref span, value);
         }
 
-        public static int ReadSVarInt(List<byte> buffer, ref int offset)
+        public static int ReadSVarInt(ref MemorySpan span)
         {
-            return VarInt.ReadSInt32(buffer, ref offset);
+            return VarInt.ReadSInt32(ref span);
         }
 
-        public static void WriteSVarInt(List<byte> buffer, int value, out int moveOffset)
+        public static void WriteSVarInt(ref MemorySpan span, int value)
         {
-            VarInt.WriteSInt32(buffer, value, out moveOffset);
+            VarInt.WriteSInt32(ref span, value);
         }
 
-        public static long ReadVarLong(List<byte> buffer, ref int offset)
+        public static long ReadVarLong(ref MemorySpan span)
         {
-            return VarInt.ReadInt64(buffer, ref offset);
+            return VarInt.ReadInt64(ref span);
         }
 
-        public static void WriteVarLong(List<byte> buffer, long value, out int moveOffset)
+        public static void WriteVarLong(ref MemorySpan span, long value)
         {
-            VarInt.WriteInt64(buffer, value, out moveOffset);
+            VarInt.WriteInt64(ref span, value);
         }
 
-        public static ulong ReadUVarLong(List<byte> buffer, ref int offset)
+        public static ulong ReadUVarLong(ref MemorySpan span)
         {
-            return VarInt.ReadUInt64(buffer, ref offset);
+            return VarInt.ReadUInt64(ref span);
         }
 
-        public static void WriteUVarLong(List<byte> buffer, ulong value, out int moveOffset)
+        public static void WriteUVarLong(ref MemorySpan span, ulong value)
         {
-            VarInt.WriteUInt64(buffer, value, out moveOffset);
+            VarInt.WriteUInt64(ref span, value);
         }
 
-        public static long ReadSVarLong(List<byte> buffer, ref int offset)
+        public static long ReadSVarLong(ref MemorySpan span)
         {
-            return VarInt.ReadSInt64(buffer, ref offset);
+            return VarInt.ReadSInt64(ref span);
         }
 
-        public static void WriteSVarLong(List<byte> buffer, long value, out int moveOffset)
+        public static void WriteSVarLong(ref MemorySpan span, long value)
         {
-            VarInt.WriteSInt64(buffer, value, out moveOffset);
+            VarInt.WriteSInt64(ref span, value);
         }
 
-        public static float ReadFloat(List<byte> buffer, int offset)
+        public static float ReadFloat(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 4));
+            byte[] bytes = span.ReadBytes(4);
 
             if (BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToSingle(bytes.ToArray(), 0);
+            return BitConverter.ToSingle(bytes, 0);
         }
 
-        public static void WriteFloat(List<byte> buffer, float value)
+        public static void WriteFloat(ref MemorySpan span, float value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -411,24 +387,22 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static float ReadLFloat(List<byte> buffer, int offset)
+        public static float ReadLFloat(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 4));
+            byte[] bytes = span.ReadBytes(4);
 
             if (!BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToSingle(bytes.ToArray(), 0);
+            return BitConverter.ToSingle(bytes, 0);
         }
 
-        public static void WriteLFloat(List<byte> buffer, float value)
+        public static void WriteLFloat(ref MemorySpan span, float value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -437,24 +411,22 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static double ReadDouble(List<byte> buffer, int offset)
+        public static double ReadDouble(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 8));
+            byte[] bytes = span.ReadBytes(8);
 
             if (BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToDouble(bytes.ToArray(), 0);
+            return BitConverter.ToDouble(bytes, 0);
         }
 
-        public static void WriteDouble(List<byte> buffer, double value)
+        public static void WriteDouble(ref MemorySpan span, double value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -463,24 +435,22 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static double ReadLDouble(List<byte> buffer, int offset)
+        public static double ReadLDouble(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.AddRange(buffer.GetRange(offset, 8));
+            byte[] bytes = span.ReadBytes(8);
 
             if (!BitConverter.IsLittleEndian)
             {
-                bytes.Reverse();
+                Array.Reverse(bytes);
             }
 
-            return BitConverter.ToDouble(bytes.ToArray(), 0);
+            return BitConverter.ToDouble(bytes, 0);
         }
 
-        public static void WriteLDouble(List<byte> buffer, double value)
+        public static void WriteLDouble(ref MemorySpan span, double value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
@@ -489,58 +459,59 @@ namespace MineNET.Utils
                 Array.Reverse(bytes);
             }
 
-            buffer.AddRange(bytes);
+            span.WriteBytes(bytes);
         }
 
-        public static string ReadFixedString(List<byte> buffer, int offset)
+        public static string ReadFixedString(ref MemorySpan span)
         {
-            short len = ReadShort(buffer, offset);
+            short len = ReadShort(ref span);
             if (len <= 0)
                 return string.Empty;
 
-            byte[] b = ReadBytes(buffer, offset + 2, len);
+            byte[] b = ReadBytes(ref span, len);
             return Encoding.UTF8.GetString(b);
         }
 
-        public static void WriteFixedString(List<byte> buffer, string value)
+        public static void WriteFixedString(ref MemorySpan span, string value)
         {
-            WriteShort(buffer, (short) value.Length);
-            WriteBytes(buffer, Encoding.UTF8.GetBytes(value));
+            WriteShort(ref span, (short) value.Length);
+            WriteBytes(ref span, Encoding.UTF8.GetBytes(value));
         }
 
-        public static string ReadString(List<byte> buffer, ref int offset)
+        public static string ReadString(ref MemorySpan span)
         {
-            uint len = ReadUVarInt(buffer, ref offset);
+            uint len = ReadUVarInt(ref span);
             if (len <= 0)
                 return string.Empty;
 
-            byte[] b = ReadBytes(buffer, offset, (int) len);
+            byte[] b = ReadBytes(ref span, (int) len);
             return Encoding.UTF8.GetString(b);
         }
 
-        public static void WriteString(List<byte> buffer, string value, out int moveOffset)
+        public static void WriteString(ref MemorySpan span, string value)
         {
-            WriteUVarInt(buffer, (uint) value.Length, out moveOffset);
-            WriteBytes(buffer, Encoding.UTF8.GetBytes(value));
+            WriteUVarInt(ref span, (uint) value.Length);
+            WriteBytes(ref span, Encoding.UTF8.GetBytes(value));
         }
 
-        public static byte[] ReadBytes(List<byte> buffer, int start, int length)
+        public static byte[] ReadBytes(ref MemorySpan span, int offset, int length)
         {
-            List<byte> result = new List<byte>();
-            byte[] raw = buffer.ToArray();
-            for (int i = start; i < start + length; ++i)
-            {
-                result.Add(raw[i]);
-            }
-            return result.ToArray();
+            return span.ReadBytes(offset, length);
         }
 
-        public static void WriteBytes(List<byte> buffer, byte[] value)
+        public static byte[] ReadBytes(ref MemorySpan span, int length)
         {
-            for (int i = 0; i < value.Length; ++i)
-            {
-                buffer.Add(value[i]);
-            }
+            return span.ReadBytes(length);
+        }
+
+        public static byte[] ReadBytes(ref MemorySpan span)
+        {
+            return span.ReadBytes();
+        }
+
+        public static void WriteBytes(ref MemorySpan span, byte[] value)
+        {
+            span.WriteBytes(value);
         }
 
         public static byte[][] SplitBytes(byte[] buffer, int length)

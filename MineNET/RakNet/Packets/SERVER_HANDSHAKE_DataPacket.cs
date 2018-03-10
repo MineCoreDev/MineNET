@@ -98,14 +98,14 @@ namespace MineNET.RakNet.Packets
 
             WriteIPEndPoint(this.endPoint);
 
-            WriteLShort(20);
+            WriteShort(0);
             for (int i = 0; i < 20; ++i)
             {
                 WriteIPEndPoint(this.systemEndPoints[i]);
             }
 
-            WriteLong(this.sendPing);
-            WriteLong(this.sendPong);
+            WriteLLong((uint)this.sendPing);
+            WriteLLong((uint)this.sendPong);
         }
     }
 }
