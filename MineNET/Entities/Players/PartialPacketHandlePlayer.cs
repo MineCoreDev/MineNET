@@ -191,6 +191,7 @@ namespace MineNET.Entities.Players
             this.SendPlayerAttribute();
             //AvailableCommands
             AvailableCommandsPacket availableCommandsPacket = new AvailableCommandsPacket();
+            availableCommandsPacket.commands = Server.Instance.CommandManager.CommandList;
             this.SendPacket(availableCommandsPacket);
 
             //AdventureSettings

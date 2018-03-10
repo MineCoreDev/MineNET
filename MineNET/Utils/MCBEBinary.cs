@@ -278,5 +278,18 @@ namespace MineNET.Utils
                 this.WriteBytes(stream.GetResult());
             }
         }
+
+        public CommandOriginData ReadCommandOriginData()
+        {
+            CommandOriginData commandOriginData = new CommandOriginData();
+            commandOriginData.Type = this.ReadUVarInt();
+            commandOriginData.Guid = this.ReadGUID();
+            commandOriginData.RequestId = this.ReadString();
+            if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE || commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
+            {
+                commandOriginData.Unknown = this.ReadVarLong();
+            }
+            return commandOriginData;
+        }
     }
 }

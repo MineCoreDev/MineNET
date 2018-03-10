@@ -7,31 +7,19 @@ namespace MineNET.Commands
 {
     public sealed class CommandManager
     {
-        ICommandHandler commandHandler;
-        public ICommandHandler CommandHandler
-        {
-            get
-            {
-                return this.commandHandler;
-            }
+        public ICommandHandler CommandHandler { get; set; }
 
-            set
-            {
-                this.commandHandler = value;
-            }
-        }
-
-        Dictionary<string, Command> commandList = new Dictionary<string, Command>();
+        public Dictionary<string, Command> CommandList { get; set; } = new Dictionary<string, Command>();
 
         public CommandManager()
         {
-            Init();
+            this.Init();
         }
 
-        void Init()
+        private void Init()
         {
-            RegisterCommands();
-            this.commandHandler = new CommandHandler(this);
+            this.RegisterCommands();
+            this.CommandHandler = new CommandHandler(this);
         }
 
         public void HandleConsoleCommand(string msg)
@@ -50,7 +38,7 @@ namespace MineNET.Commands
                 args = new string[0];
             }
 
-            this.commandHandler.CommandHandle(new ConsoleSender(), cmd, args);
+            this.CommandHandler.CommandHandle(new ConsoleSender(), cmd, args);
         }
 
         internal void HandlePlayerCommand(Player player, string msg)
@@ -69,48 +57,51 @@ namespace MineNET.Commands
                 args = new string[0];
             }
 
-            this.commandHandler.CommandHandle(player, cmd, args);
+            this.CommandHandler.CommandHandle(player, cmd, args);
         }
 
         public Command GetCommand(string cmd)
         {
-            if (this.commandList.ContainsKey(cmd))
+            if (this.CommandList.ContainsKey(cmd))
             {
-                return this.commandList[cmd];
+                return this.CommandList[cmd];
             }
             return null;
         }
 
         public void RegisterCommand(Command command)
         {
-            if (!this.commandList.ContainsKey(command.Alias))
+            if (!this.CommandList.ContainsKey(command.Name))
             {
-                this.commandList.Add(command.Alias, (Command) command.Clone());
+                this.CommandList.Add(command.Name, command.Clone());
             }
 
-            for (int i = 0; i < command.SubAlias.Length; ++i)
+            if (command.Aliases != null)
             {
-                if (!this.commandList.ContainsKey(command.SubAlias[i]))
+                for (int i = 0; i < command.Aliases.Length; ++i)
                 {
-                    this.commandList.Add(command.SubAlias[i], (Command) command.Clone());
+                    if (!this.CommandList.ContainsKey(command.Aliases[i]))
+                    {
+                        this.CommandList.Add(command.Aliases[i], command.Clone());
+                    }
                 }
             }
         }
 
         public void RemoveCommand(string alias)
         {
-            if (this.commandList.ContainsKey(alias))
+            if (this.CommandList.ContainsKey(alias))
             {
-                this.commandList.Remove(alias);
+                this.CommandList.Remove(alias);
             }
         }
 
         public void RemoveAllCommand()
         {
-            this.commandList.Clear();
+            this.CommandList.Clear();
         }
 
-        void RegisterCommands()
+        private void RegisterCommands()
         {
             RegisterCommand(new StopCommand());
         }

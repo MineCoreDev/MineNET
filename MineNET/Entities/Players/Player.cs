@@ -14,13 +14,12 @@ namespace MineNET.Entities.Players
     public partial class Player : EntityHuman, CommandSender, InventoryHolder
     {
         public override string Name { get; protected set; }
+        public override bool IsPlayer { get { return true; } }
 
         public IPEndPoint EndPoint { get; internal set; }
 
         public LoginData LoginData { get; internal set; }
         public ClientData ClientData { get; internal set; }
-
-        public override bool IsPlayer { get { return true; } }
 
         public bool IsPreLogined { get; private set; }
         public bool IsLogined { get; private set; }

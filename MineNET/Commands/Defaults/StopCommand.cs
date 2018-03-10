@@ -1,8 +1,17 @@
-﻿namespace MineNET.Commands.Defaults
+﻿using MineNET.Data;
+
+namespace MineNET.Commands.Defaults
 {
     public class StopCommand : Command
     {
-        public override string Alias
+        public StopCommand()
+        {
+            /* test
+              this.AddParameters(new CommandParameterManager()
+                .AddParameter(new CommandParameter("test", CommandParameter.ARG_TYPE_INT)));*/
+        }
+
+        public override string Name
         {
             get
             {
@@ -14,15 +23,17 @@
         {
             get
             {
-                return this.LangDescription();
+                //return this.LangDescription();
+                return "stop";
             }
         }
 
-        public override string Name
+        public override PlayerPermissions Permission
         {
             get
             {
-                return "default_stopCommand";
+                //return PlayerPermissions.OPERATOR;
+                return PlayerPermissions.VISITOR;
             }
         }
 

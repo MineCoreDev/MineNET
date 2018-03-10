@@ -129,9 +129,12 @@ namespace MineNET
             this.serverConfig?.Save<ServerConfig>();
 
             Player[] players = this.GetPlayers();
-            for (int i = 0; i < players.Length; ++i)
+            if (players != null)
             {
-                players[i].Close("disconnect.closed");//TODO: Option Add
+                for (int i = 0; i < players.Length; ++i)
+                {
+                    players[i].Close("disconnect.closed");//TODO: Option Add
+                }
             }
 
             this.NetworkManager.Server.UDPClientClose();

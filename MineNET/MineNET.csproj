@@ -350,10 +350,15 @@
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandSender.cs" />
     <Compile Include="Commands\ConsoleSender.cs" />
+    <Compile Include="Commands\Data\CommandEnum.cs" />
     <Compile Include="Commands\Defaults\StopCommand.cs" />
     <Compile Include="Commands\Data\ICommandHandler.cs" />
+    <Compile Include="Commands\Parameters\CommandParameter.cs" />
+    <Compile Include="Commands\Parameters\CommandParameterManager.cs" />
+    <Compile Include="Network\Packets\CommandRequestPacket.cs" />
     <Compile Include="Network\Packets\Data\AdventureSettingsEntry.cs" />
     <Compile Include="Network\Packets\Data\ClientData.cs" />
+    <Compile Include="Network\Packets\Data\CommandOriginData.cs" />
     <Compile Include="Network\Packets\Data\ContainerIds.cs" />
     <Compile Include="Network\Packets\Data\LoginData.cs" />
     <Compile Include="Network\Packets\Data\PlayerPermissions.cs" />
