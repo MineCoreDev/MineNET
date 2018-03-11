@@ -172,7 +172,7 @@ namespace MineNET.Network
         {
             if (this.packetPool.ContainsKey(id))
             {
-                return (DataPacket) this.packetPool[id];
+                return this.packetPool[id].Clone();
             }
             return null;
         }

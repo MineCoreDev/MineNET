@@ -481,8 +481,8 @@ namespace MineNET.Utils
         public static string ReadString(ref MemorySpan span)
         {
             uint len = ReadUVarInt(ref span);
-            if (len <= 0)
-                return string.Empty;
+            if (len == 0)
+                return "";
 
             byte[] b = ReadBytes(ref span, (int) len);
             return Encoding.UTF8.GetString(b);
@@ -490,8 +490,14 @@ namespace MineNET.Utils
 
         public static void WriteString(ref MemorySpan span, string value)
         {
+            byte[] buf = Encoding.UTF8.GetBytes(value);
+            if (string.IsNullOrEmpty(value))
+            {
+                WriteUVarInt(ref span, 0);
+                return;
+            }
             WriteUVarInt(ref span, (uint) value.Length);
-            WriteBytes(ref span, Encoding.UTF8.GetBytes(value));
+            WriteBytes(ref span, buf);
         }
 
         public static byte[] ReadBytes(ref MemorySpan span, int offset, int length)

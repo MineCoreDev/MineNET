@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Data;
@@ -130,27 +129,32 @@ namespace MineNET.Utils
                 this.WriteGuid(entries[i].Guid);
                 if (type == PlayerListPacket.TYPE_ADD)
                 {
-                    this.WriteEntityUniqueId(entries[i].EntityUniqueId);
-                    this.WriteString(entries[i].Name);
-                    this.WriteSkin(entries[i].Skin);
-                    this.WriteString(entries[i].XboxUserId);
+                    this.WriteEntityUniqueId(entries[0].EntityUniqueId);
+                    this.WriteString(entries[0].Name);
+                    this.WriteSkin(entries[0].Skin);
+                    this.WriteString(entries[0].XboxUserId);
                 }
             }
         }
 
         public Skin ReadSkin()
         {
-            return new Skin(this.ReadString(), this.ReadBytes((int) this.ReadUVarInt()), this.ReadBytes((int) this.ReadUVarInt()), this.ReadString(), this.ReadString());
+            return new Skin(this.ReadString(), this.ReadString(), this.ReadString(), this.ReadString(), this.ReadString());
         }
 
         public void WriteSkin(Skin skin)
         {
-            this.WriteString(skin.SkinId);
-            this.WriteString(Convert.ToBase64String(skin.SkinData));
-            this.WriteString(Convert.ToBase64String(skin.CapeData));
+            Logger.Info(skin.SkinId.Length + "");
+            Logger.Info(skin.SkinData.Length + "");
+            Logger.Info(skin.CapeData.Length + "");
+            Logger.Info(skin.GeometryName.Length + "");
+            Logger.Info(skin.GeometryData.Length + "");
+            this.WriteString("");
+            this.WriteString("");
+            this.WriteString("");
+            this.WriteString("");
+            this.WriteString("");
 
-            this.WriteString(skin.GeometryName);
-            this.WriteString(skin.GeometryData);
             /*this.WriteString(skin.SkinId);
             this.WriteUVarInt(0);
             this.WriteUVarInt(0);
