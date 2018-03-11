@@ -90,7 +90,7 @@ namespace MineNET
             Stopwatch s = new Stopwatch();
             s.Start();
 
-            Init();
+            this.Init();
 
             s.Stop();
             Logger.Info("%server_started");

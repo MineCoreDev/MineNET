@@ -22,16 +22,14 @@ namespace MineNET.Commands.Parameters
         public string Name { get; set; }
         public int Type { get; set; }
         public bool Optional { get; set; }
-        public int Flag { get; set; }
         public CommandEnum CommandEnum { get; set; }
         public string Postfix { get; set; }
 
-        public CommandParameter(string name, int type, bool optional = true, int flag = CommandParameter.ARG_FLAG_VALID, CommandEnum commandEnum = null, string postfix = null)
+        public CommandParameter(string name, int type, bool optional = true, CommandEnum commandEnum = null, string postfix = null)
         {
             this.Name = name;
             this.Type = type;
             this.Optional = optional;
-            this.Flag = flag;
             this.CommandEnum = commandEnum;
             this.Postfix = postfix;
         }

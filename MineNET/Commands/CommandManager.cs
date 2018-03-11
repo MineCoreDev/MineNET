@@ -76,6 +76,7 @@ namespace MineNET.Commands
                 this.CommandList.Add(command.Name, command.Clone());
             }
 
+            /*
             if (command.Aliases != null)
             {
                 for (int i = 0; i < command.Aliases.Length; ++i)
@@ -86,6 +87,7 @@ namespace MineNET.Commands
                     }
                 }
             }
+            */
         }
 
         public void RemoveCommand(string alias)

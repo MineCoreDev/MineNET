@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MineNET.Commands.Parameters;
+using MineNET.Commands.Data;
 using MineNET.Data;
 using MineNET.Utils;
 
@@ -13,18 +13,21 @@ namespace MineNET.Commands
         public virtual string[] Aliases { get; } = null;
         public virtual PlayerPermissions Permission { get; } = PlayerPermissions.VISITOR;
         public virtual int Flag { get; } = 0;
-        public List<CommandParameterManager> CommandParameterManagers { get; } = new List<CommandParameterManager>();
+        public List<CommandOverload> CommandOverloads { get; } = new List<CommandOverload>();
 
         public Command()
         {
-            //Server.Instance.CommandManager.RegisterCommand(this);
+
         }
 
         public abstract bool Execute(CommandSender sender, params string[] args);
 
-        public void AddParameters(CommandParameterManager manager)
+        public void AddOverloads(params CommandOverload[] overloads)
         {
-            this.CommandParameterManagers.Add(manager);
+            for (int i = 0; i < overloads.Length; ++i)
+            {
+                this.CommandOverloads.Add(overloads[i]);
+            }
         }
 
         internal string LangDescription()
