@@ -132,7 +132,7 @@ namespace MineNET.Entities
             this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
 
             ResourcePacksInfoPacket resourcePacksInfoPacket = new ResourcePacksInfoPacket();
-            //this.SendPacket(resourcePacksInfoPacket);
+            this.SendPacket(resourcePacksInfoPacket);
         }
 
         private void ResourcePackClientResponsePacketHandle(ResourcePackClientResponsePacket pk)
