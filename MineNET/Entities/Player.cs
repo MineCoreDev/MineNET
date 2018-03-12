@@ -205,9 +205,6 @@ namespace MineNET.Entities
 
             this.LoadData();
 
-            PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.Skin, this.LoginData.XUID);
-            Server.Instance.AddPlayerList(this, entry);
-
             this.X = 128;
             this.Y = 6;
             this.Z = 128;
@@ -356,7 +353,7 @@ namespace MineNET.Entities
 
         public void Save()
         {
-            if (this.HasSpawned)
+            if (this.HasSpawned && this.namedTag != null)
             {
                 string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
                 NBTIO.WriteGZIPFile(path, this.namedTag, NBTEndian.BIG_ENDIAN);
