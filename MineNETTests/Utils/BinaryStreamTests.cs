@@ -21,14 +21,16 @@ namespace MineNET.Utils.Tests
         public void MemorySpanTest()
         {
             MemorySpan span = new MemorySpan(new byte[0]);
-            span.WriteBytes(new byte[1] { 20 });
+            span.WriteBytes(ArrayUtils.CreateArray<byte>(1000, 0));
+            span.Offset = 0;
+            Console.WriteLine(Binary.SplitBytes(span, 90).Length);
         }
 
         [TestMethod()]
         public void WriteReadTest2()
         {
             BinaryStream bs = new BinaryStream();
-            bs.WriteString("");
+            
         }
 
         [TestMethod()]

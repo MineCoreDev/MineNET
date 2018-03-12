@@ -251,9 +251,9 @@ namespace MineNET.RakNet
                 }
                 else
                 {
-                    /*if (packet.buffer.Length + 4 > this.mtuSize)
+                    if (packet.buffer.Length + 4 > this.mtuSize)
                     {
-                        byte[][] buffers = Binary.SplitBytes(packet.buffer, this.mtuSize - 60);
+                        byte[][] buffers = Binary.SplitBytes(new MemorySpan(packet.buffer), this.mtuSize - 60);
                         int splitID = ++this.splitID % 65536;
                         for (int i = 0; i < buffers.Length; ++i)
                         {
@@ -280,20 +280,19 @@ namespace MineNET.RakNet
                             };
 
                             this.server.SendPacket(dp, this.point.Address, this.point.Port);
-
-                            Logger.Log("Split");
                         }
                     }
                     else
-                    {*/
-                    DataPacket_0 pk = new DataPacket_0();
-                    pk.SeqNumber = this.sendSeqNumber++;
-                    pk.Packets = new[]
                     {
-                        packet
-                    };
+                        DataPacket_0 pk = new DataPacket_0();
+                        pk.SeqNumber = this.sendSeqNumber++;
+                        pk.Packets = new[]
+                        {
+                            packet
+                        };
 
-                    this.packetQueue.Enqueue(pk);
+                        this.packetQueue.Enqueue(pk);
+                    }
                 }
             }
         }

@@ -520,19 +520,19 @@ namespace MineNET.Utils
             span.WriteBytes(value);
         }
 
-        public static byte[][] SplitBytes(byte[] buffer, int length)
+        public static byte[][] SplitBytes(MemorySpan span, int length)
         {
             List<byte[]> splits = new List<byte[]>();
-            int count = 0;
-            while (count != buffer.Length)
+            while (span.Offset < span.Length)
             {
-                List<byte> split = new List<byte>();
-                for (int i = count; i < length; ++i)
+                if ((span.Length - span.Offset) >= length)
                 {
-                    split.Add(buffer[i]);
-                    count++;
+                    splits.Add(span.ReadBytes(length));
                 }
-                splits.Add(split.ToArray());
+                else
+                {
+                    splits.Add(span.ReadBytes());
+                }
             }
 
             return splits.ToArray();

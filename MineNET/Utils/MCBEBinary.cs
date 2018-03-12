@@ -131,7 +131,8 @@ namespace MineNET.Utils
                 {
                     this.WriteEntityUniqueId(entries[i].EntityUniqueId);
                     this.WriteString(entries[i].Name);
-                    this.WriteSkin(entries[i].Skin, entries[i].XboxUserId);
+                    this.WriteSkin(entries[i].Skin);
+                    this.WriteString(entries[i].XboxUserId);
                 }
             }
         }
@@ -141,21 +142,13 @@ namespace MineNET.Utils
             return new Skin(this.ReadString(), this.ReadString(), this.ReadString(), this.ReadString(), this.ReadString());
         }
 
-        public void WriteSkin(Skin skin, string xuid)
+        public void WriteSkin(Skin skin)
         {
             this.WriteString(skin.SkinId);
             this.WriteString(skin.SkinData);
             this.WriteString(skin.CapeData);
             this.WriteString(skin.GeometryName);
             this.WriteString(skin.GeometryData);
-            this.WriteString(xuid);
-        }
-
-        public void WrileByteAndLen(byte[] buffer)
-        {
-            int len = buffer.Length;
-            this.WriteUVarInt((uint) len);
-            this.WriteBytes(buffer);
         }
 
         public Item ReadItem()
