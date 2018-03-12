@@ -109,22 +109,23 @@ namespace MineNET.Network
 
             pk.Encode();
 
-            byte[] buffer = pk.GetResult();
-            Logger.Log("%server_packet_send", buffer[0].ToString("X"), buffer.Length);
+            byte[] buffer = pk.ToArray();
 
             BinaryStream st = new BinaryStream();
             st.WriteVarInt((int) pk.Length);
             st.WriteBytes(buffer);
 
             BatchPacket bp = new BatchPacket();
-            bp.Payload = st.GetResult();
+            bp.Payload = st.ToArray();
             bp.Encode();
 
             RakNet.Packets.EncapsulatedPacket enc = new RakNet.Packets.EncapsulatedPacket();
 
-            enc.buffer = bp.GetResult();
+            enc.buffer = bp.ToArray();
             enc.reliability = RakNet.Packets.PacketReliability.RELIABLE;
             enc.messageIndex = ++session.MessageIndex;
+
+            Logger.Log("%server_packet_send", buffer[0].ToString("X"), buffer.Length);
 
             session.SendPacket(enc, immediate);
         }
@@ -135,7 +136,7 @@ namespace MineNET.Network
             {
                 using (BinaryStream stream = new BinaryStream(pk.Payload))
                 {
-                    while (!stream.EndOfStream())
+                    while (!stream.EndOfStream)
                     {
                         int len = stream.ReadVarInt();
                         byte[] buffer = stream.ReadBytes(len);

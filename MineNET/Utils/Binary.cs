@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 
 namespace MineNET.Utils
@@ -9,520 +8,534 @@ namespace MineNET.Utils
     {
         public const int Int24_Max = 16777215;
 
-        public static bool ReadBool(Stream stream)
+        public static bool ReadBool(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = span.ReadBytes(1);
 
-            bytes.Add((byte) stream.ReadByte());
-
-            return BitConverter.ToBoolean(bytes.ToArray(), 0);
+            return BitConverter.ToBoolean(bytes, 0);
         }
 
-        public static void WriteBool(Stream stream, bool value)
+        public static void WriteBool(ref MemorySpan span, bool value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
+            span.WriteBytes(bytes);
         }
 
-        public static byte ReadByte(Stream stream)
+        public static byte ReadByte(ref MemorySpan span)
         {
-            return (byte) stream.ReadByte();
+            return span.ReadByte();
         }
 
-        public static void WriteByte(Stream stream, byte value)
+        public static void WriteByte(ref MemorySpan span, byte value)
         {
-            stream.WriteByte(value);
+            span.WriteByte(value);
         }
 
-        public static sbyte ReadSByte(Stream stream)
+        public static sbyte ReadSByte(ref MemorySpan span)
         {
-            return (sbyte) stream.ReadByte();
+            return (sbyte) span.ReadByte();
         }
 
-        public static void WriteSByte(Stream stream, sbyte value)
+        public static void WriteSByte(ref MemorySpan span, sbyte value)
         {
-            stream.WriteByte((byte) value);
+            span.WriteByte((byte) value);
         }
 
-        public static short ReadShort(Stream stream)
+        public static short ReadShort(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = span.ReadBytes(2);
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
 
-            return BitConverter.ToInt16(bytes.ToArray(), 0);
+            return BitConverter.ToInt16(bytes, 0);
         }
 
-        public static void WriteShort(Stream stream, short value)
-        {
-            byte[] bytes = BitConverter.GetBytes(value);
-
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-        }
-
-        public static ushort ReadUShort(Stream stream)
-        {
-            List<byte> bytes = new List<byte>();
-
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-
-            return BitConverter.ToUInt16(bytes.ToArray(), 0);
-        }
-
-        public static void WriteUShort(Stream stream, ushort value)
+        public static void WriteShort(ref MemorySpan span, short value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
         }
 
-        public static ushort ReadLShort(Stream stream)
+        public static ushort ReadUShort(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = span.ReadBytes(2);
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
 
-            bytes.Reverse();
-
-            return BitConverter.ToUInt16(bytes.ToArray(), 0);
+            return BitConverter.ToUInt16(bytes, 0);
         }
 
-        public static void WriteLShort(Stream stream, ushort value)
+        public static void WriteUShort(ref MemorySpan span, ushort value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[0]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
         }
 
-        public static int ReadTriad(Stream stream)
+        public static ushort ReadLShort(ref MemorySpan span)
         {
-            int b0 = stream.ReadByte();
-            int b1 = stream.ReadByte();
-            int b2 = stream.ReadByte();
+            byte[] bytes = span.ReadBytes(2);
 
-            return (b0 << 16 | b1 << 8 | b2);
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            return BitConverter.ToUInt16(bytes, 0);
         }
 
-        public static void WriteTriad(Stream stream, int value)
+        public static void WriteLShort(ref MemorySpan span, ushort value)
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
+        }
+
+        public static int ReadTriad(ref MemorySpan span)
+        {
+            byte[] bytes = span.ReadBytes(3);
+
+            return (bytes[0] << 16 | bytes[1] << 8 | bytes[2]);
+        }
+
+        public static void WriteTriad(ref MemorySpan span, int value)
         {
             if (value > Int24_Max)
             {
                 throw new OverflowException("Not Int24 Value!");
             }
-            stream.WriteByte((byte) (value >> 16));
-            stream.WriteByte((byte) (value >> 8));
-            stream.WriteByte((byte) value);
+
+            byte[] bytes = new byte[]
+            {
+                ((byte) (value >> 16)),
+                ((byte) (value >> 8)),
+                ((byte)value)
+            };
+
+            span.WriteBytes(bytes);
         }
 
-        public static int ReadLTriad(Stream stream)
+        public static int ReadLTriad(ref MemorySpan span)
         {
-            int b0 = stream.ReadByte();
-            int b1 = stream.ReadByte();
-            int b2 = stream.ReadByte();
+            byte[] bytes = span.ReadBytes(3);
 
-            return (b0 | b1 << 8 | b2 << 16);
+            return (bytes[0] | bytes[1] << 8 | bytes[2] << 16);
         }
 
-        public static void WriteLTriad(Stream stream, int value)
+        public static void WriteLTriad(ref MemorySpan span, int value)
         {
             if (value > Int24_Max)
             {
                 throw new OverflowException("Not Int24 Value!");
             }
-            stream.WriteByte((byte) value);
-            stream.WriteByte((byte) (value >> 8));
-            stream.WriteByte((byte) (value >> 16));
-        }
 
-        //TODO: Endian Bug Fix...
-        /*public static int ReadTriad(Stream stream)
-        {
-            if(BitConverter.IsLittleEndian)
+            byte[] bytes = new byte[3]
             {
-                return _ReadLTriad(stream);
-            }
-            else
+                (byte) value,
+                ((byte) (value << 8)),
+                ((byte) (value << 16))
+            };
+
+            span.WriteBytes(bytes);
+        }
+
+        public static int ReadInt(ref MemorySpan span)
+        {
+            byte[] bytes = span.ReadBytes(4);
+
+            if (BitConverter.IsLittleEndian)
             {
-                return _WriteTriad(stream);
+                Array.Reverse(bytes);
             }
-        }*/
 
-        public static int ReadInt(Stream stream)
-        {
-            List<byte> bytes = new List<byte>();
-
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-
-            return BitConverter.ToInt32(bytes.ToArray(), 0);
+            return BitConverter.ToInt32(bytes, 0);
         }
 
-        public static void WriteInt(Stream stream, int value)
+        public static void WriteInt(ref MemorySpan span, int value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[3]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
         }
 
-        public static uint ReadUInt(Stream stream)
+        public static uint ReadUInt(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = span.ReadBytes(4);
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
 
-            return BitConverter.ToUInt32(bytes.ToArray(), 0);
+            return BitConverter.ToUInt32(bytes, 0);
         }
 
-        public static void WriteUInt(Stream stream, uint value)
-        {
-            byte[] bytes = BitConverter.GetBytes(value);
-
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[3]);
-        }
-
-        public static uint ReadLInt(Stream stream)
-        {
-            List<byte> bytes = new List<byte>();
-
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-
-            bytes.Reverse();
-
-            return BitConverter.ToUInt32(bytes.ToArray(), 0);
-        }
-
-        public static void WriteLInt(Stream stream, uint value)
+        public static void WriteUInt(ref MemorySpan span, uint value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[0]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
         }
 
-        public static long ReadLong(Stream stream)
+        public static uint ReadLInt(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = span.ReadBytes(4);
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
 
-            return BitConverter.ToInt64(bytes.ToArray(), 0);
+            return BitConverter.ToUInt32(bytes, 0);
         }
 
-        public static void WriteLong(Stream stream, long value)
+        public static void WriteLInt(ref MemorySpan span, uint value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[4]);
-            stream.WriteByte(bytes[5]);
-            stream.WriteByte(bytes[6]);
-            stream.WriteByte(bytes[7]);
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
         }
 
-        public static ulong ReadULong(Stream stream)
+        public static long ReadLong(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = span.ReadBytes(8);
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
 
-            return BitConverter.ToUInt64(bytes.ToArray(), 0);
+            return BitConverter.ToInt64(bytes, 0);
         }
 
-        public static void WriteULong(Stream stream, ulong value)
+        public static void WriteLong(ref MemorySpan span, long value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[4]);
-            stream.WriteByte(bytes[5]);
-            stream.WriteByte(bytes[6]);
-            stream.WriteByte(bytes[7]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
         }
 
-        public static ulong ReadLLong(Stream stream)
+        public static ulong ReadULong(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = span.ReadBytes(8);
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
 
-            bytes.Reverse();
-
-            return BitConverter.ToUInt64(bytes.ToArray(), 0);
+            return BitConverter.ToUInt64(bytes, 0);
         }
 
-        public static void WriteLLong(Stream stream, ulong value)
+        public static void WriteULong(ref MemorySpan span, ulong value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[7]);
-            stream.WriteByte(bytes[6]);
-            stream.WriteByte(bytes[5]);
-            stream.WriteByte(bytes[4]);
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[0]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
         }
 
-        public static int ReadVarInt(Stream stream)
+        public static ulong ReadLLong(ref MemorySpan span)
         {
-            return VarInt.ReadInt32(stream);
+            byte[] bytes = span.ReadBytes(8);
+
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            return BitConverter.ToUInt64(bytes, 0);
         }
 
-        public static void WriteVarInt(Stream stream, int value)
-        {
-            VarInt.WriteInt32(stream, value);
-        }
-
-        public static uint ReadUVarInt(Stream stream)
-        {
-            return VarInt.ReadUInt32(stream);
-        }
-
-        public static void WriteUVarInt(Stream stream, uint value)
-        {
-            VarInt.WriteUInt32(stream, value);
-        }
-
-        public static long ReadVarLong(Stream stream)
-        {
-            return VarInt.ReadInt64(stream);
-        }
-
-        public static void WriteVarLong(Stream stream, long value)
-        {
-            VarInt.WriteInt64(stream, value);
-        }
-
-        public static ulong ReadUVarLong(Stream stream)
-        {
-            return VarInt.ReadUInt64(stream);
-        }
-
-        public static void WriteUVarLong(Stream stream, ulong value)
-        {
-            VarInt.WriteUInt64(stream, value);
-        }
-
-        public static float ReadFloat(Stream stream)
-        {
-            List<byte> bytes = new List<byte>();
-
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-
-            return BitConverter.ToSingle(bytes.ToArray(), 0);
-        }
-
-        public static void WriteFloat(Stream stream, float value)
+        public static void WriteLLong(ref MemorySpan span, ulong value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[3]);
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
         }
 
-        public static float ReadLFloat(Stream stream)
+        public static int ReadVarInt(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
-
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-
-            bytes.Reverse();
-
-            return BitConverter.ToSingle(bytes.ToArray(), 0);
+            return VarInt.ReadInt32(ref span);
         }
 
-        public static void WriteLFloat(Stream stream, float value)
+        public static void WriteVarInt(ref MemorySpan span, int value)
+        {
+            VarInt.WriteInt32(ref span, value);
+        }
+
+        public static uint ReadUVarInt(ref MemorySpan span)
+        {
+            return VarInt.ReadUInt32(ref span);
+        }
+
+        public static void WriteUVarInt(ref MemorySpan span, uint value)
+        {
+            VarInt.WriteUInt32(ref span, value);
+        }
+
+        public static int ReadSVarInt(ref MemorySpan span)
+        {
+            return VarInt.ReadSInt32(ref span);
+        }
+
+        public static void WriteSVarInt(ref MemorySpan span, int value)
+        {
+            VarInt.WriteSInt32(ref span, value);
+        }
+
+        public static long ReadVarLong(ref MemorySpan span)
+        {
+            return VarInt.ReadInt64(ref span);
+        }
+
+        public static void WriteVarLong(ref MemorySpan span, long value)
+        {
+            VarInt.WriteInt64(ref span, value);
+        }
+
+        public static ulong ReadUVarLong(ref MemorySpan span)
+        {
+            return VarInt.ReadUInt64(ref span);
+        }
+
+        public static void WriteUVarLong(ref MemorySpan span, ulong value)
+        {
+            VarInt.WriteUInt64(ref span, value);
+        }
+
+        public static long ReadSVarLong(ref MemorySpan span)
+        {
+            return VarInt.ReadSInt64(ref span);
+        }
+
+        public static void WriteSVarLong(ref MemorySpan span, long value)
+        {
+            VarInt.WriteSInt64(ref span, value);
+        }
+
+        public static float ReadFloat(ref MemorySpan span)
+        {
+            byte[] bytes = span.ReadBytes(4);
+
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            return BitConverter.ToSingle(bytes, 0);
+        }
+
+        public static void WriteFloat(ref MemorySpan span, float value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[0]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
         }
 
-        public static double ReadDouble(Stream stream)
+        public static float ReadLFloat(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = span.ReadBytes(4);
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
 
-            return BitConverter.ToDouble(bytes.ToArray(), 0);
+            return BitConverter.ToSingle(bytes, 0);
         }
 
-        public static void WriteDouble(Stream stream, double value)
+        public static void WriteLFloat(ref MemorySpan span, float value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[0]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[4]);
-            stream.WriteByte(bytes[5]);
-            stream.WriteByte(bytes[6]);
-            stream.WriteByte(bytes[7]);
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
         }
 
-        public static double ReadLDouble(Stream stream)
+        public static double ReadDouble(ref MemorySpan span)
         {
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = span.ReadBytes(8);
 
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
-            bytes.Add((byte) stream.ReadByte());
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
 
-            bytes.Reverse();
-
-            return BitConverter.ToDouble(bytes.ToArray(), 0);
+            return BitConverter.ToDouble(bytes, 0);
         }
 
-        public static void WriteLDouble(Stream stream, double value)
+        public static void WriteDouble(ref MemorySpan span, double value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
-            stream.WriteByte(bytes[7]);
-            stream.WriteByte(bytes[6]);
-            stream.WriteByte(bytes[5]);
-            stream.WriteByte(bytes[4]);
-            stream.WriteByte(bytes[3]);
-            stream.WriteByte(bytes[2]);
-            stream.WriteByte(bytes[1]);
-            stream.WriteByte(bytes[0]);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
         }
 
-        public static string ReadFixedString(MemoryStream stream)
+        public static double ReadLDouble(ref MemorySpan span)
         {
-            ushort len = ReadLShort(stream);
-            if (len <= 0) return string.Empty;
-            byte[] b = ReadBytes(stream, (int) stream.Position, len);
-            Console.WriteLine(b.Length);
+            byte[] bytes = span.ReadBytes(8);
+
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            return BitConverter.ToDouble(bytes, 0);
+        }
+
+        public static void WriteLDouble(ref MemorySpan span, double value)
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            span.WriteBytes(bytes);
+        }
+
+        public static string ReadFixedString(ref MemorySpan span)
+        {
+            short len = ReadShort(ref span);
+            if (len <= 0)
+                return string.Empty;
+
+            byte[] b = ReadBytes(ref span, len);
             return Encoding.UTF8.GetString(b);
         }
 
-        public static void WriteFixedString(MemoryStream stream, string value)
+        public static void WriteFixedString(ref MemorySpan span, string value)
         {
-            WriteLShort(stream, (ushort) (value.Length));
-            WriteBytes(stream, Encoding.UTF8.GetBytes(value));
+            WriteShort(ref span, (short) value.Length);
+            WriteBytes(ref span, Encoding.UTF8.GetBytes(value));
         }
 
-        public static byte[] ReadBytes(MemoryStream stream, int start, int length)
+        public static string ReadString(ref MemorySpan span)
         {
-            List<byte> result = new List<byte>();
-            byte[] raw = stream.ToArray();
-            for (int i = start; i < start + length; ++i)
+            uint len = ReadUVarInt(ref span);
+            if (len == 0)
+                return "";
+
+            byte[] b = ReadBytes(ref span, (int) len);
+            return Encoding.UTF8.GetString(b);
+        }
+
+        public static void WriteString(ref MemorySpan span, string value)
+        {
+            byte[] buf = Encoding.UTF8.GetBytes(value);
+            if (string.IsNullOrEmpty(value))
             {
-                result.Add(raw[i]);
+                WriteUVarInt(ref span, 0);
+                return;
             }
-            stream.Position += length;
-            return result.ToArray();
+            WriteUVarInt(ref span, (uint) value.Length);
+            WriteBytes(ref span, buf);
         }
 
-        public static void WriteBytes(MemoryStream stream, byte[] value)
+        public static byte[] ReadBytes(ref MemorySpan span, int offset, int length)
         {
-            for (int i = 0; i < value.Length; ++i)
-            {
-                stream.WriteByte(value[i]);
-            }
+            return span.ReadBytes(offset, length);
         }
 
-        public static byte[][] SplitBytes(byte[] buffer, int length)
+        public static byte[] ReadBytes(ref MemorySpan span, int length)
+        {
+            return span.ReadBytes(length);
+        }
+
+        public static byte[] ReadBytes(ref MemorySpan span)
+        {
+            return span.ReadBytes();
+        }
+
+        public static void WriteBytes(ref MemorySpan span, byte[] value)
+        {
+            span.WriteBytes(value);
+        }
+
+        public static byte[][] SplitBytes(MemorySpan span, int length)
         {
             List<byte[]> splits = new List<byte[]>();
-            int count = 0;
-            while (count != buffer.Length)
+            while (span.Offset < span.Length)
             {
-                List<byte> split = new List<byte>();
-                for (int i = count; i < length; ++i)
+                if ((span.Length - span.Offset) >= length)
                 {
-                    split.Add(buffer[i]);
-                    count++;
+                    splits.Add(span.ReadBytes(length));
                 }
-                splits.Add(split.ToArray());
+                else
+                {
+                    splits.Add(span.ReadBytes());
+                }
             }
 
             return splits.ToArray();
-        }
-
-        public static void Reset(Stream stream)
-        {
-            stream.Position = 0;
-        }
-
-        public static bool EndOfStream(Stream stream)
-        {
-            return stream.Position >= stream.Length;
         }
     }
 }

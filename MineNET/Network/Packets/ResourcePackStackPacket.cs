@@ -25,14 +25,14 @@ namespace MineNET.Network.Packets
             base.Encode();
 
             this.WriteBool(this.MustAccept);
-            this.WriteUVarInt((uint) this.BehaviourPackEntries.Length);
+            this.WriteShort((short) this.BehaviourPackEntries.Length);
             for (int i = 0; i < this.BehaviourPackEntries.Length; ++i)
             {
                 ResourcePack entry = this.BehaviourPackEntries[i];
                 this.WriteString(entry.GetPackId());
                 this.WriteString(entry.GetPackVersion());
             }
-            this.WriteUVarInt((uint) this.ResourcePackEntries.Length);
+            this.WriteShort((short) this.ResourcePackEntries.Length);
             for (int i = 0; i < this.ResourcePackEntries.Length; ++i)
             {
                 ResourcePack entry = this.ResourcePackEntries[i];

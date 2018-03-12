@@ -36,7 +36,7 @@
 
             this.ReadMagic();
             this.protocol = this.ReadByte();
-            this.mtuSize = (short)(this.ReadBytes().Length + 18);
+            this.mtuSize = (short) (this.ReadBytes().Length + 18);
         }
     }
 }

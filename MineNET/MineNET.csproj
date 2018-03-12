@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MineNET</RootNamespace>
     <AssemblyName>MineNET</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -739,6 +740,7 @@
     <Compile Include="Utils\MCBEBinary.cs" />
     <Compile Include="Utils\Math.cs" />
     <Compile Include="Utils\ArrayUtils.cs" />
+    <Compile Include="Utils\MemorySpan.cs" />
     <Compile Include="Utils\VarDump.cs" />
     <Compile Include="Utils\VarInt.cs" />
     <Compile Include="Utils\ZlibStream.cs" />

@@ -19,8 +19,8 @@ namespace MineNET.Utils
 
         public void WriteVector2(Vector2 value)
         {
-            this.WriteFloat(value.X);
-            this.WriteFloat(value.Y);
+            this.WriteLFloat(value.X);
+            this.WriteLFloat(value.Y);
         }
 
         public Vector3 ReadVector3()
@@ -30,9 +30,9 @@ namespace MineNET.Utils
 
         public void WriteVector3(Vector3 value)
         {
-            this.WriteFloat(value.X);
-            this.WriteFloat(value.Y);
-            this.WriteFloat(value.Z);
+            this.WriteLFloat(value.X);
+            this.WriteLFloat(value.Y);
+            this.WriteLFloat(value.Z);
         }
 
         //TODO : ReadBlockPosition
@@ -79,10 +79,10 @@ namespace MineNET.Utils
             this.WriteUVarInt((uint) attributes.Length);
             for (int i = 0; i < attributes.Length; ++i)
             {
-                this.WriteFloat(attributes[i].MinValue);
-                this.WriteFloat(attributes[i].MaxValue);
-                this.WriteFloat(attributes[i].Value);
-                this.WriteFloat(attributes[i].DefaultValue);
+                this.WriteLFloat(attributes[i].MinValue);
+                this.WriteLFloat(attributes[i].MaxValue);
+                this.WriteLFloat(attributes[i].Value);
+                this.WriteLFloat(attributes[i].DefaultValue);
                 this.WriteString(attributes[i].Name);
             }
         }
@@ -115,7 +115,7 @@ namespace MineNET.Utils
                 {
                     GameRule<float> floatValue = (GameRule<float>) rules[i];
                     this.WriteByte(3);
-                    this.WriteFloat(floatValue.Value);
+                    this.WriteLFloat(floatValue.Value);
                 }
             }
         }
@@ -126,7 +126,7 @@ namespace MineNET.Utils
             this.WriteUVarInt((uint) entries.Length);
             for (int i = 0; i < entries.Length; ++i)
             {
-                this.WriteGUID(entries[i].Guid);
+                this.WriteGuid(entries[i].Guid);
                 if (type == PlayerListPacket.TYPE_ADD)
                 {
                     this.WriteEntityUniqueId(entries[i].EntityUniqueId);
@@ -142,29 +142,16 @@ namespace MineNET.Utils
 
         public Skin ReadSkin()
         {
-            return new Skin(this.ReadString(), this.ReadBytes((int) this.ReadUVarInt()), this.ReadBytes((int) this.ReadUVarInt()), this.ReadString(), this.ReadString());
+            return new Skin(this.ReadString(), this.ReadString(), this.ReadString(), this.ReadString(), this.ReadString());
         }
 
         public void WriteSkin(Skin skin)
         {
-            /*this.WriteString(skin.SkinId);
-            this.WriteString(Convert.ToBase64String(skin.SkinData));
-            this.WriteString(Convert.ToBase64String(skin.CapeData));
-
-            this.WriteString(skin.GeometryName);
-            this.WriteString(skin.GeometryData);*/
             this.WriteString(skin.SkinId);
             this.WriteUVarInt(0);
             this.WriteUVarInt(0);
             this.WriteString(skin.GeometryName);
-            this.WriteUVarInt(0);
-        }
-
-        public void WrileByteAndLen(byte[] buffer)
-        {
-            int len = buffer.Length;
-            this.WriteUVarInt((uint) len);
-            this.WriteBytes(buffer);
+            this.WriteString(skin.GeometryData);
         }
 
         public Item ReadItem()
@@ -248,7 +235,7 @@ namespace MineNET.Utils
                     }
                     else if (type == EntityMetadataType.DATA_TYPE_SHORT)
                     {
-                        stream.WriteShort(data.GetShort(id));
+                        stream.WriteLShort((ushort) data.GetShort(id));
                     }
                     else if (type == EntityMetadataType.DATA_TYPE_INT)
                     {
@@ -256,7 +243,7 @@ namespace MineNET.Utils
                     }
                     else if (type == EntityMetadataType.DATA_TYPE_FLOAT)
                     {
-                        stream.WriteFloat(data.GetFloat(id));
+                        stream.WriteLFloat(data.GetFloat(id));
                     }
                     else if (type == EntityMetadataType.DATA_TYPE_STRING)
                     {
@@ -275,7 +262,7 @@ namespace MineNET.Utils
                         stream.WriteVector3(data.GetVector(id));
                     }
                 }
-                this.WriteBytes(stream.GetResult());
+                this.WriteBytes(stream.ToArray());
             }
         }
 

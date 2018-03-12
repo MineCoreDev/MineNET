@@ -1,385 +1,411 @@
 ﻿using System;
-using System.IO;
 using System.Net;
-using System.Text;
 
 namespace MineNET.Utils
 {
-    public class BinaryStream : MemoryStream
+    public class BinaryStream : IDisposable, ICloneable<BinaryStream>
     {
+        MemorySpan buffer = new MemorySpan(new byte[0]);
+
+        public int Offset
+        {
+            get
+            {
+                return this.buffer.Offset;
+            }
+
+            set
+            {
+                this.buffer.Offset = value;
+            }
+        }
+
+        public int Length
+        {
+            get
+            {
+                return this.buffer.Length;
+            }
+        }
+
+        public bool EndOfStream
+        {
+            get
+            {
+                return this.Offset >= this.Length;
+            }
+        }
+
+        #region Ctor Method
+
         public BinaryStream()
         {
-
         }
 
-        public BinaryStream(byte[] buffer)
+        public BinaryStream(byte[] buffer, bool reset = true)
         {
-            Binary.WriteBytes(this, buffer);
-            this.Reset();
+            this.buffer = new MemorySpan(buffer);
+            if (reset)
+            {
+                this.Reset();
+            }
         }
+
+        #endregion
+
+        #region Public Method
 
         public bool ReadBool()
         {
-            return Binary.ReadBool(this);
+            return Binary.ReadBool(ref this.buffer);
         }
 
         public void WriteBool(bool value)
         {
-            Binary.WriteBool(this, value);
+            Binary.WriteBool(ref this.buffer, value);
         }
 
-        public new byte ReadByte()
+        public byte ReadByte()
         {
-            return Binary.ReadByte(this);
+            return Binary.ReadByte(ref this.buffer);
         }
 
-        public new void WriteByte(byte value)
+        public void WriteByte(byte value)
         {
-            Binary.WriteByte(this, value);
+            Binary.WriteByte(ref this.buffer, value);
         }
 
         public sbyte ReadSByte()
         {
-            return Binary.ReadSByte(this);
+            return Binary.ReadSByte(ref this.buffer);
         }
 
         public void WriteSByte(sbyte value)
         {
-            Binary.WriteSByte(this, value);
+            Binary.WriteSByte(ref this.buffer, value);
         }
 
         public short ReadShort()
         {
-            return Binary.ReadShort(this);
+            return Binary.ReadShort(ref this.buffer);
         }
 
         public void WriteShort(short value)
         {
-            Binary.WriteShort(this, value);
+            Binary.WriteShort(ref this.buffer, value);
         }
 
         public ushort ReadUShort()
         {
-            return Binary.ReadUShort(this);
+            return Binary.ReadUShort(ref this.buffer);
         }
 
         public void WriteUShort(ushort value)
         {
-            Binary.WriteUShort(this, value);
+            Binary.WriteUShort(ref this.buffer, value);
         }
 
         public ushort ReadLShort()
         {
-            return Binary.ReadLShort(this);
+            return Binary.ReadLShort(ref this.buffer);
         }
 
         public void WriteLShort(ushort value)
         {
-            Binary.WriteLShort(this, value);
+            Binary.WriteLShort(ref this.buffer, value);
         }
 
         public int ReadTriad()
         {
-            return Binary.ReadTriad(this);
+            return Binary.ReadTriad(ref this.buffer);
         }
 
         public void WriteTriad(int value)
         {
-            Binary.WriteTriad(this, value);
+            Binary.WriteTriad(ref this.buffer, value);
         }
 
         public int ReadLTriad()
         {
-            return Binary.ReadLTriad(this);
+            return Binary.ReadLTriad(ref this.buffer);
         }
 
         public void WriteLTriad(int value)
         {
-            Binary.WriteLTriad(this, value);
+            Binary.WriteLTriad(ref this.buffer, value);
         }
 
         public int ReadInt()
         {
-            return Binary.ReadInt(this);
+            return Binary.ReadInt(ref this.buffer);
         }
 
         public void WriteInt(int value)
         {
-            Binary.WriteInt(this, value);
+            Binary.WriteInt(ref this.buffer, value);
         }
 
         public uint ReadUInt()
         {
-            return Binary.ReadUInt(this);
+            return Binary.ReadUInt(ref this.buffer);
         }
 
-        public void WriteUIntt(uint value)
+        public void WriteUInt(uint value)
         {
-            Binary.WriteUInt(this, value);
+            Binary.WriteUInt(ref this.buffer, value);
         }
 
         public uint ReadLInt()
         {
-            return Binary.ReadLInt(this);
+            return Binary.ReadLInt(ref this.buffer);
         }
 
         public void WriteLInt(uint value)
         {
-            Binary.WriteLInt(this, value);
+            Binary.WriteLInt(ref this.buffer, value);
         }
 
         public long ReadLong()
         {
-            return Binary.ReadLong(this);
+            return Binary.ReadLong(ref this.buffer);
         }
 
         public void WriteLong(long value)
         {
-            Binary.WriteLong(this, value);
+            Binary.WriteLong(ref this.buffer, value);
         }
 
         public ulong ReadULong()
         {
-            return Binary.ReadULong(this);
+            return Binary.ReadULong(ref this.buffer);
         }
 
         public void WriteULong(ulong value)
         {
-            Binary.WriteULong(this, value);
+            Binary.WriteULong(ref this.buffer, value);
         }
 
         public ulong ReadLLong()
         {
-            return Binary.ReadLLong(this);
+            return Binary.ReadLLong(ref this.buffer);
         }
 
         public void WriteLLong(ulong value)
         {
-            Binary.WriteLLong(this, value);
+            Binary.WriteLLong(ref this.buffer, value);
         }
 
         public int ReadVarInt()
         {
-            return Binary.ReadVarInt(this);
+            return Binary.ReadVarInt(ref this.buffer);
         }
 
         public void WriteVarInt(int value)
         {
-            Binary.WriteVarInt(this, value);
+            Binary.WriteVarInt(ref this.buffer, value);
         }
 
         public uint ReadUVarInt()
         {
-            return Binary.ReadUVarInt(this);
+            return Binary.ReadUVarInt(ref this.buffer);
         }
 
         public void WriteUVarInt(uint value)
         {
-            Binary.WriteUVarInt(this, value);
+            Binary.WriteUVarInt(ref this.buffer, value);
         }
 
         public int ReadSVarInt()
         {
-            return VarInt.ReadSInt32(this);
+            return Binary.ReadSVarInt(ref this.buffer);
         }
 
         public void WriteSVarInt(int value)
         {
-            VarInt.WriteSInt32(this, value);
+            Binary.WriteSVarInt(ref this.buffer, value);
         }
 
         public long ReadVarLong()
         {
-            return Binary.ReadVarLong(this);
+            return Binary.ReadVarLong(ref this.buffer);
         }
 
-        public void WriteVarLong(long value)
+        public void WriteVarLong(int value)
         {
-            Binary.WriteVarLong(this, value);
+            Binary.WriteVarLong(ref this.buffer, value);
         }
 
         public ulong ReadUVarLong()
         {
-            return Binary.ReadUVarLong(this);
+            return Binary.ReadUVarLong(ref this.buffer);
         }
 
         public void WriteUVarLong(ulong value)
         {
-            Binary.WriteUVarLong(this, value);
+            Binary.WriteUVarLong(ref this.buffer, value);
         }
 
         public long ReadSVarLong()
         {
-            return VarInt.ReadSInt64(this);
+            return Binary.ReadSVarLong(ref this.buffer);
         }
 
         public void WriteSVarLong(long value)
         {
-            VarInt.WriteSInt64(this, value);
+            Binary.WriteSVarLong(ref this.buffer, value);
         }
 
         public float ReadFloat()
         {
-            return Binary.ReadFloat(this);
+            return Binary.ReadFloat(ref this.buffer);
         }
 
         public void WriteFloat(float value)
         {
-            Binary.WriteFloat(this, value);
+            Binary.WriteFloat(ref this.buffer, value);
         }
 
         public float ReadLFloat()
         {
-            return Binary.ReadLFloat(this);
+            return Binary.ReadLFloat(ref this.buffer);
         }
 
         public void WriteLFloat(float value)
         {
-            Binary.WriteLFloat(this, value);
+            Binary.WriteLFloat(ref this.buffer, value);
         }
 
         public double ReadDouble()
         {
-            return Binary.ReadDouble(this);
+            return Binary.ReadDouble(ref this.buffer);
         }
 
         public void WriteDouble(double value)
         {
-            Binary.WriteDouble(this, value);
+            Binary.WriteDouble(ref this.buffer, value);
         }
 
         public double ReadLDouble()
         {
-            return Binary.ReadLDouble(this);
+            return Binary.ReadLDouble(ref this.buffer);
         }
 
         public void WriteLDouble(double value)
         {
-            Binary.WriteLDouble(this, value);
+            Binary.WriteLDouble(ref this.buffer, value);
         }
 
         public string ReadFixedString()
         {
-            return Binary.ReadFixedString(this);
+            return Binary.ReadFixedString(ref this.buffer);
         }
 
         public void WriteFixedString(string value)
         {
-            Binary.WriteFixedString(this, value);
+            Binary.WriteFixedString(ref this.buffer, value);
         }
 
         public string ReadString()
         {
-            int len = ReadVarInt();
-            return Encoding.UTF8.GetString(ReadBytes(len));
+            return Binary.ReadString(ref this.buffer);
         }
 
         public void WriteString(string value)
         {
-            WriteVarInt(value.Length);
-            WriteBytes(Encoding.UTF8.GetBytes(value));
+            Binary.WriteString(ref this.buffer, value);
         }
 
         public IPEndPoint ReadIPEndPoint()
         {
-            byte version = ReadByte();
+            byte version = this.ReadByte();
             if (version == 4)
             {
-                IPAddress ip = new IPAddress(new byte[]
-                {
-                    (byte)(~ReadByte() & 0xff),
-                    (byte)(~ReadByte() & 0xff),
-                    (byte)(~ReadByte() & 0xff),
-                    (byte)(~ReadByte() & 0xff)
-                });
-                int port = ReadLShort();
+                IPAddress ip = new IPAddress(ReadBytes(4));
+                int port = this.ReadUShort();
                 return new IPEndPoint(ip, port);
             }
             else if (version == 6)
             {
-                ReadShort();
-                int port = ReadLShort();
-                ReadLong();
-                IPAddress ip = new IPAddress(ReadBytes(16));
+                this.ReadLShort();
+                int port = ReadUShort();
+                this.ReadLong();
+                IPAddress ip = new IPAddress(this.ReadBytes(16));
                 return new IPEndPoint(ip, port);
             }
             else
             {
-                throw new NotSupportedException($"IPv{version} Not Support!");
+                throw new NotSupportedException();
             }
         }
 
-        public void WriteIPEndPoint(IPEndPoint endPoint)
+        public void WriteIPEndPoint(IPEndPoint point)
         {
-            byte version = 4;
-
-            WriteByte(version);
-            if (version == 4)
-            {
-                WriteBytes(endPoint.Address.GetAddressBytes());
-                WriteLShort((ushort) endPoint.Port);
-            }
-            else
-            {
-                throw new NotSupportedException($"IPv{version} Not Support!");
-            }
+            this.WriteByte(4);
+            this.WriteBytes(point.Address.GetAddressBytes());
+            this.WriteUShort((ushort) point.Port);
         }
 
-        public Guid ReadGUID()
+        public Guid ReadGuid()
         {
-            return new Guid(ReadBytes(16));
+            return new Guid(this.ReadBytes(16));
         }
 
-        public void WriteGUID(Guid guid)
+        public void WriteGuid(Guid guid)
         {
-            WriteBytes(guid.ToByteArray());
-        }
-
-        public byte[] ReadBytes(int start, int length)
-        {
-            return Binary.ReadBytes(this, start, length);
-        }
-
-        public byte[] ReadBytes(int length)
-        {
-            return Binary.ReadBytes(this, (int) this.Position, length);
+            this.WriteBytes(guid.ToByteArray());
         }
 
         public byte[] ReadBytes()
         {
-            return Binary.ReadBytes(this, (int) this.Position, (int) this.Length - (int) this.Position);
+            return Binary.ReadBytes(ref this.buffer);
+        }
+
+        public byte[] ReadBytes(int length)
+        {
+            return Binary.ReadBytes(ref this.buffer, length);
+        }
+
+        public byte[] ReadBytes(int offset, int length)
+        {
+            return Binary.ReadBytes(ref this.buffer, offset, length);
         }
 
         public void WriteBytes(byte[] value)
         {
-            Binary.WriteBytes(this, value);
-        }
-
-        public new byte[] GetBuffer()
-        {
-            return this.GetResult();
+            Binary.WriteBytes(ref this.buffer, value);
         }
 
         public void SetBuffer(byte[] buffer)
         {
+            this.buffer = new MemorySpan(buffer);
             this.Reset();
-            this.WriteBytes(buffer);
-            this.Reset();
-        }
-
-        public byte[] GetResult()
-        {
-            return this.ToArray();
         }
 
         public void Reset()
         {
-            Binary.Reset(this);
+            this.Offset = 0;
         }
 
-        public bool EndOfStream()
+        public byte[] ToArray()
         {
-            return Binary.EndOfStream(this);
+            return this.buffer.ToArray();
         }
+
+        public virtual void Dispose()
+        {
+            this.buffer.Dispose();
+        }
+
+        public BinaryStream Clone()
+        {
+            return new BinaryStream(this.ToArray());
+        }
+
+        object ICloneable.Clone()
+        {
+            return new BinaryStream(this.ToArray());
+        }
+
+        #endregion
     }
 }

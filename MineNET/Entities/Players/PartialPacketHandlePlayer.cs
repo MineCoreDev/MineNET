@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 using MineNET.Entities.Data;
 using MineNET.Events.PlayerEvents;
 using MineNET.Network.Packets;
@@ -87,7 +90,11 @@ namespace MineNET.Entities.Players
 
         private void ResourcePackClientResponsePacketHandle(ResourcePackClientResponsePacket pk)
         {
-            if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_REFUSED)
+            if (this.PackSyncCompleted)
+            {
+                return;
+            }
+            else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_REFUSED)
             {
                 this.Close("disconnectionScreen.resourcePackn");
             }

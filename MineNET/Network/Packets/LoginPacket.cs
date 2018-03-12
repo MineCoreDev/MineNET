@@ -30,7 +30,7 @@ namespace MineNET.Network.Packets
         {
             base.Decode();
 
-            this.Protocol = (int) this.ReadLInt();
+            this.Protocol = this.ReadInt();
 
             this.LoginData = new LoginData();
             this.ClientData = new ClientData();
@@ -39,7 +39,7 @@ namespace MineNET.Network.Packets
             using (BinaryStream stream = new BinaryStream(this.ReadBytes(len)))
             {
 
-                int chainLen = stream.ReadInt();
+                int chainLen = (int) stream.ReadLInt();
                 string chain = Encoding.UTF8.GetString(stream.ReadBytes(chainLen));
                 JObject chainObj = JObject.Parse(chain);
                 chain = chainObj.ToString();
@@ -58,7 +58,7 @@ namespace MineNET.Network.Packets
                     }
                 }
 
-                int clientDataLen = stream.ReadInt();
+                int clientDataLen = (int) stream.ReadLInt();
                 string clientDataJson = Encoding.UTF8.GetString(stream.ReadBytes(clientDataLen));
 
                 this.SetClientData(clientDataJson);
@@ -80,17 +80,17 @@ namespace MineNET.Network.Packets
             this.ClientData.ServerAddress = clientDataJwt.Value<string>("ServerAddress");
             this.ClientData.Skin = new Skin(
                 clientDataJwt.Value<string>("SkinId"),
-                Convert.FromBase64String(clientDataJwt.Value<string>("SkinData")),
-                Convert.FromBase64String(clientDataJwt.Value<string>("CapeData")),
+                clientDataJwt.Value<string>("SkinData"),
+                clientDataJwt.Value<string>("CapeData"),
                 clientDataJwt.Value<string>("SkinGeometryName"),
                 clientDataJwt.Value<string>("SkinGeometry")
                 );
             this.ClientData.UIProfile = clientDataJwt.Value<int>("UIProfile");
         }
 
-        protected override void Dispose(bool disposing)
+        public override void Dispose()
         {
-            base.Dispose(disposing);
+            base.Dispose();
 
             this.ClientData = null;
             this.LoginData = null;

@@ -352,7 +352,7 @@ namespace MineNET.NBT.Tags
 
         internal override void Read(NBTStream stream)
         {
-            while (stream.Position != stream.Length)
+            while (stream.Offset != stream.Length)
             {
                 NBTTagType type = (NBTTagType) stream.ReadByte();
                 string tagName = "";

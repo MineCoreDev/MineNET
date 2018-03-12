@@ -39,7 +39,7 @@ namespace MineNET.RakNet.Packets
             }
             else
             {
-                length = stream.ReadLShort();
+                length = stream.ReadUShort() / 8;
             }
 
             if (rb > PacketReliability.UNRELIABLE)
@@ -65,6 +65,7 @@ namespace MineNET.RakNet.Packets
 
             pk.buffer = stream.ReadBytes();
             pk.length = pk.buffer.Length;
+
             buffer = stream.ReadBytes();
 
             return pk;
@@ -81,7 +82,7 @@ namespace MineNET.RakNet.Packets
             }
             else
             {
-                stream.WriteLShort((ushort) (this.buffer.Length * 8));
+                stream.WriteUShort((ushort) (this.buffer.Length * 8));
             }
 
             if (this.reliability > PacketReliability.UNRELIABLE)
@@ -106,7 +107,7 @@ namespace MineNET.RakNet.Packets
 
             stream.WriteBytes(this.buffer);
 
-            return stream.GetResult();
+            return stream.ToArray();
         }
 
         public EncapsulatedPacket Clone()

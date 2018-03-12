@@ -185,7 +185,7 @@ namespace MineNET.RakNet
                         shd.Encode();
 
                         EncapsulatedPacket enc = new EncapsulatedPacket();
-                        enc.buffer = shd.GetResult();
+                        enc.buffer = shd.ToArray();
                         enc.reliability = PacketReliability.UNRELIABLE;
 
                         SendPacket(enc);
@@ -213,7 +213,7 @@ namespace MineNET.RakNet
                     pong.Encode();
 
                     EncapsulatedPacket enc = new EncapsulatedPacket();
-                    enc.buffer = pong.GetResult();
+                    enc.buffer = pong.ToArray();
                     enc.reliability = PacketReliability.UNRELIABLE;
 
                     SendPacket(enc);
@@ -249,50 +249,50 @@ namespace MineNET.RakNet
                     this.server.SendPacket(pk, this.point.Address, this.point.Port);
                     return;
                 }
-
-                if (packet.buffer.Length + 4 > this.mtuSize)
-                {
-                    byte[][] buffers = Binary.SplitBytes(packet.buffer, this.mtuSize - 60);
-                    int splitID = ++this.splitID % 65536;
-                    for (int i = 0; i < buffers.Length; ++i)
-                    {
-                        EncapsulatedPacket pk = new EncapsulatedPacket();
-                        pk.splitID = splitID;
-                        pk.hasSplit = true;
-                        pk.splitCount = buffers.Length;
-                        pk.reliability = packet.reliability;
-                        pk.splitIndex = i;
-                        if (i > 0)
-                        {
-                            pk.messageIndex = this.messageIndex++;
-                        }
-                        else
-                        {
-                            pk.messageIndex = this.messageIndex;
-                        }
-
-                        DataPacket_0 dp = new DataPacket_0();
-                        dp.SeqNumber = this.sendSeqNumber++;
-                        dp.Packets = new[]
-                        {
-                            pk
-                        };
-
-                        this.server.SendPacket(dp, this.point.Address, this.point.Port);
-
-                        Logger.Log("Split");
-                    }
-                }
                 else
                 {
-                    DataPacket_0 pk = new DataPacket_0();
-                    pk.SeqNumber = this.sendSeqNumber++;
-                    pk.Packets = new[]
+                    if (packet.buffer.Length + 4 > this.mtuSize)
                     {
-                        packet
-                    };
+                        byte[][] buffers = Binary.SplitBytes(new MemorySpan(packet.buffer), this.mtuSize - 60);
+                        int splitID = ++this.splitID % 65536;
+                        for (int i = 0; i < buffers.Length; ++i)
+                        {
+                            EncapsulatedPacket pk = new EncapsulatedPacket();
+                            pk.splitID = splitID;
+                            pk.hasSplit = true;
+                            pk.splitCount = buffers.Length;
+                            pk.reliability = packet.reliability;
+                            pk.splitIndex = i;
+                            if (i > 0)
+                            {
+                                pk.messageIndex = this.messageIndex++;
+                            }
+                            else
+                            {
+                                pk.messageIndex = this.messageIndex;
+                            }
 
-                    this.packetQueue.Enqueue(pk);
+                            DataPacket_0 dp = new DataPacket_0();
+                            dp.SeqNumber = this.sendSeqNumber++;
+                            dp.Packets = new[]
+                            {
+                                pk
+                            };
+
+                            this.server.SendPacket(dp, this.point.Address, this.point.Port);
+                        }
+                    }
+                    else
+                    {
+                        DataPacket_0 pk = new DataPacket_0();
+                        pk.SeqNumber = this.sendSeqNumber++;
+                        pk.Packets = new[]
+                        {
+                            packet
+                        };
+
+                        this.packetQueue.Enqueue(pk);
+                    }
                 }
             }
         }
@@ -350,7 +350,7 @@ namespace MineNET.RakNet
                 pk.Encode();
 
                 EncapsulatedPacket ep = new EncapsulatedPacket();
-                ep.buffer = pk.GetResult();
+                ep.buffer = pk.ToArray();
                 ep.reliability = PacketReliability.UNRELIABLE;
 
                 SendPacket(ep);
