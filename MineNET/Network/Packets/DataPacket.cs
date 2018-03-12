@@ -28,7 +28,7 @@ namespace MineNET.Network.Packets
             this.Extra2 = this.ReadByte();
         }
 
-        public virtual DataPacket Clone()
+        public new DataPacket Clone()
         {
             return (DataPacket) this.MemberwiseClone();
         }

@@ -101,7 +101,7 @@ namespace MineNET.Network.Packets
                         }
                     }
                 }
-                result = stream.GetResult();
+                result = stream.ToArray();
             }
 
             this.WriteUVarInt((uint) enumValues.Count);

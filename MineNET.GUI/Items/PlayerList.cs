@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Forms;
-using MineNET.Entities;
 using MineNET.Entities.Players;
 
 namespace MineNET.GUI.Items

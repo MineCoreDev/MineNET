@@ -253,7 +253,7 @@ namespace MineNET.Entities.Players
             gameRulesChangedPacket.GameRules = rules;
             this.SendPacket(gameRulesChangedPacket);
             this.SendDataProperties();
-            PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, new Skin("", new byte[0], new byte[0], "", ""), this.LoginData.XUID);
+            PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, new Skin("", "", "", "", ""), this.LoginData.XUID);
             Server.Instance.AddPlayer(this, entry);
         }
     }
