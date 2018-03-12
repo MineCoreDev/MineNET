@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using MineNET.Commands;
 using MineNET.Entities.Attributes;
+using MineNET.Entities.Data;
 using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
 using MineNET.NBT.Data;
@@ -135,6 +136,16 @@ namespace MineNET.Entities.Players
             SendPacket(pk);
 
             base.SetMotion(motion);
+        }
+
+        public Skin GetSkin()
+        {
+            return this.ClientData.Skin;
+        }
+
+        public void SetSkin(Skin skin)
+        {
+            //TODO: 
         }
 
         public void SendMessage(string message)

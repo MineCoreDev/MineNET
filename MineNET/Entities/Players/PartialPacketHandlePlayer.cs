@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using System.Threading.Tasks;
-using MineNET.Entities.Data;
+﻿using System.Threading.Tasks;
 using MineNET.Events.PlayerEvents;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
@@ -253,7 +249,7 @@ namespace MineNET.Entities.Players
             gameRulesChangedPacket.GameRules = rules;
             this.SendPacket(gameRulesChangedPacket);
             this.SendDataProperties();
-            PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, new Skin("", "", "", "", ""), this.LoginData.XUID);
+            PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, this.ClientData.Skin, this.LoginData.XUID);
             Server.Instance.AddPlayer(this, entry);
         }
     }

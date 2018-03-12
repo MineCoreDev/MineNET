@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using MineNET.RakNet.Packets;
@@ -48,8 +49,9 @@ namespace MineNET.RakNet
         int endSeq = 2048;
         int lastSeqNumber = -1;
 
-        Dictionary<int, EncapsulatedPacket> reliableWindow = new Dictionary<int, EncapsulatedPacket>();
         Dictionary<int, int> receivedWindow = new Dictionary<int, int>();
+
+        Dictionary<int, Dictionary<int, EncapsulatedPacket>> splitPackets = new Dictionary<int, Dictionary<int, EncapsulatedPacket>>();
 
         int messageIndex = 0;
         public int MessageIndex
@@ -158,7 +160,52 @@ namespace MineNET.RakNet
 
         private void EncapsulatedPacketHandle(EncapsulatedPacket packet)
         {
+            if (packet.hasSplit)
+            {
+                SplitPackets(packet);
+                return;
+            }
             EncapsulatedPacketHandler(packet);
+        }
+
+        private void SplitPackets(EncapsulatedPacket packet)
+        {
+            if (!splitPackets.ContainsKey(packet.splitID))
+            {
+                splitPackets.Add(packet.splitID, new Dictionary<int, EncapsulatedPacket>());
+                if (!splitPackets[packet.splitID].ContainsKey(packet.splitIndex))
+                {
+                    splitPackets[packet.splitID].Add(packet.splitIndex, packet);
+                }
+            }
+            else
+            {
+                if (!splitPackets[packet.splitID].ContainsKey(packet.splitIndex))
+                {
+                    splitPackets[packet.splitID].Add(packet.splitIndex, packet);
+                }
+            }
+
+            if (splitPackets[packet.splitID].Count == packet.splitCount)
+            {
+                EncapsulatedPacket pk = new EncapsulatedPacket();
+                int offset = 0;
+                pk.buffer = new byte[0];
+                for (int i = 0; i < packet.splitCount; ++i)
+                {
+                    EncapsulatedPacket p = splitPackets[packet.splitID][i];
+                    Array.Resize(ref pk.buffer, pk.buffer.Length + p.buffer.Length);
+                    Buffer.BlockCopy(p.buffer, 0, pk.buffer, offset, p.buffer.Length);
+                    Logger.Info(p.buffer.Length + " " + p.splitID + ":" + p.splitIndex + "/" + p.splitCount + " " + pk.reliability);
+                    offset += p.buffer.Length;
+                }
+
+                pk.length = pk.buffer.Length;
+
+                splitPackets.Remove(pk.splitID);
+
+                EncapsulatedPacketHandler(pk);
+            }
         }
 
         private void EncapsulatedPacketHandler(EncapsulatedPacket packet)
@@ -251,18 +298,20 @@ namespace MineNET.RakNet
                 }
                 else
                 {
-                    if (packet.buffer.Length + 4 > this.mtuSize)
+                    if (packet.GetTotalLength() + 4 > this.mtuSize)
                     {
                         byte[][] buffers = Binary.SplitBytes(new MemorySpan(packet.buffer), this.mtuSize - 60);
-                        int splitID = ++this.splitID % 65536;
+                        int splitID = this.splitID++ % 65536;
                         for (int i = 0; i < buffers.Length; ++i)
                         {
                             EncapsulatedPacket pk = new EncapsulatedPacket();
                             pk.splitID = splitID;
                             pk.hasSplit = true;
                             pk.splitCount = buffers.Length;
-                            pk.reliability = packet.reliability;
+                            pk.reliability = PacketReliability.UNRELIABLE;
                             pk.splitIndex = i;
+                            pk.buffer = buffers[i];
+                            Logger.Info(pk.buffer.Length + " " + pk.splitID + ":" + pk.splitIndex + "/" + pk.splitCount + " " + pk.reliability);
                             if (i > 0)
                             {
                                 pk.messageIndex = this.messageIndex++;

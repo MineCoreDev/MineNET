@@ -47,7 +47,7 @@ namespace MineNET.RakNet.Packets
 
             ReadMagic();
             this.endPoint = ReadIPEndPoint();
-            this.mtuSize = (short) ReadLShort();
+            this.mtuSize = ReadShort();
             this.clientID = (long) ReadLLong();
         }
     }

@@ -23,14 +23,18 @@ namespace MineNET.Utils.Tests
             MemorySpan span = new MemorySpan(new byte[0]);
             span.WriteBytes(ArrayUtils.CreateArray<byte>(1000, 0));
             span.Offset = 0;
-            Console.WriteLine(Binary.SplitBytes(span, 90).Length);
+            byte[][] buffers = Binary.SplitBytes(span, 90);
+            for (int i = 0; i < buffers.Length; ++i)
+            {
+                Console.WriteLine(buffers[i].Length);
+            }
         }
 
         [TestMethod()]
         public void WriteReadTest2()
         {
             BinaryStream bs = new BinaryStream();
-            
+
         }
 
         [TestMethod()]

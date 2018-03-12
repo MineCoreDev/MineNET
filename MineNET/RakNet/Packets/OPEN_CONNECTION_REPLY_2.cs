@@ -63,7 +63,7 @@ namespace MineNET.RakNet.Packets
             WriteMagic();
             WriteLLong((ulong) this.serverID);
             WriteIPEndPoint(this.endPoint);
-            WriteLShort((ushort) this.mtuSize);
+            WriteShort((short) this.mtuSize);
             WriteByte(0);
         }
     }

@@ -71,6 +71,11 @@ namespace MineNET.RakNet.Packets
             return pk;
         }
 
+        public int GetTotalLength()
+        {
+            return 3 + this.buffer.Length + (this.messageIndex != -1 ? 3 : 0) + (this.orderIndex != -1 ? 4 : 0) + (this.hasSplit ? 10 : 0);
+        }
+
         public byte[] ToResult(bool internalCall = false)
         {
             BinaryStream stream = new BinaryStream();
