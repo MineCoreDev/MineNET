@@ -37,16 +37,6 @@ namespace MineNET.NBT.IO
             this.Reset();
         }
 
-        public new byte ReadByte()
-        {
-            return this.ReadByte();
-        }
-
-        public new void WriteByte(byte value)
-        {
-            this.WriteByte(value);
-        }
-
         public new short ReadShort()
         {
             if (this.swap)
@@ -55,7 +45,7 @@ namespace MineNET.NBT.IO
             }
             else
             {
-                return this.ReadShort();
+                return base.ReadShort();
             }
         }
 
@@ -67,7 +57,7 @@ namespace MineNET.NBT.IO
             }
             else
             {
-                this.WriteShort(value);
+                base.WriteShort(value);
             }
         }
 
@@ -79,7 +69,7 @@ namespace MineNET.NBT.IO
             }
             else
             {
-                return this.ReadInt();
+                return base.ReadInt();
             }
         }
 
@@ -91,7 +81,7 @@ namespace MineNET.NBT.IO
             }
             else
             {
-                this.WriteInt(value);
+                base.WriteInt(value);
             }
         }
 
@@ -103,7 +93,7 @@ namespace MineNET.NBT.IO
             }
             else
             {
-                return this.ReadLong();
+                return base.ReadLong();
             }
         }
 
@@ -115,7 +105,7 @@ namespace MineNET.NBT.IO
             }
             else
             {
-                this.WriteLong(value);
+                base.WriteLong(value);
             }
         }
 
@@ -127,7 +117,7 @@ namespace MineNET.NBT.IO
             }
             else
             {
-                return this.ReadShort();
+                return base.ReadShort();
             }
         }
 
@@ -139,7 +129,7 @@ namespace MineNET.NBT.IO
             }
             else
             {
-                this.WriteFloat(value);
+                base.WriteFloat(value);
             }
         }
 
@@ -151,7 +141,7 @@ namespace MineNET.NBT.IO
             }
             else
             {
-                return this.ReadDouble();
+                return base.ReadDouble();
             }
         }
 
@@ -163,7 +153,7 @@ namespace MineNET.NBT.IO
             }
             else
             {
-                this.WriteDouble(value);
+                base.WriteDouble(value);
             }
         }
 

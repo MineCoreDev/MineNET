@@ -196,7 +196,6 @@ namespace MineNET.RakNet
                     EncapsulatedPacket p = splitPackets[packet.splitID][i];
                     Array.Resize(ref pk.buffer, pk.buffer.Length + p.buffer.Length);
                     Buffer.BlockCopy(p.buffer, 0, pk.buffer, offset, p.buffer.Length);
-                    Logger.Info(p.buffer.Length + " " + p.splitID + ":" + p.splitIndex + "/" + p.splitCount + " " + pk.reliability);
                     offset += p.buffer.Length;
                 }
 
@@ -311,7 +310,6 @@ namespace MineNET.RakNet
                             pk.reliability = PacketReliability.UNRELIABLE;
                             pk.splitIndex = i;
                             pk.buffer = buffers[i];
-                            Logger.Info(pk.buffer.Length + " " + pk.splitID + ":" + pk.splitIndex + "/" + pk.splitCount + " " + pk.reliability);
                             if (i > 0)
                             {
                                 pk.messageIndex = this.messageIndex++;
