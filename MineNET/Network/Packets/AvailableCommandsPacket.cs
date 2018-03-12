@@ -43,17 +43,17 @@ namespace MineNET.Network.Packets
                     stream.WriteByte((byte) command.Flag);
                     stream.WriteByte((byte) command.Permission);
 
-                    int enumIndex = 0;
+                    int enumIndex = -1;
                     if (command.Aliases != null && command.Aliases.Length > 0)
                     {
                         List<int> aliases = new List<int>();
                         for (int i = 0; i < command.Aliases.Length; ++i)
                         {
                             enumValues.Add(command.Aliases[i]);
-                            aliases.Add(enumValues.Count);
+                            aliases.Add(enumValues.Count - 1);
                         }
                         enumValues.Add(command.Name);
-                        aliases.Add(enumValues.Count);
+                        aliases.Add(enumValues.Count - 1);
 
                         enums.Add(new CommandEnumCash($"{command.Name}CommandAliases", aliases.ToArray()));
                         enumIndex = enums.Count - 1;
@@ -80,17 +80,17 @@ namespace MineNET.Network.Packets
                                 {
                                     string value = commandEnum.Values[k];
                                     enumValues.Add(value);
-                                    realValue.Add(enumValues.Count);
+                                    realValue.Add(enumValues.Count - 1);
                                 }
                                 enums.Add(new CommandEnumCash(commandEnum.Name, realValue.ToArray()));
                                 enumIndex = enums.Count - 1;
-                                Logger.Info($"{enumIndex}");
                                 type = CommandParameter.ARG_FLAG_ENUM | CommandParameter.ARG_FLAG_VALID | enumIndex;
                             }
                             else if (parameter.Postfix != null && parameter.Postfix.Length > 0)
                             {
                                 postFixes.Add(parameter.Postfix);
-                                type = type << 24 | postFixes.Count - 1;
+                                int key = postFixes.Count - 1;
+                                type = type | CommandParameter.ARG_FLAG_POSTFIX | key; //TODO
                             }
                             else
                             {
@@ -108,7 +108,6 @@ namespace MineNET.Network.Packets
             for (int i = 0; i < enumValues.Count; ++i)
             {
                 this.WriteString(enumValues[i]);
-                Logger.Info(enumValues[i]);
             }
 
             this.WriteUVarInt((uint) postFixes.Count);

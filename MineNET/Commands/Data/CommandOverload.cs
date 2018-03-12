@@ -5,12 +5,10 @@ namespace MineNET.Commands.Data
 {
     public class CommandOverload
     {
-        public string Name { get; set; }
         public List<CommandParameter> Parameters { get; set; } = new List<CommandParameter>();
 
-        public CommandOverload(string name, params CommandParameter[] parameters)
+        public CommandOverload(params CommandParameter[] parameters)
         {
-            this.Name = name;
             for (int i = 0; i < parameters.Length; ++i)
             {
                 this.Parameters.Add(parameters[i]);
