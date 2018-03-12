@@ -46,7 +46,7 @@ namespace MineNET.GUI.Forms
             this.Visible = false;
 
             MainForm form = new MainForm(this);
-            form.Show();
+            form.ShowDialog();
         }
     }
 }

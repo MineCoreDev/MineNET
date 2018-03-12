@@ -54,9 +54,12 @@
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox2.Location = new System.Drawing.Point(3, 252);
+            this.textBox2.MaxLength = 1000;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(343, 19);
             this.textBox2.TabIndex = 10;
+            this.textBox2.WordWrap = false;
+            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             // 
             // label1
             // 
@@ -123,6 +126,7 @@
             this.button1.TabIndex = 15;
             this.button1.Text = "Send";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 

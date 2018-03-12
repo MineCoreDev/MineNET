@@ -46,15 +46,48 @@ namespace MineNET.GUI.Items
             }
         }
 
+        internal void SendCommand()
+        {
+            string cmd = textBox2.Text;
+            if (!string.IsNullOrWhiteSpace(cmd) && Server.Instance != null)
+            {
+                Server.Instance.CommandManager.HandleConsoleCommand(textBox2.Text);
+            }
+            textBox2.Clear();
+            textBox2.Focus();
+        }
+
+        internal TextBox Input
+        {
+            get
+            {
+                return this.textBox2;
+            }
+        }
+
         private bool CheckShowOutput(Logger.LoggerLevel level)
         {
             int t = (int) level;
             return checkedListBox1.GetItemChecked(t);
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SendCommand();
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
+        }
+
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char) Keys.Enter && textBox2.Focused)
+            {
+                SendCommand();
+                e.Handled = true;
+            }
         }
     }
 }

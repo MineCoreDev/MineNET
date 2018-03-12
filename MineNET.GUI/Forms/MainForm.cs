@@ -43,6 +43,8 @@ namespace MineNET.GUI.Forms
         {
             this.button1.Enabled = true;
             this.button2.Enabled = false;
+
+            Server = null;
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
