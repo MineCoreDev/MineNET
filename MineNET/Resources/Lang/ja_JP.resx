@@ -153,7 +153,7 @@
   <data name="command_notFound" xml:space="preserve">
     <value>§cコマンド &lt;{0}&gt; は見つかりませんでした。 helpで確認して下さい。</value>
   </data>
-  <data name="command_default_stopCommand_description" xml:space="preserve">
+  <data name="command_stop_description" xml:space="preserve">
     <value>サーバーを安全に終了する事が出来るコマンド</value>
   </data>
   <data name="server_started2" xml:space="preserve">

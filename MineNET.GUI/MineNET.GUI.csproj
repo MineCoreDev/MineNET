@@ -126,6 +126,7 @@
     <ProjectReference Include="..\MineNET\MineNET.csproj">
       <Project>{1f471258-4c9f-4e08-9515-769957ce1e23}</Project>
       <Name>MineNET</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

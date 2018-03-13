@@ -29,22 +29,40 @@ namespace MineNET.GUI.Forms
 
         private async void ServerStart()
         {
+            this.button1.Enabled = false;
+            this.button2.Enabled = true;
+
             ServerEvents.ServerStop += ServerEvents_ServerStop;
 
             Server = new Server();
             Server.Start();
-            Server.Logger.UseGUI = true;
             inputOutput1.OnUpdate();
             playerList1.OnUpdate();
             await Task.Delay(100);
         }
 
-        private void ServerEvents_ServerStop(ServerStopEventArgs args)
+        private void ServerStop()
         {
             this.button1.Enabled = true;
             this.button2.Enabled = false;
 
-            Server = null;
+            this.Server = null;
+        }
+
+        private void ServerEvents_ServerStop(ServerStopEventArgs args)
+        {
+            ServerEvents.ServerStop -= ServerEvents_ServerStop;
+
+            this.ServerStop();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Exit Application?", "Alert", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            if (result != DialogResult.Yes)
+            {
+                e.Cancel = true;
+            }
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -59,30 +77,24 @@ namespace MineNET.GUI.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (Server != null)
+            if (this.Server != null)
             {
                 return;
             }
 
-            this.button1.Enabled = false;
-            this.button2.Enabled = true;
-
-            ServerStart();
+            this.ServerStart();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (Server == null)
+            if (this.Server == null)
             {
                 return;
             }
 
             Server.Stop();
 
-            this.button1.Enabled = true;
-            this.button2.Enabled = false;
-
-            Server = null;
+            this.ServerStop();
         }
     }
 }

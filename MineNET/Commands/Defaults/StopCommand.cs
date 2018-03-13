@@ -1,4 +1,5 @@
 ﻿using MineNET.Commands.Data;
+using MineNET.Commands.Parameters;
 using MineNET.Data;
 
 namespace MineNET.Commands.Defaults
@@ -9,6 +10,10 @@ namespace MineNET.Commands.Defaults
         {
             this.RemoveAllOverloads();
             this.AddOverloads(new CommandOverload());
+            this.AddOverloads(new CommandOverload(new CommandParameter[]
+            {
+                new CommandParameterString("reason", false)
+            }));
         }
 
         public override string Name
@@ -23,8 +28,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                //return this.LangDescription();
-                return "stop";
+                return "Stop Command";//TODO: 日本語が入ると正常に動かない this.LangDescription();
             }
         }
 

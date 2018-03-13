@@ -148,7 +148,7 @@ namespace MineNET.Entities.Players
                     Player[] players = Server.Instance.GetPlayers();
                     for (int i = 0; i < players.Length; ++i)
                     {
-                        players[i].SendMessage(pk.Message);
+                        players[i].SendPacket(pk);
                     }
                 }
             }

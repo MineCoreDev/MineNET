@@ -58,7 +58,7 @@ namespace MineNET.Network.Packets
                         enums.Add(new CommandEnumCash($"{command.Name}CommandAliases", aliases.ToArray()));
                         enumIndex = enums.Count - 1;
                     }
-                    stream.WriteInt(enumIndex);//LInt
+                    stream.WriteLInt((uint) enumIndex);
 
                     List<CommandOverload> overloads = command.CommandOverloads;
                     stream.WriteUVarInt((uint) overloads.Count);
@@ -96,7 +96,7 @@ namespace MineNET.Network.Packets
                             {
                                 type |= CommandParameter.ARG_FLAG_VALID;
                             }
-                            stream.WriteInt(type); //LInt
+                            stream.WriteLInt((uint) type); //LInt
                             stream.WriteBool(parameter.Optional);
                         }
                     }
