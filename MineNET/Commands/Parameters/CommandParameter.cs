@@ -25,7 +25,7 @@ namespace MineNET.Commands.Parameters
         public CommandEnum CommandEnum { get; set; }
         public string Postfix { get; set; }
 
-        public CommandParameter(string name, int type, bool optional = true, CommandEnum commandEnum = null, string postfix = null)
+        public CommandParameter(string name, int type, bool optional = false, CommandEnum commandEnum = null, string postfix = null)
         {
             this.Name = name;
             this.Type = type;
