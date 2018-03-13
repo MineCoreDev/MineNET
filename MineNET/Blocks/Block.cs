@@ -134,7 +134,7 @@ namespace MineNET.Blocks
 
         public virtual Block Clone()
         {
-            return (Block) Clone();
+            return (Block) this.MemberwiseClone();
         }
 
         object ICloneable.Clone()
