@@ -200,9 +200,10 @@ namespace MineNET.Network
             this.RegisterPacket(new LoginPacket());
             this.RegisterPacket(new PlayStatusPacket());
             this.RegisterPacket(new ResourcePackClientResponsePacket());
-            this.RegisterPacket(new RequestChunkRadiusPacket());
-            this.RegisterPacket(new MovePlayerPacket());
             this.RegisterPacket(new TextPacket());
+            this.RegisterPacket(new MovePlayerPacket());
+            this.RegisterPacket(new RequestChunkRadiusPacket());
+            this.RegisterPacket(new CommandRequestPacket());
         }
     }
 }

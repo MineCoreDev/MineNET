@@ -41,7 +41,7 @@ namespace MineNET.Commands
             this.CommandHandler.CommandHandle(new ConsoleSender(), cmd, args);
         }
 
-        internal void HandlePlayerCommand(Player player, string msg)
+        public void HandlePlayerCommand(Player player, string msg)
         {
             string[] args = msg.Split(' ');
             string cmd = args[0];

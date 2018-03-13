@@ -33,6 +33,10 @@ namespace MineNET.Entities.Players
             {
                 this.TextPacketHandle((TextPacket) pk);
             }
+            else if (pk is CommandRequestPacket)
+            {
+                this.CommandRequestPacketHandle((CommandRequestPacket) pk);
+            }
         }
 
         private void LoginPacketHandle(LoginPacket pk)
@@ -154,13 +158,19 @@ namespace MineNET.Entities.Players
             }
         }
 
+        private void CommandRequestPacketHandle(CommandRequestPacket pk)
+        {
+            string command = pk.Command.Remove(0, 1);
+            //TODO : event
+            Server.Instance.CommandManager.HandlePlayerCommand(this, command);
+        }
+
         private void ProcessLogin()
         {
             if (this.IsLogined)
             {
                 return;
             }
-            //TODO: PlayerDataLoad
             PlayerLoginEventArgs playerLoginEvent = new PlayerLoginEventArgs(this, "");
             PlayerEvents.OnPlayerLogin(playerLoginEvent);
             if (playerLoginEvent.IsCancel)
@@ -192,30 +202,18 @@ namespace MineNET.Entities.Players
             this.SendPacket(startGamePacket);
 
             this.SendPlayerAttribute();
-            //AvailableCommands
+
             AvailableCommandsPacket availableCommandsPacket = new AvailableCommandsPacket();
             availableCommandsPacket.commands = Server.Instance.CommandManager.CommandList;
             this.SendPacket(availableCommandsPacket);
 
-            //AdventureSettings
-            AdventureSettingsPacket adventureSettingsPacket = new AdventureSettingsPacket();
-            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, false);
-            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.NO_PVP, false);
-            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.AUTO_JUMP, false);
-            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, false);
-            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
-            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.FLYING, false);
-            adventureSettingsPacket.EntityUniqueId = this.EntityID;
-            this.SendPacket(adventureSettingsPacket);
-
-            //SetEntityData
             //InventoryContent
             //MobArmorEquipment
             //inventoryContent
             //MobEquipment
             //InventorySlot
 
-            SendFastChunk();
+            this.SendFastChunk();
         }
 
         private async void SendFastChunk()
@@ -249,9 +247,19 @@ namespace MineNET.Entities.Players
             GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
             gameRulesChangedPacket.GameRules = rules;
             this.SendPacket(gameRulesChangedPacket);
-            this.SendDataProperties();
+
             PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, this.ClientData.Skin, this.LoginData.XUID);
-            Server.Instance.AddPlayer(this, entry);
+            AdventureSettingsEntry adventureSettingsEntry = new AdventureSettingsEntry();
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.WORLD_IMMUTABLE, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.NO_PVP, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.AUTO_JUMP, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.ALLOW_FLIGHT, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.NO_CLIP, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.FLYING, false);
+            adventureSettingsEntry.EntityUniqueId = this.EntityID;
+            Server.Instance.AddPlayer(this, entry, adventureSettingsEntry);
+
+            this.SendDataProperties();
         }
     }
 }

@@ -144,13 +144,17 @@ namespace MineNET
             this.Kill();
         }
 
-        public void AddPlayer(Player player, PlayerListEntry entry)
+        public void AddPlayer(Player player, PlayerListEntry entry, AdventureSettingsEntry adventureSettingsEntry)
         {
             if (!this.playerListEntries.ContainsValue(entry))
             {
                 this.playerListEntries[player.EntityID] = entry;
                 this.SendPlayerLists(player);
-                this.AddPlayerList(player, entry);
+                this.AddPlayerList(entry);
+
+                this.adventureSettingsEntry[player.EntityID] = adventureSettingsEntry;
+                this.SendAdventureSettings(player);
+                this.AddAdventureSettings(adventureSettingsEntry);
             }
         }
 
@@ -159,9 +163,9 @@ namespace MineNET
             if (this.playerListEntries.ContainsKey(entityID))
             {
                 PlayerListEntry entry = this.playerListEntries[entityID];
-                this.playerListEntries.Remove(entityID);
-
                 this.RemovePlayerList(entry);
+                this.playerListEntries.Remove(entityID);
+                this.adventureSettingsEntry.Remove(entityID);
             }
         }
 
@@ -171,6 +175,16 @@ namespace MineNET
             pk.Type = PlayerListPacket.TYPE_ADD;
             pk.Entries = this.playerListEntries.Values.ToArray();
             player.SendPacket(pk);
+        }
+
+        public void SendAdventureSettings(Player player)
+        {
+            foreach (AdventureSettingsEntry entry in this.adventureSettingsEntry.Values)
+            {
+                AdventureSettingsPacket pk = new AdventureSettingsPacket();
+                pk.Entry = entry;
+                player.SendPacket(pk);
+            }
         }
 
         public Player[] GetPlayers()

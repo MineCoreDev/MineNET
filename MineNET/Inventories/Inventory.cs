@@ -31,11 +31,11 @@ namespace MineNET.Inventories
 
         Item[] RemoveItem(params Item[] items);
 
+        bool Contains(Item item);
+
         bool Clear(int index, bool send);
 
         void ClearAll();
-
-        bool Contains(Item item);
 
         void OnSlotChange(int index, Item item, bool send);
 
@@ -46,7 +46,6 @@ namespace MineNET.Inventories
         InventoryHolder Holder
         {
             get;
-            set;
         }
 
         List<Player> Viewers

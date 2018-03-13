@@ -2,7 +2,7 @@
 {
     public class CommandParameterMessage : CommandParameter
     {
-        public CommandParameterMessage(string name, bool optional = true, string postfix = null)
+        public CommandParameterMessage(string name, bool optional = false, string postfix = null)
             : base(name, CommandParameter.ARG_TYPE_RAWTEXT, optional, null, postfix)
         {
 
