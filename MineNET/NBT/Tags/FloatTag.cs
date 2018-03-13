@@ -1,4 +1,5 @@
-﻿using MineNET.NBT.Data;
+﻿using System;
+using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 
 namespace MineNET.NBT.Tags
@@ -35,9 +36,17 @@ namespace MineNET.NBT.Tags
 
         internal override void WriteTag(NBTStream stream)
         {
-            stream.WriteByte((byte) this.TagType);
-            stream.WriteString(this.Name);
-            this.Write(stream);
+            if (!string.IsNullOrEmpty(this.Name))
+            {
+                stream.WriteByte((byte) this.TagType);
+                stream.WriteString(this.Name);
+                this.Write(stream);
+            }
+            else
+            {
+                throw new NullReferenceException("Tag Name Null");
+            }
+
         }
 
         internal override void Read(NBTStream stream)
