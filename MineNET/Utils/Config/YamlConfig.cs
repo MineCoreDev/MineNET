@@ -1,16 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
+using YamlDotNet.RepresentationModel;
 
 namespace MineNET.Utils.Config
 {
-    class YamlConfig : IConfig
+    public class YamlConfig : IConfig
     {
-        public void Save<T>()
+        public static YamlConfig Load(string filePath)
         {
-            throw new NotImplementedException();
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                YamlConfig config = new YamlConfig();
+                config.FilePath = filePath;
+                config.stream.Load(reader);
+                return config;
+            }
+
+        }
+
+        private YamlStream stream;
+        public string FilePath { get; private set; }
+
+        public YamlConfig()
+        {
+            stream = new YamlStream();
+        }
+
+        public YamlDocument Read(int index)
+        {
+            return stream.Documents[index];
+        }
+
+        public void Write(YamlDocument doc)
+        {
+            stream.Documents.Add(doc);
+        }
+
+        public void Save()
+        {
+            using (StreamWriter writer = new StreamWriter(this.FilePath))
+            {
+                stream.Save(writer);
+            }
         }
     }
 }

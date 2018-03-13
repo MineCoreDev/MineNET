@@ -25,12 +25,12 @@ namespace MineNET.NBT.Tags
 
         public ListTag() : base("")
         {
-
+            this.CheckListTagType();
         }
 
         public ListTag(string name) : base(name)
         {
-
+            this.CheckListTagType();
         }
 
         public ListTag<T> Add(T tag)
@@ -198,6 +198,62 @@ namespace MineNET.NBT.Tags
             stream.ReadByte();
             this.Name = stream.ReadString();
             this.Read(stream);
+        }
+
+        internal void CheckListTagType()
+        {
+            if (typeof(T) == typeof(ByteTag))
+            {
+                this.ListTagType = NBTTagType.BYTE;
+            }
+            else if (typeof(T) == typeof(ByteArrayTag))
+            {
+                this.ListTagType = NBTTagType.BYTE_ARRAY;
+            }
+            else if (typeof(T) == typeof(CompoundTag))
+            {
+                this.ListTagType = NBTTagType.COMPOUND;
+            }
+            else if (typeof(T) == typeof(DoubleTag))
+            {
+                this.ListTagType = NBTTagType.DOUBLE;
+            }
+            else if (typeof(T) == typeof(EndTag))
+            {
+                this.ListTagType = NBTTagType.END;
+            }
+            else if (typeof(T) == typeof(FloatTag))
+            {
+                this.ListTagType = NBTTagType.FLOAT;
+            }
+            else if (typeof(T) == typeof(IntTag))
+            {
+                this.ListTagType = NBTTagType.INT;
+            }
+            else if (typeof(T) == typeof(IntArrayTag))
+            {
+                this.ListTagType = NBTTagType.INT_ARRAY;
+            }
+            else if (typeof(T) == typeof(ListTag<>))
+            {
+                this.ListTagType = NBTTagType.LIST;
+            }
+            else if (typeof(T) == typeof(LongTag))
+            {
+                this.ListTagType = NBTTagType.LONG;
+            }
+            else if (typeof(T) == typeof(LongArrayTag))
+            {
+                this.ListTagType = NBTTagType.LONG_ARRAY;
+            }
+            else if (typeof(T) == typeof(ShortTag))
+            {
+                this.ListTagType = NBTTagType.SHORT;
+            }
+            else if (typeof(T) == typeof(StringTag))
+            {
+                this.ListTagType = NBTTagType.STRING;
+            }
         }
 
         public override bool Equals(object obj)

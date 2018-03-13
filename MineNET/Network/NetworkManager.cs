@@ -60,12 +60,17 @@ namespace MineNET.Network
             }
         }
 
-        public void RemovePlayer(string id)
+        public void RemovePlayer(string id, bool callClose = false)
         {
             if (this.players.ContainsKey(id))
             {
+                if (callClose)
+                {
+                    Player p = this.players[id];
+                    p.Close("");
+                }
+
                 this.identifierACKs.Remove(id);
-                this.players[id].Close("");
                 this.players.Remove(id);
             }
         }

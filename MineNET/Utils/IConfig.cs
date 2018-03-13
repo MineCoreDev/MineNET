@@ -1,7 +1,6 @@
 ﻿namespace MineNET.Utils
 {
-    public interface IConfig
+    public class IConfig
     {
-        void Save<T>();
     }
 }
