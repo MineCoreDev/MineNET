@@ -11,7 +11,7 @@ namespace MineNET.Inventories
     {
         private List<Player> viewers = new List<Player>();
 
-        private InventoryHolder holder;
+        protected InventoryHolder holder;
 
         private Dictionary<int, Item> slots = new Dictionary<int, Item>();
 
@@ -63,7 +63,7 @@ namespace MineNET.Inventories
                 return this.Clear(index, send);
             }
             Item old = this.GetItem(index);
-            this.slots.Add(index, item);
+            this.slots[index] = item;
             this.OnSlotChange(index, old, send);
             return true;
         }
@@ -200,6 +200,23 @@ namespace MineNET.Inventories
             return itemSlots.ToArray();
         }
 
+        public virtual bool Contains(Item item)
+        {
+            int count = Math.Max(1, item.Count);
+            foreach (Item slot in this.slots.Values)
+            {
+                if (item.Equals(slot))
+                {
+                    count -= slot.Count;
+                    if (count <= 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public virtual bool Clear(int index, bool send = true)
         {
             if (!this.slots.ContainsKey(index))
@@ -218,23 +235,6 @@ namespace MineNET.Inventories
             {
                 this.Clear(i, true);
             }
-        }
-
-        public virtual bool Contains(Item item)
-        {
-            int count = Math.Max(1, item.Count);
-            foreach (Item slot in this.slots.Values)
-            {
-                if (item.Equals(slot))
-                {
-                    count -= slot.Count;
-                    if (count <= 0)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
 
         public virtual void OnSlotChange(int index, Item item, bool send)
@@ -281,7 +281,7 @@ namespace MineNET.Inventories
                 return this.holder;
             }
 
-            set
+            protected set
             {
                 this.holder = value;
             }

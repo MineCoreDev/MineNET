@@ -156,12 +156,12 @@ namespace MineNET.Utils
 
         public Item ReadItem()
         {
-            int id = this.ReadVarInt();
+            int id = this.ReadSVarInt();
             if (id < 0)
             {
                 return Item.Get(0, 0, 0);
             }
-            int auxValue = this.ReadVarInt();
+            int auxValue = this.ReadSVarInt();
             int data = auxValue >> 8;
             if (data == short.MaxValue)
             {
@@ -177,7 +177,7 @@ namespace MineNET.Utils
             }
 
             //TODO
-            int canPlaceOn = this.ReadVarInt();
+            int canPlaceOn = this.ReadSVarInt();
             if (canPlaceOn > 0)
             {
                 for (int i = 0; i < canPlaceOn; ++i)
@@ -187,7 +187,7 @@ namespace MineNET.Utils
             }
 
             //TODO
-            int canDestroy = this.ReadVarInt();
+            int canDestroy = this.ReadSVarInt();
             if (canDestroy > 0)
             {
                 for (int i = 0; i < canDestroy; ++i)
@@ -202,17 +202,17 @@ namespace MineNET.Utils
         {
             if (item == null || item.ID == 0)
             {
-                this.WriteVarInt(0);
+                this.WriteSVarInt(0);
                 return;
             }
-            this.WriteVarInt(item.ID);
+            this.WriteSVarInt(item.ID);
             int auxValue = (((item.Damage != 0 ? item.Damage : -1) & 0x7fff) << 8) | item.Count;
-            this.WriteVarInt(auxValue);
+            this.WriteSVarInt(auxValue);
             byte[] nbt = item.Tags;
             this.WriteLShort((ushort) nbt.Length);
             this.WriteBytes(nbt);
-            this.WriteVarInt(0); //TODO
-            this.WriteVarInt(0); //TODO
+            this.WriteSVarInt(0); //TODO
+            this.WriteSVarInt(0); //TODO
         }
 
         //ReadEntityMetadata
