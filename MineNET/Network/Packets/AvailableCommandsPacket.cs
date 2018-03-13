@@ -96,7 +96,7 @@ namespace MineNET.Network.Packets
                             {
                                 type |= CommandParameter.ARG_FLAG_VALID;
                             }
-                            stream.WriteLInt((uint) type); //LInt
+                            stream.WriteLInt((uint) type);
                             stream.WriteBool(parameter.Optional);
                         }
                     }

@@ -130,7 +130,7 @@ namespace MineNET
             this.isShutdown = true;
         }
 
-        private async void AddPlayerList(Player player, PlayerListEntry entry)
+        private async void AddPlayerList(PlayerListEntry entry)
         {
             Player[] players = this.GetPlayers();
             for (int i = 0; i < players.Length; ++i)

@@ -2,7 +2,7 @@
 {
     public class CommandParameterInt : CommandParameter
     {
-        public CommandParameterInt(string name, bool optional = true, string postfix = null)
+        public CommandParameterInt(string name, bool optional = false, string postfix = null)
             : base(name, CommandParameter.ARG_TYPE_INT, optional, null, postfix)
         {
 

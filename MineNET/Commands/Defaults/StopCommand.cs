@@ -9,10 +9,8 @@ namespace MineNET.Commands.Defaults
         public StopCommand()
         {
             this.RemoveAllOverloads();
-            this.AddOverloads(new CommandOverload(new CommandParameter[]
-            {
-                new CommandParameterString("stopReason", true)
-            }));
+            this.AddOverloads(new CommandOverload());
+            this.AddOverloads(new CommandOverload(new CommandParameterString("stopReason", true)));
         }
 
         public override string Name

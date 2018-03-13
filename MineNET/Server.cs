@@ -150,7 +150,7 @@ namespace MineNET
             {
                 this.playerListEntries[player.EntityID] = entry;
                 this.SendPlayerLists(player);
-                this.AddPlayerList(player, entry);
+                this.AddPlayerList(entry);
             }
         }
 
@@ -159,9 +159,8 @@ namespace MineNET
             if (this.playerListEntries.ContainsKey(entityID))
             {
                 PlayerListEntry entry = this.playerListEntries[entityID];
-                this.playerListEntries.Remove(entityID);
-
                 this.RemovePlayerList(entry);
+                this.playerListEntries.Remove(entityID);
             }
         }
 
