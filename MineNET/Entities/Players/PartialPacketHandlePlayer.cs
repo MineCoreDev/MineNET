@@ -229,16 +229,17 @@ namespace MineNET.Entities.Players
                         new Chunk(i, j).TestChunkSend(this);
                     }
                 }
-                PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, "", "");
-                PlayerEvents.OnPlayerJoin(playerJoinEvent);
-                if (playerJoinEvent.IsCancel)
-                {
-                    this.Close(playerJoinEvent.KickMessage);
-                    return;
-                }
-
-                this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
             });
+
+            PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, "", "");
+            PlayerEvents.OnPlayerJoin(playerJoinEvent);
+            if (playerJoinEvent.IsCancel)
+            {
+                this.Close(playerJoinEvent.KickMessage);
+                return;
+            }
+
+            this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
 
             this.HasSpawned = true;
 

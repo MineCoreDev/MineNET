@@ -23,12 +23,12 @@ namespace MineNET.NBT.IO.Tests
             tag.PutByteArray("byteArray", ArrayUtils.CreateArray<byte>(200));
             tag.PutShort("short", 12345);
             tag.PutInt("int", 12345678);
-            //tag.PutIntArray("intArray", ArrayUtils.CreateArray<int>(200));
+            tag.PutIntArray("intArray", ArrayUtils.CreateArray<int>(200));
             tag.PutLong("long", 123456789123456);
-            //tag.PutLongArray("longArray", ArrayUtils.CreateArray<long>(200));
+            tag.PutLongArray("longArray", ArrayUtils.CreateArray<long>(200));
             tag.PutFloat("float", 12.3456f);
             tag.PutDouble("double", 12.3456789);
-            //tag.PutList(list);
+            tag.PutList(list);
             tag.PutCompound("com", subTag);
             NBTIO.WriteRawFile(Environment.CurrentDirectory + "\\test.nbt", tag);
         }

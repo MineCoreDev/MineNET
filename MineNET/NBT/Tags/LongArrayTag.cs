@@ -31,22 +31,53 @@ namespace MineNET.NBT.Tags
 
         internal override void Write(NBTStream stream)
         {
-            throw new NotImplementedException();
+            int len = this.Data.Length;
+            stream.WriteInt(len);
+            for (int i = 0; i < len; ++i)
+            {
+                stream.WriteLong(this.Data[i]);
+            }
         }
 
         internal override void WriteTag(NBTStream stream)
         {
-            throw new NotImplementedException();
+            int len = this.Data.Length;
+            if (!string.IsNullOrEmpty(this.Name))
+            {
+                stream.WriteByte((byte) this.TagType);
+                stream.WriteString(this.Name);
+                stream.WriteInt(len);
+                for (int i = 0; i < len; ++i)
+                {
+                    stream.WriteLong(this.Data[i]);
+                }
+            }
+            else
+            {
+                throw new NullReferenceException("Tag Name Null");
+            }
         }
 
         internal override void Read(NBTStream stream)
         {
-            throw new NotImplementedException();
+            int len = stream.ReadInt();
+            this.Data = new long[len];
+            for (int i = 0; i < len; ++i)
+            {
+                this.Data[i] = stream.ReadLong();
+            }
         }
 
         internal override void ReadTag(NBTStream stream)
         {
-            throw new NotImplementedException();
+            stream.ReadByte();
+            string name = stream.ReadString();
+            int len = stream.ReadInt();
+            this.Data = new long[len];
+            for (int i = 0; i < len; ++i)
+            {
+                this.Data[i] = stream.ReadLong();
+            }
         }
 
         public override bool Equals(object obj)

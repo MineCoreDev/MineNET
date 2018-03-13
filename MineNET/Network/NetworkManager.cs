@@ -65,6 +65,7 @@ namespace MineNET.Network
             if (this.players.ContainsKey(id))
             {
                 this.identifierACKs.Remove(id);
+                this.players[id].Close("");
                 this.players.Remove(id);
             }
         }

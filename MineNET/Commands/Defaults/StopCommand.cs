@@ -11,7 +11,8 @@ namespace MineNET.Commands.Defaults
             this.RemoveAllOverloads();
             this.AddOverloads(new CommandOverload(new CommandParameter[]
             {
-                new CommandParameterString("stopReason", true)
+                //new CommandParameterString("stopReason", true),
+                new CommandParameterInt("value", false, "Level")
             }));
         }
 

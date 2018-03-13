@@ -90,7 +90,7 @@ namespace MineNET.Network.Packets
                             {
                                 postFixes.Add(parameter.Postfix);
                                 int key = postFixes.Count - 1;
-                                type = type | CommandParameter.ARG_FLAG_POSTFIX | key; //TODO
+                                type |= CommandParameter.ARG_FLAG_VALID | CommandParameter.ARG_FLAG_POSTFIX | key;
                             }
                             else
                             {

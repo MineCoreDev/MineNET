@@ -105,12 +105,26 @@ namespace MineNET.NBT.Tags
 
         internal override void Write(NBTStream stream)
         {
-            throw new NotImplementedException();
+            stream.WriteByte((byte) this.ListTagType);
+            stream.WriteInt(this.Tags.Count);
+            for (int i = 0; i < this.Tags.Count; ++i)
+            {
+                this.Tags[i].Write(stream);
+            }
         }
 
         internal override void WriteTag(NBTStream stream)
         {
-            throw new NotImplementedException();
+            if (!string.IsNullOrEmpty(this.Name))
+            {
+                stream.WriteByte((byte) this.TagType);
+                stream.WriteString(this.Name);
+                this.Write(stream);
+            }
+            else
+            {
+                throw new NullReferenceException("Tag Name Null");
+            }
         }
 
         internal override void Read(NBTStream stream)
@@ -165,6 +179,13 @@ namespace MineNET.NBT.Tags
                     case NBTTagType.INT_ARRAY:
                         tag = new IntArrayTag(new int[0]);
                         break;
+
+                    case NBTTagType.LONG_ARRAY:
+                        tag = new LongArrayTag(new long[0]);
+                        break;
+
+                    default:
+                        throw new NotSupportedException();
                 }
 
                 tag.Read(stream);
