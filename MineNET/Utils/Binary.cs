@@ -496,7 +496,7 @@ namespace MineNET.Utils
                 WriteUVarInt(ref span, 0);
                 return;
             }
-            WriteUVarInt(ref span, (uint) value.Length);
+            WriteUVarInt(ref span, (uint) buf.Length);
             WriteBytes(ref span, buf);
         }
 

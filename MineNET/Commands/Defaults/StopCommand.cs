@@ -28,7 +28,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "Stop Command";//TODO: 日本語が入ると正常に動かない this.LangDescription();
+                return this.LangDescription();
             }
         }
 
