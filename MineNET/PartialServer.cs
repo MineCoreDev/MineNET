@@ -27,6 +27,7 @@ namespace MineNET
         private PluginManager pluginManager;
 
         private Dictionary<long, PlayerListEntry> playerListEntries = new Dictionary<long, PlayerListEntry>();
+        private Dictionary<long, AdventureSettingsEntry> adventureSettingsEntry = new Dictionary<long, AdventureSettingsEntry>();
 
         private Logger logger;
 
@@ -157,6 +158,20 @@ namespace MineNET
                 playerListPacket.Type = PlayerListPacket.TYPE_REMOVE;
                 playerListPacket.Entries = new PlayerListEntry[] { entry };
                 players[i].SendPacket(playerListPacket);
+            }
+        }
+
+        private void AddAdventureSettings(AdventureSettingsEntry entry)
+        {
+            Player[] players = this.GetPlayers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (players[i].HasSpawned)
+                {
+                    AdventureSettingsPacket pk = new AdventureSettingsPacket();
+                    pk.Entry = entry;
+                    players[i].SendPacket(pk);
+                }
             }
         }
     }

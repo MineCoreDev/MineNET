@@ -207,18 +207,6 @@ namespace MineNET.Entities.Players
             availableCommandsPacket.commands = Server.Instance.CommandManager.CommandList;
             this.SendPacket(availableCommandsPacket);
 
-            AdventureSettingsPacket adventureSettingsPacket = new AdventureSettingsPacket();
-            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, false);
-            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.NO_PVP, false);
-            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.AUTO_JUMP, false);
-            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, false);
-            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
-            adventureSettingsPacket.SetFlag(AdventureSettingsPacket.FLYING, false);
-            adventureSettingsPacket.EntityUniqueId = this.EntityID;
-            this.SendPacket(adventureSettingsPacket);
-
-            this.SendDataProperties();
-
             //InventoryContent
             //MobArmorEquipment
             //inventoryContent
@@ -261,7 +249,17 @@ namespace MineNET.Entities.Players
             this.SendPacket(gameRulesChangedPacket);
 
             PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, this.ClientData.Skin, this.LoginData.XUID);
-            Server.Instance.AddPlayer(this, entry);
+            AdventureSettingsEntry adventureSettingsEntry = new AdventureSettingsEntry();
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.WORLD_IMMUTABLE, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.NO_PVP, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.AUTO_JUMP, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.ALLOW_FLIGHT, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.NO_CLIP, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.FLYING, false);
+            adventureSettingsEntry.EntityUniqueId = this.EntityID;
+            Server.Instance.AddPlayer(this, entry, adventureSettingsEntry);
+
+            this.SendDataProperties();
         }
     }
 }
