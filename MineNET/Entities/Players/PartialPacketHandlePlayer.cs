@@ -4,7 +4,6 @@ using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Utils;
 using MineNET.Values;
-using MineNET.Worlds;
 using MineNET.Worlds.Data;
 
 namespace MineNET.Entities.Players
@@ -220,13 +219,7 @@ namespace MineNET.Entities.Players
         {
             await Task.Run(() =>
             {
-                for (int i = ((int) this.X >> 4) - this.RequestChunkRadius; i < ((int) this.X >> 4) + this.RequestChunkRadius; ++i)
-                {
-                    for (int j = ((int) this.Z >> 4) - this.RequestChunkRadius; j < ((int) this.Z >> 4) + this.RequestChunkRadius; ++j)
-                    {
-                        new Chunk(i, j).TestChunkSend(this);
-                    }
-                }
+                Logger.Fatal("World Rewriteing... World Not Gen...(現在、ワールド書き直し中...　ワールドは生成されません。)")
             });
 
             PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, "", "");

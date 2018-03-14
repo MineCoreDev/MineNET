@@ -185,6 +185,11 @@ namespace MineNET.Entities
 
         }
 
+        public virtual void SaveNBT()
+        {
+
+        }
+
         public virtual void Close()
         {
 

@@ -225,4 +225,13 @@
   <data name="server_language_key_error" xml:space="preserve">
     <value>&lt;{0}&gt;というキーは見つかりませんでした。</value>
   </data>
+  <data name="config_error" xml:space="preserve">
+    <value>Configのロード中にエラーが発生しました。</value>
+  </data>
+  <data name="config_error2" xml:space="preserve">
+    <value>削除して再生成する事をおすすめします。</value>
+  </data>
+  <data name="sever_exception" xml:space="preserve">
+    <value>MineNETサーバーでエラーが発生しました。</value>
+  </data>
 </root>

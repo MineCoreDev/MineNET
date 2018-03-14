@@ -102,5 +102,10 @@ namespace MineNET.Utils
         {
             this.arrayData = new byte[size / 2];
         }
+
+        public NibbleArray(byte[] data)
+        {
+            this.arrayData = data;
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using MineNET.Utils;
-using MineNET.Worlds.Formats;
 
 namespace MineNET.Worlds
 {
@@ -59,20 +58,6 @@ namespace MineNET.Worlds
             set
             {
                 this.blockLigth = value;
-            }
-        }
-
-        public IChunkFormat format;
-        IChunkFormat ChunkFormat
-        {
-            get
-            {
-                return this.format;
-            }
-
-            set
-            {
-                this.format = value;
             }
         }
 

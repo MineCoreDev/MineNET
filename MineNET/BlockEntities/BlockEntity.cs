@@ -70,7 +70,7 @@ namespace MineNET.BlockEntities
             get;
         }
 
-        public BlockEntity Clone()
+        public virtual BlockEntity Clone()
         {
             return (BlockEntity) this.MemberwiseClone();
         }
@@ -80,7 +80,12 @@ namespace MineNET.BlockEntities
             return this.MemberwiseClone();
         }
 
-        public void OnUpdate()
+        public virtual void OnUpdate()
+        {
+
+        }
+
+        public virtual void SaveNBT()
         {
 
         }

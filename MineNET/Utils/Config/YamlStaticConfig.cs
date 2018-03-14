@@ -1,7 +1,8 @@
-﻿using MineNET.Utils.Config.Yaml;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
+using MineNET.Utils.Config.Yaml;
+using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
 namespace MineNET.Utils.Config
@@ -12,24 +13,34 @@ namespace MineNET.Utils.Config
 
         public static T Load<T>(string filePath) where T : YamlStaticConfig
         {
-            if (File.Exists(filePath))
+            try
             {
-                using (StreamReader r = new StreamReader(filePath, false))
+                if (File.Exists(filePath))
                 {
-                    Deserializer s = new DeserializerBuilder()
-                        .Build();
-                    YamlStaticConfig conv = s.Deserialize<T>(r);
+                    using (StreamReader r = new StreamReader(filePath, false))
+                    {
+                        Deserializer s = new DeserializerBuilder()
+                            .Build();
+                        YamlStaticConfig conv = s.Deserialize<T>(r);
+                        conv.filePath = filePath;
+                        return (T) Convert.ChangeType(conv, typeof(T));
+                    }
+                }
+                else
+                {
+                    object ins = Activator.CreateInstance(typeof(T));
+                    YamlStaticConfig conv = (YamlStaticConfig) ins;
                     conv.filePath = filePath;
-                    return (T) Convert.ChangeType(conv, typeof(T));
+                    conv.Save<T>();
+                    return (T) conv;
                 }
             }
-            else
+            catch (YamlException e)
             {
-                object ins = Activator.CreateInstance(typeof(T));
-                YamlStaticConfig conv = (YamlStaticConfig) ins;
-                conv.filePath = filePath;
-                conv.Save<T>();
-                return (T) conv;
+                Logger.Error(e);
+                Logger.Error("%config_error");
+                Logger.Notice("%config_error2");
+                throw new ServerException();
             }
         }
 

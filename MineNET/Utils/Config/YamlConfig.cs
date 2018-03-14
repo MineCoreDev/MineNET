@@ -1,5 +1,10 @@
-﻿using System.IO;
-using YamlDotNet.RepresentationModel;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using MineNET.Utils.Config.Yaml;
+using YamlDotNet.Core;
+using YamlDotNet.Serialization;
 
 namespace MineNET.Utils.Config
 {
@@ -7,39 +12,66 @@ namespace MineNET.Utils.Config
     {
         public static YamlConfig Load(string filePath)
         {
-            using (StreamReader reader = new StreamReader(filePath))
+            try
             {
-                YamlConfig config = new YamlConfig();
-                config.FilePath = filePath;
-                config.stream.Load(reader);
-                return config;
+                if (File.Exists(filePath))
+                {
+                    using (StreamReader r = new StreamReader(filePath, false))
+                    {
+                        Deserializer s = new DeserializerBuilder()
+                            .Build();
+                        YamlConfig conv = s.Deserialize<YamlConfig>(r);
+                        conv.FilePath = filePath;
+                        return (YamlConfig) Convert.ChangeType(conv, typeof(YamlConfig));
+                    }
+                }
+                else
+                {
+                    object ins = Activator.CreateInstance(typeof(YamlConfig));
+                    YamlConfig conv = (YamlConfig) ins;
+                    conv.FilePath = filePath;
+                    conv.Save();
+                    return (YamlConfig) conv;
+                }
             }
-
+            catch (YamlException e)
+            {
+                Logger.Error(e);
+                Logger.Error("%config_error");
+                Logger.Notice("%config_error2");
+                throw new ServerException();
+            }
         }
 
-        private YamlStream stream;
+        [YamlIgnore]
         public string FilePath { get; private set; }
-
-        public YamlConfig()
-        {
-            stream = new YamlStream();
-        }
-
-        public YamlDocument Read(int index)
-        {
-            return stream.Documents[index];
-        }
-
-        public void Write(YamlDocument doc)
-        {
-            stream.Documents.Add(doc);
-        }
+        public Dictionary<string, object> Datas { get; set; } = new Dictionary<string, object>();
 
         public void Save()
         {
-            using (StreamWriter writer = new StreamWriter(this.FilePath))
+            if (File.Exists(this.FilePath))
             {
-                stream.Save(writer);
+                StreamWriter w = new StreamWriter(this.FilePath, false, Encoding.UTF8);
+                SerializerBuilder sb = new SerializerBuilder()
+                    .EmitDefaults()
+                    .WithTypeInspector(inner => new CommentTypeInspector(inner))
+                    .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
+                Serializer s = sb.Build();
+                s.Serialize(w, this, typeof(YamlConfig));
+                w.Close();
+            }
+            else
+            {
+                FileStream file = File.Create(this.FilePath);
+                file.Close();
+                StreamWriter w = new StreamWriter(this.FilePath, false, Encoding.UTF8);
+                SerializerBuilder sb = new SerializerBuilder()
+                    .EmitDefaults()
+                    .WithTypeInspector(inner => new CommentTypeInspector(inner))
+                    .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
+                Serializer s = sb.Build();
+                s.Serialize(w, this, typeof(YamlConfig));
+                w.Close();
             }
         }
     }

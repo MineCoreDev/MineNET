@@ -722,6 +722,7 @@
     <Compile Include="RakNet\RakNetServer.cs" />
     <Compile Include="RakNet\RakNetSession.cs" />
     <Compile Include="ServerConfig.cs" />
+    <Compile Include="ServerException.cs" />
     <Compile Include="Utils\Binary.cs" />
     <Compile Include="Utils\BinaryStream.cs" />
     <Compile Include="Utils\Config\Yaml\Attributes\YamlDescriptionAttribute.cs" />
@@ -759,7 +760,13 @@
     <Compile Include="Worlds\Data\GameRule.cs" />
     <Compile Include="Worlds\Data\GameRuleBase.cs" />
     <Compile Include="Worlds\Data\GameRules.cs" />
-    <Compile Include="Worlds\Formats\IChunkFormat.cs" />
+    <Compile Include="Worlds\Formats\ChunkFormats\IChunkFormat.cs" />
+    <Compile Include="Worlds\Formats\WorldDataFormats\IWorldDataFormat.cs" />
+    <Compile Include="Worlds\Formats\ChunkFormats\McaChunkFormat.cs" />
+    <Compile Include="Worlds\Formats\WorldDataFormats\LevelDBFormat.cs" />
+    <Compile Include="Worlds\Formats\WorldSaveFormats\IWorldSaveFormat.cs" />
+    <Compile Include="Worlds\Formats\WorldSaveFormats\MineNETWorldSaveFormat.cs" />
+    <Compile Include="Worlds\Formats\WorldSaveFormats\RegionWorldSaveFormat.cs" />
     <Compile Include="Worlds\SubChunk.cs" />
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>

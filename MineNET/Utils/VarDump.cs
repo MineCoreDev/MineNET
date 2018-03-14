@@ -78,7 +78,7 @@ namespace MineNET.Utils
                     }
                 }
 
-                foreach (FieldInfo f in fields)
+                /*foreach (FieldInfo f in fields)
                 {
                     try
                     {
@@ -131,7 +131,7 @@ namespace MineNET.Utils
                     catch
                     {
                     }
-                }
+                }*/
             }
 
             return builder.ToString();
