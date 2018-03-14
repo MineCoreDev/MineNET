@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MineNET.Blocks;
 using MineNET.Entities.Players;
+using MineNET.Events.InventoryEvents;
 using MineNET.Items;
 using MineNET.Network.Packets;
 
@@ -297,7 +298,12 @@ namespace MineNET.Inventories
 
         public virtual bool Open(Player player)
         {
-            //TODO : InventoryOpenEvent
+            InventoryOpenEventArgs inventoryOpenEventArgs = new InventoryOpenEventArgs(this, player);
+            InventoryEvents.OnInventoryOpen(inventoryOpenEventArgs);
+            if (inventoryOpenEventArgs.IsCancel)
+            {
+                return false;
+            }
             this.OnOpen(player);
             return true;
         }
@@ -309,7 +315,8 @@ namespace MineNET.Inventories
 
         public virtual void Close(Player player)
         {
-            //TODO : InventoryCloseEvent
+            InventoryCloseEventArgs inventoryCloseEventArgs = new InventoryCloseEventArgs(this, player);
+            InventoryEvents.OnInventoryClose(inventoryCloseEventArgs);
             this.OnClose(player);
         }
 
