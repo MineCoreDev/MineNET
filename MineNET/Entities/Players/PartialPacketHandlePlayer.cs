@@ -219,7 +219,7 @@ namespace MineNET.Entities.Players
         {
             await Task.Run(() =>
             {
-                Logger.Fatal("World Rewriteing... World Not Gen...(現在、ワールド書き直し中...　ワールドは生成されません。)")
+                Logger.Fatal("World Rewriteing... World Not Gen...(現在、ワールド書き直し中...　ワールドは生成されません。)");
             });
 
             PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, "", "");
