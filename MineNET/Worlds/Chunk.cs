@@ -38,42 +38,34 @@ namespace MineNET.Worlds
         public byte[] Biomes { get; private set; } = ArrayUtils.CreateArray<byte>(256);
         public short[] HeightMap { get; private set; } = ArrayUtils.CreateArray<short>(256);
 
-
         SubChunk[] subChunks = ArrayUtils.CreateArray<SubChunk>(16);
         List<Entity> entities = new List<Entity>();
+        ListTag<CompoundTag> entitiesTag = new ListTag<CompoundTag>();
         List<BlockEntity> blockEntities = new List<BlockEntity>();
+        ListTag<CompoundTag> blockEntitiesTag = new ListTag<CompoundTag>();
 
-
-        public Chunk(int x, int z, SubChunk[] chunkDatas, byte[] biomes, short[] heightMap, ListTag<CompoundTag> entitiesTag, ListTag<CompoundTag> blockEntitiesTag)
+        public Chunk(int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null, short[] heightMap = null, ListTag<CompoundTag> entitiesTag = null, ListTag<CompoundTag> blockEntitiesTag = null)
         {
             this.x = x;
             this.z = z;
 
-            //TODO: remove...
-            SubChunk flat = new SubChunk();
-            for (int i = 0; i < 16; ++i)//X
+            if (biomes != null)
             {
-                for (int j = 0; j < 16; ++j)//Z
-                {
-                    for (int k = 0; k < 16; ++k)//Y
-                    {
-                        if (k == 0)
-                        {
-                            flat.SetBlock(i, k, j, 7);
-                        }
-                        else if (k == 1 || k == 2)
-                        {
-                            flat.SetBlock(i, k, j, 3);
-                        }
-                        else if (k == 3)
-                        {
-                            flat.SetBlock(i, k, j, 2);
-                        }
-                    }
-                }
+                this.Biomes = biomes;
             }
 
-            this.subChunks[0] = flat;
+            if (heightMap != null)
+            {
+                this.HeightMap = heightMap;
+            }
+
+            if (chunkDatas != null)
+            {
+                this.subChunks = chunkDatas;
+            }
+
+            this.entitiesTag = entitiesTag;
+            this.blockEntitiesTag = blockEntitiesTag;
         }
 
         public void SendChunk(Player player)
@@ -101,6 +93,34 @@ namespace MineNET.Worlds
             return this.blockEntities.ToArray();
         }
 
+        public void GenerationFlat()
+        {
+            SubChunk flat = new SubChunk();
+            for (int i = 0; i < 16; ++i)//X
+            {
+                for (int j = 0; j < 16; ++j)//Z
+                {
+                    for (int k = 0; k < 16; ++k)//Y
+                    {
+                        if (k == 0)
+                        {
+                            flat.SetBlock(i, k, j, 7);
+                        }
+                        else if (k == 1 || k == 2)
+                        {
+                            flat.SetBlock(i, k, j, 3);
+                        }
+                        else if (k == 3)
+                        {
+                            flat.SetBlock(i, k, j, 2);
+                        }
+                    }
+                }
+            }
+
+            this.subChunks[0] = flat;
+        }
+
         public byte[] GetBytes()
         {
             using (BinaryStream stream = new BinaryStream())
@@ -122,7 +142,7 @@ namespace MineNET.Worlds
 
                 byte[] b1 = new byte[512];
                 Buffer.BlockCopy(HeightMap, 0, b1, 0, 512);
-                stream.WriteBytes(Biomes);
+                stream.WriteBytes(b1);
                 stream.WriteByte(0);
                 stream.WriteSVarInt(0);
 

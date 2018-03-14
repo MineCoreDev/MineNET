@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using MineNET.Blocks;
 using MineNET.Entities.Players;
+using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds.Formats.WorldSaveFormats;
 
@@ -75,8 +76,9 @@ namespace MineNET.Worlds
         {
             for (int i = (chunkX - requestRadius); i < (chunkX + requestRadius); ++i)
             {
-                for (int j = (chunkZ - requestRadius); j < (chunkZ - requestRadius); ++j)
+                for (int j = (chunkZ - requestRadius); j < (chunkZ + requestRadius); ++j)
                 {
+                    Logger.Info("Send");
                     this.Format.GetChunk(i, j).SendChunk(player);
                 }
             }

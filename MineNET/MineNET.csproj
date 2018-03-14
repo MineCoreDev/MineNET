@@ -760,6 +760,7 @@
     <Compile Include="Worlds\Data\GameRule.cs" />
     <Compile Include="Worlds\Data\GameRuleBase.cs" />
     <Compile Include="Worlds\Data\GameRules.cs" />
+    <Compile Include="Worlds\Data\RegionFile.cs" />
     <Compile Include="Worlds\Formats\ChunkFormats\IChunkFormat.cs" />
     <Compile Include="Worlds\Formats\WorldDataFormats\IWorldDataFormat.cs" />
     <Compile Include="Worlds\Formats\ChunkFormats\McaChunkFormat.cs" />

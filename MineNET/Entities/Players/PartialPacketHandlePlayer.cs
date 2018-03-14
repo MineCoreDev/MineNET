@@ -4,7 +4,9 @@ using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Utils;
 using MineNET.Values;
+using MineNET.Worlds;
 using MineNET.Worlds.Data;
+using MineNET.Worlds.Formats.WorldSaveFormats;
 
 namespace MineNET.Entities.Players
 {
@@ -219,7 +221,10 @@ namespace MineNET.Entities.Players
         {
             await Task.Run(() =>
             {
-                Logger.Fatal("World Rewriteing... World Not Gen...(現在、ワールド書き直し中...　ワールドは生成されません。)");
+                World w = new World();
+                w.Format = new RegionWorldSaveFormat("test");
+                w.LoadChunk(this, (int) this.X >> 4, (int) this.Z >> 4, this.RequestChunkRadius);
+                //Logger.Fatal("World Rewriteing... World Not Gen...(現在、ワールド書き直し中...　ワールドは生成されません。)");
             });
 
             PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, "", "");

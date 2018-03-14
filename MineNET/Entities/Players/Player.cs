@@ -28,7 +28,7 @@ namespace MineNET.Entities.Players
         public bool PackSyncCompleted { get; private set; }
         public bool HasSpawned { get; private set; }
 
-        public int RequestChunkRadius = 5;
+        public int RequestChunkRadius { get; private set; } = 5;
 
         public override float WIDTH
         {
