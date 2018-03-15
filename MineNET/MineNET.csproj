@@ -747,6 +747,7 @@
     <Compile Include="Utils\IConfig.cs" />
     <Compile Include="Utils\JWT.cs" />
     <Compile Include="Utils\LangManager.cs" />
+    <Compile Include="Utils\LinqExtention.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\MCBEBinary.cs" />
     <Compile Include="Utils\Math.cs" />

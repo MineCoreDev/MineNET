@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using MineNET.Blocks;
 using MineNET.NBT.IO;
@@ -57,8 +58,13 @@ namespace MineNET.Items
                 int id = item.Value<int>("id");
                 int damage = item.Value<int>("damage");
                 string tags = item.Value<string>("nbt_hex");
+                byte[] nbt = null;
+                if (!string.IsNullOrEmpty(tags))
+                {
+                    nbt = tags.Chunks(2).Select(x => Convert.ToByte(new string(x.ToArray()), 16)).ToArray();
+                }
 
-                Item.AddCreativeItem(Item.Get(id, damage));
+                Item.AddCreativeItem(Item.Get(id, damage, tags: nbt));
             }
         }
 
