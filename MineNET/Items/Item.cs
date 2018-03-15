@@ -13,7 +13,7 @@ namespace MineNET.Items
 {
     public class Item : ICloneable<Item>
     {
-        static List<Item> creativeItems = new List<Item>();
+        private static List<Item> creativeItems = new List<Item>();
 
         public static Item Get(int id, int meta = 0, int count = 1, byte[] tags = null)
         {
@@ -46,6 +46,11 @@ namespace MineNET.Items
         public static void AddCreativeItems(params Item[] items)
         {
             creativeItems.AddRange(items);
+        }
+
+        public static Item[] GetCreativeItems()
+        {
+            return Item.creativeItems.ToArray();
         }
 
         public static void LoadCreativeItems()

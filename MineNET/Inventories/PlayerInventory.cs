@@ -97,6 +97,15 @@ namespace MineNET.Inventories
             }
         }
 
+        public void SendCreativeItems()
+        {
+            Player player = this.Holder;
+            InventoryContentPacket pk = new InventoryContentPacket();
+            pk.InventoryId = ContainerIds.CREATIVE.GetIndex();
+            pk.Items = Item.GetCreativeItems();
+            player.SendPacket(pk);
+        }
+
         public Item GetItemMainHand()
         {
             return this.GetItem(this.mainHand);

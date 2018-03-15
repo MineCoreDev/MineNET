@@ -66,6 +66,7 @@ namespace MineNET.Inventories
         public override void SendContents(params Player[] players)
         {
             base.SendContents(players);
+            this.SendArmorContents(players);
         }
 
         public void SendArmorContents(params Player[] players)
@@ -94,6 +95,19 @@ namespace MineNET.Inventories
             for (int i = 0; i < items.Length; ++i)
             {
                 this.SetItem(i, items[i]);
+            }
+        }
+
+        public new Player Holder
+        {
+            get
+            {
+                return (Player) this.holder;
+            }
+
+            protected set
+            {
+                this.holder = value;
             }
         }
 
