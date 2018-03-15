@@ -13,8 +13,6 @@ namespace MineNET.Entities.Players
 
         public Player()
         {
-            this.inventory = new PlayerInventory(this);
-
             this.ShowNameTag = true;
             this.AlwaysShowNameTag = true;
 
@@ -33,17 +31,22 @@ namespace MineNET.Entities.Players
             {
                 this.namedTag = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
             }
+
+            this.inventory = new PlayerInventory(this);
         }
 
         private void RegisterData()
         {
             CompoundTag item = NBTIO.WriteItem(Item.Get(0));
             this.namedTag = new CompoundTag();
-            this.namedTag.PutList(new ListTag<CompoundTag>("Armor"));
-            for (int i = 0; i < 4; ++i)
-            {
-                this.namedTag.GetList<CompoundTag>("Armor").Add(item);
-            }
+            this.namedTag.PutList(new ListTag<CompoundTag>("Attributes"));
+
+            this.namedTag.PutList(new ListTag<FloatTag>("Pos"));
+            this.namedTag.PutList(new ListTag<FloatTag>("Rotation"));
+
+            this.namedTag.PutInt("PlayerGameMode", int.Parse(Server.ServerConfig.GameMode));
+            this.namedTag.PutInt("PlayerLevel", 0);
+            this.namedTag.PutFloat("PlayerLevelProgress", 0f);
         }
 
         private int FixRadius(int radius)

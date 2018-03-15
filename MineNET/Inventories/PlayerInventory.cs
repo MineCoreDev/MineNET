@@ -1,6 +1,8 @@
 ﻿using MineNET.Data;
 using MineNET.Entities.Players;
 using MineNET.Items;
+using MineNET.NBT.IO;
+using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 
@@ -18,6 +20,26 @@ namespace MineNET.Inventories
 
         public PlayerInventory(Player player) : base(player)
         {
+            if (!player.namedTag.Exist("Inventory"))
+            {
+                player.namedTag.PutList(new ListTag<CompoundTag>("Inventory"));
+                for (int i = 0; i < this.Size; ++i)
+                {
+                    player.namedTag.GetList<CompoundTag>("Inventory").Add(NBTIO.WriteItem(Item.Get(0), i));
+                }
+            }
+            for (int i = 0; i < this.Size; ++i)
+            {
+                Item item = NBTIO.ReadItem(player.namedTag.GetList<CompoundTag>("Inventory")[i]);
+                this.SetItem(i, item, false);
+            }
+
+            if (!player.namedTag.Exist("Mainhand"))
+            {
+                player.namedTag.PutInt("Mainhand", 0);
+            }
+            this.mainHand = player.namedTag.GetInt("Mainhand");
+
             this.cursor = new PlayerCursorInventory(player);
             this.offhand = new PlayerOffhandInventory(player);
             this.armor = new ArmorInventory(player);

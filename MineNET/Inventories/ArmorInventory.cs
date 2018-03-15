@@ -2,6 +2,8 @@
 using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.Items;
+using MineNET.NBT.IO;
+using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 
@@ -16,7 +18,19 @@ namespace MineNET.Inventories
 
         public ArmorInventory(EntityLiving entity) : base(entity)
         {
-
+            if (!entity.namedTag.Exist("Armor"))
+            {
+                entity.namedTag.PutList(new ListTag<CompoundTag>("Armor"));
+                for (int i = 0; i < this.Size; ++i)
+                {
+                    entity.namedTag.GetList<CompoundTag>("Armor").Add(NBTIO.WriteItem(Item.Get(0), i));
+                }
+            }
+            for (int i = 0; i < this.Size; ++i)
+            {
+                Item item = NBTIO.ReadItem(entity.namedTag.GetList<CompoundTag>("Armor")[i]);
+                this.SetItem(i, item, false);
+            }
         }
 
         public override int Size

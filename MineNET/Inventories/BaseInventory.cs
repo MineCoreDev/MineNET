@@ -14,7 +14,7 @@ namespace MineNET.Inventories
 
         protected InventoryHolder holder;
 
-        private Dictionary<int, Item> slots = new Dictionary<int, Item>();
+        protected Dictionary<int, Item> slots = new Dictionary<int, Item>();
 
         public BaseInventory(InventoryHolder holder, Dictionary<int, Item> items = null)
         {
