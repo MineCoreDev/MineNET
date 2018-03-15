@@ -678,6 +678,11 @@
     <Compile Include="Plugins\PluginBase.cs" />
     <Compile Include="Plugins\PluginException.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="Resources\Data\ResourceData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceData.resx</DependentUpon>
+    </Compile>
     <Compile Include="Server.cs" />
     <Compile Include="NBT\Tags\ByteArrayTag.cs" />
     <Compile Include="NBT\Tags\ByteTag.cs" />
@@ -768,6 +773,10 @@
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Data\ResourceData.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Lang\ja_JP.resx" />
   </ItemGroup>
   <ItemGroup>
@@ -775,6 +784,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\CreativeItems.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
