@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using MineNET.Blocks;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
+using MineNET.Resources.Data;
 using MineNET.Utils;
+using Newtonsoft.Json.Linq;
 
 namespace MineNET.Items
 {
     public class Item : ICloneable<Item>
     {
+        static List<Item> creativeItems = new List<Item>();
+
         public static Item Get(int id, int meta = 0, int count = 1, byte[] tags = null)
         {
             Item item = ItemFactory.GetItem(id);
@@ -19,6 +25,41 @@ namespace MineNET.Items
             }
             item.tags = tags;
             return item;
+        }
+
+        public static void AddCreativeItem(Item item)
+        {
+            creativeItems.Add(item);
+        }
+
+        public static void RemoveCreativeItem(Item item)
+        {
+            creativeItems.Remove(item);
+        }
+
+        public static void RemoveCreativeItem(int index)
+        {
+            creativeItems.RemoveAt(index);
+        }
+
+        public static void AddCreativeItems(params Item[] items)
+        {
+            creativeItems.AddRange(items);
+        }
+
+        public static void LoadCreativeItems()
+        {
+            string data = Encoding.UTF8.GetString(ResourceData.CreativeItems);
+            JObject json = JObject.Parse(data);
+            JToken items = json.GetValue("items");
+            foreach (JObject item in items)
+            {
+                int id = item.Value<int>("id");
+                int damage = item.Value<int>("damage");
+                string tags = item.Value<string>("nbt_hex");
+
+                Item.AddCreativeItem(Item.Get(id, damage));
+            }
         }
 
         public static Item Get(string name)

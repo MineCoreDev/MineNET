@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Players;
+using MineNET.Items;
 using MineNET.Network;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
@@ -54,6 +55,8 @@ namespace MineNET
             }
 
             Logger.Info("%server_start");
+
+            Item.LoadCreativeItems();
 
             this.commandManager = new CommandManager();
             this.pluginManager = new PluginManager();
