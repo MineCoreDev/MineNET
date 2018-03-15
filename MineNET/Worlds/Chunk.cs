@@ -141,8 +141,9 @@ namespace MineNET.Worlds
                 }
 
                 byte[] b1 = new byte[512];
-                Buffer.BlockCopy(HeightMap, 0, b1, 0, 512);
+                Buffer.BlockCopy(this.HeightMap, 0, b1, 0, 512);
                 stream.WriteBytes(b1);
+                stream.WriteBytes(this.Biomes);
                 stream.WriteByte(0);
                 stream.WriteSVarInt(0);
 
