@@ -678,6 +678,19 @@
     <Compile Include="Plugins\PluginBase.cs" />
     <Compile Include="Plugins\PluginException.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_1.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_2.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_3.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_5.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_6.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_7.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_D.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_E.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_F.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_B.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_9.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_A.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_8.cs" />
     <Compile Include="Resources\Data\ResourceData.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

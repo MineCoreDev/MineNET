@@ -360,13 +360,13 @@ namespace MineNET.RakNet
                 this.ackQueue.Clear();
             }
 
-            if (this.nackQueue.Count > 0)
+            /*if (this.nackQueue.Count > 0)
             {
                 NACK nack = new NACK();
                 nack.packets = this.nackQueue.Values.ToArray();
                 this.server.SendPacket(nack, this.point.Address, this.point.Port);
                 this.nackQueue.Clear();
-            }
+            }*/
 
             int[] a = this.receivedWindow.Values.ToArray();
             for (int i = 0; i < this.receivedWindow.Values.Count; ++i)
