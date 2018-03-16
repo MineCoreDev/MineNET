@@ -210,8 +210,7 @@ namespace MineNET.Entities.Players
             this.GetInventory().SendContents();
             this.GetInventory().GetArmorInventory().SendContents();
             this.GetInventory().SendCreativeItems();
-            //MobEquipment
-            //InventorySlot
+            this.GetInventory().SendMainHand(this);
 
             this.SendFastChunk();
         }

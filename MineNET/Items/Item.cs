@@ -69,7 +69,7 @@ namespace MineNET.Items
                     nbt = tags.Chunks(2).Select(x => Convert.ToByte(new string(x.ToArray()), 16)).ToArray();
                 }
 
-                Item.AddCreativeItem(Item.Get(id, damage, tags: nbt));
+                Item.AddCreativeItem(Item.Get(id, damage, 1, nbt));
             }
         }
 
