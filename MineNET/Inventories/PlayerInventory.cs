@@ -97,9 +97,36 @@ namespace MineNET.Inventories
             }
         }
 
+        public void SendCreativeItems()
+        {
+            Player player = this.Holder;
+            InventoryContentPacket pk = new InventoryContentPacket();
+            pk.InventoryId = ContainerIds.CREATIVE.GetIndex();
+            pk.Items = Item.GetCreativeItems();
+            player.SendPacket(pk);
+        }
+
+        public void SendMainHand(params Player[] players)
+        {
+            for (int i = 0; i < players.Length; ++i)
+            {
+                MobEquipmentPacket pk = new MobEquipmentPacket();
+                pk.EntityRuntimeId = this.Holder.EntityID;
+                pk.Item = this.GetItemMainHand();
+                pk.InventorySlot = (byte) this.GetMainHandSlot();
+                pk.WindowId = this.Type;
+                players[i].SendPacket(pk);
+            }
+        }
+
+        public int GetMainHandSlot()
+        {
+            return this.mainHand;
+        }
+
         public Item GetItemMainHand()
         {
-            return this.GetItem(this.mainHand);
+            return this.GetItem(this.GetMainHandSlot());
         }
 
         public bool SetItemMainHand(Item item)

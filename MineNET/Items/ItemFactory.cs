@@ -726,7 +726,7 @@ namespace MineNET.Items
             {
                 return new ItemExperienceBottle();
             }
-            else if (id == FIREWORK_CHARGE)
+            else if (id == FIRE_CHARGE)
             {
                 return new ItemFireCharge();
             }
