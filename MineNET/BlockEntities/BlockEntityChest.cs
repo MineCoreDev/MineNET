@@ -5,7 +5,7 @@ using MineNET.Values;
 
 namespace MineNET.BlockEntities
 {
-    public class BlockEntityChest : BlockEntitySpawnable, InventoryHolder
+    public class BlockEntityChest : BlockEntityHolder
     {
         private ChestInventory inventory;
 
@@ -33,8 +33,17 @@ namespace MineNET.BlockEntities
             }
         }
 
-        Inventory InventoryHolder.Inventory { get; set; }
+        public new ChestInventory Inventory
+        {
+            get
+            {
+                return (ChestInventory) base.Inventory;
+            }
 
-        public ChestInventory Inventory { get; protected set; }
+            protected set
+            {
+                base.Inventory = value;
+            }
+        }
     }
 }

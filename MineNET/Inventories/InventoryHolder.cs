@@ -7,7 +7,6 @@ namespace MineNET.Inventories
         Inventory Inventory
         {
             get;
-            set;
         }
     }
 }
