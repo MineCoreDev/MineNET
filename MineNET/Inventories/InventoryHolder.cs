@@ -4,6 +4,10 @@ namespace MineNET.Inventories
 {
     public interface InventoryHolder : IVector3
     {
-        Inventory GetInventory();
+        Inventory Inventory
+        {
+            get;
+            set;
+        }
     }
 }

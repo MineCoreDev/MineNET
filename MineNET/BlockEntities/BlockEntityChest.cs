@@ -11,7 +11,7 @@ namespace MineNET.BlockEntities
 
         public BlockEntityChest(Position position, CompoundTag nbt = null) : base(position, nbt)
         {
-            this.inventory = new ChestInventory(this);
+            this.Inventory = new ChestInventory(this);
 
             if (!this.namedTag.Exist("items"))
             {
@@ -33,9 +33,8 @@ namespace MineNET.BlockEntities
             }
         }
 
-        public Inventory GetInventory()
-        {
-            return this.inventory;
-        }
+        Inventory InventoryHolder.Inventory { get; set; }
+
+        public ChestInventory Inventory { get; protected set; }
     }
 }

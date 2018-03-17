@@ -4,9 +4,8 @@ namespace MineNET.Entities
 {
     public abstract class EntityLiving : Entity, InventoryHolder
     {
-        public virtual Inventory GetInventory()
-        {
-            return null;
-        }
+        Inventory InventoryHolder.Inventory { get; set; }
+
+        public Inventory Inventory { get; protected set; }
     }
 }
