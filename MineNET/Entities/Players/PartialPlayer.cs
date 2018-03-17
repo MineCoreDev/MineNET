@@ -9,8 +9,6 @@ namespace MineNET.Entities.Players
 {
     public partial class Player
     {
-        private PlayerInventory inventory;
-
         public Player()
         {
             this.ShowNameTag = true;
@@ -32,7 +30,7 @@ namespace MineNET.Entities.Players
                 this.namedTag = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
             }
 
-            this.inventory = new PlayerInventory(this);
+            this.Inventory = new PlayerInventory(this);
         }
 
         private void RegisterData()

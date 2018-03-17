@@ -207,10 +207,10 @@ namespace MineNET.Entities.Players
             availableCommandsPacket.commands = Server.Instance.CommandManager.CommandList;
             this.SendPacket(availableCommandsPacket);
 
-            this.GetInventory().SendContents();
-            this.GetInventory().GetArmorInventory().SendContents();
-            this.GetInventory().SendCreativeItems();
-            this.GetInventory().SendMainHand(this);
+            this.Inventory.SendContents();
+            this.Inventory.GetArmorInventory().SendContents();
+            this.Inventory.SendCreativeItems();
+            this.Inventory.SendMainHand(this);
 
             this.SendFastChunk();
         }

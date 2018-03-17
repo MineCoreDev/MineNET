@@ -5,13 +5,13 @@ using MineNET.Values;
 
 namespace MineNET.BlockEntities
 {
-    public class BlockEntityChest : BlockEntitySpawnable, InventoryHolder
+    public class BlockEntityChest : BlockEntityHolder
     {
         private ChestInventory inventory;
 
         public BlockEntityChest(Position position, CompoundTag nbt = null) : base(position, nbt)
         {
-            this.inventory = new ChestInventory(this);
+            this.Inventory = new ChestInventory(this);
 
             if (!this.namedTag.Exist("items"))
             {
@@ -33,9 +33,17 @@ namespace MineNET.BlockEntities
             }
         }
 
-        public Inventory GetInventory()
+        public new ChestInventory Inventory
         {
-            return this.inventory;
+            get
+            {
+                return (ChestInventory) base.Inventory;
+            }
+
+            protected set
+            {
+                base.Inventory = value;
+            }
         }
     }
 }

@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="BlockEntities\BlockEntity.cs" />
     <Compile Include="BlockEntities\BlockEntityChest.cs" />
+    <Compile Include="BlockEntities\BlockEntityHolder.cs" />
     <Compile Include="BlockEntities\BlockEntitySpawnable.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Blocks\BlockAcaciaDoor.cs" />
@@ -373,6 +374,8 @@
     <Compile Include="Events\InventoryEvents\InventoryEventArgs.cs" />
     <Compile Include="Events\InventoryEvents\InventoryEvents.cs" />
     <Compile Include="Events\InventoryEvents\InventoryOpenEventArgs.cs" />
+    <Compile Include="Network\Packets\AddEntityPacket.cs" />
+    <Compile Include="Network\Packets\AddPlayerPacket.cs" />
     <Compile Include="Network\Packets\CommandRequestPacket.cs" />
     <Compile Include="Network\Packets\Data\AdventureSettingsEntry.cs" />
     <Compile Include="Network\Packets\Data\ClientData.cs" />
