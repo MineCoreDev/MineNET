@@ -48,7 +48,6 @@ namespace MineNET
 
             this.Update();
 
-
             if (this.mineNETConfig.EnableConsoleInput)
             {
                 this.consoleInput = new ConsoleInput();
@@ -56,7 +55,7 @@ namespace MineNET
 
             Logger.Info("%server_start");
 
-            Item.LoadCreativeItems();
+            this.LoadFiles();
 
             this.commandManager = new CommandManager();
             this.pluginManager = new PluginManager();
@@ -84,6 +83,14 @@ namespace MineNET
             {
                 Directory.CreateDirectory(pPath);
             }
+        }
+
+        private async void LoadFiles()
+        {
+            await Task.Run(() =>
+            {
+                Item.LoadCreativeItems();
+            });
         }
 
         private async void Update()

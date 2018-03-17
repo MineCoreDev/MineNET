@@ -1,8 +1,8 @@
 ﻿namespace MineNET.RakNet.Packets
 {
-    public class ACK : AcknowledgePacket
+    public class DataPacket_8 : DataPacket
     {
-        public const int ID = 0xC0;
+        public const int ID = 0x88;
 
         public override byte PacketID
         {
