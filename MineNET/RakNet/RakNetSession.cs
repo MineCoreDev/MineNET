@@ -50,6 +50,7 @@ namespace MineNET.RakNet
         int lastSeqNumber = -1;
 
         Dictionary<int, int> receivedWindow = new Dictionary<int, int>();
+        Dictionary<int, int> encapsulatedPacketWindow = new Dictionary<int, int>();
 
         Dictionary<int, Dictionary<int, EncapsulatedPacket>> splitPackets = new Dictionary<int, Dictionary<int, EncapsulatedPacket>>();
 
@@ -70,6 +71,8 @@ namespace MineNET.RakNet
         Dictionary<int, int> ackQueue = new Dictionary<int, int>();
         Dictionary<int, int> nackQueue = new Dictionary<int, int>();
 
+        Dictionary<int, DataPacket> reSendQueue = new Dictionary<int, DataPacket>();
+
         Queue<Packet> packetQueue = new Queue<Packet>();
 
         int timedOut;
@@ -80,7 +83,7 @@ namespace MineNET.RakNet
             this.point = point;
             this.clientID = clientID;
             this.mtuSize = mtuSize;
-            this.timedOut = 100;
+            this.timedOut = 1000;
         }
 
         internal void DataPacketHandle(Packet pk)
@@ -149,11 +152,29 @@ namespace MineNET.RakNet
             {
                 if (pk is ACK)
                 {
-                    Logger.Log("§aHandle ACK");
+                    ACK ack = (ACK) pk;
+                    pk.Decode();
+                    for (int i = 0; i < ack.packets.Length; ++i)
+                    {
+                        if (reSendQueue.ContainsKey(ack.packets[i]))
+                        {
+                            reSendQueue.Remove(ack.packets[i]);
+                        }
+                    }
                 }
                 else if (pk is NACK)
                 {
-                    Logger.Log("§cHandle NACK");
+                    NACK nack = (NACK) pk;
+                    pk.Decode();
+                    for (int i = 0; i < nack.packets.Length; ++i)
+                    {
+                        if (reSendQueue.ContainsKey(nack.packets[i]))
+                        {
+                            DataPacket dp = reSendQueue[nack.packets[i]];
+                            dp.SeqNumber = this.sendSeqNumber++;
+                            this.server.SendPacket(dp, this.point.Address, this.point.Port);
+                        }
+                    }
                 }
             }
         }
@@ -165,6 +186,14 @@ namespace MineNET.RakNet
                 SplitPackets(packet);
                 return;
             }
+
+            if (encapsulatedPacketWindow.ContainsKey(packet.messageIndex))
+            {
+                return;
+            }
+
+            encapsulatedPacketWindow.Add(packet.messageIndex, packet.messageIndex);
+
             EncapsulatedPacketHandler(packet);
         }
 
@@ -275,8 +304,15 @@ namespace MineNET.RakNet
         {
             for (int i = 0; i < this.packetQueue.Count; ++i)
             {
-                this.server.SendPacket(this.packetQueue.Dequeue(), this.point.Address, this.point.Port);
+                Packet pk = this.packetQueue.Dequeue();
+                this.AddResendQueue((DataPacket) pk);
+                this.server.SendPacket(pk, this.point.Address, this.point.Port);
             }
+        }
+
+        public void AddResendQueue(DataPacket packet)
+        {
+            reSendQueue.Add(packet.SeqNumber, (DataPacket) packet.Clone());
         }
 
         public void SendPacket(EncapsulatedPacket packet, bool notQueue = false)
@@ -292,6 +328,7 @@ namespace MineNET.RakNet
                         packet
                     };
 
+                    this.AddResendQueue(pk);
                     this.server.SendPacket(pk, this.point.Address, this.point.Port);
                     return;
                 }
@@ -326,6 +363,7 @@ namespace MineNET.RakNet
                                 pk
                             };
 
+                            this.AddResendQueue(dp);
                             this.server.SendPacket(dp, this.point.Address, this.point.Port);
                         }
                     }
@@ -360,13 +398,13 @@ namespace MineNET.RakNet
                 this.ackQueue.Clear();
             }
 
-            /*if (this.nackQueue.Count > 0)
+            if (this.nackQueue.Count > 0)
             {
                 NACK nack = new NACK();
                 nack.packets = this.nackQueue.Values.ToArray();
                 this.server.SendPacket(nack, this.point.Address, this.point.Port);
                 this.nackQueue.Clear();
-            }*/
+            }
 
             int[] a = this.receivedWindow.Values.ToArray();
             for (int i = 0; i < this.receivedWindow.Values.Count; ++i)

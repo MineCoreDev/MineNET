@@ -678,6 +678,7 @@
     <Compile Include="Plugins\PluginBase.cs" />
     <Compile Include="Plugins\PluginException.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="RakNet\Packets\AcknowledgePacket.cs" />
     <Compile Include="RakNet\Packets\DataPacket_1.cs" />
     <Compile Include="RakNet\Packets\DataPacket_2.cs" />
     <Compile Include="RakNet\Packets\DataPacket_3.cs" />
