@@ -51,7 +51,7 @@ namespace MineNET.Entities.Players
 
         private int FixRadius(int radius)
         {
-            int maxRequest = Server.ServerConfig.ViewDistance;
+            int maxRequest = Server.ServerConfig.MaxViewDistance;
             if (radius > maxRequest) radius = maxRequest;
             return radius;
         }

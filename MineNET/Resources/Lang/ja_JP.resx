@@ -175,10 +175,10 @@
     <value>サーバー名</value>
   </data>
   <data name="server_config_generateEnd" xml:space="preserve">
-    <value>エンドを生成</value>
+    <value>エンドの生成</value>
   </data>
   <data name="server_config_generateNether" xml:space="preserve">
-    <value>ネザーを生成</value>
+    <value>ネザーの生成</value>
   </data>
   <data name="server_config_loadWorldNames" xml:space="preserve">
     <value>読み込む サブワールド名 &lt;複数可&gt;</value>
@@ -224,5 +224,26 @@
   </data>
   <data name="server_language_key_error" xml:space="preserve">
     <value>&lt;{0}&gt;というキーは見つかりませんでした。</value>
+  </data>
+  <data name="server_config_difficulty" xml:space="preserve">
+    <value>ゲームの難易度</value>
+  </data>
+  <data name="server_config_hardcore" xml:space="preserve">
+    <value>ハードコアモードの有効化</value>
+  </data>
+  <data name="server_config_maxViewDistance" xml:space="preserve">
+    <value>ワールドの最大描画距離</value>
+  </data>
+  <data name="server_config_pvp" xml:space="preserve">
+    <value>PVPの有効化</value>
+  </data>
+  <data name="server_config_whitelist" xml:space="preserve">
+    <value>ホワイトリストの有効化</value>
+  </data>
+  <data name="server_exception_config" xml:space="preserve">
+    <value>Configのロードに失敗しました。</value>
+  </data>
+  <data name="server_exception_config2" xml:space="preserve">
+    <value>File&lt;{0}&gt;を削除してください。</value>
   </data>
 </root>

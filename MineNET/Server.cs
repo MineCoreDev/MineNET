@@ -137,7 +137,7 @@ namespace MineNET
                 }
             }
 
-            this.NetworkManager.Server.UDPClientClose();
+            this.NetworkManager?.Server?.UDPClientClose();
 
             ServerEvents.OnServerStop(new ServerStopEventArgs());
 

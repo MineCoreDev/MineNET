@@ -36,21 +36,22 @@ namespace MineNET
         [YamlDescription("%server_config_generateEnd")]
         public bool GenerateEnd { get; set; } = false;
 
-        public int ViewDistance { get; set; } = 5;
+        [YamlDescription("%server_config_maxViewDistance")]
+        public int MaxViewDistance { get; set; } = 5;
 
         [YamlDescription("%server_config_onlineMode")]
         public bool OnlineMode { get; set; } = false;
 
-        [YamlDescription("ホワイトリスト")]
+        [YamlDescription("%server_config_whitelist")]
         public bool WhiteList { get; set; } = false;
 
-        [YamlDescription("ハードコア")]
+        [YamlDescription("%server_config_hardcore")]
         public bool Hardcore { get; set; } = false;
 
-        [YamlDescription("pvp")]
+        [YamlDescription("%server_config_pvp")]
         public bool Pvp { get; set; } = true;
 
-        [YamlDescription("難易度")]
+        [YamlDescription("%server_config_difficulty")]
         public int Difficulty { get; set; } = 1;
     }
 }
