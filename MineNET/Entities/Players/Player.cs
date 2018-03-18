@@ -106,25 +106,36 @@ namespace MineNET.Entities.Players
 
         public void Save()
         {
-            string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
-            NBTIO.WriteGZIPFile(path, this.namedTag, NBTEndian.BIG_ENDIAN);
+            if (this.HasSpawned)
+            {
+                string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
+                NBTIO.WriteGZIPFile(path, this.namedTag, NBTEndian.BIG_ENDIAN);
+            }
         }
 
-        public new PlayerInventory GetInventory()
+        public new PlayerInventory Inventory
         {
-            return this.inventory;
+            get
+            {
+                return (PlayerInventory) base.Inventory;
+            }
+
+            protected set
+            {
+                base.Inventory = value;
+            }
         }
 
         public void OpenInventory(Inventory inventory)
         {
             inventory.Open(this);
-            this.inventory.OpenInventory(inventory);
+            this.Inventory.OpenInventory(inventory);
         }
 
         public void CloseInventory(Inventory inventory)
         {
             inventory.Close(this);
-            this.inventory.CloseInventory();
+            this.Inventory.CloseInventory();
         }
 
         public override void SetMotion(Vector3 motion)

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using MineNET.Utils.Config.Yaml;
+using MineNET.Utils.Config.Yaml;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
@@ -35,40 +36,52 @@ namespace MineNET.Utils.Config
                     return (T) conv;
                 }
             }
-            catch (YamlException e)
+            catch
             {
-                Logger.Error(e);
-                Logger.Error("%config_error");
-                Logger.Notice("%config_error2");
-                throw new ServerException();
+                Logger.Error("%server_exception_config");
+                Logger.Notice("%server_exception_config2", filePath);
+                throw new IOException(LangManager.GetString("server_exception_config")
+                    + Environment.NewLine
+                    + string.Format(LangManager.GetString("server_exception_config2"), filePath));
             }
         }
 
         public void Save<T>()
         {
-            if (File.Exists(this.filePath))
+            try
             {
-                StreamWriter w = new StreamWriter(this.filePath, false, Encoding.UTF8);
-                SerializerBuilder sb = new SerializerBuilder()
-                    .EmitDefaults()
-                    .WithTypeInspector(inner => new CommentTypeInspector(inner))
-                    .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
-                Serializer s = sb.Build();
-                s.Serialize(w, this, typeof(T));
-                w.Close();
+                if (File.Exists(this.filePath))
+                {
+                    StreamWriter w = new StreamWriter(this.filePath, false, Encoding.UTF8);
+                    SerializerBuilder sb = new SerializerBuilder()
+                        .EmitDefaults()
+                        .WithTypeInspector(inner => new CommentTypeInspector(inner))
+                        .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
+                    Serializer s = sb.Build();
+                    s.Serialize(w, this, typeof(T));
+                    w.Close();
+                }
+                else
+                {
+                    FileStream file = File.Create(this.filePath);
+                    file.Close();
+                    StreamWriter w = new StreamWriter(this.filePath, false, Encoding.UTF8);
+                    SerializerBuilder sb = new SerializerBuilder()
+                        .EmitDefaults()
+                        .WithTypeInspector(inner => new CommentTypeInspector(inner))
+                        .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
+                    Serializer s = sb.Build();
+                    s.Serialize(w, this, typeof(T));
+                    w.Close();
+                }
             }
-            else
+            catch
             {
-                FileStream file = File.Create(this.filePath);
-                file.Close();
-                StreamWriter w = new StreamWriter(this.filePath, false, Encoding.UTF8);
-                SerializerBuilder sb = new SerializerBuilder()
-                    .EmitDefaults()
-                    .WithTypeInspector(inner => new CommentTypeInspector(inner))
-                    .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
-                Serializer s = sb.Build();
-                s.Serialize(w, this, typeof(T));
-                w.Close();
+                Logger.Error("%server_exception_config");
+                Logger.Notice("%server_exception_config2", filePath);
+                throw new IOException(LangManager.GetString("server_exception_config")
+                    + Environment.NewLine
+                    + string.Format(LangManager.GetString("server_exception_config2"), filePath));
             }
         }
     }

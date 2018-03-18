@@ -2,6 +2,8 @@
 using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.Items;
+using MineNET.NBT.IO;
+using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 
@@ -16,7 +18,19 @@ namespace MineNET.Inventories
 
         public ArmorInventory(EntityLiving entity) : base(entity)
         {
-
+            if (!entity.namedTag.Exist("Armor"))
+            {
+                entity.namedTag.PutList(new ListTag<CompoundTag>("Armor"));
+                for (int i = 0; i < this.Size; ++i)
+                {
+                    entity.namedTag.GetList<CompoundTag>("Armor").Add(NBTIO.WriteItem(Item.Get(0), i));
+                }
+            }
+            for (int i = 0; i < this.Size; ++i)
+            {
+                Item item = NBTIO.ReadItem(entity.namedTag.GetList<CompoundTag>("Armor")[i]);
+                this.SetItem(i, item, false);
+            }
         }
 
         public override int Size
@@ -52,6 +66,7 @@ namespace MineNET.Inventories
         public override void SendContents(params Player[] players)
         {
             base.SendContents(players);
+            this.SendArmorContents(players);
         }
 
         public void SendArmorContents(params Player[] players)
@@ -80,6 +95,19 @@ namespace MineNET.Inventories
             for (int i = 0; i < items.Length; ++i)
             {
                 this.SetItem(i, items[i]);
+            }
+        }
+
+        public new Player Holder
+        {
+            get
+            {
+                return (Player) this.holder;
+            }
+
+            protected set
+            {
+                this.holder = value;
             }
         }
 

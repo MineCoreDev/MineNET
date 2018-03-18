@@ -200,13 +200,13 @@ namespace MineNET.Utils
 
         public void WriteItem(Item item)
         {
-            if (item == null || item.ID == 0)
+            if (item == null || item.ID <= 0)
             {
                 this.WriteSVarInt(0);
                 return;
             }
             this.WriteSVarInt(item.ID);
-            int auxValue = (((item.Damage != 0 ? item.Damage : -1) & 0x7fff) << 8) | item.Count;
+            int auxValue = ((item.Damage & 0x7fff) << 8) | (item.Count & 0xff);
             this.WriteSVarInt(auxValue);
             byte[] nbt = item.Tags;
             this.WriteLShort((ushort) nbt.Length);

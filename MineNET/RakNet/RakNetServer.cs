@@ -390,8 +390,21 @@ namespace MineNET.RakNet
             this.RegisterPacket(OPEN_CONNECTION_REPLY_2.ID, new OPEN_CONNECTION_REPLY_2());
 
             this.RegisterPacket(DataPacket_0.ID, new DataPacket_0());
+            this.RegisterPacket(DataPacket_1.ID, new DataPacket_1());
+            this.RegisterPacket(DataPacket_2.ID, new DataPacket_2());
+            this.RegisterPacket(DataPacket_3.ID, new DataPacket_3());
             this.RegisterPacket(DataPacket_4.ID, new DataPacket_4());
+            this.RegisterPacket(DataPacket_5.ID, new DataPacket_5());
+            this.RegisterPacket(DataPacket_6.ID, new DataPacket_6());
+            this.RegisterPacket(DataPacket_7.ID, new DataPacket_7());
+            this.RegisterPacket(DataPacket_8.ID, new DataPacket_8());
+            this.RegisterPacket(DataPacket_9.ID, new DataPacket_9());
+            this.RegisterPacket(DataPacket_A.ID, new DataPacket_A());
+            this.RegisterPacket(DataPacket_B.ID, new DataPacket_B());
             this.RegisterPacket(DataPacket_C.ID, new DataPacket_C());
+            this.RegisterPacket(DataPacket_D.ID, new DataPacket_D());
+            this.RegisterPacket(DataPacket_E.ID, new DataPacket_E());
+            this.RegisterPacket(DataPacket_F.ID, new DataPacket_F());
 
             this.RegisterPacket(ACK.ID, new ACK());
             this.RegisterPacket(NACK.ID, new NACK());

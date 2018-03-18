@@ -29,16 +29,24 @@ namespace MineNET.GUI.Forms
 
         private async void ServerStart()
         {
-            this.button1.Enabled = false;
-            this.button2.Enabled = true;
+            try
+            {
+                this.button1.Enabled = false;
+                this.button2.Enabled = true;
 
-            ServerEvents.ServerStop += ServerEvents_ServerStop;
+                ServerEvents.ServerStop += ServerEvents_ServerStop;
 
-            Server = new Server();
-            Server.Start();
-            inputOutput1.OnUpdate();
-            playerList1.OnUpdate();
-            await Task.Delay(100);
+                Server = new Server();
+                Server.Start();
+                inputOutput1.OnUpdate();
+                playerList1.OnUpdate();
+                await Task.Delay(100);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Server.ErrorStop(e);
+            }
         }
 
         private void ServerStop()

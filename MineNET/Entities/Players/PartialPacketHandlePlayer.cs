@@ -208,11 +208,10 @@ namespace MineNET.Entities.Players
             availableCommandsPacket.commands = Server.Instance.CommandManager.CommandList;
             this.SendPacket(availableCommandsPacket);
 
-            //InventoryContent
-            //MobArmorEquipment
-            //inventoryContent
-            //MobEquipment
-            //InventorySlot
+            this.Inventory.SendContents();
+            this.Inventory.GetArmorInventory().SendContents();
+            this.Inventory.SendCreativeItems();
+            this.Inventory.SendMainHand(this);
 
             this.SendFastChunk();
         }

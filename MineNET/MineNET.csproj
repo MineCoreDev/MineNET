@@ -75,6 +75,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -97,6 +101,7 @@
   <ItemGroup>
     <Compile Include="BlockEntities\BlockEntity.cs" />
     <Compile Include="BlockEntities\BlockEntityChest.cs" />
+    <Compile Include="BlockEntities\BlockEntityHolder.cs" />
     <Compile Include="BlockEntities\BlockEntitySpawnable.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Blocks\BlockAcaciaDoor.cs" />
@@ -369,6 +374,12 @@
     <Compile Include="Commands\Parameters\CommandParameterText.cs" />
     <Compile Include="Commands\Parameters\CommandParameterValue.cs" />
     <Compile Include="Commands\Parameters\CommandParameterValueEnum.cs" />
+    <Compile Include="Events\InventoryEvents\InventoryCloseEventArgs.cs" />
+    <Compile Include="Events\InventoryEvents\InventoryEventArgs.cs" />
+    <Compile Include="Events\InventoryEvents\InventoryEvents.cs" />
+    <Compile Include="Events\InventoryEvents\InventoryOpenEventArgs.cs" />
+    <Compile Include="Network\Packets\AddEntityPacket.cs" />
+    <Compile Include="Network\Packets\AddPlayerPacket.cs" />
     <Compile Include="Network\Packets\CommandRequestPacket.cs" />
     <Compile Include="Network\Packets\Data\AdventureSettingsEntry.cs" />
     <Compile Include="Network\Packets\Data\ClientData.cs" />
@@ -674,6 +685,25 @@
     <Compile Include="Plugins\PluginBase.cs" />
     <Compile Include="Plugins\PluginException.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="RakNet\Packets\AcknowledgePacket.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_1.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_2.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_3.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_5.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_6.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_7.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_D.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_E.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_F.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_B.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_9.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_A.cs" />
+    <Compile Include="RakNet\Packets\DataPacket_8.cs" />
+    <Compile Include="Resources\Data\ResourceData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceData.resx</DependentUpon>
+    </Compile>
     <Compile Include="Server.cs" />
     <Compile Include="NBT\Tags\ByteArrayTag.cs" />
     <Compile Include="NBT\Tags\ByteTag.cs" />
@@ -739,6 +769,7 @@
     <Compile Include="Utils\IConfig.cs" />
     <Compile Include="Utils\JWT.cs" />
     <Compile Include="Utils\LangManager.cs" />
+    <Compile Include="Utils\LinqExtention.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\MCBEBinary.cs" />
     <Compile Include="Utils\Math.cs" />
@@ -772,6 +803,10 @@
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Data\ResourceData.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Lang\ja_JP.resx" />
   </ItemGroup>
   <ItemGroup>
@@ -779,6 +814,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\File\CreativeItems.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

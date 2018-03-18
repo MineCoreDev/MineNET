@@ -10,5 +10,7 @@ namespace MineNET
         public bool EnableConsoleOutput { get; set; } = true;
 
         public bool EnableDebugLog { get; set; } = true;
+
+        public string ServerStopText { get; set; } = "disconnect.closed";
     }
 }
