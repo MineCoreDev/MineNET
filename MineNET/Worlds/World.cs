@@ -77,9 +77,47 @@ namespace MineNET.Worlds
             {
                 for (int j = (chunkZ - requestRadius); j < (chunkZ + requestRadius); ++j)
                 {
-                    this.Format.GetChunk(i, j).SendChunk(player);
+                    string hash = $"{i}:{j}";
+                    if (!player.loadedChunk.ContainsKey(hash))
+                    {
+                        player.loadedChunk.Add(hash, hash);
+                        this.Format.GetChunk(i, j).SendChunk(player);
+                    }
                 }
             }
+            /*Dictionary<string, string> load = new Dictionary<string, string>();
+            for (int i = (chunkX - requestRadius); i < (chunkX + requestRadius); ++i)
+            {
+                for (int j = (chunkZ - requestRadius); j < (chunkZ + requestRadius); ++j)
+                {
+                    string hash = $"{i}:{j}";
+                    load.Add(hash, hash);
+                }
+            }
+
+            List<KeyValuePair<string, string>> loadArray = load.ToList();
+            for (int i = 0; i < loadArray.Count; ++i)
+            {
+                if (player.loadedChunk.ContainsKey(loadArray[i].Key))
+                {
+                    load.Remove(loadArray[i].Key);
+                }
+            }
+
+            Logger.Info(load.Keys.Count + "");
+
+            player.loadedChunk.Clear();
+            if (load.Count == 0)
+            {
+                player.loadedChunk.ToList().AddRange(loadArray);
+            }
+
+            foreach (string l in load.Keys)
+            {
+                string[] xz = l.Split(':');
+                this.Format.GetChunk(int.Parse(xz[0]), int.Parse(xz[1])).SendChunk(player);
+                player.loadedChunk.Add(l, l);
+            }*/
         }
     }
 }

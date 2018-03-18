@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using MineNET.Events.PlayerEvents;
+﻿using MineNET.Events.PlayerEvents;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Utils;
@@ -65,6 +64,9 @@ namespace MineNET.Entities.Players
                 this.Close(playerPreLoginEvent.KickMessage);
                 return;
             }
+
+            this.World = new World();
+            this.World.Format = new RegionWorldSaveFormat("test");
 
             this.IsPreLogined = true;
 
@@ -213,19 +215,11 @@ namespace MineNET.Entities.Players
             this.Inventory.SendCreativeItems();
             this.Inventory.SendMainHand(this);
 
-            this.SendFastChunk();
+            this.GameJoin();
         }
 
-        private async void SendFastChunk()
+        private void GameJoin()
         {
-            await Task.Run(() =>
-            {
-                World w = new World();
-                w.Format = new RegionWorldSaveFormat("test");
-                w.LoadChunk(this, (int) this.X >> 4, (int) this.Z >> 4, this.RequestChunkRadius);
-                //Logger.Fatal("World Rewriteing... World Not Gen...(現在、ワールド書き直し中...　ワールドは生成されません。)");
-            });
-
             PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, "", "");
             PlayerEvents.OnPlayerJoin(playerJoinEvent);
             if (playerJoinEvent.IsCancel)

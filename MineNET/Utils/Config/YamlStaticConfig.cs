@@ -2,8 +2,6 @@
 using System.IO;
 using System.Text;
 using MineNET.Utils.Config.Yaml;
-using MineNET.Utils.Config.Yaml;
-using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
 namespace MineNET.Utils.Config
