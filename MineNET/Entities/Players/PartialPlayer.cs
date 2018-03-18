@@ -55,12 +55,12 @@ namespace MineNET.Entities.Players
             {
                 if (this.IsLogined)
                 {
-                    /*await Task.Run(() =>
+                    await Task.Run(() =>
                     {
                         World w = new World();
                         w.Format = new RegionWorldSaveFormat("test");
                         w.LoadChunk(this, ((int) this.X) >> 4, ((int) this.Z) >> 4, this.RequestChunkRadius);
-                    });*/
+                    });
                     Logger.Info(GetChunkVector().ToString());
                     await Task.Delay(10000);
                 }
