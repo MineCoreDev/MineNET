@@ -360,6 +360,7 @@
     <Compile Include="Commands\ConsoleSender.cs" />
     <Compile Include="Commands\Data\CommandEnum.cs" />
     <Compile Include="Commands\Data\CommandOverload.cs" />
+    <Compile Include="Commands\Defaults\HelpCommand.cs" />
     <Compile Include="Commands\Defaults\StopCommand.cs" />
     <Compile Include="Commands\Data\ICommandHandler.cs" />
     <Compile Include="Commands\Parameters\CommandParameter.cs" />

@@ -105,7 +105,8 @@ namespace MineNET.Commands
 
         private void RegisterCommands()
         {
-            RegisterCommand(new StopCommand());
+            this.RegisterCommand(new StopCommand());
+            this.RegisterCommand(new HelpCommand());
         }
     }
 }
