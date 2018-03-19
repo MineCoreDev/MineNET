@@ -102,10 +102,14 @@ namespace MineNET.Worlds
                     Tuple<int, int> chunkXZ = new Tuple<int, int>(i, j);
                     if (!player.loadedChunk.ContainsKey(chunkXZ))
                     {
-                        Chunk chunk = this.Format.GetChunk(i, j);
-                        player.loadedChunk.Add(chunkXZ, DateTime.Now.ToBinary());
-                        this.chunks.Add(chunkXZ, chunk);
-                        chunk.SendChunk(player);
+                        try
+                        {
+                            Chunk chunk = this.Format.GetChunk(i, j);
+                            player.loadedChunk.Add(chunkXZ, DateTime.Now.ToBinary());
+                            this.chunks.Add(chunkXZ, chunk);
+                            chunk.SendChunk(player);
+                        }
+                        catch { }
                     }
                 }
             }
