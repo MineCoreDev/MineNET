@@ -14,7 +14,7 @@ namespace MineNET.Utils
     {
         public Vector2 ReadVector2()
         {
-            return new Vector2(this.ReadFloat(), this.ReadFloat());
+            return new Vector2(this.ReadLFloat(), this.ReadLFloat());
         }
 
         public void WriteVector2(Vector2 value)
@@ -25,7 +25,7 @@ namespace MineNET.Utils
 
         public Vector3 ReadVector3()
         {
-            return new Vector3(this.ReadFloat(), this.ReadFloat(), this.ReadFloat());
+            return new Vector3(this.ReadLFloat(), this.ReadLFloat(), this.ReadLFloat());
         }
 
         public void WriteVector3(Vector3 value)

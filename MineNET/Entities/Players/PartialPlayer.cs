@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using MineNET.Inventories;
 using MineNET.Items;
 using MineNET.NBT.Data;
@@ -9,6 +12,8 @@ namespace MineNET.Entities.Players
 {
     public partial class Player
     {
+        internal SortedList<Tuple<int, int>, long> loadedChunk = new SortedList<Tuple<int, int>, long>();
+
         public Player()
         {
             this.ShowNameTag = true;
@@ -42,7 +47,7 @@ namespace MineNET.Entities.Players
             this.namedTag.PutList(new ListTag<FloatTag>("Pos"));
             this.namedTag.PutList(new ListTag<FloatTag>("Rotation"));
 
-            this.namedTag.PutInt("PlayerGameMode", int.Parse(Server.ServerConfig.GameMode));
+            this.namedTag.PutInt("PlayerGameMode", int.Parse(Server.ServerConfig.GameMode));//TODO Parse Error...
             this.namedTag.PutInt("PlayerLevel", 0);
             this.namedTag.PutFloat("PlayerLevelProgress", 0f);
         }
@@ -56,7 +61,13 @@ namespace MineNET.Entities.Players
 
         internal override void OnUpdate()
         {
-
+            if (this.IsLogined)
+            {
+                Task.Run(() =>
+                {
+                    this.World.LoadChunk(this, ((int) this.X) >> 4, ((int) this.Z) >> 4, this.RequestChunkRadius);
+                });
+            }
         }
     }
 }

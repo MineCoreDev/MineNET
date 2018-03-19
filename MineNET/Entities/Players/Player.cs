@@ -27,8 +27,9 @@ namespace MineNET.Entities.Players
         public bool HaveAllPacks { get; private set; }
         public bool PackSyncCompleted { get; private set; }
         public bool HasSpawned { get; private set; }
+        public bool Closed { get; private set; }
 
-        public int RequestChunkRadius = 5;
+        public int RequestChunkRadius { get; private set; } = 5;
 
         public override float WIDTH
         {
@@ -100,6 +101,9 @@ namespace MineNET.Entities.Players
                 this.SendPacket(pk, true);
             }
             this.Save();
+
+            this.Closed = true;
+
             Server.Instance.RemovePlayer(this.EntityID);
             Server.Instance.NetworkManager.PlayerClose(this.EndPoint, reason);
         }

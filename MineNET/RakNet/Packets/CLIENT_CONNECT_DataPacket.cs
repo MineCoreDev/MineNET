@@ -43,8 +43,8 @@
         {
             base.Decode();
 
-            this.clientID = (long) ReadLLong();
-            this.sendPing = (long) ReadLLong();
+            this.clientID = ReadLong();
+            this.sendPing = ReadLong();
             this.useSecurity = ReadBool();
         }
     }

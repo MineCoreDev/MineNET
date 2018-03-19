@@ -180,7 +180,40 @@ namespace MineNET.Entities
             }
         }
 
+        public Vector3 GetVector3()
+        {
+            return new Vector3(this.X, this.Y, this.Z);
+        }
+
+        public void SetVector3(Vector3 pos)
+        {
+            this.X = pos.X;
+            this.Y = pos.Y;
+            this.Z = pos.Z;
+        }
+
+        public Vector2 GetVector2()
+        {
+            return new Vector2(this.X, this.Z);
+        }
+
+        public void SetVector2(Vector2 pos)
+        {
+            this.X = pos.X;
+            this.Z = pos.Y;
+        }
+
+        public Vector2 GetChunkVector()
+        {
+            return new Vector2(((int) this.X) >> 4, ((int) this.Z) >> 4);
+        }
+
         internal virtual void OnUpdate()
+        {
+
+        }
+
+        public virtual void SaveNBT()
         {
 
         }

@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using MineNET.Events.PlayerEvents;
+﻿using MineNET.Events.PlayerEvents;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
 using MineNET.Worlds.Data;
+using MineNET.Worlds.Formats.WorldSaveFormats;
 
 namespace MineNET.Entities.Players
 {
@@ -64,6 +64,9 @@ namespace MineNET.Entities.Players
                 this.Close(playerPreLoginEvent.KickMessage);
                 return;
             }
+
+            this.World = new World();
+            this.World.Format = new RegionWorldSaveFormat("test");
 
             this.IsPreLogined = true;
 
@@ -212,22 +215,11 @@ namespace MineNET.Entities.Players
             this.Inventory.SendCreativeItems();
             this.Inventory.SendMainHand(this);
 
-            this.SendFastChunk();
+            this.GameJoin();
         }
 
-        private async void SendFastChunk()
+        private void GameJoin()
         {
-            await Task.Run(() =>
-            {
-                for (int i = ((int) this.X >> 4) - this.RequestChunkRadius; i < ((int) this.X >> 4) + this.RequestChunkRadius; ++i)
-                {
-                    for (int j = ((int) this.Z >> 4) - this.RequestChunkRadius; j < ((int) this.Z >> 4) + this.RequestChunkRadius; ++j)
-                    {
-                        new Chunk(i, j).TestChunkSend(this);
-                    }
-                }
-            });
-
             PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, "", "");
             PlayerEvents.OnPlayerJoin(playerJoinEvent);
             if (playerJoinEvent.IsCancel)
@@ -252,7 +244,7 @@ namespace MineNET.Entities.Players
             adventureSettingsEntry.SetFlag(AdventureSettingsEntry.WORLD_IMMUTABLE, false);
             adventureSettingsEntry.SetFlag(AdventureSettingsEntry.NO_PVP, false);
             adventureSettingsEntry.SetFlag(AdventureSettingsEntry.AUTO_JUMP, false);
-            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.ALLOW_FLIGHT, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.ALLOW_FLIGHT, true);
             adventureSettingsEntry.SetFlag(AdventureSettingsEntry.NO_CLIP, false);
             adventureSettingsEntry.SetFlag(AdventureSettingsEntry.FLYING, false);
             adventureSettingsEntry.EntityUniqueId = this.EntityID;

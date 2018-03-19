@@ -39,5 +39,12 @@ namespace MineNET.NBT.IO.Tests
             CompoundTag tag = NBTIO.ReadRawFile(Environment.CurrentDirectory + "\\test.nbt");
             Console.WriteLine(tag);
         }
+
+        [TestMethod()]
+        public void TestLoad1()
+        {
+            CompoundTag tag = NBTIO.ReadRawFile(Environment.CurrentDirectory + "\\test\\r.0.0.mca", Data.NBTEndian.BIG_ENDIAN);
+            Console.WriteLine(VarDump.Var_Dump(tag));
+        }
     }
 }
