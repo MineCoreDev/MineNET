@@ -120,6 +120,18 @@
   <data name="app_language_key_error" xml:space="preserve">
     <value>Keyが見つかりませんでした。</value>
   </data>
+  <data name="form_input_label" xml:space="preserve">
+    <value>入力</value>
+  </data>
+  <data name="form_outputOption_label" xml:space="preserve">
+    <value>出力オプション</value>
+  </data>
+  <data name="form_output_label" xml:space="preserve">
+    <value>出力</value>
+  </data>
+  <data name="form_playerList_label" xml:space="preserve">
+    <value>プレイヤーリスト</value>
+  </data>
   <data name="start_lang_setup" xml:space="preserve">
     <value>言語を設定中...</value>
   </data>

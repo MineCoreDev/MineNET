@@ -24,7 +24,10 @@ namespace MineNET.GUI.Forms
 
         private void SetupLanguage()
         {
-
+            this.playerList1.Text = LangManager.GetString("form_playerList_label");
+            this.inputOutput1.InputLabel = LangManager.GetString("form_input_label");
+            this.inputOutput1.OutputLabel = LangManager.GetString("form_output_label");
+            this.inputOutput1.OutputOptionLabel = LangManager.GetString("form_outputOption_label");
         }
 
         private async void ServerStart()
