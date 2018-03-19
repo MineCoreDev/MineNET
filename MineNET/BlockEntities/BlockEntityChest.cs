@@ -7,7 +7,7 @@ namespace MineNET.BlockEntities
 {
     public class BlockEntityChest : BlockEntityHolder
     {
-        private ChestInventory inventory;
+        private ChestInventory inventory = null;
 
         public BlockEntityChest(Position position, CompoundTag nbt = null) : base(position, nbt)
         {

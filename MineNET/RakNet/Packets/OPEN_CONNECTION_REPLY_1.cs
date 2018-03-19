@@ -45,9 +45,9 @@
             base.Encode();
 
             this.WriteMagic();
-            this.WriteLLong((ulong) this.serverID);
+            this.WriteLong(this.serverID);
             this.WriteByte(0);
-            this.WriteShort((short) this.mtuSize);
+            this.WriteShort(this.mtuSize);
         }
     }
 }

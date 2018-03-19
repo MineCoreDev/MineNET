@@ -25,7 +25,7 @@
         {
             base.Decode();
 
-            this.pingID = (long) ReadLLong();
+            this.pingID = ReadLong();
         }
     }
 }

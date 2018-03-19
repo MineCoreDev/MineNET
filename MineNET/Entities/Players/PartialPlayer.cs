@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using MineNET.Inventories;
 using MineNET.Items;
 using MineNET.NBT.Data;
@@ -10,7 +12,7 @@ namespace MineNET.Entities.Players
 {
     public partial class Player
     {
-        internal Dictionary<string, string> loadedChunk = new Dictionary<string, string>();
+        internal SortedList<Tuple<int, int>, long> loadedChunk = new SortedList<Tuple<int, int>, long>();
 
         public Player()
         {
@@ -61,7 +63,10 @@ namespace MineNET.Entities.Players
         {
             if (this.IsLogined)
             {
-                this.World.LoadChunk(this, ((int) this.X) >> 4, ((int) this.Z) >> 4, this.RequestChunkRadius);
+                Task.Run(() =>
+                {
+                    this.World.LoadChunk(this, ((int) this.X) >> 4, ((int) this.Z) >> 4, this.RequestChunkRadius);
+                });
             }
         }
     }

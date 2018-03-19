@@ -30,8 +30,7 @@
         {
             base.Encode();
 
-            WriteLLong((ulong) this.pingID);
-            WriteLLong((ulong) this.pingID);
+            WriteLong(this.pingID);
         }
     }
 }

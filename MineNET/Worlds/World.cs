@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using MineNET.Blocks;
 using MineNET.Entities.Players;
 using MineNET.Values;
@@ -8,6 +10,8 @@ namespace MineNET.Worlds
 {
     public class World
     {
+        public Dictionary<Tuple<int, int>, Chunk> chunks = new Dictionary<Tuple<int, int>, Chunk>();
+
         public static World CreateWorld(string worldName)
         {
             return World.CreateWorld(worldName, new MineNETWorldSaveFormat());
@@ -77,47 +81,34 @@ namespace MineNET.Worlds
             {
                 for (int j = (chunkZ - requestRadius); j < (chunkZ + requestRadius); ++j)
                 {
-                    string hash = $"{i}:{j}";
-                    if (!player.loadedChunk.ContainsKey(hash))
+                    Tuple<int, int> chunkXZ = new Tuple<int, int>(i, j);
+                    if (!player.loadedChunk.ContainsKey(chunkXZ))
                     {
-                        player.loadedChunk.Add(hash, hash);
-                        this.Format.GetChunk(i, j).SendChunk(player);
+                        Chunk chunk = this.Format.GetChunk(i, j);
+                        player.loadedChunk.Add(chunkXZ, DateTime.Now.ToBinary());
+                        this.chunks.Add(chunkXZ, chunk);
+                        chunk.SendChunk(player);
                     }
                 }
             }
-            /*Dictionary<string, string> load = new Dictionary<string, string>();
+        }
+
+        public void UnLoadChunk(Player player, int chunkX, int chunkZ, int requestRadius)
+        {
             for (int i = (chunkX - requestRadius); i < (chunkX + requestRadius); ++i)
             {
                 for (int j = (chunkZ - requestRadius); j < (chunkZ + requestRadius); ++j)
                 {
-                    string hash = $"{i}:{j}";
-                    load.Add(hash, hash);
+                    Tuple<int, int> chunkXZ = new Tuple<int, int>(i, j);
+                    if (!player.loadedChunk.ContainsKey(chunkXZ))
+                    {
+                        Chunk chunk = this.Format.GetChunk(i, j);
+                        player.loadedChunk.Add(chunkXZ, DateTime.Now.ToBinary());
+                        this.chunks.Add(chunkXZ, chunk);
+                        chunk.SendChunk(player);
+                    }
                 }
             }
-
-            List<KeyValuePair<string, string>> loadArray = load.ToList();
-            for (int i = 0; i < loadArray.Count; ++i)
-            {
-                if (player.loadedChunk.ContainsKey(loadArray[i].Key))
-                {
-                    load.Remove(loadArray[i].Key);
-                }
-            }
-
-            Logger.Info(load.Keys.Count + "");
-
-            player.loadedChunk.Clear();
-            if (load.Count == 0)
-            {
-                player.loadedChunk.ToList().AddRange(loadArray);
-            }
-
-            foreach (string l in load.Keys)
-            {
-                string[] xz = l.Split(':');
-                this.Format.GetChunk(int.Parse(xz[0]), int.Parse(xz[1])).SendChunk(player);
-                player.loadedChunk.Add(l, l);
-            }*/
         }
     }
 }

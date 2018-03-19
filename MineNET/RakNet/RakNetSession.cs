@@ -189,10 +189,16 @@ namespace MineNET.RakNet
 
             if (encapsulatedPacketWindow.ContainsKey(packet.messageIndex))
             {
-                return;
+                if (packet.messageIndex != -1)
+                {
+                    Logger.Log("Handled Packet Handle!<{0}>", packet.messageIndex);
+                    return;
+                }
             }
-
-            encapsulatedPacketWindow.Add(packet.messageIndex, packet.messageIndex);
+            else
+            {
+                encapsulatedPacketWindow.Add(packet.messageIndex, packet.messageIndex);
+            }
 
             EncapsulatedPacketHandler(packet);
         }

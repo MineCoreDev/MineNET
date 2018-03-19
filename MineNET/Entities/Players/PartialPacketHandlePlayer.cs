@@ -244,7 +244,7 @@ namespace MineNET.Entities.Players
             adventureSettingsEntry.SetFlag(AdventureSettingsEntry.WORLD_IMMUTABLE, false);
             adventureSettingsEntry.SetFlag(AdventureSettingsEntry.NO_PVP, false);
             adventureSettingsEntry.SetFlag(AdventureSettingsEntry.AUTO_JUMP, false);
-            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.ALLOW_FLIGHT, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.ALLOW_FLIGHT, true);
             adventureSettingsEntry.SetFlag(AdventureSettingsEntry.NO_CLIP, false);
             adventureSettingsEntry.SetFlag(AdventureSettingsEntry.FLYING, false);
             adventureSettingsEntry.EntityUniqueId = this.EntityID;
