@@ -78,6 +78,62 @@ namespace MineNET.Worlds
             player.SendPacket(pk);
         }
 
+        public byte GetBlock(int bx, int by, int bz)
+        {
+            SubChunk chunk = this.subChunks[by >> 4];
+            return chunk.GetBlock(bx, by - 16 * (by >> 4), bz);
+        }
+
+        public void SetBlock(int bx, int by, int bz, byte bid)
+        {
+            SubChunk chunk = this.subChunks[by >> 4];
+            chunk.SetBlock(bx, by - 16 * (by >> 4), bz, bid);
+        }
+
+        public void SetHeight(int bx, int bz, short h)
+        {
+            this.HeightMap[((bz << 4) + (bx))] = h;
+        }
+
+        public byte GetHeight(int bx, int bz)
+        {
+            return (byte) this.HeightMap[((bz << 4) + (bx))];
+        }
+
+        public void SetBiome(int bx, int bz, byte biome)
+        {
+            this.Biomes[(bz << 4) + (bx)] = biome;
+        }
+
+        public byte GetBiome(int bx, int bz)
+        {
+            return this.Biomes[(bz << 4) + (bx)];
+        }
+
+        /* public byte GetBlocklight(int bx, int by, int bz)
+         {
+             SubChunk chunk = this.subChunks[by >> 4];
+             return chunk.GetBlocklight(bx, by - 16 * (by >> 4), bz);
+         }
+
+         public void SetBlocklight(int bx, int by, int bz, byte data)
+         {
+             SubChunk chunk = subChunks[by >> 4];
+             chunk.SetBlocklight(bx, by - 16 * (by >> 4), bz, data);
+         }*/
+
+        public byte GetMetadata(int bx, int by, int bz)
+        {
+            SubChunk chunk = subChunks[by >> 4];
+            return chunk.GetMetaData(bx, by - 16 * (by >> 4), bz);
+        }
+
+        public void SetMetadata(int bx, int by, int bz, byte data)
+        {
+            SubChunk chunk = subChunks[by >> 4];
+            chunk.SetMetaData(bx, by - 16 * (by >> 4), bz, data);
+        }
+
         public SubChunk[] GetSubChunk()
         {
             return this.subChunks;

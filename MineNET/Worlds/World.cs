@@ -67,13 +67,38 @@ namespace MineNET.Worlds
 
         public Block GetBlock(Vector3 pos)
         {
-            //TODO
-            return Block.Get(0);
+            Tuple<int, int> chunkPos = new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4);
+            Chunk chunk = null;
+            if (chunks.ContainsKey(chunkPos))
+            {
+                chunk = chunks[chunkPos];
+            }
+            else
+            {
+                throw new Exception();
+            }
+
+            byte id = chunk.GetBlock((int) pos.X, (int) pos.Y, (int) pos.Z);
+            byte meta = chunk.GetMetadata((int) pos.X, (int) pos.Y, (int) pos.Z);
+
+            return Block.Get(id, meta);
         }
 
         public void SetBlock(Vector3 pos, Block block)
         {
-            //TODO
+            Tuple<int, int> chunkPos = new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4);
+            Chunk chunk = null;
+            if (chunks.ContainsKey(chunkPos))
+            {
+                chunk = chunks[chunkPos];
+            }
+            else
+            {
+                throw new Exception();
+            }
+
+            chunk.SetBlock((int) pos.X, (int) pos.Y, (int) pos.Z, (byte) block.ID);
+            chunk.SetMetadata((int) pos.X, (int) pos.Y, (int) pos.Z, (byte) block.Damage);
         }
 
         public IEnumerable<Chunk> LoadChunks(Vector2 chunkXZ, int radius)

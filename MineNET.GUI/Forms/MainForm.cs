@@ -49,6 +49,7 @@ namespace MineNET.GUI.Forms
             {
                 MessageBox.Show(e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Server.ErrorStop(e);
+                throw e;
             }
         }
 
