@@ -384,8 +384,6 @@
     <Compile Include="Events\InventoryEvents\InventoryEventArgs.cs" />
     <Compile Include="Events\InventoryEvents\InventoryEvents.cs" />
     <Compile Include="Events\InventoryEvents\InventoryOpenEventArgs.cs" />
-    <Compile Include="Inventories\Data\NetworkInventoryAction.cs" />
-    <Compile Include="Inventories\InventoryTransactionPacket.cs" />
     <Compile Include="Inventories\Transactions\Action\InventoryAction.cs" />
     <Compile Include="Inventories\Transactions\Data\ReleaseItemData.cs" />
     <Compile Include="Inventories\Transactions\Data\TransactionData.cs" />
@@ -400,6 +398,7 @@
     <Compile Include="Network\Packets\Data\CommandOriginData.cs" />
     <Compile Include="Network\Packets\Data\ContainerIds.cs" />
     <Compile Include="Network\Packets\Data\LoginData.cs" />
+    <Compile Include="Network\Packets\Data\NetworkInventoryAction.cs" />
     <Compile Include="Network\Packets\Data\PlayerPermissions.cs" />
     <Compile Include="Entities\Metadata\EntityDataLong.cs" />
     <Compile Include="Entities\Metadata\EntityDataPos.cs" />
@@ -677,6 +676,7 @@
     <Compile Include="Network\Packets\GameRulesChangedPacket.cs" />
     <Compile Include="Network\Packets\InventoryContentPacket.cs" />
     <Compile Include="Network\Packets\InventorySlotPacket.cs" />
+    <Compile Include="Network\Packets\InventoryTransactionPacket.cs" />
     <Compile Include="Network\Packets\MobArmorEquipmentPacket.cs" />
     <Compile Include="Network\Packets\MobEquipmentPacket.cs" />
     <Compile Include="Network\Packets\MovePlayerPacket.cs" />
