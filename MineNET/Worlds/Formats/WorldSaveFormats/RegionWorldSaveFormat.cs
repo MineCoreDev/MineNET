@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using MineNET.NBT.IO;
 using MineNET.Worlds.Data;
 using MineNET.Worlds.Formats.ChunkFormats;
@@ -25,12 +26,27 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
             }
         }
 
+        public string WorldName { get; }
         public string LevelDataFilePath { get; }
         public Dictionary<string, RegionFile> Files = new Dictionary<string, RegionFile>();
 
         public RegionWorldSaveFormat(string worldName)
         {
-            this.LevelDataFilePath = $"{Server.ExecutePath}\\level.dat";
+            this.WorldName = worldName;
+
+            string worldFolder = $"{Server.ExecutePath}\\worlds\\{worldName}";
+            if (!Directory.Exists(worldFolder))
+            {
+                Directory.CreateDirectory(worldFolder);
+            }
+
+            string regionFolder = $"{worldFolder}\\region";
+            if (!Directory.Exists(regionFolder))
+            {
+                Directory.CreateDirectory(regionFolder);
+            }
+
+            this.LevelDataFilePath = $"{worldFolder}\\level.dat";
         }
 
         public Chunk GetChunk(int chunkX, int chunkZ)
@@ -42,7 +58,7 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
             RegionFile file = null;
             if (!this.Files.ContainsKey(key))
             {
-                file = new RegionFile(regionX, regionZ);
+                file = new RegionFile(this.WorldName, regionX, regionZ);
                 this.Files.Add(key, file);
 
                 Chunk chunk = new Chunk(chunkX, chunkZ);
@@ -61,7 +77,7 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
                         chunk.GenerationFlat();//TODO
                         return chunk;
                     }
-                    
+
                     return this.ChunkFormat.NBTDeserialize(NBTIO.ReadZLIBFile(data, NBT.Data.NBTEndian.BIG_ENDIAN));
                 }
                 else

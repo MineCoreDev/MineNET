@@ -5,7 +5,7 @@ using MineNET.Utils;
 
 namespace MineNET.Worlds.Data
 {
-    public class RegionFile
+    public class RegionFile : IDisposable
     {
         public const int VERSION = 1;
         public const byte COMPRESSION_GZIP = 1;
@@ -28,9 +28,9 @@ namespace MineNET.Worlds.Data
 
         public bool IsFileCreated { get; private set; }
 
-        public RegionFile(int rX, int rZ, string ext = "mca")
+        public RegionFile(string worldName, int rX, int rZ, string ext = "mca")
         {
-            this.ChunkDataFilePath = $"{Server.ExecutePath}\\region\\r.{rX}.{rZ}.{ext}";
+            this.ChunkDataFilePath = $"{Server.ExecutePath}\\worlds\\{worldName}\\region\\r.{rX}.{rZ}.{ext}";
 
             this.X = rX;
             this.Z = rZ;
@@ -42,6 +42,7 @@ namespace MineNET.Worlds.Data
         {
             if (!File.Exists(this.ChunkDataFilePath))
             {
+                //File.WriteAllBytes(this.ChunkDataFilePath, new byte[0]);
                 return false;
             }
             else
@@ -129,6 +130,11 @@ namespace MineNET.Worlds.Data
         public void Save()
         {
 
+        }
+
+        public void Dispose()
+        {
+            ((IDisposable) this.stream).Dispose();
         }
     }
 }

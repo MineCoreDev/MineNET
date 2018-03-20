@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using MineNET.Blocks;
 using MineNET.Entities.Players;
+using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds.Formats.WorldSaveFormats;
 
@@ -84,24 +85,6 @@ namespace MineNET.Worlds
                     Tuple<int, int> chunkXZ = new Tuple<int, int>(i, j);
                     if (!player.loadedChunk.ContainsKey(chunkXZ))
                     {
-                        Chunk chunk = this.Format.GetChunk(i, j);
-                        player.loadedChunk.Add(chunkXZ, DateTime.Now.ToBinary());
-                        this.chunks.Add(chunkXZ, chunk);
-                        chunk.SendChunk(player);
-                    }
-                }
-            }
-        }
-
-        public void UnLoadChunk(Player player, int chunkX, int chunkZ, int requestRadius)
-        {
-            for (int i = (chunkX - requestRadius); i < (chunkX + requestRadius); ++i)
-            {
-                for (int j = (chunkZ - requestRadius); j < (chunkZ + requestRadius); ++j)
-                {
-                    Tuple<int, int> chunkXZ = new Tuple<int, int>(i, j);
-                    if (!player.loadedChunk.ContainsKey(chunkXZ))
-                    {
                         try
                         {
                             Chunk chunk = this.Format.GetChunk(i, j);
@@ -109,8 +92,44 @@ namespace MineNET.Worlds
                             this.chunks.Add(chunkXZ, chunk);
                             chunk.SendChunk(player);
                         }
-                        catch { }
+                        catch (Exception e)
+                        {
+                            Logger.Error(e);
+                        }
                     }
+                }
+            }
+        }
+
+        public void UnLoadChunk(Player player, int chunkX, int chunkZ)
+        {
+            Tuple<int, int> chunkXZ = new Tuple<int, int>(chunkX, chunkZ);
+            if (!player.loadedChunk.ContainsKey(chunkXZ))
+            {
+                try
+                {
+                    player.loadedChunk.Remove(chunkXZ);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e);
+                }
+            }
+        }
+
+        public void UnLoadChunk(int chunkX, int chunkZ)
+        {
+            Tuple<int, int> chunkXZ = new Tuple<int, int>(chunkX, chunkZ);
+            if (!this.chunks.ContainsKey(chunkXZ))
+            {
+                try
+                {
+                    this.Format.SetChunk(this.chunks[chunkXZ]);
+                    this.chunks.Remove(chunkXZ);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e);
                 }
             }
         }
