@@ -1,4 +1,4 @@
-﻿using MineNET.Commands.Data;
+﻿using MineNET.Commands.Enums;
 
 namespace MineNET.Commands.Parameters
 {

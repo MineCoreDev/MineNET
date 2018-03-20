@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MineNET.Commands;
 using MineNET.Commands.Data;
+using MineNET.Commands.Enums;
 using MineNET.Commands.Parameters;
 using MineNET.Utils;
 

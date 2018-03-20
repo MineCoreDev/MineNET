@@ -358,11 +358,15 @@
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandSender.cs" />
     <Compile Include="Commands\ConsoleSender.cs" />
-    <Compile Include="Commands\Data\CommandEnum.cs" />
+    <Compile Include="Commands\Enums\CommandEnum.cs" />
     <Compile Include="Commands\Data\CommandOverload.cs" />
     <Compile Include="Commands\Defaults\HelpCommand.cs" />
     <Compile Include="Commands\Defaults\StopCommand.cs" />
     <Compile Include="Commands\Data\ICommandHandler.cs" />
+    <Compile Include="Commands\Enums\CommandEnumBlocks.cs" />
+    <Compile Include="Commands\Enums\CommandEnumBoolean.cs" />
+    <Compile Include="Commands\Enums\CommandEnumGameMode.cs" />
+    <Compile Include="Commands\Enums\CommandEnumItems.cs" />
     <Compile Include="Commands\Parameters\CommandParameter.cs" />
     <Compile Include="Commands\Parameters\CommandParameterCommand.cs" />
     <Compile Include="Commands\Parameters\CommandParameterFloat.cs" />
