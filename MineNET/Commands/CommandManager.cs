@@ -10,6 +10,7 @@ namespace MineNET.Commands
         public ICommandHandler CommandHandler { get; set; }
 
         public Dictionary<string, Command> CommandList { get; set; } = new Dictionary<string, Command>();
+        public Dictionary<string, Command> CommandAliases { get; set; } = new Dictionary<string, Command>();
 
         public CommandManager()
         {
@@ -66,6 +67,10 @@ namespace MineNET.Commands
             {
                 return this.CommandList[cmd];
             }
+            if (this.CommandAliases.ContainsKey(cmd))
+            {
+                return this.CommandAliases[cmd];
+            }
             return null;
         }
 
@@ -73,21 +78,19 @@ namespace MineNET.Commands
         {
             if (!this.CommandList.ContainsKey(command.Name))
             {
-                this.CommandList.Add(command.Name, command.Clone());
+                this.CommandList.Add(command.Name, command);
             }
 
-            /*
             if (command.Aliases != null)
             {
                 for (int i = 0; i < command.Aliases.Length; ++i)
                 {
-                    if (!this.CommandList.ContainsKey(command.Aliases[i]))
+                    if (!this.CommandAliases.ContainsKey(command.Aliases[i]))
                     {
-                        this.CommandList.Add(command.Aliases[i], command.Clone());
+                        this.CommandAliases.Add(command.Aliases[i], command);
                     }
                 }
             }
-            */
         }
 
         public void RemoveCommand(string alias)
