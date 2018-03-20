@@ -98,7 +98,7 @@ namespace MineNET.RakNet.Packets
 
             WriteIPEndPoint(this.endPoint);
 
-            WriteLShort(20);
+            WriteShort(20);
             for (int i = 0; i < 20; ++i)
             {
                 WriteIPEndPoint(this.systemEndPoints[i]);

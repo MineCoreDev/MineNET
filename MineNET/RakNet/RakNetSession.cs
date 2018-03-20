@@ -318,7 +318,10 @@ namespace MineNET.RakNet
 
         public void AddResendQueue(DataPacket packet)
         {
-            reSendQueue.Add(packet.SeqNumber, (DataPacket) packet.Clone());
+            if (packet != null)
+            {
+                reSendQueue.Add(packet.SeqNumber, (DataPacket) packet.Clone());
+            }
         }
 
         public void SendPacket(EncapsulatedPacket packet, bool notQueue = false)
