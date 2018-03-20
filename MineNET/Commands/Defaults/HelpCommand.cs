@@ -33,10 +33,15 @@ namespace MineNET.Commands.Defaults
         {
             Logger.Info("使えるコマンド一覧");
             Dictionary<string, Command> commandList = Server.Instance.CommandManager.CommandList;
-            foreach (string name in commandList.Keys)
+
+            List<KeyValuePair<string, Command>> list = new List<KeyValuePair<string, Command>>(commandList);
+            list.Sort((a, b) => a.Key.CompareTo(b.Key));
+            for (int i = 0; i < list.Count; ++i)
             {
-                Command command = commandList[name];
+                KeyValuePair<string, Command> Data = list[i];
+                Command command = Data.Value;
                 Logger.Info($" §2/{command.Name}§f : {command.Description}");
+
             }
             return true;
         }

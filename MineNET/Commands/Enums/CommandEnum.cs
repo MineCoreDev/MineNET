@@ -1,4 +1,4 @@
-﻿namespace MineNET.Commands.Data
+﻿namespace MineNET.Commands.Enums
 {
     public class CommandEnum
     {
