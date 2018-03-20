@@ -28,7 +28,7 @@ namespace MineNET.Network.Packets
 
             this.WriteByte(this.WindowId);
             this.WriteByte(this.Type);
-            this.WriteBlockPosition(this.Vector3.GetFloorX(), this.Vector3.GetFloorY(), this.Vector3.GetFloorZ());
+            this.WriteBlockVector3(this.Vector3.GetFloorX(), this.Vector3.GetFloorY(), this.Vector3.GetFloorZ());
             this.WriteEntityUniqueId(this.EntityUniqueId);
         }
     }

@@ -204,6 +204,7 @@ namespace MineNET.Network
             this.RegisterPacket(new MovePlayerPacket());
             this.RegisterPacket(new RequestChunkRadiusPacket());
             this.RegisterPacket(new CommandRequestPacket());
+            this.RegisterPacket(new InventoryTransactionPacket());
         }
     }
 }

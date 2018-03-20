@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MineNET.Blocks.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Data;
 using MineNET.Entities.Metadata;
@@ -35,19 +36,26 @@ namespace MineNET.Utils
             this.WriteLFloat(value.Z);
         }
 
-        //TODO : ReadBlockPosition
-
-        public void WriteBlockPosition(Vector3 pos)
+        public Vector3 ReadBlockVector3()
         {
-            this.WriteBlockPosition(pos.ToVector3i());
+            return new Vector3(
+                this.ReadSVarInt(),
+                this.ReadUVarInt(),
+                this.ReadSVarInt()
+            );
         }
 
-        public void WriteBlockPosition(Vector3i pos)
+        public void WriteBlockVector3(Vector3 pos)
         {
-            this.WriteBlockPosition(pos.X, pos.Y, pos.Z);
+            this.WriteBlockVector3(pos.ToVector3i());
         }
 
-        public void WriteBlockPosition(int x, int y, int z)
+        public void WriteBlockVector3(Vector3i pos)
+        {
+            this.WriteBlockVector3(pos.X, pos.Y, pos.Z);
+        }
+
+        public void WriteBlockVector3(int x, int y, int z)
         {
             this.WriteSVarInt(x);
             this.WriteUVarInt((uint) y);
@@ -277,6 +285,16 @@ namespace MineNET.Utils
                 commandOriginData.Unknown = this.ReadVarLong();
             }
             return commandOriginData;
+        }
+
+        public BlockFace ReadBlockFace()
+        {
+            return BlockFaceExtensions.FromIndex(this.ReadVarInt());
+        }
+
+        public void WriteBlockFace(BlockFace face)
+        {
+            this.WriteVarInt(face.GetIndex());
         }
     }
 }

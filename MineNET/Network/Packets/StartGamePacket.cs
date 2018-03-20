@@ -103,7 +103,7 @@ namespace MineNET.Network.Packets
             this.WriteSVarInt(this.Generator);
             this.WriteSVarInt(this.WorldGamemode);
             this.WriteSVarInt(this.Difficulty);
-            this.WriteBlockPosition(this.SpawnX, this.SpawnY, this.SpawnZ);
+            this.WriteBlockVector3(this.SpawnX, this.SpawnY, this.SpawnZ);
             this.WriteBool(this.HasAchievementsDisabled);
             this.WriteSVarInt(this.DayCycleStopTime);
             this.WriteBool(this.EduMode);

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MineNET.Blocks;
+using MineNET.Entities.Players;
+using MineNET.Network.Packets;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds.Formats.WorldSaveFormats;
@@ -69,9 +71,9 @@ namespace MineNET.Worlds
         {
             Tuple<int, int> chunkPos = new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4);
             Chunk chunk = null;
-            if (chunks.ContainsKey(chunkPos))
+            if (this.chunks.ContainsKey(chunkPos))
             {
-                chunk = chunks[chunkPos];
+                chunk = this.chunks[chunkPos];
             }
             else
             {
@@ -88,9 +90,9 @@ namespace MineNET.Worlds
         {
             Tuple<int, int> chunkPos = new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4);
             Chunk chunk = null;
-            if (chunks.ContainsKey(chunkPos))
+            if (this.chunks.ContainsKey(chunkPos))
             {
-                chunk = chunks[chunkPos];
+                chunk = this.chunks[chunkPos];
             }
             else
             {
@@ -99,11 +101,13 @@ namespace MineNET.Worlds
 
             chunk.SetBlock((int) pos.X, (int) pos.Y, (int) pos.Z, (byte) block.ID);
             chunk.SetMetadata((int) pos.X, (int) pos.Y, (int) pos.Z, (byte) block.Damage);
+
+            this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos });
         }
 
         public IEnumerable<Chunk> LoadChunks(Vector2 chunkXZ, int radius)
         {
-            lock (chunks)
+            lock (this.chunks)
             {
                 Dictionary<Tuple<int, int>, double> newOrders = new Dictionary<Tuple<int, int>, double>();
 
@@ -126,24 +130,24 @@ namespace MineNET.Worlds
                     }
                 }
 
-                foreach (Tuple<int, int> chunkKey in chunks.Keys.ToArray())
+                foreach (Tuple<int, int> chunkKey in this.chunks.Keys.ToArray())
                 {
                     if (!newOrders.ContainsKey(chunkKey))
                     {
                         //this.Format.SetChunk(chunks[chunkKey]);//TODO:
-                        chunks.Remove(chunkKey);
+                        this.chunks.Remove(chunkKey);
                     }
                 }
 
                 foreach (var pair in newOrders.OrderBy(pair => pair.Value))
                 {
-                    if (chunks.ContainsKey(pair.Key)) continue;
+                    if (this.chunks.ContainsKey(pair.Key)) continue;
 
                     Chunk chunk = null;
                     try
                     {
                         chunk = this.Format.GetChunk(pair.Key.Item1, pair.Key.Item2);
-                        chunks.Add(pair.Key, chunk);
+                        this.chunks.Add(pair.Key, chunk);
                     }
                     catch (Exception e)
                     {
@@ -151,6 +155,23 @@ namespace MineNET.Worlds
                     }
 
                     yield return chunk;
+                }
+            }
+        }
+
+        public void SendBlocks(Player[] players, Vector3[] vector3, int flags = UpdateBlockPacket.FLAG_NONE)
+        {
+            for (int i = 0; i < vector3.Length; ++i)
+            {
+                Block block = this.GetBlock(vector3[i]);
+                UpdateBlockPacket pk = new UpdateBlockPacket();
+                pk.Vector3 = vector3[i].ToVector3i();
+                pk.BlockId = block.ID;
+                pk.BlockData = block.Damage;
+                pk.Flags = flags;
+                for (int j = 0; j < players.Length; ++j)
+                {
+                    players[j].SendPacket(pk);
                 }
             }
         }

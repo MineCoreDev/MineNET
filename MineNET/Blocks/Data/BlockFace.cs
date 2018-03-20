@@ -14,6 +14,35 @@ namespace MineNET.Blocks.Data
 
     public static class BlockFaceExtensions
     {
+        public static BlockFace FromIndex(int index)
+        {
+            if (index == 0)
+            {
+                return BlockFace.DOWN;
+            }
+            else if (index == 1)
+            {
+                return BlockFace.UP;
+            }
+            else if (index == 2)
+            {
+                return BlockFace.NORTH;
+            }
+            else if (index == 3)
+            {
+                return BlockFace.SOUTH;
+            }
+            else if (index == 4)
+            {
+                return BlockFace.WEST;
+            }
+            else if (index == 5)
+            {
+                return BlockFace.EAST;
+            }
+            return BlockFace.DOWN;
+        }
+
         public static int GetIndex(this BlockFace face)
         {
             return (int) face;
