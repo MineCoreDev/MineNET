@@ -68,6 +68,7 @@ namespace MineNET
             string mPath = $"{ExecutePath}\\MineNET.yml";
             string sPath = $"{ExecutePath}\\ServerProperties.yml";
             this.mineNETConfig = YamlStaticConfig.Load<MineNETConfig>(mPath);
+            LangManager.Lang = this.mineNETConfig.Language;
             this.serverConfig = YamlStaticConfig.Load<ServerConfig>(sPath);
         }
 

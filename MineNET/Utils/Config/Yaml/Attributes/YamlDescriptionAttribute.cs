@@ -1,14 +1,32 @@
 ﻿using System;
+using System.Resources;
 
 namespace MineNET.Utils.Config
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, Inherited = false, AllowMultiple = true)]
     public sealed class YamlDescriptionAttribute : Attribute
     {
-        public YamlDescriptionAttribute(string description)
+        public YamlDescriptionAttribute(string description, Type t = null)
         {
             this.Description = description;
-            this.IsInline = false;
+            if (t != null)
+            {
+                this.Manager = new ResourceManager(t);
+            }
+        }
+
+        public YamlDescriptionAttribute(string description, Type target, string resourceName, bool useFullName = false)
+        {
+            this.Description = description;
+            if (useFullName)
+            {
+                this.Manager = new ResourceManager(resourceName, target.Assembly);
+            }
+            else
+            {
+                this.Manager = new ResourceManager($"{resourceName}{LangManager.Lang}", target.Assembly);
+            }
+
         }
 
         public string Description
@@ -16,7 +34,7 @@ namespace MineNET.Utils.Config
             get;
         }
 
-        public bool IsInline
+        public ResourceManager Manager
         {
             get;
         }

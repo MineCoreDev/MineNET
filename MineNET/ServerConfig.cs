@@ -1,4 +1,5 @@
-﻿using MineNET.Utils.Config;
+﻿using MineNET.Entities.Data;
+using MineNET.Utils.Config;
 
 namespace MineNET
 {
@@ -14,7 +15,7 @@ namespace MineNET
         public int MaxPlayers { get; set; } = 20;
 
         [YamlDescription("%server_config_worldGameMode")]
-        public string GameMode { get; set; } = "Survival";
+        public GameMode GameMode { get; set; } = GameMode.Survival;
 
         [YamlDescription("%server_config_mainWorldName")]
         public string MainWorldName { get; set; } = "World";

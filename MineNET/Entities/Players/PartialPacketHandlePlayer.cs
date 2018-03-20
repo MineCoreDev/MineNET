@@ -1,4 +1,5 @@
-﻿using MineNET.Events.PlayerEvents;
+﻿using MineNET.Entities.Data;
+using MineNET.Events.PlayerEvents;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Utils;
@@ -193,7 +194,7 @@ namespace MineNET.Entities.Players
             StartGamePacket startGamePacket = new StartGamePacket();
             startGamePacket.EntityUniqueId = this.EntityID;
             startGamePacket.EntityRuntimeId = this.EntityID;
-            startGamePacket.PlayerGamemode = 1;
+            startGamePacket.PlayerGamemode = GameMode.Creative;
             startGamePacket.PlayerPosition = new Vector3(this.X, this.Y, this.Z);
             startGamePacket.Direction = new Vector2(this.Yaw, this.Pitch);
             startGamePacket.WorldGamemode = 0;

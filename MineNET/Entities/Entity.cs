@@ -49,6 +49,8 @@ namespace MineNET.Entities
 
         public abstract string Name { get; protected set; }
 
+        public virtual bool Closed { get; protected set; }
+
         public Player[] GetViewers()
         {
             return this.viewers.ToArray();

@@ -64,101 +64,148 @@ namespace MineNET.Utils
 
         public static void Log(string msg, params object[] formats)
         {
-            if (msg[0] == '%')
+            if (!string.IsNullOrEmpty(msg))
             {
-                msg = msg.Remove(0, 1);
-                msg = LangManager.GetString(msg);
+                if (msg[0] == '%')
+                {
+                    msg = msg.Remove(0, 1);
+                    msg = LangManager.GetString(msg);
+                }
+                string f = string.Format(msg, formats);
+                Log(f);
             }
-            string f = string.Format(msg, formats);
-            Log(f);
         }
 
         public static void Log(string msg)
         {
-            if (msg[0] == '%')
+            if (!string.IsNullOrEmpty(msg))
             {
-                msg = msg.Remove(0, 1);
-                msg = LangManager.GetString(msg);
+                if (msg[0] == '%')
+                {
+                    msg = msg.Remove(0, 1);
+                    msg = LangManager.GetString(msg);
+                }
+                string text = $"§7[Log][{CreateTime()}]{msg}";
+                Server.Instance.Logger?.AddLogText(text, LoggerLevel.Log);
             }
-            string text = $"§7[Log][{CreateTime()}]{msg}";
-            Server.Instance.Logger?.AddLogText(text, LoggerLevel.Log);
+        }
+
+        public static void Log(object msg)
+        {
+            Log(msg.ToString());
         }
 
         public static void Info(string msg, params object[] formats)
         {
-            if (msg[0] == '%')
+            if (!string.IsNullOrEmpty(msg))
             {
-                msg = msg.Remove(0, 1);
-                msg = LangManager.GetString(msg);
+                if (msg[0] == '%')
+                {
+                    msg = msg.Remove(0, 1);
+                    msg = LangManager.GetString(msg);
+                }
+                string f = string.Format(msg, formats);
+                Info(f);
             }
-            string f = string.Format(msg, formats);
-            Info(f);
         }
 
         public static void Info(string msg)
         {
-            if (msg[0] == '%')
+            if (!string.IsNullOrEmpty(msg))
             {
-                msg = msg.Remove(0, 1);
-                msg = LangManager.GetString(msg);
+                if (msg[0] == '%')
+                {
+                    msg = msg.Remove(0, 1);
+                    msg = LangManager.GetString(msg);
+                }
+                string text = $"§f[Info][{CreateTime()}]{msg}";
+                Server.Instance.Logger?.AddLogText(text);
             }
-            string text = $"§f[Info][{CreateTime()}]{msg}";
-            Server.Instance.Logger?.AddLogText(text);
+        }
+
+        public static void Info(object msg)
+        {
+            Info(msg.ToString());
         }
 
         public static void Notice(string msg, params object[] formats)
         {
-            if (msg[0] == '%')
+            if (!string.IsNullOrEmpty(msg))
             {
-                msg = msg.Remove(0, 1);
-                msg = LangManager.GetString(msg);
+                if (msg[0] == '%')
+                {
+                    msg = msg.Remove(0, 1);
+                    msg = LangManager.GetString(msg);
+                }
+                string f = string.Format(msg, formats);
+                Notice(f);
             }
-            string f = string.Format(msg, formats);
-            Notice(f);
         }
 
         public static void Notice(string msg)
         {
-            if (msg[0] == '%')
+            if (!string.IsNullOrEmpty(msg))
             {
-                msg = msg.Remove(0, 1);
-                msg = LangManager.GetString(msg);
+                if (msg[0] == '%')
+                {
+                    msg = msg.Remove(0, 1);
+                    msg = LangManager.GetString(msg);
+                }
+                string text = $"§b[Notice][{CreateTime()}]{msg}";
+                Server.Instance.Logger?.AddLogText(text, LoggerLevel.Notice);
             }
-            string text = $"§b[Notice][{CreateTime()}]{msg}";
-            Server.Instance.Logger?.AddLogText(text, LoggerLevel.Notice);
+        }
+
+        public static void Notice(object msg)
+        {
+            Notice(msg.ToString());
         }
 
         public static void Warning(string msg, params object[] formats)
         {
-            if (msg[0] == '%')
+            if (!string.IsNullOrEmpty(msg))
             {
-                msg = msg.Remove(0, 1);
-                msg = LangManager.GetString(msg);
+                if (msg[0] == '%')
+                {
+                    msg = msg.Remove(0, 1);
+                    msg = LangManager.GetString(msg);
+                }
+                string f = string.Format(msg, formats);
+                Warning(f);
             }
-            string f = string.Format(msg, formats);
-            Warning(f);
         }
 
         public static void Warning(string msg)
         {
-            if (msg[0] == '%')
+            if (!string.IsNullOrEmpty(msg))
             {
-                msg = msg.Remove(0, 1);
-                msg = LangManager.GetString(msg);
+                if (msg[0] == '%')
+                {
+                    msg = msg.Remove(0, 1);
+                    msg = LangManager.GetString(msg);
+                }
+                string text = $"§e[Warning][{CreateTime()}]{msg}";
+                Server.Instance.Logger?.AddLogText(text, LoggerLevel.Warning);
             }
-            string text = $"§e[Warning][{CreateTime()}]{msg}";
-            Server.Instance.Logger?.AddLogText(text, LoggerLevel.Warning);
+        }
+
+        public static void Warning(object msg)
+        {
+            Warning(msg.ToString());
         }
 
         public static void Error(string msg, params object[] formats)
         {
-            if (msg[0] == '%')
+            if (!string.IsNullOrEmpty(msg))
             {
-                msg = msg.Remove(0, 1);
-                msg = LangManager.GetString(msg);
+                if (msg[0] == '%')
+                {
+                    msg = msg.Remove(0, 1);
+                    msg = LangManager.GetString(msg);
+                }
+                string f = string.Format(msg, formats);
+                Error(f);
             }
-            string f = string.Format(msg, formats);
-            Error(f);
         }
 
         public static void Error(Exception exception)
@@ -171,13 +218,21 @@ namespace MineNET.Utils
 
         public static void Error(string msg)
         {
-            if (msg[0] == '%')
+            if (!string.IsNullOrEmpty(msg))
             {
-                msg = msg.Remove(0, 1);
-                msg = LangManager.GetString(msg);
+                if (msg[0] == '%')
+                {
+                    msg = msg.Remove(0, 1);
+                    msg = LangManager.GetString(msg);
+                }
+                string text = $"§c[Error][{CreateTime()}]{msg}";
+                Server.Instance.Logger?.AddLogText(text, LoggerLevel.Error);
             }
-            string text = $"§c[Error][{CreateTime()}]{msg}";
-            Server.Instance.Logger?.AddLogText(text, LoggerLevel.Error);
+        }
+
+        public static void Error(object msg)
+        {
+            Error(msg.ToString());
         }
 
         public static void Fatal(string msg, params object[] formats)
@@ -201,13 +256,21 @@ namespace MineNET.Utils
 
         public static void Fatal(string msg)
         {
-            if (msg[0] == '%')
+            if (!string.IsNullOrEmpty(msg))
             {
-                msg = msg.Remove(0, 1);
-                msg = LangManager.GetString(msg);
+                if (msg[0] == '%')
+                {
+                    msg = msg.Remove(0, 1);
+                    msg = LangManager.GetString(msg);
+                }
+                string text = $"§4[Fatal][{CreateTime()}]{msg}";
+                Server.Instance.Logger?.AddLogText(text, LoggerLevel.Fatal);
             }
-            string text = $"§4[Fatal][{CreateTime()}]{msg}";
-            Server.Instance.Logger?.AddLogText(text, LoggerLevel.Fatal);
+        }
+
+        public static void Fatal(object msg)
+        {
+            Fatal(msg.ToString());
         }
 
         internal void Update()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Resources;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
@@ -8,11 +9,11 @@ namespace MineNET.Utils.Config.Yaml
     {
         public readonly IObjectDescriptor innerDescriptor;
 
-        public CommentObjectDescriptor(IObjectDescriptor innerDescriptor, string comment, bool isInline)
+        public CommentObjectDescriptor(IObjectDescriptor innerDescriptor, string comment, ResourceManager manager)
         {
             this.innerDescriptor = innerDescriptor;
             this.Comment = comment;
-            this.IsInline = isInline;
+            this.Manager = manager;
         }
 
         public string Comment
@@ -21,7 +22,7 @@ namespace MineNET.Utils.Config.Yaml
             private set;
         }
 
-        public bool IsInline
+        public ResourceManager Manager
         {
             get;
             private set;

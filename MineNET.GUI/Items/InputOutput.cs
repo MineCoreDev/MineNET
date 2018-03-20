@@ -11,13 +11,6 @@ namespace MineNET.GUI.Items
         public InputOutput()
         {
             InitializeComponent();
-
-            checkedListBox1.SetItemChecked(0, false);
-            checkedListBox1.SetItemChecked(1, true);
-            checkedListBox1.SetItemChecked(2, true);
-            checkedListBox1.SetItemChecked(3, true);
-            checkedListBox1.SetItemChecked(4, true);
-            checkedListBox1.SetItemChecked(5, true);
         }
 
         internal async void OnUpdate()
@@ -78,6 +71,19 @@ namespace MineNET.GUI.Items
             }
         }
 
+        internal string InputButtonLabel
+        {
+            get
+            {
+                return this.button1.Text;
+            }
+
+            set
+            {
+                this.button1.Text = value;
+            }
+        }
+
         internal string OutputLabel
         {
             get
@@ -101,6 +107,27 @@ namespace MineNET.GUI.Items
             set
             {
                 this.label3.Text = value;
+            }
+        }
+
+        internal string OutputClearButtonLabel
+        {
+            get
+            {
+                return this.button2.Text;
+            }
+
+            set
+            {
+                this.button2.Text = value;
+            }
+        }
+
+        internal CheckedListBox OutputOptionCheckBox
+        {
+            get
+            {
+                return checkedListBox1;
             }
         }
 

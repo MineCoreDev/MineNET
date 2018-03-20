@@ -1,4 +1,5 @@
 ﻿using MineNET.Data;
+using MineNET.Entities.Data;
 using MineNET.Values;
 using MineNET.Worlds.Data;
 
@@ -20,7 +21,7 @@ namespace MineNET.Network.Packets
 
         public long EntityRuntimeId { get; set; }
 
-        public int PlayerGamemode { get; set; }
+        public GameMode PlayerGamemode { get; set; }
 
         public Vector3 PlayerPosition { get; set; }
 
@@ -95,7 +96,7 @@ namespace MineNET.Network.Packets
             //TODO: Packet
             this.WriteEntityUniqueId(this.EntityUniqueId);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
-            this.WriteSVarInt(this.PlayerGamemode);
+            this.WriteSVarInt(this.PlayerGamemode.GameModeToInt());
             this.WriteVector3(this.PlayerPosition);
             this.WriteVector2(this.Direction);
             this.WriteSVarInt(this.Seed);

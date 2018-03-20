@@ -14,12 +14,20 @@ namespace MineNET.Utils.Config.Yaml
         public override bool EnterMapping(IPropertyDescriptor key, IObjectDescriptor value, IEmitter context)
         {
             CommentObjectDescriptor comment = value as CommentObjectDescriptor;
-            if (comment != null && comment.Comment != null)
+            if (comment != null && !string.IsNullOrEmpty(comment.Comment))
             {
                 if (comment.Comment[0] == '%')
                 {
-                    string msg = LangManager.GetString(comment.Comment.Remove(0, 1));
-                    context.Emit(new Comment(msg, false));
+                    if (comment.Manager != null)
+                    {
+                        string msg = comment.Manager.GetString(comment.Comment.Remove(0, 1));
+                        context.Emit(new Comment(msg, false));
+                    }
+                    else
+                    {
+                        string msg = LangManager.GetString(comment.Comment.Remove(0, 1));
+                        context.Emit(new Comment(msg, false));
+                    }
                 }
                 else
                 {

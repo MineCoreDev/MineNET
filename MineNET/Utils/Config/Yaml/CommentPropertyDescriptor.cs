@@ -81,7 +81,7 @@ namespace MineNET.Utils.Config.Yaml
         public IObjectDescriptor Read(object target)
         {
             YamlDescriptionAttribute att = this.baseDescriptor.GetCustomAttribute<YamlDescriptionAttribute>();
-            return att != null ? new CommentObjectDescriptor(this.baseDescriptor.Read(target), att.Description, att.IsInline) : this.baseDescriptor.Read(target);
+            return att != null ? new CommentObjectDescriptor(this.baseDescriptor.Read(target), att.Description, att.Manager) : this.baseDescriptor.Read(target);
         }
     }
 }

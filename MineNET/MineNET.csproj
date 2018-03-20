@@ -379,6 +379,7 @@
     <Compile Include="Commands\Parameters\CommandParameterText.cs" />
     <Compile Include="Commands\Parameters\CommandParameterValue.cs" />
     <Compile Include="Commands\Parameters\CommandParameterValueEnum.cs" />
+    <Compile Include="Entities\Data\GameMode.cs" />
     <Compile Include="Events\InventoryEvents\InventoryCloseEventArgs.cs" />
     <Compile Include="Events\InventoryEvents\InventoryEventArgs.cs" />
     <Compile Include="Events\InventoryEvents\InventoryEvents.cs" />

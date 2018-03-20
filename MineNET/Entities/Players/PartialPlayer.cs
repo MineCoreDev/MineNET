@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using MineNET.Entities.Data;
 using MineNET.Inventories;
 using MineNET.Items;
 using MineNET.NBT.Data;
@@ -44,7 +45,7 @@ namespace MineNET.Entities.Players
             this.namedTag.PutList(new ListTag<FloatTag>("Pos"));
             this.namedTag.PutList(new ListTag<FloatTag>("Rotation"));
 
-            this.namedTag.PutInt("PlayerGameMode", int.Parse(Server.ServerConfig.GameMode));//TODO Parse Error...
+            this.namedTag.PutInt("PlayerGameMode", Server.ServerConfig.GameMode.GameModeToInt());//TODO Parse Error...
             this.namedTag.PutInt("PlayerLevel", 0);
             this.namedTag.PutFloat("PlayerLevelProgress", 0f);
         }

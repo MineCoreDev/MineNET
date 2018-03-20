@@ -120,8 +120,23 @@
   <data name="app_language_key_error" xml:space="preserve">
     <value>Keyが見つかりませんでした。</value>
   </data>
+  <data name="config_outputOption" xml:space="preserve">
+    <value>出力オプション</value>
+  </data>
+  <data name="form_button1_label" xml:space="preserve">
+    <value>開始</value>
+  </data>
+  <data name="form_button2_label" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="form_inputButton_label" xml:space="preserve">
+    <value>送信</value>
+  </data>
   <data name="form_input_label" xml:space="preserve">
     <value>入力</value>
+  </data>
+  <data name="form_outputClearButton_label" xml:space="preserve">
+    <value>出力をクリア</value>
   </data>
   <data name="form_outputOption_label" xml:space="preserve">
     <value>出力オプション</value>

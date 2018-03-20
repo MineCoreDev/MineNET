@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\MineNETGUIConfig.cs" />
+    <Compile Include="Data\OutputOption.cs" />
     <Compile Include="Forms\LoadForm.cs">
       <SubType>Form</SubType>
     </Compile>

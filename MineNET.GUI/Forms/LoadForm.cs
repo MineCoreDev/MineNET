@@ -24,6 +24,7 @@ namespace MineNET.GUI.Forms
             string mPath = $"{Server.ExecutePath}\\MineNET.yml";
             MineNETConfig conf = YamlStaticConfig.Load<MineNETConfig>(mPath);
             LangManager.Language = conf.Language;
+            MineNET.Utils.LangManager.Lang = conf.Language;
 
             this.statusAndProgress1.Text = LangManager.GetString("start_lang_setup");
             this.statusAndProgress1.ProgressBar.Value = 25;

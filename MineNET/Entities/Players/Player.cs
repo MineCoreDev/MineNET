@@ -27,7 +27,21 @@ namespace MineNET.Entities.Players
         public bool HaveAllPacks { get; private set; }
         public bool PackSyncCompleted { get; private set; }
         public bool HasSpawned { get; private set; }
-        public bool Closed { get; private set; }
+
+        GameMode gameMode = GameMode.Survival;
+        public GameMode GameMode
+        {
+            get
+            {
+                return this.gameMode;
+            }
+
+            set
+            {
+                this.gameMode = value;
+                //TODO: Send Packet...
+            }
+        }
 
         public int RequestChunkRadius { get; private set; } = 5;
 

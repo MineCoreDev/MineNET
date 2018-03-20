@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using MineNET.Entities.Data;
 using MineNET.RakNet.Packets;
 using MineNET.Utils;
 
@@ -259,7 +260,7 @@ namespace MineNET.RakNet
                 string version = Network.Packets.ProtocolInfo.CLIENT_VERSION;
                 int maxPlayer = Server.ServerConfig.MaxPlayers;
                 int? player = Server.Instance.NetworkManager?.players.Count;
-                string gameMode = Server.ServerConfig.GameMode;
+                string gameMode = Server.ServerConfig.GameMode.GameModeToString();
 
                 UNCONNECTED_PING uping = (UNCONNECTED_PING) packet;
                 UNCONNECTED_PONG upong = new UNCONNECTED_PONG();
