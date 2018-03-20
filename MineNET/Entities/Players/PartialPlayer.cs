@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using MineNET.Inventories;
 using MineNET.Items;
 using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
+using MineNET.Worlds;
 
 namespace MineNET.Entities.Players
 {
     public partial class Player
     {
-        internal SortedList<Tuple<int, int>, long> loadedChunk = new SortedList<Tuple<int, int>, long>();
-
         public Player()
         {
             this.ShowNameTag = true;
@@ -61,11 +58,14 @@ namespace MineNET.Entities.Players
 
         internal override void OnUpdate()
         {
-            if (this.IsLogined)
+            if (this.HasSpawned)
             {
                 Task.Run(() =>
                 {
-                    this.World.LoadChunk(this, ((int) this.X) >> 4, ((int) this.Z) >> 4, this.RequestChunkRadius);
+                    foreach (Chunk chunk in this.World.LoadChunks(this.GetChunkVector(), this.RequestChunkRadius))
+                    {
+                        chunk.SendChunk(this);
+                    }
                 });
             }
         }

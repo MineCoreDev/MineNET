@@ -71,7 +71,8 @@ namespace MineNET.RakNet
         Dictionary<int, int> ackQueue = new Dictionary<int, int>();
         Dictionary<int, int> nackQueue = new Dictionary<int, int>();
 
-        Dictionary<int, DataPacket> reSendQueue = new Dictionary<int, DataPacket>();
+        Dictionary<int, DataPacket> packetToSend = new Dictionary<int, DataPacket>();
+        Dictionary<int, DataPacket> recoveryQueue = new Dictionary<int, DataPacket>();
 
         Queue<Packet> packetQueue = new Queue<Packet>();
 
@@ -156,9 +157,9 @@ namespace MineNET.RakNet
                     pk.Decode();
                     for (int i = 0; i < ack.packets.Length; ++i)
                     {
-                        if (reSendQueue.ContainsKey(ack.packets[i]))
+                        if (recoveryQueue.ContainsKey(ack.packets[i]))
                         {
-                            reSendQueue.Remove(ack.packets[i]);
+                            recoveryQueue.Remove(ack.packets[i]);
                         }
                     }
                 }
@@ -168,11 +169,16 @@ namespace MineNET.RakNet
                     pk.Decode();
                     for (int i = 0; i < nack.packets.Length; ++i)
                     {
-                        if (reSendQueue.ContainsKey(nack.packets[i]))
+                        if (recoveryQueue.ContainsKey(nack.packets[i]))
                         {
-                            DataPacket dp = reSendQueue[nack.packets[i]];
+                            DataPacket dp = recoveryQueue[nack.packets[i]];
                             dp.SeqNumber = this.sendSeqNumber++;
-                            this.server.SendPacket(dp, this.point.Address, this.point.Port);
+                            packetToSend.Add(nack.packets[i], dp);
+                            recoveryQueue.Remove(nack.packets[i]);
+                        }
+                        else
+                        {
+                            Logger.Log("Not Recovery Packet");
                         }
                     }
                 }
@@ -320,7 +326,7 @@ namespace MineNET.RakNet
         {
             if (packet != null)
             {
-                reSendQueue.Add(packet.SeqNumber, (DataPacket) packet.Clone());
+                recoveryQueue.Add(packet.SeqNumber, (DataPacket) packet.Clone());
             }
         }
 
@@ -378,7 +384,7 @@ namespace MineNET.RakNet
                     }
                     else
                     {
-                        DataPacket_0 pk = new DataPacket_0();
+                        DataPacket_4 pk = new DataPacket_4();
                         pk.SeqNumber = this.sendSeqNumber++;
                         pk.Packets = new[]
                         {
@@ -432,8 +438,16 @@ namespace MineNET.RakNet
                 }
             }
 
+            if (packetToSend.Count > 0)
+            {
+                foreach (DataPacket pk in packetToSend.Values)
+                {
+                    this.server.SendPacket(pk, point.Address, point.Port);
+                }
+                packetToSend.Clear();
+            }
+
             SendQueuePackets();
-            //recover pk
         }
 
         internal void Close(string msg, bool serverClose = true)

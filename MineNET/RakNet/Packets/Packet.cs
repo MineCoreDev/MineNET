@@ -11,6 +11,8 @@ namespace MineNET.RakNet.Packets
             get;
         }
 
+        public long SendTime { get; set; }
+
         public virtual void Encode()
         {
             WriteByte(this.PacketID);

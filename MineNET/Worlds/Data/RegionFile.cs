@@ -129,7 +129,14 @@ namespace MineNET.Worlds.Data
 
         public void Save()
         {
+            if (!File.Exists(this.ChunkDataFilePath))
+            {
 
+            }
+            else
+            {
+
+            }
         }
 
         public void Dispose()

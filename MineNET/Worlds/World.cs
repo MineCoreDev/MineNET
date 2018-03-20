@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using MineNET.Blocks;
-using MineNET.Entities.Players;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds.Formats.WorldSaveFormats;
@@ -76,60 +76,56 @@ namespace MineNET.Worlds
             //TODO
         }
 
-        public void LoadChunk(Player player, int chunkX, int chunkZ, int requestRadius)
+        public IEnumerable<Chunk> LoadChunks(Vector2 chunkXZ, int radius)
         {
-            for (int i = (chunkX - requestRadius); i < (chunkX + requestRadius); ++i)
+            lock (chunks)
             {
-                for (int j = (chunkZ - requestRadius); j < (chunkZ + requestRadius); ++j)
+                Dictionary<Tuple<int, int>, double> newOrders = new Dictionary<Tuple<int, int>, double>();
+
+                double radiusSquared = Math.Pow(radius, 2);
+                Vector2 center = chunkXZ;
+
+                for (int x = -radius; x <= radius; ++x)
                 {
-                    Tuple<int, int> chunkXZ = new Tuple<int, int>(i, j);
-                    if (!player.loadedChunk.ContainsKey(chunkXZ))
+                    for (int z = -radius; z <= radius; ++z)
                     {
-                        try
+                        int distance = (x * x) + (z * z);
+                        if (distance > radiusSquared)
                         {
-                            Chunk chunk = this.Format.GetChunk(i, j);
-                            player.loadedChunk.Add(chunkXZ, DateTime.Now.ToBinary());
-                            this.chunks.Add(chunkXZ, chunk);
-                            chunk.SendChunk(player);
+                            continue;
                         }
-                        catch (Exception e)
-                        {
-                            Logger.Error(e);
-                        }
+                        int chunkX = (int) (x + center.X);
+                        int chunkZ = (int) (z + center.Y);
+                        Tuple<int, int> index = new Tuple<int, int>(chunkX, chunkZ);
+                        newOrders[index] = distance;
                     }
                 }
-            }
-        }
 
-        public void UnLoadChunk(Player player, int chunkX, int chunkZ)
-        {
-            Tuple<int, int> chunkXZ = new Tuple<int, int>(chunkX, chunkZ);
-            if (!player.loadedChunk.ContainsKey(chunkXZ))
-            {
-                try
+                foreach (Tuple<int, int> chunkKey in chunks.Keys.ToArray())
                 {
-                    player.loadedChunk.Remove(chunkXZ);
+                    if (!newOrders.ContainsKey(chunkKey))
+                    {
+                        //this.Format.SetChunk(chunks[chunkKey]);//TODO:
+                        chunks.Remove(chunkKey);
+                    }
                 }
-                catch (Exception e)
-                {
-                    Logger.Error(e);
-                }
-            }
-        }
 
-        public void UnLoadChunk(int chunkX, int chunkZ)
-        {
-            Tuple<int, int> chunkXZ = new Tuple<int, int>(chunkX, chunkZ);
-            if (!this.chunks.ContainsKey(chunkXZ))
-            {
-                try
+                foreach (var pair in newOrders.OrderBy(pair => pair.Value))
                 {
-                    this.Format.SetChunk(this.chunks[chunkXZ]);
-                    this.chunks.Remove(chunkXZ);
-                }
-                catch (Exception e)
-                {
-                    Logger.Error(e);
+                    if (chunks.ContainsKey(pair.Key)) continue;
+
+                    Chunk chunk = null;
+                    try
+                    {
+                        chunk = this.Format.GetChunk(pair.Key.Item1, pair.Key.Item2);
+                        chunks.Add(pair.Key, chunk);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error(e);
+                    }
+
+                    yield return chunk;
                 }
             }
         }
