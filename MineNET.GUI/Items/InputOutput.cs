@@ -65,6 +65,45 @@ namespace MineNET.GUI.Items
             }
         }
 
+        internal string InputLabel
+        {
+            get
+            {
+                return this.label1.Text;
+            }
+
+            set
+            {
+                this.label1.Text = value;
+            }
+        }
+
+        internal string OutputLabel
+        {
+            get
+            {
+                return this.label2.Text;
+            }
+
+            set
+            {
+                this.label2.Text = value;
+            }
+        }
+
+        internal string OutputOptionLabel
+        {
+            get
+            {
+                return this.label3.Text;
+            }
+
+            set
+            {
+                this.label3.Text = value;
+            }
+        }
+
         private bool CheckShowOutput(Logger.LoggerLevel level)
         {
             int t = (int) level;

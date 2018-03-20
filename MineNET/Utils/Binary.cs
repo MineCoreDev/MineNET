@@ -155,8 +155,8 @@ namespace MineNET.Utils
             byte[] bytes = new byte[3]
             {
                 (byte) value,
-                ((byte) (value << 8)),
-                ((byte) (value << 16))
+                ((byte) (value >> 8)),
+                ((byte) (value >> 16))
             };
 
             span.WriteBytes(bytes);

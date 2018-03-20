@@ -28,5 +28,18 @@ namespace MineNET.GUI.Items
                 await Task.Delay(2000);
             }
         }
+
+        public override string Text
+        {
+            get
+            {
+                return label1.Text;
+            }
+
+            set
+            {
+                label1.Text = value;
+            }
+        }
     }
 }
