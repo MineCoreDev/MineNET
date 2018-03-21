@@ -358,6 +358,7 @@
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandSender.cs" />
     <Compile Include="Commands\ConsoleSender.cs" />
+    <Compile Include="Commands\Defaults\GameModeCommand.cs" />
     <Compile Include="Commands\Enums\CommandEnum.cs" />
     <Compile Include="Commands\Data\CommandOverload.cs" />
     <Compile Include="Commands\Defaults\HelpCommand.cs" />
@@ -688,6 +689,7 @@
     <Compile Include="Network\Packets\ResourcePackStackPacket.cs" />
     <Compile Include="Network\Packets\SetEntityMotionPacket.cs" />
     <Compile Include="Network\Packets\SetEntityDataPacket.cs" />
+    <Compile Include="Network\Packets\SetPlayerGameTypePacket.cs" />
     <Compile Include="Network\Packets\SetTimePacket.cs" />
     <Compile Include="Network\Packets\StartGamePacket.cs" />
     <Compile Include="Network\Packets\TextPacket.cs" />

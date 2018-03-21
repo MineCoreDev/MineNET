@@ -250,12 +250,12 @@ namespace MineNET.Entities.Players
 
             PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, this.ClientData.Skin, this.LoginData.XUID);
             AdventureSettingsEntry adventureSettingsEntry = new AdventureSettingsEntry();
-            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.WORLD_IMMUTABLE, false);
-            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.NO_PVP, false);
-            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.AUTO_JUMP, false);
-            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.ALLOW_FLIGHT, true);
-            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.NO_CLIP, false);
-            adventureSettingsEntry.SetFlag(AdventureSettingsEntry.FLYING, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_PVP, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsPacket.AUTO_JUMP, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, true);
+            adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
+            adventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, false);
             adventureSettingsEntry.EntityUniqueId = this.EntityID;
             Server.Instance.AddPlayer(this, entry, adventureSettingsEntry);
 

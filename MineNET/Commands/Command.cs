@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MineNET.Commands.Data;
 using MineNET.Commands.Parameters;
 using MineNET.Data;
+using MineNET.Entities.Players;
 using MineNET.Utils;
 
 namespace MineNET.Commands
@@ -34,6 +35,44 @@ namespace MineNET.Commands
         public void RemoveAllOverloads()
         {
             this.CommandOverloads = new List<CommandOverload>();
+        }
+
+        public Player[] GetPlayerFromSelector(string selector, CommandSender sender)
+        {
+            List<Player> players = new List<Player>();
+            if (selector == "@a")
+            {
+                return Server.Instance.GetPlayers();
+            }
+            else if (selector == "@e")
+            {
+
+            }
+            else if (selector == "@p")
+            {
+                //TODO
+                if (sender.IsPlayer)
+                {
+                    players.Add((Player) sender);
+                }
+            }
+            else if (selector == "@r")
+            {
+                Player[] online = Server.Instance.GetPlayers();
+                players.Add(online[new Random().Next(online.Length)]);
+            }
+            else if (selector == "@s")
+            {
+                if (sender.IsPlayer)
+                {
+                    players.Add((Player) sender);
+                }
+            }
+            else
+            {
+                players.Add(Server.Instance.GetPlayer(selector));
+            }
+            return players.ToArray();
         }
 
         internal string LangDescription()
