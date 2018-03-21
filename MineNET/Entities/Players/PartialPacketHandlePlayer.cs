@@ -202,7 +202,7 @@ namespace MineNET.Entities.Players
             StartGamePacket startGamePacket = new StartGamePacket();
             startGamePacket.EntityUniqueId = this.EntityID;
             startGamePacket.EntityRuntimeId = this.EntityID;
-            startGamePacket.PlayerGamemode = GameMode.Creative;
+            startGamePacket.PlayerGamemode = this.GameMode;
             startGamePacket.PlayerPosition = new Vector3(this.X, this.Y, this.Z);
             startGamePacket.Direction = new Vector2(this.Yaw, this.Pitch);
             startGamePacket.WorldGamemode = this.World.DefaultGameMode.GameModeToInt();

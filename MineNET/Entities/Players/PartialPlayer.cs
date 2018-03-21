@@ -8,6 +8,7 @@ using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
+using MineNET.Utils;
 using MineNET.Worlds;
 
 namespace MineNET.Entities.Players
@@ -36,6 +37,9 @@ namespace MineNET.Entities.Players
             }
 
             this.Inventory = new PlayerInventory(this);
+
+            this.gameMode = GameModeExtention.FromIndex(this.namedTag.GetInt("PlayerGameMode"));
+            Logger.Info($"{this.GameMode}");
         }
 
         private void RegisterData()
@@ -47,7 +51,7 @@ namespace MineNET.Entities.Players
             this.namedTag.PutList(new ListTag<FloatTag>("Pos"));
             this.namedTag.PutList(new ListTag<FloatTag>("Rotation"));
 
-            this.namedTag.PutInt("PlayerGameMode", Server.ServerConfig.GameMode.GameModeToInt());//TODO Parse Error...
+            this.namedTag.PutInt("PlayerGameMode", Server.ServerConfig.GameMode.GameModeToInt());
             this.namedTag.PutInt("PlayerLevel", 0);
             this.namedTag.PutFloat("PlayerLevelProgress", 0f);
         }
@@ -79,7 +83,7 @@ namespace MineNET.Entities.Players
         private void SendGameMode()
         {
             SetPlayerGameTypePacket pk = new SetPlayerGameTypePacket();
-            pk.GameMode = this.gameMode;
+            pk.GameMode = this.GameMode;
             this.SendPacket(pk);
 
             AdventureSettingsEntry entry = Server.Instance.GetAdventureSettingsEntry(this);
