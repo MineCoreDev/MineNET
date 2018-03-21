@@ -99,8 +99,8 @@ namespace MineNET.Utils
 
         public void Dispose()
         {
-            _buffer = null;
-            _offset = 0;
+            this._buffer = null;
+            this._offset = 0;
         }
     }
 }

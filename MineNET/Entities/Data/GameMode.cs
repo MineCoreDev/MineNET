@@ -10,6 +10,27 @@
 
     public static class GameModeExtention
     {
+        public static GameMode FromIndex(int index)
+        {
+            if (index == 0)
+            {
+                return GameMode.Survival;
+            }
+            else if (index == 1)
+            {
+                return GameMode.Creative;
+            }
+            else if (index == 2)
+            {
+                return GameMode.Adventure;
+            }
+            else if (index == 3)
+            {
+                return GameMode.Spectator;
+            }
+            return GameMode.Survival;
+        }
+
         public static int GameModeToInt(this GameMode gameMode)
         {
             return (int) gameMode;

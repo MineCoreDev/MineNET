@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MineNET.Data;
 using MineNET.Utils;
 
 namespace MineNET.Commands.Defaults
@@ -26,6 +27,14 @@ namespace MineNET.Commands.Defaults
             get
             {
                 return new string[] { "?" };
+            }
+        }
+
+        public override PlayerPermissions Permission
+        {
+            get
+            {
+                return PlayerPermissions.VISITOR;
             }
         }
 

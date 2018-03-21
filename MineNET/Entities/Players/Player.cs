@@ -39,7 +39,7 @@ namespace MineNET.Entities.Players
             set
             {
                 this.gameMode = value;
-                //TODO: Send Packet...
+                this.SendGameMode();
             }
         }
 
@@ -183,6 +183,26 @@ namespace MineNET.Entities.Players
             pk.Type = TextPacket.TYPE_RAW;
             pk.Message = message;
             this.SendPacket(pk);
+        }
+
+        public bool IsSurvival()
+        {
+            return this.gameMode == GameMode.Survival;
+        }
+
+        public bool IsCreative()
+        {
+            return this.gameMode == GameMode.Creative;
+        }
+
+        public bool IsAdventure()
+        {
+            return this.gameMode == GameMode.Adventure;
+        }
+
+        public bool IsSpectator()
+        {
+            return this.gameMode == GameMode.Spectator;
         }
     }
 }

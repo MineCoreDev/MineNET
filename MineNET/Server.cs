@@ -229,5 +229,44 @@ namespace MineNET
                 players[i].SendPacket(pk);
             }
         }
+
+        public PlayerListEntry GetPlayerListEntry(Player player)
+        {
+            return this.GetPlayerListEntry(player.EntityID);
+        }
+
+        public PlayerListEntry GetPlayerListEntry(long entityID)
+        {
+            if (this.playerListEntries.ContainsKey(entityID))
+            {
+                return this.playerListEntries[entityID];
+            }
+            return null;
+        }
+
+        public AdventureSettingsEntry GetAdventureSettingsEntry(Player player)
+        {
+            return this.GetAdventureSettingsEntry(player.EntityID);
+        }
+
+        public AdventureSettingsEntry GetAdventureSettingsEntry(long entityID)
+        {
+            if (this.adventureSettingsEntry.ContainsKey(entityID))
+            {
+                return this.adventureSettingsEntry[entityID];
+            }
+            return null;
+        }
+
+        public void UpdateAdventureSettings(AdventureSettingsEntry entry)
+        {
+            Player[] players = this.GetPlayers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                AdventureSettingsPacket pk = new AdventureSettingsPacket();
+                pk.Entry = entry;
+                players[i].SendPacket(pk);
+            }
+        }
     }
 }

@@ -110,6 +110,7 @@ namespace MineNET.Commands
         {
             this.RegisterCommand(new StopCommand());
             this.RegisterCommand(new HelpCommand());
+            this.RegisterCommand(new GameModeCommand());
         }
     }
 }
