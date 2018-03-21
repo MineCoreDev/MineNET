@@ -28,7 +28,7 @@ namespace MineNET.Entities.Players
         public bool PackSyncCompleted { get; private set; }
         public bool HasSpawned { get; private set; }
 
-        GameMode gameMode = GameMode.Survival;
+        private GameMode gameMode = GameMode.Survival;
         public GameMode GameMode
         {
             get
@@ -126,6 +126,8 @@ namespace MineNET.Entities.Players
         {
             if (this.HasSpawned)
             {
+                this.namedTag.PutInt("PlayerGameMode", this.GameMode.GameModeToInt());
+
                 string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
                 NBTIO.WriteGZIPFile(path, this.namedTag, NBTEndian.BIG_ENDIAN);
             }
@@ -187,22 +189,22 @@ namespace MineNET.Entities.Players
 
         public bool IsSurvival()
         {
-            return this.gameMode == GameMode.Survival;
+            return this.GameMode == GameMode.Survival;
         }
 
         public bool IsCreative()
         {
-            return this.gameMode == GameMode.Creative;
+            return this.GameMode == GameMode.Creative;
         }
 
         public bool IsAdventure()
         {
-            return this.gameMode == GameMode.Adventure;
+            return this.GameMode == GameMode.Adventure;
         }
 
         public bool IsSpectator()
         {
-            return this.gameMode == GameMode.Spectator;
+            return this.GameMode == GameMode.Spectator;
         }
     }
 }
