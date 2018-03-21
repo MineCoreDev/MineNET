@@ -1,11 +1,11 @@
-﻿using MineNET.Events.PlayerEvents;
+﻿using MineNET.Entities.Data;
+using MineNET.Events.PlayerEvents;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
 using MineNET.Worlds.Data;
-using MineNET.Worlds.Formats.WorldSaveFormats;
 
 namespace MineNET.Entities.Players
 {
@@ -64,9 +64,6 @@ namespace MineNET.Entities.Players
                 this.Close(playerPreLoginEvent.KickMessage);
                 return;
             }
-
-            this.World = new World();
-            this.World.Format = new RegionWorldSaveFormat("test");
 
             this.IsPreLogined = true;
 
@@ -184,11 +181,23 @@ namespace MineNET.Entities.Players
 
             this.IsLogined = true;
 
+            //if (World.Exists(worldName))
+            //{
+            //    this.World = World.GetWorld(worldName);
+            //}
+            //else
+            //{
+            this.World = World.GetMainWorld();
+            //}
+
             this.LoadData();
 
-            this.X = 128;
-            this.Y = 6;
-            this.Z = 128;
+            if (this.X == 0 && this.Y == 0 && this.Z == 0)
+            {
+                this.X = this.World.SpawnPoint.GetFloorX();
+                this.Y = this.World.SpawnPoint.GetFloorY();
+                this.Z = this.World.SpawnPoint.GetFloorZ();
+            }
 
             StartGamePacket startGamePacket = new StartGamePacket();
             startGamePacket.EntityUniqueId = this.EntityID;
@@ -196,12 +205,12 @@ namespace MineNET.Entities.Players
             startGamePacket.PlayerGamemode = this.GameMode;
             startGamePacket.PlayerPosition = new Vector3(this.X, this.Y, this.Z);
             startGamePacket.Direction = new Vector2(this.Yaw, this.Pitch);
-            startGamePacket.WorldGamemode = 0;
-            startGamePacket.Difficulty = 1;
-            startGamePacket.SpawnX = 128;
-            startGamePacket.SpawnY = 6;
-            startGamePacket.SpawnZ = 128;
-            startGamePacket.WorldName = "world";
+            startGamePacket.WorldGamemode = this.World.DefaultGameMode.GameModeToInt();
+            startGamePacket.Difficulty = this.World.Difficulty;
+            startGamePacket.SpawnX = this.World.SpawnPoint.GetFloorX();
+            startGamePacket.SpawnY = this.World.SpawnPoint.GetFloorY();
+            startGamePacket.SpawnZ = this.World.SpawnPoint.GetFloorZ();
+            startGamePacket.WorldName = this.World.Name;
             this.SendPacket(startGamePacket);
 
             this.SendPlayerAttribute();

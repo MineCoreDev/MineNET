@@ -111,6 +111,8 @@ namespace MineNET
                 players[i].Close(this.mineNETConfig.ServerStopText);
             }
 
+            this.UnloadWorld();
+
             this.NetworkManager.Server.UDPClientClose();
 
             ServerEvents.OnServerStop(new ServerStopEventArgs());
@@ -136,6 +138,8 @@ namespace MineNET
                     players[i].Close(this.mineNETConfig.ServerStopText);
                 }
             }
+
+            this.UnloadWorld();
 
             this.NetworkManager?.Server?.UDPClientClose();
 

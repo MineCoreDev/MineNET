@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MineNET.Blocks;
+using MineNET.Entities.Data;
 using MineNET.Entities.Players;
 using MineNET.Network.Packets;
 using MineNET.Utils;
@@ -15,40 +16,71 @@ namespace MineNET.Worlds
     {
         public Dictionary<Tuple<int, int>, Chunk> chunks = new Dictionary<Tuple<int, int>, Chunk>();
 
-        public static World CreateWorld(string worldName)
+        public static void CreateWorld(string worldName)
         {
-            return World.CreateWorld(worldName, new MineNETWorldSaveFormat());
+            World.CreateWorld(worldName, new RegionWorldSaveFormat(worldName));
         }
 
-        public static World CreateWorld(string worldName, IWorldSaveFormat format)
+        public static void CreateWorld(string worldName, IWorldSaveFormat format)
         {
             World world = new World();
             world.Format = format;
+
+            world.Name = worldName;
             world.Format.WorldData.Create(world);
             world.Format.WorldData.Save(world);
 
-            return world;
+            Server.Instance.worlds.Add(worldName, world);
         }
 
-        public static World LoadWorld(string worldName)
+        public static void LoadWorld(string worldName)
         {
-            return World.CreateWorld(worldName, new MineNETWorldSaveFormat());
+            World.LoadWorld(worldName, new RegionWorldSaveFormat(worldName));
         }
 
-        public static World LoadWorld(string worldName, IWorldSaveFormat format)
+        public static void LoadWorld(string worldName, IWorldSaveFormat format)
         {
             if (World.Exists(worldName))
             {
                 World world = new World();
                 world.Format = format;
+                world.Name = worldName;
                 world.Format.WorldData.Load(world);
 
-                return world;
+                Server.Instance.worlds.Add(worldName, world);
             }
             else
             {
-                return CreateWorld(worldName);
+                CreateWorld(worldName);
             }
+        }
+
+        public static World GetWorld(string worldName)
+        {
+            if (World.Exists(worldName))
+            {
+                if (World.LoadedWorld(worldName))
+                {
+                    return Server.Instance.worlds[worldName];
+                }
+            }
+
+            return null;
+        }
+
+        public static World GetMainWorld()
+        {
+            return Server.Instance.worlds[Server.ServerConfig.MainWorldName];
+        }
+
+        public static bool LoadedWorld(string worldName)
+        {
+            if (Server.Instance.worlds.ContainsKey(worldName))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public static bool Exists(string worldName)
@@ -65,7 +97,12 @@ namespace MineNET.Worlds
         }
 
         public IWorldSaveFormat Format { get; set; }
-        public string Name { get; }
+        public string Name { get; private set; }
+
+        public Vector3 SpawnPoint { get; set; } = new Vector3(128f, 6f, 128f);
+
+        public GameMode DefaultGameMode { get; set; } = GameMode.Survival;
+        public int Difficulty { get; set; } = 1;
 
         public Block GetBlock(Vector3 pos)
         {

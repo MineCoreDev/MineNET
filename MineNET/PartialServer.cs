@@ -11,6 +11,7 @@ using MineNET.Network.Packets.Data;
 using MineNET.Plugins;
 using MineNET.Utils;
 using MineNET.Utils.Config;
+using MineNET.Worlds;
 
 namespace MineNET
 {
@@ -30,6 +31,8 @@ namespace MineNET
         private Dictionary<long, PlayerListEntry> playerListEntries = new Dictionary<long, PlayerListEntry>();
         private Dictionary<long, AdventureSettingsEntry> adventureSettingsEntry = new Dictionary<long, AdventureSettingsEntry>();
 
+        internal Dictionary<string, World> worlds = new Dictionary<string, World>();
+
         private Logger logger;
 
         private bool isShutdown;
@@ -38,6 +41,8 @@ namespace MineNET
         {
             this.InitConfig();
             this.InitFolder();
+
+            this.InitWorld();
 
             if (this.mineNETConfig.EnableConsoleOutput)
             {
@@ -83,6 +88,27 @@ namespace MineNET
             if (!Directory.Exists(pPath))
             {
                 Directory.CreateDirectory(pPath);
+            }
+        }
+
+        private void InitWorld()
+        {
+            string worldName = this.serverConfig.MainWorldName;
+            if (World.Exists(worldName))
+            {
+                World.LoadWorld(worldName);
+            }
+            else
+            {
+                World.CreateWorld(worldName);
+            }
+        }
+
+        private void UnloadWorld()
+        {
+            foreach (World w in worlds.Values)
+            {
+                w.Format.WorldData.Save(w);
             }
         }
 
