@@ -8,7 +8,6 @@ using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
-using MineNET.Utils;
 using MineNET.Worlds;
 
 namespace MineNET.Entities.Players
@@ -28,8 +27,8 @@ namespace MineNET.Entities.Players
             string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
             if (!File.Exists(path))
             {
-                NBTIO.WriteGZIPFile(path, new CompoundTag(), NBTEndian.BIG_ENDIAN);
                 this.RegisterData();
+                NBTIO.WriteGZIPFile(path, this.namedTag, NBTEndian.BIG_ENDIAN);
             }
             else
             {
@@ -39,7 +38,6 @@ namespace MineNET.Entities.Players
             this.Inventory = new PlayerInventory(this);
 
             this.gameMode = GameModeExtention.FromIndex(this.namedTag.GetInt("PlayerGameMode"));
-            Logger.Info($"{this.GameMode}");
         }
 
         private void RegisterData()

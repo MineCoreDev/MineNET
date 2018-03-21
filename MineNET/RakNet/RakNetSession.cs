@@ -464,7 +464,7 @@ namespace MineNET.RakNet
                 SendPacket(ep);
             }
 
-            Server.Instance.NetworkManager.RemovePlayer(RakNetServer.IPEndPointToID(this.point), true);
+            Server.Instance.NetworkManager.RemovePlayerFromRakNet(RakNetServer.IPEndPointToID(this.point));
             this.server.RemoveSession(this.point, msg);
         }
     }

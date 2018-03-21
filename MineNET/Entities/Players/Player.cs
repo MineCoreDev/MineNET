@@ -102,7 +102,7 @@ namespace MineNET.Entities.Players
             Server.Instance.NetworkManager.SendPacket(this, pk, immediate);
         }
 
-        public void Close(string reason)
+        public void Close(string reason, bool clientDisconnect = false)
         {
             PlayerQuitEventArgs playerQuitEvent = new PlayerQuitEventArgs(this, "", reason);
             PlayerEvents.OnPlayerQuit(playerQuitEvent);
@@ -119,7 +119,11 @@ namespace MineNET.Entities.Players
             this.Closed = true;
 
             Server.Instance.RemovePlayer(this.EntityID);
-            Server.Instance.NetworkManager.PlayerClose(this.EndPoint, reason);
+
+            if (!clientDisconnect)
+            {
+                Server.Instance.NetworkManager.PlayerClose(this.EndPoint, reason);
+            }
         }
 
         public void Save()

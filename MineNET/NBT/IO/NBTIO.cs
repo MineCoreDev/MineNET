@@ -157,8 +157,9 @@ namespace MineNET.NBT.IO
                     using (GZipStream gs = new GZipStream(ms, CompressionMode.Compress, true))
                     {
                         gs.Write(stream.ToArray(), 0, (int) stream.Length);
-                        File.WriteAllBytes(fileName, ms.ToArray());
                     }
+
+                    File.WriteAllBytes(fileName, ms.ToArray());
                 }
             }
         }
