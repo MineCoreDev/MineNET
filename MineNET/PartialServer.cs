@@ -33,6 +33,8 @@ namespace MineNET
 
         internal Dictionary<string, World> worlds = new Dictionary<string, World>();
 
+        private int tick = 0;
+
         private Logger logger;
 
         private bool isShutdown;
@@ -133,8 +135,9 @@ namespace MineNET
                 Player[] players = this.GetPlayers();
                 for (int i = 0; i < players?.Length; ++i)
                 {
-                    players[i].OnUpdate();
+                    players[i].OnUpdate(tick);
                 }
+                ++tick;
             }
         }
 

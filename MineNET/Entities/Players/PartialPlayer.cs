@@ -59,17 +59,20 @@ namespace MineNET.Entities.Players
             return radius;
         }
 
-        internal override void OnUpdate()
+        internal override void OnUpdate(int tick)
         {
             if (this.HasSpawned)
             {
-                Task.Run(() =>
+                if (tick % 20 == 0)
                 {
-                    foreach (Chunk chunk in this.World.LoadChunks(this.GetChunkVector(), this.RequestChunkRadius))
+                    Task.Run(() =>
                     {
-                        chunk.SendChunk(this);
-                    }
-                });
+                        foreach (Chunk chunk in this.World.LoadChunks(this.GetChunkVector(), this.RequestChunkRadius))
+                        {
+                            chunk.SendChunk(this);
+                        }
+                    });
+                }
             }
         }
 

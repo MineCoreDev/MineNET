@@ -210,7 +210,7 @@ namespace MineNET.Entities
             return new Vector2(((int) this.X) >> 4, ((int) this.Z) >> 4);
         }
 
-        internal virtual void OnUpdate()
+        internal virtual void OnUpdate(int tick)
         {
 
         }
