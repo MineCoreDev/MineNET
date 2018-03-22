@@ -37,6 +37,18 @@ namespace MineNET.NBT.IO.Tests
         public void ReadRawFileTest()
         {
             CompoundTag tag = NBTIO.ReadRawFile(Environment.CurrentDirectory + "\\test.nbt");
+            tag.GetBool("bool");
+            tag.GetByte("byte");
+            tag.GetByteArray("byteArray");
+            tag.GetShort("short");
+            tag.GetInt("int");
+            tag.GetIntArray("intArray");
+            tag.GetLong("long");
+            tag.GetLongArray("longArray");
+            tag.GetFloat("float");
+            tag.GetDouble("double");
+            tag.GetList<IntTag>("list");
+            tag.GetCompound("com");
             Console.WriteLine(tag);
         }
 

@@ -22,15 +22,18 @@ namespace MineNET.Inventories
         {
             if (!player.namedTag.Exist("Inventory"))
             {
-                player.namedTag.PutList(new ListTag<CompoundTag>("Inventory"));
+                ListTag<CompoundTag> initItems = new ListTag<CompoundTag>("Inventory");
                 for (int i = 0; i < this.Size; ++i)
                 {
-                    player.namedTag.GetList<CompoundTag>("Inventory").Add(NBTIO.WriteItem(Item.Get(0), i));
+                    initItems.Add(NBTIO.WriteItem(Item.Get(0), i));
                 }
+                player.namedTag.PutList(initItems);
             }
+
+            ListTag<CompoundTag> items = player.namedTag.GetList<CompoundTag>("Inventory");
             for (int i = 0; i < this.Size; ++i)
             {
-                Item item = NBTIO.ReadItem(player.namedTag.GetList<CompoundTag>("Inventory")[i]);
+                Item item = NBTIO.ReadItem(items[i]);
                 this.SetItem(i, item, false);
             }
 

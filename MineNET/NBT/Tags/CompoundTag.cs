@@ -222,7 +222,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Exist(name))
             {
-                return (ListTag<T>) this.tags[name];
+                return (ListTag<T>) Convert.ChangeType(this.tags[name], typeof(ListTag<T>));
             }
             else
             {

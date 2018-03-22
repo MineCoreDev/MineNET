@@ -15,11 +15,7 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public NBTTagType ListTagType
-        {
-            get;
-            set;
-        }
+        public NBTTagType ListTagType { get; set; }
 
         private List<T> list = new List<T>();
 
