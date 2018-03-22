@@ -108,9 +108,11 @@ namespace MineNET.Commands
 
         private void RegisterCommands()
         {
-            this.RegisterCommand(new StopCommand());
-            this.RegisterCommand(new HelpCommand());
             this.RegisterCommand(new GameModeCommand());
+            this.RegisterCommand(new HelpCommand());
+            this.RegisterCommand(new MeCommand());
+            this.RegisterCommand(new SayCommand());
+            this.RegisterCommand(new StopCommand());
         }
     }
 }

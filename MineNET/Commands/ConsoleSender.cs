@@ -6,6 +6,14 @@ namespace MineNET.Commands
     {
         public bool IsPlayer { get { return false; } }
 
+        public string Name
+        {
+            get
+            {
+                return "Server";
+            }
+        }
+
         public void SendMessage(string message)
         {
             Logger.Info(message);
