@@ -4,6 +4,8 @@
     {
         bool IsPlayer { get; }
 
+        string Name { get; }
+
         void SendMessage(string message);
     }
 }

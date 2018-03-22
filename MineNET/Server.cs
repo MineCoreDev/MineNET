@@ -234,6 +234,21 @@ namespace MineNET
             }
         }
 
+        public void BroadcastMessage(string message, Player[] players = null)
+        {
+            if (players == null)
+            {
+                players = this.GetPlayers();
+            }
+            for (int i = 0; i < players.Length; ++i)
+            {
+                TextPacket pk = new TextPacket();
+                pk.Type = TextPacket.TYPE_CHAT;
+                pk.Message = message;
+                players[i].SendPacket(pk);
+            }
+        }
+
         public PlayerListEntry GetPlayerListEntry(Player player)
         {
             return this.GetPlayerListEntry(player.EntityID);
