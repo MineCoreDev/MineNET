@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
 
@@ -11,7 +12,7 @@ namespace MineNET.NBT.IO.Tests
         [TestMethod()]
         public void WriteRawFileTest()
         {
-            ListTag<IntTag> list = new ListTag<IntTag>("list");
+            ListTag list = new ListTag("list", NBTTagType.INT);
             list.Add(new IntTag(12345));
             list.Add(new IntTag(67890));
             CompoundTag subTag = new CompoundTag();
@@ -47,7 +48,7 @@ namespace MineNET.NBT.IO.Tests
             tag.GetLongArray("longArray");
             tag.GetFloat("float");
             tag.GetDouble("double");
-            tag.GetList<IntTag>("list");
+            tag.GetList("list");
             tag.GetCompound("com");
             Console.WriteLine(tag);
         }
@@ -55,7 +56,7 @@ namespace MineNET.NBT.IO.Tests
         [TestMethod()]
         public void WriteGZFileTest()
         {
-            ListTag<IntTag> list = new ListTag<IntTag>("list");
+            ListTag list = new ListTag("list", NBTTagType.INT);
             list.Add(new IntTag(12345));
             list.Add(new IntTag(67890));
             CompoundTag subTag = new CompoundTag();

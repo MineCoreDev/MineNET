@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using MineNET.Entities.Data;
 using MineNET.Inventories;
@@ -14,6 +16,8 @@ namespace MineNET.Entities.Players
 {
     public partial class Player
     {
+        internal Dictionary<Tuple<int, int>, double> loadedChunk = new Dictionary<Tuple<int, int>, double>();
+
         public Player()
         {
             this.ShowNameTag = true;
@@ -44,10 +48,10 @@ namespace MineNET.Entities.Players
         {
             CompoundTag item = NBTIO.WriteItem(Item.Get(0));
             this.namedTag = new CompoundTag();
-            this.namedTag.PutList(new ListTag<CompoundTag>("Attributes"));
+            this.namedTag.PutList(new ListTag("Attributes", NBTTagType.COMPOUND));
 
-            this.namedTag.PutList(new ListTag<FloatTag>("Pos"));
-            this.namedTag.PutList(new ListTag<FloatTag>("Rotation"));
+            this.namedTag.PutList(new ListTag("Pos", NBTTagType.FLOAT));
+            this.namedTag.PutList(new ListTag("Rotation", NBTTagType.FLOAT));
 
             this.namedTag.PutInt("PlayerGameMode", Server.ServerConfig.GameMode.GameModeToInt());
             this.namedTag.PutInt("PlayerLevel", 0);
@@ -65,11 +69,11 @@ namespace MineNET.Entities.Players
         {
             if (this.HasSpawned)
             {
-                if (tick % 20 == 0)
+                if (tick % 10 == 0)
                 {
                     Task.Run(() =>
                     {
-                        foreach (Chunk chunk in this.World.LoadChunks(this.GetChunkVector(), this.RequestChunkRadius))
+                        foreach (Chunk chunk in this.World.LoadChunks(this, this.RequestChunkRadius))
                         {
                             chunk.SendChunk(this);
                         }

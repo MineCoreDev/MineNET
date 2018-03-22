@@ -1,5 +1,4 @@
-﻿using MineNET.Inventories.Data;
-using MineNET.Inventories.Transactions.Data;
+﻿using MineNET.Inventories.Transactions.Data;
 
 namespace MineNET.Network.Packets
 {

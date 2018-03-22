@@ -1,5 +1,6 @@
 ﻿using MineNET.BlockEntities;
 using MineNET.Entities;
+using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
 
@@ -14,15 +15,16 @@ namespace MineNET.Worlds.Formats.ChunkFormats
             int z = level.GetInt("zPos");
 
             SubChunk[] subChunks = ArrayUtils.CreateArray<SubChunk>(16);
-            ListTag<CompoundTag> section = level.GetList<CompoundTag>("Sections");
-            for (int i = 0; i < section.Count; ++i)
+            ListTag sections = level.GetList("Sections");
+            for (int i = 0; i < sections.Count; ++i)
             {
+                CompoundTag section = ((CompoundTag) sections[i]);
                 SubChunk subChunk = new SubChunk();
-                byte y = section[i].GetByte("Y");
-                subChunk.BlockData = section[i].GetByteArray("Blocks");
-                subChunk.MetaDatas = new NibbleArray(section[i].GetByteArray("Data"));
-                subChunk.SkyLights = new NibbleArray(section[i].GetByteArray("SkyLight"));
-                subChunk.BlockLigths = new NibbleArray(section[i].GetByteArray("BlockLight"));
+                byte y = section.GetByte("Y");
+                subChunk.BlockData = section.GetByteArray("Blocks");
+                subChunk.MetaDatas = new NibbleArray(section.GetByteArray("Data"));
+                subChunk.SkyLights = new NibbleArray(section.GetByteArray("SkyLight"));
+                subChunk.BlockLigths = new NibbleArray(section.GetByteArray("BlockLight"));
                 subChunks[y] = subChunk;
             }
 
@@ -31,7 +33,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
             int[] heightMap = level.GetIntArray("HeightMap");
             heightMap.CopyTo(cast, 0);
 
-            Chunk chunk = new Chunk(x, z, subChunks, biomes, cast, level.GetList<CompoundTag>("Entities"), level.GetList<CompoundTag>("TileEntities"));
+            Chunk chunk = new Chunk(x, z, subChunks, biomes, cast, level.GetList("Entities"), level.GetList("TileEntities"));
             chunk.LastUpdate = level.GetLong("LastUpdate");
             chunk.InhabitedTime = level.GetLong("InhabitedTime");
             chunk.LightPopulated = level.GetByte("LightPopulated") == 1;
@@ -61,7 +63,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
             chunk.HeightMap.CopyTo(cast, 0);
             tag.PutIntArray("HeightMap", cast);
 
-            ListTag<CompoundTag> sections = new ListTag<CompoundTag>("Sections");
+            ListTag sections = new ListTag("Sections", NBTTagType.COMPOUND);
             SubChunk[] subChunks = chunk.GetSubChunk();
             for (int i = 0; i < subChunks.Length; ++i)
             {
@@ -79,7 +81,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
             }
             tag.PutList(sections);
 
-            ListTag<CompoundTag> entitiesTag = new ListTag<CompoundTag>("Entities");
+            ListTag entitiesTag = new ListTag("Entities", NBTTagType.COMPOUND);
             Entity[] entities = chunk.GetEntities();
             for (int i = 0; i < entities.Length; ++i)
             {
@@ -87,7 +89,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
                 entitiesTag.Add(entities[i].namedTag);
             }
 
-            ListTag<CompoundTag> blockEntitiesTag = new ListTag<CompoundTag>("TileEntities");
+            ListTag blockEntitiesTag = new ListTag("TileEntities", NBTTagType.COMPOUND);
             BlockEntity[] blockEntities = chunk.GetBlockEntities();
             for (int i = 0; i < blockEntities.Length; ++i)
             {

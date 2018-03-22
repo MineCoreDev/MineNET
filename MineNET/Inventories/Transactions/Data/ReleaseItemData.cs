@@ -14,7 +14,7 @@ namespace MineNET.Inventories.Transactions.Data
         public ReleaseItemData(InventoryTransactionPacket pk)
         {
             this.ActionType = (int) pk.ReadUVarInt();
-            this.HotbarSlot = pk.ReadVarInt();
+            this.HotbarSlot = pk.ReadSVarInt();
             this.ItemMainHand = pk.ReadItem();
             this.HeadRot = pk.ReadVector3();
         }

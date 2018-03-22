@@ -1,6 +1,7 @@
 ﻿using MineNET.Data;
 using MineNET.Entities.Players;
 using MineNET.Items;
+using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets.Data;
@@ -13,15 +14,18 @@ namespace MineNET.Inventories
         {
             if (!player.namedTag.Exist("Offhand"))
             {
-                player.namedTag.PutList(new ListTag<CompoundTag>("Offhand"));
+                ListTag newTag = new ListTag("Offhand", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
-                    player.namedTag.GetList<CompoundTag>("Offhand").Add(NBTIO.WriteItem(Item.Get(0)));
+                    newTag.Add(NBTIO.WriteItem(Item.Get(0)));
                 }
+                player.namedTag.PutList(newTag);
             }
+
+            ListTag items = player.namedTag.GetList("Offhand");
             for (int i = 0; i < this.Size; ++i)
             {
-                Item item = NBTIO.ReadItem(player.namedTag.GetList<CompoundTag>("Offhand")[i]);
+                Item item = NBTIO.ReadItem((CompoundTag) items[i]);
                 this.SetItem(i, item, false);
             }
         }

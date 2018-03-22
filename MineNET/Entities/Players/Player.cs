@@ -116,6 +116,8 @@ namespace MineNET.Entities.Players
             }
             this.Save();
 
+            this.World.UnLoadChunks(this);
+
             this.Closed = true;
 
             Server.Instance.RemovePlayer(this.EntityID);

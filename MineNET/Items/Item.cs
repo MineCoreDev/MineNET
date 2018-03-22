@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MineNET.Blocks;
+using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Resources.Data;
@@ -404,11 +405,11 @@ namespace MineNET.Items
             {
                 return new string[0];
             }
-            ListTag<StringTag> lores = display.GetList<StringTag>("lore");
+            ListTag lores = display.GetList("lore");
             string[] data = new string[lores.Count];
             for (int i = 0; i < lores.Count; ++i)
             {
-                data[i] = lores[i].Data;
+                data[i] = ((StringTag) lores[i]).Data;
             }
             return data;
         }
@@ -430,7 +431,7 @@ namespace MineNET.Items
                 {
                     tag = new CompoundTag();
                 }
-                ListTag<StringTag> list = new ListTag<StringTag>("lore");
+                ListTag list = new ListTag("lore", NBTTagType.STRING);
                 for (int i = 0; i < lores.Length; ++i)
                 {
                     list.Add(new StringTag(lores[i]));
@@ -460,7 +461,7 @@ namespace MineNET.Items
                 return this;
             }
             CompoundTag tag = this.GetNamedTag();
-            ListTag<StringTag> list = tag.GetCompound("display").GetList<StringTag>("lore");
+            ListTag list = tag.GetCompound("display").GetList("lore");
             for (int i = 0; i < lores.Length; ++i)
             {
                 list.Add(new StringTag(lores[i]));

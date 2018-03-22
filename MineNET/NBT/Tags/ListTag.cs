@@ -5,7 +5,7 @@ using MineNET.NBT.IO;
 
 namespace MineNET.NBT.Tags
 {
-    public class ListTag<T> : Tag where T : Tag
+    public class ListTag : Tag
     {
         public override NBTTagType TagType
         {
@@ -17,29 +17,34 @@ namespace MineNET.NBT.Tags
 
         public NBTTagType ListTagType { get; set; }
 
-        private List<T> list = new List<T>();
+        private List<Tag> list = new List<Tag>();
 
-        public ListTag() : base("")
+        public ListTag(NBTTagType type) : base("")
         {
-            this.CheckListTagType();
+            this.ListTagType = type;
         }
 
-        public ListTag(string name) : base(name)
+        public ListTag(string name, NBTTagType type) : base(name)
         {
-            this.CheckListTagType();
+            this.ListTagType = type;
         }
 
-        public ListTag<T> Add(T tag)
+        public ListTag Add(Tag tag)
         {
-            this.list.Add(tag);
-            return this;
+            if (tag.TagType == this.ListTagType)
+            {
+                this.list.Add(tag);
+                return this;
+            }
+            else
+                throw new FormatException();
         }
 
-        public T GetTag(int index)
+        public T GetTag<T>(int index) where T : Tag
         {
             if (this.Exist(index))
             {
-                return this[index];
+                return (T) this[index];
             }
             else
                 throw new IndexOutOfRangeException();
@@ -58,7 +63,7 @@ namespace MineNET.NBT.Tags
             }
         }
 
-        public T this[int index]
+        public Tag this[int index]
         {
             get
             {
@@ -74,14 +79,20 @@ namespace MineNET.NBT.Tags
             {
                 if (this.Exist(index))
                 {
-                    this.list[index] = value;
+                    if (value.TagType == this.ListTagType)
+                    {
+                        this.list[index] = value;
+                    }
+                    else
+                        throw new FormatException();
+
                 }
                 else
                     throw new IndexOutOfRangeException();
             }
         }
 
-        public List<T> Tags
+        public List<Tag> Tags
         {
             get
             {
@@ -165,7 +176,7 @@ namespace MineNET.NBT.Tags
                         break;
 
                     case NBTTagType.LIST:
-                        tag = new ListTag<Tag>();
+                        tag = new ListTag(NBTTagType.LIST);
                         break;
 
                     case NBTTagType.COMPOUND:
@@ -185,7 +196,7 @@ namespace MineNET.NBT.Tags
                 }
 
                 tag.Read(stream);
-                this.list.Add((T) tag);
+                this.list.Add(tag);
             }
         }
 
@@ -196,69 +207,13 @@ namespace MineNET.NBT.Tags
             this.Read(stream);
         }
 
-        internal void CheckListTagType()
-        {
-            if (typeof(T) == typeof(ByteTag))
-            {
-                this.ListTagType = NBTTagType.BYTE;
-            }
-            else if (typeof(T) == typeof(ByteArrayTag))
-            {
-                this.ListTagType = NBTTagType.BYTE_ARRAY;
-            }
-            else if (typeof(T) == typeof(CompoundTag))
-            {
-                this.ListTagType = NBTTagType.COMPOUND;
-            }
-            else if (typeof(T) == typeof(DoubleTag))
-            {
-                this.ListTagType = NBTTagType.DOUBLE;
-            }
-            else if (typeof(T) == typeof(EndTag))
-            {
-                this.ListTagType = NBTTagType.END;
-            }
-            else if (typeof(T) == typeof(FloatTag))
-            {
-                this.ListTagType = NBTTagType.FLOAT;
-            }
-            else if (typeof(T) == typeof(IntTag))
-            {
-                this.ListTagType = NBTTagType.INT;
-            }
-            else if (typeof(T) == typeof(IntArrayTag))
-            {
-                this.ListTagType = NBTTagType.INT_ARRAY;
-            }
-            else if (typeof(T) == typeof(ListTag<>))
-            {
-                this.ListTagType = NBTTagType.LIST;
-            }
-            else if (typeof(T) == typeof(LongTag))
-            {
-                this.ListTagType = NBTTagType.LONG;
-            }
-            else if (typeof(T) == typeof(LongArrayTag))
-            {
-                this.ListTagType = NBTTagType.LONG_ARRAY;
-            }
-            else if (typeof(T) == typeof(ShortTag))
-            {
-                this.ListTagType = NBTTagType.SHORT;
-            }
-            else if (typeof(T) == typeof(StringTag))
-            {
-                this.ListTagType = NBTTagType.STRING;
-            }
-        }
-
         public override bool Equals(object obj)
         {
-            if (!(obj is ListTag<T>))
+            if (!(obj is ListTag))
             {
                 return false;
             }
-            ListTag<T> tag = (ListTag<T>) obj;
+            ListTag tag = (ListTag) obj;
             if (this.Name != tag.Name)
             {
                 return false;
@@ -277,12 +232,12 @@ namespace MineNET.NBT.Tags
             return true;
         }
 
-        public static bool operator ==(ListTag<T> A, ListTag<T> B)
+        public static bool operator ==(ListTag A, ListTag B)
         {
             return A.Equals(B);
         }
 
-        public static bool operator !=(ListTag<T> A, ListTag<T> B)
+        public static bool operator !=(ListTag A, ListTag B)
         {
             return !A.Equals(B);
         }

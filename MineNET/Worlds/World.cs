@@ -142,14 +142,14 @@ namespace MineNET.Worlds
             this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos });
         }
 
-        public IEnumerable<Chunk> LoadChunks(Vector2 chunkXZ, int radius)
+        public IEnumerable<Chunk> LoadChunks(Player player, int radius)
         {
             lock (this.chunks)
             {
                 Dictionary<Tuple<int, int>, double> newOrders = new Dictionary<Tuple<int, int>, double>();
 
                 double radiusSquared = Math.Pow(radius, 2);
-                Vector2 center = chunkXZ;
+                Vector2 center = player.GetChunkVector();
 
                 for (int x = -radius; x <= radius; ++x)
                 {
@@ -173,18 +173,23 @@ namespace MineNET.Worlds
                     {
                         //this.Format.SetChunk(chunks[chunkKey]);//TODO:
                         this.chunks.Remove(chunkKey);
+                        player.loadedChunk.Remove(chunkKey);
                     }
                 }
 
                 foreach (var pair in newOrders.OrderBy(pair => pair.Value))
                 {
-                    if (this.chunks.ContainsKey(pair.Key)) continue;
+                    if (player.loadedChunk.ContainsKey(pair.Key)) continue;
 
                     Chunk chunk = null;
                     try
                     {
                         chunk = this.Format.GetChunk(pair.Key.Item1, pair.Key.Item2);
-                        this.chunks.Add(pair.Key, chunk);
+                        if (!chunks.ContainsKey(pair.Key))
+                        {
+                            this.chunks.Add(pair.Key, chunk);
+                        }
+                        player.loadedChunk.Add(pair.Key, pair.Value);
                     }
                     catch (Exception e)
                     {
@@ -192,6 +197,21 @@ namespace MineNET.Worlds
                     }
 
                     yield return chunk;
+                }
+            }
+        }
+
+        public void UnLoadChunks(Player player)
+        {
+            lock (this.chunks)
+            {
+                foreach (Tuple<int, int> chunkKey in this.chunks.Keys.ToArray())
+                {
+                    if (!player.loadedChunk.ContainsKey(chunkKey))
+                    {
+                        //this.Format.SetChunk(chunks[chunkKey]);//TODO:
+                        this.chunks.Remove(chunkKey);
+                    }
                 }
             }
         }

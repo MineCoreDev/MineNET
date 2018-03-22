@@ -165,7 +165,7 @@ namespace MineNET.Utils
         public Item ReadItem()
         {
             int id = this.ReadSVarInt();
-            if (id < 0)
+            if (id <= 0)
             {
                 return Item.Get(0, 0, 0);
             }
@@ -203,6 +203,7 @@ namespace MineNET.Utils
                     this.ReadString();
                 }
             }
+
             return Item.Get(id, data, cnt, nbt);
         }
 
@@ -289,7 +290,7 @@ namespace MineNET.Utils
 
         public BlockFace ReadBlockFace()
         {
-            return BlockFaceExtensions.FromIndex(this.ReadVarInt());
+            return BlockFaceExtensions.FromIndex(this.ReadSVarInt());
         }
 
         public void WriteBlockFace(BlockFace face)

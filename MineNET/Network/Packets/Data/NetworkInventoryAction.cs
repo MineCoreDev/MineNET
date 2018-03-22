@@ -52,7 +52,7 @@ namespace MineNET.Network.Packets
 
             if (this.SourceType == NetworkInventoryAction.SOURCE_CONTAINER)
             {
-                this.WindowId = pk.ReadVarInt();
+                this.WindowId = pk.ReadSVarInt();
             }
             else if (this.SourceType == NetworkInventoryAction.SOURCE_WORLD)
             {
@@ -64,7 +64,7 @@ namespace MineNET.Network.Packets
             }
             else if (this.SourceType == NetworkInventoryAction.SOURCE_TODO)
             {
-                this.WindowId = pk.ReadVarInt();
+                this.WindowId = pk.ReadSVarInt();
             }
 
             this.InventorySlot = (int) pk.ReadUVarInt();

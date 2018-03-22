@@ -218,19 +218,19 @@ namespace MineNET.NBT.Tags
             return this;
         }
 
-        public ListTag<T> GetList<T>(string name) where T : Tag
+        public ListTag GetList(string name)
         {
             if (this.Exist(name))
             {
-                return (ListTag<T>) Convert.ChangeType(this.tags[name], typeof(ListTag<T>));
+                return ((ListTag) this.tags[name]);
             }
             else
             {
-                return new ListTag<T>();
+                throw new IndexOutOfRangeException();
             }
         }
 
-        public CompoundTag PutList<T>(ListTag<T> data) where T : Tag
+        public CompoundTag PutList(ListTag data)
         {
             this.tags[data.Name] = data;
             return this;
@@ -414,7 +414,7 @@ namespace MineNET.NBT.Tags
 
                     case NBTTagType.LIST:
                         tagName = stream.ReadString();
-                        ListTag<Tag> listtag = new ListTag<Tag>();
+                        ListTag listtag = new ListTag(NBTTagType.BYTE);
                         listtag.Read(stream);
                         listtag.Name = tagName;
                         this.PutList(listtag);

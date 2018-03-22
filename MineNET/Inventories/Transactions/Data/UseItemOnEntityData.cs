@@ -17,7 +17,7 @@ namespace MineNET.Inventories.Transactions.Data
         {
             this.EntityRuntimeId = pk.ReadEntityRuntimeId();
             this.ActionType = (int) pk.ReadUVarInt();
-            this.HotbarSlot = pk.ReadVarInt();
+            this.HotbarSlot = pk.ReadSVarInt();
             this.ItemMainHand = pk.ReadItem();
             this.PlayerPos = pk.ReadVector3();
             this.ClickPos = pk.ReadVector3();

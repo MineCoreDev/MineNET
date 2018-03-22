@@ -1,4 +1,5 @@
 ﻿using MineNET.Inventories;
+using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Values;
@@ -15,13 +16,13 @@ namespace MineNET.BlockEntities
 
             if (!this.namedTag.Exist("items"))
             {
-                this.namedTag.PutList(new ListTag<CompoundTag>("items"));
+                this.namedTag.PutList(new ListTag("items", NBTTagType.COMPOUND));
             }
 
-            ListTag<CompoundTag> items = this.namedTag.GetList<CompoundTag>("items");
+            ListTag items = this.namedTag.GetList("items");
             for (int i = 0; i < items.Count; ++i)
             {
-                this.inventory.SetItem(i, NBTIO.ReadItem(items[i]));
+                this.inventory.SetItem(i, NBTIO.ReadItem((CompoundTag) items[i]));
             }
         }
 

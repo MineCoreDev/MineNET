@@ -2,6 +2,7 @@
 using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.Items;
+using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
@@ -20,15 +21,18 @@ namespace MineNET.Inventories
         {
             if (!entity.namedTag.Exist("Armor"))
             {
-                entity.namedTag.PutList(new ListTag<CompoundTag>("Armor"));
+                ListTag newTag = new ListTag("Armor", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
-                    entity.namedTag.GetList<CompoundTag>("Armor").Add(NBTIO.WriteItem(Item.Get(0), i));
+                    newTag.Add(NBTIO.WriteItem(Item.Get(0), i));
                 }
+                entity.namedTag.PutList(newTag);
             }
+
+            ListTag items = entity.namedTag.GetList("Armor");
             for (int i = 0; i < this.Size; ++i)
             {
-                Item item = NBTIO.ReadItem(entity.namedTag.GetList<CompoundTag>("Armor")[i]);
+                Item item = NBTIO.ReadItem((CompoundTag) items[i]);
                 this.SetItem(i, item, false);
             }
         }

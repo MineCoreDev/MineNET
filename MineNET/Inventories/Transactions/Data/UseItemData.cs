@@ -20,7 +20,7 @@ namespace MineNET.Inventories.Transactions.Data
             this.ActionType = (int) pk.ReadUVarInt();
             this.BlockPos = pk.ReadBlockVector3().ToVector3i();
             this.Face = pk.ReadBlockFace();
-            this.HotbarSlot = pk.ReadVarInt();
+            this.HotbarSlot = pk.ReadSVarInt();
             this.ItemMainHand = pk.ReadItem();
             this.PlayerPos = pk.ReadVector3();
             this.ClickPos = pk.ReadVector3();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MineNET.BlockEntities;
 using MineNET.Entities;
 using MineNET.Entities.Players;
+using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Utils;
@@ -40,11 +41,11 @@ namespace MineNET.Worlds
 
         SubChunk[] subChunks = ArrayUtils.CreateArray<SubChunk>(16);
         List<Entity> entities = new List<Entity>();
-        ListTag<CompoundTag> entitiesTag = new ListTag<CompoundTag>();
+        ListTag entitiesTag = new ListTag(NBTTagType.COMPOUND);
         List<BlockEntity> blockEntities = new List<BlockEntity>();
-        ListTag<CompoundTag> blockEntitiesTag = new ListTag<CompoundTag>();
+        ListTag blockEntitiesTag = new ListTag(NBTTagType.COMPOUND);
 
-        public Chunk(int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null, short[] heightMap = null, ListTag<CompoundTag> entitiesTag = null, ListTag<CompoundTag> blockEntitiesTag = null)
+        public Chunk(int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null, short[] heightMap = null, ListTag entitiesTag = null, ListTag blockEntitiesTag = null)
         {
             this.x = x;
             this.z = z;
