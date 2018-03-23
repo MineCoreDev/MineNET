@@ -39,7 +39,24 @@ namespace MineNET.Worlds.Generator.Flat
         {
             if (this.ReadFlatOption())
             {
-                //TODO: Custom...
+                BlockLayers layers = this.flatOption.blockLayers;
+                for (int i = 0; i < 16; ++i)//X
+                {
+                    for (int j = 0; j < 16; ++j)//Z
+                    {
+                        int y = 0;
+                        for (int c = 0; c < layers.layers.Count; ++c)
+                        {
+                            BlockLayer layer = layers.layers[c];
+                            for (int k = y; k < layer.height; ++k)//Y
+                            {
+                                chunk.SetBlock(i, k, j, (byte) layer.block.ID);
+                                chunk.SetMetadata(i, k, j, (byte) layer.block.Damage);
+                                y++;
+                            }
+                        }
+                    }
+                }
             }
             else
             {

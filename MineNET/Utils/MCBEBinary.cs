@@ -184,7 +184,7 @@ namespace MineNET.Utils
                 nbt = this.ReadBytes(nbtLen);
             }
 
-            //TODO
+            //TODO:
             int canPlaceOn = this.ReadSVarInt();
             if (canPlaceOn > 0)
             {
@@ -194,7 +194,7 @@ namespace MineNET.Utils
                 }
             }
 
-            //TODO
+            //TODO:
             int canDestroy = this.ReadSVarInt();
             if (canDestroy > 0)
             {
@@ -220,8 +220,8 @@ namespace MineNET.Utils
             byte[] nbt = item.Tags;
             this.WriteLShort((ushort) nbt.Length);
             this.WriteBytes(nbt);
-            this.WriteSVarInt(0); //TODO
-            this.WriteSVarInt(0); //TODO
+            this.WriteSVarInt(0); //TODO:
+            this.WriteSVarInt(0); //TODO:
         }
 
         //ReadEntityMetadata
