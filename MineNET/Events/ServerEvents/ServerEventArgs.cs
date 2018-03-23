@@ -8,7 +8,7 @@ namespace MineNET.Events.ServerEvents
 
         public ServerEventArgs()
         {
-            Server = Server.Instance;
+            this.Server = Server.Instance;
         }
     }
 }

@@ -5,6 +5,7 @@ namespace MineNET.Events.PlayerEvents
     public class PlayerJoinEventArgs : PlayerEventArgs, ICancellable
     {
         public string JoinMessage { get; set; }
+
         public string KickMessage { get; set; }
 
         public bool IsCancel { get; set; }
