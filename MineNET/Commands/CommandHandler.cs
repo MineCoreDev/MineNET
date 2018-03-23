@@ -6,7 +6,7 @@ namespace MineNET.Commands
 {
     public sealed class CommandHandler : ICommandHandler
     {
-        CommandManager manager;
+        private CommandManager manager;
 
         public CommandHandler(CommandManager mgr)
         {

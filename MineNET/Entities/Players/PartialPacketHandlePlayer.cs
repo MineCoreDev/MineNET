@@ -147,7 +147,13 @@ namespace MineNET.Entities.Players
                 pk.Message = pk.Message.Trim();
                 if (pk.Message != "" && pk.Message.Length < 256)
                 {
-                    pk.Message = $"<{this.Name}§f> {pk.Message}§f";
+                    PlayerChatEventArgs playerChatEvent = new PlayerChatEventArgs(this, pk.Message);
+                    PlayerEvents.OnPlayerChat(playerChatEvent);
+                    if (playerChatEvent.IsCancel)
+                    {
+                        return;
+                    }
+                    pk.Message = $"<{this.Name}§f> {playerChatEvent.Message}§f";
                     Logger.Info(pk.Message);
                     Player[] players = Server.Instance.GetPlayers();
                     for (int i = 0; i < players.Length; ++i)

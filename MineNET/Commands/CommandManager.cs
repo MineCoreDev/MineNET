@@ -2,6 +2,8 @@
 using MineNET.Commands.Data;
 using MineNET.Commands.Defaults;
 using MineNET.Entities.Players;
+using MineNET.Events.PlayerEvents;
+using MineNET.Events.ServerEvents;
 
 namespace MineNET.Commands
 {
@@ -25,7 +27,14 @@ namespace MineNET.Commands
 
         public void HandleConsoleCommand(string msg)
         {
-            string[] args = msg.Split(' ');
+            CommandSender sender = new ConsoleSender();
+            ServerCommandEventArgs serverCommandEvent = new ServerCommandEventArgs(sender, msg);
+            ServerEvents.OnServerCommand(serverCommandEvent);
+            if (serverCommandEvent.IsCancel)
+            {
+                return;
+            }
+            string[] args = serverCommandEvent.Message.Split(' ');
             string cmd = args[0];
 
             if (args.Length != 1)
@@ -39,12 +48,18 @@ namespace MineNET.Commands
                 args = new string[0];
             }
 
-            this.CommandHandler.CommandHandle(new ConsoleSender(), cmd, args);
+            this.CommandHandler.CommandHandle(sender, cmd, args);
         }
 
         public void HandlePlayerCommand(Player player, string msg)
         {
-            string[] args = msg.Split(' ');
+            PlayerCommandPreprocessEventArgs playerCommandPreprocessEvent = new PlayerCommandPreprocessEventArgs(player, msg);
+            PlayerEvents.OnPlayerCommandPreprocess(playerCommandPreprocessEvent);
+            if (playerCommandPreprocessEvent.IsCancel)
+            {
+                return;
+            }
+            string[] args = playerCommandPreprocessEvent.Message.Split(' ');
             string cmd = args[0];
 
             if (args.Length != 1)

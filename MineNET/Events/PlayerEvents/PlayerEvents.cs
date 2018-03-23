@@ -2,10 +2,22 @@
 {
     public class PlayerEvents : MineNETEvents
     {
-        public static event EventHandler<PlayerPreLoginEventArgs> PlayerPreLogin;
-        public static void OnPlayerPreLogin(PlayerPreLoginEventArgs args)
+        public static event EventHandler<PlayerChatEventArgs> PlayerChat;
+        public static void OnPlayerChat(PlayerChatEventArgs args)
         {
-            PlayerPreLogin?.Invoke(args);
+            PlayerChat?.Invoke(args);
+        }
+
+        public static event EventHandler<PlayerCommandPreprocessEventArgs> PlayerCommandPreprocess;
+        public static void OnPlayerCommandPreprocess(PlayerCommandPreprocessEventArgs args)
+        {
+            PlayerCommandPreprocess?.Invoke(args);
+        }
+
+        public static event EventHandler<PlayerJoinEventArgs> PlayerJoin;
+        public static void OnPlayerJoin(PlayerJoinEventArgs args)
+        {
+            PlayerJoin?.Invoke(args);
         }
 
         public static event EventHandler<PlayerLoginEventArgs> PlayerLogin;
@@ -14,10 +26,10 @@
             PlayerLogin?.Invoke(args);
         }
 
-        public static event EventHandler<PlayerJoinEventArgs> PlayerJoin;
-        public static void OnPlayerJoin(PlayerJoinEventArgs args)
+        public static event EventHandler<PlayerPreLoginEventArgs> PlayerPreLogin;
+        public static void OnPlayerPreLogin(PlayerPreLoginEventArgs args)
         {
-            PlayerJoin?.Invoke(args);
+            PlayerPreLogin?.Invoke(args);
         }
 
         public static event EventHandler<PlayerQuitEventArgs> PlayerQuit;
