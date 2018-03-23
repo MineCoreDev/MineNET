@@ -59,7 +59,7 @@ namespace MineNET.Worlds
         {
             if (World.Exists(worldName))
             {
-                if (World.LoadedWorld(worldName))
+                if (World.HasLoadedWorld(worldName))
                 {
                     return Server.Instance.worlds[worldName];
                 }
@@ -73,7 +73,7 @@ namespace MineNET.Worlds
             return Server.Instance.worlds[Server.ServerConfig.MainWorldName];
         }
 
-        public static bool LoadedWorld(string worldName)
+        public static bool HasLoadedWorld(string worldName)
         {
             if (Server.Instance.worlds.ContainsKey(worldName))
             {
@@ -98,6 +98,10 @@ namespace MineNET.Worlds
 
         public IWorldSaveFormat Format { get; set; }
         public string Name { get; private set; }
+        public string GeneratorName { get; private set; }
+
+        public long Seed { get; private set; } = 0L;
+        public long LastPlayed { get; private set; }
 
         public Vector3 SpawnPoint { get; set; } = new Vector3(128f, 6f, 128f);
 
@@ -171,9 +175,12 @@ namespace MineNET.Worlds
                 {
                     if (!newOrders.ContainsKey(chunkKey))
                     {
-                        //this.Format.SetChunk(chunks[chunkKey]);//TODO:
-                        this.chunks.Remove(chunkKey);
-                        player.loadedChunk.Remove(chunkKey);
+                        if (!this.HasChunkLoadedByPlayer(chunkKey, player))
+                        {
+                            //this.Format.SetChunk(chunks[chunkKey]);//TODO:
+                            this.chunks.Remove(chunkKey);
+                            player.loadedChunk.Remove(chunkKey);
+                        }
                     }
                 }
 
@@ -209,11 +216,36 @@ namespace MineNET.Worlds
                 {
                     if (!player.loadedChunk.ContainsKey(chunkKey))
                     {
-                        //this.Format.SetChunk(chunks[chunkKey]);//TODO:
-                        this.chunks.Remove(chunkKey);
+                        if (!this.HasChunkLoadedByPlayer(chunkKey, player))
+                        {
+                            //this.Format.SetChunk(chunks[chunkKey]);//TODO:
+                            this.chunks.Remove(chunkKey);
+                        }
                     }
                 }
             }
+        }
+
+        public bool HasChunkLoadedByPlayer(Tuple<int, int> chunkPos, Player notCheckPlayer = null)
+        {
+            Player[] players = Server.Instance.GetPlayers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (notCheckPlayer != null)
+                {
+                    if (notCheckPlayer.Name == players[i].Name)
+                    {
+                        continue;
+                    }
+                }
+
+                bool r = players[i].loadedChunk.ContainsKey(chunkPos);
+                if (r)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void SendBlocks(Player[] players, Vector3[] vector3, int flags = UpdateBlockPacket.FLAG_NONE)

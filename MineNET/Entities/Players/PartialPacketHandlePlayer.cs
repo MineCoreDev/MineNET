@@ -42,7 +42,9 @@ namespace MineNET.Entities.Players
         private void LoginPacketHandle(LoginPacket pk)
         {
             if (this.IsPreLogined)
+            {
                 return;
+            }
 
             if (pk.Protocol < ProtocolInfo.CLIENT_PROTOCOL)
             {
@@ -57,16 +59,6 @@ namespace MineNET.Entities.Players
                 return;
             }
 
-            PlayerPreLoginEventArgs playerPreLoginEvent = new PlayerPreLoginEventArgs(this, "");
-            PlayerEvents.OnPlayerPreLogin(playerPreLoginEvent);
-            if (playerPreLoginEvent.IsCancel)
-            {
-                this.Close(playerPreLoginEvent.KickMessage);
-                return;
-            }
-
-            this.IsPreLogined = true;
-
             this.LoginData = pk.LoginData;
             this.Name = pk.LoginData.DisplayName;
             this.DisplayName = this.Name;
@@ -76,11 +68,24 @@ namespace MineNET.Entities.Players
             Player[] players = Server.Instance.GetPlayers();
             for (int i = 0; i < players.Length; ++i)
             {
-                if (players[i] != this)
+                if (players[i].GetHashCode() != this.GetHashCode())
                 {
-                    //TODO
+                    if (players[i].Name == this.Name)
+                    {
+                        this.Close("disconnectionScreen.loggedinOtherLocation");
+                    }
                 }
             }
+
+            PlayerPreLoginEventArgs playerPreLoginEvent = new PlayerPreLoginEventArgs(this, "");
+            PlayerEvents.OnPlayerPreLogin(playerPreLoginEvent);
+            if (playerPreLoginEvent.IsCancel)
+            {
+                this.Close(playerPreLoginEvent.KickMessage);
+                return;
+            }
+
+            this.IsPreLogined = true;
 
             this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
 
@@ -113,7 +118,94 @@ namespace MineNET.Entities.Players
             {
                 this.PackSyncCompleted = true;
 
-                this.ProcessLogin();
+                if (this.IsLogined)
+                {
+                    return;
+                }
+                PlayerLoginEventArgs playerLoginEvent = new PlayerLoginEventArgs(this, "");
+                PlayerEvents.OnPlayerLogin(playerLoginEvent);
+                if (playerLoginEvent.IsCancel)
+                {
+                    this.Close(playerLoginEvent.KickMessage);
+                    return;
+                }
+
+                this.IsLogined = true;
+
+                //if (World.Exists(worldName))
+                //{
+                //    this.World = World.GetWorld(worldName);
+                //}
+                //else
+                //{
+                this.World = World.GetMainWorld();
+                //}
+
+                this.LoadData();
+
+                if (this.X == 0 && this.Y == 0 && this.Z == 0)
+                {
+                    this.X = this.World.SpawnPoint.GetFloorX();
+                    this.Y = this.World.SpawnPoint.GetFloorY();
+                    this.Z = this.World.SpawnPoint.GetFloorZ();
+                }
+
+                StartGamePacket startGamePacket = new StartGamePacket();
+                startGamePacket.EntityUniqueId = this.EntityID;
+                startGamePacket.EntityRuntimeId = this.EntityID;
+                startGamePacket.PlayerGamemode = this.GameMode;
+                startGamePacket.PlayerPosition = new Vector3(this.X, this.Y, this.Z);
+                startGamePacket.Direction = new Vector2(this.Yaw, this.Pitch);
+                startGamePacket.WorldGamemode = this.World.DefaultGameMode.GameModeToInt();
+                startGamePacket.Difficulty = this.World.Difficulty;
+                startGamePacket.SpawnX = this.World.SpawnPoint.GetFloorX();
+                startGamePacket.SpawnY = this.World.SpawnPoint.GetFloorY();
+                startGamePacket.SpawnZ = this.World.SpawnPoint.GetFloorZ();
+                startGamePacket.WorldName = this.World.Name;
+                this.SendPacket(startGamePacket);
+
+                this.SendPlayerAttribute();
+
+                AvailableCommandsPacket availableCommandsPacket = new AvailableCommandsPacket();
+                availableCommandsPacket.commands = Server.Instance.CommandManager.CommandList;
+                this.SendPacket(availableCommandsPacket);
+
+                this.Inventory.SendContents();
+                this.Inventory.GetArmorInventory().SendContents();
+                this.Inventory.SendCreativeItems();
+                this.Inventory.SendMainHand(this);
+
+                PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, "", "");
+                PlayerEvents.OnPlayerJoin(playerJoinEvent);
+                if (playerJoinEvent.IsCancel)
+                {
+                    this.Close(playerJoinEvent.KickMessage);
+                    return;
+                }
+
+                this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+
+                this.HasSpawned = true;
+
+                GameRules rules = new GameRules();
+                rules.Add(new GameRule<bool>("ShowCoordinates", true));
+
+                GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
+                gameRulesChangedPacket.GameRules = rules;
+                this.SendPacket(gameRulesChangedPacket);
+
+                PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, this.ClientData.Skin, this.LoginData.XUID);
+                AdventureSettingsEntry adventureSettingsEntry = new AdventureSettingsEntry();
+                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, false);
+                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_PVP, false);
+                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.AUTO_JUMP, false);
+                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, true);
+                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
+                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, false);
+                adventureSettingsEntry.EntityUniqueId = this.EntityID;
+                Server.Instance.AddPlayer(this, entry, adventureSettingsEntry);
+
+                this.SendDataProperties();
             }
         }
 
@@ -137,7 +229,6 @@ namespace MineNET.Entities.Players
             this.Z = pos.Z;
             this.Pitch = direction.X;
             this.Yaw = direction.Y;
-            //this.SendPosition(pos, direction, MovePlayerPacket.MODE_RESET);
         }
 
         private void TextPacketHandle(TextPacket pk)
@@ -161,105 +252,7 @@ namespace MineNET.Entities.Players
         private void CommandRequestPacketHandle(CommandRequestPacket pk)
         {
             string command = pk.Command.Remove(0, 1);
-            //TODO : event
             Server.Instance.CommandManager.HandlePlayerCommand(this, command);
-        }
-
-        private void ProcessLogin()
-        {
-            if (this.IsLogined)
-            {
-                return;
-            }
-            PlayerLoginEventArgs playerLoginEvent = new PlayerLoginEventArgs(this, "");
-            PlayerEvents.OnPlayerLogin(playerLoginEvent);
-            if (playerLoginEvent.IsCancel)
-            {
-                this.Close(playerLoginEvent.KickMessage);
-                return;
-            }
-
-            this.IsLogined = true;
-
-            //if (World.Exists(worldName))
-            //{
-            //    this.World = World.GetWorld(worldName);
-            //}
-            //else
-            //{
-            this.World = World.GetMainWorld();
-            //}
-
-            this.LoadData();
-
-            if (this.X == 0 && this.Y == 0 && this.Z == 0)
-            {
-                this.X = this.World.SpawnPoint.GetFloorX();
-                this.Y = this.World.SpawnPoint.GetFloorY();
-                this.Z = this.World.SpawnPoint.GetFloorZ();
-            }
-
-            StartGamePacket startGamePacket = new StartGamePacket();
-            startGamePacket.EntityUniqueId = this.EntityID;
-            startGamePacket.EntityRuntimeId = this.EntityID;
-            startGamePacket.PlayerGamemode = this.GameMode;
-            startGamePacket.PlayerPosition = new Vector3(this.X, this.Y, this.Z);
-            startGamePacket.Direction = new Vector2(this.Yaw, this.Pitch);
-            startGamePacket.WorldGamemode = this.World.DefaultGameMode.GameModeToInt();
-            startGamePacket.Difficulty = this.World.Difficulty;
-            startGamePacket.SpawnX = this.World.SpawnPoint.GetFloorX();
-            startGamePacket.SpawnY = this.World.SpawnPoint.GetFloorY();
-            startGamePacket.SpawnZ = this.World.SpawnPoint.GetFloorZ();
-            startGamePacket.WorldName = this.World.Name;
-            this.SendPacket(startGamePacket);
-
-            this.SendPlayerAttribute();
-
-            AvailableCommandsPacket availableCommandsPacket = new AvailableCommandsPacket();
-            availableCommandsPacket.commands = Server.Instance.CommandManager.CommandList;
-            this.SendPacket(availableCommandsPacket);
-
-            this.Inventory.SendContents();
-            this.Inventory.GetArmorInventory().SendContents();
-            this.Inventory.SendCreativeItems();
-            this.Inventory.SendMainHand(this);
-
-            this.GameJoin();
-        }
-
-        private void GameJoin()
-        {
-            PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, "", "");
-            PlayerEvents.OnPlayerJoin(playerJoinEvent);
-            if (playerJoinEvent.IsCancel)
-            {
-                this.Close(playerJoinEvent.KickMessage);
-                return;
-            }
-
-            this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
-
-            this.HasSpawned = true;
-
-            GameRules rules = new GameRules();
-            rules.Add(new GameRule<bool>("ShowCoordinates", true));
-
-            GameRulesChangedPacket gameRulesChangedPacket = new GameRulesChangedPacket();
-            gameRulesChangedPacket.GameRules = rules;
-            this.SendPacket(gameRulesChangedPacket);
-
-            PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, this.ClientData.Skin, this.LoginData.XUID);
-            AdventureSettingsEntry adventureSettingsEntry = new AdventureSettingsEntry();
-            adventureSettingsEntry.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, false);
-            adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_PVP, false);
-            adventureSettingsEntry.SetFlag(AdventureSettingsPacket.AUTO_JUMP, false);
-            adventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, true);
-            adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
-            adventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, false);
-            adventureSettingsEntry.EntityUniqueId = this.EntityID;
-            Server.Instance.AddPlayer(this, entry, adventureSettingsEntry);
-
-            this.SendDataProperties();
         }
     }
 }
