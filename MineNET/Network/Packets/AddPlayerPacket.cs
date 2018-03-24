@@ -30,7 +30,7 @@ namespace MineNET.Network.Packets
 
         public int Flag { get; set; } = 0;
         public int CommandPermission { get; set; } = 0;
-        public int ActionPermissions { get; set; } = 0; //TODO
+        public int ActionPermissions { get; set; } = 0; //TODO:
         public int PermissionLevel { get; set; } = PlayerPermissions.MEMBER.GetIndex();
         public int StoredCustomPermissions { get; set; } = 0;
 

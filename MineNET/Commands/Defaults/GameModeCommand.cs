@@ -120,7 +120,7 @@ namespace MineNET.Commands.Defaults
                     players[i].GameMode = GameModeExtention.FromIndex(gamemode);
                     players[i].SendMessage("ゲームモードが変更されました");
                     Logger.Info($"{players[i].Name} のゲームモードが変更されました");
-                    //TODO : need send message at op
+                    //TODO: need send message at op
                 }
             }
             return true;

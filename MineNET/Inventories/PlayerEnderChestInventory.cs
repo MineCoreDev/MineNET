@@ -49,14 +49,14 @@ namespace MineNET.Inventories
         {
             base.OnOpen(player);
 
-            //TODO
+            //TODO:
         }
 
         public override void OnClose(Player player)
         {
             base.OnClose(player);
 
-            //TODO
+            //TODO:
         }
     }
 }

@@ -109,7 +109,7 @@ namespace MineNET.Entities.Players
             reason = playerQuitEvent.Reason;
             if (!string.IsNullOrEmpty(reason))
             {
-                DisconnectPacket pk = new DisconnectPacket();//TODO NotQueue Send...
+                DisconnectPacket pk = new DisconnectPacket();
                 pk.Message = reason;
 
                 this.SendPacket(pk, true);

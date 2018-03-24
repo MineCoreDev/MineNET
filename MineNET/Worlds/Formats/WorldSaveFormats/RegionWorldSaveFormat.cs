@@ -62,7 +62,7 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
                 this.Files.Add(key, file);
 
                 Chunk chunk = new Chunk(chunkX, chunkZ);
-                chunk.GenerationFlat();//TODO
+                chunk.GenerationFlat();//TODO:
                 return chunk;
             }
             else
@@ -74,7 +74,7 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
                     if (data == null)
                     {
                         Chunk chunk = new Chunk(chunkX, chunkZ);
-                        chunk.GenerationFlat();//TODO
+                        chunk.GenerationFlat();//TODO:
                         return chunk;
                     }
 
@@ -83,7 +83,7 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
                 else
                 {
                     Chunk chunk = new Chunk(chunkX, chunkZ);
-                    chunk.GenerationFlat();//TODO
+                    chunk.GenerationFlat();//TODO:
                     return chunk;
                 }
             }

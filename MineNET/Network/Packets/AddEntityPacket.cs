@@ -38,8 +38,8 @@ namespace MineNET.Network.Packets
             this.WriteVector2(this.Direction);
             this.WriteAttributes(this.Attributes);
             this.WriteEntityMetadata(this.Metadata);
-            this.WriteUVarInt(0); //TODO : EntityLink size
-            //TODO : WriteEntityLink
+            this.WriteUVarInt(0); //TODO: EntityLink size
+            //TODO: WriteEntityLink
         }
     }
 }

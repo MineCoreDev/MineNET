@@ -64,7 +64,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
             tag.PutIntArray("HeightMap", cast);
 
             ListTag sections = new ListTag("Sections", NBTTagType.COMPOUND);
-            SubChunk[] subChunks = chunk.GetSubChunk();
+            SubChunk[] subChunks = chunk.SubChunks;
             for (int i = 0; i < subChunks.Length; ++i)
             {
                 if (subChunks[i].IsEnpty())

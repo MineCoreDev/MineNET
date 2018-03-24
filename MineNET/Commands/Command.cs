@@ -50,7 +50,7 @@ namespace MineNET.Commands
             }
             else if (selector == "@p")
             {
-                //TODO
+                //TODO:
                 if (sender.IsPlayer)
                 {
                     players.Add((Player) sender);

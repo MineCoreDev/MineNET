@@ -39,7 +39,7 @@ namespace MineNET.Worlds
         public byte[] Biomes { get; private set; } = ArrayUtils.CreateArray<byte>(256);
         public short[] HeightMap { get; private set; } = ArrayUtils.CreateArray<short>(256);
 
-        SubChunk[] subChunks = ArrayUtils.CreateArray<SubChunk>(16);
+        public SubChunk[] SubChunks { get; set; } = ArrayUtils.CreateArray<SubChunk>(16);
         List<Entity> entities = new List<Entity>();
         ListTag entitiesTag = new ListTag(NBTTagType.COMPOUND);
         List<BlockEntity> blockEntities = new List<BlockEntity>();
@@ -62,7 +62,7 @@ namespace MineNET.Worlds
 
             if (chunkDatas != null)
             {
-                this.subChunks = chunkDatas;
+                this.SubChunks = chunkDatas;
             }
 
             this.entitiesTag = entitiesTag;
@@ -81,13 +81,13 @@ namespace MineNET.Worlds
 
         public byte GetBlock(int bx, int by, int bz)
         {
-            SubChunk chunk = this.subChunks[by >> 4];
+            SubChunk chunk = this.SubChunks[by >> 4];
             return chunk.GetBlock(bx, by - 16 * (by >> 4), bz);
         }
 
         public void SetBlock(int bx, int by, int bz, byte bid)
         {
-            SubChunk chunk = this.subChunks[by >> 4];
+            SubChunk chunk = this.SubChunks[by >> 4];
             chunk.SetBlock(bx, by - 16 * (by >> 4), bz, bid);
         }
 
@@ -125,19 +125,14 @@ namespace MineNET.Worlds
 
         public byte GetMetadata(int bx, int by, int bz)
         {
-            SubChunk chunk = subChunks[by >> 4];
+            SubChunk chunk = this.SubChunks[by >> 4];
             return chunk.GetMetaData(bx, by - 16 * (by >> 4), bz);
         }
 
         public void SetMetadata(int bx, int by, int bz, byte data)
         {
-            SubChunk chunk = subChunks[by >> 4];
+            SubChunk chunk = this.SubChunks[by >> 4];
             chunk.SetMetaData(bx, by - 16 * (by >> 4), bz, data);
-        }
-
-        public SubChunk[] GetSubChunk()
-        {
-            return this.subChunks;
         }
 
         public Entity[] GetEntities()
@@ -175,7 +170,7 @@ namespace MineNET.Worlds
                 }
             }
 
-            this.subChunks[0] = flat;
+            this.SubChunks[0] = flat;
         }
 
         public byte[] GetBytes()
@@ -186,7 +181,7 @@ namespace MineNET.Worlds
 
                 for (int i = 15; i >= 0; i--)
                 {
-                    if (this.subChunks[i].IsEnpty())
+                    if (this.SubChunks[i].IsEnpty())
                         sendChunk = i;
                     else break;
                 }
@@ -194,7 +189,7 @@ namespace MineNET.Worlds
                 stream.WriteByte((byte) sendChunk);
                 for (int i = 0; i < sendChunk; ++i)
                 {
-                    stream.WriteBytes(this.subChunks[i].GetBytes());
+                    stream.WriteBytes(this.SubChunks[i].GetBytes());
                 }
 
                 byte[] b1 = new byte[512];
