@@ -72,7 +72,7 @@ namespace MineNET.Inventories
         public virtual Item[] AddItem(params Item[] items)
         {
             List<Item> itemSlots = new List<Item>();
-            for (int i = 0; i < this.Size; ++i)
+            for (int i = 0; i < items.Length; ++i)
             {
                 if (items[i].ID != BlockFactory.AIR && items[i].Count <= 0)
                 {

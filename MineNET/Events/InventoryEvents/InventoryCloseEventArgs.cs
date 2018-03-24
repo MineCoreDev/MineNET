@@ -11,7 +11,7 @@ namespace MineNET.Events.InventoryEvents
 
         public InventoryCloseEventArgs(Inventory inventory, Player player) : base(inventory)
         {
-            this.Inventory = inventory;
+            this.Player = player;
         }
     }
 }

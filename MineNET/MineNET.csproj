@@ -387,10 +387,12 @@
     <Compile Include="Events\InventoryEvents\InventoryEventArgs.cs" />
     <Compile Include="Events\InventoryEvents\InventoryEvents.cs" />
     <Compile Include="Events\InventoryEvents\InventoryOpenEventArgs.cs" />
+    <Compile Include="Events\InventoryEvents\InventoryTransactionEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerChatEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCommandPreprocessEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerCommandEventArgs.cs" />
     <Compile Include="Inventories\Transactions\Action\InventoryAction.cs" />
+    <Compile Include="Inventories\Transactions\Action\SlotChangeAction.cs" />
     <Compile Include="Inventories\Transactions\Data\ReleaseItemData.cs" />
     <Compile Include="Inventories\Transactions\Data\TransactionData.cs" />
     <Compile Include="Inventories\Transactions\Data\UseItemData.cs" />

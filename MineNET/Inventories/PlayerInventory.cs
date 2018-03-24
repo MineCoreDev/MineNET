@@ -17,7 +17,7 @@ namespace MineNET.Inventories
         private PlayerOffhandInventory offhand;
         private ArmorInventory armor;
 
-        private Inventory other;
+        private Inventory opend = null;
 
         public PlayerInventory(Player player) : base(player)
         {
@@ -190,12 +190,12 @@ namespace MineNET.Inventories
 
         public void OpenInventory(Inventory inventory)
         {
-            this.other = inventory;
+            this.opend = inventory;
         }
 
         public void CloseInventory()
         {
-            this.other = null;
+            this.opend = null;
         }
 
         public Inventory GetInventory(byte id)
@@ -216,9 +216,9 @@ namespace MineNET.Inventories
             {
                 return this.armor;
             }
-            else if (id == this.other.Type)
+            else if (id == this.opend.Type)
             {
-                return this.other;
+                return this.opend;
             }
             else
             {
@@ -226,19 +226,36 @@ namespace MineNET.Inventories
             }
         }
 
-        public PlayerCursorInventory GetPlayerCursorInventory()
+        public ArmorInventory ArmorInventory
         {
-            return this.cursor;
+            get
+            {
+                return this.armor;
+            }
         }
 
-        public PlayerOffhandInventory GetPlayerOffhandInventory()
+        public PlayerCursorInventory PlayerCursorInventory
         {
-            return this.offhand;
+            get
+            {
+                return this.cursor;
+            }
         }
 
-        public ArmorInventory GetArmorInventory()
+        public PlayerOffhandInventory PlayerOffhandInventory
         {
-            return this.armor;
+            get
+            {
+                return this.offhand;
+            }
+        }
+
+        public Inventory OpendInventory
+        {
+            get
+            {
+                return this.opend;
+            }
         }
     }
 }

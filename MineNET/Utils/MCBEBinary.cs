@@ -184,27 +184,27 @@ namespace MineNET.Utils
                 nbt = this.ReadBytes(nbtLen);
             }
 
-            //TODO:
+            Item item = Item.Get(id, data, cnt, nbt);
+
             int canPlaceOn = this.ReadSVarInt();
             if (canPlaceOn > 0)
             {
                 for (int i = 0; i < canPlaceOn; ++i)
                 {
-                    this.ReadString();
+                    item.AddCanPlaceOn(this.ReadString());
                 }
             }
 
-            //TODO:
             int canDestroy = this.ReadSVarInt();
             if (canDestroy > 0)
             {
                 for (int i = 0; i < canDestroy; ++i)
                 {
-                    this.ReadString();
+                    item.AddCanDestroy(this.ReadString());
                 }
             }
 
-            return Item.Get(id, data, cnt, nbt);
+            return item;
         }
 
         public void WriteItem(Item item)
@@ -220,8 +220,20 @@ namespace MineNET.Utils
             byte[] nbt = item.Tags;
             this.WriteLShort((ushort) nbt.Length);
             this.WriteBytes(nbt);
-            this.WriteSVarInt(0); //TODO:
-            this.WriteSVarInt(0); //TODO:
+
+            string[] canPlaceOn = item.CanPlaceOn;
+            this.WriteSVarInt(canPlaceOn.Length);
+            for (int i = 0; i < canPlaceOn.Length; ++i)
+            {
+                this.WriteString(canPlaceOn[i]);
+            }
+
+            string[] canDestroy = item.CanDestroy;
+            this.WriteSVarInt(canDestroy.Length);
+            for (int i = 0; i < canDestroy.Length; ++i)
+            {
+                this.WriteString(canDestroy[i]);
+            }
         }
 
         //ReadEntityMetadata

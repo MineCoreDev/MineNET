@@ -1,5 +1,9 @@
-﻿using MineNET.Entities.Data;
+﻿using System;
+using System.Collections.Generic;
+using MineNET.Entities.Data;
 using MineNET.Events.PlayerEvents;
+using MineNET.Inventories.Transactions;
+using MineNET.Inventories.Transactions.Action;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Utils;
@@ -36,6 +40,10 @@ namespace MineNET.Entities.Players
             else if (pk is CommandRequestPacket)
             {
                 this.CommandRequestPacketHandle((CommandRequestPacket) pk);
+            }
+            else if (pk is InventoryTransactionPacket)
+            {
+                this.InventoryTransactionHandle((InventoryTransactionPacket) pk);
             }
         }
 
@@ -170,10 +178,10 @@ namespace MineNET.Entities.Players
                 availableCommandsPacket.commands = Server.Instance.CommandManager.CommandList;
                 this.SendPacket(availableCommandsPacket);
 
-                this.Inventory.SendContents();
-                this.Inventory.GetArmorInventory().SendContents();
-                this.Inventory.SendCreativeItems();
-                this.Inventory.SendMainHand(this);
+            this.Inventory.SendContents();
+            this.Inventory.ArmorInventory.SendContents();
+            this.Inventory.SendCreativeItems();
+            this.Inventory.SendMainHand(this);
 
                 PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, "", "");
                 PlayerEvents.OnPlayerJoin(playerJoinEvent);
@@ -259,6 +267,56 @@ namespace MineNET.Entities.Players
         {
             string command = pk.Command.Remove(0, 1);
             Server.Instance.CommandManager.HandlePlayerCommand(this, command);
+        }
+
+        private void InventoryTransactionHandle(InventoryTransactionPacket pk)
+        {
+            List<InventoryAction> actions = new List<InventoryAction>();
+            for (int i = 0; i < pk.Actions.Length; ++i)
+            {
+                try
+                {
+                    InventoryAction action = pk.Actions[i].GetInventoryAction(this);
+                    actions.Add(action);
+                }
+                catch (Exception e)
+                {
+                    Logger.Log($"Unhandled inventory action from {this.Name}: {e.Message}");
+                    this.SendAllInventories();
+                    return;
+                }
+            }
+
+            if (pk.TransactionType == InventoryTransactionPacket.TYPE_NORMAL)
+            {
+                InventoryTransaction transaction = new InventoryTransaction(this, actions);
+                if (this.IsSpectator)
+                {
+                    this.SendAllInventories();
+                    return;
+                }
+                if (!transaction.Execute())
+                {
+                    Logger.Log($"Failed to execute inventory transaction from {this.Name} with actions");
+                }
+            }
+            else if (pk.TransactionType == InventoryTransactionPacket.TYPE_MISMATCH)
+            {
+                this.SendAllInventories();
+                return;
+            }
+            else if (pk.TransactionType == InventoryTransactionPacket.TYPE_USE_ITEM)
+            {
+
+            }
+            else if (pk.TransactionType == InventoryTransactionPacket.TYPE_USE_ITEM_ON_ENTITY)
+            {
+
+            }
+            else if (pk.TransactionType == InventoryTransactionPacket.TYPE_RELEASE_ITEM)
+            {
+
+            }
         }
     }
 }
