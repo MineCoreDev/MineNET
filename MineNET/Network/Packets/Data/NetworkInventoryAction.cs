@@ -1,4 +1,8 @@
-﻿using MineNET.Items;
+﻿using System;
+using MineNET.Entities.Players;
+using MineNET.Inventories;
+using MineNET.Inventories.Transactions.Action;
+using MineNET.Items;
 
 namespace MineNET.Network.Packets
 {
@@ -70,6 +74,31 @@ namespace MineNET.Network.Packets
             this.InventorySlot = (int) pk.ReadUVarInt();
             this.OldItem = pk.ReadItem();
             this.NewItem = pk.ReadItem();
+        }
+
+        public InventoryAction GetInventoryAction(Player player)
+        {
+            if (this.SourceType == NetworkInventoryAction.SOURCE_CONTAINER)
+            {
+                Inventory inventory = player.Inventory.GetInventory((byte) this.WindowId);
+                if (inventory != null)
+                {
+                    return new SlotChangeAction(inventory, this.InventorySlot, this.OldItem, this.NewItem);
+                }
+            }
+            else if (this.SourceType == NetworkInventoryAction.SOURCE_WORLD)
+            {
+
+            }
+            else if (this.SourceType == NetworkInventoryAction.SOURCE_CREATIVE)
+            {
+
+            }
+            else if (this.SourceType == NetworkInventoryAction.SOURCE_TODO)
+            {
+
+            }
+            throw new ArgumentOutOfRangeException();
         }
     }
 }

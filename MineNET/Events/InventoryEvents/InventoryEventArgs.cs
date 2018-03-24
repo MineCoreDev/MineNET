@@ -5,7 +5,7 @@ namespace MineNET.Events.InventoryEvents
 {
     public class InventoryEventArgs : EventArgs
     {
-        public Inventory Inventory { get; set; }
+        public Inventory Inventory { get; }
 
         public InventoryEventArgs(Inventory inventory)
         {

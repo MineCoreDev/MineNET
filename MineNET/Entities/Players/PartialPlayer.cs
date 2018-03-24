@@ -89,13 +89,13 @@ namespace MineNET.Entities.Players
             this.SendPacket(pk);
 
             AdventureSettingsEntry entry = Server.Instance.GetAdventureSettingsEntry(this);
-            entry.SetFlag(AdventureSettingsPacket.BUILD_AND_MINE, !this.IsSpectator());
-            entry.SetFlag(AdventureSettingsPacket.WORLD_BUILDER, !this.IsSpectator());
-            entry.SetFlag(AdventureSettingsPacket.NO_CLIP, this.IsSpectator());
-            entry.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, this.IsSpectator());
-            entry.SetFlag(AdventureSettingsPacket.NO_PVP, this.IsSpectator());
-            entry.SetFlag(AdventureSettingsPacket.FLYING, this.IsCreative() || this.IsSpectator());
-            entry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, this.IsCreative() || this.IsSpectator());
+            entry.SetFlag(AdventureSettingsPacket.BUILD_AND_MINE, !this.IsSpectator);
+            entry.SetFlag(AdventureSettingsPacket.WORLD_BUILDER, !this.IsSpectator);
+            entry.SetFlag(AdventureSettingsPacket.NO_CLIP, this.IsSpectator);
+            entry.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, this.IsSpectator);
+            entry.SetFlag(AdventureSettingsPacket.NO_PVP, this.IsSpectator);
+            entry.SetFlag(AdventureSettingsPacket.FLYING, this.IsCreative || this.IsSpectator);
+            entry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, this.IsCreative || this.IsSpectator);
             Server.Instance.UpdateAdventureSettings(entry);
         }
     }

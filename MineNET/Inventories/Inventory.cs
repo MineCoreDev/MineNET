@@ -23,7 +23,7 @@ namespace MineNET.Inventories
 
         Item GetItem(int index);
 
-        bool SetItem(int index, Item item, bool send);
+        bool SetItem(int index, Item item, bool send = true);
 
         Item[] AddItem(params Item[] items);
 

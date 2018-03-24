@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -565,27 +566,48 @@ namespace MineNET.Items
 
         public override bool Equals(object obj)
         {
+            return this.Equals(obj);
+        }
+
+        public bool Equals(object obj, bool checkDamage = true, bool checkCount = true, bool checkNBT = true, bool checkComponents = true)
+        {
             if (!(obj is Item))
             {
                 return false;
             }
             Item item = (Item) obj;
-            if (this.ID != item.ID || this.Damage != item.Damage || this.Count != item.Count)
+            if (this.ID != item.ID)
             {
                 return false;
             }
-            if (this.HasTags() != item.HasTags())
+            if (checkDamage && this.Damage != item.Damage)
             {
                 return false;
             }
-            else
+            if (checkCount && this.Count != item.Count)
             {
-                if (this.HasTags())
+                return false;
+            }
+            if (checkNBT)
+            {
+                if (this.HasTags() != item.HasTags())
                 {
-                    if (this.GetNamedTag() != item.GetNamedTag())
+                    return false;
+                }
+                else
+                {
+                    if (this.HasTags() && this.GetNamedTag() != item.GetNamedTag())
                     {
                         return false;
                     }
+                }
+            }
+            if (checkComponents)
+            {
+                if (!((IStructuralEquatable) this.CanPlaceOn).Equals(item.CanPlaceOn, StructuralComparisons.StructuralEqualityComparer) ||
+                    !((IStructuralEquatable) this.CanDestroy).Equals(item.CanDestroy, StructuralComparisons.StructuralEqualityComparer))
+                {
+                    return false;
                 }
             }
             return true;

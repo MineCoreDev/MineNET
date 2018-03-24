@@ -193,24 +193,48 @@ namespace MineNET.Entities.Players
             this.SendPacket(pk);
         }
 
-        public bool IsSurvival()
+        public bool IsSurvival
         {
-            return this.GameMode == GameMode.Survival;
+            get
+            {
+                return this.GameMode == GameMode.Survival;
+            }
         }
 
-        public bool IsCreative()
+        public bool IsCreative
         {
-            return this.GameMode == GameMode.Creative;
+            get
+            {
+                return this.GameMode == GameMode.Creative;
+            }
         }
 
-        public bool IsAdventure()
+        public bool IsAdventure
         {
-            return this.GameMode == GameMode.Adventure;
+            get
+            {
+                return this.GameMode == GameMode.Adventure;
+            }
         }
 
-        public bool IsSpectator()
+        public bool IsSpectator
         {
-            return this.GameMode == GameMode.Spectator;
+            get
+            {
+                return this.GameMode == GameMode.Spectator;
+            }
+        }
+
+        public void SendAllInventories()
+        {
+            this.Inventory.SendContents(this);
+            this.Inventory.ArmorInventory.SendContents(this);
+            this.Inventory.PlayerCursorInventory.SendContents(this);
+            this.Inventory.PlayerOffhandInventory.SendContents(this);
+            if (this.Inventory.OpendInventory != null)
+            {
+                this.Inventory.OpendInventory.SendContents(this);
+            }
         }
     }
 }
