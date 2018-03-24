@@ -246,4 +246,16 @@
   <data name="server_exception_config2" xml:space="preserve">
     <value>File&lt;{0}&gt;を削除してください。</value>
   </data>
+  <data name="server_world_create" xml:space="preserve">
+    <value>世界&lt;{0}&gt;を新しく作成しました。</value>
+  </data>
+  <data name="server_world_loaded" xml:space="preserve">
+    <value>世界&lt;{0}&gt;を読み込みました。</value>
+  </data>
+  <data name="server_world_loading" xml:space="preserve">
+    <value>世界&lt;{0}&gt;を読み込んでいます...</value>
+  </data>
+  <data name="server_config_flatGeneratorOptions" xml:space="preserve">
+    <value>フラットジェネレータの設定</value>
+  </data>
 </root>

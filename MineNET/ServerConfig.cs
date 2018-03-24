@@ -31,6 +31,9 @@ namespace MineNET
         [YamlDescription("%server_config_mainWorldGenerator")]
         public string WorldGenerator { get; set; } = "Default";
 
+        [YamlDescription("%server_config_flatGeneratorOptions")]
+        public string FlatGeneratorOptions { get; set; } = "0;7,2*3,2";
+
         [YamlDescription("%server_config_generateNether")]
         public bool GenerateNether { get; set; } = false;
 

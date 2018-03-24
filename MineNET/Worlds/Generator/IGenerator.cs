@@ -1,6 +1,8 @@
-﻿namespace MineNET.Worlds.Generator
+﻿using System;
+
+namespace MineNET.Worlds.Generator
 {
-    public interface IGenerator
+    public interface IGenerator : ICloneable
     {
         string Name { get; }
         void ChunkGeneration(Chunk chunk);
