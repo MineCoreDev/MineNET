@@ -92,6 +92,10 @@ namespace MineNET.Items
         private byte[] tags = new byte[0];
         private CompoundTag cachedNBT = null;
 
+        private List<string> canPlaceOn = new List<string>();
+
+        private List<string> canDestroy = new List<string>();
+
         private Block block = null;
 
         public Item(int id, int meta = 0, int count = 1)
@@ -158,6 +162,74 @@ namespace MineNET.Items
             nbt.Name = null;
             this.cachedNBT = nbt;
             this.tags = NBTIO.WriteTag(nbt);
+            return this;
+        }
+
+        public string[] CanPlaceOn
+        {
+            get
+            {
+                return this.canPlaceOn.ToArray();
+            }
+
+            set
+            {
+                this.canPlaceOn = value.ToList();
+            }
+        }
+
+        public Item AddCanPlaceOn(params string[] blocks)
+        {
+            for (int i = 0; i < blocks.Length; ++i)
+            {
+                this.canPlaceOn.Add(blocks[i]);
+            }
+            return this;
+        }
+
+        public Item RemoceCanPlaceOn(params string[] blocks)
+        {
+            for (int i = 0; i < blocks.Length; ++i)
+            {
+                if (this.canPlaceOn.Contains(blocks[i]))
+                {
+                    this.canPlaceOn.Remove(blocks[i]);
+                }
+            }
+            return this;
+        }
+
+        public string[] CanDestroy
+        {
+            get
+            {
+                return this.canDestroy.ToArray();
+            }
+
+            set
+            {
+                this.canDestroy = value.ToList();
+            }
+        }
+
+        public Item AddCanDestroy(params string[] blocks)
+        {
+            for (int i = 0; i < blocks.Length; ++i)
+            {
+                this.canDestroy.Add(blocks[i]);
+            }
+            return this;
+        }
+
+        public Item RemoceCanDestroy(params string[] blocks)
+        {
+            for (int i = 0; i < blocks.Length; ++i)
+            {
+                if (this.canDestroy.Contains(blocks[i]))
+                {
+                    this.canDestroy.Remove(blocks[i]);
+                }
+            }
             return this;
         }
 

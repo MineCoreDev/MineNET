@@ -221,17 +221,53 @@ namespace MineNET.NBT.IO
             {
                 nbt.PutCompound("tag", item.GetNamedTag());
             }
+            string[] canPlaceOn = item.CanPlaceOn;
+            if (canPlaceOn.Length > 0)
+            {
+                ListTag list = new ListTag("CanPlaceOn", NBTTagType.STRING);
+                for (int i = 0; i < canPlaceOn.Length; ++i)
+                {
+                    list.Add(new StringTag(canPlaceOn[i]));
+                }
+                nbt.PutList(list);
+            }
+            string[] canDestroy = item.CanDestroy;
+            if (canDestroy.Length > 0)
+            {
+                ListTag list = new ListTag("CanPlaceOn", NBTTagType.STRING);
+                for (int i = 0; i < canDestroy.Length; ++i)
+                {
+                    list.Add(new StringTag(canDestroy[i]));
+                }
+                nbt.PutList(list);
+            }
             return nbt;
         }
 
         public static Item ReadItem(CompoundTag nbt)
         {
             Item item = Item.Get(nbt.GetShort("id"), nbt.GetShort("damage"), nbt.GetByte("count"));
-            if (nbt.Equals("tag"))
+            if (nbt.Exist("tag"))
             {
                 CompoundTag tag = (CompoundTag) nbt.GetCompound("tag").Clone();
                 tag.Name = "";
                 item.SetNamedTag(tag);
+            }
+            if (nbt.Exist("CanPlaceOn"))
+            {
+                ListTag list = nbt.GetList("CanPlaceOn");
+                for (int i = 0; i < list.Count; ++i)
+                {
+                    item.AddCanPlaceOn(((StringTag) list[i]).Data);
+                }
+            }
+            if (nbt.Exist("CanDestroy"))
+            {
+                ListTag list = nbt.GetList("CanDestroy");
+                for (int i = 0; i < list.Count; ++i)
+                {
+                    item.AddCanDestroy(((StringTag) list[i]).Data);
+                }
             }
             return item;
         }
