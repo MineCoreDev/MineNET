@@ -1,4 +1,9 @@
-﻿using MineNET.Entities.Metadata;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using MineNET.Entities.Metadata;
+using MineNET.Entities.Players;
+using MineNET.Network.Packets;
 
 namespace MineNET.Entities
 {
@@ -133,6 +138,82 @@ namespace MineNET.Entities
         public const int DATA_FLAG_AFFECTED_BY_GRAVITY = 46;
         public const int DATA_FLAG_FIRE_IMMUNE = 47;
         public const int DATA_FLAG_DANCING = 48;
+
+        public bool GetFlag(int id, int flagID)
+        {
+            EntityData data = this.GetDataProperty(id);
+            if (data is EntityDataLong)
+            {
+                EntityDataLong longData = (EntityDataLong) data;
+                long flag = longData.Data;
+                BitArray flags = new BitArray(BitConverter.GetBytes(flag));
+                return flags[flagID];
+            }
+            return false;
+        }
+
+        public void SetFlag(int id, int flagID, bool value = true, bool send = false)
+        {
+            EntityData data = this.GetDataProperty(id);
+            if (data is EntityDataLong)
+            {
+                EntityDataLong longData = (EntityDataLong) data;
+                long flag = longData.Data;
+                BitArray flags = new BitArray(BitConverter.GetBytes(flag));
+                flags[flagID] = value;
+
+                byte[] result = new byte[8];
+                flags.CopyTo(result, 0);
+
+                this.SetDataProperty(new EntityDataLong(id, BitConverter.ToInt64(result, 0)), send);
+            }
+        }
+
+        public EntityData GetDataProperty(int id)
+        {
+            return this.dataProperties.GetEntityData(id);
+        }
+
+        public void SetDataProperty(EntityData data, bool send = false)
+        {
+            this.dataProperties.PutEntityData(data);
+            if (send)
+            {
+                this.SendDataProperties();
+            }
+        }
+
+        public void RemoveDataProperty(int id, bool send = false)
+        {
+            this.dataProperties.Remove(id);
+            if (send)
+            {
+                this.SendDataProperties();
+            }
+        }
+
+        public Dictionary<int, EntityData> GetDataProperties()
+        {
+            return this.dataProperties.GetEntityDatas();
+        }
+
+        public void SendDataProperties()
+        {
+            SetEntityDataPacket pk = new SetEntityDataPacket();
+            pk.EntityRuntimeId = this.EntityID;
+            pk.EntityData = this.dataProperties;
+
+            if (this.IsPlayer)
+            {
+                List<Player> players = new List<Player>(this.GetViewers());
+                players.Add((Player) this);
+                this.AsyncSendPacketPlayers(pk, players.ToArray());
+            }
+            else
+            {
+                this.AsyncSendPacketPlayers(pk, this.GetViewers());
+            }
+        }
 
         public virtual string DisplayName
         {

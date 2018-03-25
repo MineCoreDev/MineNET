@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MineNET.Entities.Metadata;
@@ -21,6 +20,26 @@ namespace MineNET.Entities
 
         public CompoundTag namedTag;
 
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
+
+        public float Yaw { get; set; }
+        public float Pitch { get; set; }
+
+        public World World { get; set; }
+
+        public long EntityID { get; }
+
+        public abstract float WIDTH { get; }
+        public abstract float HEIGHT { get; }
+
+        public virtual bool IsPlayer { get { return false; } }
+
+        public abstract string Name { get; protected set; }
+
+        public virtual bool Closed { get; protected set; }
+
         public Entity()
         {
             this.EntityID = Entity.nextEntityId++;
@@ -39,17 +58,6 @@ namespace MineNET.Entities
             this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_AFFECTED_BY_GRAVITY);
             //this.SetFlag(Entity.DATA_FLAGS, Entity.);
         }
-
-        public long EntityID { get; }
-
-        public abstract float WIDTH { get; }
-        public abstract float HEIGHT { get; }
-
-        public virtual bool IsPlayer { get { return false; } }
-
-        public abstract string Name { get; protected set; }
-
-        public virtual bool Closed { get; protected set; }
 
         public Player[] GetViewers()
         {
@@ -104,105 +112,51 @@ namespace MineNET.Entities
             this.AsyncSendPacketViewers(pk);
         }
 
-        public bool GetFlag(int id, int flagID)
+        public Vector2 Vector2
         {
-            EntityData data = this.GetDataProperty(id);
-            if (data is EntityDataLong)
+            get
             {
-                EntityDataLong longData = (EntityDataLong) data;
-                long flag = longData.Data;
-                BitArray flags = new BitArray(BitConverter.GetBytes(flag));
-                return flags[flagID];
-            }
-            return false;
-        }
-
-        public void SetFlag(int id, int flagID, bool value = true, bool send = false)
-        {
-            EntityData data = this.GetDataProperty(id);
-            if (data is EntityDataLong)
-            {
-                EntityDataLong longData = (EntityDataLong) data;
-                long flag = longData.Data;
-                BitArray flags = new BitArray(BitConverter.GetBytes(flag));
-                flags[flagID] = value;
-
-                byte[] result = new byte[8];
-                flags.CopyTo(result, 0);
-
-                this.SetDataProperty(new EntityDataLong(id, BitConverter.ToInt64(result, 0)), send);
+                return new Vector2(this.X, this.Z);
             }
         }
 
-        public EntityData GetDataProperty(int id)
+        public Vector3 Vector3
         {
-            return this.dataProperties.GetEntityData(id);
-        }
-
-        public void SetDataProperty(EntityData data, bool send = false)
-        {
-            this.dataProperties.PutEntityData(data);
-            if (send)
+            get
             {
-                this.SendDataProperties();
+                return new Vector3(this.X, this.Y, this.Z);
+            }
+
+            protected set
+            {
+                this.X = value.X;
+                this.Y = value.Y;
+                this.Z = value.Z;
             }
         }
 
-        public void RemoveDataProperty(int id, bool send = false)
+        public Vector3i Vector3i
         {
-            this.dataProperties.Remove(id);
-            if (send)
+            get
             {
-                this.SendDataProperties();
+                return this.Vector3.Vector3i;
             }
         }
 
-        public Dictionary<int, EntityData> GetDataProperties()
+        public Position Position
         {
-            return this.dataProperties.GetEntityDatas();
-        }
-
-
-
-        public void SendDataProperties()
-        {
-            SetEntityDataPacket pk = new SetEntityDataPacket();
-            pk.EntityRuntimeId = this.EntityID;
-            pk.EntityData = this.dataProperties;
-
-            if (this.IsPlayer)
+            get
             {
-                List<Player> players = new List<Player>(this.GetViewers());
-                players.Add((Player) this);
-                this.AsyncSendPacketPlayers(pk, players.ToArray());
-            }
-            else
-            {
-                this.AsyncSendPacketPlayers(pk, this.GetViewers());
+                return new Position(this.X, this.Y, this.Z, this.World);
             }
         }
 
-        public Vector3 GetVector3()
+        public Location Location
         {
-            return new Vector3(this.X, this.Y, this.Z);
-        }
-
-        public void SetVector3(Vector3 pos)
-        {
-            this.X = pos.X;
-            this.Y = pos.Y;
-            this.Z = pos.Z;
-        }
-
-        public Vector2 GetVector2()
-        {
-            return new Vector2(this.X, this.Z);
-        }
-
-        public void SetVector2(Vector2 pos)
-        {
-            this.X = pos.X;
-            this.Z = pos.Y;
+            get
+            {
+                return new Location(this.X, this.Y, this.Z, this.Yaw, this.Pitch, this.World);
+            }
         }
 
         public Vector2 GetChunkVector()
@@ -225,13 +179,12 @@ namespace MineNET.Entities
 
         }
 
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
-
-        public float Yaw { get; set; }
-        public float Pitch { get; set; }
-
-        public World World { get; set; }
+        public Vector2 DirectionPlane
+        {
+            get
+            {
+                return new Vector2((float) -Math.Cos(this.Yaw * Math.PI / 180 - Math.PI / 2), (float) -Math.Sin(this.Yaw * Math.PI / 180 - Math.PI / 2)).Normalized;
+            }
+        }
     }
 }

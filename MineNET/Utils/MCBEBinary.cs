@@ -47,7 +47,7 @@ namespace MineNET.Utils
 
         public void WriteBlockVector3(Vector3 pos)
         {
-            this.WriteBlockVector3(pos.ToVector3i());
+            this.WriteBlockVector3(pos.Vector3i);
         }
 
         public void WriteBlockVector3(Vector3i pos)

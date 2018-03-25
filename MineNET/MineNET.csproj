@@ -421,7 +421,7 @@
     <Compile Include="Entities\Metadata\EntityDataShort.cs" />
     <Compile Include="Entities\Metadata\EntityDataVector.cs" />
     <Compile Include="Entities\Metadata\EntityMetadataManager.cs" />
-    <Compile Include="Entities\PartialEntity.cs" />
+    <Compile Include="Entities\PartialMetadataEntity.cs" />
     <Compile Include="Entities\Players\PartialPacketHandlePlayer.cs" />
     <Compile Include="Entities\Players\PartialPlayer.cs" />
     <Compile Include="Events\MineNETEvents.cs" />

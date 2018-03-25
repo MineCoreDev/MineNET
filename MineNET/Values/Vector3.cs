@@ -4,16 +4,16 @@ namespace MineNET.Values
 {
     public struct Vector3 : IVector3
     {
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
+
         public Vector3(float x, float y, float z)
         {
             this.X = x;
             this.Y = y;
             this.Z = z;
         }
-
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
 
         public float this[int index]
         {
@@ -55,19 +55,54 @@ namespace MineNET.Values
             }
         }
 
-        public int GetFloorX()
+        public int FloorX
         {
-            return (int) Math.Floor(this.X);
+            get
+            {
+                return (int) Math.Floor(this.X);
+            }
         }
 
-        public int GetFloorY()
+        public int FloorY
         {
-            return (int) Math.Floor(this.Y);
+            get
+            {
+                return (int) Math.Floor(this.Y);
+            }
         }
 
-        public int GetFloorZ()
+        public int FloorZ
         {
-            return (int) Math.Floor(this.Z);
+            get
+            {
+                return (int) Math.Floor(this.Z);
+            }
+        }
+
+        public float Magnitude
+        {
+            get
+            {
+                return (float) Math.Sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z);
+            }
+        }
+
+        public float SqrtMagnitude
+        {
+            get
+            {
+                return this.X * this.X + this.Y * this.Y + this.Z * this.Z;
+            }
+        }
+
+        public static float Distance(Vector3 a, Vector3 b)
+        {
+            return (a - b).Magnitude;
+        }
+
+        public static float DistanceSquared(Vector3 a, Vector3 b)
+        {
+            return (a - b).SqrtMagnitude;
         }
 
         public override string ToString()
@@ -75,9 +110,20 @@ namespace MineNET.Values
             return $"X: {this.X} Y: {this.Y} Z: {this.Z}";
         }
 
-        public Vector3i ToVector3i()
+        public Vector3i Vector3i
         {
-            return new Vector3i(this.GetFloorX(), this.GetFloorY(), this.GetFloorZ());
+            get
+            {
+                return new Vector3i(this.FloorX, this.FloorY, this.FloorZ);
+            }
+        }
+
+        public Vector2 Vector2
+        {
+            get
+            {
+                return new Vector2(this.X, this.Y);
+            }
         }
 
         public static Vector3 operator +(Vector3 A, Vector3 B)
