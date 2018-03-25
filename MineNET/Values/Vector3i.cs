@@ -2,6 +2,10 @@
 {
     public class Vector3i : IVector3i
     {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Z { get; set; }
+
         public Vector3i(int x, int y, int z)
         {
             this.X = x;
@@ -9,13 +13,12 @@
             this.Z = z;
         }
 
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Z { get; set; }
-
-        public Vector3 ToVector3()
+        public Vector3 Vector3
         {
-            return new Vector3(this.X, this.Y, this.Z);
+            get
+            {
+                return new Vector3(this.X, this.Y, this.Z);
+            }
         }
     }
 }

@@ -236,5 +236,17 @@ namespace MineNET.Entities.Players
                 this.Inventory.OpendInventory.SendContents(this);
             }
         }
+
+        public bool CanInteract(Vector3 pos, double maxDistance)
+        {
+            if (Vector3.DistanceSquared(this.Vector3, pos) > maxDistance * maxDistance)
+            {
+                return false;
+            }
+            Vector2 dv = this.DirectionPlane;
+            float dot1 = Vector2.Dot(dv, new Vector2(this.X, this.Z));
+            float dot2 = Vector2.Dot(dv, new Vector2(pos.X, this.Z));
+            return (dot2 - dot1) >= -0.5;
+        }
     }
 }

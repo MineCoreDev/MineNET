@@ -75,7 +75,7 @@ namespace MineNET.Values
         public static Vector2 MoveTowards(Vector2 current, Vector2 target, float maxDistanceDelta)
         {
             Vector2 a = target - current;
-            float magnitude = a.magnitude;
+            float magnitude = a.Magnitude;
             if (magnitude <= maxDistanceDelta || magnitude == 0f)
             {
                 return target;
@@ -96,7 +96,7 @@ namespace MineNET.Values
 
         public void Normalize()
         {
-            float magnitude = this.magnitude;
+            float magnitude = this.Magnitude;
             if (magnitude > 1E-05f)
             {
                 this /= magnitude;
@@ -107,7 +107,7 @@ namespace MineNET.Values
             }
         }
 
-        public Vector2 normalized
+        public Vector2 Normalized
         {
             get
             {
@@ -142,7 +142,7 @@ namespace MineNET.Values
             return lhs.X * rhs.X + lhs.Y * rhs.Y;
         }
 
-        public float magnitude
+        public float Magnitude
         {
             get
             {
@@ -150,7 +150,7 @@ namespace MineNET.Values
             }
         }
 
-        public float sqrMagnitude
+        public float SqrtMagnitude
         {
             get
             {
@@ -160,19 +160,24 @@ namespace MineNET.Values
 
         public static float Angle(Vector2 from, Vector2 to)
         {
-            return (float) Math.Acos(Utils.MineNEtMath.Clamp(Vector2.Dot(from.normalized, to.normalized), -1f, 1f)) * 57.29578f;
+            return (float) Math.Acos(Utils.MineNEtMath.Clamp(Vector2.Dot(from.Normalized, to.Normalized), -1f, 1f)) * 57.29578f;
         }
 
         public static float Distance(Vector2 a, Vector2 b)
         {
-            return (a - b).magnitude;
+            return (a - b).Magnitude;
+        }
+
+        public static float DistanceSquared(Vector2 a, Vector2 b)
+        {
+            return (a - b).SqrtMagnitude;
         }
 
         public static Vector2 ClampMagnitude(Vector2 vector, float maxLength)
         {
-            if (vector.sqrMagnitude > maxLength * maxLength)
+            if (vector.SqrtMagnitude > maxLength * maxLength)
             {
-                return vector.normalized * maxLength;
+                return vector.Normalized * maxLength;
             }
             return vector;
         }

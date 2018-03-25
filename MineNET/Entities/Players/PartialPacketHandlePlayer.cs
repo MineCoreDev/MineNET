@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using MineNET.Blocks.Data;
 using MineNET.Entities.Data;
 using MineNET.Events.PlayerEvents;
 using MineNET.Inventories.Transactions;
 using MineNET.Inventories.Transactions.Action;
+using MineNET.Inventories.Transactions.Data;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Utils;
@@ -153,9 +155,9 @@ namespace MineNET.Entities.Players
 
                 if (this.X == 0 && this.Y == 0 && this.Z == 0)
                 {
-                    this.X = this.World.SpawnPoint.GetFloorX();
-                    this.Y = this.World.SpawnPoint.GetFloorY();
-                    this.Z = this.World.SpawnPoint.GetFloorZ();
+                    this.X = this.World.SpawnPoint.FloorX;
+                    this.Y = this.World.SpawnPoint.FloorY;
+                    this.Z = this.World.SpawnPoint.FloorZ;
                 }
 
                 StartGamePacket startGamePacket = new StartGamePacket();
@@ -166,9 +168,9 @@ namespace MineNET.Entities.Players
                 startGamePacket.Direction = new Vector2(this.Yaw, this.Pitch);
                 startGamePacket.WorldGamemode = this.World.DefaultGameMode.GameModeToInt();
                 startGamePacket.Difficulty = this.World.Difficulty;
-                startGamePacket.SpawnX = this.World.SpawnPoint.GetFloorX();
-                startGamePacket.SpawnY = this.World.SpawnPoint.GetFloorY();
-                startGamePacket.SpawnZ = this.World.SpawnPoint.GetFloorZ();
+                startGamePacket.SpawnX = this.World.SpawnPoint.FloorX;
+                startGamePacket.SpawnY = this.World.SpawnPoint.FloorY;
+                startGamePacket.SpawnZ = this.World.SpawnPoint.FloorZ;
                 startGamePacket.WorldName = this.World.Name;
                 this.SendPacket(startGamePacket);
 
@@ -178,10 +180,10 @@ namespace MineNET.Entities.Players
                 availableCommandsPacket.commands = Server.Instance.CommandManager.CommandList;
                 this.SendPacket(availableCommandsPacket);
 
-            this.Inventory.SendContents();
-            this.Inventory.ArmorInventory.SendContents();
-            this.Inventory.SendCreativeItems();
-            this.Inventory.SendMainHand(this);
+                this.Inventory.SendContents();
+                this.Inventory.ArmorInventory.SendContents();
+                this.Inventory.SendCreativeItems();
+                this.Inventory.SendMainHand(this);
 
                 PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, "", "");
                 PlayerEvents.OnPlayerJoin(playerJoinEvent);
@@ -307,7 +309,20 @@ namespace MineNET.Entities.Players
             }
             else if (pk.TransactionType == InventoryTransactionPacket.TYPE_USE_ITEM)
             {
+                UseItemData data = (UseItemData) pk.TransactionData;
+                Vector3i blockPos = data.BlockPos;
+                BlockFace face = data.Face;
+                if (data.ActionType == InventoryTransactionPacket.USE_ITEM_ACTION_CLICK_BLOCK)
+                {
+                    this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ACTION, false, true);
+                    if (this.CanInteract(blockPos.Vector3 + new Vector3(0.5f, 0.5f, 0.5f), this.IsCreative ? 13 : 7))
+                    {
+                        //TODO : this.World.UseItemOn();
+                    }
 
+                    //Send MainHand
+
+                }
             }
             else if (pk.TransactionType == InventoryTransactionPacket.TYPE_USE_ITEM_ON_ENTITY)
             {

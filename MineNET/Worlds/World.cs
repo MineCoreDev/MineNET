@@ -192,7 +192,7 @@ namespace MineNET.Worlds
                     try
                     {
                         chunk = this.Format.GetChunk(pair.Key.Item1, pair.Key.Item2);
-                        if (!chunks.ContainsKey(pair.Key))
+                        if (!this.chunks.ContainsKey(pair.Key))
                         {
                             this.chunks.Add(pair.Key, chunk);
                         }
@@ -254,7 +254,7 @@ namespace MineNET.Worlds
             {
                 Block block = this.GetBlock(vector3[i]);
                 UpdateBlockPacket pk = new UpdateBlockPacket();
-                pk.Vector3 = vector3[i].ToVector3i();
+                pk.Vector3 = vector3[i].Vector3i;
                 pk.BlockId = block.ID;
                 pk.BlockData = block.Damage;
                 pk.Flags = flags;

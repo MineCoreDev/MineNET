@@ -2,16 +2,7 @@
 {
     public interface ILocation : IPosition
     {
-        float Yaw
-        {
-            get;
-            set;
-        }
-
-        float Pitch
-        {
-            get;
-            set;
-        }
+        float Yaw { get; }
+        float Pitch { get; }
     }
 }

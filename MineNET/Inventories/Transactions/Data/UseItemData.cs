@@ -18,7 +18,7 @@ namespace MineNET.Inventories.Transactions.Data
         public UseItemData(InventoryTransactionPacket pk)
         {
             this.ActionType = (int) pk.ReadUVarInt();
-            this.BlockPos = pk.ReadBlockVector3().ToVector3i();
+            this.BlockPos = pk.ReadBlockVector3().Vector3i;
             this.Face = pk.ReadBlockFace();
             this.HotbarSlot = pk.ReadSVarInt();
             this.ItemMainHand = pk.ReadItem();
