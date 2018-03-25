@@ -132,10 +132,11 @@ namespace MineNET.Worlds
             else
             {
                 throw new Exception();
+                //chunk = this.Format.GetChunk(this.Generator, chunkPos.Item1, chunkPos.Item2);
             }
 
-            byte id = chunk.GetBlock((int) pos.X, (int) pos.Y, (int) pos.Z);
-            byte meta = chunk.GetMetadata((int) pos.X, (int) pos.Y, (int) pos.Z);
+            byte id = chunk.GetBlock(chunkPos.Item1, (int) pos.Y, chunkPos.Item2);
+            byte meta = chunk.GetMetadata(chunkPos.Item1, (int) pos.Y, chunkPos.Item2);
 
             return Block.Get(id, meta);
         }
@@ -151,12 +152,29 @@ namespace MineNET.Worlds
             else
             {
                 throw new Exception();
+                //chunk = this.Format.GetChunk(this.Generator, chunkPos.Item1, chunkPos.Item2);
             }
 
-            chunk.SetBlock((int) pos.X, (int) pos.Y, (int) pos.Z, (byte) block.ID);
-            chunk.SetMetadata((int) pos.X, (int) pos.Y, (int) pos.Z, (byte) block.Damage);
+            chunk.SetBlock(chunkPos.Item1, (int) pos.Y, chunkPos.Item2, (byte) block.ID);
+            chunk.SetMetadata(chunkPos.Item1, (int) pos.Y, chunkPos.Item2, (byte) block.Damage);
 
             this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos });
+        }
+
+        public Chunk GetChunk(Tuple<int, int> chunkPos)
+        {
+            Chunk chunk = null;
+            if (this.chunks.ContainsKey(chunkPos))
+            {
+                chunk = this.chunks[chunkPos];
+            }
+            else
+            {
+                chunk = this.Format.GetChunk(chunkPos.Item1, chunkPos.Item2);
+            }
+            chunk.InternalSetWorld(this);
+
+            return chunk;
         }
 
         public IEnumerable<Chunk> LoadChunks(Player player, int radius)
@@ -204,20 +222,14 @@ namespace MineNET.Worlds
                     Chunk chunk = null;
                     try
                     {
-                        if (this.chunks.ContainsKey(pair.Key))
-                        {
-                            chunk = this.chunks[pair.Key];
-                        }
-                        else
-                        {
-                            chunk = this.Format.GetChunk(this.Generator, pair.Key.Item1, pair.Key.Item2);
-                        }
+                        chunk = this.GetChunk(pair.Key);
 
                         if (!chunks.ContainsKey(pair.Key))
                         {
                             this.chunks.Add(pair.Key, chunk);
                         }
                         player.loadedChunk.Add(pair.Key, pair.Value);
+                        this.Generator.ChunkGeneration(chunk);
                     }
                     catch (Exception e)
                     {

@@ -21,7 +21,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
                 CompoundTag section = ((CompoundTag) sections[i]);
                 SubChunk subChunk = new SubChunk();
                 byte y = section.GetByte("Y");
-                subChunk.BlockData = section.GetByteArray("Blocks");
+                subChunk.BlockDatas = section.GetByteArray("Blocks");
                 subChunk.MetaDatas = new NibbleArray(section.GetByteArray("Data"));
                 subChunk.SkyLights = new NibbleArray(section.GetByteArray("SkyLight"));
                 subChunk.BlockLigths = new NibbleArray(section.GetByteArray("BlockLight"));
@@ -67,13 +67,13 @@ namespace MineNET.Worlds.Formats.ChunkFormats
             SubChunk[] subChunks = chunk.SubChunks;
             for (int i = 0; i < subChunks.Length; ++i)
             {
-                if (subChunks[i].IsEnpty())
+                if (subChunks[i].IsEnpty)
                 {
                     continue;
                 }
                 CompoundTag data = new CompoundTag();
                 data.PutByte("Y", (byte) i);
-                data.PutByteArray("Blocks", subChunks[i].BlockData);
+                data.PutByteArray("Blocks", subChunks[i].BlockDatas);
                 data.PutByteArray("Data", subChunks[i].MetaDatas.ArrayData);
                 data.PutByteArray("SkyLight", subChunks[i].SkyLights.ArrayData);
                 data.PutByteArray("BlockLight", subChunks[i].BlockLigths.ArrayData);
@@ -82,7 +82,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
             tag.PutList(sections);
 
             ListTag entitiesTag = new ListTag("Entities", NBTTagType.COMPOUND);
-            Entity[] entities = chunk.GetEntities();
+            Entity[] entities = chunk.Entities;
             for (int i = 0; i < entities.Length; ++i)
             {
                 entities[i].SaveNBT();
@@ -90,7 +90,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
             }
 
             ListTag blockEntitiesTag = new ListTag("TileEntities", NBTTagType.COMPOUND);
-            BlockEntity[] blockEntities = chunk.GetBlockEntities();
+            BlockEntity[] blockEntities = chunk.BlockEntities;
             for (int i = 0; i < blockEntities.Length; ++i)
             {
                 blockEntities[i].SaveNBT();

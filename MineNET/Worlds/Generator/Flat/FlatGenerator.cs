@@ -101,7 +101,11 @@ namespace MineNET.Worlds.Generator.Flat
 
         public override void GenerationOnTheGroundNaturalObjects(Chunk chunk)
         {
-            //throw new NotImplementedException();
+            //Tree Test...
+            /*Vector2 offset = new Vector2(8, 8);
+            Vector3 pos = new Vector3((chunk.X << 4) + offset.X, 0, (chunk.Z << 4) + offset.Y);
+            pos.Y = chunk.GetBlockHighest(offset);
+            new OakTree().GenerationStruct(chunk.World, pos);*/
         }
 
         public override void GenerationUnderGroundNaturalObjects(Chunk chunk)
