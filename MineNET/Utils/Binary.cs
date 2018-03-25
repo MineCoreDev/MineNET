@@ -466,7 +466,7 @@ namespace MineNET.Utils
         {
             short len = ReadShort(ref span);
             if (len <= 0)
-                return string.Empty;
+                return "";
 
             byte[] b = ReadBytes(ref span, len);
             return Encoding.UTF8.GetString(b);
@@ -474,6 +474,12 @@ namespace MineNET.Utils
 
         public static void WriteFixedString(ref MemorySpan span, string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                WriteShort(ref span, 0);
+                return;
+            }
+
             WriteShort(ref span, (short) value.Length);
             WriteBytes(ref span, Encoding.UTF8.GetBytes(value));
         }

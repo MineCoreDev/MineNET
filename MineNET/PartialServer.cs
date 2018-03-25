@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using MineNET.Commands;
-using MineNET.Entities.Attributes;
 using MineNET.Entities.Players;
 using MineNET.Items;
 using MineNET.Network;
@@ -44,14 +43,16 @@ namespace MineNET
             this.InitConfig();
             this.InitFolder();
 
-            this.InitWorld();
-
             if (this.mineNETConfig.EnableConsoleOutput)
             {
                 this.logger = new Logger();
                 this.logger.Init();
                 this.UpdateLogger();
             }
+
+            Logger.Info("%server_start");
+
+            this.InitWorld();
 
             this.Update();
 
@@ -60,13 +61,10 @@ namespace MineNET
                 this.consoleInput = new ConsoleInput();
             }
 
-            Logger.Info("%server_start");
-
             this.LoadFiles();
 
             this.commandManager = new CommandManager();
             this.pluginManager = new PluginManager();
-            new EntityAttributePool();
             this.networkManager = new NetworkManager();
         }
 
@@ -98,12 +96,15 @@ namespace MineNET
             string worldName = this.serverConfig.MainWorldName;
             if (World.Exists(worldName))
             {
+                Logger.Info("%server_world_loading", worldName);
                 World.LoadWorld(worldName);
             }
             else
             {
+                Logger.Info("%server_world_create", worldName);
                 World.CreateWorld(worldName);
             }
+            Logger.Info("%server_world_loaded", worldName);
         }
 
         private void UnloadWorld()

@@ -20,7 +20,7 @@ namespace MineNET.Entities.Attributes
 
         public static EntityAttribute GetAttribute(int id)
         {
-            return EntityAttributePool.Instance.GetAttribute(id);
+            return EntityAttributePool.GetAttribute(id);
         }
 
         public EntityAttribute(string name, float max, float min, float defaultValue, bool shouldSend = true)

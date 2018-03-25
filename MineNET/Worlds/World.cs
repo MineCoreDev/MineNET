@@ -9,11 +9,14 @@ using MineNET.Network.Packets;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds.Formats.WorldSaveFormats;
+using MineNET.Worlds.Generator;
 
 namespace MineNET.Worlds
 {
     public class World
     {
+        public const int MAX_HEIGHT = 256;
+
         public Dictionary<Tuple<int, int>, Chunk> chunks = new Dictionary<Tuple<int, int>, Chunk>();
 
         public static void CreateWorld(string worldName)
@@ -28,7 +31,6 @@ namespace MineNET.Worlds
 
             world.Name = worldName;
             world.Format.WorldData.Create(world);
-            world.Format.WorldData.Save(world);
 
             Server.Instance.worlds.Add(worldName, world);
         }
@@ -97,6 +99,7 @@ namespace MineNET.Worlds
         }
 
         public IWorldSaveFormat Format { get; set; }
+        public IGenerator Generator { get; private set; }
         public string Name { get; private set; }
         public string GeneratorName { get; private set; }
 
@@ -107,6 +110,16 @@ namespace MineNET.Worlds
 
         public GameMode DefaultGameMode { get; set; } = GameMode.Survival;
         public int Difficulty { get; set; } = 1;
+
+        public World()
+        {
+            string generatorName = Server.ServerConfig.WorldGenerator.ToUpper();
+            this.Generator = GeneratorManager.GetGenerator(generatorName);
+            if (this.Generator == null)
+            {
+                this.Generator = GeneratorManager.GetGenerator("FLAT");
+            }
+        }
 
         public Block GetBlock(Vector3 pos)
         {
@@ -191,8 +204,16 @@ namespace MineNET.Worlds
                     Chunk chunk = null;
                     try
                     {
-                        chunk = this.Format.GetChunk(pair.Key.Item1, pair.Key.Item2);
-                        if (!this.chunks.ContainsKey(pair.Key))
+                        if (this.chunks.ContainsKey(pair.Key))
+                        {
+                            chunk = this.chunks[pair.Key];
+                        }
+                        else
+                        {
+                            chunk = this.Format.GetChunk(this.Generator, pair.Key.Item1, pair.Key.Item2);
+                        }
+
+                        if (!chunks.ContainsKey(pair.Key))
                         {
                             this.chunks.Add(pair.Key, chunk);
                         }

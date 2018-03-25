@@ -145,34 +145,6 @@ namespace MineNET.Worlds
             return this.blockEntities.ToArray();
         }
 
-        public void GenerationFlat()
-        {
-            SubChunk flat = new SubChunk();
-            for (int i = 0; i < 16; ++i)//X
-            {
-                for (int j = 0; j < 16; ++j)//Z
-                {
-                    for (int k = 0; k < 16; ++k)//Y
-                    {
-                        if (k == 0)
-                        {
-                            flat.SetBlock(i, k, j, 7);
-                        }
-                        else if (k == 1 || k == 2)
-                        {
-                            flat.SetBlock(i, k, j, 3);
-                        }
-                        else if (k == 3)
-                        {
-                            flat.SetBlock(i, k, j, 2);
-                        }
-                    }
-                }
-            }
-
-            this.SubChunks[0] = flat;
-        }
-
         public byte[] GetBytes()
         {
             using (BinaryStream stream = new BinaryStream())
