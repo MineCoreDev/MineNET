@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MineNET.Blocks;
 using MineNET.Entities.Players;
 using MineNET.Events.InventoryEvents;
@@ -110,10 +111,12 @@ namespace MineNET.Inventories.Transactions
                     slotChanges[hash] = list;
                 }
             }
-            foreach (KeyValuePair<int, List<SlotChangeAction>> entry in slotChanges)
+
+            KeyValuePair<int, List<SlotChangeAction>>[] entries = slotChanges.ToArray();
+            for (int c = 0; c < entries.Length; ++c)
             {
-                int hash = entry.Key;
-                List<SlotChangeAction> list = entry.Value;
+                int hash = entries[c].Key;
+                List<SlotChangeAction> list = entries[c].Value;
 
                 if (list.Count == 1)
                 {
