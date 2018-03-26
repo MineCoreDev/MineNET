@@ -42,7 +42,7 @@ namespace MineNET.Network.Packets
                     stream.WriteString(command.Name);
                     stream.WriteString(command.Description);
                     stream.WriteByte((byte) command.Flag);
-                    stream.WriteByte((byte) command.Permission);
+                    stream.WriteByte((byte) command.CommandPermission);
 
                     int enumIndex = -1;
                     if (command.Aliases != null && command.Aliases.Length > 0)
@@ -61,9 +61,9 @@ namespace MineNET.Network.Packets
                     }
                     stream.WriteLInt((uint) enumIndex);
 
-                    List<CommandOverload> overloads = command.CommandOverloads;
-                    stream.WriteUVarInt((uint) overloads.Count);
-                    for (int i = 0; i < overloads.Count; ++i)
+                    CommandOverload[] overloads = command.CommandOverloads;
+                    stream.WriteUVarInt((uint) overloads.Length);
+                    for (int i = 0; i < overloads.Length; ++i)
                     {
                         CommandOverload overload = overloads[i];
                         List<CommandParameter> parameters = overload.Parameters;

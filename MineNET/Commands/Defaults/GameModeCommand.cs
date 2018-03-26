@@ -10,19 +10,6 @@ namespace MineNET.Commands.Defaults
 {
     public class GameModeCommand : Command
     {
-        public GameModeCommand()
-        {
-            this.RemoveAllOverloads();
-            this.AddOverloads(new CommandOverload(
-                new CommandParameterString("gamemode", false, new CommandEnumGameMode()),
-                new CommandParameterTarget("player", true)
-                ));
-            this.AddOverloads(new CommandOverload(
-                new CommandParameterInt("gamemode", false),
-                new CommandParameterTarget("player", true)
-                ));
-        }
-
         public override string Name
         {
             get
@@ -47,12 +34,30 @@ namespace MineNET.Commands.Defaults
             }
         }
 
-        public override PlayerPermissions Permission
+        public override PlayerPermissions CommandPermission
         {
             get
             {
                 //return PlayerPermissions.OPERATOR;
                 return PlayerPermissions.VISITOR;
+            }
+        }
+
+        public override CommandOverload[] CommandOverloads
+        {
+            get
+            {
+                return new CommandOverload[]
+                {
+                    new CommandOverload(
+                        new CommandParameterString("gamemode", false, new CommandEnumGameMode()),
+                        new CommandParameterTarget("player", true)
+                    ),
+                    new CommandOverload(
+                        new CommandParameterInt("gamemode", false),
+                        new CommandParameterTarget("player", true)
+                    )
+                };
             }
         }
 

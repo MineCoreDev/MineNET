@@ -30,7 +30,7 @@ namespace MineNET.Commands.Defaults
             }
         }
 
-        public override PlayerPermissions Permission
+        public override PlayerPermissions CommandPermission
         {
             get
             {

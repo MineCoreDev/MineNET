@@ -9,25 +9,6 @@ namespace MineNET.Commands.Defaults
 {
     public class GiveCommand : Command
     {
-        public GiveCommand()
-        {
-            this.RemoveAllOverloads();
-            this.AddOverloads(new CommandOverload(
-                new CommandParameterTarget("player", true),
-                new CommandParameterString("itemName", true, new CommandEnumItems()),
-                new CommandParameterInt("amount", false),
-                new CommandParameterInt("data", false)
-                //new CommandParameterJson("components")
-                ));
-            this.AddOverloads(new CommandOverload(
-                new CommandParameterTarget("player", true),
-                new CommandParameterInt("id", true),
-                new CommandParameterInt("amount", false),
-                new CommandParameterInt("data", false)
-                //new CommandParameterJson("components")
-                ));
-        }
-
         public override string Name
         {
             get
@@ -44,12 +25,36 @@ namespace MineNET.Commands.Defaults
             }
         }
 
-        public override PlayerPermissions Permission
+        public override PlayerPermissions CommandPermission
         {
             get
             {
                 //return PlayerPermissions.OPERATOR
                 return PlayerPermissions.VISITOR;
+            }
+        }
+
+        public override CommandOverload[] CommandOverloads
+        {
+            get
+            {
+                return new CommandOverload[]
+                {
+                    new CommandOverload(
+                        new CommandParameterTarget("player", true),
+                        new CommandParameterString("itemName", true, new CommandEnumItems()),
+                        new CommandParameterInt("amount", false),
+                        new CommandParameterInt("data", false)
+                        //new CommandParameterJson("components")
+                    ),
+                    new CommandOverload(
+                        new CommandParameterTarget("player", true),
+                        new CommandParameterInt("id", true),
+                        new CommandParameterInt("amount", false),
+                        new CommandParameterInt("data", false)
+                        //new CommandParameterJson("components")
+                    )
+                };
             }
         }
 
