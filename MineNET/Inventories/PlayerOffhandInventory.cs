@@ -46,14 +46,17 @@ namespace MineNET.Inventories
             }
         }
 
-        public Item GetItem()
+        public Item Item
         {
-            return base.GetItem(0);
-        }
+            get
+            {
+                return this.GetItem(0);
+            }
 
-        public bool SetItem(Item item)
-        {
-            return base.SetItem(0, item);
+            set
+            {
+                this.SetItem(0, value);
+            }
         }
     }
 }

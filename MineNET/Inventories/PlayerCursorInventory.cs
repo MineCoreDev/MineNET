@@ -1,5 +1,6 @@
 ﻿using MineNET.Data;
 using MineNET.Entities.Players;
+using MineNET.Items;
 using MineNET.Network.Packets.Data;
 
 namespace MineNET.Inventories
@@ -24,6 +25,19 @@ namespace MineNET.Inventories
             get
             {
                 return ContainerIds.CURSOR.GetIndex();
+            }
+        }
+
+        public Item Item
+        {
+            get
+            {
+                return this.GetItem(0);
+            }
+
+            set
+            {
+                this.SetItem(0, value);
             }
         }
     }

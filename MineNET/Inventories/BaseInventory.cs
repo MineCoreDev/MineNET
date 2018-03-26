@@ -12,13 +12,11 @@ namespace MineNET.Inventories
     {
         private List<Player> viewers = new List<Player>();
 
-        protected InventoryHolder holder;
-
         protected Dictionary<int, Item> slots = new Dictionary<int, Item>();
 
         public BaseInventory(InventoryHolder holder, Dictionary<int, Item> items = null)
         {
-            this.holder = holder;
+            this.Holder = holder;
             if (items != null)
             {
                 this.slots = items;
@@ -275,18 +273,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public InventoryHolder Holder
-        {
-            get
-            {
-                return this.holder;
-            }
-
-            protected set
-            {
-                this.holder = value;
-            }
-        }
+        public InventoryHolder Holder { get; protected set; }
 
         public List<Player> Viewers
         {
