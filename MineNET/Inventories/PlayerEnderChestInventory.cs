@@ -15,17 +15,17 @@ namespace MineNET.Inventories
         {
             this.Player = player;
 
-            if (!player.namedTag.Exist("EnderChestInventory"))
+            if (!player.NamedTag.Exist("EnderChestInventory"))
             {
                 ListTag newTag = new ListTag("EnderChestInventory", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
                     newTag.Add(NBTIO.WriteItem(Item.Get(0)));
                 }
-                player.namedTag.PutList(newTag);
+                player.NamedTag.PutList(newTag);
             }
 
-            ListTag items = player.namedTag.GetList("EnderChestInventory");
+            ListTag items = player.NamedTag.GetList("EnderChestInventory");
             for (int i = 0; i < this.Size; ++i)
             {
                 Item item = NBTIO.ReadItem((CompoundTag) items[i]);
@@ -75,7 +75,7 @@ namespace MineNET.Inventories
             {
                 inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
             }
-            this.Player.namedTag.PutList(inventory);
+            this.Player.NamedTag.PutList(inventory);
         }
     }
 }

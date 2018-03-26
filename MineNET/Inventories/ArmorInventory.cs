@@ -19,17 +19,17 @@ namespace MineNET.Inventories
 
         public ArmorInventory(EntityLiving entity) : base(entity)
         {
-            if (!entity.namedTag.Exist("Armor"))
+            if (!entity.NamedTag.Exist("Armor"))
             {
                 ListTag newTag = new ListTag("Armor", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
                     newTag.Add(NBTIO.WriteItem(Item.Get(0), i));
                 }
-                entity.namedTag.PutList(newTag);
+                entity.NamedTag.PutList(newTag);
             }
 
-            ListTag items = entity.namedTag.GetList("Armor");
+            ListTag items = entity.NamedTag.GetList("Armor");
             for (int i = 0; i < this.Size; ++i)
             {
                 Item item = NBTIO.ReadItem((CompoundTag) items[i]);
@@ -174,7 +174,7 @@ namespace MineNET.Inventories
             {
                 inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
             }
-            this.Holder.namedTag.PutList(inventory);
+            this.Holder.NamedTag.PutList(inventory);
         }
     }
 }

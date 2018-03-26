@@ -11,7 +11,7 @@ namespace MineNET.BlockEntities
     {
         private static Dictionary<string, Type> registry = new Dictionary<string, Type>();
 
-        public CompoundTag namedTag;
+        public CompoundTag NamedTag { get; protected set; }
 
         public static void RegisterBlockEntity(BlockEntity block)
         {
@@ -43,7 +43,7 @@ namespace MineNET.BlockEntities
             nbt.PutInt("x", (int) this.X);
             nbt.PutInt("y", (int) this.Y);
             nbt.PutInt("z", (int) this.Z);
-            this.namedTag = nbt;
+            this.NamedTag = nbt;
         }
 
         public BlockEntity(World world, CompoundTag nbt)
@@ -54,7 +54,7 @@ namespace MineNET.BlockEntities
             this.Y = nbt.GetInt("y");
             this.Z = nbt.GetInt("z");
 
-            this.namedTag = nbt;
+            this.NamedTag = nbt;
         }
 
         public float X { get; set; }

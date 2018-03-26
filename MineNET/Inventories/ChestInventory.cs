@@ -11,17 +11,17 @@ namespace MineNET.Inventories
     {
         public ChestInventory(BlockEntityChest holder) : base(holder)
         {
-            if (!holder.namedTag.Exist("Items"))
+            if (!holder.NamedTag.Exist("Items"))
             {
                 ListTag initItems = new ListTag("Items", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
                     initItems.Add(NBTIO.WriteItem(Item.Get(0), i));
                 }
-                holder.namedTag.PutList(initItems);
+                holder.NamedTag.PutList(initItems);
             }
 
-            ListTag items = holder.namedTag.GetList("Items");
+            ListTag items = holder.NamedTag.GetList("Items");
             for (int i = 0; i < this.Size; ++i)
             {
                 Item item = NBTIO.ReadItem((CompoundTag) items[i]);
@@ -65,7 +65,7 @@ namespace MineNET.Inventories
             {
                 inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
             }
-            this.Holder.namedTag.PutList(inventory);
+            this.Holder.NamedTag.PutList(inventory);
         }
     }
 }

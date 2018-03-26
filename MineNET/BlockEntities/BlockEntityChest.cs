@@ -14,12 +14,12 @@ namespace MineNET.BlockEntities
         {
             this.Inventory = new ChestInventory(this);
 
-            if (!this.namedTag.Exist("items"))
+            if (!this.NamedTag.Exist("items"))
             {
-                this.namedTag.PutList(new ListTag("items", NBTTagType.COMPOUND));
+                this.NamedTag.PutList(new ListTag("items", NBTTagType.COMPOUND));
             }
 
-            ListTag items = this.namedTag.GetList("items");
+            ListTag items = this.NamedTag.GetList("items");
             for (int i = 0; i < items.Count; ++i)
             {
                 this.inventory.SetItem(i, NBTIO.ReadItem((CompoundTag) items[i]));

@@ -18,8 +18,6 @@ namespace MineNET.Entities
 
         protected List<Player> viewers = new List<Player>();
 
-        public CompoundTag namedTag;
-
         public float X { get; set; }
         public float Y { get; set; }
         public float Z { get; set; }
@@ -28,6 +26,8 @@ namespace MineNET.Entities
         public float Pitch { get; set; }
 
         public World World { get; set; }
+
+        public CompoundTag NamedTag { get; protected set; }
 
         public long EntityID { get; }
 
