@@ -2,9 +2,9 @@
 
 namespace MineNET.Console
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Server server = null;
             try

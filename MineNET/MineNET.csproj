@@ -359,6 +359,7 @@
     <Compile Include="Commands\CommandSender.cs" />
     <Compile Include="Commands\ConsoleSender.cs" />
     <Compile Include="Commands\Defaults\GameModeCommand.cs" />
+    <Compile Include="Commands\Defaults\GiveCommand.cs" />
     <Compile Include="Commands\Defaults\MeCommand.cs" />
     <Compile Include="Commands\Defaults\SayCommand.cs" />
     <Compile Include="Commands\Enums\CommandEnum.cs" />

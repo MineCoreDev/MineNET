@@ -72,7 +72,7 @@ namespace MineNET.Inventories
             List<Item> itemSlots = new List<Item>();
             for (int i = 0; i < items.Length; ++i)
             {
-                if (items[i].ID != BlockFactory.AIR && items[i].Count <= 0)
+                if (items[i].ID != BlockFactory.AIR && items[i].Count > 0)
                 {
                     itemSlots.Add(items[i].Clone());
                 }
@@ -89,18 +89,19 @@ namespace MineNET.Inventories
 
                 for (int j = 0; j < itemSlots.Count; ++j)
                 {
-                    if (itemSlots[i].Equals(item) && item.Count < item.MaxStackSize)
+                    Item slot = itemSlots[j];
+                    if (slot.Equals(item, true, false) && item.Count < item.MaxStackSize)
                     {
-                        int amount = Math.Min(item.MaxStackSize - item.Count, itemSlots[i].Count);
+                        int amount = Math.Min(item.MaxStackSize - item.Count, slot.Count);
                         amount = Math.Min(amount, this.MaxStackSize);
                         if (amount > 0)
                         {
-                            itemSlots[i].Count -= amount;
-                            item.Count -= amount;
+                            slot.Count -= amount;
+                            item.Count += amount;
                             this.SetItem(i, item);
-                            if (itemSlots[i].Count <= 0)
+                            if (slot.Count <= 0)
                             {
-                                itemSlots.Remove(itemSlots[i]);
+                                itemSlots.Remove(slot);
                             }
                         }
                     }
@@ -112,16 +113,17 @@ namespace MineNET.Inventories
             }
             if (itemSlots.Count > 0 && emptySlots.Count > 0)
             {
-                for (int i = 0; i < itemSlots.Count; ++i)
+                for (int i = 0; i < emptySlots.Count; ++i)
                 {
-                    if (emptySlots.Count > 0)
+                    if (itemSlots.Count > 0)
                     {
                         Item slot = itemSlots[0];
                         int amount = Math.Min(slot.MaxStackSize, slot.Count);
                         amount = Math.Min(amount, this.MaxStackSize);
                         slot.Count -= amount;
                         Item item = slot.Clone();
-                        this.SetItem(i, item);
+                        item.Count = amount;
+                        this.SetItem(emptySlots[i], item);
                         if (slot.Count <= 0)
                         {
                             itemSlots.Remove(slot);

@@ -147,6 +147,7 @@ namespace MineNET.Entities.Players
 
             this.namedTag.PutInt("PlayerGameMode", this.GameMode.GameModeToInt());
         }
+
         public new PlayerInventory Inventory
         {
             get
