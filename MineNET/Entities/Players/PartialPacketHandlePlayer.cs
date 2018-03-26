@@ -246,21 +246,21 @@ namespace MineNET.Entities.Players
         {
             if (pk.Type == TextPacket.TYPE_CHAT)
             {
-                pk.Message = pk.Message.Trim();
-                if (pk.Message != "" && pk.Message.Length < 256)
+                string message = pk.Message.Trim();
+                if (message != "" && message.Length < 256)
                 {
-                    PlayerChatEventArgs playerChatEvent = new PlayerChatEventArgs(this, pk.Message);
+                    PlayerChatEventArgs playerChatEvent = new PlayerChatEventArgs(this, message);
                     PlayerEvents.OnPlayerChat(playerChatEvent);
                     if (playerChatEvent.IsCancel)
                     {
                         return;
                     }
-                    pk.Message = $"<{this.Name}§f> {playerChatEvent.Message}§f";
-                    Logger.Info(pk.Message);
+                    message = $"<{this.Name}§f> {playerChatEvent.Message}§f";
+                    Logger.Info(message);
                     Player[] players = Server.Instance.GetPlayers();
                     for (int i = 0; i < players.Length; ++i)
                     {
-                        players[i].SendPacket(pk);
+                        players[i].SendChat(message);
                     }
                 }
             }

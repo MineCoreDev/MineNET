@@ -192,6 +192,15 @@ namespace MineNET.Entities.Players
             this.SendPacket(pk);
         }
 
+        public void SendChat(string message, string xboxUserId = "")
+        {
+            TextPacket pk = new TextPacket();
+            pk.Type = TextPacket.TYPE_CHAT;
+            pk.Message = message;
+            pk.XboxUserId = xboxUserId;
+            this.SendPacket(pk);
+        }
+
         public bool IsSurvival
         {
             get
