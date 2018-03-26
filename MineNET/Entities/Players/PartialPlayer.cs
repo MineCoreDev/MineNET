@@ -9,7 +9,6 @@ using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
-using MineNET.Utils;
 using MineNET.Worlds;
 
 namespace MineNET.Entities.Players

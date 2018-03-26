@@ -117,7 +117,7 @@ namespace MineNET.NBT.IO
             }
             else
             {
-                return base.ReadShort();
+                return base.ReadFloat();
             }
         }
 
