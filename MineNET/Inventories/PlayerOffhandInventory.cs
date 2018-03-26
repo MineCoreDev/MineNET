@@ -12,17 +12,17 @@ namespace MineNET.Inventories
     {
         public PlayerOffhandInventory(Player player) : base(player)
         {
-            if (!player.namedTag.Exist("Offhand"))
+            if (!player.NamedTag.Exist("Offhand"))
             {
                 ListTag newTag = new ListTag("Offhand", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
                     newTag.Add(NBTIO.WriteItem(Item.Get(0)));
                 }
-                player.namedTag.PutList(newTag);
+                player.NamedTag.PutList(newTag);
             }
 
-            ListTag items = player.namedTag.GetList("Offhand");
+            ListTag items = player.NamedTag.GetList("Offhand");
             for (int i = 0; i < this.Size; ++i)
             {
                 Item item = NBTIO.ReadItem((CompoundTag) items[i]);
@@ -79,7 +79,7 @@ namespace MineNET.Inventories
             {
                 inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
             }
-            this.Holder.namedTag.PutList(inventory);
+            this.Holder.NamedTag.PutList(inventory);
         }
     }
 }

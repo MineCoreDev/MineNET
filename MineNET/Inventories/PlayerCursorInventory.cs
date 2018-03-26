@@ -12,17 +12,17 @@ namespace MineNET.Inventories
     {
         public PlayerCursorInventory(Player player) : base(player)
         {
-            if (!player.namedTag.Exist("Cursor"))
+            if (!player.NamedTag.Exist("Cursor"))
             {
                 ListTag initItems = new ListTag("Cursor", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
                     initItems.Add(NBTIO.WriteItem(Item.Get(0), i));
                 }
-                player.namedTag.PutList(initItems);
+                player.NamedTag.PutList(initItems);
             }
 
-            ListTag items = player.namedTag.GetList("Cursor");
+            ListTag items = player.NamedTag.GetList("Cursor");
             for (int i = 0; i < this.Size; ++i)
             {
                 Item item = NBTIO.ReadItem((CompoundTag) items[i]);
@@ -79,7 +79,7 @@ namespace MineNET.Inventories
             {
                 inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
             }
-            this.Holder.namedTag.PutList(inventory);
+            this.Holder.NamedTag.PutList(inventory);
         }
     }
 }

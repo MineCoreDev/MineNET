@@ -23,28 +23,28 @@ namespace MineNET.Inventories
 
         public PlayerInventory(Player player) : base(player)
         {
-            if (!player.namedTag.Exist("Inventory"))
+            if (!player.NamedTag.Exist("Inventory"))
             {
                 ListTag initItems = new ListTag("Inventory", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
                     initItems.Add(NBTIO.WriteItem(Item.Get(0), i));
                 }
-                player.namedTag.PutList(initItems);
+                player.NamedTag.PutList(initItems);
             }
 
-            ListTag items = player.namedTag.GetList("Inventory");
+            ListTag items = player.NamedTag.GetList("Inventory");
             for (int i = 0; i < this.Size; ++i)
             {
                 Item item = NBTIO.ReadItem((CompoundTag) items[i]);
                 this.SetItem(i, item, false);
             }
 
-            if (!player.namedTag.Exist("Mainhand"))
+            if (!player.NamedTag.Exist("Mainhand"))
             {
-                player.namedTag.PutInt("Mainhand", 0);
+                player.NamedTag.PutInt("Mainhand", 0);
             }
-            this.mainHand = player.namedTag.GetInt("Mainhand");
+            this.mainHand = player.NamedTag.GetInt("Mainhand");
 
             this.cursor = new PlayerCursorInventory(player);
             this.offhand = new PlayerOffhandInventory(player);
@@ -304,9 +304,9 @@ namespace MineNET.Inventories
             {
                 inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
             }
-            this.Holder.namedTag.PutList(inventory);
+            this.Holder.NamedTag.PutList(inventory);
 
-            this.Holder.namedTag.PutInt("MainHand", this.MainHandSlot);
+            this.Holder.NamedTag.PutInt("MainHand", this.MainHandSlot);
 
             this.PlayerCursorInventory.SaveNBT();
             this.PlayerOffhandInventory.SaveNBT();

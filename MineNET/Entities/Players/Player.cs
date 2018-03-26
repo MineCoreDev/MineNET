@@ -138,7 +138,7 @@ namespace MineNET.Entities.Players
                 this.SaveNBT();
 
                 string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
-                NBTIO.WriteGZIPFile(path, this.namedTag, NBTEndian.BIG_ENDIAN);
+                NBTIO.WriteGZIPFile(path, this.NamedTag, NBTEndian.BIG_ENDIAN);
             }
         }
 
@@ -148,7 +148,7 @@ namespace MineNET.Entities.Players
 
             this.Inventory.SaveNBT();
 
-            this.namedTag.PutInt("PlayerGameMode", this.GameMode.GameModeToInt());
+            this.NamedTag.PutInt("PlayerGameMode", this.GameMode.GameModeToInt());
         }
 
         public new PlayerInventory Inventory

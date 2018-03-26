@@ -37,26 +37,26 @@ namespace MineNET.Entities.Players
             }
             else
             {
-                this.namedTag = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
+                this.NamedTag = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
             }
 
             this.Inventory = new PlayerInventory(this);
 
-            this.gameMode = GameModeExtention.FromIndex(this.namedTag.GetInt("PlayerGameMode"));
+            this.gameMode = GameModeExtention.FromIndex(this.NamedTag.GetInt("PlayerGameMode"));
         }
 
         private void RegisterData()
         {
-            this.namedTag = new CompoundTag();
-            this.namedTag.PutList(new ListTag("Attributes", NBTTagType.COMPOUND));
+            this.NamedTag = new CompoundTag();
+            this.NamedTag.PutList(new ListTag("Attributes", NBTTagType.COMPOUND));
 
-            this.namedTag.PutString("WorldName", "");
-            this.namedTag.PutList(new ListTag("Pos", NBTTagType.FLOAT));
-            this.namedTag.PutList(new ListTag("Rotation", NBTTagType.FLOAT));
+            this.NamedTag.PutString("WorldName", "");
+            this.NamedTag.PutList(new ListTag("Pos", NBTTagType.FLOAT));
+            this.NamedTag.PutList(new ListTag("Rotation", NBTTagType.FLOAT));
 
-            this.namedTag.PutInt("PlayerGameMode", Server.ServerConfig.GameMode.GameModeToInt());
-            this.namedTag.PutInt("PlayerLevel", 0);
-            this.namedTag.PutFloat("PlayerLevelProgress", 0f);
+            this.NamedTag.PutInt("PlayerGameMode", Server.ServerConfig.GameMode.GameModeToInt());
+            this.NamedTag.PutInt("PlayerLevel", 0);
+            this.NamedTag.PutFloat("PlayerLevelProgress", 0f);
         }
 
         private int FixRadius(int radius)

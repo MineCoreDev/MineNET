@@ -86,7 +86,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
             for (int i = 0; i < entities.Length; ++i)
             {
                 entities[i].SaveNBT();
-                entitiesTag.Add(entities[i].namedTag);
+                entitiesTag.Add(entities[i].NamedTag);
             }
 
             ListTag blockEntitiesTag = new ListTag("TileEntities", NBTTagType.COMPOUND);
@@ -94,7 +94,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
             for (int i = 0; i < blockEntities.Length; ++i)
             {
                 blockEntities[i].SaveNBT();
-                blockEntitiesTag.Add(blockEntities[i].namedTag);
+                blockEntitiesTag.Add(blockEntities[i].NamedTag);
             }
 
             CompoundTag outTag = new CompoundTag("");
