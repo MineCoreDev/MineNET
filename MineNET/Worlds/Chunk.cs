@@ -1,34 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using MineNET.BlockEntities;
+using MineNET.Blocks;
 using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Utils;
+using MineNET.Values;
 
 namespace MineNET.Worlds
 {
     public class Chunk
     {
-        int x;
-        public int X
+        public int X { get; }
+        public int Z { get; }
+
+        public Vector2 Vector2
         {
             get
             {
-                return this.x;
+                return new Vector2(this.X, this.Z);
             }
         }
 
-        int z;
-        public int Z
-        {
-            get
-            {
-                return this.z;
-            }
-        }
+        public World World { get; private set; }
 
         public bool LightPopulated { get; set; }
         public bool TerrainPopulated { get; set; }
@@ -47,8 +44,8 @@ namespace MineNET.Worlds
 
         public Chunk(int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null, short[] heightMap = null, ListTag entitiesTag = null, ListTag blockEntitiesTag = null)
         {
-            this.x = x;
-            this.z = z;
+            this.X = x;
+            this.Z = z;
 
             if (biomes != null)
             {
@@ -72,8 +69,8 @@ namespace MineNET.Worlds
         public void SendChunk(Player player)
         {
             FullChunkDataPacket pk = new FullChunkDataPacket();
-            pk.ChunkX = this.x;
-            pk.ChunkY = this.z;
+            pk.ChunkX = this.X;
+            pk.ChunkY = this.Z;
             pk.Data = this.GetBytes();
 
             player.SendPacket(pk);
@@ -135,14 +132,35 @@ namespace MineNET.Worlds
             chunk.SetMetaData(bx, by - 16 * (by >> 4), bz, data);
         }
 
-        public Entity[] GetEntities()
+        public Entity[] Entities
         {
-            return this.entities.ToArray();
+            get
+            {
+                return this.entities.ToArray();
+            }
         }
 
-        public BlockEntity[] GetBlockEntities()
+        public BlockEntity[] BlockEntities
         {
-            return this.blockEntities.ToArray();
+            get
+            {
+                return this.blockEntities.ToArray();
+            }
+        }
+
+        public int GetBlockHighest(Vector2 pos)
+        {
+            for (int i = 255; i > 0; --i)
+            {
+                int id = this.GetBlock((int) pos.X, i, (int) pos.Y);
+                int meta = this.GetMetadata((int) pos.X, i, (int) pos.Y);
+                if (Block.Get(id, meta).IsSolid)
+                {
+                    return i;
+                }
+            }
+
+            return 0;
         }
 
         public byte[] GetBytes()
@@ -153,7 +171,7 @@ namespace MineNET.Worlds
 
                 for (int i = 15; i >= 0; i--)
                 {
-                    if (this.SubChunks[i].IsEnpty())
+                    if (this.SubChunks[i].IsEnpty)
                         sendChunk = i;
                     else break;
                 }
@@ -173,6 +191,11 @@ namespace MineNET.Worlds
 
                 return stream.ToArray();
             }
+        }
+
+        internal void InternalSetWorld(World world)
+        {
+            this.World = world;
         }
     }
 }

@@ -827,6 +827,8 @@
     <Compile Include="Worlds\Generator\GeneratorBase.cs" />
     <Compile Include="Worlds\Generator\GeneratorManager.cs" />
     <Compile Include="Worlds\Generator\IGenerator.cs" />
+    <Compile Include="Worlds\Structures\NaturalObjects\OakTree.cs" />
+    <Compile Include="Worlds\Structures\StructureBase.cs" />
     <Compile Include="Worlds\SubChunk.cs" />
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>
