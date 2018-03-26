@@ -87,10 +87,10 @@ namespace MineNET.Inventories
         public Item[] GetArmorContents()
         {
             return new Item[] {
-                this.GetHelmet(),
-                this.GetChestPlate(),
-                this.GetLeggings(),
-                this.GetBoots(),
+                this.Helmet,
+                this.ChestPlate,
+                this.Leggings,
+                this.Boots,
             };
         }
 
@@ -102,57 +102,79 @@ namespace MineNET.Inventories
             }
         }
 
-        public new Player Holder
+        public new EntityLiving Holder
         {
             get
             {
-                return (Player) this.holder;
+                return (EntityLiving) base.Holder;
             }
 
             protected set
             {
-                this.holder = value;
+                base.Holder = value;
             }
         }
 
-        public Item GetHelmet()
+        public Item Helmet
         {
-            return this.GetItem(ArmorInventory.SLOT_ARMOR_HEAD);
+            get
+            {
+                return this.GetItem(ArmorInventory.SLOT_ARMOR_HEAD);
+            }
+
+            set
+            {
+                this.SetItem(ArmorInventory.SLOT_ARMOR_HEAD, value.Clone());
+            }
         }
 
-        public bool SetHelmet(Item item)
+        public Item ChestPlate
         {
-            return this.SetItem(ArmorInventory.SLOT_ARMOR_HEAD, item.Clone());
+            get
+            {
+                return this.GetItem(ArmorInventory.SLOT_ARMOR_CHEST);
+            }
+
+            set
+            {
+                this.SetItem(ArmorInventory.SLOT_ARMOR_CHEST, value.Clone());
+            }
         }
 
-        public Item GetChestPlate()
+        public Item Leggings
         {
-            return this.GetItem(ArmorInventory.SLOT_ARMOR_CHEST);
+            get
+            {
+                return this.GetItem(ArmorInventory.SLOT_ARMOR_LEGS);
+            }
+
+            set
+            {
+                this.SetItem(ArmorInventory.SLOT_ARMOR_LEGS, value.Clone());
+            }
         }
 
-        public bool SetChestPlate(Item item)
+        public Item Boots
         {
-            return this.SetItem(ArmorInventory.SLOT_ARMOR_CHEST, item.Clone());
+            get
+            {
+                return this.GetItem(ArmorInventory.SLOT_ARMOR_FEET);
+            }
+
+            set
+            {
+                this.SetItem(ArmorInventory.SLOT_ARMOR_FEET, value.Clone());
+            }
         }
 
-        public Item GetLeggings()
+        public override void SaveNBT()
         {
-            return this.GetItem(ArmorInventory.SLOT_ARMOR_LEGS);
-        }
-
-        public bool SetLeggings(Item item)
-        {
-            return this.SetItem(ArmorInventory.SLOT_ARMOR_LEGS, item.Clone());
-        }
-
-        public Item GetBoots()
-        {
-            return this.GetItem(ArmorInventory.SLOT_ARMOR_FEET);
-        }
-
-        public bool SetBoots(Item item)
-        {
-            return this.SetItem(ArmorInventory.SLOT_ARMOR_FEET, item.Clone());
+            ListTag inventory = new ListTag("Armor", NBTTagType.COMPOUND);
+            for (int i = 0; i < this.Size; ++i)
+            {
+                inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
+            }
+            this.Holder.namedTag.PutList(inventory);
         }
     }
 }

@@ -17,6 +17,8 @@ namespace MineNET.Inventories
         private PlayerOffhandInventory offhand;
         private ArmorInventory armor;
 
+        private PlayerEnderChestInventory ender;
+
         private Inventory opend = null;
 
         public PlayerInventory(Player player) : base(player)
@@ -47,6 +49,8 @@ namespace MineNET.Inventories
             this.cursor = new PlayerCursorInventory(player);
             this.offhand = new PlayerOffhandInventory(player);
             this.armor = new ArmorInventory(player);
+
+            this.ender = new PlayerEnderChestInventory(player);
         }
 
         public override int Size
@@ -92,12 +96,12 @@ namespace MineNET.Inventories
         {
             get
             {
-                return (Player) this.holder;
+                return (Player) base.Holder;
             }
 
             protected set
             {
-                this.holder = value;
+                base.Holder = value;
             }
         }
 
@@ -116,84 +120,111 @@ namespace MineNET.Inventories
             {
                 MobEquipmentPacket pk = new MobEquipmentPacket();
                 pk.EntityRuntimeId = this.Holder.EntityID;
-                pk.Item = this.GetItemMainHand();
-                pk.InventorySlot = (byte) this.GetMainHandSlot();
+                pk.Item = this.MainHandItem;
+                pk.InventorySlot = (byte) this.MainHandSlot;
                 pk.WindowId = this.Type;
                 players[i].SendPacket(pk);
             }
         }
 
-        public int GetMainHandSlot()
+        public int MainHandSlot
         {
-            return this.mainHand;
+            get
+            {
+                return this.mainHand;
+            }
+
+            set
+            {
+                this.mainHand = value;
+                this.SendMainHand(this.Holder);
+            }
         }
 
-        public Item GetItemMainHand()
+        public Item MainHandItem
         {
-            return this.GetItem(this.GetMainHandSlot());
+            get
+            {
+                return this.GetItem(this.MainHandSlot);
+            }
+
+            set
+            {
+                this.SetItem(this.mainHand, value.Clone());
+            }
         }
 
-        public bool SetItemMainHand(Item item)
+        public Item OffHandItem
         {
-            return this.SetItem(this.mainHand, item.Clone());
+            get
+            {
+                return this.PlayerOffhandInventory.Item;
+            }
+
+            set
+            {
+                this.PlayerOffhandInventory.Item = value;
+            }
         }
 
-        public Item GetItemOffHand()
+        public Item Helmet
         {
-            return this.offhand.GetItem();
+            get
+            {
+                return this.ArmorInventory.Helmet;
+            }
+
+            set
+            {
+                this.ArmorInventory.Helmet = value;
+            }
         }
 
-        public bool SetItemOffHand(Item item)
+        public Item ChestPlate
         {
-            return this.offhand.SetItem(item);
+            get
+            {
+                return this.ArmorInventory.ChestPlate;
+            }
+
+            set
+            {
+                this.ArmorInventory.ChestPlate = value;
+            }
         }
 
-        public Item GetHelmet()
+        public Item Leggings
         {
-            return this.armor.GetHelmet();
+            get
+            {
+                return this.ArmorInventory.Leggings;
+            }
+
+            set
+            {
+                this.ArmorInventory.Leggings = value;
+            }
         }
 
-        public bool SetHelmet(Item item)
+        public Item Boots
         {
-            return this.armor.SetHelmet(item);
+            get
+            {
+                return this.ArmorInventory.Boots;
+            }
+
+            set
+            {
+                this.ArmorInventory.Boots = value;
+            }
         }
 
-        public Item GetChestPlate()
-        {
-            return this.armor.GetChestPlate();
-        }
-
-        public bool SetChestPlate(Item item)
-        {
-            return this.armor.SetChestPlate(item);
-        }
-
-        public Item GetLeggings()
-        {
-            return this.armor.GetLeggings();
-        }
-
-        public bool SetLeggings(Item item)
-        {
-            return this.armor.SetLeggings(item);
-        }
-
-        public Item GetBoots()
-        {
-            return this.armor.GetBoots();
-        }
-
-        public bool SetBoots(Item item)
-        {
-            return this.armor.SetBoots(item);
-        }
-
-        public void OpenInventory(Inventory inventory)
+        internal void OpenInventory(Inventory inventory)
         {
             this.opend = inventory;
         }
 
-        public void CloseInventory()
+        internal void CloseInventory()
         {
             this.opend = null;
         }
@@ -250,12 +281,38 @@ namespace MineNET.Inventories
             }
         }
 
+        public PlayerEnderChestInventory PlayerEnderChestInventory
+        {
+            get
+            {
+                return this.ender;
+            }
+        }
+
         public Inventory OpendInventory
         {
             get
             {
                 return this.opend;
             }
+        }
+
+        public override void SaveNBT()
+        {
+            ListTag inventory = new ListTag("Inventory", NBTTagType.COMPOUND);
+            for (int i = 0; i < this.Size; ++i)
+            {
+                inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
+            }
+            this.Holder.namedTag.PutList(inventory);
+
+            this.Holder.namedTag.PutInt("MainHand", this.MainHandSlot);
+
+            this.PlayerCursorInventory.SaveNBT();
+            this.PlayerOffhandInventory.SaveNBT();
+            this.ArmorInventory.SaveNBT();
+
+            this.PlayerEnderChestInventory.SaveNBT();
         }
     }
 }

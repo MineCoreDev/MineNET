@@ -46,14 +46,40 @@ namespace MineNET.Inventories
             }
         }
 
-        public Item GetItem()
+        public Item Item
         {
-            return base.GetItem(0);
+            get
+            {
+                return this.GetItem(0);
+            }
+
+            set
+            {
+                this.SetItem(0, value);
+            }
         }
 
-        public bool SetItem(Item item)
+        public new Player Holder
         {
-            return base.SetItem(0, item);
+            get
+            {
+                return (Player) base.Holder;
+            }
+
+            set
+            {
+                base.Holder = value;
+            }
+        }
+
+        public override void SaveNBT()
+        {
+            ListTag inventory = new ListTag("Offhand", NBTTagType.COMPOUND);
+            for (int i = 0; i < this.Size; ++i)
+            {
+                inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
+            }
+            this.Holder.namedTag.PutList(inventory);
         }
     }
 }

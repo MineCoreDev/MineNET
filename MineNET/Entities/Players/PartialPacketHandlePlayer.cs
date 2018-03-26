@@ -74,6 +74,7 @@ namespace MineNET.Entities.Players
             this.DisplayName = this.Name;
 
             this.ClientData = pk.ClientData;
+            this.Skin = this.ClientData.Skin;
 
             Player[] players = Server.Instance.GetPlayers();
             for (int i = 0; i < players.Length; ++i)

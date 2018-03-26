@@ -359,6 +359,7 @@
     <Compile Include="Commands\CommandSender.cs" />
     <Compile Include="Commands\ConsoleSender.cs" />
     <Compile Include="Commands\Defaults\GameModeCommand.cs" />
+    <Compile Include="Commands\Defaults\GiveCommand.cs" />
     <Compile Include="Commands\Defaults\MeCommand.cs" />
     <Compile Include="Commands\Defaults\SayCommand.cs" />
     <Compile Include="Commands\Enums\CommandEnum.cs" />
@@ -390,6 +391,7 @@
     <Compile Include="Events\InventoryEvents\InventoryTransactionEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerChatEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCommandPreprocessEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerCreateDataEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerCommandEventArgs.cs" />
     <Compile Include="Inventories\Transactions\Action\InventoryAction.cs" />
     <Compile Include="Inventories\Transactions\Action\SlotChangeAction.cs" />

@@ -14,6 +14,12 @@
             PlayerCommandPreprocess?.Invoke(args);
         }
 
+        public static event EventHandler<PlayerCreateDataEventArgs> PlayerCreateData;
+        public static void OnPlayerCreateData(PlayerCreateDataEventArgs args)
+        {
+            PlayerCreateData?.Invoke(args);
+        }
+
         public static event EventHandler<PlayerJoinEventArgs> PlayerJoin;
         public static void OnPlayerJoin(PlayerJoinEventArgs args)
         {

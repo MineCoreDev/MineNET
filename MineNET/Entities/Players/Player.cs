@@ -132,11 +132,20 @@ namespace MineNET.Entities.Players
         {
             if (this.HasSpawned)
             {
-                this.namedTag.PutInt("PlayerGameMode", this.GameMode.GameModeToInt());
+                this.SaveNBT();
 
                 string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
                 NBTIO.WriteGZIPFile(path, this.namedTag, NBTEndian.BIG_ENDIAN);
             }
+        }
+
+        public override void SaveNBT()
+        {
+            base.SaveNBT();
+
+            this.Inventory.SaveNBT();
+
+            this.namedTag.PutInt("PlayerGameMode", this.GameMode.GameModeToInt());
         }
 
         public new PlayerInventory Inventory
@@ -173,16 +182,6 @@ namespace MineNET.Entities.Players
             SendPacket(pk);
 
             base.SetMotion(motion);
-        }
-
-        public Skin GetSkin()
-        {
-            return this.ClientData.Skin;
-        }
-
-        public void SetSkin(Skin skin)
-        {
-            //TODO: 
         }
 
         public void SendMessage(string message)
