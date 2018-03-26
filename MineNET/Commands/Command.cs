@@ -13,29 +13,12 @@ namespace MineNET.Commands
         public abstract string Name { get; }
         public virtual string Description { get; } = "";
         public virtual string[] Aliases { get; } = null;
-        public virtual PlayerPermissions Permission { get; } = PlayerPermissions.VISITOR;
+        public virtual string Permission { get; } = null;
+        public virtual PlayerPermissions CommandPermission { get; } = PlayerPermissions.VISITOR;
         public virtual int Flag { get; } = 0;
-        public List<CommandOverload> CommandOverloads { get; set; } = new List<CommandOverload>();
-
-        public Command()
-        {
-            this.CommandOverloads.Add(new CommandOverload(new CommandParameterString("args")));
-        }
+        public virtual CommandOverload[] CommandOverloads { get; } = new CommandOverload[] { new CommandOverload(new CommandParameterString("args")) };
 
         public abstract bool Execute(CommandSender sender, params string[] args);
-
-        public void AddOverloads(params CommandOverload[] overloads)
-        {
-            for (int i = 0; i < overloads.Length; ++i)
-            {
-                this.CommandOverloads.Add(overloads[i]);
-            }
-        }
-
-        public void RemoveAllOverloads()
-        {
-            this.CommandOverloads = new List<CommandOverload>();
-        }
 
         public Player[] GetPlayerFromSelector(string selector, CommandSender sender)
         {

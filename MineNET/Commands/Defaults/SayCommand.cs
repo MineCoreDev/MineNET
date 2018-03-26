@@ -7,12 +7,6 @@ namespace MineNET.Commands.Defaults
 {
     public class SayCommand : Command
     {
-        public SayCommand()
-        {
-            this.RemoveAllOverloads();
-            this.AddOverloads(new CommandOverload(new CommandParameterMessage("message")));
-        }
-
         public override string Name
         {
             get
@@ -29,12 +23,25 @@ namespace MineNET.Commands.Defaults
             }
         }
 
-        public override PlayerPermissions Permission
+        public override PlayerPermissions CommandPermission
         {
             get
             {
                 //return PlayerPermissions.OPERATOR;
                 return PlayerPermissions.VISITOR;
+            }
+        }
+
+        public override CommandOverload[] CommandOverloads
+        {
+            get
+            {
+                return new CommandOverload[]
+                {
+                    new CommandOverload(
+                        new CommandParameterMessage("message")
+                    )
+                };
             }
         }
 

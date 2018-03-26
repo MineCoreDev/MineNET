@@ -1,16 +1,16 @@
 ﻿using MineNET.Commands.Data;
-using MineNET.Commands.Parameters;
 using MineNET.Data;
+using MineNET.Entities.Players;
 
 namespace MineNET.Commands.Defaults
 {
-    public class StopCommand : Command
+    public class ListCommand : Command
     {
         public override string Name
         {
             get
             {
-                return "stop";
+                return "list";
             }
         }
 
@@ -18,7 +18,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return this.LangDescription();
+                return "サーバー上のプレイヤーの一覧を表示する";
             }
         }
 
@@ -26,7 +26,6 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                //return PlayerPermissions.OPERATOR;
                 return PlayerPermissions.VISITOR;
             }
         }
@@ -38,16 +37,19 @@ namespace MineNET.Commands.Defaults
                 return new CommandOverload[]
                 {
                     new CommandOverload(),
-                    new CommandOverload(
-                        new CommandParameterString("stopReason", true)
-                    )
                 };
             }
         }
 
         public override bool Execute(CommandSender sender, params string[] args)
         {
-            Server.Instance.Stop();
+            Server server = Server.Instance;
+            sender.SendMessage($"{server.GetPlayers().Length} / {20} のプレイヤーがオンラインです");
+            Player[] players = server.GetPlayers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                sender.SendMessage(players[i].Name);
+            }
             return true;
         }
     }

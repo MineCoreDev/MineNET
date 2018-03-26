@@ -360,8 +360,10 @@
     <Compile Include="Commands\ConsoleSender.cs" />
     <Compile Include="Commands\Defaults\GameModeCommand.cs" />
     <Compile Include="Commands\Defaults\GiveCommand.cs" />
+    <Compile Include="Commands\Defaults\ListCommand.cs" />
     <Compile Include="Commands\Defaults\MeCommand.cs" />
     <Compile Include="Commands\Defaults\SayCommand.cs" />
+    <Compile Include="Commands\Defaults\TellCommand.cs" />
     <Compile Include="Commands\Enums\CommandEnum.cs" />
     <Compile Include="Commands\Data\CommandOverload.cs" />
     <Compile Include="Commands\Defaults\HelpCommand.cs" />

@@ -6,12 +6,6 @@ namespace MineNET.Commands.Defaults
 {
     public class MeCommand : Command
     {
-        public MeCommand()
-        {
-            this.RemoveAllOverloads();
-            this.AddOverloads(new CommandOverload(new CommandParameterMessage("message", false)));
-        }
-
         public override string Name
         {
             get
@@ -25,6 +19,19 @@ namespace MineNET.Commands.Defaults
             get
             {
                 return "あなたに関するメッセージを表示します";
+            }
+        }
+
+        public override CommandOverload[] CommandOverloads
+        {
+            get
+            {
+                return new CommandOverload[]
+                {
+                    new CommandOverload(
+                        new CommandParameterMessage("message", false)
+                    )
+                };
             }
         }
 
