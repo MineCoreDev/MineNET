@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using MineNET.Entities.Data;
+using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
 using MineNET.Items;
 using MineNET.NBT.Data;
@@ -31,6 +32,9 @@ namespace MineNET.Entities.Players
             string path = $"{Server.ExecutePath}\\players\\{this.Name}.dat";
             if (!File.Exists(path))
             {
+                PlayerCreateDataEventArgs playerCreateDataEvent = new PlayerCreateDataEventArgs(this);
+                PlayerEvents.OnPlayerCreateData(playerCreateDataEvent);
+
                 this.RegisterData();
                 NBTIO.WriteGZIPFile(path, this.namedTag, NBTEndian.BIG_ENDIAN);
             }

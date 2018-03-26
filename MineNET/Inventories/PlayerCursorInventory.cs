@@ -1,6 +1,9 @@
 ﻿using MineNET.Data;
 using MineNET.Entities.Players;
 using MineNET.Items;
+using MineNET.NBT.Data;
+using MineNET.NBT.IO;
+using MineNET.NBT.Tags;
 using MineNET.Network.Packets.Data;
 
 namespace MineNET.Inventories
@@ -9,7 +12,22 @@ namespace MineNET.Inventories
     {
         public PlayerCursorInventory(Player player) : base(player)
         {
+            if (!player.namedTag.Exist("Cursor"))
+            {
+                ListTag initItems = new ListTag("Cursor", NBTTagType.COMPOUND);
+                for (int i = 0; i < this.Size; ++i)
+                {
+                    initItems.Add(NBTIO.WriteItem(Item.Get(0), i));
+                }
+                player.namedTag.PutList(initItems);
+            }
 
+            ListTag items = player.namedTag.GetList("Cursor");
+            for (int i = 0; i < this.Size; ++i)
+            {
+                Item item = NBTIO.ReadItem((CompoundTag) items[i]);
+                this.SetItem(i, item, false);
+            }
         }
 
         public override int Size
@@ -39,6 +57,29 @@ namespace MineNET.Inventories
             {
                 this.SetItem(0, value);
             }
+        }
+
+        public new Player Holder
+        {
+            get
+            {
+                return (Player) base.Holder;
+            }
+
+            set
+            {
+                base.Holder = value;
+            }
+        }
+
+        public override void SaveNBT()
+        {
+            ListTag inventory = new ListTag("Cursor", NBTTagType.COMPOUND);
+            for (int i = 0; i < this.Size; ++i)
+            {
+                inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
+            }
+            this.Holder.namedTag.PutList(inventory);
         }
     }
 }

@@ -102,16 +102,16 @@ namespace MineNET.Inventories
             }
         }
 
-        public new Player Holder
+        public new EntityLiving Holder
         {
             get
             {
-                return (Player) this.Holder;
+                return (EntityLiving) base.Holder;
             }
 
             protected set
             {
-                this.Holder = value;
+                base.Holder = value;
             }
         }
 
@@ -165,6 +165,16 @@ namespace MineNET.Inventories
             {
                 this.SetItem(ArmorInventory.SLOT_ARMOR_FEET, value.Clone());
             }
+        }
+
+        public override void SaveNBT()
+        {
+            ListTag inventory = new ListTag("Armor", NBTTagType.COMPOUND);
+            for (int i = 0; i < this.Size; ++i)
+            {
+                inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
+            }
+            this.Holder.namedTag.PutList(inventory);
         }
     }
 }

@@ -311,5 +311,7 @@ namespace MineNET.Inventories
         {
             this.viewers.Remove(player);
         }
+
+        public abstract void SaveNBT();
     }
 }

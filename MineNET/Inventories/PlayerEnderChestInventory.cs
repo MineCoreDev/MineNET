@@ -9,8 +9,12 @@ namespace MineNET.Inventories
 {
     public class PlayerEnderChestInventory : ContainerInventory
     {
-        public PlayerEnderChestInventory(Player player) : base(player)
+        public Player Player { get; }
+
+        public PlayerEnderChestInventory(Player player) : base(null)
         {
+            this.Player = player;
+
             if (!player.namedTag.Exist("EnderChestInventory"))
             {
                 ListTag newTag = new ListTag("EnderChestInventory", NBTTagType.COMPOUND);
@@ -57,6 +61,21 @@ namespace MineNET.Inventories
             base.OnClose(player);
 
             //TODO:
+        }
+
+        public void SetHolder(InventoryHolder holder)
+        {
+            this.Holder = holder;
+        }
+
+        public override void SaveNBT()
+        {
+            ListTag inventory = new ListTag("EnderChestInventory", NBTTagType.COMPOUND);
+            for (int i = 0; i < this.Size; ++i)
+            {
+                inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
+            }
+            this.Player.namedTag.PutList(inventory);
         }
     }
 }

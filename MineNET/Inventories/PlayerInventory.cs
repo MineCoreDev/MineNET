@@ -17,6 +17,8 @@ namespace MineNET.Inventories
         private PlayerOffhandInventory offhand;
         private ArmorInventory armor;
 
+        private PlayerEnderChestInventory ender;
+
         private Inventory opend = null;
 
         public PlayerInventory(Player player) : base(player)
@@ -47,6 +49,8 @@ namespace MineNET.Inventories
             this.cursor = new PlayerCursorInventory(player);
             this.offhand = new PlayerOffhandInventory(player);
             this.armor = new ArmorInventory(player);
+
+            this.ender = new PlayerEnderChestInventory(player);
         }
 
         public override int Size
@@ -92,12 +96,12 @@ namespace MineNET.Inventories
         {
             get
             {
-                return (Player) this.Holder;
+                return (Player) base.Holder;
             }
 
             protected set
             {
-                this.Holder = value;
+                base.Holder = value;
             }
         }
 
@@ -277,12 +281,38 @@ namespace MineNET.Inventories
             }
         }
 
+        public PlayerEnderChestInventory PlayerEnderChestInventory
+        {
+            get
+            {
+                return this.ender;
+            }
+        }
+
         public Inventory OpendInventory
         {
             get
             {
                 return this.opend;
             }
+        }
+
+        public override void SaveNBT()
+        {
+            ListTag inventory = new ListTag("Inventory", NBTTagType.COMPOUND);
+            for (int i = 0; i < this.Size; ++i)
+            {
+                inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
+            }
+            this.Holder.namedTag.PutList(inventory);
+
+            this.Holder.namedTag.PutInt("MainHand", this.MainHandSlot);
+
+            this.PlayerCursorInventory.SaveNBT();
+            this.PlayerOffhandInventory.SaveNBT();
+            this.ArmorInventory.SaveNBT();
+
+            this.PlayerEnderChestInventory.SaveNBT();
         }
     }
 }

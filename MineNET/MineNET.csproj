@@ -390,6 +390,7 @@
     <Compile Include="Events\InventoryEvents\InventoryTransactionEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerChatEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCommandPreprocessEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerCreateDataEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerCommandEventArgs.cs" />
     <Compile Include="Inventories\Transactions\Action\InventoryAction.cs" />
     <Compile Include="Inventories\Transactions\Action\SlotChangeAction.cs" />

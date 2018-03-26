@@ -61,5 +61,7 @@ namespace MineNET.Inventories
         void Close(Player player);
 
         void OnClose(Player player);
+
+        void SaveNBT();
     }
 }
