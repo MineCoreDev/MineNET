@@ -55,7 +55,6 @@ namespace MineNET.NBT.IO
                     }
                     ms.Write(sumBytes, 0, sumBytes.Length);
 
-
                     File.WriteAllBytes(fileName, ms.ToArray());
                 }
             }

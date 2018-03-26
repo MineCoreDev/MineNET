@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using MineNET.Entities.Data;
 using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
-using MineNET.Items;
 using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
+using MineNET.Utils;
 using MineNET.Worlds;
 
 namespace MineNET.Entities.Players
@@ -36,7 +35,6 @@ namespace MineNET.Entities.Players
                 PlayerEvents.OnPlayerCreateData(playerCreateDataEvent);
 
                 this.RegisterData();
-                NBTIO.WriteGZIPFile(path, this.namedTag, NBTEndian.BIG_ENDIAN);
             }
             else
             {
@@ -50,10 +48,10 @@ namespace MineNET.Entities.Players
 
         private void RegisterData()
         {
-            CompoundTag item = NBTIO.WriteItem(Item.Get(0));
             this.namedTag = new CompoundTag();
             this.namedTag.PutList(new ListTag("Attributes", NBTTagType.COMPOUND));
 
+            this.namedTag.PutString("WorldName", "");
             this.namedTag.PutList(new ListTag("Pos", NBTTagType.FLOAT));
             this.namedTag.PutList(new ListTag("Rotation", NBTTagType.FLOAT));
 
@@ -71,17 +69,15 @@ namespace MineNET.Entities.Players
 
         internal override void OnUpdate(int tick)
         {
+        }
+
+        internal void SendChunk()
+        {
             if (this.HasSpawned)
             {
-                if (tick % 10 == 0)
+                foreach (Chunk c in this.World.LoadChunks(this, this.RequestChunkRadius))
                 {
-                    Task.Run(() =>
-                    {
-                        foreach (Chunk chunk in this.World.LoadChunks(this, this.RequestChunkRadius))
-                        {
-                            chunk.SendChunk(this);
-                        }
-                    });
+                    c.SendChunk(this);
                 }
             }
         }

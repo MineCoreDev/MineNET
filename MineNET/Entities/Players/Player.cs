@@ -116,7 +116,10 @@ namespace MineNET.Entities.Players
             }
             this.Save();
 
-            this.World.UnLoadChunks(this);
+            if (this.World != null)
+            {
+                this.World.UnLoadChunks(this);
+            }
 
             this.Closed = true;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MineNET.Items;
 using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
@@ -86,11 +87,39 @@ namespace MineNET.NBT.IO.Tests
             Console.WriteLine(tag.GetList("list")[0]);
         }
 
+        private CompoundTag namedTag;
+
         [TestMethod()]
-        public void TestLoad1()
+        public void Test3()
         {
-            CompoundTag tag = NBTIO.ReadRawFile(Environment.CurrentDirectory + "\\test\\r.0.0.mca", Data.NBTEndian.BIG_ENDIAN);
-            Console.WriteLine(VarDump.Var_Dump(tag));
+            this.namedTag = new CompoundTag();
+            this.namedTag.PutList(new ListTag("Attributes", NBTTagType.COMPOUND));
+
+            this.namedTag.PutList(new ListTag("Pos", NBTTagType.FLOAT));
+            this.namedTag.PutList(new ListTag("Rotation", NBTTagType.FLOAT));
+
+            this.namedTag.PutInt("PlayerGameMode", 0);
+            this.namedTag.PutInt("PlayerLevel", 0);
+            this.namedTag.PutFloat("PlayerLevelProgress", 0f);
+
+            if (!this.namedTag.Exist("Inventory"))
+            {
+                ListTag initItems = new ListTag("Inventory", NBTTagType.COMPOUND);
+                for (int i = 0; i < 36; ++i)
+                {
+                    initItems.Add(NBTIO.WriteItem(Item.Get(0), i));
+                }
+                this.namedTag.PutList(initItems);
+            }
+
+            ListTag items = this.namedTag.GetList("Inventory");
+            for (int i = 0; i < 36; ++i)
+            {
+                Item item = NBTIO.ReadItem((CompoundTag) items[i]);
+            }
+
+            NBTIO.WriteGZIPFile(Environment.CurrentDirectory + "\\test3.nbt", this.namedTag);
+            Console.WriteLine(NBTIO.ReadGZIPFile(Environment.CurrentDirectory + "\\test3.nbt"));
         }
     }
 }

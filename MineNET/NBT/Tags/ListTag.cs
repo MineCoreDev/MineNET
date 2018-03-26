@@ -107,7 +107,12 @@ namespace MineNET.NBT.Tags
 
         public override string ToString()
         {
-            return $"ListTag : Name {this.Name} : Data {this.Tags.ToString()}";
+            string data = "";
+            foreach (Tag tag in this.Tags)
+            {
+                data += $"{Environment.NewLine}{tag.ToString()}";
+            }
+            return $"ListTag : Name {this.Name} : Data {data}";
         }
 
         internal override void Write(NBTStream stream)

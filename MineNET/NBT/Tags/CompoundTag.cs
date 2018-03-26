@@ -326,7 +326,7 @@ namespace MineNET.NBT.Tags
             string data = "";
             foreach (Tag tag in this.tags.Values)
             {
-                data = $"{data}\n{tag.ToString()}";
+                data += $"{Environment.NewLine}{tag.ToString()}";
             }
             return $"CompoundTag : Name {this.Name} : Data {data}";
         }

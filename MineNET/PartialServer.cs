@@ -138,8 +138,26 @@ namespace MineNET
                 {
                     players[i].OnUpdate(tick);
                 }
+
+                if (tick % 20 == 0)
+                {
+                    this.SendPlayersChunk();
+                }
+
                 ++tick;
             }
+        }
+
+        private void SendPlayersChunk()
+        {
+            Task.Run(() =>
+            {
+                Player[] sendChunk = this.GetPlayers();
+                for (int i = 0; i < sendChunk?.Length; ++i)
+                {
+                    sendChunk[i].SendChunk();
+                }
+            });
         }
 
         private async void UpdateLogger()

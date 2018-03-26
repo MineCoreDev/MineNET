@@ -121,6 +121,11 @@ namespace MineNET.Worlds
             }
         }
 
+        public void OnUpdate(int tick)
+        {
+
+        }
+
         public Block GetBlock(Vector3 pos)
         {
             Tuple<int, int> chunkPos = new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4);
@@ -210,8 +215,8 @@ namespace MineNET.Worlds
                         {
                             //this.Format.SetChunk(chunks[chunkKey]);//TODO:
                             this.chunks.Remove(chunkKey);
-                            player.loadedChunk.Remove(chunkKey);
                         }
+                        player.loadedChunk.Remove(chunkKey);
                     }
                 }
 
