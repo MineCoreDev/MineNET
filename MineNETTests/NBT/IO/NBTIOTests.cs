@@ -56,9 +56,9 @@ namespace MineNET.NBT.IO.Tests
         [TestMethod()]
         public void WriteGZFileTest()
         {
-            ListTag list = new ListTag("list", NBTTagType.INT);
-            list.Add(new IntTag(12345));
-            list.Add(new IntTag(67890));
+            ListTag list = new ListTag("list", NBTTagType.COMPOUND);
+            list.Add(new CompoundTag().PutInt("c1", 123));
+            list.Add(new CompoundTag().PutLong("c2", 123456));
             CompoundTag subTag = new CompoundTag();
             subTag.PutBool("bool", true);
             subTag.PutByte("byte", 123);
@@ -83,6 +83,7 @@ namespace MineNET.NBT.IO.Tests
         {
             CompoundTag tag = NBTIO.ReadGZIPFile(Environment.CurrentDirectory + "\\test2.nbt");
             Console.WriteLine(tag);
+            Console.WriteLine(tag.GetList("list")[0]);
         }
 
         [TestMethod()]
