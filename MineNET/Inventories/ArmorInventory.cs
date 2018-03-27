@@ -24,7 +24,7 @@ namespace MineNET.Inventories
                 ListTag newTag = new ListTag("Armor", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
-                    newTag.Add(NBTIO.WriteItem(Item.Get(0), i));
+                    newTag.Add(NBTIO.WriteItem(Item.Get(0, 0, 0), i));
                 }
                 entity.NamedTag.PutList(newTag);
             }

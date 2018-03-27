@@ -45,7 +45,7 @@ namespace MineNET.Inventories
         {
             if (!this.slots.ContainsKey(index))
             {
-                return Item.Get(BlockFactory.AIR);
+                return Item.Get(BlockFactory.AIR, 0, 0);
             }
             return this.slots[index];
         }
@@ -225,7 +225,7 @@ namespace MineNET.Inventories
                 return true;
             }
             Item old = this.GetItem(index);
-            this.slots.Remove(index);
+            this.slots[index] = Item.Get(0, 0, 0);
             this.OnSlotChange(index, old, send);
             return true;
         }

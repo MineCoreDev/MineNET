@@ -214,21 +214,20 @@ namespace MineNET.Inventories.Transactions
                 {
                     Item haveItem = haveItems[i].Clone();
                     Item needItem = needItems[i].Clone();
-                    if (haveItem != needItem)
+                    if (haveItem.Equals(needItem, true, false))
                     {
-                        continue;
-                    }
-                    int amount = Math.Min(haveItem.Count, needItem.Count);
-                    haveItem.Count -= amount;
-                    needItem.Count -= amount;
-                    if (haveItem.Count == 0)
-                    {
-                        haveItems.Remove(haveItem);
-                    }
-                    if (needItem.Count == 0)
-                    {
-                        needItems.Remove(needItem);
-                        break;
+                        int amount = Math.Min(haveItem.Count, needItem.Count);
+                        haveItem.Count -= amount;
+                        needItem.Count -= amount;
+                        if (haveItem.Count == 0)
+                        {
+                            haveItems.Remove(haveItems[i]);
+                        }
+                        if (needItem.Count == 0)
+                        {
+                            needItems.Remove(needItems[i]);
+                            break;
+                        }
                     }
                 }
             }
@@ -239,7 +238,7 @@ namespace MineNET.Inventories.Transactions
         {
             for (int i = 0; i < this.Inventories.Count; ++i)
             {
-                this.Inventories[i].SendContents();
+                this.Inventories[i].SendContents(this.Player);
             }
         }
     }

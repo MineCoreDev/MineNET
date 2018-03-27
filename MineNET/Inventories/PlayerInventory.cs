@@ -28,7 +28,7 @@ namespace MineNET.Inventories
                 ListTag initItems = new ListTag("Inventory", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
-                    initItems.Add(NBTIO.WriteItem(Item.Get(0), i));
+                    initItems.Add(NBTIO.WriteItem(Item.Get(0, 0, 0), i));
                 }
                 player.NamedTag.PutList(initItems);
             }

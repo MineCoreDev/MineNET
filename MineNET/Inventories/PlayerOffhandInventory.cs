@@ -17,7 +17,7 @@ namespace MineNET.Inventories
                 ListTag newTag = new ListTag("Offhand", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
-                    newTag.Add(NBTIO.WriteItem(Item.Get(0)));
+                    newTag.Add(NBTIO.WriteItem(Item.Get(0, 0, 0)));
                 }
                 player.NamedTag.PutList(newTag);
             }
