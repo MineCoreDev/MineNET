@@ -3,7 +3,7 @@ using MineNET.Entities.Players;
 
 namespace MineNET.Events.PlayerEvents
 {
-    public class PlayerEventArgs : EventArgs
+    public abstract class PlayerEventArgs : EventArgs
     {
         public Player Player { get; }
 

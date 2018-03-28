@@ -1,4 +1,5 @@
 ﻿using System;
+using MineNET.Worlds;
 
 namespace MineNET.Values
 {
@@ -108,6 +109,11 @@ namespace MineNET.Values
         public override string ToString()
         {
             return $"X: {this.X} Y: {this.Y} Z: {this.Z}";
+        }
+
+        public Position Position(World world)
+        {
+            return new Position(this.X, this.Y, this.Z, world);
         }
 
         public Vector3i Vector3i

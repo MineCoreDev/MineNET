@@ -20,6 +20,12 @@
             PlayerCreateData?.Invoke(args);
         }
 
+        public static event EventHandler<PlayerInteractEventArgs> PlayerInteract;
+        public static void OnPlayerInteract(PlayerInteractEventArgs args)
+        {
+            PlayerInteract?.Invoke(args);
+        }
+
         public static event EventHandler<PlayerJoinEventArgs> PlayerJoin;
         public static void OnPlayerJoin(PlayerJoinEventArgs args)
         {

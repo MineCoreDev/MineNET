@@ -47,15 +47,15 @@ namespace MineNET.Blocks
             get;
         }
 
-        public virtual bool Place(Block target, Block side, BlockFace face, Vector3 clickPos, Player player, Item item)
+        public virtual bool Place(Block clicked, Block replace, BlockFace face, Vector3 clickPos, Player player, Item item)
         {
-            this.World.SetBlock(this.ToVector3(), this);
+            this.World.SetBlock(this.Vector3, this);
             return true;
         }
 
         public virtual bool Break(Player player, Item item)
         {
-            this.World.SetBlock(this.ToVector3(), new BlockAir());
+            this.World.SetBlock(this.Vector3, new BlockAir());
             return true;
         }
 
@@ -69,19 +69,29 @@ namespace MineNET.Blocks
 
         }
 
-        public virtual Item[] GetDrops()
+        public virtual Item[] GetDrops(Item item)
         {
-            return new Item[] { this.ToItem() };
+            if (this.ID < 1)
+            {
+                return new Item[] { Item.Get(BlockFactory.AIR, 0, 0) };
+            }
+            return new Item[] { this.Item };
         }
 
-        public virtual Item ToItem()
+        public virtual Item Item
         {
-            return Item.Get(this.ID, this.Damage);
+            get
+            {
+                return Item.Get(this.ID, this.Damage);
+            }
         }
 
-        public virtual int GetDropExp()
+        public virtual int DropExp
         {
-            return 0;
+            get
+            {
+                return 0;
+            }
         }
 
         public virtual byte MaxStackSize
@@ -108,23 +118,53 @@ namespace MineNET.Blocks
             }
         }
 
+        public virtual bool CanBePlace
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool CanBeActivate
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public Block GetSideBlock(BlockFace face)
         {
             if (this.HasPosition())
             {
-                return this.World.GetBlock(this.ToVector3() + face.GetPosition());
+                return this.World.GetBlock(this.Vector3 + face.GetPosition());
             }
             return null;
         }
 
-        public Vector3 ToVector3()
+        public Vector3 Vector3
         {
-            return new Vector3(this.X, this.Y, this.Z);
+            get
+            {
+                return new Vector3(this.X, this.Y, this.Z);
+            }
         }
 
-        public Position ToPosition()
+        public Position Position
         {
-            return new Position(this.X, this.Y, this.Z, this.World);
+            get
+            {
+                return new Position(this.X, this.Y, this.Z, this.World);
+            }
+
+            set
+            {
+                this.X = value.X;
+                this.Y = value.Y;
+                this.Z = value.Z;
+                this.World = value.World;
+            }
         }
 
         public bool HasPosition()

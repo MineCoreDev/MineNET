@@ -386,6 +386,9 @@
     <Compile Include="Commands\Parameters\CommandParameterValue.cs" />
     <Compile Include="Commands\Parameters\CommandParameterValueEnum.cs" />
     <Compile Include="Entities\Data\GameMode.cs" />
+    <Compile Include="Events\BlockEvents\BlockEventArgs.cs" />
+    <Compile Include="Events\BlockEvents\BlockEvents.cs" />
+    <Compile Include="Events\BlockEvents\BlockPlaceEventArgs.cs" />
     <Compile Include="Events\InventoryEvents\InventoryCloseEventArgs.cs" />
     <Compile Include="Events\InventoryEvents\InventoryEventArgs.cs" />
     <Compile Include="Events\InventoryEvents\InventoryEvents.cs" />
@@ -394,6 +397,7 @@
     <Compile Include="Events\PlayerEvents\PlayerChatEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCommandPreprocessEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCreateDataEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerInteractEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerCommandEventArgs.cs" />
     <Compile Include="Inventories\Transactions\Action\InventoryAction.cs" />
     <Compile Include="Inventories\Transactions\Action\SlotChangeAction.cs" />

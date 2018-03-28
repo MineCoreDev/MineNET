@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MineNET.Blocks;
+using MineNET.Blocks.Data;
 using MineNET.Entities.Data;
 using MineNET.Entities.Players;
+using MineNET.Events.BlockEvents;
+using MineNET.Events.PlayerEvents;
+using MineNET.Items;
 using MineNET.Network.Packets;
 using MineNET.Utils;
 using MineNET.Values;
@@ -16,6 +20,14 @@ namespace MineNET.Worlds
     public class World
     {
         public const int MAX_HEIGHT = 256;
+
+        public const int BLOCK_UPDATE_NORMAL = 1;
+        public const int BLOCK_UPDATE_RANDOM = 2;
+        public const int BLOCK_UPDATE_SCHEDULED = 3;
+        public const int BLOCK_UPDATE_WEAK = 4;
+        public const int BLOCK_UPDATE_TOUCH = 5;
+        public const int BLOCK_UPDATE_REDSTONE = 6;
+        public const int BLOCK_UPDATE_TICK = 7;
 
         public Dictionary<Tuple<int, int>, Chunk> chunks = new Dictionary<Tuple<int, int>, Chunk>();
 
@@ -143,7 +155,10 @@ namespace MineNET.Worlds
             byte id = chunk.GetBlock(chunkPos.Item1, (int) pos.Y, chunkPos.Item2);
             byte meta = chunk.GetMetadata(chunkPos.Item1, (int) pos.Y, chunkPos.Item2);
 
-            return Block.Get(id, meta);
+            Block block = Block.Get(id, meta);
+            block.Position = pos.Position(this);
+
+            return block;
         }
 
         public void SetBlock(Vector3 pos, Block block)
@@ -229,7 +244,7 @@ namespace MineNET.Worlds
                     {
                         chunk = this.GetChunk(pair.Key);
 
-                        if (!chunks.ContainsKey(pair.Key))
+                        if (!this.chunks.ContainsKey(pair.Key))
                         {
                             this.chunks.Add(pair.Key, chunk);
                         }
@@ -301,6 +316,69 @@ namespace MineNET.Worlds
                     players[j].SendPacket(pk);
                 }
             }
+        }
+
+        public void UseItem(Vector3 pos, Item item, BlockFace blockFace, Vector3 clickPos, Player player)
+        {
+            Block clicked = this.GetBlock(pos);
+            Block replace = clicked.GetSideBlock(blockFace);
+
+            if (clicked.Y > 255 || clicked.Y < 0 || replace.ID == BlockFactory.AIR)
+            {
+                return;
+            }
+
+            PlayerInteractEventArgs playerInteractEvent = new PlayerInteractEventArgs(player, item, clicked, blockFace);
+
+            if (player.GameMode == GameMode.Adventure)
+            {
+                playerInteractEvent.IsCancel = true;
+            }
+
+            if (Server.ServerConfig.SpawnProtection > 0) //player.IsOp()
+            {
+                //TODO
+            }
+
+            PlayerEvents.OnPlayerInteract(playerInteractEvent);
+            if (playerInteractEvent.IsCancel)
+            {
+                return;
+            }
+            clicked.Update(World.BLOCK_UPDATE_TOUCH);
+            if (item.CanBeActivate && (!clicked.CanBeActivate || player.Sneaking) && item.Activate(player, this, clicked, blockFace, clickPos))
+            {
+                //TODO
+            }
+
+            if (!item.CanBePlace)
+            {
+                return;
+            }
+            Block hand = item.Block;
+            hand.Position = replace.Position;
+
+            //TODO : near by entity check
+
+            //TODO : check can place on
+
+            BlockPlaceEventArgs blockPlaceEvent = new BlockPlaceEventArgs(player, hand, replace, clicked, item);
+
+            //TODO : check spawn protection
+
+            BlockEvents.OnBlockPlace(blockPlaceEvent);
+            if (blockPlaceEvent.IsCancel)
+            {
+                return;
+            }
+            hand.Place(clicked, replace, blockFace, clickPos, player, item);
+
+            //TODO : block sound
+        }
+
+        public void UseBreak(Vector3 pos, Item item, Player player)
+        {
+
         }
     }
 }

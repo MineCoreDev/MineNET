@@ -3,7 +3,7 @@ using MineNET.Inventories;
 
 namespace MineNET.Events.InventoryEvents
 {
-    public class InventoryEventArgs : EventArgs
+    public abstract class InventoryEventArgs : EventArgs
     {
         public Inventory Inventory { get; }
 

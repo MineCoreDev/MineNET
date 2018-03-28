@@ -28,6 +28,9 @@ namespace MineNET
             "End"
         };*/
 
+        [YamlDescription("スポーン地点の保護の範囲")]
+        public int SpawnProtection { get; set; } = 16;
+
         [YamlDescription("%server_config_mainWorldGenerator")]
         public string WorldGenerator { get; set; } = "Default";
 

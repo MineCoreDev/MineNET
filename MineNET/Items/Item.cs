@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MineNET.Blocks;
+using MineNET.Blocks.Data;
+using MineNET.Entities.Players;
 using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Resources.Data;
 using MineNET.Utils;
+using MineNET.Values;
+using MineNET.Worlds;
 using Newtonsoft.Json.Linq;
 
 namespace MineNET.Items
@@ -120,9 +124,12 @@ namespace MineNET.Items
 
         public int Count { get; set; }
 
-        public bool HasTags()
+        public bool HasTags
         {
-            return this.tags != null && this.tags.Length > 0;
+            get
+            {
+                return this.tags != null && this.tags.Length > 0;
+            }
         }
 
         public byte[] Tags
@@ -141,7 +148,7 @@ namespace MineNET.Items
 
         public CompoundTag GetNamedTag()
         {
-            if (!this.HasTags())
+            if (!this.HasTags)
             {
                 return new CompoundTag();
             }
@@ -166,72 +173,9 @@ namespace MineNET.Items
             return this;
         }
 
-        public string[] CanPlaceOn
+        public virtual bool Activate(Player player, World world, Block clicked, BlockFace blockFace, Vector3 clickPos)
         {
-            get
-            {
-                return this.canPlaceOn.ToArray();
-            }
-
-            set
-            {
-                this.canPlaceOn = value.ToList();
-            }
-        }
-
-        public Item AddCanPlaceOn(params string[] blocks)
-        {
-            for (int i = 0; i < blocks.Length; ++i)
-            {
-                this.canPlaceOn.Add(blocks[i]);
-            }
-            return this;
-        }
-
-        public Item RemoceCanPlaceOn(params string[] blocks)
-        {
-            for (int i = 0; i < blocks.Length; ++i)
-            {
-                if (this.canPlaceOn.Contains(blocks[i]))
-                {
-                    this.canPlaceOn.Remove(blocks[i]);
-                }
-            }
-            return this;
-        }
-
-        public string[] CanDestroy
-        {
-            get
-            {
-                return this.canDestroy.ToArray();
-            }
-
-            set
-            {
-                this.canDestroy = value.ToList();
-            }
-        }
-
-        public Item AddCanDestroy(params string[] blocks)
-        {
-            for (int i = 0; i < blocks.Length; ++i)
-            {
-                this.canDestroy.Add(blocks[i]);
-            }
-            return this;
-        }
-
-        public Item RemoceCanDestroy(params string[] blocks)
-        {
-            for (int i = 0; i < blocks.Length; ++i)
-            {
-                if (this.canDestroy.Contains(blocks[i]))
-                {
-                    this.canDestroy.Remove(blocks[i]);
-                }
-            }
-            return this;
+            return false;
         }
 
         public Block Block
@@ -244,7 +188,7 @@ namespace MineNET.Items
                 }
                 else
                 {
-                    return this.block;
+                    return this.block.Clone();
                 }
             }
 
@@ -390,9 +334,25 @@ namespace MineNET.Items
             }
         }
 
+        public virtual bool CanBePlace
+        {
+            get
+            {
+                return this.Block != null && this.Block.CanBePlace;
+            }
+        }
+
+        public virtual bool CanBeActivate
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public string GetCustomName()
         {
-            if (!this.HasTags())
+            if (!this.HasTags)
             {
                 return "";
             }
@@ -419,7 +379,7 @@ namespace MineNET.Items
             else
             {
                 CompoundTag tag;
-                if (this.HasTags())
+                if (this.HasTags)
                 {
                     tag = this.GetNamedTag();
                 }
@@ -442,7 +402,7 @@ namespace MineNET.Items
 
         public Item ClearCustomName()
         {
-            if (!this.HasTags())
+            if (!this.HasTags)
             {
                 return this;
             }
@@ -463,7 +423,7 @@ namespace MineNET.Items
 
         public string[] GetLore()
         {
-            if (!this.HasTags())
+            if (!this.HasTags)
             {
                 return new string[0];
             }
@@ -496,7 +456,7 @@ namespace MineNET.Items
             else
             {
                 CompoundTag tag;
-                if (this.HasTags())
+                if (this.HasTags)
                 {
                     tag = this.GetNamedTag();
                 }
@@ -528,7 +488,7 @@ namespace MineNET.Items
             {
                 return this;
             }
-            if (!this.HasTags() || this.GetLore().Length < 1)
+            if (!this.HasTags || this.GetLore().Length < 1)
             {
                 this.SetLore(lores);
                 return this;
@@ -545,7 +505,7 @@ namespace MineNET.Items
 
         public Item ClearLore()
         {
-            if (!this.HasTags())
+            if (!this.HasTags)
             {
                 return this;
             }
@@ -561,6 +521,74 @@ namespace MineNET.Items
                 display.Remove("lore");
             }
             this.SetNamedTag(tag);
+            return this;
+        }
+
+        public string[] CanPlaceOn
+        {
+            get
+            {
+                return this.canPlaceOn.ToArray();
+            }
+
+            set
+            {
+                this.canPlaceOn = value.ToList();
+            }
+        }
+
+        public Item AddCanPlaceOn(params string[] blocks)
+        {
+            for (int i = 0; i < blocks.Length; ++i)
+            {
+                this.canPlaceOn.Add(blocks[i]);
+            }
+            return this;
+        }
+
+        public Item RemoveCanPlaceOn(params string[] blocks)
+        {
+            for (int i = 0; i < blocks.Length; ++i)
+            {
+                if (this.canPlaceOn.Contains(blocks[i]))
+                {
+                    this.canPlaceOn.Remove(blocks[i]);
+                }
+            }
+            return this;
+        }
+
+        public string[] CanDestroy
+        {
+            get
+            {
+                return this.canDestroy.ToArray();
+            }
+
+            set
+            {
+                this.canDestroy = value.ToList();
+            }
+        }
+
+        public Item AddCanDestroy(params string[] blocks)
+        {
+            for (int i = 0; i < blocks.Length; ++i)
+            {
+                this.canDestroy.Add(blocks[i]);
+            }
+            return this;
+        }
+
+        public Item RemoveCanDestroy(params string[] blocks)
+        {
+            for (int i = 0; i < blocks.Length; ++i)
+            {
+                if (this.canDestroy.Contains(blocks[i]))
+                {
+                    this.canDestroy.Remove(blocks[i]);
+                }
+            }
             return this;
         }
 
@@ -590,13 +618,13 @@ namespace MineNET.Items
             }
             if (checkNBT)
             {
-                if (this.HasTags() != item.HasTags())
+                if (this.HasTags != item.HasTags)
                 {
                     return false;
                 }
                 else
                 {
-                    if (this.HasTags() && this.GetNamedTag() != item.GetNamedTag())
+                    if (this.HasTags && this.GetNamedTag() != item.GetNamedTag())
                     {
                         return false;
                     }
