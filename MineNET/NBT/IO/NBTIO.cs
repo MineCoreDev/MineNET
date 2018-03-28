@@ -216,7 +216,7 @@ namespace MineNET.NBT.IO
             {
                 nbt.PutByte("slot", (byte) slot);
             }
-            if (item.HasTags())
+            if (item.HasTags)
             {
                 nbt.PutCompound("tag", item.GetNamedTag());
             }

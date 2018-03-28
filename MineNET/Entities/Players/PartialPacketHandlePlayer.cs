@@ -6,6 +6,7 @@ using MineNET.Events.PlayerEvents;
 using MineNET.Inventories.Transactions;
 using MineNET.Inventories.Transactions.Action;
 using MineNET.Inventories.Transactions.Data;
+using MineNET.Items;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Utils;
@@ -311,18 +312,36 @@ namespace MineNET.Entities.Players
             else if (pk.TransactionType == InventoryTransactionPacket.TYPE_USE_ITEM)
             {
                 UseItemData data = (UseItemData) pk.TransactionData;
-                Vector3i blockPos = data.BlockPos;
+                Vector3 blockPos = data.BlockPos.Vector3;
                 BlockFace face = data.Face;
                 if (data.ActionType == InventoryTransactionPacket.USE_ITEM_ACTION_CLICK_BLOCK)
                 {
                     this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ACTION, false, true);
-                    if (this.CanInteract(blockPos.Vector3 + new Vector3(0.5f, 0.5f, 0.5f), this.IsCreative ? 13 : 7))
+                    if (this.CanInteract(blockPos + new Vector3(0.5f, 0.5f, 0.5f), this.IsCreative ? 13 : 7))
                     {
-                        //TODO : this.World.UseItemOn();
+                        Item item = this.Inventory.MainHandItem;
+                        this.World.UseItem(blockPos, item, face, data.ClickPos, this);
                     }
 
                     //Send MainHand
 
+                }
+                else if (data.ActionType == InventoryTransactionPacket.USE_ITEM_ACTION_BREAK_BLOCK)
+                {
+                    Item item = this.Inventory.MainHandItem;
+                    if (this.CanInteract(blockPos + new Vector3(0.5f, 0.5f, 0.5f), this.IsCreative ? 13 : 7))
+                    {
+                        this.World.UseBreak(data.BlockPos.Vector3, item, this);
+                        if (this.IsSurvival)
+                        {
+                            //TODO : food
+                            this.Inventory.SendMainHand();
+                        }
+                    }
+                    else
+                    {
+                        this.World.SendBlocks(new Player[] { this }, new Vector3[] { data.BlockPos.Vector3 });
+                    }
                 }
             }
             else if (pk.TransactionType == InventoryTransactionPacket.TYPE_USE_ITEM_ON_ENTITY)

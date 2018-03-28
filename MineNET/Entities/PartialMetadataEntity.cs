@@ -224,7 +224,7 @@ namespace MineNET.Entities
 
             set
             {
-                this.SetDataProperty(new EntityDataString(Entity.DATA_NAMETAG, value), true);
+                this.SetDataProperty(new EntityDataString(Entity.DATA_NAMETAG, value));
             }
         }
 
@@ -237,7 +237,7 @@ namespace MineNET.Entities
 
             set
             {
-                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_CAN_SHOW_NAMETAG, value, true);
+                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_CAN_SHOW_NAMETAG, value);
             }
         }
 
@@ -250,7 +250,7 @@ namespace MineNET.Entities
 
             set
             {
-                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ALWAYS_SHOW_NAMETAG, value, true);
+                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ALWAYS_SHOW_NAMETAG, value);
             }
         }
 
@@ -264,6 +264,19 @@ namespace MineNET.Entities
             set
             {
                 this.SetDataProperty(new EntityDataString(Entity.DATA_INTERACTIVE_TAG, value));
+            }
+        }
+
+        public bool Sneaking
+        {
+            get
+            {
+                return this.GetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_SNEAKING);
+            }
+
+            set
+            {
+                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_SNEAKING, value);
             }
         }
     }
