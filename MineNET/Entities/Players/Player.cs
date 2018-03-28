@@ -8,6 +8,7 @@ using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
+using MineNET.Utils;
 using MineNET.Values;
 
 namespace MineNET.Entities.Players
@@ -104,7 +105,7 @@ namespace MineNET.Entities.Players
 
         public void Close(string reason, bool clientDisconnect = false)
         {
-            PlayerQuitEventArgs playerQuitEvent = new PlayerQuitEventArgs(this, "", reason);
+            PlayerQuitEventArgs playerQuitEvent = new PlayerQuitEventArgs(this, $"§e{this.Name} が世界を去りました", reason);
             PlayerEvents.OnPlayerQuit(playerQuitEvent);
             reason = playerQuitEvent.Reason;
             if (!string.IsNullOrEmpty(reason))
@@ -114,6 +115,12 @@ namespace MineNET.Entities.Players
 
                 this.SendPacket(pk, true);
             }
+            if (!string.IsNullOrEmpty(playerQuitEvent.QuitMessage))
+            {
+                Server.Instance.BroadcastMessage(playerQuitEvent.QuitMessage);
+            }
+            Logger.Info($"§e{this.Name} left the game");
+
             this.Save();
 
             if (this.World != null)
