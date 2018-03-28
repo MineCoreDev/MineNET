@@ -2,58 +2,6 @@
 
 namespace MineNET.Utils
 {
-    public struct ColorText
-    {
-        public const string CODE = "§";
-
-        private char value;
-
-        public static ColorText RED
-        {
-            get
-            {
-                return new ColorText('c');
-            }
-        }
-
-        public ColorText(char value)
-        {
-            this.value = value;
-        }
-
-        public override string ToString()
-        {
-            return $"{CODE}{this.value}";
-        }
-    }
-
-    public sealed class TranslationMessage
-    {
-        public string TranslationKey { get; }
-
-        public object[] TranslationFills { get; } = null;
-
-        public ColorText Header { get; } = new ColorText('f');
-
-        public TranslationMessage(string key)
-        {
-            this.TranslationKey = key;
-        }
-
-        public TranslationMessage(string key, params object[] args)
-        {
-            this.TranslationKey = key;
-            this.TranslationFills = args;
-        }
-
-        public TranslationMessage(ColorText header, string key, params object[] args)
-        {
-            this.Header = header;
-            this.TranslationKey = key;
-            this.TranslationFills = args;
-        }
-    }
-
     public sealed class LangManager
     {
         static string lang = "ja_JP";
