@@ -118,7 +118,7 @@ namespace MineNET.Blocks
             }
         }
 
-        public virtual bool CanBePlace
+        public virtual bool CanBePlaced
         {
             get
             {
@@ -126,7 +126,15 @@ namespace MineNET.Blocks
             }
         }
 
-        public virtual bool CanBeActivate
+        public virtual bool CanBreak
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public virtual bool CanBeActivated
         {
             get
             {

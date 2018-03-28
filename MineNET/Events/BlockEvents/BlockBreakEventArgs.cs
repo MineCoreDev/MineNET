@@ -8,6 +8,7 @@ namespace MineNET.Events.BlockEvents
     {
         public Player Player { get; set; }
         public Item Item { get; set; }
+        public Item[] Drops { get; set; }
 
         public bool IsCancel { get; set; }
 
@@ -15,6 +16,7 @@ namespace MineNET.Events.BlockEvents
         {
             this.Player = player;
             this.Item = item;
+            this.Drops = block.GetDrops(item);
         }
     }
 }

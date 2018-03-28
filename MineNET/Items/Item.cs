@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MineNET.Blocks;
 using MineNET.Blocks.Data;
+using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.NBT.Data;
 using MineNET.NBT.IO;
@@ -178,6 +179,16 @@ namespace MineNET.Items
             return false;
         }
 
+        public virtual bool Use(Block block)
+        {
+            return false;
+        }
+
+        public virtual bool Use(Entity entity)
+        {
+            return false;
+        }
+
         public Block Block
         {
             get
@@ -338,7 +349,7 @@ namespace MineNET.Items
         {
             get
             {
-                return this.Block != null && this.Block.CanBePlace;
+                return this.Block != null && this.Block.CanBePlaced;
             }
         }
 

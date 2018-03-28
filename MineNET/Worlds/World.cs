@@ -330,7 +330,7 @@ namespace MineNET.Worlds
 
             PlayerInteractEventArgs playerInteractEvent = new PlayerInteractEventArgs(player, item, clicked, blockFace);
 
-            if (player.GameMode == GameMode.Adventure)
+            if (player.IsAdventure)
             {
                 playerInteractEvent.IsCancel = true;
             }
@@ -346,7 +346,7 @@ namespace MineNET.Worlds
                 return;
             }
             clicked.Update(World.BLOCK_UPDATE_TOUCH);
-            if (item.CanBeActivate && (!clicked.CanBeActivate || player.Sneaking) && item.Activate(player, this, clicked, blockFace, clickPos))
+            if (item.CanBeActivate && (!clicked.CanBeActivated || player.Sneaking) && item.Activate(player, this, clicked, blockFace, clickPos))
             {
                 //TODO
             }
@@ -378,7 +378,38 @@ namespace MineNET.Worlds
 
         public void UseBreak(Vector3 pos, Item item, Player player)
         {
+            if (player.IsSpectator)
+            {
+                return;
+            }
+            Block block = this.GetBlock(pos);
 
+            BlockBreakEventArgs blockBreakEvent = new BlockBreakEventArgs(player, block, item);
+
+            if (player.IsSurvival && !block.CanBreak)
+            {
+                blockBreakEvent.IsCancel = true;
+            }
+
+            //TODO : spawn protection
+
+            BlockEvents.OnBlockBreak(blockBreakEvent);
+            if (blockBreakEvent.IsCancel)
+            {
+                return;
+            }
+
+            Item[] drops = blockBreakEvent.Drops;
+
+            //TODO : can destroy
+
+            //TODO : particle
+
+            block.Break(player, item);
+
+            item.Use(block);
+
+            //TODO : item drop
         }
     }
 }

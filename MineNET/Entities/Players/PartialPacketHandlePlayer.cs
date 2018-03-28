@@ -333,7 +333,20 @@ namespace MineNET.Entities.Players
                 }
                 else if (data.ActionType == InventoryTransactionPacket.USE_ITEM_ACTION_BREAK_BLOCK)
                 {
-
+                    Item item = this.Inventory.MainHandItem;
+                    if (this.CanInteract(blockPos + new Vector3(0.5f, 0.5f, 0.5f), this.IsCreative ? 13 : 7))
+                    {
+                        this.World.UseBreak(data.BlockPos.Vector3, item, this);
+                        if (this.IsSurvival)
+                        {
+                            //TODO : food
+                            this.Inventory.SendMainHand();
+                        }
+                    }
+                    else
+                    {
+                        this.World.SendBlocks(new Player[] { this }, new Vector3[] { data.BlockPos.Vector3 });
+                    }
                 }
             }
             else if (pk.TransactionType == InventoryTransactionPacket.TYPE_USE_ITEM_ON_ENTITY)

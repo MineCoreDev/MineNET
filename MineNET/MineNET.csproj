@@ -386,6 +386,7 @@
     <Compile Include="Commands\Parameters\CommandParameterValue.cs" />
     <Compile Include="Commands\Parameters\CommandParameterValueEnum.cs" />
     <Compile Include="Entities\Data\GameMode.cs" />
+    <Compile Include="Events\BlockEvents\BlockBreakEventArgs.cs" />
     <Compile Include="Events\BlockEvents\BlockEventArgs.cs" />
     <Compile Include="Events\BlockEvents\BlockEvents.cs" />
     <Compile Include="Events\BlockEvents\BlockPlaceEventArgs.cs" />
