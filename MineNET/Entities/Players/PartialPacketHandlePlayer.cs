@@ -261,12 +261,7 @@ namespace MineNET.Entities.Players
                         return;
                     }
                     message = $"<{this.Name}§f> {playerChatEvent.Message}§f";
-                    Logger.Info(message);
-                    Player[] players = Server.Instance.GetPlayers();
-                    for (int i = 0; i < players.Length; ++i)
-                    {
-                        players[i].SendChat(message);
-                    }
+                    Server.Instance.BroadcastChat(message);
                 }
             }
         }

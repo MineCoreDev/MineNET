@@ -4,6 +4,7 @@ using MineNET.Commands.Parameters;
 using MineNET.Data;
 using MineNET.Entities.Players;
 using MineNET.Items;
+using MineNET.Utils;
 
 namespace MineNET.Commands.Defaults
 {
@@ -21,7 +22,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "プレイヤーにアイテムを与える";
+                return "commands.give.description";
             }
         }
 
@@ -41,18 +42,18 @@ namespace MineNET.Commands.Defaults
                 return new CommandOverload[]
                 {
                     new CommandOverload(
-                        new CommandParameterTarget("player", true),
-                        new CommandParameterString("itemName", true, new CommandEnumItems()),
-                        new CommandParameterInt("amount", false),
-                        new CommandParameterInt("data", false)
-                        //new CommandParameterJson("components")
+                        new CommandParameterTarget("player", false),
+                        new CommandParameterString("itemName", false, new CommandEnumItems()),
+                        new CommandParameterInt("amount", true),
+                        new CommandParameterInt("data", true),
+                        new CommandParameterJson("dataTag", true)
                     ),
                     new CommandOverload(
-                        new CommandParameterTarget("player", true),
-                        new CommandParameterInt("id", true),
-                        new CommandParameterInt("amount", false),
-                        new CommandParameterInt("data", false)
-                        //new CommandParameterJson("components")
+                        new CommandParameterTarget("player", false),
+                        new CommandParameterInt("id", false),
+                        new CommandParameterInt("amount", true),
+                        new CommandParameterInt("data", true),
+                        new CommandParameterJson("dataTag", true)
                     )
                 };
             }
@@ -62,20 +63,22 @@ namespace MineNET.Commands.Defaults
         {
             if (args.Length < 2)
             {
-                sender.SendMessage("/give [target] [item] ....");
+                sender.SendMessage("/give <target> <itemName/id> ...");
                 return false;
             }
+
             if (args[0] == "@e")
             {
-                sender.SendMessage("セレクターはプレイヤー型にする必要があります");
+                this.SendTargetNotPlayerMessage(sender);
                 return false;
             }
+
             Player[] players = this.GetPlayerFromSelector(args[0], sender);
-            if (players.Length < 1)
+            if (players == null)
             {
-                sender.SendMessage("セレクターに合う対象がいません");
                 return false;
             }
+
             Item item = Item.Get(args[1]);
             if (args.Length > 2)
             {
@@ -87,18 +90,21 @@ namespace MineNET.Commands.Defaults
                 }
                 item.Count = count;
             }
+
             if (args.Length > 3)
             {
                 int damage;
                 int.TryParse(args[3], out damage);
                 item.Damage = damage;
             }
+
             for (int i = 0; i < players.Length; ++i)
             {
                 players[i].Inventory.AddItem(item.Clone());
-                players[i].SendMessage($"{item.Name} を {item.Count} 個受け取りました");
-                sender.SendMessage($"{players[i].Name} に {item.Name} を {item.Count} 個与えました");
+                sender.SendMessage(new TranslationMessage("commands.give.successRecipient", item.Name, item.Count));
+                Server.Instance.BroadcastMessageAndLoggerSend(new TranslationMessage("commands.give.success", item.Name, item.Count, players[i].Name));
             }
+
             return true;
         }
     }

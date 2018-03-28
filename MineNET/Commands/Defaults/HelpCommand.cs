@@ -18,7 +18,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "コマンド一覧を表示するコマンド";
+                return "commands.help.description";
             }
         }
 
@@ -40,18 +40,21 @@ namespace MineNET.Commands.Defaults
 
         public override bool Execute(CommandSender sender, params string[] args)
         {
-            Logger.Info("使えるコマンド一覧");
-            Dictionary<string, Command> commandList = Server.Instance.CommandManager.CommandList;
-
-            List<KeyValuePair<string, Command>> list = new List<KeyValuePair<string, Command>>(commandList);
-            list.Sort((a, b) => a.Key.CompareTo(b.Key));
-            for (int i = 0; i < list.Count; ++i)
+            if (!sender.IsPlayer)
             {
-                KeyValuePair<string, Command> Data = list[i];
-                Command command = Data.Value;
-                Logger.Info($" §2/{command.Name}§f : {command.Description}");
+                Logger.Info("%commands.help.header", 1, 1);
+                Dictionary<string, Command> commandList = Server.Instance.CommandManager.CommandList;
 
+                List<KeyValuePair<string, Command>> list = new List<KeyValuePair<string, Command>>(commandList);
+                list.Sort((a, b) => a.Key.CompareTo(b.Key));
+                for (int i = 0; i < list.Count; ++i)
+                {
+                    KeyValuePair<string, Command> Data = list[i];
+                    Command command = Data.Value;
+                    Logger.Info($" §2/{command.Name}§f : {this.GetTranslationDescription(command.Description)}");
+                }
             }
+
             return true;
         }
     }

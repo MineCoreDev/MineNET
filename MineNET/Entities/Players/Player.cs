@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using MineNET.Commands;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Data;
@@ -200,6 +201,33 @@ namespace MineNET.Entities.Players
             pk.Type = TextPacket.TYPE_RAW;
             pk.Message = message;
             this.SendPacket(pk);
+        }
+
+        public void SendMessage(string message, params object[] args)
+        {
+            List<string> list = new List<string>();
+            for (int i = 0; i < args.Length; ++i)
+            {
+                list.Add(args[i].ToString());
+            }
+
+            TextPacket pk = new TextPacket();
+            pk.Type = TextPacket.TYPE_TRANSLATION;
+            pk.Message = message;
+            pk.Parameters = list.ToArray();
+            this.SendPacket(pk);
+        }
+
+        public void SendMessage(TranslationMessage message)
+        {
+            if (message.TranslationFills == null)
+            {
+                this.SendMessage($"{message.Header.ToString()}%{message.TranslationKey}", new string[0]);
+            }
+            else
+            {
+                this.SendMessage($"{message.Header.ToString()}%{message.TranslationKey}", message.TranslationFills);
+            }
         }
 
         public void SendChat(string message, string xboxUserId = "")

@@ -1,6 +1,7 @@
 ﻿using MineNET.Commands.Data;
 using MineNET.Commands.Parameters;
 using MineNET.Data;
+using MineNET.Utils;
 
 namespace MineNET.Commands.Defaults
 {
@@ -18,7 +19,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return this.LangDescription();
+                return "commands.stop.description";
             }
         }
 
@@ -47,7 +48,15 @@ namespace MineNET.Commands.Defaults
 
         public override bool Execute(CommandSender sender, params string[] args)
         {
-            Server.Instance.Stop();
+            string msg = "";
+            if (args.Length == 1)
+            {
+                msg = args[0];
+            }
+
+            Server.Instance.BroadcastMessage(new TranslationMessage("commands.stop.start"));
+
+            Server.Instance.Stop(msg);
             return true;
         }
     }

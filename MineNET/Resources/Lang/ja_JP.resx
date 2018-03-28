@@ -150,11 +150,8 @@
   <data name="raknet_sessionClose_reason" xml:space="preserve">
     <value>理由: &lt;{0}&gt;</value>
   </data>
-  <data name="command_notFound" xml:space="preserve">
-    <value>§cコマンド &lt;{0}&gt; は見つかりませんでした。 helpで確認して下さい。</value>
-  </data>
-  <data name="command_stop_description" xml:space="preserve">
-    <value>サーバーを安全に終了する事が出来るコマンド</value>
+  <data name="commands.gamemode.description" xml:space="preserve">
+    <value>プレイヤーのゲーム モードを設定する。</value>
   </data>
   <data name="server_started2" xml:space="preserve">
     <value>helpでコマンド確認して下さい。 起動時間: &lt;{0}&gt;</value>
@@ -257,5 +254,56 @@
   </data>
   <data name="server_config_flatGeneratorOptions" xml:space="preserve">
     <value>フラットジェネレータの設定</value>
+  </data>
+  <data name="commands.gamemode.fail.invalid" xml:space="preserve">
+    <value>§cゲーム モード '{0}' は無効です</value>
+  </data>
+  <data name="commands.gamemode.success.other" xml:space="preserve">
+    <value>{1} のゲームモードを {0} に設定しました</value>
+  </data>
+  <data name="commands.gamemode.success.self" xml:space="preserve">
+    <value>あなたのゲームモードを {0} に設定しました</value>
+  </data>
+  <data name="commands.give.description" xml:space="preserve">
+    <value>プレイヤーにアイテムを与える。</value>
+  </data>
+  <data name="commands.help.description" xml:space="preserve">
+    <value>コマンドのヘルプ/一覧を呼び出す。</value>
+  </data>
+  <data name="commands.list.description" xml:space="preserve">
+    <value>サーバー上のプレイヤーの一覧を表示する。</value>
+  </data>
+  <data name="commands.say.description" xml:space="preserve">
+    <value>チャットで他のプレイヤーにメッセージを送信する.</value>
+  </data>
+  <data name="commands.stop.description" xml:space="preserve">
+    <value>サーバーを停止する。</value>
+  </data>
+  <data name="commands.tell.description" xml:space="preserve">
+    <value>1 人または複数のプレイヤーにプライベート メッセージを送信する。</value>
+  </data>
+  <data name="commands.generic.noTargetMatch" xml:space="preserve">
+    <value>§cセレクターに合う対象がありません </value>
+  </data>
+  <data name="commands.generic.targetNotPlayer" xml:space="preserve">
+    <value>§cセレクターはプレイヤーの型にする必要があります </value>
+  </data>
+  <data name="commands.give.success" xml:space="preserve">
+    <value>{2} に {0} を {1} 個与えました </value>
+  </data>
+  <data name="commands.give.successRecipient" xml:space="preserve">
+    <value>{0} を {1}個受け取りました </value>
+  </data>
+  <data name="commands.help.header" xml:space="preserve">
+    <value>--- ヘルプ ページの {0} ／ {1} ページを表示 (/help &lt;ページ番号&gt;) ---</value>
+  </data>
+  <data name="commands.me.description" xml:space="preserve">
+    <value>あなたに関するメッセージを表示します。</value>
+  </data>
+  <data name="commands.generic.player.notFound" xml:space="preserve">
+    <value>§c指定されたプレイヤーが見つかりません</value>
+  </data>
+  <data name="commands.generic.unknown" xml:space="preserve">
+    <value>§c不明なコマンド: {0}。このコマンドが存在し、これを使用する権限があることを確認してください</value>
   </data>
 </root>

@@ -1,5 +1,4 @@
 ﻿using MineNET.Commands.Data;
-using MineNET.Entities.Players;
 using MineNET.Utils;
 
 namespace MineNET.Commands
@@ -22,14 +21,7 @@ namespace MineNET.Commands
             }
             else
             {
-                if (sender is Player)
-                {
-                    //TODO: Send Player Message
-                }
-                else
-                {
-                    Logger.Info("%command_notFound", cmd);
-                }
+                sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.unknown", cmd));
             }
         }
     }

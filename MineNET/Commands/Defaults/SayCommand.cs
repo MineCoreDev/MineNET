@@ -19,7 +19,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "チャットで他のプレイヤーにメッセージを送信する";
+                return "commands.say.description";
             }
         }
 
@@ -49,11 +49,13 @@ namespace MineNET.Commands.Defaults
         {
             if (args.Length < 1)
             {
-                sender.SendMessage("/say [message]");
+                sender.SendMessage("/say <message>");
                 return false;
             }
-            Server.Instance.BroadcastMessage($"[{sender.Name}] {args[0]}");
-            Logger.Info($"[{sender.Name}] {args[0]}");
+
+            string msg = $"[{sender.Name}] {args[0]}";
+            Server.Instance.BroadcastMessage(msg);
+            Logger.Info(msg);
             return true;
         }
     }

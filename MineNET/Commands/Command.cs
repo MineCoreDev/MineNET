@@ -20,6 +20,17 @@ namespace MineNET.Commands
 
         public abstract bool Execute(CommandSender sender, params string[] args);
 
+        public CommandOverload[] EnptyCommandOverloads
+        {
+            get
+            {
+                return new CommandOverload[]
+                {
+                    new CommandOverload(),
+                };
+            }
+        }
+
         public Player[] GetPlayerFromSelector(string selector, CommandSender sender)
         {
             List<Player> players = new List<Player>();
@@ -53,14 +64,35 @@ namespace MineNET.Commands
             }
             else
             {
-                players.Add(Server.Instance.GetPlayer(selector));
+                Player player = Server.Instance.GetPlayer(selector);
+                if (player == null)
+                {
+                    sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.player.notFound"));
+                    return null;
+                }
+                else
+                {
+                    players.Add(player);
+                }
             }
+
+            if (players.Count < 1)
+            {
+                sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.noTargetMatch"));
+                return null;
+            }
+
             return players.ToArray();
         }
 
-        internal string LangDescription()
+        public void SendTargetNotPlayerMessage(CommandSender sender)
         {
-            return LangManager.GetString($"command_{this.Name}_description");
+            sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.targetNotPlayer"));
+        }
+
+        public string GetTranslationDescription(string messageKey)
+        {
+            return LangManager.GetString(messageKey);
         }
 
         public Command Clone()
