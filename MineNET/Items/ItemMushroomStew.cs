@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
-    public class ItemMushroomStew : Item
+    public class ItemMushroomStew : ItemFood
     {
         public ItemMushroomStew() : base(ItemFactory.MUSHROOM_STEW)
         {
@@ -18,6 +12,30 @@ namespace MineNET.Items
             get
             {
                 return "MushroomStew";
+            }
+        }
+
+        public override byte MaxStackSize
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        public override int FoodRestore
+        {
+            get
+            {
+                return 6;
+            }
+        }
+
+        public override float SaturationRestore
+        {
+            get
+            {
+                return 7.2f;
             }
         }
     }

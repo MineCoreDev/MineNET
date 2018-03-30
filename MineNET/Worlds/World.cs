@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using MineNET.BlockEntities;
 using MineNET.Blocks;
 using MineNET.Blocks.Data;
+using MineNET.Entities;
 using MineNET.Entities.Data;
 using MineNET.Entities.Players;
 using MineNET.Events.BlockEvents;
@@ -28,8 +30,6 @@ namespace MineNET.Worlds
         public const int BLOCK_UPDATE_TOUCH = 5;
         public const int BLOCK_UPDATE_REDSTONE = 6;
         public const int BLOCK_UPDATE_TICK = 7;
-
-        public Dictionary<Tuple<int, int>, Chunk> chunks = new Dictionary<Tuple<int, int>, Chunk>();
 
         public static void CreateWorld(string worldName)
         {
@@ -122,6 +122,14 @@ namespace MineNET.Worlds
 
         public GameMode DefaultGameMode { get; set; } = GameMode.Survival;
         public int Difficulty { get; set; } = 1;
+
+        public Dictionary<Tuple<int, int>, Chunk> chunks = new Dictionary<Tuple<int, int>, Chunk>();
+
+        private Dictionary<long, Player> Players { get; set; } = new Dictionary<long, Player>();
+
+        private Dictionary<long, Entity> Entities { get; set; } = new Dictionary<long, Entity>();
+
+        private List<BlockEntity> BlockEntities { get; set; } = new List<BlockEntity>();
 
         public World()
         {
@@ -410,6 +418,51 @@ namespace MineNET.Worlds
             item.Use(block);
 
             //TODO : item drop
+        }
+
+        public void AddEntity(Entity entity)
+        {
+            if (entity.World.Name != this.Name)
+            {
+                return;
+            }
+            this.Entities[entity.EntityID] = entity;
+        }
+
+        public void RemoveEntity(Entity entity)
+        {
+            if (!this.Entities.ContainsKey(entity.EntityID))
+            {
+                return;
+            }
+            this.Entities.Remove(entity.EntityID);
+        }
+
+        public Entity GetEntity(long entityID)
+        {
+            if (this.Entities.ContainsKey(entityID))
+            {
+                return this.Entities[entityID];
+            }
+            return null;
+        }
+
+        public void AddBlockEntity(BlockEntity blockEntity)
+        {
+            if (blockEntity.World.Name != this.Name)
+            {
+                return;
+            }
+            this.BlockEntities.Add(blockEntity);
+        }
+
+        public void RemoveBlockEntity(BlockEntity blockEntity)
+        {
+            if (!this.BlockEntities.Contains(blockEntity))
+            {
+                return;
+            }
+            this.BlockEntities.Remove(blockEntity);
         }
     }
 }

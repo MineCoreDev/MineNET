@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public class ItemSplashPotion : Item
     {
@@ -12,12 +6,20 @@ namespace MineNET.Items
         {
 
         }
-        
+
         public override string Name
         {
             get
             {
                 return "SplashPotion";
+            }
+        }
+
+        public override byte MaxStackSize
+        {
+            get
+            {
+                return 1;
             }
         }
     }

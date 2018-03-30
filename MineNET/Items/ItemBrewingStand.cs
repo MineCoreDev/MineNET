@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MineNET.Blocks;
 
 namespace MineNET.Items
 {
@@ -10,7 +6,7 @@ namespace MineNET.Items
     {
         public ItemBrewingStand() : base(ItemFactory.BREWING_STAND)
         {
-
+            this.Block = new BlockBrewingStand();
         }
 
         public override string Name

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
-    public class ItemShears : Item
+    public class ItemShears : ItemTool
     {
         public ItemShears() : base(ItemFactory.SHEARS)
         {
@@ -18,6 +12,14 @@ namespace MineNET.Items
             get
             {
                 return "Shears";
+            }
+        }
+
+        public override bool IsShears
+        {
+            get
+            {
+                return true;
             }
         }
     }

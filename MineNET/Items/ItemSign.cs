@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MineNET.Blocks;
 
 namespace MineNET.Items
 {
@@ -10,7 +6,7 @@ namespace MineNET.Items
     {
         public ItemSign() : base(ItemFactory.SIGN)
         {
-
+            this.Block = new BlockStandingSign();
         }
 
         public override string Name
@@ -18,6 +14,14 @@ namespace MineNET.Items
             get
             {
                 return "Sign";
+            }
+        }
+
+        public override byte MaxStackSize
+        {
+            get
+            {
+                return 16;
             }
         }
     }

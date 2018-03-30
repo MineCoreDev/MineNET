@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MineNET.Blocks;
 
 namespace MineNET.Items
 {
-    public class ItemBed : Item
+    public class ItemBed : ItemFood
     {
         public ItemBed() : base(ItemFactory.BED)
         {
-
+            this.Block = new BlockBed();
         }
 
         public override string Name
@@ -18,6 +14,14 @@ namespace MineNET.Items
             get
             {
                 return "Bed";
+            }
+        }
+
+        public override byte MaxStackSize
+        {
+            get
+            {
+                return 1;
             }
         }
     }

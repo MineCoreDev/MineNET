@@ -8,8 +8,6 @@ namespace MineNET.BlockEntities
 {
     public class BlockEntityChest : BlockEntityHolder
     {
-        private ChestInventory inventory = null;
-
         public BlockEntityChest(Position position, CompoundTag nbt = null) : base(position, nbt)
         {
             this.Inventory = new ChestInventory(this);
@@ -22,7 +20,7 @@ namespace MineNET.BlockEntities
             ListTag items = this.NamedTag.GetList("items");
             for (int i = 0; i < items.Count; ++i)
             {
-                this.inventory.SetItem(i, NBTIO.ReadItem((CompoundTag) items[i]));
+                this.Inventory.SetItem(i, NBTIO.ReadItem((CompoundTag) items[i]));
             }
         }
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MineNET.Blocks;
 
 namespace MineNET.Items
 {
@@ -10,7 +6,7 @@ namespace MineNET.Items
     {
         public ItemDarkOakDoor() : base(ItemFactory.DARK_OAK_DOOR)
         {
-
+            this.Block = new BlockDarkOakDoor();
         }
 
         public override string Name

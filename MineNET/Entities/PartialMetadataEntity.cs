@@ -171,12 +171,12 @@ namespace MineNET.Entities
 
         public EntityData GetDataProperty(int id)
         {
-            return this.dataProperties.GetEntityData(id);
+            return this.DataProperties.GetEntityData(id);
         }
 
         public void SetDataProperty(EntityData data, bool send = false)
         {
-            this.dataProperties.PutEntityData(data);
+            this.DataProperties.PutEntityData(data);
             if (send)
             {
                 this.SendDataProperties();
@@ -185,7 +185,7 @@ namespace MineNET.Entities
 
         public void RemoveDataProperty(int id, bool send = false)
         {
-            this.dataProperties.Remove(id);
+            this.DataProperties.Remove(id);
             if (send)
             {
                 this.SendDataProperties();
@@ -194,14 +194,14 @@ namespace MineNET.Entities
 
         public Dictionary<int, EntityData> GetDataProperties()
         {
-            return this.dataProperties.GetEntityDatas();
+            return this.DataProperties.GetEntityDatas();
         }
 
         public void SendDataProperties()
         {
             SetEntityDataPacket pk = new SetEntityDataPacket();
             pk.EntityRuntimeId = this.EntityID;
-            pk.EntityData = this.dataProperties;
+            pk.EntityData = this.DataProperties;
 
             if (this.IsPlayer)
             {

@@ -27,6 +27,11 @@ namespace MineNET.Items
             Item item = ItemFactory.GetItem(id);
             item.Damage = meta;
             item.Count = count;
+            if (item.ID == 0)
+            {
+                item.Damage = 0;
+                item.Count = 0;
+            }
             if (tags == null)
             {
                 tags = new byte[0];

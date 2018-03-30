@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MineNET.Blocks;
 
 namespace MineNET.Items
 {
@@ -10,7 +6,7 @@ namespace MineNET.Items
     {
         public ItemRedstone() : base(ItemFactory.REDSTONE)
         {
-
+            this.Block = new BlockRedstoneBlock();
         }
 
         public override string Name

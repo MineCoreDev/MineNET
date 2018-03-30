@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public class ItemAppleenchanted : ItemFood
     {
@@ -18,6 +12,22 @@ namespace MineNET.Items
             get
             {
                 return "Appleenchanted";
+            }
+        }
+
+        public override int FoodRestore
+        {
+            get
+            {
+                return 4;
+            }
+        }
+
+        public override float SaturationRestore
+        {
+            get
+            {
+                return 9.6f;
             }
         }
     }

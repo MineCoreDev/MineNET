@@ -14,7 +14,7 @@ namespace MineNET.Entities
     {
         private static long nextEntityId = 0;
 
-        private EntityMetadataManager dataProperties = new EntityMetadataManager();
+        public EntityMetadataManager DataProperties { get; protected set; } = new EntityMetadataManager();
 
         protected List<Player> viewers = new List<Player>();
 
@@ -26,6 +26,10 @@ namespace MineNET.Entities
         public float Pitch { get; set; }
 
         public World World { get; set; }
+
+        public float MotionX { get; set; }
+        public float MotionY { get; set; }
+        public float MotionZ { get; set; }
 
         public CompoundTag NamedTag { get; protected set; }
 
@@ -110,6 +114,26 @@ namespace MineNET.Entities
             pk.Motion = motion;
 
             this.AsyncSendPacketViewers(pk);
+        }
+
+        public virtual void SpawnTo(Player player)
+        {
+
+        }
+
+        public virtual void SpawnToAll()
+        {
+
+        }
+
+        public virtual void DespawnFrom(Player player)
+        {
+
+        }
+
+        public virtual void DespawnFromAll()
+        {
+
         }
 
         public Vector2 Vector2

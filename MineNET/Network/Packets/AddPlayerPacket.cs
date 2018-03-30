@@ -25,8 +25,8 @@ namespace MineNET.Network.Packets
         public Vector3 Vector3 { get; set; }
         public Vector3 Speed { get; set; }
         public Vector3 Direction { get; set; }
-        public Item Item { get; set; }
-        public EntityMetadataManager Metadata { get; set; }
+        public Item Item { get; set; } = Item.Get(0, 0, 0);
+        public EntityMetadataManager Metadata { get; set; } = new EntityMetadataManager();
 
         public int Flag { get; set; } = 0;
         public int CommandPermission { get; set; } = 0;

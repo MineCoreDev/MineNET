@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public class ItemBoat : Item
     {
@@ -18,6 +12,14 @@ namespace MineNET.Items
             get
             {
                 return "Boat";
+            }
+        }
+
+        public override byte MaxStackSize
+        {
+            get
+            {
+                return 1;
             }
         }
     }

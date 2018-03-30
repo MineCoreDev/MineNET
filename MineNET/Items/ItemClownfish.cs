@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
-    public class ItemClownfish : Item
+    public class ItemClownfish : ItemFood
     {
         public ItemClownfish() : base(ItemFactory.CLOWNFISH)
         {
@@ -18,6 +12,22 @@ namespace MineNET.Items
             get
             {
                 return "Clownfish";
+            }
+        }
+
+        public override int FoodRestore
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        public override float SaturationRestore
+        {
+            get
+            {
+                return 0.2f;
             }
         }
     }
