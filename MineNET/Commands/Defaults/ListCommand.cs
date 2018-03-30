@@ -18,7 +18,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "サーバー上のプレイヤーの一覧を表示する";
+                return "commands.list.description";
             }
         }
 
@@ -34,17 +34,14 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return new CommandOverload[]
-                {
-                    new CommandOverload(),
-                };
+                return this.EnptyCommandOverloads;
             }
         }
 
         public override bool Execute(CommandSender sender, params string[] args)
         {
             Server server = Server.Instance;
-            sender.SendMessage($"{server.GetPlayers().Length} / {20} のプレイヤーがオンラインです");
+            sender.SendMessage($"{server.GetPlayers().Length} / {Server.ServerConfig.MaxPlayers} のプレイヤーがオンラインです");
             Player[] players = server.GetPlayers();
             for (int i = 0; i < players.Length; ++i)
             {

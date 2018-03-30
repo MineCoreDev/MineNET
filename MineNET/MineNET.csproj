@@ -407,6 +407,7 @@
     <Compile Include="Inventories\Transactions\Data\UseItemData.cs" />
     <Compile Include="Inventories\Transactions\Data\UseItemOnEntityData.cs" />
     <Compile Include="Inventories\Transactions\InventoryTransaction.cs" />
+    <Compile Include="NBT\IO\NBTJsonSerializer.cs" />
     <Compile Include="Network\Packets\AddEntityPacket.cs" />
     <Compile Include="Network\Packets\AddPlayerPacket.cs" />
     <Compile Include="Network\Packets\CommandRequestPacket.cs" />
@@ -788,6 +789,7 @@
     <Compile Include="ServerException.cs" />
     <Compile Include="Utils\Binary.cs" />
     <Compile Include="Utils\BinaryStream.cs" />
+    <Compile Include="Utils\ColorText.cs" />
     <Compile Include="Utils\Config\Yaml\Attributes\YamlDescriptionAttribute.cs" />
     <Compile Include="Utils\Config\JsonConfig.cs" />
     <Compile Include="Utils\Config\JsonStaticConfig.cs" />
@@ -808,6 +810,7 @@
     <Compile Include="Utils\MineNEtMath.cs" />
     <Compile Include="Utils\ArrayUtils.cs" />
     <Compile Include="Utils\MemorySpan.cs" />
+    <Compile Include="Utils\TranslationMessage.cs" />
     <Compile Include="Utils\VarDump.cs" />
     <Compile Include="Utils\VarInt.cs" />
     <Compile Include="Utils\ZlibStream.cs" />

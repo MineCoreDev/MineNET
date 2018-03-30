@@ -99,7 +99,7 @@ namespace MineNET
             ServerEvents.OnServerStart(new ServerStartEventArgs());
         }
 
-        public void Stop()
+        public void Stop(string reason = "")
         {
             Logger.Info("%server_stop");
             this.mineNETConfig.Save<MineNETConfig>();
@@ -108,7 +108,14 @@ namespace MineNET
             Player[] players = this.GetPlayers();
             for (int i = 0; i < players.Length; ++i)
             {
-                players[i].Close(this.mineNETConfig.ServerStopText);
+                if (string.IsNullOrEmpty(reason))
+                {
+                    players[i].Close(this.mineNETConfig.ServerStopText);
+                }
+                else
+                {
+                    players[i].Close(reason);
+                }
             }
 
             this.UnloadWorld();
@@ -120,7 +127,7 @@ namespace MineNET
             this.Kill();
         }
 
-        public void ErrorStop(Exception e)
+        public void ErrorStop(Exception e, bool sendExceptionMessage = false)
         {
             this.logger = new Logger();
             Logger.Fatal(e.ToString());
@@ -135,7 +142,14 @@ namespace MineNET
             {
                 for (int i = 0; i < players.Length; ++i)
                 {
-                    players[i].Close(this.mineNETConfig.ServerStopText);
+                    if (sendExceptionMessage)
+                    {
+                        players[i].Close(e.ToString());
+                    }
+                    else
+                    {
+                        players[i].Close(this.mineNETConfig.ServerStopText);
+                    }
                 }
             }
 
@@ -240,13 +254,61 @@ namespace MineNET
             {
                 players = this.GetPlayers();
             }
+
             for (int i = 0; i < players.Length; ++i)
             {
-                TextPacket pk = new TextPacket();
-                pk.Type = TextPacket.TYPE_CHAT;
-                pk.Message = message;
-                players[i].SendPacket(pk);
+                players[i].SendMessage(message);
             }
+        }
+
+        public void BroadcastMessage(TranslationMessage message, Player[] players = null)
+        {
+            if (players == null)
+            {
+                players = this.GetPlayers();
+            }
+
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendMessage(message);
+            }
+        }
+
+        public void BroadcastMessageAndLoggerSend(TranslationMessage message, Player[] players = null)
+        {
+            if (players == null)
+            {
+                players = this.GetPlayers();
+            }
+
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendMessage(message);
+            }
+
+            if (message.TranslationFills == null)
+            {
+                Logger.Info($"%{message.TranslationKey}");
+            }
+            else
+            {
+                Logger.Info($"%{message.TranslationKey}", message.TranslationFills);
+            }
+        }
+
+        public void BroadcastChat(string message, Player[] players = null)
+        {
+            if (players == null)
+            {
+                players = this.GetPlayers();
+            }
+
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendMessage(message);
+            }
+
+            Logger.Info(message);
         }
 
         public PlayerListEntry GetPlayerListEntry(Player player)

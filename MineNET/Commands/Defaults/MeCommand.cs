@@ -18,7 +18,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "あなたに関するメッセージを表示します";
+                return "commands.me.description";
             }
         }
 
@@ -39,11 +39,13 @@ namespace MineNET.Commands.Defaults
         {
             if (args.Length < 1)
             {
-                sender.SendMessage("/me [message]");
+                sender.SendMessage("/me <message>");
                 return false;
             }
-            Server.Instance.BroadcastMessage($"* {sender.Name} {args[0]}");
-            Logger.Info($"* {sender.Name} {args[0]}");
+
+            string msg = $"* {sender.Name} {args[0]}";
+            Server.Instance.BroadcastMessage(msg);
+            Logger.Info(msg);
             return true;
         }
     }

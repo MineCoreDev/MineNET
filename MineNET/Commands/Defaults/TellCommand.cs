@@ -1,6 +1,7 @@
 ﻿using MineNET.Commands.Data;
 using MineNET.Commands.Parameters;
 using MineNET.Entities.Players;
+using MineNET.Utils;
 
 namespace MineNET.Commands.Defaults
 {
@@ -18,7 +19,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "1人または複数のプレイヤーにプライベート メッセージを送信する";
+                return "commands.tell.description";
             }
         }
 
@@ -48,24 +49,26 @@ namespace MineNET.Commands.Defaults
         {
             if (args.Length < 2)
             {
-                sender.SendMessage("/tell [target] [message]");
+                sender.SendMessage("/tell <target> <message>");
                 return false;
             }
+
             if (args[0] == "@e")
             {
-                sender.SendMessage("セレクターはプレイヤー型にする必要があります");
+                this.SendTargetNotPlayerMessage(sender);
                 return false;
             }
+
             Player[] players = this.GetPlayerFromSelector(args[0], sender);
-            if (players.Length < 1)
+            if (players == null)
             {
-                sender.SendMessage("セレクターに合う対象がいません");
                 return false;
             }
+
             for (int i = 0; i < players.Length; ++i)
             {
-                players[i].SendMessage($"[{sender.Name}: {players[i].Name} にささやかれました: {args[1]}]");
-                sender.SendMessage($"{players[i].Name} にささやきました: {args[1]}");
+                players[i].SendMessage(new TranslationMessage("commands.message.display.incoming", sender.Name, args[1]));
+                sender.SendMessage(new TranslationMessage("commands.message.display.outgoing", sender.Name, args[1]));
             }
             return true;
         }

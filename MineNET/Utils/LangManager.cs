@@ -56,7 +56,7 @@ namespace MineNET.Utils
                 {
                     return msg;
                 }
-                throw new System.NullReferenceException();
+                throw new System.NullReferenceException(string.Format(Manager.GetString("server_language_key_error"), key));
             }
             catch (System.Exception exception)
             {

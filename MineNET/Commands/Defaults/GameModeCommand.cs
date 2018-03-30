@@ -22,7 +22,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "ゲームモードを変更するコマンド";
+                return "commands.gamemode.description";
             }
         }
 
@@ -65,26 +65,56 @@ namespace MineNET.Commands.Defaults
         {
             if (args.Length < 1)
             {
-                sender.SendMessage("/gamemode [int] [target]");
+                if (!sender.IsPlayer)
+                {
+                    sender.SendMessage("/gamemode <int> <target>");
+                }
+                else
+                {
+                    sender.SendMessage("/gamemode <int/string> [target]");
+                }
                 return false;
             }
             else if (args.Length < 2)
             {
                 if (!sender.IsPlayer)
                 {
-                    sender.SendMessage("/gamemode [int] [target]");
+                    sender.SendMessage("/gamemode <int> <target>");
                     return false;
                 }
+
                 int gamemode = 0;
-                int.TryParse(args[0], out gamemode);
+                if (!int.TryParse(args[0], out gamemode))
+                {
+                    if (args[0] == "s" || args[0] == "survival")
+                    {
+                        gamemode = 0;
+                    }
+                    else if (args[0] == "c" || args[0] == "creative")
+                    {
+                        gamemode = 1;
+                    }
+                    else if (args[0] == "a" || args[0] == "adventure")
+                    {
+                        gamemode = 2;
+                    }
+                    else
+                    {
+                        sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.gamemode.fail.invalid", args[0]));
+                        return false;
+                    }
+                }
+
                 if (gamemode < 0 || 3 < gamemode)
                 {
-                    sender.SendMessage("ゲームモードは0～3です");
+                    sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.gamemode.fail.invalid", gamemode));
                     return false;
                 }
+
                 Player player = (Player) sender;
                 player.GameMode = GameModeExtention.FromIndex(gamemode);
-                player.SendMessage("ゲームモードが変更されました");
+                player.SendMessage(new TranslationMessage("commands.gamemode.success.self", player.GameMode.GameModeToString()));
+                Server.Instance.BroadcastMessageAndLoggerSend(new TranslationMessage("commands.gamemode.success.other", player.GameMode.GameModeToString(), player.Name));
             }
             else
             {
@@ -103,30 +133,39 @@ namespace MineNET.Commands.Defaults
                     {
                         gamemode = 2;
                     }
+                    else
+                    {
+                        sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.gamemode.fail.invalid", args[0]));
+                        return false;
+                    }
                 }
+
                 if (gamemode < 0 || 3 < gamemode)
                 {
-                    sender.SendMessage("ゲームモードは0～3です");
+                    sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.gamemode.fail.invalid", gamemode));
                     return false;
                 }
+
                 if (args[1] == "@e")
                 {
-                    sender.SendMessage("セレクターはプレイヤーの型にする必要があります");
+                    this.SendTargetNotPlayerMessage(sender);
                     return false;
                 }
+
                 Player[] players = this.GetPlayerFromSelector(args[1], sender);
-                if (players.Length < 1)
+                if (players == null)
                 {
-                    sender.SendMessage("セレクターに合う対象がいません");
                     return false;
                 }
+
                 for (int i = 0; i < players.Length; ++i)
                 {
                     players[i].GameMode = GameModeExtention.FromIndex(gamemode);
-                    players[i].SendMessage("ゲームモードが変更されました");
-                    Logger.Info($"{players[i].Name} のゲームモードが変更されました");
-                    //TODO: need send message at op
+                    players[i].SendMessage(new TranslationMessage("commands.gamemode.success.self", players[i].GameMode.GameModeToString()));
+                    Server.Instance.BroadcastMessageAndLoggerSend(new TranslationMessage("commands.gamemode.success.other", players[i].GameMode.GameModeToString(), players[i].Name));
                 }
+
+                //TODO: need send message at op
             }
             return true;
         }
