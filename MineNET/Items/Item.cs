@@ -173,7 +173,7 @@ namespace MineNET.Items
 
         public Item SetNamedTag(CompoundTag nbt)
         {
-            nbt.Name = null;
+            nbt.Name = "";
             this.cachedNBT = nbt;
             this.tags = NBTIO.WriteTag(nbt);
             return this;
@@ -374,16 +374,16 @@ namespace MineNET.Items
             }
 
             CompoundTag tag = this.GetNamedTag();
-            if (tag.Exist("display"))
+            if (!tag.Exist("display"))
             {
                 return "";
             }
             CompoundTag display = tag.GetCompound("display");
-            if (!display.Exist("name"))
+            if (!display.Exist("Name"))
             {
                 return "";
             }
-            return display.GetString("name");
+            return display.GetString("Name");
         }
 
         public Item SetCustomName(string name)
@@ -405,11 +405,11 @@ namespace MineNET.Items
                 }
                 if (tag.Exist("display"))
                 {
-                    tag.GetCompound("display").PutString("name", name);
+                    tag.GetCompound("display").PutString("Name", name);
                 }
                 else
                 {
-                    tag.PutCompound("display", new CompoundTag("display").PutString("name", name));
+                    tag.PutCompound("display", new CompoundTag("display").PutString("Name", name));
                 }
                 this.SetNamedTag(tag);
             }
@@ -429,9 +429,9 @@ namespace MineNET.Items
                 return this;
             }
             CompoundTag display = tag.GetCompound("display");
-            if (display.Exist("name"))
+            if (display.Exist("Name"))
             {
-                display.Remove("name");
+                display.Remove("Name");
             }
             this.SetNamedTag(tag);
             return this;
