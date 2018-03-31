@@ -233,7 +233,7 @@ namespace MineNET.NBT.IO
             string[] canDestroy = item.CanDestroy;
             if (canDestroy.Length > 0)
             {
-                ListTag list = new ListTag("CanDestroy", NBTTagType.STRING);
+                ListTag list = new ListTag("CanPlaceOn", NBTTagType.STRING);
                 for (int i = 0; i < canDestroy.Length; ++i)
                 {
                     list.Add(new StringTag(canDestroy[i]));

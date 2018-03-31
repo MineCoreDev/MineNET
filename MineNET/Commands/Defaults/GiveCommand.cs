@@ -4,9 +4,7 @@ using MineNET.Commands.Parameters;
 using MineNET.Data;
 using MineNET.Entities.Players;
 using MineNET.Items;
-using MineNET.NBT.IO;
 using MineNET.Utils;
-using Newtonsoft.Json.Linq;
 
 namespace MineNET.Commands.Defaults
 {
@@ -98,20 +96,6 @@ namespace MineNET.Commands.Defaults
                 int damage;
                 int.TryParse(args[3], out damage);
                 item.Damage = damage;
-            }
-
-            if (args.Length > 4)
-            {
-                string tag = args[4];
-                try
-                {
-                    item.SetNamedTag(NBTJsonSerializer.Deserialize(JObject.Parse(tag)));
-                }
-                catch
-                {
-                    sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.give.tagError", tag));
-                    return false;
-                }
             }
 
             for (int i = 0; i < players.Length; ++i)

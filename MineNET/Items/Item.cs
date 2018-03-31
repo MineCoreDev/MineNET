@@ -134,14 +134,7 @@ namespace MineNET.Items
         {
             get
             {
-                if (this.tags != null)
-                {
-                    return this.tags.Length > 0;
-                }
-                else
-                {
-                    return false;
-                }
+                return this.tags != null && this.tags.Length > 0;
             }
         }
 
@@ -647,7 +640,7 @@ namespace MineNET.Items
                 }
                 else
                 {
-                    if (this.HasTags && !((IStructuralEquatable) this.Tags).Equals(item.Tags, StructuralComparisons.StructuralEqualityComparer))
+                    if (this.HasTags && this.GetNamedTag() != item.GetNamedTag())
                     {
                         return false;
                     }
