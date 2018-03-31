@@ -219,7 +219,10 @@ namespace MineNET.Utils
             this.WriteSVarInt(auxValue);
             byte[] nbt = item.Tags;
             this.WriteLShort((ushort) nbt.Length);
-            this.WriteBytes(nbt);
+            if (nbt.Length > 0)
+            {
+                this.WriteBytes(nbt);
+            }
 
             string[] canPlaceOn = item.CanPlaceOn;
             this.WriteSVarInt(canPlaceOn.Length);

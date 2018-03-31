@@ -306,4 +306,7 @@
   <data name="commands.generic.unknown" xml:space="preserve">
     <value>§c不明なコマンド: {0}。このコマンドが存在し、これを使用する権限があることを確認してください</value>
   </data>
+  <data name="commands.give.tagError" xml:space="preserve">
+    <value>データ タグの解析に失敗しました: {0}</value>
+  </data>
 </root>

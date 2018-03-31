@@ -464,26 +464,36 @@ namespace MineNET.NBT.Tags
 
         public override bool Equals(object obj)
         {
-            if (!(obj is CompoundTag))
+            return Equals(this, obj);
+        }
+
+        public new static bool Equals(object objA, object objB)
+        {
+            if (!(objA is CompoundTag) && !(objB is CompoundTag))
+            {
+                return true;
+            }
+            else if (!(objA is CompoundTag) || !(objB is CompoundTag))
             {
                 return false;
             }
-            CompoundTag tag = (CompoundTag) obj;
-            if (this.Name != tag.Name)
+            CompoundTag tagA = (CompoundTag) objA;
+            CompoundTag tagB = (CompoundTag) objB;
+            if (tagA.Name != tagB.Name)
             {
                 return false;
             }
-            if (this.tags.Count != tag.tags.Count)
+            if (tagA.tags.Count != tagB.tags.Count)
             {
                 return false;
             }
-            foreach (string key in this.tags.Keys)
+            foreach (string key in tagA.tags.Keys)
             {
-                if (!tag.tags.ContainsKey(key))
+                if (!tagB.tags.ContainsKey(key))
                 {
                     return false;
                 }
-                if (!this.tags[key].Equals(tag.tags[key]))
+                if (!tagA.tags[key].Equals(tagB.tags[key]))
                 {
                     return false;
                 }
@@ -493,12 +503,12 @@ namespace MineNET.NBT.Tags
 
         public static bool operator ==(CompoundTag A, CompoundTag B)
         {
-            return A.Equals(B);
+            return Equals(A, B);
         }
 
         public static bool operator !=(CompoundTag A, CompoundTag B)
         {
-            return !A.Equals(B);
+            return !Equals(A, B);
         }
 
         public override int GetHashCode()
