@@ -134,7 +134,14 @@ namespace MineNET.Items
         {
             get
             {
-                return this.tags != null && this.tags.Length > 0;
+                if (this.tags != null)
+                {
+                    return this.tags.Length > 0;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 

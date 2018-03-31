@@ -186,9 +186,9 @@ namespace MineNET.NBT.IO
             }
         }
 
-        public static byte[] WriteTag(CompoundTag tag)
+        public static byte[] WriteTag(CompoundTag tag, NBTEndian endian = NBTEndian.LITTLE_ENDIAN)
         {
-            using (NBTStream stream = new NBTStream())
+            using (NBTStream stream = new NBTStream(endian))
             {
                 tag.Write(stream);
                 return stream.ToArray();
@@ -233,7 +233,7 @@ namespace MineNET.NBT.IO
             string[] canDestroy = item.CanDestroy;
             if (canDestroy.Length > 0)
             {
-                ListTag list = new ListTag("CanPlaceOn", NBTTagType.STRING);
+                ListTag list = new ListTag("CanDestroy", NBTTagType.STRING);
                 for (int i = 0; i < canDestroy.Length; ++i)
                 {
                     list.Add(new StringTag(canDestroy[i]));
