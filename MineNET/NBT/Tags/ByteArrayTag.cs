@@ -70,14 +70,8 @@ namespace MineNET.NBT.Tags
 
         internal override void ReadTag(NBTStream stream)
         {
-            stream.ReadByte();
             string name = stream.ReadString();
-            int len = stream.ReadInt();
-            this.Data = new byte[len];
-            for (int i = 0; i < len; ++i)
-            {
-                this.Data[i] = stream.ReadByte();
-            }
+            this.Read(stream);
         }
 
         public override bool Equals(object obj)

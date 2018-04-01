@@ -72,12 +72,7 @@ namespace MineNET.NBT.Tags
         {
             stream.ReadByte();
             string name = stream.ReadString();
-            int len = stream.ReadInt();
-            this.Data = new long[len];
-            for (int i = 0; i < len; ++i)
-            {
-                this.Data[i] = stream.ReadLong();
-            }
+            this.Read(stream);
         }
 
         public override bool Equals(object obj)
