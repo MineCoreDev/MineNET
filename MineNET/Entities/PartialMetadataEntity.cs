@@ -205,13 +205,13 @@ namespace MineNET.Entities
 
             if (this.IsPlayer)
             {
-                List<Player> players = new List<Player>(this.GetViewers());
+                List<Player> players = new List<Player>(this.Viewers);
                 players.Add((Player) this);
                 this.AsyncSendPacketPlayers(pk, players.ToArray());
             }
             else
             {
-                this.AsyncSendPacketPlayers(pk, this.GetViewers());
+                this.AsyncSendPacketPlayers(pk, this.Viewers);
             }
         }
 

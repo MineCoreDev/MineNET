@@ -38,7 +38,7 @@ namespace MineNET.NBT.Tags
         {
             if (this.Name != null)
             {
-                stream.WriteByte((byte) TagType);
+                stream.WriteByte((byte) this.TagType);
                 stream.WriteString(this.Name);
                 this.Write(stream);
             }
@@ -55,7 +55,6 @@ namespace MineNET.NBT.Tags
 
         internal override void ReadTag(NBTStream stream)
         {
-            stream.ReadByte();
             this.Name = stream.ReadString();
             this.Read(stream);
         }
@@ -80,11 +79,27 @@ namespace MineNET.NBT.Tags
 
         public static bool operator ==(StringTag A, StringTag B)
         {
+            if (object.ReferenceEquals(A, B))
+            {
+                return true;
+            }
+            if ((object) A == null || (object) B == null)
+            {
+                return false;
+            }
             return A.Equals(B);
         }
 
         public static bool operator !=(StringTag A, StringTag B)
         {
+            if (object.ReferenceEquals(A, B))
+            {
+                return false;
+            }
+            if ((object) A == null || (object) B == null)
+            {
+                return true;
+            }
             return !A.Equals(B);
         }
 

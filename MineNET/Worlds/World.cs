@@ -315,7 +315,7 @@ namespace MineNET.Worlds
             {
                 Block block = this.GetBlock(vector3[i]);
                 UpdateBlockPacket pk = new UpdateBlockPacket();
-                pk.Vector3 = vector3[i].Vector3i;
+                pk.Vector3 = vector3[i];
                 pk.BlockId = block.ID;
                 pk.BlockData = block.Damage;
                 pk.Flags = flags;

@@ -70,14 +70,8 @@ namespace MineNET.NBT.Tags
 
         internal override void ReadTag(NBTStream stream)
         {
-            stream.ReadByte();
             string name = stream.ReadString();
-            int len = stream.ReadInt();
-            this.Data = new byte[len];
-            for (int i = 0; i < len; ++i)
-            {
-                this.Data[i] = stream.ReadByte();
-            }
+            this.Read(stream);
         }
 
         public override bool Equals(object obj)
@@ -107,11 +101,27 @@ namespace MineNET.NBT.Tags
 
         public static bool operator ==(ByteArrayTag A, ByteArrayTag B)
         {
+            if (object.ReferenceEquals(A, B))
+            {
+                return true;
+            }
+            if ((object) A == null || (object) B == null)
+            {
+                return false;
+            }
             return A.Equals(B);
         }
 
         public static bool operator !=(ByteArrayTag A, ByteArrayTag B)
         {
+            if (object.ReferenceEquals(A, B))
+            {
+                return false;
+            }
+            if ((object) A == null || (object) B == null)
+            {
+                return true;
+            }
             return !A.Equals(B);
         }
 

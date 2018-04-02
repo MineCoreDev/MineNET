@@ -116,22 +116,6 @@ namespace MineNET.Values
             return new Position(this.X, this.Y, this.Z, world);
         }
 
-        public Vector3i Vector3i
-        {
-            get
-            {
-                return new Vector3i(this.FloorX, this.FloorY, this.FloorZ);
-            }
-        }
-
-        public Vector2 Vector2
-        {
-            get
-            {
-                return new Vector2(this.X, this.Y);
-            }
-        }
-
         public static Vector3 operator +(Vector3 A, Vector3 B)
         {
             return new Vector3(A.X + B.X, A.Y + B.Y, A.Z + B.Z);
@@ -140,6 +124,31 @@ namespace MineNET.Values
         public static Vector3 operator -(Vector3 A, Vector3 B)
         {
             return new Vector3(A.X - B.X, A.Y - B.Y, A.Z - B.Z);
+        }
+
+        public static Position operator +(Vector3 p, World world)
+        {
+            return new Position(p.X, p.Y, p.X, world);
+        }
+
+        public static implicit operator Vector3(Vector2 v)
+        {
+            return new Vector3(v.X, v.Y, 0f);
+        }
+
+        public static implicit operator Vector3(Vector3i v)
+        {
+            return new Vector3(v.X, v.Y, v.Z);
+        }
+
+        public static explicit operator Vector3(Position p)
+        {
+            return new Vector3(p.X, p.Y, p.Z);
+        }
+
+        public static explicit operator Vector3(Location l)
+        {
+            return new Vector3(l.X, l.Y, l.Z);
         }
     }
 }

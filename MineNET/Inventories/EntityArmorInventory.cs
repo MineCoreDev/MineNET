@@ -10,14 +10,14 @@ using MineNET.Network.Packets.Data;
 
 namespace MineNET.Inventories
 {
-    public class ArmorInventory : BaseInventory
+    public class EntityArmorInventory : BaseInventory
     {
         public const int SLOT_ARMOR_HEAD = 0;
         public const int SLOT_ARMOR_CHEST = 1;
         public const int SLOT_ARMOR_LEGS = 2;
         public const int SLOT_ARMOR_FEET = 3;
 
-        public ArmorInventory(EntityLiving entity) : base(entity)
+        public EntityArmorInventory(EntityLiving entity) : base(entity)
         {
             if (!entity.NamedTag.Exist("Armor"))
             {
@@ -58,7 +58,7 @@ namespace MineNET.Inventories
             if (send)
             {
                 this.SendSlot(index, this.Viewers.ToArray());
-                this.SendArmorContents(((EntityLiving) this.Holder).GetViewers());
+                this.SendArmorContents(((EntityLiving) this.Holder).Viewers);
             }
         }
 
@@ -119,12 +119,12 @@ namespace MineNET.Inventories
         {
             get
             {
-                return this.GetItem(ArmorInventory.SLOT_ARMOR_HEAD);
+                return this.GetItem(EntityArmorInventory.SLOT_ARMOR_HEAD);
             }
 
             set
             {
-                this.SetItem(ArmorInventory.SLOT_ARMOR_HEAD, value.Clone());
+                this.SetItem(EntityArmorInventory.SLOT_ARMOR_HEAD, value.Clone());
             }
         }
 
@@ -132,12 +132,12 @@ namespace MineNET.Inventories
         {
             get
             {
-                return this.GetItem(ArmorInventory.SLOT_ARMOR_CHEST);
+                return this.GetItem(EntityArmorInventory.SLOT_ARMOR_CHEST);
             }
 
             set
             {
-                this.SetItem(ArmorInventory.SLOT_ARMOR_CHEST, value.Clone());
+                this.SetItem(EntityArmorInventory.SLOT_ARMOR_CHEST, value.Clone());
             }
         }
 
@@ -145,12 +145,12 @@ namespace MineNET.Inventories
         {
             get
             {
-                return this.GetItem(ArmorInventory.SLOT_ARMOR_LEGS);
+                return this.GetItem(EntityArmorInventory.SLOT_ARMOR_LEGS);
             }
 
             set
             {
-                this.SetItem(ArmorInventory.SLOT_ARMOR_LEGS, value.Clone());
+                this.SetItem(EntityArmorInventory.SLOT_ARMOR_LEGS, value.Clone());
             }
         }
 
@@ -158,12 +158,12 @@ namespace MineNET.Inventories
         {
             get
             {
-                return this.GetItem(ArmorInventory.SLOT_ARMOR_FEET);
+                return this.GetItem(EntityArmorInventory.SLOT_ARMOR_FEET);
             }
 
             set
             {
-                this.SetItem(ArmorInventory.SLOT_ARMOR_FEET, value.Clone());
+                this.SetItem(EntityArmorInventory.SLOT_ARMOR_FEET, value.Clone());
             }
         }
 

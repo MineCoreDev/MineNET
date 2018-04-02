@@ -1,28 +1,30 @@
 ﻿using MineNET.Data;
+using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.Items;
 using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
+using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 
 namespace MineNET.Inventories
 {
-    public class PlayerOffhandInventory : BaseInventory
+    public class EntityOffhandInventory : BaseInventory
     {
-        public PlayerOffhandInventory(Player player) : base(player)
+        public EntityOffhandInventory(EntityLiving holder) : base(holder)
         {
-            if (!player.NamedTag.Exist("Offhand"))
+            if (!holder.NamedTag.Exist("Offhand"))
             {
                 ListTag newTag = new ListTag("Offhand", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
                     newTag.Add(NBTIO.WriteItem(Item.Get(0, 0, 0)));
                 }
-                player.NamedTag.PutList(newTag);
+                holder.NamedTag.PutList(newTag);
             }
 
-            ListTag items = player.NamedTag.GetList("Offhand");
+            ListTag items = holder.NamedTag.GetList("Offhand");
             for (int i = 0; i < this.Size; ++i)
             {
                 Item item = NBTIO.ReadItem((CompoundTag) items[i]);
@@ -46,7 +48,21 @@ namespace MineNET.Inventories
             }
         }
 
-        public Item Item
+        public override void OnSlotChange(int index, Item item, bool send)
+        {
+            base.OnSlotChange(index, item, send);
+
+            if (index == 0)
+            {
+                if (this.Holder is Player)
+                {
+                    this.SendOffHand((Player) this.Holder);
+                }
+                this.SendOffHand(this.Holder.Viewers);
+            }
+        }
+
+        public Item OffHandItem
         {
             get
             {
@@ -59,16 +75,29 @@ namespace MineNET.Inventories
             }
         }
 
-        public new Player Holder
+        public new EntityLiving Holder
         {
             get
             {
-                return (Player) base.Holder;
+                return (EntityLiving) base.Holder;
             }
 
             set
             {
                 base.Holder = value;
+            }
+        }
+
+        public void SendOffHand(params Player[] players)
+        {
+            for (int i = 0; i < players.Length; ++i)
+            {
+                MobEquipmentPacket pk = new MobEquipmentPacket();
+                pk.EntityRuntimeId = this.Holder.EntityID;
+                pk.Item = this.OffHandItem;
+                pk.InventorySlot = 0;
+                pk.WindowId = this.Type;
+                players[i].SendPacket(pk);
             }
         }
 

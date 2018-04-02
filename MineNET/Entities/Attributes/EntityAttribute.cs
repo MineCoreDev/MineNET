@@ -33,7 +33,7 @@ namespace MineNET.Entities.Attributes
             this.ShouldSend = shouldSend;
         }
 
-        float maxValue;
+        private float maxValue;
         public float MaxValue
         {
             get
@@ -50,7 +50,7 @@ namespace MineNET.Entities.Attributes
             }
         }
 
-        float minValue;
+        private float minValue;
         public float MinValue
         {
             get
@@ -67,7 +67,7 @@ namespace MineNET.Entities.Attributes
             }
         }
 
-        float value;
+        private float value;
         public float Value
         {
             get
@@ -84,7 +84,7 @@ namespace MineNET.Entities.Attributes
             }
         }
 
-        float defaultValue;
+        private float defaultValue;
         public float DefaultValue
         {
             get

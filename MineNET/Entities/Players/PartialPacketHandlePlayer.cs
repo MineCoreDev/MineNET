@@ -312,7 +312,7 @@ namespace MineNET.Entities.Players
             else if (pk.TransactionType == InventoryTransactionPacket.TYPE_USE_ITEM)
             {
                 UseItemData data = (UseItemData) pk.TransactionData;
-                Vector3 blockPos = data.BlockPos.Vector3;
+                Vector3 blockPos = data.BlockPos;
                 BlockFace face = data.Face;
                 if (data.ActionType == InventoryTransactionPacket.USE_ITEM_ACTION_CLICK_BLOCK)
                 {
@@ -331,7 +331,7 @@ namespace MineNET.Entities.Players
                     Item item = this.Inventory.MainHandItem;
                     if (this.CanInteract(blockPos + new Vector3(0.5f, 0.5f, 0.5f), this.IsCreative ? 13 : 7))
                     {
-                        this.World.UseBreak(data.BlockPos.Vector3, item, this);
+                        this.World.UseBreak(data.BlockPos, item, this);
                         if (this.IsSurvival)
                         {
                             //TODO : food
@@ -340,7 +340,7 @@ namespace MineNET.Entities.Players
                     }
                     else
                     {
-                        this.World.SendBlocks(new Player[] { this }, new Vector3[] { data.BlockPos.Vector3 });
+                        this.World.SendBlocks(new Player[] { this }, new Vector3[] { data.BlockPos });
                     }
                 }
             }
