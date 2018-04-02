@@ -56,6 +56,7 @@ namespace MineNET.NBT.Tags
 
         internal override void ReadTag(NBTStream stream)
         {
+            stream.ReadByte();
             this.Name = stream.ReadString();
             this.Read(stream);
         }
