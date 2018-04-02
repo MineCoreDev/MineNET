@@ -352,7 +352,6 @@
     <Compile Include="Blocks\BlockYellowFlower.cs" />
     <Compile Include="Blocks\BlockYellowGlazedTerracotta.cs" />
     <Compile Include="Blocks\Data\BlockFace.cs" />
-    <Compile Include="Blocks\Test.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CommandHandler.cs" />
     <Compile Include="Commands\CommandManager.cs" />
@@ -385,6 +384,7 @@
     <Compile Include="Commands\Parameters\CommandParameterText.cs" />
     <Compile Include="Commands\Parameters\CommandParameterValue.cs" />
     <Compile Include="Commands\Parameters\CommandParameterValueEnum.cs" />
+    <Compile Include="Entities\Attributes\EntityAttributeDictionary.cs" />
     <Compile Include="Entities\Data\GameMode.cs" />
     <Compile Include="Events\BlockEvents\BlockBreakEventArgs.cs" />
     <Compile Include="Events\BlockEvents\BlockEventArgs.cs" />
@@ -400,6 +400,7 @@
     <Compile Include="Events\PlayerEvents\PlayerCreateDataEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerInteractEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerCommandEventArgs.cs" />
+    <Compile Include="Inventories\EntityInventory.cs" />
     <Compile Include="Inventories\Transactions\Action\InventoryAction.cs" />
     <Compile Include="Inventories\Transactions\Action\SlotChangeAction.cs" />
     <Compile Include="Inventories\Transactions\Data\ReleaseItemData.cs" />
@@ -448,7 +449,7 @@
     <Compile Include="Events\ServerEvents\DataPacketSendArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerStartEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerStopEventArgs.cs" />
-    <Compile Include="Inventories\ArmorInventory.cs" />
+    <Compile Include="Inventories\EntityArmorInventory.cs" />
     <Compile Include="Inventories\ChestInventory.cs" />
     <Compile Include="Inventories\Data\InventoryType.cs" />
     <Compile Include="Network\Packets\Data\PlayerListEntry.cs" />
@@ -467,7 +468,7 @@
     <Compile Include="Inventories\PlayerCursorInventory.cs" />
     <Compile Include="Inventories\PlayerEnderChestInventory.cs" />
     <Compile Include="Inventories\PlayerInventory.cs" />
-    <Compile Include="Inventories\PlayerOffhandInventory.cs" />
+    <Compile Include="Inventories\EntityOffhandInventory.cs" />
     <Compile Include="Items\Data\ToolType.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemAcaciaDoor.cs" />

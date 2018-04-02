@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MineNET.Entities.Metadata;
 using MineNET.Entities.Players;
+using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Values;
@@ -31,7 +32,7 @@ namespace MineNET.Entities
         public float MotionY { get; set; }
         public float MotionZ { get; set; }
 
-        public CompoundTag NamedTag { get; protected set; }
+        public CompoundTag NamedTag { get; protected set; } = new CompoundTag();
 
         public long EntityID { get; }
 
@@ -61,16 +62,22 @@ namespace MineNET.Entities
             this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_HAS_COLLISION);
             this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_AFFECTED_BY_GRAVITY);
             //this.SetFlag(Entity.DATA_FLAGS, Entity.);
+            this.EntityInit();
         }
 
-        public Player[] GetViewers()
+        public abstract void EntityInit();
+
+        public Player[] Viewers
         {
-            return this.viewers.ToArray();
+            get
+            {
+                return this.viewers.ToArray();
+            }
         }
 
         public void SendPacketViewers(DataPacket pk)
         {
-            Player[] players = this.GetViewers();
+            Player[] players = this.Viewers;
             for (int i = 0; i < players.Length; ++i)
             {
                 if (players[i].HasSpawned)
@@ -195,7 +202,16 @@ namespace MineNET.Entities
 
         public virtual void SaveNBT()
         {
+            ListTag pos = new ListTag("Pos", NBTTagType.FLOAT);
+            pos.Add(new FloatTag(this.X));
+            pos.Add(new FloatTag(this.Y));
+            pos.Add(new FloatTag(this.Z));
+            this.NamedTag.PutList(pos);
 
+            ListTag rotation = new ListTag("Rotation", NBTTagType.FLOAT);
+            rotation.Add(new FloatTag(this.Yaw));
+            rotation.Add(new FloatTag(this.Pitch));
+            this.NamedTag.PutList(rotation);
         }
 
         public virtual void Close()

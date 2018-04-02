@@ -9,19 +9,15 @@ using MineNET.Network.Packets.Data;
 
 namespace MineNET.Inventories
 {
-    public class PlayerInventory : BaseInventory
+    public class PlayerInventory : EntityInventory
     {
-        private int mainHand = 0;
-
         private PlayerCursorInventory cursor;
-        private PlayerOffhandInventory offhand;
-        private ArmorInventory armor;
 
         private PlayerEnderChestInventory ender;
 
         private Inventory opend = null;
 
-        public PlayerInventory(Player player) : base(player)
+        public PlayerInventory(Player player) : base(player, 36)
         {
             if (!player.NamedTag.Exist("Inventory"))
             {
@@ -40,33 +36,9 @@ namespace MineNET.Inventories
                 this.SetItem(i, item, false);
             }
 
-            if (!player.NamedTag.Exist("Mainhand"))
-            {
-                player.NamedTag.PutInt("Mainhand", 0);
-            }
-            this.mainHand = player.NamedTag.GetInt("Mainhand");
-
             this.cursor = new PlayerCursorInventory(player);
-            this.offhand = new PlayerOffhandInventory(player);
-            this.armor = new ArmorInventory(player);
 
             this.ender = new PlayerEnderChestInventory(player);
-        }
-
-        public override int Size
-        {
-            get
-            {
-                return 36;
-            }
-        }
-
-        public override byte Type
-        {
-            get
-            {
-                return ContainerIds.INVENTORY.GetIndex();
-            }
         }
 
         public override void SendSlot(int index, params Player[] players)
@@ -114,111 +86,6 @@ namespace MineNET.Inventories
             player.SendPacket(pk);
         }
 
-        public void SendMainHand(params Player[] players)
-        {
-            for (int i = 0; i < players.Length; ++i)
-            {
-                MobEquipmentPacket pk = new MobEquipmentPacket();
-                pk.EntityRuntimeId = this.Holder.EntityID;
-                pk.Item = this.MainHandItem;
-                pk.InventorySlot = (byte) this.MainHandSlot;
-                pk.WindowId = this.Type;
-                players[i].SendPacket(pk);
-            }
-        }
-
-        public int MainHandSlot
-        {
-            get
-            {
-                return this.mainHand;
-            }
-
-            set
-            {
-                this.mainHand = value;
-                this.SendMainHand(this.Holder);
-            }
-        }
-
-        public Item MainHandItem
-        {
-            get
-            {
-                return this.GetItem(this.MainHandSlot);
-            }
-
-            set
-            {
-                this.SetItem(this.mainHand, value.Clone());
-            }
-        }
-
-        public Item OffHandItem
-        {
-            get
-            {
-                return this.PlayerOffhandInventory.Item;
-            }
-
-            set
-            {
-                this.PlayerOffhandInventory.Item = value;
-            }
-        }
-
-        public Item Helmet
-        {
-            get
-            {
-                return this.ArmorInventory.Helmet;
-            }
-
-            set
-            {
-                this.ArmorInventory.Helmet = value;
-            }
-        }
-
-        public Item ChestPlate
-        {
-            get
-            {
-                return this.ArmorInventory.ChestPlate;
-            }
-
-            set
-            {
-                this.ArmorInventory.ChestPlate = value;
-            }
-        }
-
-        public Item Leggings
-        {
-            get
-            {
-                return this.ArmorInventory.Leggings;
-            }
-
-            set
-            {
-                this.ArmorInventory.Leggings = value;
-            }
-        }
-
-        public Item Boots
-        {
-            get
-            {
-                return this.ArmorInventory.Boots;
-            }
-
-            set
-            {
-                this.ArmorInventory.Boots = value;
-            }
-        }
-
         internal void OpenInventory(Inventory inventory)
         {
             this.opend = inventory;
@@ -235,33 +102,25 @@ namespace MineNET.Inventories
             {
                 return this;
             }
-            else if (id == this.cursor.Type)
+            else if (id == this.PlayerCursorInventory.Type)
             {
-                return this.cursor;
+                return this.PlayerCursorInventory;
             }
-            else if (id == this.offhand.Type)
+            else if (id == this.PlayerOffhandInventory.Type)
             {
-                return this.offhand;
+                return this.PlayerOffhandInventory;
             }
-            else if (id == this.armor.Type)
+            else if (id == this.ArmorInventory.Type)
             {
-                return this.armor;
+                return this.ArmorInventory;
             }
-            else if (id == this.opend.Type)
+            else if (id == this.OpendInventory.Type)
             {
-                return this.opend;
+                return this.OpendInventory;
             }
             else
             {
                 return null;
-            }
-        }
-
-        public ArmorInventory ArmorInventory
-        {
-            get
-            {
-                return this.armor;
             }
         }
 
@@ -270,14 +129,6 @@ namespace MineNET.Inventories
             get
             {
                 return this.cursor;
-            }
-        }
-
-        public PlayerOffhandInventory PlayerOffhandInventory
-        {
-            get
-            {
-                return this.offhand;
             }
         }
 
@@ -299,6 +150,8 @@ namespace MineNET.Inventories
 
         public override void SaveNBT()
         {
+            base.SaveNBT();
+
             ListTag inventory = new ListTag("Inventory", NBTTagType.COMPOUND);
             for (int i = 0; i < this.Size; ++i)
             {
@@ -306,11 +159,7 @@ namespace MineNET.Inventories
             }
             this.Holder.NamedTag.PutList(inventory);
 
-            this.Holder.NamedTag.PutInt("MainHand", this.MainHandSlot);
-
             this.PlayerCursorInventory.SaveNBT();
-            this.PlayerOffhandInventory.SaveNBT();
-            this.ArmorInventory.SaveNBT();
 
             this.PlayerEnderChestInventory.SaveNBT();
         }
