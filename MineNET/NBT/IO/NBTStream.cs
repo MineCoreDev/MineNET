@@ -18,6 +18,8 @@ namespace MineNET.NBT.IO
             }
         }
 
+        public bool Network { get; set; }
+
         Encoding utf8 = new UTF8Encoding(false, false);
 
         public NBTStream(NBTEndian endian = NBTEndian.LITTLE_ENDIAN) : this(new byte[0], endian)
@@ -63,6 +65,10 @@ namespace MineNET.NBT.IO
 
         public new int ReadInt()
         {
+            if (this.Network)
+            {
+                return this.ReadSVarInt();
+            }
             if (this.swap)
             {
                 return (int) this.ReadLInt();
@@ -75,6 +81,11 @@ namespace MineNET.NBT.IO
 
         public new void WriteInt(int value)
         {
+            if (this.Network)
+            {
+                this.WriteSVarInt(value);
+                return;
+            }
             if (this.swap)
             {
                 this.WriteLInt((uint) value);
@@ -87,6 +98,10 @@ namespace MineNET.NBT.IO
 
         public new long ReadLong()
         {
+            if (this.Network)
+            {
+                return this.ReadSVarLong();
+            }
             if (this.swap)
             {
                 return (long) this.ReadLLong();
@@ -99,6 +114,11 @@ namespace MineNET.NBT.IO
 
         public new void WriteLong(long value)
         {
+            if (this.Network)
+            {
+                this.WriteSVarLong(value);
+                return;
+            }
             if (this.swap)
             {
                 this.WriteLLong((ulong) value);
@@ -157,14 +177,94 @@ namespace MineNET.NBT.IO
             }
         }
 
+        public new int ReadSVarInt()
+        {
+            if (this.swap)
+            {
+                return ~base.ReadSVarInt();
+            }
+            else
+            {
+                return base.ReadSVarInt();
+            }
+        }
+
+        public new void WriteSVarInt(int value)
+        {
+            if (this.swap)
+            {
+                base.WriteSVarInt(~value);
+            }
+            else
+            {
+                base.WriteSVarInt(value);
+            }
+        }
+
+        public new long ReadSVarLong()
+        {
+            if (this.swap)
+            {
+                return ~base.ReadSVarLong();
+            }
+            else
+            {
+                return base.ReadSVarLong();
+            }
+        }
+
+        public new void WriteSVarLong(long value)
+        {
+            if (this.swap)
+            {
+                base.WriteSVarLong(~value);
+            }
+            else
+            {
+                base.WriteSVarLong(value);
+            }
+        }
+
         public new string ReadString()
         {
-            return this.ReadFixedString();
+            int len = 0;
+            if (this.Network)
+            {
+                len = this.ReadSVarInt();
+            }
+            else
+            {
+                len = this.ReadShort();
+            }
+
+            return Encoding.UTF8.GetString(this.ReadBytes(len));
         }
 
         public new void WriteString(string value)
         {
-            this.WriteFixedString(value);
+            if (value == null)
+            {
+                if (this.Network)
+                {
+                    this.WriteSVarInt(0);
+                }
+                else
+                {
+                    this.WriteShort(0);
+                }
+                return;
+            }
+
+            byte[] buffer = Encoding.UTF8.GetBytes(value);
+            if (this.Network)
+            {
+                this.WriteSVarInt((int) buffer.Length);
+            }
+            else
+            {
+                this.WriteShort((short) buffer.Length);
+            }
+            this.WriteBytes(buffer);
         }
 
         static bool IsBigEndian(NBTEndian e)

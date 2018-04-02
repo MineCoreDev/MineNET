@@ -186,21 +186,23 @@ namespace MineNET.NBT.IO
             }
         }
 
-        public static byte[] WriteTag(CompoundTag tag, NBTEndian endian = NBTEndian.LITTLE_ENDIAN)
+        public static byte[] WriteTag(CompoundTag tag, NBTEndian endian = NBTEndian.LITTLE_ENDIAN, bool isNetwork = false)
         {
             using (NBTStream stream = new NBTStream(endian))
             {
-                tag.Write(stream);
+                stream.Network = isNetwork;
+                tag.WriteTag(stream);
                 return stream.ToArray();
             }
         }
 
-        public static CompoundTag ReadTag(byte[] bytes, NBTEndian endian = NBTEndian.LITTLE_ENDIAN)
+        public static CompoundTag ReadTag(byte[] bytes, NBTEndian endian = NBTEndian.LITTLE_ENDIAN, bool isNetwork = false)
         {
             CompoundTag tag = new CompoundTag();
             using (NBTStream stream = new NBTStream(bytes, endian))
             {
-                tag.Read(stream);
+                stream.Network = isNetwork;
+                tag.ReadTag(stream);
             }
 
             return tag;

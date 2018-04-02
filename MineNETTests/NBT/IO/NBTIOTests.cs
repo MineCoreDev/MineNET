@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MineNET.Items;
 using MineNET.NBT.Data;
@@ -120,6 +121,24 @@ namespace MineNET.NBT.IO.Tests
 
             NBTIO.WriteGZIPFile(Environment.CurrentDirectory + "\\test3.nbt", this.namedTag);
             Console.WriteLine(NBTIO.ReadGZIPFile(Environment.CurrentDirectory + "\\test3.nbt"));
+        }
+
+        [TestMethod()]
+        public void Test4()
+        {
+            /*this.namedTag = new CompoundTag();
+            Item item = Item.Get(10);
+            item.SetCustomName("Test");
+            this.namedTag.PutCompound("Item", NBTIO.WriteItem(item));
+
+            byte[] buffer = NBTIO.WriteTag(this.namedTag);
+            Console.WriteLine(NBTIO.ReadTag(buffer));*/
+            string tags = "0a0000090400656e63680a01000000020200696412000203006c766c01000000";
+            byte[] t = tags.Chunks(2).Select(x => Convert.ToByte(new string(x.ToArray()), 16)).ToArray();
+            CompoundTag com = NBTIO.ReadTag(t);
+            Console.WriteLine(com);
+            Console.WriteLine("");
+            Console.WriteLine(NBTIO.ReadTag(NBTIO.WriteTag(com)));
         }
     }
 }
