@@ -455,7 +455,6 @@
     <Compile Include="Network\Packets\Data\PlayerListEntry.cs" />
     <Compile Include="Data\ResourcePack.cs" />
     <Compile Include="Entities\Data\Skin.cs" />
-    <Compile Include="Entities\Attributes\EntityAttributePool.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Attributes\EntityAttribute.cs" />
     <Compile Include="Entities\EntityHuman.cs" />

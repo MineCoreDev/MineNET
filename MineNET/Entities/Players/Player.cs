@@ -30,6 +30,17 @@ namespace MineNET.Entities.Players
         public bool PackSyncCompleted { get; private set; }
         public bool HasSpawned { get; private set; }
 
+        public override void EntityInit()
+        {
+            base.EntityInit();
+
+            this.Attributes.AddAttribute(EntityAttribute.HUNGER);
+            this.Attributes.AddAttribute(EntityAttribute.SATURATION);
+            this.Attributes.AddAttribute(EntityAttribute.EXHAUSTION);
+            this.Attributes.AddAttribute(EntityAttribute.EXPERIENCE);
+            this.Attributes.AddAttribute(EntityAttribute.EXPERIENCE_LEVEL);
+        }
+
         private GameMode gameMode = GameMode.Survival;
         public GameMode GameMode
         {
@@ -75,11 +86,11 @@ namespace MineNET.Entities.Players
         {
             EntityAttribute[] atts = new EntityAttribute[]
             {
-                EntityAttribute.GetAttribute(EntityAttribute.HEALTH),
-                EntityAttribute.GetAttribute(EntityAttribute.HUNGER),
-                EntityAttribute.GetAttribute(EntityAttribute.MOVEMENT_SPEED),
-                EntityAttribute.GetAttribute(EntityAttribute.EXPERIENCE_LEVEL),
-                EntityAttribute.GetAttribute(EntityAttribute.EXPERIENCE)
+                EntityAttribute.HEALTH,
+                EntityAttribute.HUNGER,
+                EntityAttribute.MOVEMENT_SPEED,
+                EntityAttribute.EXPERIENCE_LEVEL,
+                EntityAttribute.EXPERIENCE
             };
 
             UpdateAttributesPacket updateAttributesPacket = new UpdateAttributesPacket();

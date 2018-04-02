@@ -52,29 +52,11 @@ namespace MineNET
         public YamlConfig OpsConfig { get; private set; }
         public YamlConfig WhitelistConfig { get; private set; }
 
-        public NetworkManager NetworkManager
-        {
-            get
-            {
-                return this.networkManager;
-            }
-        }
+        public NetworkManager NetworkManager { get; private set; }
 
-        public CommandManager CommandManager
-        {
-            get
-            {
-                return this.commandManager;
-            }
-        }
+        public CommandManager CommandManager { get; private set; }
 
-        public PluginManager PluginManager
-        {
-            get
-            {
-                return this.pluginManager;
-            }
-        }
+        public PluginManager PluginManager { get; private set; }
 
         public Logger Logger
         {
@@ -213,7 +195,7 @@ namespace MineNET
 
         public Player[] GetPlayers()
         {
-            return this.networkManager?.players.Values.ToArray();
+            return this.NetworkManager?.players.Values.ToArray();
         }
 
         public Player GetPlayer(string name)

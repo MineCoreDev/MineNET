@@ -23,10 +23,6 @@ namespace MineNET
         private MineNETConfig mineNETConfig;
         private ServerConfig serverConfig;
 
-        private NetworkManager networkManager;
-        private CommandManager commandManager;
-        private PluginManager pluginManager;
-
         private Dictionary<long, PlayerListEntry> playerListEntries = new Dictionary<long, PlayerListEntry>();
         private Dictionary<long, AdventureSettingsEntry> adventureSettingsEntry = new Dictionary<long, AdventureSettingsEntry>();
 
@@ -63,9 +59,9 @@ namespace MineNET
 
             this.LoadFiles();
 
-            this.commandManager = new CommandManager();
-            this.pluginManager = new PluginManager();
-            this.networkManager = new NetworkManager();
+            this.CommandManager = new CommandManager();
+            this.PluginManager = new PluginManager();
+            this.NetworkManager = new NetworkManager();
         }
 
         private void InitConfig()
@@ -188,7 +184,7 @@ namespace MineNET
             string cmd = this.consoleInput.GetCommand();
             if (!string.IsNullOrEmpty(cmd))
             {
-                this.commandManager.HandleConsoleCommand(cmd);
+                this.CommandManager.HandleConsoleCommand(cmd);
             }
         }
 

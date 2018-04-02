@@ -275,36 +275,36 @@ namespace MineNET.Utils
 
         internal void Update()
         {
-            if (loggerTexts.Count == 0)
+            if (this.loggerTexts.Count == 0)
             {
                 return;
             }
 
             for (int i = 0; i < 10; ++i)
             {
-                if (loggerTexts.Count == 0)
+                if (this.loggerTexts.Count == 0)
                 {
                     return;
                 }
 
-                LoggerInfo info = loggerTexts.Dequeue();
+                LoggerInfo info = this.loggerTexts.Dequeue();
                 if (info != null)
                 {
                     string log = info.text;
                     if (!this.UseGUI)
                     {
-                        CUIFormat(log);
+                        this.CUIFormat(log);
                     }
                     else
                     {
                         RemoveColorCode(ref log);
                         info.text = log;
-                        GuiLoggerTexts.Enqueue(info);
+                        this.GuiLoggerTexts.Enqueue(info);
                     }
 
                     if (info.level != LoggerLevel.Log)
                     {
-                        WriteLog(log);
+                        this.WriteLog(log);
                     }
                 }
             }
@@ -321,7 +321,7 @@ namespace MineNET.Utils
                     continue;
                 }
                 if (f[i] == null || f[i] == string.Empty) continue;
-                CUIOutputFormatColor(f[i]);
+                this.CUIOutputFormatColor(f[i]);
             }
             Console.ResetColor();
             Console.Write(Environment.NewLine);

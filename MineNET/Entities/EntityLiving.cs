@@ -11,7 +11,9 @@ namespace MineNET.Entities
 
         public override void EntityInit()
         {
-            this.Attributes.AddAttribute();
+            this.Attributes.AddAttribute(EntityAttribute.HEALTH);
+            this.Attributes.AddAttribute(EntityAttribute.KNOCKBACK_RESISTANCE);
+            this.Attributes.AddAttribute(EntityAttribute.MOVEMENT_SPEED);
         }
     }
 }

@@ -3,25 +3,21 @@ using MineNET.Utils;
 
 namespace MineNET.Entities.Attributes
 {
-    public class EntityAttribute : ICloneable<EntityAttribute>
+    public struct EntityAttribute : ICloneable<EntityAttribute>
     {
-        public const int ABSORPTION = 0;
-        public const int SATURATION = 1;
-        public const int EXHAUSTION = 2;
-        public const int KNOCKBACK_RESISTANCE = 3;
-        public const int HEALTH = 4;
-        public const int MOVEMENT_SPEED = 5;
-        public const int FOLLOW_RANGE = 6;
-        public const int HUNGER = 7;
-        public const int FOOD = 7;
-        public const int ATTACK_DAMAGE = 8;
-        public const int EXPERIENCE_LEVEL = 9;
-        public const int EXPERIENCE = 10;
-
-        public static EntityAttribute GetAttribute(int id)
-        {
-            return EntityAttributePool.GetAttribute(id);
-        }
+        public static readonly EntityAttribute ABSORPTION = new EntityAttribute("minecraft:absorption", 340282346638528859811704183484516925440.0f, 0f, 0f);
+        public static readonly EntityAttribute SATURATION = new EntityAttribute("minecraft:player.saturation", 20.0f, 0f, 5.0f);
+        public static readonly EntityAttribute EXHAUSTION = new EntityAttribute("minecraft:player.exhaustion", 5.0f, 0f, 0.41f);
+        public static readonly EntityAttribute KNOCKBACK_RESISTANCE = new EntityAttribute("minecraft:knockback_resistance", 1.0f, 0.0f, 0.0f);
+        public static readonly EntityAttribute HEALTH = new EntityAttribute("minecraft:health", 20.0f, 0.0f, 20.0f);
+        public static readonly EntityAttribute MOVEMENT_SPEED = new EntityAttribute("minecraft:movement", 340282346638528859811704183484516925440.0f, 0.0f, 0.10f);
+        public static readonly EntityAttribute FOLLOW_RANGE = new EntityAttribute("minecraft:follow_range", 2048.0f, 0.0f, 16.0f, false);
+        public static readonly EntityAttribute HUNGER = new EntityAttribute("minecraft:player.hunger", 20.0f, 0.0f, 20.0f);
+        public static readonly EntityAttribute ATTACK_DAMAGE = new EntityAttribute("minecraft:attack_damage", 340282346638528859811704183484516925440.0f, 0.0f, 1.0f, false);
+        public static readonly EntityAttribute EXPERIENCE_LEVEL = new EntityAttribute("minecraft:player.level", 24791.0f, 0.0f, 0.0f);
+        public static readonly EntityAttribute EXPERIENCE = new EntityAttribute("minecraft:player.experience", 1.0f, 0.0f, 0.0f);
+        public static readonly EntityAttribute LUCK = new EntityAttribute("minecraft:luck", 1024.0f, 0.0f, 0.0f, false);
+        public static readonly EntityAttribute FALL_DAMAGE = new EntityAttribute("minecraft:fall_damage", 340282346638528859811704183484516925440.0f, 0.0f, 1.0f, false);
 
         public EntityAttribute(string name, float max, float min, float defaultValue, bool shouldSend = true)
         {
@@ -32,6 +28,10 @@ namespace MineNET.Entities.Attributes
             this.Name = name;
             this.ShouldSend = shouldSend;
         }
+
+        public string Name { get; set; }
+
+        public bool ShouldSend { get; }
 
         private float maxValue;
         public float MaxValue
@@ -100,10 +100,6 @@ namespace MineNET.Entities.Attributes
                 }
             }
         }
-
-        public string Name { get; set; }
-
-        public bool ShouldSend { get; }
 
         public EntityAttribute Clone()
         {
