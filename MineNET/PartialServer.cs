@@ -70,11 +70,25 @@ namespace MineNET
 
         private void InitConfig()
         {
-            string mPath = $"{ExecutePath}\\MineNET.yml";
-            string sPath = $"{ExecutePath}\\ServerProperties.yml";
-            this.mineNETConfig = YamlStaticConfig.Load<MineNETConfig>(mPath);
+            string serverPath = $"{ExecutePath}\\ServerProperties.yml";
+            this.serverConfig = YamlStaticConfig.Load<ServerConfig>(serverPath);
+
+            string minePath = $"{ExecutePath}\\MineNET.yml";
+            this.mineNETConfig = YamlStaticConfig.Load<MineNETConfig>(minePath);
+
             LangManager.Lang = this.mineNETConfig.Language;
-            this.serverConfig = YamlStaticConfig.Load<ServerConfig>(sPath);
+
+            string banPath = $"{ExecutePath}\\banned-players.yml";
+            this.BanConfig = YamlConfig.Load(banPath);
+
+            string banIpPath = $"{ExecutePath}\\banned-ips.yml";
+            this.BanIpConfig = YamlConfig.Load(banIpPath);
+
+            string opPath = $"{ExecutePath}\\ops.yml";
+            this.OpsConfig = YamlConfig.Load(opPath);
+
+            string whitelistPath = $"{ExecutePath}\\whitelist.yml";
+            this.WhitelistConfig = YamlConfig.Load(whitelistPath);
         }
 
         private void InitFolder()
@@ -109,7 +123,7 @@ namespace MineNET
 
         private void UnloadWorld()
         {
-            foreach (World w in worlds.Values)
+            foreach (World w in this.worlds.Values)
             {
                 w.Format.WorldData.Save(w);
             }
@@ -136,15 +150,15 @@ namespace MineNET
                 Player[] players = this.GetPlayers();
                 for (int i = 0; i < players?.Length; ++i)
                 {
-                    players[i].OnUpdate(tick);
+                    players[i].OnUpdate(this.tick);
                 }
 
-                if (tick % 20 == 0)
+                if (this.tick % 20 == 0)
                 {
                     this.SendPlayersChunk();
                 }
 
-                ++tick;
+                ++this.tick;
             }
         }
 

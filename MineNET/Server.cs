@@ -9,6 +9,7 @@ using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Plugins;
 using MineNET.Utils;
+using MineNET.Utils.Config;
 
 namespace MineNET
 {
@@ -18,7 +19,7 @@ namespace MineNET
         {
             get
             {
-                return instance;
+                return Server.instance;
             }
         }
 
@@ -45,6 +46,11 @@ namespace MineNET
                 return Environment.CurrentDirectory;
             }
         }
+
+        public YamlConfig BanConfig { get; private set; }
+        public YamlConfig BanIpConfig { get; private set; }
+        public YamlConfig OpsConfig { get; private set; }
+        public YamlConfig WhitelistConfig { get; private set; }
 
         public NetworkManager NetworkManager
         {
