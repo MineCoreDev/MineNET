@@ -457,11 +457,11 @@ namespace MineNET.Items
                 return new string[0];
             }
             CompoundTag display = tag.GetCompound("display");
-            if (!display.Exist("lore"))
+            if (!display.Exist("Lore"))
             {
                 return new string[0];
             }
-            ListTag lores = display.GetList("lore");
+            ListTag lores = display.GetList("Lore");
             string[] data = new string[lores.Count];
             for (int i = 0; i < lores.Count; ++i)
             {
@@ -487,7 +487,7 @@ namespace MineNET.Items
                 {
                     tag = new CompoundTag();
                 }
-                ListTag list = new ListTag("lore", NBTTagType.STRING);
+                ListTag list = new ListTag("Lore", NBTTagType.STRING);
                 for (int i = 0; i < lores.Length; ++i)
                 {
                     list.Add(new StringTag(lores[i]));
@@ -517,7 +517,7 @@ namespace MineNET.Items
                 return this;
             }
             CompoundTag tag = this.GetNamedTag();
-            ListTag list = tag.GetCompound("display").GetList("lore");
+            ListTag list = tag.GetCompound("display").GetList("Lore");
             for (int i = 0; i < lores.Length; ++i)
             {
                 list.Add(new StringTag(lores[i]));
@@ -539,9 +539,9 @@ namespace MineNET.Items
                 return this;
             }
             CompoundTag display = tag.GetCompound("display");
-            if (display.Exist("lore"))
+            if (display.Exist("Lore"))
             {
-                display.Remove("lore");
+                display.Remove("Lore");
             }
             this.SetNamedTag(tag);
             return this;
