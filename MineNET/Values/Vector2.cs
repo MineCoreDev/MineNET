@@ -46,14 +46,20 @@ namespace MineNET.Values
             }
         }
 
-        public int GetFloorX()
+        public int FloorX
         {
-            return (int) Math.Floor(this.X);
+            get
+            {
+                return (int) Math.Floor(this.X);
+            }
         }
 
-        public int GetFloorY()
+        public int FloorY
         {
-            return (int) Math.Floor(this.Y);
+            get
+            {
+                return (int) Math.Floor(this.Y);
+            }
         }
 
         public override string ToString()
@@ -277,6 +283,11 @@ namespace MineNET.Values
             return new Vector2(a.X + b.X, a.Y + b.Y);
         }
 
+        public static Vector3 operator +(Vector2 a, float b)
+        {
+            return new Vector3(a.X, a.Y, b);
+        }
+
         public static Vector2 operator -(Vector2 a, Vector2 b)
         {
             return new Vector2(a.X - b.X, a.Y - b.Y);
@@ -312,14 +323,24 @@ namespace MineNET.Values
             return Vector2.SqrMagnitude(lhs - rhs) >= 9.99999944E-11f;
         }
 
-        public static implicit operator Vector2(Vector3 v)
+        public static explicit operator Vector2(Vector3 v)
         {
             return new Vector2(v.X, v.Y);
         }
 
-        public static implicit operator Vector3(Vector2 v)
+        public static explicit operator Vector2(Vector3i v)
         {
-            return new Vector3(v.X, v.Y, 0f);
+            return new Vector2(v.X, v.Y);
+        }
+
+        public static explicit operator Vector2(Position p)
+        {
+            return new Vector2(p.X, p.Y);
+        }
+
+        public static explicit operator Vector2(Location l)
+        {
+            return new Vector2(l.X, l.Y);
         }
     }
 }

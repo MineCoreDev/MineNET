@@ -1,4 +1,5 @@
-﻿using MineNET.Worlds;
+﻿using System;
+using MineNET.Worlds;
 
 namespace MineNET.Values
 {
@@ -25,28 +26,33 @@ namespace MineNET.Values
             this.World = world;
         }
 
-        public Position Position
+        public int FloorX
         {
             get
             {
-                return new Position(this.X, this.Y, this.Z, this.World);
+                return (int) Math.Floor(this.X);
             }
         }
 
-        public Vector3 Vector3
+        public int FloorY
         {
             get
             {
-                return new Vector3(this.X, this.Y, this.Z);
+                return (int) Math.Floor(this.Y);
             }
         }
 
-        public Vector2 Vector2
+        public int FloorZ
         {
             get
             {
-                return new Vector2(this.X, this.Y);
+                return (int) Math.Floor(this.Z);
             }
+        }
+
+        public static implicit operator Location(Position p)
+        {
+            return new Location(p.X, p.Y, p.Z, 0f, 0f, p.World);
         }
     }
 }

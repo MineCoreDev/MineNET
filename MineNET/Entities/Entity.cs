@@ -170,7 +170,7 @@ namespace MineNET.Entities
         {
             get
             {
-                return this.Vector3.Vector3i;
+                return this.Vector3;
             }
         }
 
