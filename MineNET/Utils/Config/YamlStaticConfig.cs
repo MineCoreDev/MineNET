@@ -76,10 +76,10 @@ namespace MineNET.Utils.Config
             catch
             {
                 Logger.Error("%server_exception_config");
-                Logger.Notice("%server_exception_config2", filePath);
+                Logger.Notice("%server_exception_config2", this.filePath);
                 throw new IOException(LangManager.GetString("server_exception_config")
                     + Environment.NewLine
-                    + string.Format(LangManager.GetString("server_exception_config2"), filePath));
+                    + string.Format(LangManager.GetString("server_exception_config2"), this.filePath));
             }
         }
     }
