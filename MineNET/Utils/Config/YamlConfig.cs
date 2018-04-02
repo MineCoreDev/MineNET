@@ -16,22 +16,22 @@ namespace MineNET.Utils.Config
             {
                 if (File.Exists(filePath))
                 {
-                    using (StreamReader r = new StreamReader(filePath, false))
+                    using (StreamReader r = new StreamReader(filePath, Encoding.UTF8, false))
                     {
                         Deserializer s = new DeserializerBuilder()
                             .Build();
-                        YamlConfig conv = s.Deserialize<YamlConfig>(r);
+                        YamlConfig conv = new YamlConfig();
+                        conv.Root = s.Deserialize<Dictionary<string, object>>(r);
                         conv.FilePath = filePath;
                         return (YamlConfig) Convert.ChangeType(conv, typeof(YamlConfig));
                     }
                 }
                 else
                 {
-                    object ins = Activator.CreateInstance(typeof(YamlConfig));
-                    YamlConfig conv = (YamlConfig) ins;
+                    YamlConfig conv = new YamlConfig();
                     conv.FilePath = filePath;
                     conv.Save();
-                    return (YamlConfig) conv;
+                    return conv;
                 }
             }
             catch (YamlException e)
@@ -45,7 +45,7 @@ namespace MineNET.Utils.Config
 
         [YamlIgnore]
         public string FilePath { get; private set; }
-        public Dictionary<string, object> Datas { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> Root { get; set; } = new Dictionary<string, object>();
 
         public void Save()
         {
@@ -57,7 +57,7 @@ namespace MineNET.Utils.Config
                     .WithTypeInspector(inner => new CommentTypeInspector(inner))
                     .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
                 Serializer s = sb.Build();
-                s.Serialize(w, this, typeof(YamlConfig));
+                s.Serialize(w, this.Root, typeof(Dictionary<string, object>));
                 w.Close();
             }
             else
@@ -70,7 +70,7 @@ namespace MineNET.Utils.Config
                     .WithTypeInspector(inner => new CommentTypeInspector(inner))
                     .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
                 Serializer s = sb.Build();
-                s.Serialize(w, this, typeof(YamlConfig));
+                s.Serialize(w, this.Root, typeof(Dictionary<string, object>));
                 w.Close();
             }
         }
