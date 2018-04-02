@@ -32,5 +32,21 @@ namespace MineNET.Values
                 return new Position(this.X, this.Y, this.Z, this.World);
             }
         }
+
+        public Vector3 Vector3
+        {
+            get
+            {
+                return new Vector3(this.X, this.Y, this.Z);
+            }
+        }
+
+        public Vector2 Vector2
+        {
+            get
+            {
+                return new Vector2(this.X, this.Y);
+            }
+        }
     }
 }

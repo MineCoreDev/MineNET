@@ -666,11 +666,27 @@ namespace MineNET.Items
 
         public static bool operator ==(Item A, Item B)
         {
+            if (object.ReferenceEquals(A, B))
+            {
+                return true;
+            }
+            if ((object) A == null || (object) B == null)
+            {
+                return false;
+            }
             return A.Equals(B);
         }
 
         public static bool operator !=(Item A, Item B)
         {
+            if (object.ReferenceEquals(A, B))
+            {
+                return false;
+            }
+            if ((object) A == null || (object) B == null)
+            {
+                return true;
+            }
             return !A.Equals(B);
         }
 
