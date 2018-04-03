@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace MineNET.Utils
 {
-    public sealed class ConsoleInput
+    public sealed class ConsoleInput : IConsoleInput
     {
         Queue<string> commandQueue = new Queue<string>();
 

@@ -17,7 +17,7 @@ namespace MineNET.GUI.Items
         {
             while (!Server.Instance.IsShutdown())
             {
-                Queue<Logger.LoggerInfo> queue = Server.Instance.Logger.GuiLoggerTexts;
+                Queue<LoggerInfo> queue = Server.Instance.Logger.GuiLoggerTexts;
                 if (queue.Count == 0)
                 {
                     await Task.Delay(1000 / 200);
@@ -25,12 +25,12 @@ namespace MineNET.GUI.Items
                 }
                 else
                 {
-                    Logger.LoggerInfo info = queue.Dequeue();
-                    if (this.CheckShowOutput(info.level))
+                    LoggerInfo info = queue.Dequeue();
+                    if (this.CheckShowOutput(info.Level))
                     {
-                        if (!string.IsNullOrEmpty(info.text))
+                        if (!string.IsNullOrEmpty(info.Text))
                         {
-                            textBox1.AppendText(info.text + Environment.NewLine);
+                            textBox1.AppendText(info.Text + Environment.NewLine);
                         }
                     }
                 }
@@ -131,7 +131,7 @@ namespace MineNET.GUI.Items
             }
         }
 
-        private bool CheckShowOutput(Logger.LoggerLevel level)
+        private bool CheckShowOutput(LoggerLevel level)
         {
             int t = (int) level;
             return checkedListBox1.GetItemChecked(t);

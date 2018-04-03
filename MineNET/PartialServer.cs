@@ -18,8 +18,6 @@ namespace MineNET
     {
         private static Server instance;
 
-        private ConsoleInput consoleInput;
-
         private MineNETConfig mineNETConfig;
         private ServerConfig serverConfig;
 
@@ -30,8 +28,6 @@ namespace MineNET
 
         private int tick = 0;
 
-        private Logger logger;
-
         private bool isShutdown;
 
         private void Init()
@@ -41,8 +37,8 @@ namespace MineNET
 
             if (this.mineNETConfig.EnableConsoleOutput)
             {
-                this.logger = new Logger();
-                this.logger.Init();
+                this.Logger = new Logger();
+                this.Logger.Init();
                 this.UpdateLogger();
             }
 
@@ -50,13 +46,12 @@ namespace MineNET
 
             this.InitWorld();
 
-            this.Update();
-
             if (this.mineNETConfig.EnableConsoleInput)
             {
-                this.consoleInput = new ConsoleInput();
+                this.ConsoleInput = new ConsoleInput();
             }
 
+            this.Update();
             this.LoadFiles();
 
             this.CommandManager = new CommandManager();
@@ -137,7 +132,7 @@ namespace MineNET
         {
             while (!IsShutdown())
             {
-                await Task.Delay(1000 / 20);
+                ClockConstantController.Start("server");
                 if (this.mineNETConfig.EnableConsoleInput)
                 {
                     this.CommandHandle();
@@ -153,6 +148,7 @@ namespace MineNET
                 {
                     this.SendPlayersChunk();
                 }
+                await ClockConstantController.Stop("server");
 
                 ++this.tick;
             }
@@ -175,13 +171,13 @@ namespace MineNET
             while (!IsShutdown())
             {
                 await Task.Delay(1000 / 20);
-                this.logger.Update();
+                this.Logger.Update();
             }
         }
 
         private void CommandHandle()
         {
-            string cmd = this.consoleInput.GetCommand();
+            string cmd = this.ConsoleInput.GetCommand();
             if (!string.IsNullOrEmpty(cmd))
             {
                 this.CommandManager.HandleConsoleCommand(cmd);

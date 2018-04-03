@@ -794,6 +794,7 @@
     <Compile Include="ServerException.cs" />
     <Compile Include="Utils\Binary.cs" />
     <Compile Include="Utils\BinaryStream.cs" />
+    <Compile Include="Utils\ClockConstantController.cs" />
     <Compile Include="Utils\ColorText.cs" />
     <Compile Include="Utils\Config\Yaml\Attributes\YamlDescriptionAttribute.cs" />
     <Compile Include="Utils\Config\JsonConfig.cs" />
@@ -807,6 +808,7 @@
     <Compile Include="Utils\ConsoleInput.cs" />
     <Compile Include="Utils\ICloneable.cs" />
     <Compile Include="Utils\IConfig.cs" />
+    <Compile Include="Utils\IConsoleInput.cs" />
     <Compile Include="Utils\JWT.cs" />
     <Compile Include="Utils\LangManager.cs" />
     <Compile Include="Utils\LinqExtention.cs" />
@@ -857,6 +859,7 @@
     <EmbeddedResource Include="Resources\Lang\ja_JP.resx" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Events\WorldEvents\" />
     <Folder Include="Resources\ClassDiagrams\" />
   </ItemGroup>
   <ItemGroup>
