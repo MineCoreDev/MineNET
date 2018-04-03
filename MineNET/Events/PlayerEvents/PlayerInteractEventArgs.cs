@@ -7,9 +7,9 @@ namespace MineNET.Events.PlayerEvents
 {
     public class PlayerInteractEventArgs : PlayerEventArgs, ICancellable
     {
-        public Item Item { get; set; }
-        public Block Target { get; set; }
-        public BlockFace BlockFace { get; set; }
+        public Item Item { get; }
+        public Block Target { get; }
+        public BlockFace BlockFace { get; }
 
         public bool IsCancel { get; set; }
 

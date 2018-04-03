@@ -307,7 +307,7 @@ namespace MineNET.Utils
 
         public void WriteBlockFace(BlockFace face)
         {
-            this.WriteVarInt(face.GetIndex());
+            this.WriteSVarInt(face.GetIndex());
         }
     }
 }
