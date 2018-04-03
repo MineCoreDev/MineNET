@@ -397,7 +397,10 @@
     <Compile Include="Events\PlayerEvents\PlayerChatEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCommandPreprocessEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCreateDataEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerEatFoodEvent.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerExhaustEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerInteractEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerItemConsumeableEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerJumpEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerToggleGlideEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerToggleSneakEventArgs.cs" />
@@ -412,6 +415,7 @@
     <Compile Include="Inventories\Transactions\Data\UseItemData.cs" />
     <Compile Include="Inventories\Transactions\Data\UseItemOnEntityData.cs" />
     <Compile Include="Inventories\Transactions\InventoryTransaction.cs" />
+    <Compile Include="Items\Data\Consumeable.cs" />
     <Compile Include="NBT\IO\NBTJsonSerializer.cs" />
     <Compile Include="Network\Packets\AddEntityPacket.cs" />
     <Compile Include="Network\Packets\AddPlayerPacket.cs" />
@@ -694,6 +698,7 @@
     <Compile Include="Network\Packets\ChunkRadiusUpdatedPacket.cs" />
     <Compile Include="Network\Packets\ContainerClosePacket.cs" />
     <Compile Include="Network\Packets\ContainerOpenPacket.cs" />
+    <Compile Include="Network\Packets\EntityEventPacket.cs" />
     <Compile Include="Network\Packets\FullChunkDataPacket.cs" />
     <Compile Include="Network\Packets\GameRulesChangedPacket.cs" />
     <Compile Include="Network\Packets\InventoryContentPacket.cs" />

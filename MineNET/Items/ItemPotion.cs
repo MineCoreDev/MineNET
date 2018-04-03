@@ -1,6 +1,9 @@
-﻿namespace MineNET.Items
+﻿using MineNET.Entities.Players;
+using MineNET.Items.Data;
+
+namespace MineNET.Items
 {
-    public class ItemPotion : ItemFood
+    public class ItemPotion : Item, Consumeable
     {
         public ItemPotion() : base(ItemFactory.POTION)
         {
@@ -21,6 +24,11 @@
             {
                 return 1;
             }
+        }
+
+        public void OnConsume(Player player)
+        {
+            //TODO
         }
     }
 }

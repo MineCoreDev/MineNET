@@ -149,23 +149,29 @@ namespace MineNET.Entities.Players
             }
         }
 
-        public void AddExhaustion(float value)
+        public void AddExhaustion(float amount, int cause)
         {
             if (this.IsCreative || this.IsSpectator)
             {
                 return;
             }
-            float exhaustion = this.Exhaustion + value;
-            if (exhaustion >= 4f)
+            PlayerExhaustEventArgs playerExhaustEvent = new PlayerExhaustEventArgs(this, amount, cause);
+            PlayerEvents.OnPlayerExhaust(playerExhaustEvent);
+            if (playerExhaustEvent.IsCancel)
             {
-                exhaustion -= 4;
+                return;
+            }
+            float exhaustion = this.Exhaustion + playerExhaustEvent.Amount;
+            while (exhaustion >= 4f)
+            {
+                exhaustion -= 4f;
                 if (this.Saturation != 0)
                 {
-                    this.TakeSaturation(1);
+                    this.TakeSaturation(1f);
                 }
                 else
                 {
-                    this.TakeHunger(1);
+                    this.TakeHunger(1f);
                 }
             }
             this.Exhaustion = exhaustion;

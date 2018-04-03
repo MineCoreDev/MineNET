@@ -1,6 +1,6 @@
 ﻿namespace MineNET.Items
 {
-    public class ItemBeef : Item
+    public class ItemBeef : ItemFood
     {
         public ItemBeef() : base(ItemFactory.BEEF)
         {

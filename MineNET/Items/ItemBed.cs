@@ -2,7 +2,7 @@
 
 namespace MineNET.Items
 {
-    public class ItemBed : ItemFood
+    public class ItemBed : Item
     {
         public ItemBed() : base(ItemFactory.BED)
         {

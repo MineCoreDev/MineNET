@@ -20,10 +20,28 @@
             PlayerCreateData?.Invoke(args);
         }
 
+        public static event EventHandler<PlayerEatFoodEvent> PlayerEatFood;
+        public static void OnPlayerEatFood(PlayerEatFoodEvent args)
+        {
+            PlayerEatFood?.Invoke(args);
+        }
+
+        public static event EventHandler<PlayerExhaustEventArgs> PlayerExhaust;
+        public static void OnPlayerExhaust(PlayerExhaustEventArgs args)
+        {
+            PlayerExhaust?.Invoke(args);
+        }
+
         public static event EventHandler<PlayerInteractEventArgs> PlayerInteract;
         public static void OnPlayerInteract(PlayerInteractEventArgs args)
         {
             PlayerInteract?.Invoke(args);
+        }
+
+        public static event EventHandler<PlayerItemConsumeableEventArgs> PlayerItemConsumeable;
+        public static void OnPlayerItemConsumeable(PlayerItemConsumeableEventArgs args)
+        {
+            PlayerItemConsumeable?.Invoke(args);
         }
 
         public static event EventHandler<PlayerJoinEventArgs> PlayerJoin;

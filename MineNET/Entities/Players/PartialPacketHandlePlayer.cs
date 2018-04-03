@@ -7,6 +7,7 @@ using MineNET.Inventories.Transactions;
 using MineNET.Inventories.Transactions.Action;
 using MineNET.Inventories.Transactions.Data;
 using MineNET.Items;
+using MineNET.Items.Data;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Utils;
@@ -43,6 +44,10 @@ namespace MineNET.Entities.Players
             else if (pk is CommandRequestPacket)
             {
                 this.CommandRequestPacketHandle((CommandRequestPacket) pk);
+            }
+            else if (pk is EntityEventPacket)
+            {
+                this.EntityEventHandle((EntityEventPacket) pk);
             }
             else if (pk is InventoryTransactionPacket)
             {
@@ -281,6 +286,30 @@ namespace MineNET.Entities.Players
             Server.Instance.CommandManager.HandlePlayerCommand(this, command);
         }
 
+        private void EntityEventHandle(EntityEventPacket pk)
+        {
+            if (pk.EventId == EntityEventPacket.EATING_ITEM)
+            {
+                if (pk.Data != this.Inventory.MainHandItem.ID)
+                {
+                    this.Inventory.SendMainHand(this);
+                    return;
+                }
+                pk = new EntityEventPacket();
+                pk.EventId = EntityEventPacket.EATING_ITEM;
+                pk.Data = this.Inventory.MainHandItem.ID;
+                this.SendPacket(pk);
+                Player[] players = this.Viewers;
+                for (int i = 0; i < players.Length; ++i)
+                {
+                    pk = new EntityEventPacket();
+                    pk.EventId = EntityEventPacket.EATING_ITEM;
+                    pk.Data = this.Inventory.MainHandItem.ID;
+                    players[i].SendPacket(pk);
+                }
+            }
+        }
+
         private void InventoryTransactionHandle(InventoryTransactionPacket pk)
         {
             List<InventoryAction> actions = new List<InventoryAction>();
@@ -358,7 +387,37 @@ namespace MineNET.Entities.Players
             }
             else if (pk.TransactionType == InventoryTransactionPacket.TYPE_RELEASE_ITEM)
             {
+                ReleaseItemData data = (ReleaseItemData) pk.TransactionData;
+                if (data.ActionType == InventoryTransactionPacket.RELEASE_ITEM_ACTION_RELEASE)
+                {
 
+                }
+                else if (data.ActionType == InventoryTransactionPacket.RELEASE_ITEM_ACTION_CONSUME)
+                {
+                    if (this.Inventory.MainHandItem != data.MainHandItem || this.Inventory.MainHandSlot != data.HotbarSlot)
+                    {
+                        this.Inventory.SendMainHand(this);
+                        Logger.Info(1);
+                        return;
+                    }
+                    Item item = this.Inventory.MainHandItem;
+                    if (!(item is Consumeable))
+                    {
+                        Logger.Info(2);
+                        this.Inventory.SendMainHand(this);
+                        return;
+                    }
+                    Consumeable consume = (Consumeable) item;
+                    PlayerItemConsumeableEventArgs playerItemConsumeableEvent = new PlayerItemConsumeableEventArgs(this, item);
+                    PlayerEvents.OnPlayerItemConsumeable(playerItemConsumeableEvent);
+                    if (playerItemConsumeableEvent.IsCancel)
+                    {
+                        Logger.Info(3);
+                        this.Inventory.SendMainHand(this);
+                        return;
+                    }
+                    consume.OnConsume(this);
+                }
             }
         }
 
@@ -410,11 +469,11 @@ namespace MineNET.Entities.Players
                 PlayerEvents.OnPlayerJump(playerJumpEvent);
                 if (this.Sprinting)
                 {
-                    this.AddExhaustion(0.8f);
+                    this.AddExhaustion(0.8f, PlayerExhaustEventArgs.CAUSE_SPRINT_JUMPING);
                 }
                 else
                 {
-                    this.AddExhaustion(0.2f);
+                    this.AddExhaustion(0.2f, PlayerExhaustEventArgs.CAUSE_JUMPING);
                 }
             }
             else if (pk.ActionType == PlayerActionPacket.ACTION_START_SPRINT)

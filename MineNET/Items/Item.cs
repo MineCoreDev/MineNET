@@ -341,22 +341,6 @@ namespace MineNET.Items
             }
         }
 
-        public virtual int FoodRestore
-        {
-            get
-            {
-                return 0;
-            }
-        }
-
-        public virtual float SaturationRestore
-        {
-            get
-            {
-                return 0f;
-            }
-        }
-
         public virtual bool CanBePlace
         {
             get
