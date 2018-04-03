@@ -410,12 +410,10 @@ namespace MineNET.Entities.Players
                 PlayerEvents.OnPlayerJump(playerJumpEvent);
                 if (this.Sprinting)
                 {
-                    Logger.Info(true);
                     this.AddExhaustion(0.8f);
                 }
                 else
                 {
-                    Logger.Info(false);
                     this.AddExhaustion(0.2f);
                 }
             }
