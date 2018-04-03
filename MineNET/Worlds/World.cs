@@ -149,16 +149,7 @@ namespace MineNET.Worlds
         public Block GetBlock(Vector3 pos)
         {
             Tuple<int, int> chunkPos = new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4);
-            Chunk chunk = null;
-            if (this.chunks.ContainsKey(chunkPos))
-            {
-                chunk = this.chunks[chunkPos];
-            }
-            else
-            {
-                throw new Exception();
-                //chunk = this.Format.GetChunk(this.Generator, chunkPos.Item1, chunkPos.Item2);
-            }
+            Chunk chunk = this.GetChunk(chunkPos);
 
             byte id = chunk.GetBlock(chunkPos.Item1, (int) pos.Y, chunkPos.Item2);
             byte meta = chunk.GetMetadata(chunkPos.Item1, (int) pos.Y, chunkPos.Item2);
@@ -172,16 +163,7 @@ namespace MineNET.Worlds
         public void SetBlock(Vector3 pos, Block block)
         {
             Tuple<int, int> chunkPos = new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4);
-            Chunk chunk = null;
-            if (this.chunks.ContainsKey(chunkPos))
-            {
-                chunk = this.chunks[chunkPos];
-            }
-            else
-            {
-                throw new Exception();
-                //chunk = this.Format.GetChunk(this.Generator, chunkPos.Item1, chunkPos.Item2);
-            }
+            Chunk chunk = this.GetChunk(chunkPos);
 
             chunk.SetBlock(chunkPos.Item1, (int) pos.Y, chunkPos.Item2, (byte) block.ID);
             chunk.SetMetadata(chunkPos.Item1, (int) pos.Y, chunkPos.Item2, (byte) block.Damage);
