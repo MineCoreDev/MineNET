@@ -1,4 +1,6 @@
 ﻿
+using System;
+using System.Collections.Generic;
 using MineNET.Blocks;
 
 namespace MineNET.Items
@@ -217,8 +219,19 @@ namespace MineNET.Items
         public const int RECORD_11 = 510;
         public const int RECORD_WAIT = 511;
 
+        private static Dictionary<int, Type> Items = new Dictionary<int, Type>();
+
         public static Item GetItem(int id)
         {
+            if (ItemFactory.Items.ContainsKey(id))
+            {
+                try
+                {
+                    Type type = ItemFactory.Items[id];
+                    return (Item) Activator.CreateInstance(type);
+                }
+                catch { }
+            }
             if (id < 256)
             {
                 return new ItemBlock(Block.Get(id));
@@ -1080,6 +1093,11 @@ namespace MineNET.Items
 
             Item item = Item.Get(id, meta);
             return item;
+        }
+
+        public static void RegisterItem(Item item)
+        {
+            ItemFactory.Items[item.ID] = item.GetType();
         }
     }
 }

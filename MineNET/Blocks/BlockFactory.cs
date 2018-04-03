@@ -1,4 +1,7 @@
-﻿namespace MineNET.Blocks
+﻿using System;
+using System.Collections.Generic;
+
+namespace MineNET.Blocks
 {
     public class BlockFactory
     {
@@ -250,8 +253,19 @@
         public const int OBSERVER = 251;
         public const int STRUCTURE_BLOCK = 252;
 
+        private static Dictionary<int, Type> Blocks = new Dictionary<int, Type>();
+
         public static Block GetBlock(int id)
         {
+            if (BlockFactory.Blocks.ContainsKey(id))
+            {
+                try
+                {
+                    Type type = BlockFactory.Blocks[id];
+                    return (Block) Activator.CreateInstance(type);
+                }
+                catch { }
+            }
             if (id == AIR)
             {
                 return new BlockAir();
@@ -1251,6 +1265,11 @@
 
             Block block = Block.Get(id, meta);
             return block;
+        }
+
+        public static void RegisterBlock(Block block)
+        {
+            BlockFactory.Blocks[block.ID] = block.GetType();
         }
     }
 }
