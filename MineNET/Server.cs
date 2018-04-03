@@ -58,13 +58,9 @@ namespace MineNET
 
         public PluginManager PluginManager { get; private set; }
 
-        public Logger Logger
-        {
-            get
-            {
-                return this.logger;
-            }
-        }
+        public Logger Logger { get; set; }
+
+        public IConsoleInput ConsoleInput { get; set; }
 
         public bool IsShutdown()
         {
@@ -117,7 +113,7 @@ namespace MineNET
 
         public void ErrorStop(Exception e, bool sendExceptionMessage = false)
         {
-            this.logger = new Logger();
+            this.Logger = new Logger();
             Logger.Fatal(e.ToString());
             Logger.Error("%server_stop_error");
             Logger.Info("%server_stop");
@@ -222,6 +218,19 @@ namespace MineNET
             }
 
             return found;
+        }
+
+        public bool TryGetPlayer(string name, out Player result)
+        {
+            result = this.GetPlayer(name);
+            if (result != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void BroadcastPacket(DataPacket pk, Player[] players = null)

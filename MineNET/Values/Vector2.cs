@@ -4,15 +4,14 @@ namespace MineNET.Values
 {
     public struct Vector2
     {
+        public float X { get; set; }
+        public float Y { get; set; }
 
         public Vector2(float x, float y)
         {
             this.X = x;
             this.Y = y;
         }
-
-        public float X { get; set; }
-        public float Y { get; set; }
 
         public float this[int index]
         {
@@ -191,11 +190,6 @@ namespace MineNET.Values
         public static float SqrMagnitude(Vector2 a)
         {
             return a.X * a.X + a.Y * a.Y;
-        }
-
-        public float SqrMagnitude()
-        {
-            return this.X * this.X + this.Y * this.Y;
         }
 
         public static Vector2 Min(Vector2 lhs, Vector2 rhs)

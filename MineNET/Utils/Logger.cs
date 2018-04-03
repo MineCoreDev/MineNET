@@ -4,33 +4,33 @@ using System.IO;
 
 namespace MineNET.Utils
 {
+    public class LoggerInfo
+    {
+        public string Text { get; set; }
+        public LoggerLevel Level { get; set; }
+    }
+
+    public enum LoggerLevel
+    {
+        Log,
+        Info,
+        Notice,
+        Warning,
+        Error,
+        Fatal
+    }
+
     public class Logger
     {
         const int WINDOW_X = 100;
         const int WINDOW_Y = 25;
-
-        public class LoggerInfo
-        {
-            public string text;
-            public LoggerLevel level;
-        }
-
-        public enum LoggerLevel
-        {
-            Log,
-            Info,
-            Notice,
-            Warning,
-            Error,
-            Fatal
-        }
 
         public bool UseGUI { get; set; }
 
         Queue<LoggerInfo> loggerTexts = new Queue<LoggerInfo>();
         public Queue<LoggerInfo> GuiLoggerTexts { get; } = new Queue<LoggerInfo>();
 
-        internal void Init()
+        public virtual void Init()
         {
             try
             {
@@ -273,7 +273,7 @@ namespace MineNET.Utils
             Fatal(msg.ToString());
         }
 
-        internal void Update()
+        public virtual void Update()
         {
             if (this.loggerTexts.Count == 0)
             {
@@ -290,7 +290,7 @@ namespace MineNET.Utils
                 LoggerInfo info = this.loggerTexts.Dequeue();
                 if (info != null)
                 {
-                    string log = info.text;
+                    string log = info.Text;
                     if (!this.UseGUI)
                     {
                         this.CUIFormat(log);
@@ -298,11 +298,11 @@ namespace MineNET.Utils
                     else
                     {
                         RemoveColorCode(ref log);
-                        info.text = log;
+                        info.Text = log;
                         this.GuiLoggerTexts.Enqueue(info);
                     }
 
-                    if (info.level != LoggerLevel.Log)
+                    if (info.Level != LoggerLevel.Log)
                     {
                         this.WriteLog(log);
                     }
@@ -444,7 +444,7 @@ namespace MineNET.Utils
 
         void AddLogText(string text, LoggerLevel level = LoggerLevel.Info)
         {
-            if (level == LoggerLevel.Log && !Server.MineNETConfig.EnableDebugLog)
+            if (level == LoggerLevel.Log && !Server.MineNETConfig.EnableDebugLog && !this.UseGUI)
             {
                 return;
             }
@@ -452,8 +452,8 @@ namespace MineNET.Utils
             if (Server.MineNETConfig.EnableConsoleOutput)
             {
                 LoggerInfo info = new LoggerInfo();
-                info.level = level;
-                info.text = text;
+                info.Level = level;
+                info.Text = text;
                 this.loggerTexts.Enqueue(info);
             }
         }

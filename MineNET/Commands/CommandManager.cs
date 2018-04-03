@@ -89,11 +89,37 @@ namespace MineNET.Commands
             return null;
         }
 
-        public void RegisterCommand(Command command)
+        public bool TryGetCommand(string cmd, out Command command)
         {
+            command = this.GetCommand(cmd);
+            if (command != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool RegisterCommand(params Command[] commands)
+        {
+            bool result = false;
+            for (int i = 0; i < commands.Length; ++i)
+            {
+                result = this.RegisterCommand(commands[i]);
+            }
+
+            return result;
+        }
+
+        public bool RegisterCommand(Command command)
+        {
+            bool result = false;
             if (!this.CommandList.ContainsKey(command.Name))
             {
                 this.CommandList.Add(command.Name, command);
+                result = true;
             }
 
             if (command.Aliases != null)
@@ -105,15 +131,64 @@ namespace MineNET.Commands
                         this.CommandAliases.Add(command.Aliases[i], command);
                     }
                 }
+                result = true;
             }
+
+            return result;
         }
 
-        public void RemoveCommand(string alias)
+        public bool UnRegisterCommand(params string[] alias)
+        {
+            bool result = false;
+            for (int i = 0; i < alias.Length; ++i)
+            {
+                result = this.UnRegisterCommand(alias[i]);
+            }
+
+            return result;
+        }
+
+        public bool UnRegisterCommand(string alias)
         {
             if (this.CommandList.ContainsKey(alias))
             {
                 this.CommandList.Remove(alias);
+                return true;
             }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UnRegisterCommand(params Command[] commands)
+        {
+            bool result = false;
+            for (int i = 0; i < commands.Length; ++i)
+            {
+                result = this.UnRegisterCommand(commands[i]);
+            }
+
+            return result;
+        }
+
+        public bool UnRegisterCommand(Command command)
+        {
+            bool result = this.UnRegisterCommand(command.Name);
+
+            if (command.Aliases != null)
+            {
+                for (int i = 0; i < command.Aliases.Length; ++i)
+                {
+                    if (!this.CommandAliases.ContainsKey(command.Aliases[i]))
+                    {
+                        this.CommandAliases.Remove(command.Aliases[i]);
+                    }
+                }
+                result = true;
+            }
+
+            return result;
         }
 
         public void RemoveAllCommand()
@@ -123,14 +198,16 @@ namespace MineNET.Commands
 
         private void RegisterCommands()
         {
-            this.RegisterCommand(new GameModeCommand());
-            this.RegisterCommand(new GiveCommand());
-            this.RegisterCommand(new HelpCommand());
-            this.RegisterCommand(new ListCommand());
-            this.RegisterCommand(new MeCommand());
-            this.RegisterCommand(new SayCommand());
-            this.RegisterCommand(new StopCommand());
-            this.RegisterCommand(new TellCommand());
+            this.RegisterCommand(
+                new GameModeCommand(),
+                new GiveCommand(),
+                new HelpCommand(),
+                new ListCommand(),
+                new MeCommand(),
+                new SayCommand(),
+                new StopCommand(),
+                new TellCommand()
+            );
         }
     }
 }
