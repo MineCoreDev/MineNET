@@ -86,6 +86,10 @@ namespace MineNET.Entities.Players
                 attribute.Value = value;
                 this.Attributes.AddAttribute(attribute);
                 this.Attributes.Update(this);
+                if (attribute.Value <= 6 && this.Sprinting)
+                {
+                    this.Sprinting = false;
+                }
             }
         }
 
@@ -147,10 +151,22 @@ namespace MineNET.Entities.Players
 
         public void AddExhaustion(float value)
         {
+            if (this.IsCreative || this.IsSpectator)
+            {
+                return;
+            }
             float exhaustion = this.Exhaustion + value;
             if (exhaustion >= 4f)
             {
                 exhaustion -= 4;
+                if (this.Saturation != 0)
+                {
+                    this.TakeSaturation(1);
+                }
+                else
+                {
+                    this.TakeHunger(1);
+                }
             }
             this.Exhaustion = exhaustion;
         }

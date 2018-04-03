@@ -408,6 +408,16 @@ namespace MineNET.Entities.Players
             {
                 PlayerJumpEventArgs playerJumpEvent = new PlayerJumpEventArgs(this);
                 PlayerEvents.OnPlayerJump(playerJumpEvent);
+                if (this.Sprinting)
+                {
+                    Logger.Info(true);
+                    this.AddExhaustion(0.8f);
+                }
+                else
+                {
+                    Logger.Info(false);
+                    this.AddExhaustion(0.2f);
+                }
             }
             else if (pk.ActionType == PlayerActionPacket.ACTION_START_SPRINT)
             {

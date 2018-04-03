@@ -7,7 +7,7 @@ namespace MineNET.Entities.Attributes
     {
         public static readonly EntityAttribute ABSORPTION = new EntityAttribute("minecraft:absorption", 340282346638528859811704183484516925440.0f, 0f, 0f);
         public static readonly EntityAttribute SATURATION = new EntityAttribute("minecraft:player.saturation", 20.0f, 0f, 5.0f);
-        public static readonly EntityAttribute EXHAUSTION = new EntityAttribute("minecraft:player.exhaustion", 5.0f, 0f, 0.41f);
+        public static readonly EntityAttribute EXHAUSTION = new EntityAttribute("minecraft:player.exhaustion", 4.0f, 0f, 0.41f);
         public static readonly EntityAttribute KNOCKBACK_RESISTANCE = new EntityAttribute("minecraft:knockback_resistance", 1.0f, 0.0f, 0.0f);
         public static readonly EntityAttribute HEALTH = new EntityAttribute("minecraft:health", 20.0f, 0.0f, 20.0f);
         public static readonly EntityAttribute MOVEMENT_SPEED = new EntityAttribute("minecraft:movement", 340282346638528859811704183484516925440.0f, 0.0f, 0.10f);
