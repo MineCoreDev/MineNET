@@ -17,6 +17,8 @@ namespace MineNET.Entities.Players
     {
         internal Dictionary<Tuple<int, int>, double> loadedChunk = new Dictionary<Tuple<int, int>, double>();
 
+        private GameMode gameMode = GameMode.Survival;
+
         public Player()
         {
             this.ShowNameTag = true;

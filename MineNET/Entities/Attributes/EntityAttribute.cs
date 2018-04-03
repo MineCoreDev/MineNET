@@ -43,9 +43,10 @@ namespace MineNET.Entities.Attributes
 
             set
             {
-                if (value >= this.value)
+                this.maxValue = value;
+                if (value < this.value)
                 {
-                    this.maxValue = value;
+                    this.value = value;
                 }
             }
         }
@@ -60,9 +61,10 @@ namespace MineNET.Entities.Attributes
 
             set
             {
-                if (value <= this.value)
+                this.minValue = value;
+                if (value > this.value)
                 {
-                    this.minValue = value;
+                    this.value = value;
                 }
             }
         }
@@ -77,7 +79,7 @@ namespace MineNET.Entities.Attributes
 
             set
             {
-                if (this.maxValue >= value && this.minValue <= value)
+                if (this.minValue <= value && value <= this.maxValue)
                 {
                     this.value = value;
                 }
@@ -94,7 +96,7 @@ namespace MineNET.Entities.Attributes
 
             set
             {
-                if (this.maxValue >= value && this.minValue <= value)
+                if (this.minValue <= value && value <= this.maxValue)
                 {
                     this.defaultValue = value;
                 }

@@ -30,6 +30,8 @@ namespace MineNET.Entities.Players
         public bool PackSyncCompleted { get; private set; }
         public bool HasSpawned { get; private set; }
 
+        public int RequestChunkRadius { get; private set; } = 5;
+
         public override void EntityInit()
         {
             base.EntityInit();
@@ -40,23 +42,6 @@ namespace MineNET.Entities.Players
             this.Attributes.AddAttribute(EntityAttribute.EXPERIENCE);
             this.Attributes.AddAttribute(EntityAttribute.EXPERIENCE_LEVEL);
         }
-
-        private GameMode gameMode = GameMode.Survival;
-        public GameMode GameMode
-        {
-            get
-            {
-                return this.gameMode;
-            }
-
-            set
-            {
-                this.gameMode = value;
-                this.SendGameMode();
-            }
-        }
-
-        public int RequestChunkRadius { get; private set; } = 5;
 
         public override float WIDTH
         {
@@ -74,6 +59,116 @@ namespace MineNET.Entities.Players
             }
         }
 
+        public override float Health
+        {
+            get
+            {
+                return base.Health;
+            }
+
+            set
+            {
+                base.Health = value;
+                this.Attributes.Update(this);
+            }
+        }
+
+        public float Hunger
+        {
+            get
+            {
+                return this.Attributes.GetAttribute("minecraft:player.hunger").Value;
+            }
+
+            set
+            {
+                EntityAttribute attribute = this.Attributes.GetAttribute("minecraft:player.hunger");
+                attribute.Value = value;
+                this.Attributes.AddAttribute(attribute);
+                this.Attributes.Update(this);
+            }
+        }
+
+        public void AddHunger(float value)
+        {
+            float hunger = this.Hunger + value;
+            this.Hunger = hunger;
+        }
+
+        public void TakeHunger(float value)
+        {
+            float hunger = this.Hunger - value;
+            this.Hunger = hunger;
+        }
+
+        public float Saturation
+        {
+            get
+            {
+                return this.Attributes.GetAttribute("minecraft:player.saturation").Value;
+            }
+
+            set
+            {
+                EntityAttribute attribute = this.Attributes.GetAttribute("minecraft:player.saturation");
+                attribute.Value = value;
+                this.Attributes.AddAttribute(attribute);
+                this.Attributes.Update(this);
+            }
+        }
+
+        public void AddSaturation(float value)
+        {
+            float saturation = this.Saturation + value;
+            this.Saturation = saturation;
+        }
+
+        public void TakeSaturation(float value)
+        {
+            float saturation = this.Saturation - value;
+            this.Saturation = saturation;
+        }
+
+        public float Exhaustion
+        {
+            get
+            {
+                return this.Attributes.GetAttribute("minecraft:player.exhaustion").Value;
+            }
+
+            set
+            {
+                EntityAttribute attribute = this.Attributes.GetAttribute("minecraft:player.exhaustion");
+                attribute.Value = value;
+                this.Attributes.AddAttribute(attribute);
+                this.Attributes.Update(this);
+            }
+        }
+
+        public void AddExhaustion(float value)
+        {
+            float exhaustion = this.Exhaustion + value;
+            if (exhaustion >= 4f)
+            {
+                exhaustion -= 4;
+            }
+            this.Exhaustion = exhaustion;
+        }
+
+        public GameMode GameMode
+        {
+            get
+            {
+                return this.gameMode;
+            }
+
+            set
+            {
+                this.gameMode = value;
+                this.SendGameMode();
+            }
+        }
+
         public void SendPlayStatus(int status)
         {
             PlayStatusPacket pk = new PlayStatusPacket();
@@ -84,19 +179,7 @@ namespace MineNET.Entities.Players
 
         public void SendPlayerAttribute()
         {
-            EntityAttribute[] atts = new EntityAttribute[]
-            {
-                EntityAttribute.HEALTH,
-                EntityAttribute.HUNGER,
-                EntityAttribute.MOVEMENT_SPEED,
-                EntityAttribute.EXPERIENCE_LEVEL,
-                EntityAttribute.EXPERIENCE
-            };
-
-            UpdateAttributesPacket updateAttributesPacket = new UpdateAttributesPacket();
-            updateAttributesPacket.EntityRuntimeId = this.EntityID;
-            updateAttributesPacket.Attributes = atts;
-            this.SendPacket(updateAttributesPacket);
+            this.Attributes.Update(this);
         }
 
         public void SendPosition(Vector3 pos, Vector2 yawPitch, byte mode)

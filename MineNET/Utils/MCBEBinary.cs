@@ -82,8 +82,9 @@ namespace MineNET.Utils
             this.WriteUVarLong((ulong) eid);
         }
 
-        public void WriteAttributes(params EntityAttribute[] attributes)
+        public void WriteAttributes(EntityAttributeDictionary dictionary)
         {
+            EntityAttribute[] attributes = dictionary.ToArray;
             this.WriteUVarInt((uint) attributes.Length);
             for (int i = 0; i < attributes.Length; ++i)
             {

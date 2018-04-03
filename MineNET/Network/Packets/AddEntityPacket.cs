@@ -22,7 +22,7 @@ namespace MineNET.Network.Packets
         public Vector3 Vector3 { get; set; }
         public Vector3 Speed { get; set; }
         public Vector2 Direction { get; set; }
-        public EntityAttribute[] Attributes { get; set; }
+        public EntityAttributeDictionary Attributes { get; set; }
         public EntityMetadataManager Metadata { get; set; }
         //public EntityLink[] Link = new EntityLink[0];
 

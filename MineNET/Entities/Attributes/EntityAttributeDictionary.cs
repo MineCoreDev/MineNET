@@ -1,17 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MineNET.Entities.Players;
+using MineNET.Network.Packets;
 
 namespace MineNET.Entities.Attributes
 {
     public class EntityAttributeDictionary
     {
-        private Dictionary<string, EntityAttribute> attributes = new Dictionary<string, EntityAttribute>();
+        public Dictionary<string, EntityAttribute> Attributes { get; private set; } = new Dictionary<string, EntityAttribute>();
+
+        public long EntityID { get; }
+
+        public EntityAttributeDictionary(long entityID)
+        {
+            this.EntityID = entityID;
+        }
 
         public void AddAttribute(params EntityAttribute[] attributes)
         {
             for (int i = 0; i < attributes.Length; ++i)
             {
-                this.attributes[attributes[i].Name] = attributes[i];
+                this.Attributes[attributes[i].Name] = attributes[i];
             }
         }
 
@@ -19,18 +28,31 @@ namespace MineNET.Entities.Attributes
         {
             for (int i = 0; i < keys.Length; ++i)
             {
-                if (this.attributes.ContainsKey(keys[i]))
+                if (this.Attributes.ContainsKey(keys[i]))
                 {
-                    this.attributes.Remove(keys[i]);
+                    this.Attributes.Remove(keys[i]);
                 }
             }
+        }
+
+        public EntityAttribute GetAttribute(string name)
+        {
+            return this.Attributes[name];
+        }
+
+        public void Update(Player player)
+        {
+            UpdateAttributesPacket pk = new UpdateAttributesPacket();
+            pk.EntityRuntimeId = this.EntityID;
+            pk.Attributes = this;
+            player.SendPacket(pk);
         }
 
         public EntityAttribute[] ToArray
         {
             get
             {
-                return this.attributes.Values.ToArray();
+                return this.Attributes.Values.ToArray();
             }
         }
     }

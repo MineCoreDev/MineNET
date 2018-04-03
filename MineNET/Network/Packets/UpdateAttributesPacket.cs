@@ -16,7 +16,7 @@ namespace MineNET.Network.Packets
 
         public long EntityRuntimeId { get; set; }
 
-        public EntityAttribute[] Attributes { get; set; }
+        public EntityAttributeDictionary Attributes { get; set; }
 
         public override void Encode()
         {
