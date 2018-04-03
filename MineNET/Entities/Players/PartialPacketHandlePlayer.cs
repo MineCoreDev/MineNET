@@ -48,6 +48,14 @@ namespace MineNET.Entities.Players
             {
                 this.InventoryTransactionHandle((InventoryTransactionPacket) pk);
             }
+            else if (pk is MobEquipmentPacket)
+            {
+                this.MobEquipmentHandle((MobEquipmentPacket) pk);
+            }
+            else if (pk is PlayerActionPacket)
+            {
+                this.PlayerActionHandle((PlayerActionPacket) pk);
+            }
         }
 
         private void LoginPacketHandle(LoginPacket pk)
@@ -352,6 +360,132 @@ namespace MineNET.Entities.Players
             {
 
             }
+        }
+
+        private void MobEquipmentHandle(MobEquipmentPacket pk)
+        {
+            this.Inventory.MainHandSlot = pk.HotbarSlot;
+        }
+
+        private void PlayerActionHandle(PlayerActionPacket pk)
+        {
+            Vector3 pos = pk.Position;
+            BlockFace face = pk.Face;
+            if (pk.ActionType == PlayerActionPacket.ACTION_START_BREAK)
+            {
+                //TODO : InteractEvent
+                //TODO : LevelEventPacket
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_ABORT_BREAK)
+            {
+
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_STOP_BREAK)
+            {
+                //TODO : LevelEventPacket
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_GET_UPDATED_BLOCK)
+            {
+
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_DROP_ITEM)
+            {
+
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_START_SLEEPING)
+            {
+
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_STOP_SLEEPING)
+            {
+
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_RESPAWN)
+            {
+
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_JUMP)
+            {
+                PlayerJumpEventArgs playerJumpEvent = new PlayerJumpEventArgs(this);
+                PlayerEvents.OnPlayerJump(playerJumpEvent);
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_START_SPRINT)
+            {
+                PlayerToggleSprintEventArgs playerToggleSprintEvent = new PlayerToggleSprintEventArgs(this, true);
+                PlayerEvents.OnPlayerToggleSprint(playerToggleSprintEvent);
+                if (playerToggleSprintEvent.IsCancel)
+                {
+                    this.SendDataProperties();
+                }
+                this.Sprinting = true;
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_STOP_SPRINT)
+            {
+                PlayerToggleSprintEventArgs playerToggleSprintEvent = new PlayerToggleSprintEventArgs(this, false);
+                PlayerEvents.OnPlayerToggleSprint(playerToggleSprintEvent);
+                if (playerToggleSprintEvent.IsCancel)
+                {
+                    this.SendDataProperties();
+                }
+                this.Sprinting = false;
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_START_SNEAK)
+            {
+                PlayerToggleSneakEventArgs playerToggleSneakEvent = new PlayerToggleSneakEventArgs(this, true);
+                PlayerEvents.OnPlayerToggleSneak(playerToggleSneakEvent);
+                if (playerToggleSneakEvent.IsCancel)
+                {
+                    this.SendDataProperties();
+                }
+                this.Sneaking = true;
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_STOP_SNEAK)
+            {
+                PlayerToggleSneakEventArgs playerToggleSneakEvent = new PlayerToggleSneakEventArgs(this, false);
+                PlayerEvents.OnPlayerToggleSneak(playerToggleSneakEvent);
+                if (playerToggleSneakEvent.IsCancel)
+                {
+                    this.SendDataProperties();
+                }
+                this.Sneaking = false;
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_DIMENSION_CHANGE_REQUEST)
+            {
+
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_DIMENSION_CHANGE_ACK)
+            {
+
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_START_GLIDE)
+            {
+                PlayerToggleGlideEventArgs playerToggleGlideEvent = new PlayerToggleGlideEventArgs(this, true);
+                PlayerEvents.OnPlayerToggleGlide(playerToggleGlideEvent);
+                if (playerToggleGlideEvent.IsCancel)
+                {
+                    this.SendDataProperties();
+                }
+                this.Gliding = true;
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_STOP_GLIDE)
+            {
+                PlayerToggleGlideEventArgs playerToggleGlideEvent = new PlayerToggleGlideEventArgs(this, false);
+                PlayerEvents.OnPlayerToggleGlide(playerToggleGlideEvent);
+                if (playerToggleGlideEvent.IsCancel)
+                {
+                    this.SendDataProperties();
+                }
+                this.Gliding = false;
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_BUILD_DENIED)
+            {
+
+            }
+            else if (pk.ActionType == PlayerActionPacket.ACTION_CONTINUE_BREAK)
+            {
+
+            }
+            this.Action = false;
         }
     }
 }

@@ -92,7 +92,7 @@ namespace MineNET.Network.Packets
             }
             else if (this.SourceType == NetworkInventoryAction.SOURCE_CREATIVE)
             {
-
+                return new CreativeInventoryAction(this.OldItem, this.NewItem, this.InventorySlot);
             }
             else if (this.SourceType == NetworkInventoryAction.SOURCE_TODO)
             {

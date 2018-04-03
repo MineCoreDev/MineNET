@@ -32,6 +32,12 @@
             PlayerJoin?.Invoke(args);
         }
 
+        public static event EventHandler<PlayerJumpEventArgs> PlayerJump;
+        public static void OnPlayerJump(PlayerJumpEventArgs args)
+        {
+            PlayerJump?.Invoke(args);
+        }
+
         public static event EventHandler<PlayerLoginEventArgs> PlayerLogin;
         public static void OnPlayerLogin(PlayerLoginEventArgs args)
         {
@@ -48,6 +54,24 @@
         public static void OnPlayerQuit(PlayerQuitEventArgs args)
         {
             PlayerQuit?.Invoke(args);
+        }
+
+        public static event EventHandler<PlayerToggleGlideEventArgs> PlayerToggleGlide;
+        public static void OnPlayerToggleGlide(PlayerToggleGlideEventArgs args)
+        {
+            PlayerToggleGlide?.Invoke(args);
+        }
+
+        public static event EventHandler<PlayerToggleSneakEventArgs> PlayerToggleSneak;
+        public static void OnPlayerToggleSneak(PlayerToggleSneakEventArgs args)
+        {
+            PlayerToggleSneak?.Invoke(args);
+        }
+
+        public static event EventHandler<PlayerToggleSprintEventArgs> PlayerToggleSprint;
+        public static void OnPlayerToggleSprint(PlayerToggleSprintEventArgs args)
+        {
+            PlayerToggleSprint?.Invoke(args);
         }
     }
 }

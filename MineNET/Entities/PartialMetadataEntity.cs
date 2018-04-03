@@ -228,33 +228,7 @@ namespace MineNET.Entities
             }
         }
 
-        public bool ShowNameTag
-        {
-            get
-            {
-                return this.GetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_CAN_SHOW_NAMETAG);
-            }
-
-            set
-            {
-                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_CAN_SHOW_NAMETAG, value);
-            }
-        }
-
-        public bool AlwaysShowNameTag
-        {
-            get
-            {
-                return this.GetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ALWAYS_SHOW_NAMETAG);
-            }
-
-            set
-            {
-                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ALWAYS_SHOW_NAMETAG, value);
-            }
-        }
-
-        public string InteractiveTag //カーソルを合わせたときに出るボタン
+        public virtual string InteractiveTag //カーソルを合わせたときに出るボタン
         {
             get
             {
@@ -267,7 +241,46 @@ namespace MineNET.Entities
             }
         }
 
-        public bool Sneaking
+        public virtual bool ShowNameTag
+        {
+            get
+            {
+                return this.GetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_CAN_SHOW_NAMETAG);
+            }
+
+            set
+            {
+                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_CAN_SHOW_NAMETAG, value);
+            }
+        }
+
+        public virtual bool AlwaysShowNameTag
+        {
+            get
+            {
+                return this.GetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ALWAYS_SHOW_NAMETAG);
+            }
+
+            set
+            {
+                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ALWAYS_SHOW_NAMETAG, value);
+            }
+        }
+
+        public virtual bool Sprinting
+        {
+            get
+            {
+                return this.GetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_SPRINTING);
+            }
+
+            set
+            {
+                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_SPRINTING, value);
+            }
+        }
+
+        public virtual bool Sneaking
         {
             get
             {
@@ -277,6 +290,32 @@ namespace MineNET.Entities
             set
             {
                 this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_SNEAKING, value);
+            }
+        }
+
+        public virtual bool Gliding
+        {
+            get
+            {
+                return this.GetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_GLIDING);
+            }
+
+            set
+            {
+                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_GLIDING, value);
+            }
+        }
+
+        public virtual bool Action
+        {
+            get
+            {
+                return this.GetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ACTION);
+            }
+
+            set
+            {
+                this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ACTION, value);
             }
         }
     }

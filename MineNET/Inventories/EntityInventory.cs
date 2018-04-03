@@ -82,10 +82,6 @@ namespace MineNET.Inventories
             set
             {
                 this.mainHand = value;
-                if (this.Holder is Player)
-                {
-                    this.SendMainHand((Player) this.Holder);
-                }
                 this.SendMainHand(this.Holder.Viewers);
             }
         }

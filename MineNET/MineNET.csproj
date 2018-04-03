@@ -398,8 +398,13 @@
     <Compile Include="Events\PlayerEvents\PlayerCommandPreprocessEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCreateDataEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerInteractEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerJumpEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerToggleGlideEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerToggleSneakEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerToggleSprintEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerCommandEventArgs.cs" />
     <Compile Include="Inventories\EntityInventory.cs" />
+    <Compile Include="Inventories\Transactions\Action\CreativeInventoryAction.cs" />
     <Compile Include="Inventories\Transactions\Action\InventoryAction.cs" />
     <Compile Include="Inventories\Transactions\Action\SlotChangeAction.cs" />
     <Compile Include="Inventories\Transactions\Data\ReleaseItemData.cs" />
@@ -697,6 +702,7 @@
     <Compile Include="Network\Packets\MobArmorEquipmentPacket.cs" />
     <Compile Include="Network\Packets\MobEquipmentPacket.cs" />
     <Compile Include="Network\Packets\MovePlayerPacket.cs" />
+    <Compile Include="Network\Packets\PlayerActionPacket.cs" />
     <Compile Include="Network\Packets\PlayerListPacket.cs" />
     <Compile Include="Network\Packets\PlayerSkinPacket.cs" />
     <Compile Include="Network\Packets\RequestChunkRadiusPacket.cs" />
