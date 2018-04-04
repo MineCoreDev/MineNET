@@ -114,8 +114,8 @@ namespace MineNET.Network.Packets
             this.WriteBool(this.HasAchievementsDisabled);
             this.WriteSVarInt(this.DayCycleStopTime);
             this.WriteBool(this.EduMode);
-            this.WriteFloat(this.RainLevel);
-            this.WriteFloat(this.LightningLevel);
+            this.WriteLFloat(this.RainLevel);
+            this.WriteLFloat(this.LightningLevel);
             this.WriteBool(this.MultiplayerGame);
             this.WriteBool(this.BroadcastToLAN);
             this.WriteBool(this.BroadcastToXboxLive);
@@ -127,7 +127,7 @@ namespace MineNET.Network.Packets
             this.WriteBool(this.TrustPlayers);
             this.WriteSVarInt((int) this.PermissionLevel);
             this.WriteSVarInt(this.GamePublish);
-            this.WriteInt(this.ServerChunkTickRadius);
+            this.WriteLInt((uint) this.ServerChunkTickRadius);
             this.WriteBool(this.HasPlatformBroadcast);
             this.WriteUVarInt((uint) this.PlatformBroadcastMode);
             this.WriteBool(this.XboxLiveBroadcastIntent);
@@ -135,7 +135,7 @@ namespace MineNET.Network.Packets
             this.WriteString(this.WorldName);
             this.WriteString(this.PremiumWorldTemplateId);
             this.WriteBool(this.Unknown);
-            this.WriteLong(this.CurrentTick);
+            this.WriteLLong((ulong) this.CurrentTick);
             this.WriteSVarInt(this.EnchantmentSeed);
         }
     }
