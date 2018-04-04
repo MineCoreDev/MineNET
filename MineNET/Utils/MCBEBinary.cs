@@ -140,11 +140,11 @@ namespace MineNET.Utils
                 {
                     this.WriteEntityUniqueId(entries[i].EntityUniqueId);
                     this.WriteString(entries[i].Name);
-                    //this.WriteString("");
-                    //this.WriteSVarInt(entries[i].PlatForm);
+                    this.WriteString("");
+                    this.WriteSVarInt(entries[i].PlatForm);
                     this.WriteSkin(entries[i].Skin);
                     this.WriteString(entries[i].XboxUserId);
-                    //this.WriteString("");
+                    this.WriteString("");
                 }
             }
         }

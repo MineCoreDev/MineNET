@@ -23,10 +23,12 @@
         public const byte TYPE_ANNOUNCEMENT = 8;
 
         public byte Type { get; set; }
-        public string Source { get; set; } = "";
+        public bool IsLocalized { get; set; } = false;
+        public string SourceName { get; set; } = "";
+        public string SourceThirdPartyName { get; set; } = "";
+        public int SourcePlatform { get; set; } = 0;
         public string Message { get; set; } = "";
         public string[] Parameters { get; set; } = new string[0];
-        public bool IsLocalized { get; set; } = false;
         public string XboxUserId { get; set; } = "";
 
         public override void Encode()
@@ -35,16 +37,18 @@
 
             this.WriteByte(this.Type);
             this.WriteBool(this.IsLocalized);
-            if (this.Type == TextPacket.TYPE_POPUP || this.Type == TextPacket.TYPE_CHAT || this.Type == TextPacket.TYPE_WHISPER || this.Type == TextPacket.TYPE_ANNOUNCEMENT)
+            if (this.Type == TextPacket.TYPE_CHAT || this.Type == TextPacket.TYPE_WHISPER || this.Type == TextPacket.TYPE_ANNOUNCEMENT)
             {
-                this.WriteString(this.Source);
+                this.WriteString(this.SourceName);
+                this.WriteString(this.SourceThirdPartyName);
+                this.WriteVarInt(this.SourcePlatform);
                 this.WriteString(this.Message);
             }
             else if (this.Type == TextPacket.TYPE_RAW || this.Type == TextPacket.TYPE_TIP || this.Type == TextPacket.TYPE_SYSTEM)
             {
                 this.WriteString(this.Message);
             }
-            else if (this.Type == TextPacket.TYPE_TRANSLATION)
+            else if (this.Type == TextPacket.TYPE_TRANSLATION || this.Type == TextPacket.TYPE_POPUP || this.Type == TextPacket.TYPE_JUKEBOX_POPUP)
             {
                 this.WriteString(this.Message);
                 this.WriteUVarInt((uint) this.Parameters.Length);
@@ -62,16 +66,18 @@
 
             this.Type = this.ReadByte();
             this.IsLocalized = this.ReadBool();
-            if (this.Type == TextPacket.TYPE_POPUP || this.Type == TextPacket.TYPE_CHAT || this.Type == TextPacket.TYPE_WHISPER || this.Type == TextPacket.TYPE_ANNOUNCEMENT)
+            if (this.Type == TextPacket.TYPE_CHAT || this.Type == TextPacket.TYPE_WHISPER || this.Type == TextPacket.TYPE_ANNOUNCEMENT)
             {
-                this.Source = this.ReadString();
+                this.SourceName = this.ReadString();
+                this.SourceThirdPartyName = this.ReadString();
+                this.SourcePlatform = this.ReadVarInt();
                 this.Message = this.ReadString();
             }
             else if (this.Type == TextPacket.TYPE_RAW || this.Type == TextPacket.TYPE_TIP || this.Type == TextPacket.TYPE_SYSTEM)
             {
                 this.Message = this.ReadString();
             }
-            else if (this.Type == TextPacket.TYPE_TRANSLATION)
+            else if (this.Type == TextPacket.TYPE_TRANSLATION || this.Type == TextPacket.TYPE_POPUP || this.Type == TextPacket.TYPE_JUKEBOX_POPUP)
             {
                 this.Message = this.ReadString();
                 int count = (int) this.ReadUVarInt();

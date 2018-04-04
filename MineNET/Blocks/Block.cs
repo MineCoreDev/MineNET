@@ -8,7 +8,6 @@ using MineNET.Resources.Data;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
-using Newtonsoft.Json.Linq;
 
 namespace MineNET.Blocks
 {
@@ -20,7 +19,7 @@ namespace MineNET.Blocks
         public static void LoadRuntimeIds()
         {
             string data = Encoding.UTF8.GetString(ResourceData.Runtimeid_table);
-            JObject json = JObject.Parse(data); //TODO
+            /*JObject json = JObject.Parse(data); //TODO
             foreach (JObject block in json.Values<JObject>())
             {
                 int runtimeId = block.Value<int>("runtimeID");
@@ -28,7 +27,7 @@ namespace MineNET.Blocks
                 int damage = block.Value<int>("data");
                 Block.RuntimeIds[(id << 4) | damage] = runtimeId;
                 Block.FromRuntimeId[runtimeId] = (id << 4) | damage;
-            }
+            }*/
         }
 
         public static int GetRuntimeId(int id, int damage)
