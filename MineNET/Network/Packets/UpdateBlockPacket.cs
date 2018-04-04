@@ -13,6 +13,9 @@ namespace MineNET.Network.Packets
         public const int FLAG_ALL = UpdateBlockPacket.FLAG_NEIGHBORS | UpdateBlockPacket.FLAG_NETWORK;
         public const int FLAG_ALL_PRIORITY = UpdateBlockPacket.FLAG_ALL | UpdateBlockPacket.FLAG_PRIORITY;
 
+        public const int DATA_LAYER_NORMAL = 0;
+        public const int DATA_LAYER_LIQUID = 1;
+
         public const int ID = ProtocolInfo.UPDATE_BLOCK_PACKET;
 
         public override byte PacketID
@@ -24,17 +27,18 @@ namespace MineNET.Network.Packets
         }
 
         public Vector3i Vector3 { get; set; }
-        public int BlockId { get; set; }
-        public int BlockData { get; set; }
+        public int RuntimeId { get; set; }
         public int Flags { get; set; }
+        public int DataLayerId { get; set; }
 
         public override void Encode()
         {
             base.Encode();
 
             this.WriteBlockVector3(this.Vector3);
-            this.WriteUVarInt((uint) this.BlockId);
-            this.WriteUVarInt((uint) ((this.Flags << 4) | this.BlockData));
+            this.WriteUVarInt((uint) this.RuntimeId);
+            this.WriteUVarInt((uint) this.Flags);
+            this.WriteUVarInt((uint) this.DataLayerId);
         }
     }
 }

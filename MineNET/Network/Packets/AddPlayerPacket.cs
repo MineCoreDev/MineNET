@@ -20,8 +20,11 @@ namespace MineNET.Network.Packets
 
         public Guid Guid { get; set; }
         public string Username { get; set; }
+        public string ThirdPartyName { get; set; } = "";
+        public int Platform { get; set; } = 0;
         public long EntityUniqueId { get; set; }
         public long EntityRuntimeId { get; set; }
+        public string PlatformChatId { get; set; } = "";
         public Vector3 Vector3 { get; set; }
         public Vector3 Speed { get; set; }
         public Vector3 Direction { get; set; }
@@ -42,6 +45,7 @@ namespace MineNET.Network.Packets
             this.WriteString(this.Username);
             this.WriteEntityUniqueId(this.EntityUniqueId);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
+            this.WriteString(this.PlatformChatId);
             this.WriteVector3(this.Vector3);
             this.WriteVector3(this.Speed);
             this.WriteVector3(this.Direction);
