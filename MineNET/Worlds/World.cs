@@ -151,8 +151,8 @@ namespace MineNET.Worlds
             Tuple<int, int> chunkPos = new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4);
             Chunk chunk = this.GetChunk(chunkPos);
 
-            byte id = chunk.GetBlock(chunkPos.Item1, (int) pos.Y, chunkPos.Item2);
-            byte meta = chunk.GetMetadata(chunkPos.Item1, (int) pos.Y, chunkPos.Item2);
+            byte id = chunk.GetBlock(pos.FloorX & 0x0f, (int) pos.Y & 0xff, pos.FloorZ & 0x0f);
+            byte meta = chunk.GetMetadata(pos.FloorX & 0x0f, (int) pos.Y & 0xff, pos.FloorZ & 0x0f);
 
             Block block = Block.Get(id, meta);
             block.Position = pos.Position(this);
@@ -162,11 +162,11 @@ namespace MineNET.Worlds
 
         public void SetBlock(Vector3 pos, Block block)
         {
-            Tuple<int, int> chunkPos = new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4);
+            Tuple<int, int> chunkPos = new Tuple<int, int>(pos.FloorX >> 4, pos.FloorZ >> 4);
             Chunk chunk = this.GetChunk(chunkPos);
 
-            chunk.SetBlock(chunkPos.Item1, (int) pos.Y, chunkPos.Item2, (byte) block.ID);
-            chunk.SetMetadata(chunkPos.Item1, (int) pos.Y, chunkPos.Item2, (byte) block.Damage);
+            chunk.SetBlock(pos.FloorX & 0x0f, pos.FloorY & 0xff, pos.FloorZ & 0x0f, (byte) block.ID);
+            chunk.SetMetadata(pos.FloorX & 0x0f, pos.FloorY & 0xff, pos.FloorZ & 0x0f, (byte) block.Damage);
 
             this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos });
         }
