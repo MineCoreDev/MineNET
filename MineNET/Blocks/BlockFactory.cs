@@ -253,6 +253,16 @@ namespace MineNET.Blocks
         public const int OBSERVER = 251;
         public const int STRUCTURE_BLOCK = 252;
 
+        public const int PRISMARINE_STAIRS = 257;
+        public const int DARK_PRISMARINE_STAIRS = 258;
+        public const int PRISMARINE_BRICKS_STAIRS = 259;
+        public const int STRIPPED_SPRUCE_LOG = 260;
+        public const int STRIPPED_BIRCH_LOG = 261;
+        public const int STRIPPED_JUNGLE_LOG = 262;
+        public const int STRIPPED_ACACIA_LOG = 263;
+        public const int STRIPPED_DARK_OAK_LOG = 264;
+        public const int STRIPPED_OAK_LOG = 265;
+
         private static Dictionary<int, Type> Blocks = new Dictionary<int, Type>();
 
         public static Block GetBlock(int id)

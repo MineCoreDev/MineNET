@@ -77,6 +77,12 @@ namespace MineNET.Network.Packets
 
         public int ServerChunkTickRadius { get; set; } = 4;
 
+        public bool HasPlatformBroadcast { get; set; } = false;
+
+        public int PlatformBroadcastMode { get; set; } = 0;
+
+        public bool XboxLiveBroadcastIntent { get; set; } = false;
+
         public string LevelId { get; set; } = "";
 
         public string WorldName { get; set; } = "";
@@ -122,6 +128,9 @@ namespace MineNET.Network.Packets
             this.WriteSVarInt((int) this.PermissionLevel);
             this.WriteSVarInt(this.GamePublish);
             this.WriteInt(this.ServerChunkTickRadius);
+            this.WriteBool(this.HasPlatformBroadcast);
+            this.WriteUVarInt((uint) this.PlatformBroadcastMode);
+            this.WriteBool(this.XboxLiveBroadcastIntent);
             this.WriteString(this.LevelId);
             this.WriteString(this.WorldName);
             this.WriteString(this.PremiumWorldTemplateId);

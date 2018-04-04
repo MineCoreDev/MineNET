@@ -1,15 +1,30 @@
 ﻿using System;
+using System.Text;
 using MineNET.Blocks.Data;
 using MineNET.Entities.Players;
 using MineNET.Items;
+using MineNET.Resources.Data;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
+using Newtonsoft.Json.Linq;
 
 namespace MineNET.Blocks
 {
     public abstract class Block : ICloneable<Block>, IPosition
     {
+        public static void LoadRuntimeIds()
+        {
+            string data = Encoding.UTF8.GetString(ResourceData.Runtimeid_table);
+            JObject json = JObject.Parse(data);
+            foreach (JObject block in json.Values<JObject>())
+            {
+                int runtimeId = block.Value<int>("runtimeID");
+                int id = block.Value<int>("id");
+                int damage = block.Value<int>("data");
+                Logger.Info($"runtimeId {runtimeId} : id {id} : damage {damage}");
+            }
+        }
 
         public static Block Get(int id, int meta = 0)
         {
