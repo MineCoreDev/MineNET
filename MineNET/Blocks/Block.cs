@@ -29,7 +29,6 @@ namespace MineNET.Blocks
                 Block.RuntimeIds[(id << 4) | damage] = runtimeId;
                 Block.FromRuntimeId[runtimeId] = (id << 4) | damage;
             }
-            Logger.Info(Block.FromRuntimeId.Count);
         }
 
         public static int GetRuntimeId(int id, int damage)
