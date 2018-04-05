@@ -133,9 +133,14 @@ namespace MineNET.Entities
 
         public void RemoveAllEffect()
         {
-            foreach (int id in this.effects.Keys)
+            if (this.effects.Count < 1)
             {
-                this.RemoveEffect(id);
+                return;
+            }
+            int[] ids = this.effects.Keys.ToArray();
+            for (int i = 0; i < ids.Length; ++i)
+            {
+                this.RemoveEffect(ids[i]);
             }
         }
 

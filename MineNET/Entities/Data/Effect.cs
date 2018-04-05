@@ -139,7 +139,7 @@ namespace MineNET.Entities.Data
             }
             else
             {
-                throw new Exception($"EffectId {id} not found");
+                return null;
             }
             effect.Duration = duration;
             effect.Amplifier = amplifier;

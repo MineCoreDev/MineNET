@@ -85,6 +85,7 @@ namespace MineNET.Commands.Defaults
                         EntityLiving entity = (EntityLiving) entities[i];
                         if (entity.GetEffects().Length > 0)
                         {
+                            entity.RemoveAllEffect();
                             sender.SendMessage($"{entity.Name} からすべての効果を除去しました");
                         }
                         else
@@ -144,7 +145,9 @@ namespace MineNET.Commands.Defaults
             {
                 if (entities[i] is EntityLiving)
                 {
-                    sender.SendMessage($"{entities[i].Name} に{effect.Name} * {effect.Amplifier} を {effect.Duration} 秒間与えました");
+                    EntityLiving entity = (EntityLiving) entities[i];
+                    entity.AddEffect(effect.Clone());
+                    sender.SendMessage($"{entity.Name} に{effect.Name} * {effect.Amplifier} を {effect.Duration} 秒間与えました");
                 }
                 else
                 {

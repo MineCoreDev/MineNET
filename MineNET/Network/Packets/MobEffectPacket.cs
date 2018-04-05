@@ -29,10 +29,10 @@
 
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteByte((byte) this.EventId);
-            this.WriteVarInt(this.EffectId);
-            this.WriteVarInt(this.Amplifier);
+            this.WriteSVarInt(this.EffectId);
+            this.WriteSVarInt(this.Amplifier);
             this.WriteBool(this.Particles);
-            this.WriteVarInt(this.Duration);
+            this.WriteSVarInt(this.Duration);
         }
     }
 }

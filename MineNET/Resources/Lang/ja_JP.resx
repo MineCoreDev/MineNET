@@ -366,7 +366,7 @@
   <data name="effect.slowness" xml:space="preserve">
     <value>鈍化</value>
   </data>
-  <data name="effect.spped" xml:space="preserve">
+  <data name="effect.speed" xml:space="preserve">
     <value>スピード</value>
   </data>
   <data name="effect.strength" xml:space="preserve">
