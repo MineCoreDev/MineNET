@@ -73,6 +73,20 @@ namespace MineNET.Entities.Players
             }
         }
 
+        public override float Absorption
+        {
+            get
+            {
+                return base.Absorption;
+            }
+
+            set
+            {
+                base.Absorption = value;
+                this.Attributes.Update(this);
+            }
+        }
+
         public float Hunger
         {
             get

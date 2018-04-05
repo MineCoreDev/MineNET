@@ -86,6 +86,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -356,6 +357,7 @@
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandSender.cs" />
     <Compile Include="Commands\ConsoleSender.cs" />
+    <Compile Include="Commands\Defaults\EffectCommand.cs" />
     <Compile Include="Commands\Defaults\GameModeCommand.cs" />
     <Compile Include="Commands\Defaults\GiveCommand.cs" />
     <Compile Include="Commands\Defaults\ListCommand.cs" />
@@ -384,6 +386,7 @@
     <Compile Include="Commands\Parameters\CommandParameterValue.cs" />
     <Compile Include="Commands\Parameters\CommandParameterValueEnum.cs" />
     <Compile Include="Entities\Attributes\EntityAttributeDictionary.cs" />
+    <Compile Include="Entities\Data\Effect.cs" />
     <Compile Include="Entities\Data\GameMode.cs" />
     <Compile Include="Events\BlockEvents\BlockBreakEventArgs.cs" />
     <Compile Include="Events\BlockEvents\BlockEventArgs.cs" />
@@ -705,6 +708,7 @@
     <Compile Include="Network\Packets\InventorySlotPacket.cs" />
     <Compile Include="Network\Packets\InventoryTransactionPacket.cs" />
     <Compile Include="Network\Packets\MobArmorEquipmentPacket.cs" />
+    <Compile Include="Network\Packets\MobEffectPacket.cs" />
     <Compile Include="Network\Packets\MobEquipmentPacket.cs" />
     <Compile Include="Network\Packets\MovePlayerPacket.cs" />
     <Compile Include="Network\Packets\PlayerActionPacket.cs" />

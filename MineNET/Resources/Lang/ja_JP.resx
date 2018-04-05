@@ -306,4 +306,79 @@
   <data name="commands.generic.unknown" xml:space="preserve">
     <value>§c不明なコマンド: {0}。このコマンドが存在し、これを使用する権限があることを確認してください</value>
   </data>
+  <data name="effect.absorption" xml:space="preserve">
+    <value>吸収</value>
+  </data>
+  <data name="effect.blindness" xml:space="preserve">
+    <value>目つぶし</value>
+  </data>
+  <data name="effect.fatal_poison" xml:space="preserve">
+    <value>毒</value>
+  </data>
+  <data name="effect.fire_resistance" xml:space="preserve">
+    <value>耐火</value>
+  </data>
+  <data name="effect.haste" xml:space="preserve">
+    <value>勤勉</value>
+  </data>
+  <data name="effect.health_boost" xml:space="preserve">
+    <value>HPブースト</value>
+  </data>
+  <data name="effect.hunger" xml:space="preserve">
+    <value>空腹</value>
+  </data>
+  <data name="effect.instant_damage" xml:space="preserve">
+    <value>ダメージ</value>
+  </data>
+  <data name="effect.instant_health" xml:space="preserve">
+    <value>回復</value>
+  </data>
+  <data name="effect.invisibility" xml:space="preserve">
+    <value>不可視</value>
+  </data>
+  <data name="effect.jump_boost" xml:space="preserve">
+    <value>跳躍</value>
+  </data>
+  <data name="effect.levitation" xml:space="preserve">
+    <value>浮遊</value>
+  </data>
+  <data name="effect.mining_fatigue" xml:space="preserve">
+    <value>疲労</value>
+  </data>
+  <data name="effect.nausea" xml:space="preserve">
+    <value>目まい</value>
+  </data>
+  <data name="effect.night_vision" xml:space="preserve">
+    <value>暗視</value>
+  </data>
+  <data name="effect.poison" xml:space="preserve">
+    <value>毒</value>
+  </data>
+  <data name="effect.regeneration" xml:space="preserve">
+    <value>再生</value>
+  </data>
+  <data name="effect.resistance" xml:space="preserve">
+    <value>耐性</value>
+  </data>
+  <data name="effect.saturation" xml:space="preserve">
+    <value>飽和</value>
+  </data>
+  <data name="effect.slowness" xml:space="preserve">
+    <value>鈍化</value>
+  </data>
+  <data name="effect.speed" xml:space="preserve">
+    <value>スピード</value>
+  </data>
+  <data name="effect.strength" xml:space="preserve">
+    <value>力</value>
+  </data>
+  <data name="effect.water.breathing" xml:space="preserve">
+    <value>水中呼吸</value>
+  </data>
+  <data name="effect.weakness" xml:space="preserve">
+    <value>弱体化</value>
+  </data>
+  <data name="effect.wither" xml:space="preserve">
+    <value>ウィザー</value>
+  </data>
 </root>
