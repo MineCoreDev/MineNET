@@ -8,7 +8,7 @@ namespace MineNET.Utils.Tests
     public class BinaryStreamTests
     {
         [TestMethod()]
-        public void WriteBytesTest()
+        public void BinaryStreamTests_WriteBytesTest()
         {
             /*BinaryStream bs = new BinaryStream();
             for (int i = 0; i < 200000; ++i)
@@ -18,7 +18,7 @@ namespace MineNET.Utils.Tests
         }
 
         [TestMethod()]
-        public void MemorySpanTest()
+        public void BinaryStreamTests_MemorySpanTest()
         {
             MemorySpan span = new MemorySpan(new byte[0]);
             span.WriteBytes(ArrayUtils.CreateArray<byte>(1000, 0));
@@ -31,14 +31,14 @@ namespace MineNET.Utils.Tests
         }
 
         [TestMethod()]
-        public void WriteReadTest2()
+        public void BinaryStreamTests_WriteReadTest2()
         {
             BinaryStream bs = new BinaryStream();
 
         }
 
         [TestMethod()]
-        public void WriteReadTest()
+        public void BinaryStreamTests_WriteReadTest()
         {
             byte[] ipbyte = new byte[]
             {

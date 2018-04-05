@@ -11,7 +11,7 @@ namespace MineNET.NBT.IO.Tests
     public class NBTJsonSerializerTests
     {
         [TestMethod()]
-        public void SerializeTest()
+        public void NBTJsonSerializerTests_SerializeTest()
         {
             ListTag list = new ListTag("list", NBTTagType.INT);
             list.Add(new IntTag(12345));
@@ -37,7 +37,7 @@ namespace MineNET.NBT.IO.Tests
         }
 
         [TestMethod()]
-        public void DeserializeTest()
+        public void NBTJsonSerializerTests_DeserializeTest()
         {
             ListTag list = new ListTag("list", NBTTagType.INT);
             list.Add(new IntTag(12345));

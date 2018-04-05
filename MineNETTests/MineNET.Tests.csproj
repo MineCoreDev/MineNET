@@ -63,6 +63,7 @@
     <Compile Include="Utils\BinaryStreamTests.cs" />
     <Compile Include="Utils\Config\YamlConfigTests.cs" />
     <Compile Include="Utils\VarDumpTests.cs" />
+    <Compile Include="Values\ValueTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MineNET\MineNET.csproj">

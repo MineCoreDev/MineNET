@@ -24,6 +24,7 @@ namespace MineNET.Entities.Players
             this.ShowNameTag = true;
             this.AlwaysShowNameTag = true;
 
+            this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_BREATHING);
             this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_CAN_CLIMB);
         }
 
@@ -70,6 +71,7 @@ namespace MineNET.Entities.Players
 
         internal override void OnUpdate(int tick)
         {
+
         }
 
         internal void SendChunk()

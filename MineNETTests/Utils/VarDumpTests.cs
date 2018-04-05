@@ -19,7 +19,7 @@ namespace MineNET.Utils.Tests
         }
 
         [TestMethod()]
-        public void PublicFieldDumpTest()
+        public void VarDumpTests_PublicFieldDumpTest()
         {
             string s = VarDump.Var_Dump(new A());
             Console.WriteLine(s);
@@ -27,7 +27,7 @@ namespace MineNET.Utils.Tests
         }
 
         [TestMethod()]
-        public void FieldDumpTest()
+        public void VarDumpTests_FieldDumpTest()
         {
             string s = VarDump.Var_Dump(new A());
             Console.WriteLine(s);

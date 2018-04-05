@@ -8,7 +8,7 @@ namespace MineNET.Utils.Config.Tests
     public class YamlConfigTests
     {
         [TestMethod()]
-        public void LoadSaveTest()
+        public void YamlConfigTests_LoadSaveTest()
         {
             string path = Environment.CurrentDirectory + "\\TestConfig.yml";
             YamlConfig conf = YamlConfig.Load(Environment.CurrentDirectory + "\\TestConfig.yml");

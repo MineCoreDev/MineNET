@@ -12,7 +12,7 @@ namespace MineNET.NBT.IO.Tests
     public class NBTIOTests
     {
         [TestMethod()]
-        public void WriteRawFileTest()
+        public void NBTIOTests_WriteRawFileTest()
         {
             ListTag list = new ListTag("list", NBTTagType.INT);
             list.Add(new IntTag(12345));
@@ -37,7 +37,7 @@ namespace MineNET.NBT.IO.Tests
         }
 
         [TestMethod()]
-        public void ReadRawFileTest()
+        public void NBTIOTests_ReadRawFileTest()
         {
             CompoundTag tag = NBTIO.ReadRawFile(Environment.CurrentDirectory + "\\test.nbt");
             tag.GetBool("bool");
@@ -56,7 +56,7 @@ namespace MineNET.NBT.IO.Tests
         }
 
         [TestMethod()]
-        public void WriteGZFileTest()
+        public void NBTIOTests_WriteGZFileTest()
         {
             ListTag list = new ListTag("list", NBTTagType.COMPOUND);
             list.Add(new CompoundTag().PutInt("c1", 123));
@@ -81,7 +81,7 @@ namespace MineNET.NBT.IO.Tests
         }
 
         [TestMethod()]
-        public void ReadGZFileTest()
+        public void NBTIOTests_ReadGZFileTest()
         {
             CompoundTag tag = NBTIO.ReadGZIPFile(Environment.CurrentDirectory + "\\test2.nbt");
             Console.WriteLine(tag);
@@ -91,7 +91,7 @@ namespace MineNET.NBT.IO.Tests
         private CompoundTag namedTag;
 
         [TestMethod()]
-        public void Test3()
+        public void NBTIOTests_Test3()
         {
             this.namedTag = new CompoundTag();
             this.namedTag.PutList(new ListTag("Attributes", NBTTagType.COMPOUND));
@@ -124,7 +124,7 @@ namespace MineNET.NBT.IO.Tests
         }
 
         [TestMethod()]
-        public void Test4()
+        public void NBTIOTests_Test4()
         {
             /*this.namedTag = new CompoundTag();
             Item item = Item.Get(10);

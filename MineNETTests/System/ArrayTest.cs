@@ -8,7 +8,7 @@ namespace MineNETTests.System
     public class ArrayTest
     {
         [TestMethod]
-        public void Linq()
+        public void ArrayTest_Linq()
         {
             int[] test = new int[]
             {
@@ -23,7 +23,7 @@ namespace MineNETTests.System
         }
 
         [TestMethod]
-        public void Convert()
+        public void ArrayTest_Convert()
         {
             int[] test = new int[]
             {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Blocks
+﻿namespace MineNET.Blocks
 {
     public class BlockAir : BlockTransparent
     {
@@ -18,6 +12,22 @@ namespace MineNET.Blocks
             get
             {
                 return "Air";
+            }
+        }
+
+        public override bool CanBePlaced
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public override bool CanBeReplaced
+        {
+            get
+            {
+                return true;
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace MineNET.Blocks
+﻿using MineNET.Values;
+
+namespace MineNET.Blocks
 {
     public abstract class BlockSolid : Block
     {
@@ -12,6 +14,14 @@
             get
             {
                 return true;
+            }
+        }
+
+        public override AxisAlignedBB BoundingBox
+        {
+            get
+            {
+                return new AxisAlignedBB(Vector3.One, Vector3.One);
             }
         }
     }

@@ -161,6 +161,14 @@ namespace MineNET.Blocks
         {
             get
             {
+                return true;
+            }
+        }
+
+        public virtual bool CanBeReplaced
+        {
+            get
+            {
                 return false;
             }
         }
@@ -178,6 +186,14 @@ namespace MineNET.Blocks
             get
             {
                 return false;
+            }
+        }
+
+        public virtual AxisAlignedBB BoundingBox
+        {
+            get
+            {
+                return AxisAlignedBB.None;
             }
         }
 

@@ -312,7 +312,7 @@ namespace MineNET.Worlds
             Block clicked = this.GetBlock(pos);
             Block replace = clicked.GetSideBlock(blockFace);
 
-            if (clicked.Y > 255 || clicked.Y < 0 || replace.ID == BlockFactory.AIR)
+            if (clicked.Y > 255 || clicked.Y < 0 || clicked.ID == BlockFactory.AIR)
             {
                 return;
             }
@@ -334,6 +334,7 @@ namespace MineNET.Worlds
             {
                 return;
             }
+
             clicked.Update(World.BLOCK_UPDATE_TOUCH);
             if (item.CanBeActivate && (!clicked.CanBeActivated || player.Sneaking) && item.Activate(player, this, clicked, blockFace, clickPos))
             {
@@ -346,6 +347,12 @@ namespace MineNET.Worlds
             }
             Block hand = item.Block;
             hand.Position = replace.Position;
+
+            if (clicked.CanBeReplaced)
+            {
+                replace = clicked;
+                hand.Position = replace.Position;
+            }
 
             //TODO : near by entity check
 

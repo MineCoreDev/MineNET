@@ -826,6 +826,7 @@
     <Compile Include="Utils\VarDump.cs" />
     <Compile Include="Utils\VarInt.cs" />
     <Compile Include="Utils\ZlibStream.cs" />
+    <Compile Include="Values\AxisAlignedBB.cs" />
     <Compile Include="Values\IVector3.cs" />
     <Compile Include="Values\IVector3i.cs" />
     <Compile Include="Values\Vector2.cs" />

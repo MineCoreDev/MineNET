@@ -8,7 +8,7 @@ namespace MineNET.Utils.Tests
     public class ArrayUtilsTests
     {
         [TestMethod()]
-        public void CreateArrayTest()
+        public void ArrayUtilsTests_CreateArrayTest()
         {
             SubChunk c = new SubChunk();
             SubChunk[] c1 = ArrayUtils.CreateArray(10, c);
@@ -24,12 +24,6 @@ namespace MineNET.Utils.Tests
             {
                 Console.WriteLine(c2[j]);
             }
-        }
-
-        [TestMethod()]
-        public void CreateArrayTest1()
-        {
-
         }
     }
 }
