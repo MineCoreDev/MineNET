@@ -19,7 +19,7 @@ namespace MineNET.Resources.Data {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class ResourceData {
@@ -66,6 +66,16 @@ namespace MineNET.Resources.Data {
         internal static byte[] CreativeItems {
             get {
                 object obj = ResourceManager.GetObject("CreativeItems", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Byte[] のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static byte[] Runtimeid_table {
+            get {
+                object obj = ResourceManager.GetObject("Runtimeid_table", resourceCulture);
                 return ((byte[])(obj));
             }
         }

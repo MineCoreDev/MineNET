@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using MineNET.Blocks;
 using MineNET.Commands;
 using MineNET.Entities.Players;
 using MineNET.Items;
@@ -125,6 +126,7 @@ namespace MineNET
             await Task.Run(() =>
             {
                 Item.LoadCreativeItems();
+                Block.LoadRuntimeIds();
             });
         }
 

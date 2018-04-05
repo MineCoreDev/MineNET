@@ -31,6 +31,10 @@ namespace MineNET.Network.Packets
 
         public long OtherEntityRuntimeId { get; set; }
 
+        public int TeleportCuase { get; set; } = 0;
+
+        public int TeleportItem { get; set; } = 0;
+
         public override void Encode()
         {
             base.Encode();
@@ -41,6 +45,11 @@ namespace MineNET.Network.Packets
             this.WriteByte(this.Mode);
             this.WriteBool(this.OnGround);
             this.WriteSVarLong(this.OtherEntityRuntimeId);
+            if (this.Mode == MovePlayerPacket.MODE_TELEPORT)
+            {
+                this.WriteLInt((uint) this.TeleportCuase);
+                this.WriteLInt((uint) this.TeleportItem);
+            }
         }
 
         public override void Decode()
@@ -53,6 +62,11 @@ namespace MineNET.Network.Packets
             this.Mode = this.ReadByte();
             this.OnGround = this.ReadBool();
             this.OtherEntityRuntimeId = this.ReadSVarLong();
+            if (this.Mode == MovePlayerPacket.MODE_TELEPORT)
+            {
+                this.TeleportCuase = (int) this.ReadLInt();
+                this.TeleportItem = (int) this.ReadLInt();
+            }
         }
     }
 }

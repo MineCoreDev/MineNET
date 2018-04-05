@@ -1,15 +1,46 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using MineNET.Blocks.Data;
 using MineNET.Entities.Players;
 using MineNET.Items;
+using MineNET.Resources.Data;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
+using Newtonsoft.Json.Linq;
 
 namespace MineNET.Blocks
 {
     public abstract class Block : ICloneable<Block>, IPosition
     {
+        private static Dictionary<int, int> RuntimeIds = new Dictionary<int, int>();
+        private static Dictionary<int, int> FromRuntimeId = new Dictionary<int, int>();
+
+        public static void LoadRuntimeIds()
+        {
+            string data = Encoding.UTF8.GetString(ResourceData.Runtimeid_table);
+            JArray json = JArray.Parse(data);
+            foreach (JObject block in json.Values<JObject>())
+            {
+                int runtimeId = block.Value<int>("runtimeID");
+                int id = block.Value<int>("id");
+                int damage = block.Value<int>("data");
+                Block.RuntimeIds[(id << 4) | damage] = runtimeId;
+                Block.FromRuntimeId[runtimeId] = (id << 4) | damage;
+            }
+        }
+
+        public static int GetRuntimeId(int id, int damage)
+        {
+            return Block.RuntimeIds[(id << 4) | damage];
+        }
+
+        public static Block GetBlockFromRuntimeId(int runtimeId)
+        {
+            int v = Block.FromRuntimeId[runtimeId];
+            return Block.Get(v >> 4, v & 0xf);
+        }
 
         public static Block Get(int id, int meta = 0)
         {
@@ -45,6 +76,14 @@ namespace MineNET.Blocks
         public abstract string Name
         {
             get;
+        }
+
+        public int RuntimeId
+        {
+            get
+            {
+                return Block.GetRuntimeId(this.ID, this.Damage);
+            }
         }
 
         public virtual bool Place(Block clicked, Block replace, BlockFace face, Vector3 clickPos, Player player, Item item)

@@ -41,9 +41,9 @@ namespace MineNET.Worlds.Structures.NaturalObjects
             {
                 for (int y = 0; y < h - lsh + 1; ++y)
                 {
-                    for (int i = -maxW; i < maxW; ++i)
+                    for (int i = -maxW; i < maxW + 1; ++i)
                     {
-                        for (int j = -maxW; j < maxW; ++j)
+                        for (int j = -maxW; j < maxW + 1; ++j)
                         {
                             Vector3 pos = new Vector3(center.X + i, center.Y + lsh + y, center.Z + j);
                             if (world.GetBlock(pos).ID == BlockFactory.AIR)
