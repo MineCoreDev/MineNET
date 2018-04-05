@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MineNET.Commands.Data;
 using MineNET.Commands.Parameters;
 using MineNET.Data;
+using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.Utils;
 
@@ -85,9 +86,68 @@ namespace MineNET.Commands
             return players.ToArray();
         }
 
+        public Entity[] GetEntityFromSelector(string selector, CommandSender sender)
+        {
+            List<Entity> entities = new List<Entity>();
+            if (selector == "@a")
+            {
+                return Server.Instance.GetPlayers();
+            }
+            else if (selector == "@e")
+            {
+                //TODO
+            }
+            else if (selector == "@p")
+            {
+                //TODO:
+                if (sender.IsPlayer)
+                {
+                    entities.Add((Player) sender);
+                }
+            }
+            else if (selector == "@r")
+            {
+                Player[] online = Server.Instance.GetPlayers();
+                entities.Add(online[new Random().Next(online.Length)]);
+            }
+            else if (selector == "@s")
+            {
+                if (sender.IsPlayer)
+                {
+                    entities.Add((Player) sender);
+                }
+            }
+            else
+            {
+                Player player = Server.Instance.GetPlayer(selector);
+                if (player == null)
+                {
+                    sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.player.notFound"));
+                    return null;
+                }
+                else
+                {
+                    entities.Add(player);
+                }
+            }
+
+            if (entities.Count < 1)
+            {
+                sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.noTargetMatch"));
+                return null;
+            }
+
+            return entities.ToArray();
+        }
+
         public void SendTargetNotPlayerMessage(CommandSender sender)
         {
             sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.targetNotPlayer"));
+        }
+
+        public void SendSyntaxMessage(CommandSender sender)
+        {
+            sender.SendMessage("構文エラー"); //TODO
         }
 
         public string GetTranslationDescription(string messageKey)
