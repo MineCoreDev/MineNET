@@ -1,4 +1,4 @@
-# MineNET
+﻿# MineNET
 MineCraftBE Server SoftWere  
 1から作ったサーバーソフトウェア
 
@@ -12,3 +12,8 @@ MineCraftBE Server SoftWere
 - Entityの実装
 - レッドストーンの実装
 など
+
+## 使用しているライブラリ
+[YamlDotNet](https://github.com/aaubry/YamlDotNet)
+[Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
+[SharpZipLib](https://github.com/icsharpcode/SharpZipLib)
