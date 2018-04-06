@@ -14,6 +14,6 @@ MineCraftBE Server SoftWere
 など
 
 ## 使用しているライブラリ
-[YamlDotNet](https://github.com/aaubry/YamlDotNet)
-[Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
+[YamlDotNet](https://github.com/aaubry/YamlDotNet)  
+[Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)  
 [SharpZipLib](https://github.com/icsharpcode/SharpZipLib)
