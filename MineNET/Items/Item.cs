@@ -531,6 +531,46 @@ namespace MineNET.Items
             return this;
         }
 
+        public Item AddEnchant(int id, int level)
+        {
+            CompoundTag tag;
+            if (this.HasTags)
+            {
+                tag = this.GetNamedTag();
+            }
+            else
+            {
+                tag = new CompoundTag();
+            }
+            ListTag list;
+            if (tag.Exist("ench"))
+            {
+                list = tag.GetList("ench");
+            }
+            else
+            {
+                list = new ListTag("ench", NBTTagType.COMPOUND);
+                tag.PutList(list);
+            }
+            for (int i = 0; i < list.Count; ++i)
+            {
+                if (((CompoundTag) list[i]).GetShort("id") == id)
+                {
+                    list[i] = new CompoundTag()
+                        .PutShort("id", (short) id)
+                        .PutShort("lvl", (short) level);
+                    this.SetNamedTag(tag);
+                    return this;
+                }
+            }
+            CompoundTag ench = new CompoundTag()
+                        .PutShort("id", (short) id)
+                        .PutShort("lvl", (short) level);
+            list.Add(ench);
+            this.SetNamedTag(tag);
+            return this;
+        }
+
         public string[] CanPlaceOn
         {
             get
