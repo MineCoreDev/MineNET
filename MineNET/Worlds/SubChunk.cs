@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using MineNET.Blocks;
 using MineNET.Utils;
 
 namespace MineNET.Worlds
@@ -51,7 +52,12 @@ namespace MineNET.Worlds
         {
             using (BinaryStream bs = new BinaryStream())
             {
-                bs.WriteByte(0);
+                bs.WriteByte(0);//TODO New ChunkFormat...(8)
+                //bs.WriteUVarInt(4096);//block length
+                //for (int i = 0; i < 4096; ++i)
+                //{
+                //    bs.WriteSVarInt(Block.GetRuntimeId(this.BlockDatas[i], this.MetaDatas[i]));//RuntimeId?
+                //}
                 bs.WriteBytes(this.BlockDatas);
                 bs.WriteBytes(this.MetaDatas.ArrayData);
 

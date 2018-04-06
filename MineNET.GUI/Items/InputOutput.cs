@@ -11,6 +11,12 @@ namespace MineNET.GUI.Items
         public InputOutput()
         {
             InitializeComponent();
+
+            comboBox1.Items.Clear();
+            comboBox1.Items.Add(LangManager.GetString("form_inputMode_command_label"));
+            comboBox1.Items.Add(LangManager.GetString("form_inputMode_say_label"));
+
+            comboBox1.SelectedIndex = 0;
         }
 
         internal async void OnUpdate()
@@ -44,7 +50,14 @@ namespace MineNET.GUI.Items
             string cmd = textBox2.Text;
             if (!string.IsNullOrWhiteSpace(cmd) && Server.Instance != null)
             {
-                Server.Instance.CommandManager.HandleConsoleCommand(textBox2.Text);
+                if (comboBox1.SelectedIndex == 0)
+                {
+                    Server.Instance.CommandManager.HandleConsoleCommand(textBox2.Text);
+                }
+                else if (comboBox1.SelectedIndex == 1)
+                {
+                    Server.Instance.CommandManager.HandleConsoleCommand("say " + textBox2.Text);
+                }
             }
             textBox2.Clear();
             textBox2.Focus();
@@ -110,6 +123,19 @@ namespace MineNET.GUI.Items
             }
         }
 
+        internal string InputModeLabel
+        {
+            get
+            {
+                return this.label4.Text;
+            }
+
+            set
+            {
+                this.label4.Text = value;
+            }
+        }
+
         internal string OutputClearButtonLabel
         {
             get
@@ -120,6 +146,14 @@ namespace MineNET.GUI.Items
             set
             {
                 this.button2.Text = value;
+            }
+        }
+
+        internal ComboBox InputModeComboBox
+        {
+            get
+            {
+                return this.comboBox1;
             }
         }
 

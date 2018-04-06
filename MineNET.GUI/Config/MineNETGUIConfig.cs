@@ -7,5 +7,6 @@ namespace MineNET.GUI.Config
     {
         [YamlDescription("%config_outputOption", typeof(MineNETGUIConfig), "MineNET.GUI.Resources.Lang.")]
         public OutputOption OutputOption { get; set; } = new OutputOption();
+        public int InputModeIndex { get; set; } = 0;
     }
 }
