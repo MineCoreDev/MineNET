@@ -372,7 +372,7 @@
   <data name="effect.strength" xml:space="preserve">
     <value>力</value>
   </data>
-  <data name="effect.water.breathing" xml:space="preserve">
+  <data name="effect.water_breathing" xml:space="preserve">
     <value>水中呼吸</value>
   </data>
   <data name="effect.weakness" xml:space="preserve">

@@ -1,9 +1,15 @@
-﻿using MineNET.Entities.Players;
+﻿using MineNET.Entities.Data;
+using MineNET.Entities.Players;
 
 namespace MineNET.Items.Data
 {
-    interface Consumeable
+    interface IConsumeable
     {
         void OnConsume(Player player);
+
+        Effect[] AdditionalEffects
+        {
+            get;
+        }
     }
 }

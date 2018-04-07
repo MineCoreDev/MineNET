@@ -1,11 +1,11 @@
-﻿using MineNET.Entities.Players;
+﻿using MineNET.Entities.Data;
+using MineNET.Entities.Players;
 using MineNET.Events.PlayerEvents;
 using MineNET.Items.Data;
-using MineNET.Utils;
 
 namespace MineNET.Items
 {
-    public abstract class ItemFood : Item, Consumeable
+    public abstract class ItemFood : Item, IConsumeable
     {
         public ItemFood(int id) : base(id)
         {
@@ -30,17 +30,27 @@ namespace MineNET.Items
             PlayerEvents.OnPlayerEatFood(playerEatFoodEvent);
             if (playerEatFoodEvent.IsCancel)
             {
-                Logger.Info(4);
                 player.Inventory.SendMainHand(player);
                 return;
             }
-            Logger.Info(this.FoodRestore);
-            Logger.Info(this.SaturationRestore);
             player.AddHunger(this.FoodRestore);
             player.AddSaturation(this.SaturationRestore);
+            Effect[] effects = this.AdditionalEffects;
+            for (int i = 0; i < effects.Length; ++i)
+            {
+                player.AddEffect(effects[i]);
+            }
 
             this.Count--;
             player.Inventory.MainHandItem = this;
+        }
+
+        public virtual Effect[] AdditionalEffects
+        {
+            get
+            {
+                return new Effect[0];
+            }
         }
     }
 }

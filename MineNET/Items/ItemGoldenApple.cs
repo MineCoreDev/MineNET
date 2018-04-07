@@ -1,4 +1,6 @@
-﻿namespace MineNET.Items
+﻿using MineNET.Entities.Data;
+
+namespace MineNET.Items
 {
     public class ItemGoldenApple : ItemFood
     {
@@ -28,6 +30,18 @@
             get
             {
                 return 9.6f;
+            }
+        }
+
+        public override Effect[] AdditionalEffects
+        {
+            get
+            {
+                return new Effect[]
+                {
+                    Effect.GetEffect(Effect.REGENERATION, 100, 2),
+                    Effect.GetEffect(Effect.HEALTH_BOOST, 2400),
+                };
             }
         }
     }

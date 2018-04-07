@@ -67,7 +67,7 @@ namespace MineNET.Entities.Data
             }
             else if (id == Effect.JUMP_BOOST)
             {
-                effect = new Effect(Effect.JUMP_BOOST, LangManager.GetString("effect.jumpboost"), Color.FromArgb(34, 255, 76));
+                effect = new Effect(Effect.JUMP_BOOST, LangManager.GetString("effect.jump_boost"), Color.FromArgb(34, 255, 76));
             }
             else if (id == Effect.NAUSEA)
             {

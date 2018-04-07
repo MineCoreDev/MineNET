@@ -1,4 +1,7 @@
-﻿namespace MineNET.Items
+﻿using System;
+using MineNET.Entities.Data;
+
+namespace MineNET.Items
 {
     public class ItemRottenFlesh : ItemFood
     {
@@ -28,6 +31,24 @@
             get
             {
                 return 0.8f;
+            }
+        }
+
+        public override Effect[] AdditionalEffects
+        {
+            get
+            {
+                if (new Random().Next(10) <= 8)
+                {
+                    return new Effect[]
+                    {
+                        Effect.GetEffect(Effect.NAUSEA, 600)
+                    };
+                }
+                else
+                {
+                    return new Effect[0];
+                }
             }
         }
     }

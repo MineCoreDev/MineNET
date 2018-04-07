@@ -401,13 +401,13 @@ namespace MineNET.Entities.Players
                         return;
                     }
                     Item item = this.Inventory.MainHandItem;
-                    if (!(item is Consumeable))
+                    if (!(item is IConsumeable))
                     {
                         Logger.Info(2);
                         this.Inventory.SendMainHand(this);
                         return;
                     }
-                    Consumeable consume = (Consumeable) item;
+                    IConsumeable consume = (IConsumeable) item;
                     PlayerItemConsumeableEventArgs playerItemConsumeableEvent = new PlayerItemConsumeableEventArgs(this, item);
                     PlayerEvents.OnPlayerItemConsumeable(playerItemConsumeableEvent);
                     if (playerItemConsumeableEvent.IsCancel)

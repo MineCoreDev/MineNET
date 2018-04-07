@@ -1,4 +1,6 @@
-﻿namespace MineNET.Items
+﻿using MineNET.Entities.Data;
+
+namespace MineNET.Items
 {
     public class ItemSpiderEye : ItemFood
     {
@@ -28,6 +30,17 @@
             get
             {
                 return 1.2f;
+            }
+        }
+
+        public override Effect[] AdditionalEffects
+        {
+            get
+            {
+                return new Effect[]
+                {
+                     Effect.GetEffect(Effect.POISON, 80)
+                };
             }
         }
     }
