@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MineNET.Events.ServerEvents;
 using MineNET.GUI.Config;
+using MineNET.NBT.Tags;
 using MineNET.Utils.Config;
 
 namespace MineNET.GUI.Forms
@@ -162,6 +163,14 @@ namespace MineNET.GUI.Forms
         private void mineNETGUIVersionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form f = new VersionForm();
+            f.ShowDialog();
+        }
+
+        private void nBTViewerNToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CompoundTag tag = new CompoundTag();
+            tag.PutByte("Test", 123);
+            Form f = new NBTViewer(tag);
             f.ShowDialog();
         }
     }

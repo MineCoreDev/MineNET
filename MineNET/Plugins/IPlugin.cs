@@ -2,25 +2,10 @@
 {
     public interface IPlugin
     {
-        string Name
-        {
-            get;
-        }
-
-        string FileName
-        {
-            get;
-        }
-
-        string Directory
-        {
-            get;
-        }
-
-        bool Loaded
-        {
-            get;
-        }
+        string Name { get; }
+        string Description { get; }
+        APIVersion APIVersion { get; }
+        bool Loaded { get; set; }
 
         void Init(PluginAttribute plugin);
         void OnLoad();

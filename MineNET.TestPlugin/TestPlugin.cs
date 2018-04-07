@@ -5,7 +5,7 @@ using MineNET.Utils;
 
 namespace MineNET.TestPlugin
 {
-    [Plugin]
+    [Plugin("TestPlugin", "PluginTest", APIVersion.Version_1_0_0_0)]
     public class TestPlugin : PluginBase
     {
         public override void OnLoad()

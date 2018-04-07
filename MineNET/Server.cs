@@ -103,6 +103,8 @@ namespace MineNET
                 }
             }
 
+            this.PluginManager.DisablePlugins();
+
             this.UnloadWorld();
 
             this.NetworkManager.Server.UDPClientClose();

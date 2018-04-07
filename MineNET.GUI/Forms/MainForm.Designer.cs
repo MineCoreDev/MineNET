@@ -35,6 +35,7 @@
             this.controlCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nBTViewerNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mineNETGUIVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
@@ -87,9 +88,18 @@
             // 
             // toolTToolStripMenuItem
             // 
+            this.toolTToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nBTViewerNToolStripMenuItem});
             this.toolTToolStripMenuItem.Name = "toolTToolStripMenuItem";
             this.toolTToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.toolTToolStripMenuItem.Text = "Tool(&T)";
+            // 
+            // nBTViewerNToolStripMenuItem
+            // 
+            this.nBTViewerNToolStripMenuItem.Name = "nBTViewerNToolStripMenuItem";
+            this.nBTViewerNToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.nBTViewerNToolStripMenuItem.Text = "NBT Viewer(&N)";
+            this.nBTViewerNToolStripMenuItem.Click += new System.EventHandler(this.nBTViewerNToolStripMenuItem_Click);
             // 
             // helpHToolStripMenuItem
             // 
@@ -189,5 +199,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolTToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpHToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mineNETGUIVersionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nBTViewerNToolStripMenuItem;
     }
 }

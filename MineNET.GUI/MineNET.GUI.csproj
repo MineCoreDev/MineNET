@@ -104,6 +104,9 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NBTViewer.resx">
+      <DependentUpon>NBTViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\VersionForm.resx">
       <DependentUpon>VersionForm.cs</DependentUpon>
     </EmbeddedResource>

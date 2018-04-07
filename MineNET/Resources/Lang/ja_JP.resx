@@ -381,4 +381,7 @@
   <data name="effect.wither" xml:space="preserve">
     <value>ウィザー</value>
   </data>
+  <data name="server_plugin_disable" xml:space="preserve">
+    <value>プラグイン&lt;{0}&gt;が無効になりました。</value>
+  </data>
 </root>

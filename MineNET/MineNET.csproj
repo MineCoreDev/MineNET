@@ -727,6 +727,7 @@
     <Compile Include="Network\Packets\UpdateAttributesPacket.cs" />
     <Compile Include="Network\Packets\UpdateBlockPacket.cs" />
     <Compile Include="PartialServer.cs" />
+    <Compile Include="Plugins\APIVersion.cs" />
     <Compile Include="Plugins\Attributes\CommandAttribute.cs" />
     <Compile Include="Plugins\Attributes\PluginAttribute.cs" />
     <Compile Include="Plugins\IPlugin.cs" />

@@ -2,16 +2,16 @@
 {
     public abstract class PluginBase : IPlugin
     {
-        public string Directory { get; private set; }
-        public string FileName { get; private set; }
-        public bool Loaded { get; private set; }
+        public bool Loaded { get; set; }
         public string Name { get; private set; }
+        public string Description { get; private set; }
+        public APIVersion APIVersion { get; private set; }
 
         public void Init(PluginAttribute plugin)
         {
-            this.Directory = plugin.pluginPath;
-            this.FileName = plugin.pluginName;
-            this.Name = plugin.pluginName;
+            this.Name = plugin.PluginName;
+            this.Description = plugin.PluginDescription;
+            this.APIVersion = plugin.PluginAPIVersion;
         }
 
         public abstract void OnDisable();

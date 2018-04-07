@@ -1,19 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using ICSharpCode.SharpZipLib.Zip;
 using MineNET.Utils;
 
 namespace MineNET.Plugins
 {
     public class PluginManager
     {
-        public List<IPlugin> plugins = new List<IPlugin>();
+        public const string ZIPED_PLUGIN = "zip";
+        public const string ZIPED_MINENET_PLUGIN = "minenet";
+
+        public const string PLUGIN_STRUCT = "mnplugin";
+
+        public Dictionary<string, IPlugin> plugins = new Dictionary<string, IPlugin>();
 
         public PluginManager()
         {
             this.Init();
-            LoadPlugins();
+            this.LoadPlugins();
         }
 
         public void Init()
@@ -29,38 +36,41 @@ namespace MineNET.Plugins
         {
             string path = $"{Server.ExecutePath}\\plugins";
             DirectoryInfo dir = new DirectoryInfo(path);
-            DirectoryInfo[] pluginFolder = dir.GetDirectories();
-            for (int i = 0; i < pluginFolder.Length; ++i)
+            foreach (FileInfo file in dir.EnumerateFiles())
             {
-                LoadPlugin(pluginFolder[i].Name, pluginFolder[i].FullName);
+                if (file.Extension.ToLower() == ZIPED_PLUGIN || file.Extension.ToLower() == ZIPED_MINENET_PLUGIN)
+                {
+                    string temp = $"{path}\\temp";
+                    FastZip zip = new FastZip();
+                    zip.CreateEmptyDirectories = true;
+                    zip.RestoreAttributesOnExtract = true;
+                    zip.RestoreDateTimeOnExtract = true;
+
+                    zip.ExtractZip(file.FullName, temp, "");
+
+                    foreach (FileInfo i in new DirectoryInfo(temp).EnumerateFiles())
+                    {
+                        if (i.Extension.ToLower() == PLUGIN_STRUCT)
+                        {
+                            this.LoadPlugin(i.FullName);
+                        }
+                    }
+                }
+                else if (file.Extension.ToLower() == PLUGIN_STRUCT)
+                {
+                    this.LoadPlugin(file.FullName);
+                }
             }
-            //TODO: zip & plugin & minenet LoadSystem...
         }
 
-        public void LoadPlugin(string pluginFileName, string pluginPath)
+        public void LoadPlugin(string path)
         {
-            string dllPath = $"{pluginPath}\\{pluginFileName}.dll";
-            //string exePath = pluginPath + @"\\" + pluginFileName + ".exe";
-
-            if (File.Exists(dllPath))
-            {
-                LoadDllPluginExecute(dllPath);
-            }
-            /*else if (File.Exists(exePath))
-            {
-                //
-            }*/
-        }
-
-        void LoadDllPluginExecute(string dllPath)
-        {
-            string fileName = Path.GetFileName(dllPath);
+            string fileName = Path.GetFileName(path);
             try
             {
-                Assembly asm = Assembly.LoadFile(dllPath);
+                Assembly asm = Assembly.LoadFile(path);
                 Type[] types = asm.GetTypes();
                 int count = 0;
-                bool isPlugin = false;
                 for (int i = 0; i < types.Length; ++i)
                 {
                     Type t = types[i];
@@ -68,23 +78,17 @@ namespace MineNET.Plugins
                     if (att != null && t.GetInterface("IPlugin", false) != null)
                     {
                         IPlugin plugin = (IPlugin) Activator.CreateInstance(t);
-                        att.pluginName = fileName;
-                        att.pluginPath = dllPath;
                         plugin.Init(att);
                         Logger.Info("%server_plugin_load", fileName);
                         plugin.OnLoad();
-                        this.plugins.Add(plugin);
-                        isPlugin = true;
+                        plugin.Loaded = true;
+                        this.plugins.Add(att.PluginName, plugin);
                         count++;
+                        break;
                     }
                 }
 
                 if (count != 1)
-                {
-                    throw new PluginException();
-                }
-
-                if (!isPlugin)
                 {
                     Logger.Error("%server_plugin_notPlugin", fileName);
                 }
@@ -93,6 +97,86 @@ namespace MineNET.Plugins
             {
                 Logger.Error("%server_plugin_loadError", fileName);
                 Logger.Error(ex);
+            }
+        }
+
+        public void EnablePlugins()
+        {
+            IPlugin[] plugins = this.plugins.Values.ToArray();
+            for (int i = 0; i < plugins.Length; ++i)
+            {
+                if (plugins[i].Loaded)
+                {
+                    plugins[i].OnEnable();
+                    Logger.Info(LangManager.GetString("server_plugin_enable"), plugins[i].Name);
+                }
+            }
+        }
+
+        public bool EnablePlugin(string pluginName)
+        {
+            if (this.plugins.ContainsKey(pluginName))
+            {
+                this.plugins[pluginName].OnEnable();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void DisablePlugins()
+        {
+            IPlugin[] plugins = this.plugins.Values.ToArray();
+            for (int i = 0; i < plugins.Length; ++i)
+            {
+                if (plugins[i].Loaded)
+                {
+                    plugins[i].OnDisable();
+                    Logger.Info(LangManager.GetString("server_plugin_disable"), plugins[i].Name);
+                }
+            }
+            this.UnLoadPlugins();
+        }
+
+        public bool DisablePlugin(string pluginName)
+        {
+            if (this.plugins.ContainsKey(pluginName))
+            {
+                this.plugins[pluginName].OnDisable();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void UnLoadPlugins()
+        {
+            IPlugin[] plugins = this.plugins.Values.ToArray();
+            for (int i = 0; i < plugins.Length; ++i)
+            {
+                if (plugins[i].Loaded)
+                {
+                    plugins[i].OnUnLoad();
+                }
+            }
+            this.plugins.Clear();
+        }
+
+        public bool UnLoadPlugin(string pluginName)
+        {
+            if (this.plugins.ContainsKey(pluginName))
+            {
+                this.plugins[pluginName].OnUnLoad();
+                this.plugins.Remove(pluginName);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

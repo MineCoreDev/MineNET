@@ -58,6 +58,8 @@ namespace MineNET
             this.CommandManager = new CommandManager();
             this.PluginManager = new PluginManager();
             this.NetworkManager = new NetworkManager();
+
+            this.PluginManager.EnablePlugins();
         }
 
         private void InitConfig()
