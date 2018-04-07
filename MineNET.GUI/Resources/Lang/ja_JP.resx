@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="app_error" xml:space="preserve">
+    <value>エラー</value>
+  </data>
+  <data name="app_exit" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="app_exit_alert" xml:space="preserve">
+    <value>アプリケーションを終了しますか？</value>
+  </data>
   <data name="app_language_key_error" xml:space="preserve">
-    <value>Keyが見つかりませんでした。</value>
+    <value>Key&lt;{0}&gt;が見つかりませんでした。</value>
   </data>
   <data name="config_outputOption" xml:space="preserve">
     <value>出力オプション</value>
@@ -129,11 +138,38 @@
   <data name="form_button2_label" xml:space="preserve">
     <value>停止</value>
   </data>
+  <data name="form_controlCToolStripMenuItem_label" xml:space="preserve">
+    <value>操作(&amp;C)</value>
+  </data>
+  <data name="form_debugDToolStripMenuItem_label" xml:space="preserve">
+    <value>デバッグ(&amp;D)</value>
+  </data>
+  <data name="form_exitEToolStripMenuItem_label" xml:space="preserve">
+    <value>終了(&amp;E)</value>
+  </data>
+  <data name="form_fileFToolStripMenuItem_label" xml:space="preserve">
+    <value>ファイル(&amp;F)</value>
+  </data>
+  <data name="form_helpHToolStripMenuItem_label" xml:space="preserve">
+    <value>ヘルプ(&amp;H)</value>
+  </data>
   <data name="form_inputButton_label" xml:space="preserve">
     <value>送信</value>
   </data>
+  <data name="form_inputMode_command_label" xml:space="preserve">
+    <value>コマンド</value>
+  </data>
+  <data name="form_inputMode_label" xml:space="preserve">
+    <value>入力モード</value>
+  </data>
+  <data name="form_inputMode_say_label" xml:space="preserve">
+    <value>Sayコマンド</value>
+  </data>
   <data name="form_input_label" xml:space="preserve">
     <value>入力</value>
+  </data>
+  <data name="form_mineNETGUIVersionToolStripMenuItem_label" xml:space="preserve">
+    <value>MineNET GUI のバージョン情報(&amp;V)</value>
   </data>
   <data name="form_outputClearButton_label" xml:space="preserve">
     <value>出力をクリア</value>
@@ -146,6 +182,9 @@
   </data>
   <data name="form_playerList_label" xml:space="preserve">
     <value>プレイヤーリスト</value>
+  </data>
+  <data name="form_toolTToolStripMenuItem_label" xml:space="preserve">
+    <value>ツール(&amp;T)</value>
   </data>
   <data name="start_lang_setup" xml:space="preserve">
     <value>言語を設定中...</value>

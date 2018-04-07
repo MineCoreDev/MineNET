@@ -17,14 +17,14 @@ namespace MineNET.GUI.Forms
         public MainForm(LoadForm form)
         {
             this.InitializeComponent();
-            this.BaseForm = form;
             this.button2.Enabled = false;
+            this.SetupLanguage();
+            this.BaseForm = form;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             this.ConfigLoad();
-            this.SetupLanguage();
         }
 
         private void SetupLanguage()
@@ -38,6 +38,19 @@ namespace MineNET.GUI.Forms
             this.inputOutput1.OutputLabel = LangManager.GetString("form_output_label");
             this.inputOutput1.OutputOptionLabel = LangManager.GetString("form_outputOption_label");
             this.inputOutput1.OutputClearButtonLabel = LangManager.GetString("form_outputClearButton_label");
+            this.inputOutput1.InputModeLabel = LangManager.GetString("form_inputMode_label");
+
+            this.fileFToolStripMenuItem.Text = LangManager.GetString("form_fileFToolStripMenuItem_label");
+            this.exitEToolStripMenuItem.Text = LangManager.GetString("form_exitEToolStripMenuItem_label");
+
+            this.controlCToolStripMenuItem.Text = LangManager.GetString("form_controlCToolStripMenuItem_label");
+
+            this.debugDToolStripMenuItem.Text = LangManager.GetString("form_debugDToolStripMenuItem_label");
+
+            this.toolTToolStripMenuItem.Text = LangManager.GetString("form_toolTToolStripMenuItem_label");
+
+            this.helpHToolStripMenuItem.Text = LangManager.GetString("form_helpHToolStripMenuItem_label");
+            this.mineNETGUIVersionToolStripMenuItem.Text = LangManager.GetString("form_mineNETGUIVersionToolStripMenuItem_label");
         }
 
         private void ConfigLoad()
@@ -50,6 +63,7 @@ namespace MineNET.GUI.Forms
             this.inputOutput1.OutputOptionCheckBox.SetItemChecked(3, MainForm.Config.OutputOption.Warning);
             this.inputOutput1.OutputOptionCheckBox.SetItemChecked(4, MainForm.Config.OutputOption.Error);
             this.inputOutput1.OutputOptionCheckBox.SetItemChecked(5, MainForm.Config.OutputOption.Fatal);
+            this.inputOutput1.InputModeComboBox.SelectedIndex = MainForm.Config.InputModeIndex;
         }
 
         private void ConfigSave()
@@ -60,6 +74,7 @@ namespace MineNET.GUI.Forms
             Config.OutputOption.Warning = this.inputOutput1.OutputOptionCheckBox.GetItemChecked(3);
             Config.OutputOption.Error = this.inputOutput1.OutputOptionCheckBox.GetItemChecked(4);
             Config.OutputOption.Fatal = this.inputOutput1.OutputOptionCheckBox.GetItemChecked(5);
+            Config.InputModeIndex = this.inputOutput1.InputModeComboBox.SelectedIndex;
 
             Config.Save<MineNETGUIConfig>();
         }
@@ -81,7 +96,7 @@ namespace MineNET.GUI.Forms
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(e.ToString(), LangManager.GetString("app_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Server.ErrorStop(e);
                 throw e;
             }
@@ -104,7 +119,7 @@ namespace MineNET.GUI.Forms
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show("Exit Application?", "Alert", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            DialogResult result = MessageBox.Show(LangManager.GetString("app_exit_alert"), LangManager.GetString("app_exit"), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
             if (result != DialogResult.Yes)
             {
                 e.Cancel = true;
@@ -142,6 +157,12 @@ namespace MineNET.GUI.Forms
             this.Server.Stop();
 
             this.ServerStop();
+        }
+
+        private void mineNETGUIVersionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form f = new VersionForm();
+            f.ShowDialog();
         }
     }
 }

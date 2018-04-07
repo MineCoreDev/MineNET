@@ -34,11 +34,13 @@
             // 
             // listBox1
             // 
+            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 12;
             this.listBox1.Location = new System.Drawing.Point(3, 15);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 88);
+            this.listBox1.Size = new System.Drawing.Size(120, 112);
             this.listBox1.TabIndex = 0;
             // 
             // label1
@@ -57,7 +59,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listBox1);
             this.Name = "PlayerList";
-            this.Size = new System.Drawing.Size(126, 105);
+            this.Size = new System.Drawing.Size(126, 140);
             this.ResumeLayout(false);
             this.PerformLayout();
 

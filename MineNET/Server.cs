@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using MineNET.Commands;
@@ -192,6 +193,21 @@ namespace MineNET
         public Player[] GetPlayers()
         {
             return this.NetworkManager?.players.Values.ToArray();
+        }
+
+        public Player[] GetOnlinePlayers()
+        {
+            Player[] players = this.NetworkManager?.players.Values.ToArray();
+            List<Player> online = new List<Player>();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (players[i].HasSpawned)
+                {
+                    online.Add(players[i]);
+                }
+            }
+
+            return online.ToArray();
         }
 
         public Player GetPlayer(string name)

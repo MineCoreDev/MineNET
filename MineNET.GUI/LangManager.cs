@@ -1,4 +1,6 @@
-﻿using System.Resources;
+﻿using System;
+using System.Resources;
+using System.Windows.Forms;
 
 namespace MineNET.GUI
 {
@@ -42,10 +44,11 @@ namespace MineNET.GUI
                 {
                     return msg;
                 }
-                throw new System.NullReferenceException();
+                throw new NullReferenceException(string.Format(Manager.GetString("app_language_key_error"), key));
             }
-            catch
+            catch (Exception e)
             {
+                MessageBox.Show(e.ToString(), manager.BaseName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 manager = new ResourceManager("MineNET.GUI.Resources.Lang.ja_JP", typeof(LangManager).Assembly);
             }
 

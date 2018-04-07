@@ -31,16 +31,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.controlCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mineNETGUIVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.inputOutput1 = new MineNET.GUI.Items.InputOutput();
             this.playerList1 = new MineNET.GUI.Items.PlayerList();
-            this.mineNETGUIVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,17 +61,17 @@
             // fileFToolStripMenuItem
             // 
             this.fileFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.closeEToolStripMenuItem});
+            this.exitEToolStripMenuItem});
             this.fileFToolStripMenuItem.Name = "fileFToolStripMenuItem";
             this.fileFToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.fileFToolStripMenuItem.Text = "File(&F)";
             // 
-            // closeEToolStripMenuItem
+            // exitEToolStripMenuItem
             // 
-            this.closeEToolStripMenuItem.Name = "closeEToolStripMenuItem";
-            this.closeEToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.closeEToolStripMenuItem.Text = "Close(&E)";
-            this.closeEToolStripMenuItem.Click += new System.EventHandler(this.closeEToolStripMenuItem_Click);
+            this.exitEToolStripMenuItem.Name = "exitEToolStripMenuItem";
+            this.exitEToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.exitEToolStripMenuItem.Text = "Exit(&E)";
+            this.exitEToolStripMenuItem.Click += new System.EventHandler(this.closeEToolStripMenuItem_Click);
             // 
             // controlCToolStripMenuItem
             // 
@@ -98,6 +98,13 @@
             this.helpHToolStripMenuItem.Name = "helpHToolStripMenuItem";
             this.helpHToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
             this.helpHToolStripMenuItem.Text = "Help(&H)";
+            // 
+            // mineNETGUIVersionToolStripMenuItem
+            // 
+            this.mineNETGUIVersionToolStripMenuItem.Name = "mineNETGUIVersionToolStripMenuItem";
+            this.mineNETGUIVersionToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.mineNETGUIVersionToolStripMenuItem.Text = "MineNET GUI Version(&V)";
+            this.mineNETGUIVersionToolStripMenuItem.Click += new System.EventHandler(this.mineNETGUIVersionToolStripMenuItem_Click);
             // 
             // button1
             // 
@@ -138,14 +145,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.playerList1.Location = new System.Drawing.Point(12, 27);
             this.playerList1.Name = "playerList1";
-            this.playerList1.Size = new System.Drawing.Size(126, 105);
+            this.playerList1.Size = new System.Drawing.Size(126, 140);
             this.playerList1.TabIndex = 1;
-            // 
-            // mineNETGUIVersionToolStripMenuItem
-            // 
-            this.mineNETGUIVersionToolStripMenuItem.Name = "mineNETGUIVersionToolStripMenuItem";
-            this.mineNETGUIVersionToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
-            this.mineNETGUIVersionToolStripMenuItem.Text = "MineNET GUI Version(&V)";
             // 
             // MainForm
             // 
@@ -162,6 +163,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MineNET GUI";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
@@ -177,7 +179,7 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileFToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem closeEToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitEToolStripMenuItem;
         private Items.PlayerList playerList1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
