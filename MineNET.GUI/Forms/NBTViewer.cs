@@ -28,7 +28,7 @@ namespace MineNET.GUI.Forms
             }
         }
 
-        private void DataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             string type = (string) this.dataGridView1.Rows[e.RowIndex].Cells[2].Value;
             string value = this.dataGridView1.Rows[e.RowIndex].Cells[1].Value?.ToString();
@@ -132,7 +132,7 @@ namespace MineNET.GUI.Forms
             }
         }
 
-        private void DataGridView1_CellParsing(object sender, DataGridViewCellParsingEventArgs e)
+        private void dataGridView1_CellParsing(object sender, DataGridViewCellParsingEventArgs e)
         {
             if (e.ColumnIndex == 2)
             {
@@ -276,6 +276,49 @@ namespace MineNET.GUI.Forms
                 style.BackColor = Color.Gray;
                 return style;
             }
+        }
+
+        private void moveUpUToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.MoveUpCell();
+        }
+
+        private void moveDownDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.MoveDownCell();
+        }
+
+        public void MoveUpCell()
+        {
+            DataGridViewRow row = this.dataGridView1.CurrentRow;
+            int index = this.dataGridView1.CurrentRow.Index;
+            if (index != 0)
+            {
+                DataGridViewRow newRow = new DataGridViewRow();
+                newRow.Cells.AddRange(this.GetCellArray(row));
+                this.dataGridView1.Rows.RemoveAt(index);
+                this.dataGridView1.Rows.Insert(index - 1, newRow);
+            }
+        }
+
+        public void MoveDownCell()
+        {
+            DataGridViewRow row = this.dataGridView1.CurrentRow;
+            int index = this.dataGridView1.CurrentRow.Index;
+            if (index < this.dataGridView1.Rows.Count)
+            {
+                DataGridViewRow newRow = new DataGridViewRow();
+                newRow.Cells.AddRange(this.GetCellArray(row));
+                this.dataGridView1.Rows.RemoveAt(index);
+                this.dataGridView1.Rows.Insert(index + 1, newRow);
+            }
+        }
+
+        public DataGridViewCell[] GetCellArray(DataGridViewRow row)
+        {
+            DataGridViewCell[] cells = new DataGridViewCell[row.Cells.Count];
+            row.Cells.CopyTo(cells, 0);
+            return cells;
         }
     }
 }

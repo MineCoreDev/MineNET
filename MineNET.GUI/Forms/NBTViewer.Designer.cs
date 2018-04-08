@@ -35,6 +35,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveUpUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveDownDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -54,8 +56,8 @@
             this.dataGridView1.Size = new System.Drawing.Size(484, 237);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
-            this.dataGridView1.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.DataGridView1_CellParsing);
-            this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.DataGridView1_CellValidating);
+            this.dataGridView1.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.dataGridView1_CellParsing);
+            this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_CellValidating);
             // 
             // Column1
             // 
@@ -110,9 +112,26 @@
             // 
             // actionAToolStripMenuItem
             // 
+            this.actionAToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.moveUpUToolStripMenuItem,
+            this.moveDownDToolStripMenuItem});
             this.actionAToolStripMenuItem.Name = "actionAToolStripMenuItem";
             this.actionAToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
             this.actionAToolStripMenuItem.Text = "Action(&A)";
+            // 
+            // moveUpUToolStripMenuItem
+            // 
+            this.moveUpUToolStripMenuItem.Name = "moveUpUToolStripMenuItem";
+            this.moveUpUToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.moveUpUToolStripMenuItem.Text = "Move Up(&U)";
+            this.moveUpUToolStripMenuItem.Click += new System.EventHandler(this.moveUpUToolStripMenuItem_Click);
+            // 
+            // moveDownDToolStripMenuItem
+            // 
+            this.moveDownDToolStripMenuItem.Name = "moveDownDToolStripMenuItem";
+            this.moveDownDToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.moveDownDToolStripMenuItem.Text = "Move Down(&D)";
+            this.moveDownDToolStripMenuItem.Click += new System.EventHandler(this.moveDownDToolStripMenuItem_Click);
             // 
             // NBTViewer
             // 
@@ -142,5 +161,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewComboBoxColumn Column3;
+        private System.Windows.Forms.ToolStripMenuItem moveUpUToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveDownDToolStripMenuItem;
     }
 }
