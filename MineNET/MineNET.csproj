@@ -419,6 +419,7 @@
     <Compile Include="Inventories\Transactions\Data\UseItemOnEntityData.cs" />
     <Compile Include="Inventories\Transactions\InventoryTransaction.cs" />
     <Compile Include="Items\Data\Consumeable.cs" />
+    <Compile Include="Items\Enchantment\Enchantment.cs" />
     <Compile Include="NBT\IO\NBTJsonSerializer.cs" />
     <Compile Include="Network\Packets\AddEntityPacket.cs" />
     <Compile Include="Network\Packets\AddPlayerPacket.cs" />
