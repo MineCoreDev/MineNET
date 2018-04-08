@@ -871,6 +871,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Events\WorldEvents\" />
+    <Folder Include="Items\Enchantment\" />
     <Folder Include="Resources\ClassDiagrams\" />
   </ItemGroup>
   <ItemGroup>
