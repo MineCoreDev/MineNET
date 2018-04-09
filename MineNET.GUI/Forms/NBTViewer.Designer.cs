@@ -40,8 +40,20 @@
             this.actionAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveUpUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveDownDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.updateRowsRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.loadRawNBTFileRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rawNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zLIBZToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gZipGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveNBTFileSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rawNToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.zLIBZToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.gZipGToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileEndianModeEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bigEndianBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.littleEndianLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nBTViewerCacheBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cacheData)).BeginInit();
@@ -127,6 +139,11 @@
             // 
             // fileFToolStripMenuItem
             // 
+            this.fileFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadRawNBTFileRToolStripMenuItem,
+            this.saveNBTFileSToolStripMenuItem,
+            this.fileEndianModeEToolStripMenuItem,
+            this.exitEToolStripMenuItem});
             this.fileFToolStripMenuItem.Name = "fileFToolStripMenuItem";
             this.fileFToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.fileFToolStripMenuItem.Text = "File(&F)";
@@ -144,16 +161,23 @@
             // moveUpUToolStripMenuItem
             // 
             this.moveUpUToolStripMenuItem.Name = "moveUpUToolStripMenuItem";
-            this.moveUpUToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.moveUpUToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.moveUpUToolStripMenuItem.Text = "Move Up(&U)";
             this.moveUpUToolStripMenuItem.Click += new System.EventHandler(this.moveUpUToolStripMenuItem_Click);
             // 
             // moveDownDToolStripMenuItem
             // 
             this.moveDownDToolStripMenuItem.Name = "moveDownDToolStripMenuItem";
-            this.moveDownDToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.moveDownDToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.moveDownDToolStripMenuItem.Text = "Move Down(&D)";
             this.moveDownDToolStripMenuItem.Click += new System.EventHandler(this.moveDownDToolStripMenuItem_Click);
+            // 
+            // updateRowsRToolStripMenuItem
+            // 
+            this.updateRowsRToolStripMenuItem.Name = "updateRowsRToolStripMenuItem";
+            this.updateRowsRToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.updateRowsRToolStripMenuItem.Text = "Update Rows(&R)";
+            this.updateRowsRToolStripMenuItem.Click += new System.EventHandler(this.updateRowsRToolStripMenuItem_Click);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -162,12 +186,92 @@
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // updateRowsRToolStripMenuItem
+            // loadRawNBTFileRToolStripMenuItem
             // 
-            this.updateRowsRToolStripMenuItem.Name = "updateRowsRToolStripMenuItem";
-            this.updateRowsRToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.updateRowsRToolStripMenuItem.Text = "Update Rows(&R)";
-            this.updateRowsRToolStripMenuItem.Click += new System.EventHandler(this.updateRowsRToolStripMenuItem_Click);
+            this.loadRawNBTFileRToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rawNToolStripMenuItem,
+            this.zLIBZToolStripMenuItem,
+            this.gZipGToolStripMenuItem});
+            this.loadRawNBTFileRToolStripMenuItem.Name = "loadRawNBTFileRToolStripMenuItem";
+            this.loadRawNBTFileRToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.loadRawNBTFileRToolStripMenuItem.Text = "Load NBT File(&R)";
+            // 
+            // rawNToolStripMenuItem
+            // 
+            this.rawNToolStripMenuItem.Name = "rawNToolStripMenuItem";
+            this.rawNToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rawNToolStripMenuItem.Text = "Raw(&N)";
+            // 
+            // zLIBZToolStripMenuItem
+            // 
+            this.zLIBZToolStripMenuItem.Name = "zLIBZToolStripMenuItem";
+            this.zLIBZToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zLIBZToolStripMenuItem.Text = "ZLIB(&Z)";
+            // 
+            // gZipGToolStripMenuItem
+            // 
+            this.gZipGToolStripMenuItem.Name = "gZipGToolStripMenuItem";
+            this.gZipGToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gZipGToolStripMenuItem.Text = "GZip(&G)";
+            // 
+            // saveNBTFileSToolStripMenuItem
+            // 
+            this.saveNBTFileSToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rawNToolStripMenuItem1,
+            this.zLIBZToolStripMenuItem1,
+            this.gZipGToolStripMenuItem1});
+            this.saveNBTFileSToolStripMenuItem.Name = "saveNBTFileSToolStripMenuItem";
+            this.saveNBTFileSToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.saveNBTFileSToolStripMenuItem.Text = "Save NBT File(&S)";
+            // 
+            // rawNToolStripMenuItem1
+            // 
+            this.rawNToolStripMenuItem1.Name = "rawNToolStripMenuItem1";
+            this.rawNToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.rawNToolStripMenuItem1.Text = "Raw(&N)";
+            // 
+            // zLIBZToolStripMenuItem1
+            // 
+            this.zLIBZToolStripMenuItem1.Name = "zLIBZToolStripMenuItem1";
+            this.zLIBZToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.zLIBZToolStripMenuItem1.Text = "ZLIB(&Z)";
+            // 
+            // gZipGToolStripMenuItem1
+            // 
+            this.gZipGToolStripMenuItem1.Name = "gZipGToolStripMenuItem1";
+            this.gZipGToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.gZipGToolStripMenuItem1.Text = "GZip(&G)";
+            // 
+            // exitEToolStripMenuItem
+            // 
+            this.exitEToolStripMenuItem.Name = "exitEToolStripMenuItem";
+            this.exitEToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.exitEToolStripMenuItem.Text = "Exit(&E)";
+            // 
+            // fileEndianModeEToolStripMenuItem
+            // 
+            this.fileEndianModeEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.littleEndianLToolStripMenuItem,
+            this.bigEndianBToolStripMenuItem});
+            this.fileEndianModeEToolStripMenuItem.Name = "fileEndianModeEToolStripMenuItem";
+            this.fileEndianModeEToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.fileEndianModeEToolStripMenuItem.Text = "File Endian Mode(&E)";
+            // 
+            // bigEndianBToolStripMenuItem
+            // 
+            this.bigEndianBToolStripMenuItem.Name = "bigEndianBToolStripMenuItem";
+            this.bigEndianBToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.bigEndianBToolStripMenuItem.Text = "BigEndian(&B)";
+            this.bigEndianBToolStripMenuItem.Click += new System.EventHandler(this.bigEndianBToolStripMenuItem_Click);
+            // 
+            // littleEndianLToolStripMenuItem
+            // 
+            this.littleEndianLToolStripMenuItem.Checked = true;
+            this.littleEndianLToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.littleEndianLToolStripMenuItem.Name = "littleEndianLToolStripMenuItem";
+            this.littleEndianLToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.littleEndianLToolStripMenuItem.Text = "LittleEndian(&L)";
+            this.littleEndianLToolStripMenuItem.Click += new System.EventHandler(this.littleEndianLToolStripMenuItem_Click);
             // 
             // NBTViewer
             // 
@@ -205,5 +309,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewComboBoxColumn tagTypeDataGridViewComboBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem updateRowsRToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadRawNBTFileRToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rawNToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zLIBZToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gZipGToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveNBTFileSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rawNToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem zLIBZToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem gZipGToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem fileEndianModeEToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem littleEndianLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bigEndianBToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitEToolStripMenuItem;
     }
 }

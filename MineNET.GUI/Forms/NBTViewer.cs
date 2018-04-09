@@ -10,6 +10,8 @@ namespace MineNET.GUI.Forms
 {
     public partial class NBTViewer : Form
     {
+        private NBTEndian Endian { get; set; } = NBTEndian.LITTLE_ENDIAN;
+
         public NBTViewer()
         {
             this.InitializeComponent();
@@ -236,7 +238,11 @@ namespace MineNET.GUI.Forms
                 }
                 else if (tag is ListTag)
                 {
-
+                    ListTag t = (ListTag) tag;
+                    this.AddListTagHeader(t);
+                    //TODO Color(Random) ChangeStart...
+                    //this.LoadTag(t);
+                    //     Color(Random) ChengeEnd...
                 }
                 else if (tag is CompoundTag)
                 {
@@ -263,6 +269,11 @@ namespace MineNET.GUI.Forms
         private void AddTag<T>(string key, T value, NBTTagType type)
         {
             this.cacheData.NBTViewerCache.AddNBTViewerCacheRow(key, value, type.ToNameString());
+        }
+
+        private void AddListTagHeader(ListTag tag)
+        {
+            this.cacheData.NBTViewerCache.AddNBTViewerCacheRow(tag.Name, tag.Count, "List");
         }
 
         private void AddCompoundTagHeader(CompoundTag tag)
@@ -369,6 +380,20 @@ namespace MineNET.GUI.Forms
                 this.dataGridView1.CurrentCell = this.dataGridView1.Rows[index + 1].Cells[this.dataGridView1.CurrentCell.ColumnIndex];
                 this.UpdateRows();
             }
+        }
+
+        private void littleEndianLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.littleEndianLToolStripMenuItem.Checked = true;
+            this.bigEndianBToolStripMenuItem.Checked = false;
+            this.Endian = NBTEndian.LITTLE_ENDIAN;
+        }
+
+        private void bigEndianBToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.littleEndianLToolStripMenuItem.Checked = false;
+            this.bigEndianBToolStripMenuItem.Checked = true;
+            this.Endian = NBTEndian.BIG_ENDIAN;
         }
     }
 }
