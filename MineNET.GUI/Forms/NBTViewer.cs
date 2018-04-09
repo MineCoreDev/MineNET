@@ -332,6 +332,13 @@ namespace MineNET.GUI.Forms
                         this.dataGridView1.Rows[row.Index].Cells[1].ReadOnly = true;
                         this.dataGridView1.Rows[row.Index].Cells[1].Style = this.ReadOnlyCellStyle;
                     }
+                    else
+                    {
+                        this.dataGridView1.Rows[row.Index].Cells[0].ReadOnly = false;
+                        this.dataGridView1.Rows[row.Index].Cells[0].Style = new DataGridViewCellStyle();
+                        this.dataGridView1.Rows[row.Index].Cells[1].ReadOnly = false;
+                        this.dataGridView1.Rows[row.Index].Cells[1].Style = new DataGridViewCellStyle();
+                    }
                 }
             }
         }
@@ -339,24 +346,28 @@ namespace MineNET.GUI.Forms
         public void MoveUpCell()
         {
             int index = this.dataGridView1.CurrentRow.Index;
-            if (index != 0)
+            if (index != 0 && index != this.dataGridView1.Rows.Count - 1)
             {
                 object[] c1 = this.cacheData.NBTViewerCache.Rows[index].ItemArray;
                 object[] c2 = this.cacheData.NBTViewerCache.Rows[index - 1].ItemArray;
                 this.cacheData.NBTViewerCache.Rows[index].ItemArray = c2;
                 this.cacheData.NBTViewerCache.Rows[index - 1].ItemArray = c1;
+                this.dataGridView1.CurrentCell = this.dataGridView1.Rows[index - 1].Cells[this.dataGridView1.CurrentCell.ColumnIndex];
+                this.UpdateRows();
             }
         }
 
         public void MoveDownCell()
         {
             int index = this.dataGridView1.CurrentRow.Index;
-            if (index < this.dataGridView1.Rows.Count)
+            if (index + 1 < this.dataGridView1.Rows.Count - 1)
             {
                 object[] c1 = this.cacheData.NBTViewerCache.Rows[index].ItemArray;
                 object[] c2 = this.cacheData.NBTViewerCache.Rows[index + 1].ItemArray;
                 this.cacheData.NBTViewerCache.Rows[index].ItemArray = c2;
                 this.cacheData.NBTViewerCache.Rows[index + 1].ItemArray = c1;
+                this.dataGridView1.CurrentCell = this.dataGridView1.Rows[index + 1].Cells[this.dataGridView1.CurrentCell.ColumnIndex];
+                this.UpdateRows();
             }
         }
     }
