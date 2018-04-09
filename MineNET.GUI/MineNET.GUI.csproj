@@ -98,6 +98,11 @@
     <Compile Include="LangManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Data\CacheData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CacheData.xsd</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Forms\LoadForm.resx">
       <DependentUpon>LoadForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -152,6 +157,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Icon\App.ico" />
+    <None Include="Resources\Data\CacheData.xsc">
+      <DependentUpon>CacheData.xsd</DependentUpon>
+    </None>
+    <None Include="Resources\Data\CacheData.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CacheData.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\Data\CacheData.xss">
+      <DependentUpon>CacheData.xsd</DependentUpon>
+    </None>
     <None Include="Resources\Icon\AppImage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

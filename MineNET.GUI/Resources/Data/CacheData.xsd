@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CacheData" targetNamespace="http://tempuri.org/CacheData.xsd" xmlns:mstns="http://tempuri.org/CacheData.xsd" xmlns="http://tempuri.org/CacheData.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="CacheData" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="CacheData" msprop:Generator_UserDSName="CacheData">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="NBTViewerCache" msprop:Generator_TableClassName="NBTViewerCacheDataTable" msprop:Generator_TableVarName="tableNBTViewerCache" msprop:Generator_TablePropName="NBTViewerCache" msprop:Generator_RowDeletingName="NBTViewerCacheRowDeleting" msprop:Generator_RowChangingName="NBTViewerCacheRowChanging" msprop:Generator_RowEvHandlerName="NBTViewerCacheRowChangeEventHandler" msprop:Generator_RowDeletedName="NBTViewerCacheRowDeleted" msprop:Generator_UserTableName="NBTViewerCache" msprop:Generator_RowChangedName="NBTViewerCacheRowChanged" msprop:Generator_RowEvArgName="NBTViewerCacheRowChangeEvent" msprop:Generator_RowClassName="NBTViewerCacheRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Key" msprop:Generator_ColumnVarNameInTable="columnKey" msprop:Generator_ColumnPropNameInRow="Key" msprop:Generator_ColumnPropNameInTable="KeyColumn" msprop:Generator_UserColumnName="Key" type="xs:string" minOccurs="0" />
+              <xs:element name="Value" msdata:DataType="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnValue" msprop:Generator_ColumnPropNameInRow="Value" msprop:Generator_ColumnPropNameInTable="ValueColumn" msprop:Generator_UserColumnName="Value" type="xs:anyType" minOccurs="0" />
+              <xs:element name="TagType" msprop:Generator_ColumnVarNameInTable="columnTagType" msprop:Generator_ColumnPropNameInRow="TagType" msprop:Generator_ColumnPropNameInTable="TagTypeColumn" msprop:Generator_UserColumnName="TagType" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -28,27 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.keyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tagTypeDataGridViewComboBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.nBTViewerCacheBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.cacheData = new MineNET.GUI.Resources.Data.CacheData();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveUpUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveDownDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.updateRowsRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nBTViewerCacheBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cacheData)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2,
-            this.Column3});
+            this.keyDataGridViewTextBoxColumn,
+            this.valueDataGridViewTextBoxColumn,
+            this.tagTypeDataGridViewComboBoxColumn});
+            this.dataGridView1.DataSource = this.nBTViewerCacheBindingSource;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 24);
             this.dataGridView1.Name = "dataGridView1";
@@ -59,23 +68,25 @@
             this.dataGridView1.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.dataGridView1_CellParsing);
             this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_CellValidating);
             // 
-            // Column1
+            // keyDataGridViewTextBoxColumn
             // 
-            this.Column1.HeaderText = "Key";
-            this.Column1.Name = "Column1";
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.keyDataGridViewTextBoxColumn.DataPropertyName = "Key";
+            this.keyDataGridViewTextBoxColumn.HeaderText = "Key";
+            this.keyDataGridViewTextBoxColumn.Name = "keyDataGridViewTextBoxColumn";
+            this.keyDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // Column2
+            // valueDataGridViewTextBoxColumn
             // 
-            this.Column2.HeaderText = "Value";
-            this.Column2.Name = "Column2";
-            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
+            this.valueDataGridViewTextBoxColumn.HeaderText = "Value";
+            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
+            this.valueDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // Column3
+            // tagTypeDataGridViewComboBoxColumn
             // 
-            this.Column3.HeaderText = "TagType";
-            this.Column3.Items.AddRange(new object[] {
+            this.tagTypeDataGridViewComboBoxColumn.DataPropertyName = "TagType";
+            this.tagTypeDataGridViewComboBoxColumn.HeaderText = "TagType";
+            this.tagTypeDataGridViewComboBoxColumn.Items.AddRange(new object[] {
             "End",
             "Byte",
             "Short",
@@ -89,9 +100,19 @@
             "Compound",
             "IntArray",
             "LongArray"});
-            this.Column3.Name = "Column3";
-            this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.tagTypeDataGridViewComboBoxColumn.Name = "tagTypeDataGridViewComboBoxColumn";
+            this.tagTypeDataGridViewComboBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // nBTViewerCacheBindingSource
+            // 
+            this.nBTViewerCacheBindingSource.AllowNew = true;
+            this.nBTViewerCacheBindingSource.DataMember = "NBTViewerCache";
+            this.nBTViewerCacheBindingSource.DataSource = this.cacheData;
+            // 
+            // cacheData
+            // 
+            this.cacheData.DataSetName = "CacheData";
+            this.cacheData.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // menuStrip1
             // 
@@ -114,7 +135,8 @@
             // 
             this.actionAToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.moveUpUToolStripMenuItem,
-            this.moveDownDToolStripMenuItem});
+            this.moveDownDToolStripMenuItem,
+            this.updateRowsRToolStripMenuItem});
             this.actionAToolStripMenuItem.Name = "actionAToolStripMenuItem";
             this.actionAToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
             this.actionAToolStripMenuItem.Text = "Action(&A)";
@@ -133,6 +155,20 @@
             this.moveDownDToolStripMenuItem.Text = "Move Down(&D)";
             this.moveDownDToolStripMenuItem.Click += new System.EventHandler(this.moveDownDToolStripMenuItem_Click);
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "Value";
+            this.dataGridViewTextBoxColumn1.HeaderText = "Value";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // updateRowsRToolStripMenuItem
+            // 
+            this.updateRowsRToolStripMenuItem.Name = "updateRowsRToolStripMenuItem";
+            this.updateRowsRToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.updateRowsRToolStripMenuItem.Text = "Update Rows(&R)";
+            this.updateRowsRToolStripMenuItem.Click += new System.EventHandler(this.updateRowsRToolStripMenuItem_Click);
+            // 
             // NBTViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -145,6 +181,8 @@
             this.Name = "NBTViewer";
             this.Text = "NBTViewer";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nBTViewerCacheBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cacheData)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -158,10 +196,14 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileFToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem actionAToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Column3;
         private System.Windows.Forms.ToolStripMenuItem moveUpUToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveDownDToolStripMenuItem;
+        private System.Windows.Forms.BindingSource nBTViewerCacheBindingSource;
+        private Resources.Data.CacheData cacheData;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn keyDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn tagTypeDataGridViewComboBoxColumn;
+        private System.Windows.Forms.ToolStripMenuItem updateRowsRToolStripMenuItem;
     }
 }

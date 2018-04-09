@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
@@ -12,12 +13,24 @@ namespace MineNET.GUI.Forms
         public NBTViewer()
         {
             this.InitializeComponent();
+            this.dataGridView1.AutoGenerateColumns = true;
         }
 
         public NBTViewer(CompoundTag tag)
         {
             this.InitializeComponent();
-            this.LoadTag(tag, true);
+            this.dataGridView1.AutoGenerateColumns = true;
+            this._Load(tag);
+        }
+
+        private async void _Load(CompoundTag tag)
+        {
+            Task.Run(() =>
+            {
+                this.LoadTag(tag, true);
+            }).Wait();
+            await Task.Delay(1);
+            this.UpdateRows();
         }
 
         private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
@@ -30,7 +43,7 @@ namespace MineNET.GUI.Forms
 
         private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            string type = (string) this.dataGridView1.Rows[e.RowIndex].Cells[2].Value;
+            string type = this.dataGridView1.Rows[e.RowIndex].Cells[2].Value?.ToString();
             string value = this.dataGridView1.Rows[e.RowIndex].Cells[1].Value?.ToString();
 
             if (e.ColumnIndex == 1)
@@ -249,23 +262,17 @@ namespace MineNET.GUI.Forms
 
         private void AddTag<T>(string key, T value, NBTTagType type)
         {
-            this.dataGridView1.Rows.Add(key, value, type.ToNameString());
+            this.cacheData.NBTViewerCache.AddNBTViewerCacheRow(key, value, type.ToNameString());
         }
 
         private void AddCompoundTagHeader(CompoundTag tag)
         {
-            int index = this.dataGridView1.Rows.Add(tag.Name, null, "Compound");
-            this.dataGridView1.Rows[index].Cells[1].ReadOnly = true;
-            this.dataGridView1.Rows[index].Cells[1].Style = this.ReadOnlyCellStyle;
+            this.cacheData.NBTViewerCache.AddNBTViewerCacheRow(tag.Name, null, "Compound");
         }
 
         private void AddEndTag()
         {
-            int index = this.dataGridView1.Rows.Add(null, null, "End");
-            this.dataGridView1.Rows[index].Cells[0].ReadOnly = true;
-            this.dataGridView1.Rows[index].Cells[0].Style = this.ReadOnlyCellStyle;
-            this.dataGridView1.Rows[index].Cells[1].ReadOnly = true;
-            this.dataGridView1.Rows[index].Cells[1].Style = this.ReadOnlyCellStyle;
+            this.cacheData.NBTViewerCache.AddNBTViewerCacheRow(null, null, "End");
         }
 
         private DataGridViewCellStyle ReadOnlyCellStyle
@@ -288,37 +295,69 @@ namespace MineNET.GUI.Forms
             this.MoveDownCell();
         }
 
+        private void updateRowsRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.UpdateRows();
+        }
+
+        private void UpdateRows()
+        {
+            foreach (DataGridViewRow row in this.dataGridView1.Rows)
+            {
+                object obj = row.Cells[2].Value;
+                if (obj != null)
+                {
+                    if (obj.ToString() == NBTTagType.COMPOUND.ToNameString())
+                    {
+                        this.dataGridView1.Rows[row.Index].Cells[0].ReadOnly = false;
+                        this.dataGridView1.Rows[row.Index].Cells[0].Style = new DataGridViewCellStyle();
+                        this.dataGridView1.Rows[row.Index].Cells[1].Value = null;
+                        this.dataGridView1.Rows[row.Index].Cells[1].ReadOnly = true;
+                        this.dataGridView1.Rows[row.Index].Cells[1].Style = this.ReadOnlyCellStyle;
+                    }
+                    else if (obj.ToString() == NBTTagType.LIST.ToNameString())
+                    {
+                        this.dataGridView1.Rows[row.Index].Cells[0].Value = null;
+                        this.dataGridView1.Rows[row.Index].Cells[0].ReadOnly = true;
+                        this.dataGridView1.Rows[row.Index].Cells[0].Style = this.ReadOnlyCellStyle;
+                        this.dataGridView1.Rows[row.Index].Cells[1].ReadOnly = false;
+                        this.dataGridView1.Rows[row.Index].Cells[1].Style = new DataGridViewCellStyle();
+                    }
+                    else if (obj.ToString() == NBTTagType.END.ToNameString())
+                    {
+                        this.dataGridView1.Rows[row.Index].Cells[0].Value = null;
+                        this.dataGridView1.Rows[row.Index].Cells[0].ReadOnly = true;
+                        this.dataGridView1.Rows[row.Index].Cells[0].Style = this.ReadOnlyCellStyle;
+                        this.dataGridView1.Rows[row.Index].Cells[1].Value = null;
+                        this.dataGridView1.Rows[row.Index].Cells[1].ReadOnly = true;
+                        this.dataGridView1.Rows[row.Index].Cells[1].Style = this.ReadOnlyCellStyle;
+                    }
+                }
+            }
+        }
+
         public void MoveUpCell()
         {
-            DataGridViewRow row = this.dataGridView1.CurrentRow;
             int index = this.dataGridView1.CurrentRow.Index;
             if (index != 0)
             {
-                DataGridViewRow newRow = new DataGridViewRow();
-                newRow.Cells.AddRange(this.GetCellArray(row));
-                this.dataGridView1.Rows.RemoveAt(index);
-                this.dataGridView1.Rows.Insert(index - 1, newRow);
+                object[] c1 = this.cacheData.NBTViewerCache.Rows[index].ItemArray;
+                object[] c2 = this.cacheData.NBTViewerCache.Rows[index - 1].ItemArray;
+                this.cacheData.NBTViewerCache.Rows[index].ItemArray = c2;
+                this.cacheData.NBTViewerCache.Rows[index - 1].ItemArray = c1;
             }
         }
 
         public void MoveDownCell()
         {
-            DataGridViewRow row = this.dataGridView1.CurrentRow;
             int index = this.dataGridView1.CurrentRow.Index;
             if (index < this.dataGridView1.Rows.Count)
             {
-                DataGridViewRow newRow = new DataGridViewRow();
-                newRow.Cells.AddRange(this.GetCellArray(row));
-                this.dataGridView1.Rows.RemoveAt(index);
-                this.dataGridView1.Rows.Insert(index + 1, newRow);
+                object[] c1 = this.cacheData.NBTViewerCache.Rows[index].ItemArray;
+                object[] c2 = this.cacheData.NBTViewerCache.Rows[index + 1].ItemArray;
+                this.cacheData.NBTViewerCache.Rows[index].ItemArray = c2;
+                this.cacheData.NBTViewerCache.Rows[index + 1].ItemArray = c1;
             }
-        }
-
-        public DataGridViewCell[] GetCellArray(DataGridViewRow row)
-        {
-            DataGridViewCell[] cells = new DataGridViewCell[row.Cells.Count];
-            row.Cells.CopyTo(cells, 0);
-            return cells;
         }
     }
 }
