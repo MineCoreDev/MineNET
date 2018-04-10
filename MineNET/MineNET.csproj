@@ -420,6 +420,15 @@
     <Compile Include="Inventories\Transactions\InventoryTransaction.cs" />
     <Compile Include="Items\Data\Consumeable.cs" />
     <Compile Include="Items\Enchantment\Enchantment.cs" />
+    <Compile Include="Items\Enchantment\EnchantmentAquaAffinity.cs" />
+    <Compile Include="Items\Enchantment\EnchantmentBlastProtection.cs" />
+    <Compile Include="Items\Enchantment\EnchantmentDepthStrider.cs" />
+    <Compile Include="Items\Enchantment\EnchantmentFeatherFalling.cs" />
+    <Compile Include="Items\Enchantment\EnchantmentFireProtection.cs" />
+    <Compile Include="Items\Enchantment\EnchantmentProjectileProtection.cs" />
+    <Compile Include="Items\Enchantment\EnchantmentProtection.cs" />
+    <Compile Include="Items\Enchantment\EnchantmentRespiration.cs" />
+    <Compile Include="Items\Enchantment\EnchantmentThorns.cs" />
     <Compile Include="NBT\IO\NBTJsonSerializer.cs" />
     <Compile Include="Network\Packets\AddEntityPacket.cs" />
     <Compile Include="Network\Packets\AddPlayerPacket.cs" />

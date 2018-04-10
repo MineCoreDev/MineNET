@@ -384,4 +384,85 @@
   <data name="server_plugin_disable" xml:space="preserve">
     <value>プラグイン&lt;{0}&gt;が無効になりました。</value>
   </data>
+  <data name="enchantment.aqua_affinity" xml:space="preserve">
+    <value>水中作業</value>
+  </data>
+  <data name="enchantment.bane_of_arthropods" xml:space="preserve">
+    <value>虫殺し</value>
+  </data>
+  <data name="enchantment.blast_protection" xml:space="preserve">
+    <value>爆発耐性</value>
+  </data>
+  <data name="enchantment.depth_strider" xml:space="preserve">
+    <value>水中移動</value>
+  </data>
+  <data name="enchantment.efficiency" xml:space="preserve">
+    <value>効率</value>
+  </data>
+  <data name="enchantment.feather_falling" xml:space="preserve">
+    <value>落下軽減</value>
+  </data>
+  <data name="enchantment.fire_aspect" xml:space="preserve">
+    <value>火属性</value>
+  </data>
+  <data name="enchantment.fire_protection" xml:space="preserve">
+    <value>防火</value>
+  </data>
+  <data name="enchantment.flame" xml:space="preserve">
+    <value>火炎</value>
+  </data>
+  <data name="enchantment.fortune" xml:space="preserve">
+    <value>幸運</value>
+  </data>
+  <data name="enchantment.frost_walker" xml:space="preserve">
+    <value>氷上歩行</value>
+  </data>
+  <data name="enchantment.infinity" xml:space="preserve">
+    <value>無限</value>
+  </data>
+  <data name="enchantment.knockback" xml:space="preserve">
+    <value>ノックバック</value>
+  </data>
+  <data name="enchantment.looting" xml:space="preserve">
+    <value>アイテムボーナス</value>
+  </data>
+  <data name="enchantment.luck_of_the_sea" xml:space="preserve">
+    <value>宝釣り</value>
+  </data>
+  <data name="enchantment.lure" xml:space="preserve">
+    <value>入れ食い</value>
+  </data>
+  <data name="enchantment.mending" xml:space="preserve">
+    <value>修繕</value>
+  </data>
+  <data name="enchantment.power" xml:space="preserve">
+    <value>パワー</value>
+  </data>
+  <data name="enchantment.projectile_protection" xml:space="preserve">
+    <value>間接攻撃耐性</value>
+  </data>
+  <data name="enchantment.protection" xml:space="preserve">
+    <value>保護</value>
+  </data>
+  <data name="enchantment.punch" xml:space="preserve">
+    <value>衝撃</value>
+  </data>
+  <data name="enchantment.respiration" xml:space="preserve">
+    <value>水中呼吸</value>
+  </data>
+  <data name="enchantment.sharpness" xml:space="preserve">
+    <value>鋭さ</value>
+  </data>
+  <data name="enchantment.silk_touch" xml:space="preserve">
+    <value>シルクタッチ</value>
+  </data>
+  <data name="enchantment.smite" xml:space="preserve">
+    <value>聖なる力</value>
+  </data>
+  <data name="enchantment.thorns" xml:space="preserve">
+    <value>とげ</value>
+  </data>
+  <data name="enchantment.unbreaking" xml:space="preserve">
+    <value>耐久力</value>
+  </data>
 </root>

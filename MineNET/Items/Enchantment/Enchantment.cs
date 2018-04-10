@@ -19,7 +19,7 @@
         public const int LOOTING = 14;
         public const int EFFICIENCY = 15;
         public const int SILK_TOUCH = 16;
-        public const int DURABILITY = 17;
+        public const int UNBREAKING = 17;
         public const int FORTUNE = 18;
         public const int POWER = 19;
         public const int PUNCH = 20;
@@ -29,6 +29,53 @@
         public const int LURE = 24;
         public const int FROST_WALKER = 25;
         public const int MENDING = 26;
+
+        public static Enchantment GetEnchantment(int id, int level = 1)
+        {
+            Enchantment enchantment;
+            if (id == Enchantment.PROTECTION)
+            {
+                enchantment = new EnchantmentProtection();
+            }
+            else if (id == Enchantment.FIRE_PROTECTION)
+            {
+                enchantment = new EnchantmentFireProtection();
+            }
+            else if (id == Enchantment.FEATHER_FALLING)
+            {
+                enchantment = new EnchantmentFeatherFalling();
+            }
+            else if (id == Enchantment.BLAST_PROTECTION)
+            {
+                enchantment = new EnchantmentBlastProtection();
+            }
+            else if (id == Enchantment.PROJECTILE_PROTECTION)
+            {
+                enchantment = new EnchantmentProjectileProtection();
+            }
+            else if (id == Enchantment.THORNS)
+            {
+                enchantment = new EnchantmentThorns();
+            }
+            else if (id == Enchantment.RESPIRATION)
+            {
+                enchantment = new EnchantmentRespiration();
+            }
+            else if (id == Enchantment.DEPTH_STRIDER)
+            {
+                enchantment = new EnchantmentDepthStrider();
+            }
+            else if (id == Enchantment.AQUA_AFFINITY)
+            {
+                enchantment = new EnchantmentAquaAffinity();
+            }
+            else
+            {
+                return null;
+            }
+            enchantment.Level = level;
+            return enchantment;
+        }
 
         public abstract int ID { get; }
         public abstract int MinLevel { get; }
