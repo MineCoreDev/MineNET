@@ -29,10 +29,7 @@ namespace MineNET.GUI.Forms
         private async void _Load(CompoundTag tag)
         {
             this.dataGridView1.ScrollBars = ScrollBars.None;
-            Task.Run(() =>
-            {
-                this.LoadTag(tag, true);
-            }).Wait();
+            this.LoadTag(tag, true);
             await Task.Delay(1);
             this.UpdateRows();
             this.dataGridView1.ScrollBars = ScrollBars.Both;
