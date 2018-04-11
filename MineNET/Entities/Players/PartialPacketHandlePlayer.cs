@@ -98,7 +98,29 @@ namespace MineNET.Entities.Players
                     if (players[i].Name == this.Name)
                     {
                         this.Close("disconnectionScreen.loggedinOtherLocation");
+                        return;
                     }
+                }
+            }
+
+            if (Server.Instance.BanConfig.ContainsKey(this.Name))
+            {
+                this.Close("You are banned");
+                return;
+            }
+
+            if (Server.Instance.BanIpConfig.ContainsKey(this.EndPoint.Address.ToString()))
+            {
+                this.Close("You are IP banned");
+                return;
+            }
+
+            if (Server.ServerConfig.WhiteList)
+            {
+                if (!Server.Instance.WhitelistConfig.ContainsKey(this.Name))
+                {
+                    this.Close("Server is whitelisted");
+                    return;
                 }
             }
 

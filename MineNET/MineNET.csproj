@@ -364,6 +364,7 @@
     <Compile Include="Commands\Defaults\MeCommand.cs" />
     <Compile Include="Commands\Defaults\SayCommand.cs" />
     <Compile Include="Commands\Defaults\TellCommand.cs" />
+    <Compile Include="Commands\Defaults\WhitelistCommand.cs" />
     <Compile Include="Commands\Enums\CommandEnum.cs" />
     <Compile Include="Commands\Data\CommandOverload.cs" />
     <Compile Include="Commands\Defaults\HelpCommand.cs" />
