@@ -65,10 +65,10 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\NBTViewer.cs">
+    <Compile Include="Tools\NBTViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\NBTViewer.Designer.cs">
+    <Compile Include="Tools\NBTViewer.Designer.cs">
       <DependentUpon>NBTViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\VersionForm.cs">
@@ -76,6 +76,12 @@
     </Compile>
     <Compile Include="Forms\VersionForm.Designer.cs">
       <DependentUpon>VersionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Items\Infomation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Items\Infomation.Designer.cs">
+      <DependentUpon>Infomation.cs</DependentUpon>
     </Compile>
     <Compile Include="Items\InputOutput.cs">
       <SubType>UserControl</SubType>
@@ -109,11 +115,14 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\NBTViewer.resx">
+    <EmbeddedResource Include="Tools\NBTViewer.resx">
       <DependentUpon>NBTViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\VersionForm.resx">
       <DependentUpon>VersionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Items\Infomation.resx">
+      <DependentUpon>Infomation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Items\InputOutput.resx">
       <DependentUpon>InputOutput.cs</DependentUpon>

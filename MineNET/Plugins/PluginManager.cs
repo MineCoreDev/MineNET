@@ -10,10 +10,11 @@ namespace MineNET.Plugins
 {
     public class PluginManager
     {
-        public const string ZIPED_PLUGIN = "zip";
-        public const string ZIPED_MINENET_PLUGIN = "minenet";
+        public const string ZIPED_PLUGIN = ".zip";
+        public const string ZIPED_MINENET_PLUGIN = ".minenet";
 
-        public const string PLUGIN_STRUCT = "mnplugin";
+        public const string PLUGIN_STRUCT = ".mnplugin";
+        public const string PLUGIN_STRUCT_SHORT = ".mnp";
 
         public Dictionary<string, IPlugin> plugins = new Dictionary<string, IPlugin>();
 
@@ -38,7 +39,8 @@ namespace MineNET.Plugins
             DirectoryInfo dir = new DirectoryInfo(path);
             foreach (FileInfo file in dir.EnumerateFiles())
             {
-                if (file.Extension.ToLower() == ZIPED_PLUGIN || file.Extension.ToLower() == ZIPED_MINENET_PLUGIN)
+                Logger.Info(file.Extension.ToLower());
+                if (this.IsZipedPlugin(file.Extension))
                 {
                     string temp = $"{path}\\temp";
                     FastZip zip = new FastZip();
@@ -50,13 +52,13 @@ namespace MineNET.Plugins
 
                     foreach (FileInfo i in new DirectoryInfo(temp).EnumerateFiles())
                     {
-                        if (i.Extension.ToLower() == PLUGIN_STRUCT)
+                        if (this.IsPlugin(i.Extension))
                         {
                             this.LoadPlugin(i.FullName);
                         }
                     }
                 }
-                else if (file.Extension.ToLower() == PLUGIN_STRUCT)
+                else if (this.IsPlugin(file.Extension))
                 {
                     this.LoadPlugin(file.FullName);
                 }
@@ -178,6 +180,16 @@ namespace MineNET.Plugins
             {
                 return false;
             }
+        }
+
+        public bool IsZipedPlugin(string fileExt)
+        {
+            return fileExt.ToLower() == ZIPED_PLUGIN || fileExt.ToLower() == ZIPED_MINENET_PLUGIN;
+        }
+
+        public bool IsPlugin(string fileExt)
+        {
+            return fileExt.ToLower() == PLUGIN_STRUCT || fileExt.ToLower() == PLUGIN_STRUCT_SHORT;
         }
     }
 }

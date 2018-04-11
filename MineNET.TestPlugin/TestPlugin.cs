@@ -1,5 +1,4 @@
-﻿using System;
-using MineNET.Events.ServerEvents;
+﻿using MineNET.Events.ServerEvents;
 using MineNET.Plugins;
 using MineNET.Utils;
 
@@ -32,17 +31,17 @@ namespace MineNET.TestPlugin
 
         public override void OnUnLoad()
         {
-            throw new NotImplementedException();
+            Logger.Info("Plugin UnLoad");
         }
 
         public override void OnDisable()
         {
-            throw new NotImplementedException();
+            Logger.Info("Plugin Disable");
         }
 
         public override void OnEnable()
         {
-            throw new NotImplementedException();
+            Logger.Info("Plugin Enable");
         }
     }
 }

@@ -7,7 +7,7 @@ using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 
-namespace MineNET.GUI.Forms
+namespace MineNET.GUI.Tools
 {
     public partial class NBTViewer : Form
     {
@@ -28,6 +28,7 @@ namespace MineNET.GUI.Forms
 
         private async void _Load(CompoundTag tag)
         {
+
             this.dataGridView1.ScrollBars = ScrollBars.None;
             this.LoadTag(tag, true);
             await Task.Delay(1);

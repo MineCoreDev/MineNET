@@ -1,4 +1,4 @@
-﻿namespace MineNET.GUI.Forms
+﻿namespace MineNET.GUI.Tools
 {
     partial class NBTViewer
     {
@@ -54,10 +54,11 @@
             this.updateRowsRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nBTViewerCacheBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cacheData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.nBTViewerCacheBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.cacheData)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,7 +70,7 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.keyDataGridViewTextBoxColumn,
             this.valueDataGridViewTextBoxColumn,
-            this.tagTypeDataGridViewComboBoxColumn});
+            this.tagTypeDataGridViewComboBoxColumn,});
             this.dataGridView1.DataSource = this.nBTViewerCacheBindingSource;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 24);
@@ -163,21 +164,21 @@
             // rawNToolStripMenuItem
             // 
             this.rawNToolStripMenuItem.Name = "rawNToolStripMenuItem";
-            this.rawNToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rawNToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.rawNToolStripMenuItem.Text = "Raw(&N)";
             this.rawNToolStripMenuItem.Click += new System.EventHandler(this.rawNToolStripMenuItem_Click);
             // 
             // zLIBZToolStripMenuItem
             // 
             this.zLIBZToolStripMenuItem.Name = "zLIBZToolStripMenuItem";
-            this.zLIBZToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zLIBZToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.zLIBZToolStripMenuItem.Text = "ZLIB(&Z)";
             this.zLIBZToolStripMenuItem.Click += new System.EventHandler(this.zLIBZToolStripMenuItem_Click);
             // 
             // gZipGToolStripMenuItem
             // 
             this.gZipGToolStripMenuItem.Name = "gZipGToolStripMenuItem";
-            this.gZipGToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gZipGToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.gZipGToolStripMenuItem.Text = "GZip(&G)";
             this.gZipGToolStripMenuItem.Click += new System.EventHandler(this.gZipGToolStripMenuItem_Click);
             // 
@@ -285,6 +286,13 @@
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "Value";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Value";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // NBTViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -296,9 +304,9 @@
             this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "NBTViewer";
             this.Text = "NBTViewer";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nBTViewerCacheBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cacheData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.nBTViewerCacheBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.cacheData)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -334,5 +342,6 @@
         private System.Windows.Forms.ToolStripMenuItem bigEndianBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitEToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
     }
 }

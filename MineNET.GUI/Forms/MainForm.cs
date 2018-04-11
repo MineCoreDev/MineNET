@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MineNET.Events.ServerEvents;
 using MineNET.GUI.Config;
+using MineNET.GUI.Tools;
 using MineNET.Utils.Config;
 
 namespace MineNET.GUI.Forms
