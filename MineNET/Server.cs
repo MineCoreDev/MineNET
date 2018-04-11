@@ -364,5 +364,33 @@ namespace MineNET
                 players[i].SendPacket(pk);
             }
         }
+
+        public void SetWhitelist(bool value)
+        {
+            Server.ServerConfig.WhiteList = value;
+            Server.ServerConfig.Save<ServerConfig>();
+        }
+
+        public void AddWhitelist(Player player)
+        {
+            this.AddWhitelist(player.Name);
+        }
+
+        public void AddWhitelist(string name)
+        {
+            this.WhitelistConfig.Set(name, true);
+            this.WhitelistConfig.Save();
+        }
+
+        public void RemoveWhitelist(Player player)
+        {
+            this.RemoveWhitelist(player.Name);
+        }
+
+        public void RemoveWhitelist(string name)
+        {
+            this.WhitelistConfig.Remove(name);
+            this.WhitelistConfig.Save();
+        }
     }
 }

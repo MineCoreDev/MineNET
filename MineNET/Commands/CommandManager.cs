@@ -207,7 +207,8 @@ namespace MineNET.Commands
                 new MeCommand(),
                 new SayCommand(),
                 new StopCommand(),
-                new TellCommand()
+                new TellCommand(),
+                new WhitelistCommand()
             );
         }
     }
