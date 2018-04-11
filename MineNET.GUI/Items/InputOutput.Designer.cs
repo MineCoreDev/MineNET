@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -38,6 +39,11 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.allCheckCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.defaultDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -106,6 +112,7 @@
             // 
             this.checkedListBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkedListBox1.ContextMenuStrip = this.contextMenuStrip2;
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
             "Log",
@@ -165,6 +172,36 @@
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 18;
             // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.allCheckCToolStripMenuItem,
+            this.clearToolStripMenuItem,
+            this.defaultDToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(168, 92);
+            // 
+            // allCheckCToolStripMenuItem
+            // 
+            this.allCheckCToolStripMenuItem.Name = "allCheckCToolStripMenuItem";
+            this.allCheckCToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.allCheckCToolStripMenuItem.Text = "All Check(&C)";
+            this.allCheckCToolStripMenuItem.Click += new System.EventHandler(this.allCheckCToolStripMenuItem_Click);
+            // 
+            // defaultDToolStripMenuItem
+            // 
+            this.defaultDToolStripMenuItem.Name = "defaultDToolStripMenuItem";
+            this.defaultDToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.defaultDToolStripMenuItem.Text = "Reset Option(&R)";
+            this.defaultDToolStripMenuItem.Click += new System.EventHandler(this.defaultDToolStripMenuItem_Click);
+            // 
+            // clearToolStripMenuItem
+            // 
+            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.clearToolStripMenuItem.Text = "All UnCheck(&U)";
+            this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+            // 
             // InputOutput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -181,6 +218,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "InputOutput";
             this.Size = new System.Drawing.Size(481, 277);
+            this.contextMenuStrip2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -198,5 +236,9 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem allCheckCToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem defaultDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
     }
 }

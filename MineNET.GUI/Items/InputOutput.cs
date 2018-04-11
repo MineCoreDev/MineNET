@@ -189,5 +189,35 @@ namespace MineNET.GUI.Items
                 e.Handled = true;
             }
         }
+
+        private void allCheckCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.checkedListBox1.SetItemChecked(0, true);
+            this.checkedListBox1.SetItemChecked(1, true);
+            this.checkedListBox1.SetItemChecked(2, true);
+            this.checkedListBox1.SetItemChecked(3, true);
+            this.checkedListBox1.SetItemChecked(4, true);
+            this.checkedListBox1.SetItemChecked(5, true);
+        }
+
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.checkedListBox1.SetItemChecked(0, false);
+            this.checkedListBox1.SetItemChecked(1, false);
+            this.checkedListBox1.SetItemChecked(2, false);
+            this.checkedListBox1.SetItemChecked(3, false);
+            this.checkedListBox1.SetItemChecked(4, false);
+            this.checkedListBox1.SetItemChecked(5, false);
+        }
+
+        private void defaultDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.checkedListBox1.SetItemChecked(0, false);
+            this.checkedListBox1.SetItemChecked(1, true);
+            this.checkedListBox1.SetItemChecked(2, true);
+            this.checkedListBox1.SetItemChecked(3, true);
+            this.checkedListBox1.SetItemChecked(4, true);
+            this.checkedListBox1.SetItemChecked(5, true);
+        }
     }
 }

@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.keyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tagTypeDataGridViewComboBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.nBTViewerCacheBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cacheData = new MineNET.GUI.Resources.Data.CacheData();
@@ -55,10 +56,9 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize) (this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.nBTViewerCacheBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.cacheData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nBTViewerCacheBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cacheData)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,7 +70,7 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.keyDataGridViewTextBoxColumn,
             this.valueDataGridViewTextBoxColumn,
-            this.tagTypeDataGridViewComboBoxColumn,});
+            this.tagTypeDataGridViewComboBoxColumn});
             this.dataGridView1.DataSource = this.nBTViewerCacheBindingSource;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 24);
@@ -304,9 +304,9 @@
             this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "NBTViewer";
             this.Text = "NBTViewer";
-            ((System.ComponentModel.ISupportInitialize) (this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.nBTViewerCacheBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.cacheData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nBTViewerCacheBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cacheData)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
