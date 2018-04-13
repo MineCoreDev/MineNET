@@ -7,6 +7,7 @@ using MineNET.Blocks;
 using MineNET.Blocks.Data;
 using MineNET.Entities;
 using MineNET.Entities.Players;
+using MineNET.Items.Enchantments;
 using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
@@ -531,7 +532,70 @@ namespace MineNET.Items
             return this;
         }
 
-        public Item AddEnchant(int id, int level)
+        public bool HasEnchantment(int id)
+        {
+            if (!this.HasTags)
+            {
+                return false;
+            }
+            CompoundTag tag = this.GetNamedTag();
+            if (!tag.Exist("ench"))
+            {
+                return false;
+            }
+            ListTag list = tag.GetList("ench");
+            for (int i = 0; i < list.Count; ++i)
+            {
+                CompoundTag ench = (CompoundTag) list[i];
+                if (ench.GetShort("id") == id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Enchantment GetEnchantment(int id)
+        {
+            if (!this.HasEnchantment(id))
+            {
+                return null;
+            }
+            CompoundTag tag = this.GetNamedTag();
+            ListTag list = tag.GetList("ench");
+            for (int i = 0; i < list.Count; ++i)
+            {
+                CompoundTag ench = (CompoundTag) list[i];
+                if (ench.GetShort("id") == id)
+                {
+                    return Enchantment.GetEnchantment(id, ench.GetShort("lvl"));
+                }
+            }
+            return null;
+        }
+
+        public Enchantment[] GetEnchantments()
+        {
+            if (!this.HasTags)
+            {
+                return new Enchantment[0];
+            }
+            CompoundTag tag = this.GetNamedTag();
+            if (!tag.Exist("ench"))
+            {
+                return new Enchantment[0];
+            }
+            ListTag list = tag.GetList("ench");
+            List<Enchantment> enches = new List<Enchantment>();
+            for (int i = 0; i < list.Count; ++i)
+            {
+                CompoundTag ench = (CompoundTag) list[i];
+                enches.Add(Enchantment.GetEnchantment(ench.GetShort("id"), ench.GetShort("lvl")));
+            }
+            return enches.ToArray();
+        }
+
+        public Item AddEnchant(Enchantment enchant)
         {
             CompoundTag tag;
             if (this.HasTags)
@@ -554,18 +618,18 @@ namespace MineNET.Items
             }
             for (int i = 0; i < list.Count; ++i)
             {
-                if (((CompoundTag) list[i]).GetShort("id") == id)
+                if (((CompoundTag) list[i]).GetShort("id") == enchant.ID)
                 {
                     list[i] = new CompoundTag()
-                        .PutShort("id", (short) id)
-                        .PutShort("lvl", (short) level);
+                        .PutShort("id", (short) enchant.ID)
+                        .PutShort("lvl", (short) enchant.Level);
                     this.SetNamedTag(tag);
                     return this;
                 }
             }
             CompoundTag ench = new CompoundTag()
-                        .PutShort("id", (short) id)
-                        .PutShort("lvl", (short) level);
+                        .PutShort("id", (short) enchant.ID)
+                        .PutShort("lvl", (short) enchant.Level);
             list.Add(ench);
             this.SetNamedTag(tag);
             return this;

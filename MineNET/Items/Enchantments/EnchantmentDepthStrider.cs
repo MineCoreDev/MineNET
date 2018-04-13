@@ -1,14 +1,14 @@
 ﻿using MineNET.Utils;
 
-namespace MineNET.Items.Enchantment
+namespace MineNET.Items.Enchantments
 {
-    public class EnchantmentFortune : Enchantment
+    public class EnchantmentDepthStrider : Enchantment
     {
         public override int ID
         {
             get
             {
-                return Enchantment.FORTUNE;
+                return Enchantment.DEPTH_STRIDER;
             }
         }
 
@@ -40,7 +40,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return LangManager.GetString("enchantment.fortune");
+                return LangManager.GetString("enchantment.depth_strider");
             }
         }
     }

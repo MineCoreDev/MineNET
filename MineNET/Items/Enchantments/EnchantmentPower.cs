@@ -1,14 +1,14 @@
 ﻿using MineNET.Utils;
 
-namespace MineNET.Items.Enchantment
+namespace MineNET.Items.Enchantments
 {
-    public class EnchantmentUnbreaking : Enchantment
+    public class EnchantmentPower : Enchantment
     {
         public override int ID
         {
             get
             {
-                return Enchantment.UNBREAKING;
+                return Enchantment.POWER;
             }
         }
 
@@ -24,7 +24,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return 3;
+                return 5;
             }
         }
 
@@ -32,7 +32,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return 5;
+                return 10;
             }
         }
 
@@ -40,7 +40,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return LangManager.GetString("enchantment.unbreaking");
+                return LangManager.GetString("enchantment.power");
             }
         }
     }

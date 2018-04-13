@@ -200,6 +200,7 @@ namespace MineNET.Commands
         {
             this.RegisterCommand(
                 new EffectCommand(),
+                new EnchantCommand(),
                 new GameModeCommand(),
                 new GiveCommand(),
                 new HelpCommand(),

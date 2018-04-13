@@ -1,14 +1,14 @@
 ﻿using MineNET.Utils;
 
-namespace MineNET.Items.Enchantment
+namespace MineNET.Items.Enchantments
 {
-    public class EnchantmentSilkTouch : Enchantment
+    public class EnchantmentSharpness : Enchantment
     {
         public override int ID
         {
             get
             {
-                return Enchantment.SILK_TOUCH;
+                return Enchantment.SHARPNESS;
             }
         }
 
@@ -24,7 +24,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return 1;
+                return 5;
             }
         }
 
@@ -32,7 +32,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return 1;
+                return 10;
             }
         }
 
@@ -40,7 +40,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return LangManager.GetString("enchantment.silk_touch");
+                return LangManager.GetString("enchantment.sharpness");
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace MineNET.Items.Enchantment
+﻿namespace MineNET.Items.Enchantments
 {
     public abstract class Enchantment
     {
@@ -147,6 +147,21 @@
             }
             enchantment.Level = level;
             return enchantment;
+        }
+
+        public static Enchantment GetEnchantment(string name, int level = 1)
+        {
+            int id;
+            if (!int.TryParse(name, out id))
+            {
+                try
+                {
+                    Enchantment enchant = Enchantment.GetEnchantment(1);
+                    id = (int) enchant.GetType().GetField(name.ToUpper()).GetValue(enchant);
+                }
+                catch { }
+            }
+            return Enchantment.GetEnchantment(id, level);
         }
 
         public abstract int ID { get; }

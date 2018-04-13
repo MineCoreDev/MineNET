@@ -1,14 +1,14 @@
 ﻿using MineNET.Utils;
 
-namespace MineNET.Items.Enchantment
+namespace MineNET.Items.Enchantments
 {
-    public class EnchantmentBaneOfArthropods : Enchantment
+    public class EnchantmentMending : Enchantment
     {
         public override int ID
         {
             get
             {
-                return Enchantment.BANE_OF_ARTHROPODS;
+                return Enchantment.MENDING;
             }
         }
 
@@ -24,7 +24,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return 5;
+                return 1;
             }
         }
 
@@ -32,7 +32,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return 5;
+                return 2;
             }
         }
 
@@ -40,7 +40,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return LangManager.GetString("enchantment.bane_of_arthropds");
+                return LangManager.GetString("enchantment.mending");
             }
         }
     }

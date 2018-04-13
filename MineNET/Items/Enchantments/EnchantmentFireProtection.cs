@@ -1,14 +1,14 @@
 ﻿using MineNET.Utils;
 
-namespace MineNET.Items.Enchantment
+namespace MineNET.Items.Enchantments
 {
-    public class EnchantmentSmite : Enchantment
+    public class EnchantmentFireProtection : Enchantment
     {
         public override int ID
         {
             get
             {
-                return Enchantment.SMITE;
+                return Enchantment.FIRE_PROTECTION;
             }
         }
 
@@ -24,7 +24,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return 5;
+                return 4;
             }
         }
 
@@ -40,7 +40,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return LangManager.GetString("enchantment.smite");
+                return LangManager.GetString("enchantment.fire_protection");
             }
         }
     }

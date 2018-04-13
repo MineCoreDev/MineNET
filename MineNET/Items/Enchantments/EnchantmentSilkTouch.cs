@@ -1,14 +1,14 @@
 ﻿using MineNET.Utils;
 
-namespace MineNET.Items.Enchantment
+namespace MineNET.Items.Enchantments
 {
-    public class EnchantmentBlastProtection : Enchantment
+    public class EnchantmentSilkTouch : Enchantment
     {
         public override int ID
         {
             get
             {
-                return Enchantment.BLAST_PROTECTION;
+                return Enchantment.SILK_TOUCH;
             }
         }
 
@@ -24,7 +24,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
 
@@ -32,7 +32,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return 2;
+                return 1;
             }
         }
 
@@ -40,7 +40,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return LangManager.GetString("enchantment.blast_protection");
+                return LangManager.GetString("enchantment.silk_touch");
             }
         }
     }

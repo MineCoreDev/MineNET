@@ -1,14 +1,14 @@
 ﻿using MineNET.Utils;
 
-namespace MineNET.Items.Enchantment
+namespace MineNET.Items.Enchantments
 {
-    public class EnchantmentLuckOfTheSea : Enchantment
+    public class EnchantmentUnbreaking : Enchantment
     {
         public override int ID
         {
             get
             {
-                return Enchantment.LUCK_OF_THE_SEA;
+                return Enchantment.UNBREAKING;
             }
         }
 
@@ -32,7 +32,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return 2;
+                return 5;
             }
         }
 
@@ -40,7 +40,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return LangManager.GetString("enchantment.luck_of_the_sea");
+                return LangManager.GetString("enchantment.unbreaking");
             }
         }
     }

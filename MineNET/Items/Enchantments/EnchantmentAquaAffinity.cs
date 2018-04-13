@@ -1,14 +1,14 @@
 ﻿using MineNET.Utils;
 
-namespace MineNET.Items.Enchantment
+namespace MineNET.Items.Enchantments
 {
-    public class EnchantmentLooting : Enchantment
+    public class EnchantmentAquaAffinity : Enchantment
     {
         public override int ID
         {
             get
             {
-                return Enchantment.LOOTING;
+                return Enchantment.AQUA_AFFINITY;
             }
         }
 
@@ -24,7 +24,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return 3;
+                return 1;
             }
         }
 
@@ -40,7 +40,7 @@ namespace MineNET.Items.Enchantment
         {
             get
             {
-                return LangManager.GetString("enchantment.looting");
+                return LangManager.GetString("enchantment.aqua_affinity");
             }
         }
     }

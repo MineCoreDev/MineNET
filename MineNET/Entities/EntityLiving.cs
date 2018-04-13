@@ -13,7 +13,15 @@ namespace MineNET.Entities
     {
         protected Dictionary<int, Effect> effects = new Dictionary<int, Effect>();
 
-        public Inventory Inventory { get; protected set; }
+        Inventory InventoryHolder.Inventory
+        {
+            get
+            {
+                return this.Inventory;
+            }
+        }
+
+        public EntityInventory Inventory { get; protected set; }
 
         public EntityAttributeDictionary Attributes { get; protected set; }
 
@@ -24,6 +32,8 @@ namespace MineNET.Entities
             this.Attributes.AddAttribute(EntityAttribute.ABSORPTION);
             this.Attributes.AddAttribute(EntityAttribute.KNOCKBACK_RESISTANCE);
             this.Attributes.AddAttribute(EntityAttribute.MOVEMENT_SPEED);
+
+            this.Inventory = new EntityInventory(this, 9);
         }
 
         public virtual float Health
