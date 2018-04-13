@@ -69,6 +69,78 @@
             {
                 enchantment = new EnchantmentAquaAffinity();
             }
+            else if (id == Enchantment.SHARPNESS)
+            {
+                enchantment = new EnchantmentSharpness();
+            }
+            else if (id == Enchantment.SMITE)
+            {
+                enchantment = new EnchantmentSmite();
+            }
+            else if (id == Enchantment.BANE_OF_ARTHROPODS)
+            {
+                enchantment = new EnchantmentBaneOfArthropods();
+            }
+            else if (id == Enchantment.KNOCKBACK)
+            {
+                enchantment = new EnchantmentKnockback();
+            }
+            else if (id == Enchantment.FIRE_ASPECT)
+            {
+                enchantment = new EnchantmentFireAspect();
+            }
+            else if (id == Enchantment.LOOTING)
+            {
+                enchantment = new EnchantmentLooting();
+            }
+            else if (id == Enchantment.EFFICIENCY)
+            {
+                enchantment = new EnchantmentEfficiency();
+            }
+            else if (id == Enchantment.SILK_TOUCH)
+            {
+                enchantment = new EnchantmentSilkTouch();
+            }
+            else if (id == Enchantment.UNBREAKING)
+            {
+                enchantment = new EnchantmentUnbreaking();
+            }
+            else if (id == Enchantment.FORTUNE)
+            {
+                enchantment = new EnchantmentFortune();
+            }
+            else if (id == Enchantment.POWER)
+            {
+                enchantment = new EnchantmentPower();
+            }
+            else if (id == Enchantment.PUNCH)
+            {
+                enchantment = new EnchantmentPunch();
+            }
+            else if (id == Enchantment.FLAME)
+            {
+                enchantment = new EnchantmentFlame();
+            }
+            else if (id == Enchantment.INFINITY)
+            {
+                enchantment = new EnchantmentInfinity();
+            }
+            else if (id == Enchantment.LUCK_OF_THE_SEA)
+            {
+                enchantment = new EnchantmentLuckOfTheSea();
+            }
+            else if (id == Enchantment.LURE)
+            {
+                enchantment = new EnchantmentLure();
+            }
+            else if (id == Enchantment.FROST_WALKER)
+            {
+                enchantment = new EnchantmentFrostWalker();
+            }
+            else if (id == Enchantment.MENDING)
+            {
+                enchantment = new EnchantmentMending();
+            }
             else
             {
                 return null;
