@@ -32,8 +32,6 @@ namespace MineNET.Entities
             this.Attributes.AddAttribute(EntityAttribute.ABSORPTION);
             this.Attributes.AddAttribute(EntityAttribute.KNOCKBACK_RESISTANCE);
             this.Attributes.AddAttribute(EntityAttribute.MOVEMENT_SPEED);
-
-            this.Inventory = new EntityInventory(this, 9);
         }
 
         public virtual float Health
