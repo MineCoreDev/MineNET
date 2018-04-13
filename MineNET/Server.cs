@@ -389,6 +389,10 @@ namespace MineNET
 
         public void RemoveWhitelist(string name)
         {
+            if (!this.WhitelistConfig.ContainsKey(name))
+            {
+                return;
+            }
             this.WhitelistConfig.Remove(name);
             this.WhitelistConfig.Save();
         }

@@ -99,11 +99,14 @@ namespace MineNET.Commands.Defaults
                     Player[] players = this.GetPlayerFromSelector(args[1], sender);
                     if (players == null)
                     {
-                        return false;
+                        Server.Instance.AddWhitelist(args[1]);
+                        sender.SendMessage($"{args[1]} をホワイトリストに追加しました");
+                        return true;
                     }
                     for (int i = 0; i < players.Length; ++i)
                     {
                         Server.Instance.AddWhitelist(players[i]);
+                        sender.SendMessage($"{players[i].Name} をホワイトリストに追加しました");
                     }
                     return true;
                 }
@@ -117,11 +120,14 @@ namespace MineNET.Commands.Defaults
                     Player[] players = this.GetPlayerFromSelector(args[1], sender);
                     if (players == null)
                     {
-                        return false;
+                        Server.Instance.RemoveWhitelist(args[1]);
+                        sender.SendMessage($"{args[1]} をホワイトリストから削除しました");
+                        return true;
                     }
                     for (int i = 0; i < players.Length; ++i)
                     {
                         Server.Instance.RemoveWhitelist(players[i]);
+                        sender.SendMessage($"{players[1].Name} をホワイトリストから削除しました");
                     }
                     return true;
                 }

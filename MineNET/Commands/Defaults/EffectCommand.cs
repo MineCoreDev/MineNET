@@ -73,6 +73,7 @@ namespace MineNET.Commands.Defaults
             Entity[] entities = this.GetEntityFromSelector(args[0], sender);
             if (entities == null)
             {
+                this.SendNoTargetMessage(sender);
                 return false;
             }
 

@@ -78,6 +78,7 @@ namespace MineNET.Commands.Defaults
             Player[] players = this.GetPlayerFromSelector(args[0], sender);
             if (players == null)
             {
+                this.SendNoTargetMessage(sender);
                 return false;
             }
 

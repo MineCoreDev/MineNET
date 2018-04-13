@@ -68,19 +68,12 @@ namespace MineNET.Commands
                 Player player = Server.Instance.GetPlayer(selector);
                 if (player == null)
                 {
-                    sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.player.notFound"));
                     return null;
                 }
                 else
                 {
                     players.Add(player);
                 }
-            }
-
-            if (players.Count < 1)
-            {
-                sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.noTargetMatch"));
-                return null;
             }
 
             return players.ToArray();
@@ -122,7 +115,6 @@ namespace MineNET.Commands
                 Player player = Server.Instance.GetPlayer(selector);
                 if (player == null)
                 {
-                    sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.player.notFound"));
                     return null;
                 }
                 else
@@ -131,13 +123,12 @@ namespace MineNET.Commands
                 }
             }
 
-            if (entities.Count < 1)
-            {
-                sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.noTargetMatch"));
-                return null;
-            }
-
             return entities.ToArray();
+        }
+
+        public void SendNoTargetMessage(CommandSender sender)
+        {
+            sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.noTargetMatch"));
         }
 
         public void SendTargetNotPlayerMessage(CommandSender sender)

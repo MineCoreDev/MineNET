@@ -20,7 +20,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "a";
+                return "選択中のプライヤーのアイテムにエンチャントを付与する";
             }
         }
 
@@ -51,11 +51,14 @@ namespace MineNET.Commands.Defaults
                 this.SendSyntaxMessage(sender);
                 return false;
             }
+
             Entity[] entities = this.GetEntityFromSelector(args[0], sender);
             if (entities == null)
             {
+                this.SendNoTargetMessage(sender);
                 return false;
             }
+
             int level = 1;
             if (args.Length > 2)
             {
