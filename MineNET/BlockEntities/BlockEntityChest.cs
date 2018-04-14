@@ -6,8 +6,18 @@ using MineNET.Values;
 
 namespace MineNET.BlockEntities
 {
-    public class BlockEntityChest : BlockEntityHolder
+    public class BlockEntityChest : BlockEntity, InventoryHolder
     {
+        Inventory InventoryHolder.Inventory
+        {
+            get
+            {
+                return this.Inventory;
+            }
+        }
+
+        public ChestInventory Inventory { get; protected set; }
+
         public BlockEntityChest(Position position, CompoundTag nbt = null) : base(position, nbt)
         {
             this.Inventory = new ChestInventory(this);
@@ -29,19 +39,6 @@ namespace MineNET.BlockEntities
             get
             {
                 return "Chest";
-            }
-        }
-
-        public new ChestInventory Inventory
-        {
-            get
-            {
-                return (ChestInventory) base.Inventory;
-            }
-
-            protected set
-            {
-                base.Inventory = value;
             }
         }
     }
