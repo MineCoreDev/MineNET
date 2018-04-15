@@ -9,6 +9,7 @@ using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
+using MineNET.Values;
 using MineNET.Worlds;
 
 namespace MineNET.Entities.Players
@@ -19,7 +20,7 @@ namespace MineNET.Entities.Players
 
         private GameMode gameMode = GameMode.Survival;
 
-        public Player()
+        public Player() : base(null, new Vector3())
         {
             this.ShowNameTag = true;
             this.AlwaysShowNameTag = true;

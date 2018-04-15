@@ -257,6 +257,7 @@ namespace MineNET.Entities.Players
                 adventureSettingsEntry.EntityUniqueId = this.EntityID;
                 Server.Instance.AddPlayer(this, entry, adventureSettingsEntry);
 
+                this.World.AddEntity(this);
                 this.SendDataProperties();
             }
         }

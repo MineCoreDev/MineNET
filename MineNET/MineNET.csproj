@@ -725,6 +725,7 @@
     <Compile Include="Network\Packets\PlayerActionPacket.cs" />
     <Compile Include="Network\Packets\PlayerListPacket.cs" />
     <Compile Include="Network\Packets\PlayerSkinPacket.cs" />
+    <Compile Include="Network\Packets\RemoveEntityPacket.cs" />
     <Compile Include="Network\Packets\RequestChunkRadiusPacket.cs" />
     <Compile Include="Network\Packets\ResourcePackClientResponsePacket.cs" />
     <Compile Include="Network\Packets\ResourcePacksInfoPacket.cs" />
@@ -843,6 +844,7 @@
     <Compile Include="Utils\VarInt.cs" />
     <Compile Include="Utils\ZlibStream.cs" />
     <Compile Include="Values\AxisAlignedBB.cs" />
+    <Compile Include="Values\Color.cs" />
     <Compile Include="Values\IVector3.cs" />
     <Compile Include="Values\IVector3i.cs" />
     <Compile Include="Values\Vector2.cs" />

@@ -97,6 +97,14 @@ namespace MineNET.GUI.Items
             }
         }
 
+        internal TextBox Output
+        {
+            get
+            {
+                return this.textBox1;
+            }
+        }
+
         internal string OutputLabel
         {
             get
@@ -154,6 +162,22 @@ namespace MineNET.GUI.Items
             get
             {
                 return this.comboBox1;
+            }
+        }
+
+        internal Button InputSendButton
+        {
+            get
+            {
+                return this.button1;
+            }
+        }
+
+        internal Button OutputClearButton
+        {
+            get
+            {
+                return this.button2;
             }
         }
 

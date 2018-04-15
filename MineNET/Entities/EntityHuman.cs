@@ -3,11 +3,16 @@ using MineNET.Entities.Data;
 using MineNET.Entities.Players;
 using MineNET.Network.Packets;
 using MineNET.Values;
+using MineNET.Worlds;
 
 namespace MineNET.Entities
 {
     public abstract class EntityHuman : EntityLiving
     {
+        public EntityHuman(World world, Vector3 pos) : base(world, pos)
+        {
+        }
+
         public Guid Guid { get; set; }
 
         public Skin Skin { get; set; }

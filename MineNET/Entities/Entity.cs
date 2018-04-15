@@ -27,6 +27,7 @@ namespace MineNET.Entities
         public float Pitch { get; set; }
 
         public World World { get; set; }
+        public Chunk Chunk { get; set; }
 
         public float MotionX { get; set; }
         public float MotionY { get; set; }
@@ -45,7 +46,7 @@ namespace MineNET.Entities
 
         public virtual bool Closed { get; protected set; }
 
-        public Entity()
+        public Entity(World world, Vector3 pos)
         {
             this.EntityID = Entity.nextEntityId++;
 
@@ -54,14 +55,17 @@ namespace MineNET.Entities
             this.SetDataProperty(new EntityDataShort(Entity.DATA_MAX_AIR, 400));
             this.SetDataProperty(new EntityDataString(Entity.DATA_NAMETAG, ""));
             this.SetDataProperty(new EntityDataLong(Entity.DATA_LEAD_HOLDER_EID, -1));
-            this.SetDataProperty(new EntityDataLong(Entity.DATA_TARGET_EID, -1));
             this.SetDataProperty(new EntityDataFloat(Entity.DATA_SCALE, 1.0f));
             this.SetDataProperty(new EntityDataFloat(Entity.DATA_BOUNDING_BOX_WIDTH, this.WIDTH));
             this.SetDataProperty(new EntityDataFloat(Entity.DATA_BOUNDING_BOX_HEIGHT, this.HEIGHT));
 
             this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_HAS_COLLISION);
             this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_AFFECTED_BY_GRAVITY);
-            //this.SetFlag(Entity.DATA_FLAGS, Entity.);
+
+            this.Vector3 = pos;
+            this.World = world;
+            this.World?.AddEntity(this);
+
             this.EntityInit();
         }
 
@@ -125,22 +129,41 @@ namespace MineNET.Entities
 
         public virtual void SpawnTo(Player player)
         {
-
+            Vector2 chunkPos = this.GetChunkVector();
+            if (!this.viewers.Contains(player) && player.loadedChunk.ContainsKey(new Tuple<int, int>(chunkPos.FloorX, chunkPos.FloorY)))
+            {
+                this.viewers.Add(player);
+            }
         }
 
         public virtual void SpawnToAll()
         {
-
+            Player[] players = Server.Instance.GetOnlinePlayers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                this.SpawnTo(players[i]);
+            }
         }
 
         public virtual void DespawnFrom(Player player)
         {
+            if (!this.viewers.Contains(player))
+            {
+                RemoveEntityPacket pk = new RemoveEntityPacket();
+                pk.EntityUniqueId = this.EntityID;
+                player.SendPacket(pk);
 
+                this.viewers.Remove(player);
+            }
         }
 
         public virtual void DespawnFromAll()
         {
-
+            Player[] players = Server.Instance.GetOnlinePlayers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                this.DespawnFrom(players[i]);
+            }
         }
 
         public Vector2 Vector2
@@ -216,7 +239,7 @@ namespace MineNET.Entities
 
         public virtual void Close()
         {
-
+            this.World.RemoveEntity(this);
         }
 
         public Vector2 DirectionPlane
