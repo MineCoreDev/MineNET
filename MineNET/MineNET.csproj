@@ -357,6 +357,7 @@
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandSender.cs" />
     <Compile Include="Commands\ConsoleSender.cs" />
+    <Compile Include="Commands\Defaults\BanCommand.cs" />
     <Compile Include="Commands\Defaults\EffectCommand.cs" />
     <Compile Include="Commands\Defaults\EnchantCommand.cs" />
     <Compile Include="Commands\Defaults\GameModeCommand.cs" />

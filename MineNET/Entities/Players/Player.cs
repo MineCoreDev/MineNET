@@ -424,5 +424,51 @@ namespace MineNET.Entities.Players
             float dot2 = Vector2.Dot(dv, new Vector2(pos.X, this.Z));
             return (dot2 - dot1) >= -0.5;
         }
+
+        public bool Whitelist
+        {
+            get
+            {
+                return Server.Instance.WhitelistConfig.ContainsKey(this.Name);
+            }
+
+            set
+            {
+                if (value)
+                {
+                    Server.Instance.WhitelistConfig.Set(this.Name, true);
+                }
+                else
+                {
+                    if (this.Whitelist)
+                    {
+                        Server.Instance.WhitelistConfig.Remove(this.Name);
+                    }
+                }
+            }
+        }
+
+        public bool Ban
+        {
+            get
+            {
+                return Server.Instance.BanConfig.ContainsKey(this.Name);
+            }
+
+            set
+            {
+                if (value)
+                {
+                    Server.Instance.BanConfig.Set(this.Name, true);
+                }
+                else
+                {
+                    if (this.Whitelist)
+                    {
+                        Server.Instance.BanConfig.Remove(this.Name);
+                    }
+                }
+            }
+        }
     }
 }

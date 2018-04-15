@@ -199,6 +199,7 @@ namespace MineNET.Commands
         private void RegisterCommands()
         {
             this.RegisterCommand(
+                new BanCommand(),
                 new EffectCommand(),
                 new EnchantCommand(),
                 new GameModeCommand(),
