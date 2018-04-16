@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Data;
 using MineNET.Entities.Metadata;
 using MineNET.Inventories;
+using MineNET.NBT.Tags;
+using MineNET.Values;
+using MineNET.Worlds;
 
 namespace MineNET.Entities
 {
@@ -13,6 +15,11 @@ namespace MineNET.Entities
     {
         protected Dictionary<int, Effect> effects = new Dictionary<int, Effect>();
 
+        public EntityLiving(World world, CompoundTag tag) : base(world, tag)
+        {
+        }
+
+        public Inventory Inventory { get; protected set; }
         Inventory InventoryHolder.Inventory
         {
             get
@@ -179,8 +186,9 @@ namespace MineNET.Entities
                 int r = (color[0] / count) & 0xff;
                 int g = (color[1] / count) & 0xff;
                 int b = (color[2] / count) & 0xff;
+                Color rgb = new Color(r, g, b);
 
-                this.SetDataProperty(new EntityDataInt(Entity.DATA_POTION_COLOR, (r << 16) + (g << 8) + b), false);
+                this.SetDataProperty(new EntityDataInt(Entity.DATA_POTION_COLOR, rgb.RGB), false);
                 this.SetDataProperty(new EntityDataByte(Entity.DATA_POTION_AMBIENT, (byte) (ambient ? 1 : 0)), true);
             }
             else

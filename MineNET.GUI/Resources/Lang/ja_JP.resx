@@ -195,4 +195,10 @@
   <data name="start_loaded" xml:space="preserve">
     <value>ロード完了!</value>
   </data>
+  <data name="versionForm_tabPage2_text" xml:space="preserve">
+    <value>ライブラリ</value>
+  </data>
+  <data name="versionForm_text" xml:space="preserve">
+    <value>アプリケーション情報</value>
+  </data>
 </root>

@@ -415,6 +415,7 @@ namespace MineNET.Worlds
                 return;
             }
             this.Entities[entity.EntityID] = entity;
+            entity.SpawnToAll();
         }
 
         public void RemoveEntity(Entity entity)
@@ -424,6 +425,7 @@ namespace MineNET.Worlds
                 return;
             }
             this.Entities.Remove(entity.EntityID);
+            entity.DespawnFromAll();
         }
 
         public Entity GetEntity(long entityID)

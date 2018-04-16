@@ -19,7 +19,7 @@ namespace MineNET.Entities.Players
 
         private GameMode gameMode = GameMode.Survival;
 
-        public Player()
+        public Player() : base(null, null)
         {
             this.ShowNameTag = true;
             this.AlwaysShowNameTag = true;

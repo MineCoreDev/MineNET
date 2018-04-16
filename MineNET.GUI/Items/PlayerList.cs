@@ -41,5 +41,13 @@ namespace MineNET.GUI.Items
                 label1.Text = value;
             }
         }
+
+        internal ListBox PlayerListBox
+        {
+            get
+            {
+                return this.listBox1;
+            }
+        }
     }
 }

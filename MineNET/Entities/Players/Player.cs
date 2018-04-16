@@ -234,6 +234,11 @@ namespace MineNET.Entities.Players
             Server.Instance.NetworkManager.SendPacket(this, pk, immediate);
         }
 
+        public override void Close()
+        {
+            this.Close("");
+        }
+
         public void Close(string reason, bool clientDisconnect = false)
         {
             PlayerQuitEventArgs playerQuitEvent = new PlayerQuitEventArgs(this, $"§e{this.Name} が世界を去りました", reason);
@@ -260,6 +265,7 @@ namespace MineNET.Entities.Players
             }
 
             this.Closed = true;
+            this.World.RemoveEntity(this);
 
             Server.Instance.RemovePlayer(this.EntityID);
 

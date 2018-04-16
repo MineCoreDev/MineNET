@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using MineNET.Entities.Players;
 using MineNET.Network.Packets;
 using MineNET.Utils;
+using MineNET.Values;
 
 namespace MineNET.Entities.Data
 {
@@ -39,103 +39,103 @@ namespace MineNET.Entities.Data
             Effect effect;
             if (id == Effect.SPEED)
             {
-                effect = new Effect(Effect.SPEED, LangManager.GetString("effect.speed"), Color.FromArgb(124, 175, 198));
+                effect = new Effect(Effect.SPEED, LangManager.GetString("effect.speed"), new Color(124, 175, 198));
             }
             else if (id == Effect.SLOWNESS)
             {
-                effect = new Effect(Effect.SLOWNESS, LangManager.GetString("effect.slowness"), Color.FromArgb(90, 108, 129), true);
+                effect = new Effect(Effect.SLOWNESS, LangManager.GetString("effect.slowness"), new Color(90, 108, 129), true);
             }
             else if (id == Effect.HASTE)
             {
-                effect = new Effect(Effect.HASTE, LangManager.GetString("effect.haste"), Color.FromArgb(217, 192, 67));
+                effect = new Effect(Effect.HASTE, LangManager.GetString("effect.haste"), new Color(217, 192, 67));
             }
             else if (id == Effect.MINING_FATIGUE)
             {
-                effect = new Effect(Effect.MINING_FATIGUE, LangManager.GetString("effect.mining_fatigue"), Color.FromArgb(74, 66, 23), true);
+                effect = new Effect(Effect.MINING_FATIGUE, LangManager.GetString("effect.mining_fatigue"), new Color(74, 66, 23), true);
             }
             else if (id == Effect.STRENGTH)
             {
-                effect = new Effect(Effect.STRENGTH, LangManager.GetString("effect.strength"), Color.FromArgb(147, 36, 35));
+                effect = new Effect(Effect.STRENGTH, LangManager.GetString("effect.strength"), new Color(147, 36, 35));
             }
             else if (id == Effect.INSTANT_HEALTH)
             {
-                effect = new Effect(Effect.INSTANT_HEALTH, LangManager.GetString("effect.instant_health"), Color.FromArgb(248, 36, 35));
+                effect = new Effect(Effect.INSTANT_HEALTH, LangManager.GetString("effect.instant_health"), new Color(248, 36, 35));
             }
             else if (id == Effect.INSTANT_DAMAGE)
             {
-                effect = new Effect(Effect.INSTANT_DAMAGE, LangManager.GetString("effect.instant_damage"), Color.FromArgb(67, 10, 9), true);
+                effect = new Effect(Effect.INSTANT_DAMAGE, LangManager.GetString("effect.instant_damage"), new Color(67, 10, 9), true);
             }
             else if (id == Effect.JUMP_BOOST)
             {
-                effect = new Effect(Effect.JUMP_BOOST, LangManager.GetString("effect.jump_boost"), Color.FromArgb(34, 255, 76));
+                effect = new Effect(Effect.JUMP_BOOST, LangManager.GetString("effect.jump_boost"), new Color(34, 255, 76));
             }
             else if (id == Effect.NAUSEA)
             {
-                effect = new Effect(Effect.NAUSEA, LangManager.GetString("effect.nausea"), Color.FromArgb(85, 29, 74), true);
+                effect = new Effect(Effect.NAUSEA, LangManager.GetString("effect.nausea"), new Color(85, 29, 74), true);
             }
             else if (id == Effect.REGENERATION)
             {
-                effect = new Effect(Effect.REGENERATION, LangManager.GetString("effect.regeneration"), Color.FromArgb(205, 92, 171));
+                effect = new Effect(Effect.REGENERATION, LangManager.GetString("effect.regeneration"), new Color(205, 92, 171));
             }
             else if (id == Effect.RESISTANCE)
             {
-                effect = new Effect(Effect.RESISTANCE, LangManager.GetString("effect.resistance"), Color.FromArgb(153, 69, 58));
+                effect = new Effect(Effect.RESISTANCE, LangManager.GetString("effect.resistance"), new Color(153, 69, 58));
             }
             else if (id == Effect.FIRE_RESISTANCE)
             {
-                effect = new Effect(Effect.FIRE_RESISTANCE, LangManager.GetString("effect.fire_resistance"), Color.FromArgb(228, 154, 58));
+                effect = new Effect(Effect.FIRE_RESISTANCE, LangManager.GetString("effect.fire_resistance"), new Color(228, 154, 58));
             }
             else if (id == Effect.WATER_BREATHING)
             {
-                effect = new Effect(Effect.WATER_BREATHING, LangManager.GetString("effect.water_breathing"), Color.FromArgb(46, 82, 153));
+                effect = new Effect(Effect.WATER_BREATHING, LangManager.GetString("effect.water_breathing"), new Color(46, 82, 153));
             }
             else if (id == Effect.INVISIBILITY)
             {
-                effect = new Effect(Effect.INVISIBILITY, LangManager.GetString("effect.invisibility"), Color.FromArgb(127, 131, 146));
+                effect = new Effect(Effect.INVISIBILITY, LangManager.GetString("effect.invisibility"), new Color(127, 131, 146));
             }
             else if (id == Effect.BLINDNESS)
             {
-                effect = new Effect(Effect.BLINDNESS, LangManager.GetString("effect.blindness"), Color.FromArgb(191, 192, 192), true);
+                effect = new Effect(Effect.BLINDNESS, LangManager.GetString("effect.blindness"), new Color(191, 192, 192), true);
             }
             else if (id == NIGHT_VISION)
             {
-                effect = new Effect(Effect.NIGHT_VISION, LangManager.GetString("effect.night_vision"), Color.FromArgb(0, 0, 139));
+                effect = new Effect(Effect.NIGHT_VISION, LangManager.GetString("effect.night_vision"), new Color(0, 0, 139));
             }
             else if (id == Effect.HUNGER)
             {
-                effect = new Effect(Effect.HUNGER, LangManager.GetString("effect.hunger"), Color.FromArgb(46, 139, 87), true);
+                effect = new Effect(Effect.HUNGER, LangManager.GetString("effect.hunger"), new Color(46, 139, 87), true);
             }
             else if (id == Effect.WEAKNESS)
             {
-                effect = new Effect(Effect.WEAKNESS, LangManager.GetString("effect.weakness"), Color.FromArgb(72, 77, 72), true);
+                effect = new Effect(Effect.WEAKNESS, LangManager.GetString("effect.weakness"), new Color(72, 77, 72), true);
             }
             else if (id == Effect.POISON)
             {
-                effect = new Effect(Effect.POISON, LangManager.GetString("effect.poison"), Color.FromArgb(78, 147, 49), true);
+                effect = new Effect(Effect.POISON, LangManager.GetString("effect.poison"), new Color(78, 147, 49), true);
             }
             else if (id == Effect.WITHER)
             {
-                effect = new Effect(Effect.WITHER, LangManager.GetString("effect.wither"), Color.FromArgb(53, 42, 39), true);
+                effect = new Effect(Effect.WITHER, LangManager.GetString("effect.wither"), new Color(53, 42, 39), true);
             }
             else if (id == Effect.HEALTH_BOOST)
             {
-                effect = new Effect(Effect.HEALTH_BOOST, LangManager.GetString("effect.health_boost"), Color.FromArgb(248, 125, 35));
+                effect = new Effect(Effect.HEALTH_BOOST, LangManager.GetString("effect.health_boost"), new Color(248, 125, 35));
             }
             else if (id == Effect.ABSORPTION)
             {
-                effect = new Effect(Effect.ABSORPTION, LangManager.GetString("effect.absorption"), Color.FromArgb(36, 107, 251));
+                effect = new Effect(Effect.ABSORPTION, LangManager.GetString("effect.absorption"), new Color(36, 107, 251));
             }
             else if (id == Effect.SATURATION)
             {
-                effect = new Effect(Effect.SATURATION, LangManager.GetString("effect.saturation"), Color.FromArgb(255, 0, 255));
+                effect = new Effect(Effect.SATURATION, LangManager.GetString("effect.saturation"), new Color(255, 0, 255));
             }
             else if (id == Effect.LEVITATION)
             {
-                effect = new Effect(Effect.LEVITATION, LangManager.GetString("effect.levitation"), Color.FromArgb(206, 255, 255));
+                effect = new Effect(Effect.LEVITATION, LangManager.GetString("effect.levitation"), new Color(206, 255, 255));
             }
             else if (id == Effect.FATAL_POISON)
             {
-                effect = new Effect(Effect.FATAL_POISON, LangManager.GetString("effect.fatal_poison"), Color.FromArgb(78, 147, 49), true);
+                effect = new Effect(Effect.FATAL_POISON, LangManager.GetString("effect.fatal_poison"), new Color(78, 147, 49), true);
             }
             else
             {

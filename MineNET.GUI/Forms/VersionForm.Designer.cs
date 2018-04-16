@@ -52,7 +52,7 @@
             this.MinimizeBox = false;
             this.Name = "VersionForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "VersionForm";
+            this.Text = "Application Info";
             this.ResumeLayout(false);
 
         }

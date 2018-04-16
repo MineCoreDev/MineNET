@@ -6,7 +6,13 @@ namespace MineNET.GUI.Forms
     {
         public VersionForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+            this.SetupLanguage();
+        }
+
+        private void SetupLanguage()
+        {
+            this.Text = LangManager.GetString("versionForm_text");
         }
     }
 }
