@@ -374,6 +374,7 @@ namespace MineNET.Entities.Players
                 UseItemData data = (UseItemData) pk.TransactionData;
                 Vector3 blockPos = data.BlockPos;
                 BlockFace face = data.Face;
+
                 if (data.ActionType == InventoryTransactionPacket.USE_ITEM_ACTION_CLICK_BLOCK)
                 {
                     this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ACTION, false, true);

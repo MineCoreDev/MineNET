@@ -43,6 +43,8 @@ namespace MineNET.Network.Packets
 
             this.WriteGuid(this.Guid);
             this.WriteString(this.Username);
+            this.WriteString(this.ThirdPartyName);
+            this.WriteSVarInt(this.Platform);
             this.WriteEntityUniqueId(this.EntityUniqueId);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteString(this.PlatformChatId);
@@ -58,6 +60,9 @@ namespace MineNET.Network.Packets
             this.WriteVarInt(this.PermissionLevel);
             this.WriteVarInt(this.StoredCustomPermissions);
             this.WriteLLong(0);
+
+            this.WriteUVarInt(0); //TODO: EntityLink size
+            //TODO: WriteEntityLink
         }
     }
 }

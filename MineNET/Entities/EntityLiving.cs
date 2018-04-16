@@ -5,6 +5,7 @@ using MineNET.Entities.Attributes;
 using MineNET.Entities.Data;
 using MineNET.Entities.Metadata;
 using MineNET.Inventories;
+using MineNET.NBT.Tags;
 using MineNET.Values;
 using MineNET.Worlds;
 
@@ -14,7 +15,7 @@ namespace MineNET.Entities
     {
         protected Dictionary<int, Effect> effects = new Dictionary<int, Effect>();
 
-        public EntityLiving(World world, Vector3 pos) : base(world, pos)
+        public EntityLiving(World world, CompoundTag tag) : base(world, tag)
         {
         }
 

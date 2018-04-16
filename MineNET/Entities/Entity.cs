@@ -46,7 +46,7 @@ namespace MineNET.Entities
 
         public virtual bool Closed { get; protected set; }
 
-        public Entity(World world, Vector3 pos)
+        public Entity(World world, CompoundTag tag)
         {
             this.EntityID = Entity.nextEntityId++;
 
@@ -62,9 +62,16 @@ namespace MineNET.Entities
             this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_HAS_COLLISION);
             this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_AFFECTED_BY_GRAVITY);
 
-            this.Vector3 = pos;
-            this.World = world;
-            this.World?.AddEntity(this);
+            if (!this.IsPlayer)
+            {
+                ListTag pos = tag.GetList("Pos");
+                this.Vector3 = new Vector3(
+                    pos.GetTag<FloatTag>(0).Data,
+                    pos.GetTag<FloatTag>(1).Data,
+                    pos.GetTag<FloatTag>(2).Data);
+                this.World = world;
+                this.World.AddEntity(this);
+            }
 
             this.EntityInit();
         }
@@ -138,10 +145,19 @@ namespace MineNET.Entities
 
         public virtual void SpawnToAll()
         {
-            Player[] players = Server.Instance.GetOnlinePlayers();
+            if (this.Chunk == null && this.Closed)
+            {
+                return;
+            }
+
+            Vector2 chunkPos = this.GetChunkVector();
+            Entity[] players = this.World.GetChunk(new Tuple<int, int>(chunkPos.FloorX, chunkPos.FloorY)).Entities;
             for (int i = 0; i < players.Length; ++i)
             {
-                this.SpawnTo(players[i]);
+                if (players[i] is Player)
+                {
+                    this.SpawnTo((Player) players[i]);
+                }
             }
         }
 
@@ -159,7 +175,7 @@ namespace MineNET.Entities
 
         public virtual void DespawnFromAll()
         {
-            Player[] players = Server.Instance.GetOnlinePlayers();
+            Player[] players = this.viewers.ToArray();
             for (int i = 0; i < players.Length; ++i)
             {
                 this.DespawnFrom(players[i]);
