@@ -103,21 +103,21 @@ namespace MineNET.Entities.Players
                 }
             }
 
-            if (Server.Instance.BanConfig.ContainsKey(this.Name))
+            if (this.Ban)
             {
                 this.Close("You are banned");
                 return;
             }
 
-            if (Server.Instance.BanIpConfig.ContainsKey(this.EndPoint.Address.ToString()))
+            if (this.BanIp)
             {
                 this.Close("You are IP banned");
                 return;
             }
 
-            if (Server.ServerConfig.WhiteList)
+            if (Server.Instance.Whitelist)
             {
-                if (!Server.Instance.WhitelistConfig.ContainsKey(this.Name))
+                if (!this.Whitelist)
                 {
                     this.Close("Server is whitelisted");
                     return;

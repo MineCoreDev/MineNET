@@ -200,6 +200,7 @@ namespace MineNET.Commands
         {
             this.RegisterCommand(
                 new BanCommand(),
+                new BanIpCommand(),
                 new EffectCommand(),
                 new EnchantCommand(),
                 new GameModeCommand(),
@@ -207,6 +208,8 @@ namespace MineNET.Commands
                 new HelpCommand(),
                 new ListCommand(),
                 new MeCommand(),
+                new PardonCommand(),
+                new PardonIpCommand(),
                 new SayCommand(),
                 new StopCommand(),
                 new TellCommand(),

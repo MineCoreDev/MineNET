@@ -72,13 +72,13 @@ namespace MineNET.Commands.Defaults
             }
             if (args[0] == "on")
             {
-                Server.Instance.SetWhitelist(true);
+                Server.Instance.Whitelist = true;
                 sender.SendMessage("ホワリスをオンにした");
                 return true;
             }
             else if (args[0] == "off")
             {
-                Server.Instance.SetWhitelist(false);
+                Server.Instance.Whitelist = false;
                 sender.SendMessage("ホワリスをオフにした");
                 return true;
             }

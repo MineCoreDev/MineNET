@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using MineNET.Commands;
 using MineNET.Entities.Players;
 using MineNET.Events.ServerEvents;
@@ -365,10 +366,28 @@ namespace MineNET
             }
         }
 
-        public void SetWhitelist(bool value)
+        public bool Whitelist
         {
-            Server.ServerConfig.WhiteList = value;
-            Server.ServerConfig.Save<ServerConfig>();
+            get
+            {
+                return Server.ServerConfig.WhiteList;
+            }
+
+            set
+            {
+                Server.ServerConfig.WhiteList = value;
+                Server.ServerConfig.Save<ServerConfig>();
+            }
+        }
+
+        public bool IsWhitelist(Player player)
+        {
+            return this.IsWhitelist(player.Name);
+        }
+
+        public bool IsWhitelist(string name)
+        {
+            return this.WhitelistConfig.ContainsKey(name);
         }
 
         public void AddWhitelist(Player player)
@@ -389,12 +408,145 @@ namespace MineNET
 
         public void RemoveWhitelist(string name)
         {
-            if (!this.WhitelistConfig.ContainsKey(name))
+            if (!this.IsWhitelist(name))
             {
                 return;
             }
             this.WhitelistConfig.Remove(name);
             this.WhitelistConfig.Save();
+        }
+
+        public bool IsBan(Player player)
+        {
+            return this.IsBan(player.Name);
+        }
+
+        public bool IsBan(string name)
+        {
+            return this.BanConfig.ContainsKey(name);
+        }
+
+        public void AddBan(Player player)
+        {
+            this.AddBan(player.Name);
+        }
+
+        public void AddBan(string name)
+        {
+            this.BanConfig.Set(name, true);
+            this.BanConfig.Save();
+        }
+
+        public void RemoveBan(Player player)
+        {
+            this.RemoveBan(player.Name);
+        }
+
+        public void RemoveBan(string name)
+        {
+            if (!this.IsBan(name))
+            {
+                return;
+            }
+            this.BanConfig.Remove(name);
+            this.BanConfig.Save();
+        }
+
+        public bool IsBanIp(Player player)
+        {
+            return this.IsBanIp(player.EndPoint);
+        }
+
+        public bool IsBanIp(IPEndPoint endPoint)
+        {
+            return this.IsBanIp(endPoint.Address.ToString());
+        }
+
+        public bool IsBanIp(string name)
+        {
+            return this.BanIpConfig.ContainsKey(name);
+        }
+
+        public void AddBanIp(Player player)
+        {
+            this.AddBanIp(player.EndPoint);
+        }
+
+        public void AddBanIp(IPEndPoint endPoint)
+        {
+            this.AddBanIp(endPoint.Address);
+        }
+
+        public void AddBanIp(IPAddress address)
+        {
+            this.AddBanIp(address.ToString());
+        }
+
+        public void AddBanIp(string ip)
+        {
+            this.BanIpConfig.Set(ip, true);
+            this.BanIpConfig.Save();
+        }
+
+        public void RemoveBanIp(Player player)
+        {
+            this.RemoveBanIp(player.EndPoint);
+        }
+
+        public void RemoveBanIp(IPEndPoint endPoint)
+        {
+            this.RemoveBanIp(endPoint.Address);
+        }
+
+        public void RemoveBanIp(IPAddress address)
+        {
+            this.RemoveBanIp(address.ToString());
+        }
+
+        public void RemoveBanIp(string ip)
+        {
+            if (!this.IsBanIp(ip))
+            {
+                return;
+            }
+            this.BanIpConfig.Remove(ip);
+            this.BanIpConfig.Save();
+        }
+
+        public bool IsOp(Player player)
+        {
+            return this.IsOp(player.Name);
+        }
+
+        public bool IsOp(string name)
+        {
+            return this.OpsConfig.ContainsKey(name);
+        }
+
+        public void AddOp(Player player)
+        {
+            this.AddOp(player.Name);
+        }
+
+        public void AddOp(string name)
+        {
+            this.OpsConfig.Set(name, true);
+            this.OpsConfig.Save();
+        }
+
+        public void RemoveOp(Player player)
+        {
+            this.RemoveOp(player.Name);
+        }
+
+        public void RemoveOp(string name)
+        {
+            if (!this.IsOp(name))
+            {
+                return;
+            }
+            this.OpsConfig.Remove(name);
+            this.OpsConfig.Save();
         }
     }
 }

@@ -429,20 +429,20 @@ namespace MineNET.Entities.Players
         {
             get
             {
-                return Server.Instance.WhitelistConfig.ContainsKey(this.Name);
+                return Server.Instance.IsWhitelist(this);
             }
 
             set
             {
                 if (value)
                 {
-                    Server.Instance.WhitelistConfig.Set(this.Name, true);
+                    Server.Instance.AddWhitelist(this);
                 }
                 else
                 {
                     if (this.Whitelist)
                     {
-                        Server.Instance.WhitelistConfig.Remove(this.Name);
+                        Server.Instance.RemoveWhitelist(this);
                     }
                 }
             }
@@ -452,20 +452,66 @@ namespace MineNET.Entities.Players
         {
             get
             {
-                return Server.Instance.BanConfig.ContainsKey(this.Name);
+                return Server.Instance.IsBan(this);
             }
 
             set
             {
                 if (value)
                 {
-                    Server.Instance.BanConfig.Set(this.Name, true);
+                    Server.Instance.AddBan(this);
                 }
                 else
                 {
-                    if (this.Whitelist)
+                    if (this.Ban)
                     {
-                        Server.Instance.BanConfig.Remove(this.Name);
+                        Server.Instance.RemoveBan(this);
+                    }
+                }
+            }
+        }
+
+        public bool BanIp
+        {
+            get
+            {
+                return Server.Instance.IsBanIp(this);
+            }
+
+            set
+            {
+                if (value)
+                {
+                    Server.Instance.AddBanIp(this);
+                }
+                else
+                {
+                    if (this.BanIp)
+                    {
+                        Server.Instance.RemoveBanIp(this);
+                    }
+                }
+            }
+        }
+
+        public bool Op
+        {
+            get
+            {
+                return Server.Instance.IsOp(this);
+            }
+
+            set
+            {
+                if (value)
+                {
+                    Server.Instance.AddOp(this);
+                }
+                else
+                {
+                    if (this.Op)
+                    {
+                        Server.Instance.RemoveOp(this);
                     }
                 }
             }

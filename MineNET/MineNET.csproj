@@ -358,12 +358,15 @@
     <Compile Include="Commands\CommandSender.cs" />
     <Compile Include="Commands\ConsoleSender.cs" />
     <Compile Include="Commands\Defaults\BanCommand.cs" />
+    <Compile Include="Commands\Defaults\BanIpCommand.cs" />
     <Compile Include="Commands\Defaults\EffectCommand.cs" />
     <Compile Include="Commands\Defaults\EnchantCommand.cs" />
     <Compile Include="Commands\Defaults\GameModeCommand.cs" />
     <Compile Include="Commands\Defaults\GiveCommand.cs" />
     <Compile Include="Commands\Defaults\ListCommand.cs" />
     <Compile Include="Commands\Defaults\MeCommand.cs" />
+    <Compile Include="Commands\Defaults\PardonCommand.cs" />
+    <Compile Include="Commands\Defaults\PardonIpCommand.cs" />
     <Compile Include="Commands\Defaults\SayCommand.cs" />
     <Compile Include="Commands\Defaults\TellCommand.cs" />
     <Compile Include="Commands\Defaults\WhitelistCommand.cs" />
