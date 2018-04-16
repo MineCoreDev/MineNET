@@ -7,6 +7,8 @@ namespace MineNET.GUI.Forms
 {
     public partial class LoadForm : Form
     {
+        public MineNETConfig Config { get; set; }
+
         public LoadForm()
         {
             this.InitializeComponent();
@@ -42,9 +44,9 @@ namespace MineNET.GUI.Forms
         private void LoadConfigs()
         {
             string mPath = $"{Server.ExecutePath}\\MineNET.yml";
-            MineNETConfig conf = YamlStaticConfig.Load<MineNETConfig>(mPath);
-            LangManager.Language = conf.Language;
-            MineNET.Utils.LangManager.Lang = conf.Language;
+            this.Config = YamlStaticConfig.Load<MineNETConfig>(mPath);
+            LangManager.Language = this.Config.Language;
+            MineNET.Utils.LangManager.Lang = this.Config.Language;
         }
 
         private void Loaded()

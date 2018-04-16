@@ -17,12 +17,15 @@ namespace MineNET.GUI.Items
             comboBox1.Items.Add(LangManager.GetString("form_inputMode_say_label"));
 
             comboBox1.SelectedIndex = 0;
+
+            ClockConstantController.CreateController("gui_outputUpdate", 1000 / 200);
         }
 
         internal async void OnUpdate()
         {
             while (!Server.Instance.IsShutdown())
             {
+                ClockConstantController.Start("gui_outputUpdate");
                 Queue<LoggerInfo> queue = Server.Instance.Logger.GuiLoggerTexts;
                 if (queue.Count == 0)
                 {
@@ -40,8 +43,7 @@ namespace MineNET.GUI.Items
                         }
                     }
                 }
-
-                await Task.Delay(1000 / 200);
+                await ClockConstantController.Stop("gui_outputUpdate");
             }
         }
 

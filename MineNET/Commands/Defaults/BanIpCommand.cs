@@ -49,7 +49,8 @@ namespace MineNET.Commands.Defaults
             Player[] players = this.GetPlayerFromSelector(args[0], sender);
             if (players == null)
             {
-                if (IPAddress.TryParse(args[0], out IPAddress address))
+                IPAddress address = null;
+                if (IPAddress.TryParse(args[0], out address))
                 {
                     Server.Instance.AddBanIp(address);
                     sender.SendMessage($"{address.ToString()} を接続できなくしました");

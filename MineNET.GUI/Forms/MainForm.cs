@@ -88,16 +88,26 @@ namespace MineNET.GUI.Forms
 
                 this.button2.Enabled = true;
                 this.playerList1.PlayerListBox.Enabled = true;
-                this.inputOutput1.Input.Enabled = true;
-                this.inputOutput1.InputSendButton.Enabled = true;
-                this.inputOutput1.Output.Enabled = true;
-                this.inputOutput1.OutputClearButton.Enabled = true;
+                if (this.BaseForm.Config.EnableConsoleInput)
+                {
+                    this.inputOutput1.Input.Enabled = true;
+                    this.inputOutput1.InputSendButton.Enabled = true;
+                }
+                if (this.BaseForm.Config.EnableConsoleOutput)
+                {
+                    this.inputOutput1.Output.Enabled = true;
+                    this.inputOutput1.OutputClearButton.Enabled = true;
+                }
 
                 ServerEvents.ServerStop += ServerEvents_ServerStop;
 
                 this.Server = new Server();
                 this.Server.Start();
-                this.inputOutput1.OnUpdate();
+
+                if (this.BaseForm.Config.EnableConsoleOutput)
+                {
+                    this.inputOutput1.OnUpdate();
+                }
                 this.playerList1.OnUpdate();
                 await Task.Delay(100);
             }
