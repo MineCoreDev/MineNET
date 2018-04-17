@@ -7,7 +7,7 @@ using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 
-namespace MineNET.GUI.Tools
+namespace MineNET.GUI.Tools.NBTViewerTool
 {
     public partial class NBTViewer : Form
     {
@@ -16,19 +16,36 @@ namespace MineNET.GUI.Tools
         public NBTViewer()
         {
             this.InitializeComponent();
+            this.SetupLangage();
             this.dataGridView1.AutoGenerateColumns = true;
         }
 
         public NBTViewer(CompoundTag tag)
         {
             this.InitializeComponent();
+            this.SetupLangage();
             this.dataGridView1.AutoGenerateColumns = true;
             this._Load(tag);
         }
 
+        private void SetupLangage()
+        {
+            this.fileFToolStripMenuItem.Text = LangManager.GetString("nbtViewer_fileFToolStripMenuItem_label");
+            this.editEToolStripMenuItem.Text = LangManager.GetString("nbtViewer_editEToolStripMenuItem_label");
+            this.loadNBTFileLToolStripMenuItem.Text = LangManager.GetString("nbtViewer_loadNBTFileLToolStripMenuItem_label");
+            this.saveNBTFileSToolStripMenuItem.Text = LangManager.GetString("nbtViewer_saveNBTFileSToolStripMenuItem_label");
+            this.exitEToolStripMenuItem.Text = LangManager.GetString("nbtViewer_exitEToolStripMenuItem_label");
+            this.fileEndianModeEToolStripMenuItem.Text = LangManager.GetString("nbtViewer_fileEndianModeEToolStripMenuItem_label");
+            this.littleEndianLToolStripMenuItem.Text = LangManager.GetString("nbtViewer_littleEndianLToolStripMenuItem_label");
+            this.bigEndianBToolStripMenuItem.Text = LangManager.GetString("nbtViewer_bigEndianBToolStripMenuItem_label");
+            this.unLoadNBTFileUToolStripMenuItem.Text = LangManager.GetString("nbtViewer_unLoadNBTFileUToolStripMenuItem_label");
+            this.moveUpUToolStripMenuItem.Text = LangManager.GetString("nbtViewer_moveUpUToolStripMenuItem_label");
+            this.moveDownDToolStripMenuItem.Text = LangManager.GetString("nbtViewer_moveDownDToolStripMenuItem_label");
+            this.updateRowsRToolStripMenuItem.Text = LangManager.GetString("nbtViewer_updateRowsRToolStripMenuItem_label");
+        }
+
         private async void _Load(CompoundTag tag)
         {
-
             this.dataGridView1.ScrollBars = ScrollBars.None;
             this.LoadTag(tag, true);
             await Task.Delay(1);
@@ -66,7 +83,7 @@ namespace MineNET.GUI.Tools
 
             if (value == null || string.IsNullOrWhiteSpace(value))
             {
-                this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = "値が null です。";
+                this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = LangManager.GetString("nbtViewer_error_valueNull");
                 return;
             }
 
@@ -79,7 +96,7 @@ namespace MineNET.GUI.Tools
                 }
                 else
                 {
-                    this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = string.Format("型 <{0}> の範囲を超えています。範囲<{1} ～ {2}>", type, byte.MinValue, byte.MaxValue);
+                    this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = string.Format(LangManager.GetString("nbtViewer_error_valueOutOfRange"), type, byte.MinValue, byte.MaxValue);
                 }
             }
             else if (type == NBTTagType.SHORT.ToNameString())
@@ -91,7 +108,7 @@ namespace MineNET.GUI.Tools
                 }
                 else
                 {
-                    this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = string.Format("型 <{0}> の範囲を超えています。範囲<{1} ～ {2}>", type, short.MinValue, short.MaxValue);
+                    this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = string.Format(LangManager.GetString("nbtViewer_error_valueOutOfRange"), type, short.MinValue, short.MaxValue);
                 }
             }
             else if (type == NBTTagType.INT.ToNameString())
@@ -103,7 +120,7 @@ namespace MineNET.GUI.Tools
                 }
                 else
                 {
-                    this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = string.Format("型 <{0}> の範囲を超えています。範囲<{1} ～ {2}>", type, int.MinValue, int.MaxValue);
+                    this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = string.Format(LangManager.GetString("nbtViewer_error_valueOutOfRange"), type, int.MinValue, int.MaxValue);
                 }
             }
             else if (type == NBTTagType.LONG.ToNameString())
@@ -115,7 +132,7 @@ namespace MineNET.GUI.Tools
                 }
                 else
                 {
-                    this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = string.Format("型 <{0}> の範囲を超えています。範囲<{1} ～ {2}>", type, long.MinValue, long.MaxValue);
+                    this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = string.Format(LangManager.GetString("nbtViewer_error_valueOutOfRange"), type, long.MinValue, long.MaxValue);
                 }
             }
             else if (type == NBTTagType.FLOAT.ToNameString())
@@ -127,7 +144,7 @@ namespace MineNET.GUI.Tools
                 }
                 else
                 {
-                    this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = string.Format("型 <{0}> の範囲を超えています。範囲<{1} ～ {2}>", type, float.MinValue, float.MaxValue);
+                    this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = string.Format(LangManager.GetString("nbtViewer_error_valueOutOfRange"), type, float.MinValue, float.MaxValue);
                 }
             }
             else if (type == NBTTagType.DOUBLE.ToNameString())
@@ -139,12 +156,15 @@ namespace MineNET.GUI.Tools
                 }
                 else
                 {
-                    this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = string.Format("型 <{0}> の範囲を超えています。範囲<{1} ～ {2}>", type, double.MinValue, double.MaxValue);
+                    this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = string.Format(LangManager.GetString("nbtViewer_error_valueOutOfRange"), type, double.MinValue, double.MaxValue);
                 }
+            }
+            else if (type == NBTTagType.STRING.ToNameString())
+            {
             }
             else
             {
-                this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = "TagType が不正です。";
+                this.dataGridView1.Rows[e.RowIndex].Cells[1].ErrorText = LangManager.GetString("nbtViewer_error_invalidTagType");
             }
         }
 
@@ -543,29 +563,37 @@ namespace MineNET.GUI.Tools
 
         public void MoveUpCell()
         {
-            int index = this.dataGridView1.CurrentRow.Index;
-            if (index != 0 && index != this.dataGridView1.Rows.Count - 1)
+            DataGridViewRow row = this.dataGridView1.CurrentRow;
+            if (row != null)
             {
-                object[] c1 = this.cacheData.NBTViewerCache.Rows[index].ItemArray;
-                object[] c2 = this.cacheData.NBTViewerCache.Rows[index - 1].ItemArray;
-                this.cacheData.NBTViewerCache.Rows[index].ItemArray = c2;
-                this.cacheData.NBTViewerCache.Rows[index - 1].ItemArray = c1;
-                this.dataGridView1.CurrentCell = this.dataGridView1.Rows[index - 1].Cells[this.dataGridView1.CurrentCell.ColumnIndex];
-                this.UpdateRows();
+                int index = row.Index;
+                if (index != 0 && index != this.dataGridView1.Rows.Count - 1)
+                {
+                    object[] c1 = this.cacheData.NBTViewerCache.Rows[index].ItemArray;
+                    object[] c2 = this.cacheData.NBTViewerCache.Rows[index - 1].ItemArray;
+                    this.cacheData.NBTViewerCache.Rows[index].ItemArray = c2;
+                    this.cacheData.NBTViewerCache.Rows[index - 1].ItemArray = c1;
+                    this.dataGridView1.CurrentCell = this.dataGridView1.Rows[index - 1].Cells[this.dataGridView1.CurrentCell.ColumnIndex];
+                    this.UpdateRows();
+                }
             }
         }
 
         public void MoveDownCell()
         {
-            int index = this.dataGridView1.CurrentRow.Index;
-            if (index + 1 < this.dataGridView1.Rows.Count - 1)
+            DataGridViewRow row = this.dataGridView1.CurrentRow;
+            if (row != null)
             {
-                object[] c1 = this.cacheData.NBTViewerCache.Rows[index].ItemArray;
-                object[] c2 = this.cacheData.NBTViewerCache.Rows[index + 1].ItemArray;
-                this.cacheData.NBTViewerCache.Rows[index].ItemArray = c2;
-                this.cacheData.NBTViewerCache.Rows[index + 1].ItemArray = c1;
-                this.dataGridView1.CurrentCell = this.dataGridView1.Rows[index + 1].Cells[this.dataGridView1.CurrentCell.ColumnIndex];
-                this.UpdateRows();
+                int index = row.Index;
+                if (index + 1 < this.dataGridView1.Rows.Count - 1)
+                {
+                    object[] c1 = this.cacheData.NBTViewerCache.Rows[index].ItemArray;
+                    object[] c2 = this.cacheData.NBTViewerCache.Rows[index + 1].ItemArray;
+                    this.cacheData.NBTViewerCache.Rows[index].ItemArray = c2;
+                    this.cacheData.NBTViewerCache.Rows[index + 1].ItemArray = c1;
+                    this.dataGridView1.CurrentCell = this.dataGridView1.Rows[index + 1].Cells[this.dataGridView1.CurrentCell.ColumnIndex];
+                    this.UpdateRows();
+                }
             }
         }
 
@@ -591,7 +619,7 @@ namespace MineNET.GUI.Tools
             dialog.CheckPathExists = true;
             dialog.Multiselect = false;
             dialog.RestoreDirectory = true;
-            dialog.Title = "NBTフォーマットファイルを選択";
+            dialog.Title = LangManager.GetString("nbtViewer_selectNBTFormatFile");
 
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
@@ -617,7 +645,7 @@ namespace MineNET.GUI.Tools
             dialog.CheckPathExists = true;
             dialog.Multiselect = false;
             dialog.RestoreDirectory = true;
-            dialog.Title = "NBTフォーマットファイルを選択";
+            dialog.Title = LangManager.GetString("nbtViewer_selectNBTFormatFile");
 
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
@@ -643,7 +671,7 @@ namespace MineNET.GUI.Tools
             dialog.CheckPathExists = true;
             dialog.Multiselect = false;
             dialog.RestoreDirectory = true;
-            dialog.Title = "NBTフォーマットファイルを選択";
+            dialog.Title = LangManager.GetString("nbtViewer_selectNBTFormatFile");
 
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
@@ -659,6 +687,31 @@ namespace MineNET.GUI.Tools
                     MessageBox.Show(exc.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void rawNToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void zLIBZToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gZipGToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exitEToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void unLoadNBTFileUToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.cacheData.NBTViewerCache.Rows.Clear();
         }
     }
 }

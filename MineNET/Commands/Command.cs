@@ -138,7 +138,7 @@ namespace MineNET.Commands
 
         public void SendSyntaxMessage(CommandSender sender)
         {
-            sender.SendMessage("構文エラー"); //TODO
+            sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.syntax")); //TODO
         }
 
         public string GetTranslationDescription(string messageKey)

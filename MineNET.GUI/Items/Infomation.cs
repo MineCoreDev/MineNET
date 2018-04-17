@@ -16,6 +16,7 @@ namespace MineNET.GUI.Items
         {
             this.tabPage1.Text = LangManager.GetString("versionForm_text");
             this.tabPage2.Text = LangManager.GetString("versionForm_tabPage2_text");
+            this.label4.Text = LangManager.GetString("versionForm_tabPage2_text");
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

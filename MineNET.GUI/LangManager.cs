@@ -44,7 +44,7 @@ namespace MineNET.GUI
                 {
                     return msg;
                 }
-                throw new NullReferenceException(string.Format(Manager.GetString("app_language_key_error"), key));
+                throw new NullReferenceException(string.Format(Manager.GetString("app_language_keyError"), key));
             }
             catch (Exception e)
             {
@@ -58,7 +58,7 @@ namespace MineNET.GUI
                 return msg;
             }
 
-            return string.Format(Manager.GetString("app_language_key_error"), key);
+            return string.Format(Manager.GetString("app_language_keyError"), key);
         }
     }
 }

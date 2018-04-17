@@ -13,8 +13,8 @@ namespace MineNET.GUI.Items
             InitializeComponent();
 
             comboBox1.Items.Clear();
-            comboBox1.Items.Add(LangManager.GetString("form_inputMode_command_label"));
-            comboBox1.Items.Add(LangManager.GetString("form_inputMode_say_label"));
+            comboBox1.Items.Add(LangManager.GetString("mainForm_inputMode_command_label"));
+            comboBox1.Items.Add(LangManager.GetString("mainForm_inputMode_say_label"));
 
             comboBox1.SelectedIndex = 0;
 

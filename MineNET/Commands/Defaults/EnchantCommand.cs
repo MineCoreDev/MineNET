@@ -3,6 +3,7 @@ using MineNET.Commands.Parameters;
 using MineNET.Entities;
 using MineNET.Items;
 using MineNET.Items.Enchantments;
+using MineNET.Utils;
 
 namespace MineNET.Commands.Defaults
 {
@@ -20,7 +21,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "選択中のプライヤーのアイテムにエンチャントを付与する";
+                return "commands.enchant.description";
             }
         }
 
@@ -75,7 +76,7 @@ namespace MineNET.Commands.Defaults
                     Enchantment enchant = Enchantment.GetEnchantment(args[1], level);
                     if (enchant.MinLevel < level || level > enchant.MaxLevel)
                     {
-                        sender.SendMessage("レベルが範囲外");
+                        sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.enchant.invalidLevel", enchant.Name, level));
                         continue;
                     }
                     Item item = entity.Inventory.MainHandItem;
@@ -83,11 +84,11 @@ namespace MineNET.Commands.Defaults
                     {
                         item.AddEnchant(enchant);
                         entity.Inventory.MainHandItem = item;
-                        sender.SendMessage("エンチャントした");
+                        sender.SendMessage(new TranslationMessage("commands.enchant.success", entity.Name));
                     }
                     else
                     {
-                        sender.SendMessage("エンチャントできないアイテム");
+                        sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.enchant.cantEnchant", entity.Name));
                     }
                 }
             }

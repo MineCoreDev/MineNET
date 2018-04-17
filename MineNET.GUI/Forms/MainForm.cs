@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MineNET.Events.ServerEvents;
 using MineNET.GUI.Config;
-using MineNET.GUI.Tools;
+using MineNET.GUI.Tools.NBTViewerTool;
 using MineNET.Utils.Config;
 
 namespace MineNET.GUI.Forms
@@ -30,28 +30,28 @@ namespace MineNET.GUI.Forms
 
         private void SetupLanguage()
         {
-            this.button1.Text = LangManager.GetString("form_button1_label");
-            this.button2.Text = LangManager.GetString("form_button2_label");
+            this.button1.Text = LangManager.GetString("mainForm_button1_label");
+            this.button2.Text = LangManager.GetString("mainForm_button2_label");
 
-            this.playerList1.Text = LangManager.GetString("form_playerList_label");
-            this.inputOutput1.InputLabel = LangManager.GetString("form_input_label");
-            this.inputOutput1.InputButtonLabel = LangManager.GetString("form_inputButton_label");
-            this.inputOutput1.OutputLabel = LangManager.GetString("form_output_label");
-            this.inputOutput1.OutputOptionLabel = LangManager.GetString("form_outputOption_label");
-            this.inputOutput1.OutputClearButtonLabel = LangManager.GetString("form_outputClearButton_label");
-            this.inputOutput1.InputModeLabel = LangManager.GetString("form_inputMode_label");
+            this.playerList1.Text = LangManager.GetString("mainForm_playerList_label");
+            this.inputOutput1.InputLabel = LangManager.GetString("mainForm_input_label");
+            this.inputOutput1.InputButtonLabel = LangManager.GetString("mainForm_inputButton_label");
+            this.inputOutput1.OutputLabel = LangManager.GetString("mainForm_output_label");
+            this.inputOutput1.OutputOptionLabel = LangManager.GetString("mainForm_outputOption_label");
+            this.inputOutput1.OutputClearButtonLabel = LangManager.GetString("mainForm_outputClearButton_label");
+            this.inputOutput1.InputModeLabel = LangManager.GetString("mainForm_inputMode_label");
 
-            this.fileFToolStripMenuItem.Text = LangManager.GetString("form_fileFToolStripMenuItem_label");
-            this.exitEToolStripMenuItem.Text = LangManager.GetString("form_exitEToolStripMenuItem_label");
+            this.fileFToolStripMenuItem.Text = LangManager.GetString("mainForm_fileFToolStripMenuItem_label");
+            this.exitEToolStripMenuItem.Text = LangManager.GetString("mainForm_exitEToolStripMenuItem_label");
 
-            this.controlCToolStripMenuItem.Text = LangManager.GetString("form_controlCToolStripMenuItem_label");
+            this.controlCToolStripMenuItem.Text = LangManager.GetString("mainForm_controlCToolStripMenuItem_label");
 
-            this.debugDToolStripMenuItem.Text = LangManager.GetString("form_debugDToolStripMenuItem_label");
+            this.debugDToolStripMenuItem.Text = LangManager.GetString("mainForm_debugDToolStripMenuItem_label");
 
-            this.toolTToolStripMenuItem.Text = LangManager.GetString("form_toolTToolStripMenuItem_label");
+            this.toolTToolStripMenuItem.Text = LangManager.GetString("mainForm_toolTToolStripMenuItem_label");
 
-            this.helpHToolStripMenuItem.Text = LangManager.GetString("form_helpHToolStripMenuItem_label");
-            this.mineNETGUIVersionToolStripMenuItem.Text = LangManager.GetString("form_mineNETGUIVersionToolStripMenuItem_label");
+            this.helpHToolStripMenuItem.Text = LangManager.GetString("mainForm_helpHToolStripMenuItem_label");
+            this.mineNETGUIVersionToolStripMenuItem.Text = LangManager.GetString("mainForm_mineNETGUIVersionToolStripMenuItem_label");
         }
 
         private void ConfigLoad()
@@ -142,7 +142,7 @@ namespace MineNET.GUI.Forms
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show(LangManager.GetString("app_exit_alert"), LangManager.GetString("app_exit"), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            DialogResult result = MessageBox.Show(LangManager.GetString("app_exitAlert"), LangManager.GetString("app_exit"), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
             if (result != DialogResult.Yes)
             {
                 e.Cancel = true;

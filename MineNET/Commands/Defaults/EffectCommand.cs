@@ -4,6 +4,7 @@ using MineNET.Commands.Parameters;
 using MineNET.Data;
 using MineNET.Entities;
 using MineNET.Entities.Data;
+using MineNET.Utils;
 
 namespace MineNET.Commands.Defaults
 {
@@ -21,7 +22,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "ステータス効果を追加/除去します";
+                return "commands.effect.description";
             }
         }
 
@@ -87,16 +88,16 @@ namespace MineNET.Commands.Defaults
                         if (entity.GetEffects().Length > 0)
                         {
                             entity.RemoveAllEffect();
-                            sender.SendMessage($"{entity.Name} からすべての効果を除去しました");
+                            sender.SendMessage(new TranslationMessage("commands.effect.success.removed.all", entity.Name));
                         }
                         else
                         {
-                            sender.SendMessage($"{entity.Name} は効果を受けていないので、除去できませんでした");
+                            sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.effect.failure.notActive.all", entity.Name));
                         }
                     }
                     else
                     {
-                        sender.SendMessage($"{entities[i].Name} に効果を付与することはできません");
+                        sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.effect.failure.notAMob", entities[i].Name));
                     }
                 }
                 return true;
@@ -148,11 +149,11 @@ namespace MineNET.Commands.Defaults
                 {
                     EntityLiving entity = (EntityLiving) entities[i];
                     entity.AddEffect(effect.Clone());
-                    sender.SendMessage($"{entity.Name} に{effect.Name} * {effect.Amplifier} を {effect.Duration} 秒間与えました");
+                    sender.SendMessage(new TranslationMessage("commands.effect.success", effect.Name, effect.Amplifier, entity.Name, effect.Duration));
                 }
                 else
                 {
-                    sender.SendMessage($"{entities[i].Name} に効果を付与することはできません");
+                    sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.effect.failure.notAMob", entities[i].Name));
                 }
             }
             return true;

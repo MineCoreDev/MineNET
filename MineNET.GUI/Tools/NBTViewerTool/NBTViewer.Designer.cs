@@ -1,4 +1,4 @@
-﻿namespace MineNET.GUI.Tools
+﻿namespace MineNET.GUI.Tools.NBTViewerTool
 {
     partial class NBTViewer
     {
@@ -37,7 +37,7 @@
             this.cacheData = new MineNET.GUI.Resources.Data.CacheData();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadRawNBTFileRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadNBTFileLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rawNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zLIBZToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gZipGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,11 +45,14 @@
             this.rawNToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.zLIBZToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.gZipGToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.fileEndianModeEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.littleEndianLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bigEndianBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.unLoadNBTFileUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.actionAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveUpUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveDownDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateRowsRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -133,7 +136,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileFToolStripMenuItem,
-            this.actionAToolStripMenuItem});
+            this.editEToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(484, 24);
@@ -143,42 +146,45 @@
             // fileFToolStripMenuItem
             // 
             this.fileFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadRawNBTFileRToolStripMenuItem,
+            this.loadNBTFileLToolStripMenuItem,
             this.saveNBTFileSToolStripMenuItem,
+            this.toolStripMenuItem1,
             this.fileEndianModeEToolStripMenuItem,
+            this.unLoadNBTFileUToolStripMenuItem,
+            this.toolStripMenuItem2,
             this.exitEToolStripMenuItem});
             this.fileFToolStripMenuItem.Name = "fileFToolStripMenuItem";
             this.fileFToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.fileFToolStripMenuItem.Text = "File(&F)";
             // 
-            // loadRawNBTFileRToolStripMenuItem
+            // loadNBTFileLToolStripMenuItem
             // 
-            this.loadRawNBTFileRToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadNBTFileLToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.rawNToolStripMenuItem,
             this.zLIBZToolStripMenuItem,
             this.gZipGToolStripMenuItem});
-            this.loadRawNBTFileRToolStripMenuItem.Name = "loadRawNBTFileRToolStripMenuItem";
-            this.loadRawNBTFileRToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.loadRawNBTFileRToolStripMenuItem.Text = "Load NBT File(&R)";
+            this.loadNBTFileLToolStripMenuItem.Name = "loadNBTFileLToolStripMenuItem";
+            this.loadNBTFileLToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.loadNBTFileLToolStripMenuItem.Text = "Load NBT File(&L)";
             // 
             // rawNToolStripMenuItem
             // 
             this.rawNToolStripMenuItem.Name = "rawNToolStripMenuItem";
-            this.rawNToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+            this.rawNToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.rawNToolStripMenuItem.Text = "Raw(&N)";
             this.rawNToolStripMenuItem.Click += new System.EventHandler(this.rawNToolStripMenuItem_Click);
             // 
             // zLIBZToolStripMenuItem
             // 
             this.zLIBZToolStripMenuItem.Name = "zLIBZToolStripMenuItem";
-            this.zLIBZToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+            this.zLIBZToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.zLIBZToolStripMenuItem.Text = "ZLIB(&Z)";
             this.zLIBZToolStripMenuItem.Click += new System.EventHandler(this.zLIBZToolStripMenuItem_Click);
             // 
             // gZipGToolStripMenuItem
             // 
             this.gZipGToolStripMenuItem.Name = "gZipGToolStripMenuItem";
-            this.gZipGToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+            this.gZipGToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.gZipGToolStripMenuItem.Text = "GZip(&G)";
             this.gZipGToolStripMenuItem.Click += new System.EventHandler(this.gZipGToolStripMenuItem_Click);
             // 
@@ -189,26 +195,34 @@
             this.zLIBZToolStripMenuItem1,
             this.gZipGToolStripMenuItem1});
             this.saveNBTFileSToolStripMenuItem.Name = "saveNBTFileSToolStripMenuItem";
-            this.saveNBTFileSToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.saveNBTFileSToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.saveNBTFileSToolStripMenuItem.Text = "Save NBT File(&S)";
             // 
             // rawNToolStripMenuItem1
             // 
             this.rawNToolStripMenuItem1.Name = "rawNToolStripMenuItem1";
-            this.rawNToolStripMenuItem1.Size = new System.Drawing.Size(120, 22);
+            this.rawNToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.rawNToolStripMenuItem1.Text = "Raw(&N)";
+            this.rawNToolStripMenuItem1.Click += new System.EventHandler(this.rawNToolStripMenuItem1_Click);
             // 
             // zLIBZToolStripMenuItem1
             // 
             this.zLIBZToolStripMenuItem1.Name = "zLIBZToolStripMenuItem1";
-            this.zLIBZToolStripMenuItem1.Size = new System.Drawing.Size(120, 22);
+            this.zLIBZToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.zLIBZToolStripMenuItem1.Text = "ZLIB(&Z)";
+            this.zLIBZToolStripMenuItem1.Click += new System.EventHandler(this.zLIBZToolStripMenuItem1_Click);
             // 
             // gZipGToolStripMenuItem1
             // 
             this.gZipGToolStripMenuItem1.Name = "gZipGToolStripMenuItem1";
-            this.gZipGToolStripMenuItem1.Size = new System.Drawing.Size(120, 22);
+            this.gZipGToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.gZipGToolStripMenuItem1.Text = "GZip(&G)";
+            this.gZipGToolStripMenuItem1.Click += new System.EventHandler(this.gZipGToolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(187, 6);
             // 
             // fileEndianModeEToolStripMenuItem
             // 
@@ -216,7 +230,7 @@
             this.littleEndianLToolStripMenuItem,
             this.bigEndianBToolStripMenuItem});
             this.fileEndianModeEToolStripMenuItem.Name = "fileEndianModeEToolStripMenuItem";
-            this.fileEndianModeEToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.fileEndianModeEToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.fileEndianModeEToolStripMenuItem.Text = "File Endian Mode(&E)";
             // 
             // littleEndianLToolStripMenuItem
@@ -235,21 +249,34 @@
             this.bigEndianBToolStripMenuItem.Text = "BigEndian(&B)";
             this.bigEndianBToolStripMenuItem.Click += new System.EventHandler(this.bigEndianBToolStripMenuItem_Click);
             // 
+            // unLoadNBTFileUToolStripMenuItem
+            // 
+            this.unLoadNBTFileUToolStripMenuItem.Name = "unLoadNBTFileUToolStripMenuItem";
+            this.unLoadNBTFileUToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.unLoadNBTFileUToolStripMenuItem.Text = "UnLoad NBT File(&U)";
+            this.unLoadNBTFileUToolStripMenuItem.Click += new System.EventHandler(this.unLoadNBTFileUToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(187, 6);
+            // 
             // exitEToolStripMenuItem
             // 
             this.exitEToolStripMenuItem.Name = "exitEToolStripMenuItem";
-            this.exitEToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.exitEToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.exitEToolStripMenuItem.Text = "Exit(&E)";
+            this.exitEToolStripMenuItem.Click += new System.EventHandler(this.exitEToolStripMenuItem_Click);
             // 
-            // actionAToolStripMenuItem
+            // editEToolStripMenuItem
             // 
-            this.actionAToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.moveUpUToolStripMenuItem,
             this.moveDownDToolStripMenuItem,
             this.updateRowsRToolStripMenuItem});
-            this.actionAToolStripMenuItem.Name = "actionAToolStripMenuItem";
-            this.actionAToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
-            this.actionAToolStripMenuItem.Text = "Action(&A)";
+            this.editEToolStripMenuItem.Name = "editEToolStripMenuItem";
+            this.editEToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.editEToolStripMenuItem.Text = "Edit(&E)";
             // 
             // moveUpUToolStripMenuItem
             // 
@@ -319,7 +346,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileFToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem actionAToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editEToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveUpUToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveDownDToolStripMenuItem;
         private System.Windows.Forms.BindingSource nBTViewerCacheBindingSource;
@@ -329,7 +356,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewComboBoxColumn tagTypeDataGridViewComboBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem updateRowsRToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadRawNBTFileRToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadNBTFileLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rawNToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zLIBZToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gZipGToolStripMenuItem;
@@ -343,5 +370,8 @@
         private System.Windows.Forms.ToolStripMenuItem exitEToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem unLoadNBTFileUToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
     }
 }

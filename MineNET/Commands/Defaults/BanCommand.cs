@@ -1,6 +1,7 @@
 ﻿using MineNET.Commands.Data;
 using MineNET.Commands.Parameters;
 using MineNET.Entities.Players;
+using MineNET.Utils;
 
 namespace MineNET.Commands.Defaults
 {
@@ -18,7 +19,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "対象プレイヤーを接続禁止にするコマンド";
+                return "commands.ban.description";
             }
         }
 
@@ -52,7 +53,7 @@ namespace MineNET.Commands.Defaults
             {
                 Server.Instance.BanConfig.Set(args[0], true);
                 Server.Instance.BanConfig.Save();
-                sender.SendMessage($"{args[0]} を接続できなくしました");
+                sender.SendMessage(new TranslationMessage("commands.ban.success", args[0]));
                 return true;
             }
             for (int i = 0; i < players.Length; ++i)
@@ -60,7 +61,7 @@ namespace MineNET.Commands.Defaults
                 players[i].Close("banされました"); //TODO : kick
                 Server.Instance.BanConfig.Set(players[i].Name, true);
                 Server.Instance.BanConfig.Save();
-                sender.SendMessage($"{players[i].Name} を接続できなくしました");
+                sender.SendMessage(new TranslationMessage("commands.ban.success", players[i].Name));
             }
             return true;
         }

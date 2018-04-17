@@ -2,6 +2,7 @@
 using MineNET.Commands.Data;
 using MineNET.Commands.Parameters;
 using MineNET.Entities.Players;
+using MineNET.Utils;
 
 namespace MineNET.Commands.Defaults
 {
@@ -19,7 +20,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "対象IPのプレイヤーを接続禁止にするコマンド";
+                return "commands.banip.description";
             }
         }
 
@@ -53,12 +54,12 @@ namespace MineNET.Commands.Defaults
                 if (IPAddress.TryParse(args[0], out address))
                 {
                     Server.Instance.AddBanIp(address);
-                    sender.SendMessage($"{address.ToString()} を接続できなくしました");
+                    sender.SendMessage(new TranslationMessage("commands.banip.success", address.ToString()));
                     return true;
                 }
                 else
                 {
-                    sender.SendMessage($"{args[0]} はIPアドレスではありません");
+                    sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.banip.invalid"));
                     return false;
                 }
             }
@@ -67,7 +68,7 @@ namespace MineNET.Commands.Defaults
                 for (int i = 0; i < players.Length; ++i)
                 {
                     players[i].BanIp = true;
-                    sender.SendMessage($"{players[i].Name} をIPアドレスから接続できなくしました");
+                    sender.SendMessage(new TranslationMessage("commands.banip.success.players", players[i].EndPoint.Address, players[i].Name));
                 }
             }
             return true;

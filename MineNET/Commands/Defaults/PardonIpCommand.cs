@@ -1,5 +1,6 @@
 ﻿using MineNET.Commands.Data;
 using MineNET.Commands.Parameters;
+using MineNET.Utils;
 
 namespace MineNET.Commands.Defaults
 {
@@ -17,7 +18,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "IPから接続禁止状態を解除します";
+                return "IPから接続禁止状態を解除します。";
             }
         }
 
@@ -43,11 +44,11 @@ namespace MineNET.Commands.Defaults
             }
             if (!Server.Instance.IsBanIp(args[0]))
             {
-                sender.SendMessage($"{args[0]} はIPアドレスによって接続を禁止されていません");
+                sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.unbanip.invalid"));
                 return false;
             }
             Server.Instance.RemoveBanIp(args[0]);
-            sender.SendMessage($"{args[0]} の接続禁止状態を解除しました");
+            sender.SendMessage(new TranslationMessage("commands.unbanip.success", args[0]));
             return true;
         }
     }

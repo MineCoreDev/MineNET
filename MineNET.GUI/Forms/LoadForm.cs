@@ -25,17 +25,17 @@ namespace MineNET.GUI.Forms
 
             this.LoadConfigs();
 
-            this.statusAndProgress1.Text = LangManager.GetString("start_lang_setup");
+            this.statusAndProgress1.Text = LangManager.GetString("startForm_lang_setup");
             this.statusAndProgress1.ProgressBar.Value = 25;
 
             await Task.Delay(200);
 
-            this.statusAndProgress1.Text = LangManager.GetString("start_load");
+            this.statusAndProgress1.Text = LangManager.GetString("startForm_load");
             this.statusAndProgress1.ProgressBar.Value = 50;
 
             await Task.Delay(200);
 
-            this.statusAndProgress1.Text = LangManager.GetString("start_loaded");
+            this.statusAndProgress1.Text = LangManager.GetString("startForm_loaded");
             this.statusAndProgress1.ProgressBar.Value = 100;
 
             this.Loaded();

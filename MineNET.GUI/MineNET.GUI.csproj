@@ -65,10 +65,10 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tools\NBTViewer.cs">
+    <Compile Include="Tools\NBTViewerTool\NBTViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tools\NBTViewer.Designer.cs">
+    <Compile Include="Tools\NBTViewerTool\NBTViewer.Designer.cs">
       <DependentUpon>NBTViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\VersionForm.cs">
@@ -109,13 +109,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CacheData.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Tools\YamlConfigViewerTool\YamlConfigViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\YamlConfigViewerTool\YamlConfigViewer.Designer.cs">
+      <DependentUpon>YamlConfigViewer.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Forms\LoadForm.resx">
       <DependentUpon>LoadForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tools\NBTViewer.resx">
+    <EmbeddedResource Include="Tools\NBTViewerTool\NBTViewer.resx">
       <DependentUpon>NBTViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\VersionForm.resx">

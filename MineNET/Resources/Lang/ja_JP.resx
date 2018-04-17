@@ -465,4 +465,79 @@
   <data name="enchantment.unbreaking" xml:space="preserve">
     <value>耐久力</value>
   </data>
+  <data name="commands.ban.description" xml:space="preserve">
+    <value>IP アドレスを BAN 一覧に追加します。</value>
+  </data>
+  <data name="commands.ban.success" xml:space="preserve">
+    <value>プレイヤー {0} をアクセス禁止にしました</value>
+  </data>
+  <data name="commands.banip.description" xml:space="preserve">
+    <value>IP アドレスを BAN 一覧に追加します。</value>
+  </data>
+  <data name="commands.banip.invalid" xml:space="preserve">
+    <value>無効な IP アドレスが入力されたか、プレイヤーがオンラインになっていません</value>
+  </data>
+  <data name="commands.banip.success" xml:space="preserve">
+    <value>IP アドレス {0} をアクセス禁止にしました</value>
+  </data>
+  <data name="commands.banip.success.players" xml:space="preserve">
+    <value>{1} に属する IP アドレス {0} をアクセス禁止にしました</value>
+  </data>
+  <data name="commands.effect.description" xml:space="preserve">
+    <value>ステータス効果を追加/除去します。</value>
+  </data>
+  <data name="commands.effect.failure.notActive.all" xml:space="preserve">
+    <value>{0} は効果を受けていないので、除去できませんでした</value>
+  </data>
+  <data name="commands.effect.failure.notAMob" xml:space="preserve">
+    <value>{0} に効果を付与することはできません</value>
+  </data>
+  <data name="commands.effect.success" xml:space="preserve">
+    <value>{2} に {0} * {1} を {3} 秒間与えました</value>
+  </data>
+  <data name="commands.effect.success.removed.all" xml:space="preserve">
+    <value>{0} からすべての効果を除去しました</value>
+  </data>
+  <data name="commands.enchant.cantEnchant" xml:space="preserve">
+    <value>選択中のエンチャントは対象のアイテムに付加できません: {0}</value>
+  </data>
+  <data name="commands.enchant.description" xml:space="preserve">
+    <value>選択中のプレイヤーのアイテムにエンチャントを付与する。</value>
+  </data>
+  <data name="commands.enchant.invalidLevel" xml:space="preserve">
+    <value>{0} はレベル {1} に対応していません</value>
+  </data>
+  <data name="commands.enchant.success" xml:space="preserve">
+    <value>{0} のエンチャントに成功しました</value>
+  </data>
+  <data name="commands.unban.failed" xml:space="preserve">
+    <value>プレイヤー {0} のアクセス禁止を解除できませんでした</value>
+  </data>
+  <data name="commands.unban.success" xml:space="preserve">
+    <value>プレイヤー {0} のアクセス禁止を解除しました</value>
+  </data>
+  <data name="commands.unbanip.invalid" xml:space="preserve">
+    <value>IPアドレスが無効です</value>
+  </data>
+  <data name="commands.unbanip.success" xml:space="preserve">
+    <value>IP アドレス {0} のアクセス禁止を解除しました</value>
+  </data>
+  <data name="commands.whitelist.add.success" xml:space="preserve">
+    <value>{0} をホワイトリストに追加しました</value>
+  </data>
+  <data name="commands.whitelist.description" xml:space="preserve">
+    <value>サーバーのホワイトリストを管理する。</value>
+  </data>
+  <data name="commands.whitelist.disabled" xml:space="preserve">
+    <value>ホワイトリストを無効にしました</value>
+  </data>
+  <data name="commands.whitelist.enabled" xml:space="preserve">
+    <value>ホワイトリストを有効にしました</value>
+  </data>
+  <data name="commands.whitelist.list" xml:space="preserve">
+    <value>ホワイトリストには {0} 人 (サーバー全体では {1} 人) のプレイヤーがいます:</value>
+  </data>
+  <data name="commands.whitelist.remove.success" xml:space="preserve">
+    <value>{0} をホワイトリストから削除しました</value>
+  </data>
 </root>
