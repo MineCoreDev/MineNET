@@ -1,4 +1,5 @@
 ﻿using MineNET.Data;
+using MineNET.Entities.Players;
 
 namespace MineNET.Network.Packets.Data
 {
@@ -38,6 +39,13 @@ namespace MineNET.Network.Packets.Data
             {
                 this.Flags &= ~flag;
             }
+        }
+
+        public void Update(Player player)
+        {
+            AdventureSettingsPacket pk = new AdventureSettingsPacket();
+            pk.Entry = this;
+            player.SendPacket(pk);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MineNET.Blocks.Data;
+using MineNET.Data;
 using MineNET.Entities.Data;
 using MineNET.Events.PlayerEvents;
 using MineNET.Inventories.Transactions;
@@ -254,6 +255,8 @@ namespace MineNET.Entities.Players
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, true);
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, false);
+                adventureSettingsEntry.CommandPermission = this.Op ? (PlayerPermissions) Server.ServerConfig.OpPermissionLevel : PlayerPermissions.MEMBER;
+                adventureSettingsEntry.PlayerPermission = this.Op ? (PlayerPermissions) Server.ServerConfig.OpPermissionLevel : PlayerPermissions.MEMBER;
                 adventureSettingsEntry.EntityUniqueId = this.EntityID;
                 Server.Instance.AddPlayer(this, entry, adventureSettingsEntry);
 

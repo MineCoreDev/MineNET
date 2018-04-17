@@ -187,9 +187,7 @@ namespace MineNET
         {
             foreach (AdventureSettingsEntry entry in this.adventureSettingsEntry.Values)
             {
-                AdventureSettingsPacket pk = new AdventureSettingsPacket();
-                pk.Entry = entry;
-                player.SendPacket(pk);
+                entry.Update(player);
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using MineNET.Commands;
+using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Data;
 using MineNET.Events.PlayerEvents;
@@ -520,6 +521,10 @@ namespace MineNET.Entities.Players
                         Server.Instance.RemoveOp(this);
                     }
                 }
+                AdventureSettingsEntry entry = Server.Instance.GetAdventureSettingsEntry(this);
+                entry.CommandPermission = this.Op ? (PlayerPermissions) Server.ServerConfig.OpPermissionLevel : PlayerPermissions.MEMBER;
+                entry.PlayerPermission = this.Op ? (PlayerPermissions) Server.ServerConfig.OpPermissionLevel : PlayerPermissions.MEMBER;
+                entry.Update(this);
             }
         }
     }
