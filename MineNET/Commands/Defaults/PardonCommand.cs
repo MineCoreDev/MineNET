@@ -1,5 +1,6 @@
 ﻿using MineNET.Commands.Data;
 using MineNET.Commands.Parameters;
+using MineNET.Data;
 using MineNET.Utils;
 
 namespace MineNET.Commands.Defaults
@@ -19,6 +20,14 @@ namespace MineNET.Commands.Defaults
             get
             {
                 return "接続禁止状態を解除します。";
+            }
+        }
+
+        public override PlayerPermissions CommandPermission
+        {
+            get
+            {
+                return PlayerPermissions.OPERATOR;
             }
         }
 

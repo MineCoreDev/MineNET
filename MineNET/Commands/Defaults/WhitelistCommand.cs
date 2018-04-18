@@ -30,7 +30,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return PlayerPermissions.VISITOR; //TODO
+                return PlayerPermissions.OPERATOR;
             }
         }
 

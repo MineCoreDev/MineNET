@@ -84,7 +84,7 @@ namespace MineNET.Values
 
         public static Vector3 Lerp(Vector3 a, Vector3 b, float t)
         {
-            t = MineNEtMath.ClampZeroOne(t);
+            t = MineNETMath.ClampZeroOne(t);
             return new Vector3(a.X + (b.X - a.X) * t, a.Y + (b.Y - a.Y) * t, a.Z + (b.Z - a.Z) * t);
         }
 
@@ -216,7 +216,7 @@ namespace MineNET.Values
 
         public static float Angle(Vector3 from, Vector3 to)
         {
-            return (float) Math.Acos(MineNEtMath.Clamp(Vector3.Dot(from.Normalized, to.Normalized), -1f, 1f)) * 57.29578f;
+            return (float) Math.Acos(MineNETMath.Clamp(Vector3.Dot(from.Normalized, to.Normalized), -1f, 1f)) * 57.29578f;
         }
 
         public static float Distance(Vector3 a, Vector3 b)

@@ -522,8 +522,8 @@ namespace MineNET.Entities.Players
                     }
                 }
                 AdventureSettingsEntry entry = Server.Instance.GetAdventureSettingsEntry(this);
-                entry.CommandPermission = this.Op ? (PlayerPermissions) Server.ServerConfig.OpPermissionLevel : PlayerPermissions.MEMBER;
-                entry.PlayerPermission = this.Op ? (PlayerPermissions) Server.ServerConfig.OpPermissionLevel : PlayerPermissions.MEMBER;
+                entry.CommandPermission = this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
+                entry.PlayerPermission = this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
                 entry.Update(this);
             }
         }

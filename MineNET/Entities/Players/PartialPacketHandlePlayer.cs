@@ -255,8 +255,8 @@ namespace MineNET.Entities.Players
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, true);
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, false);
-                adventureSettingsEntry.CommandPermission = this.Op ? (PlayerPermissions) Server.ServerConfig.OpPermissionLevel : PlayerPermissions.MEMBER;
-                adventureSettingsEntry.PlayerPermission = this.Op ? (PlayerPermissions) Server.ServerConfig.OpPermissionLevel : PlayerPermissions.MEMBER;
+                adventureSettingsEntry.CommandPermission = this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
+                adventureSettingsEntry.PlayerPermission = this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
                 adventureSettingsEntry.EntityUniqueId = this.EntityID;
                 Server.Instance.AddPlayer(this, entry, adventureSettingsEntry);
 
@@ -424,22 +424,19 @@ namespace MineNET.Entities.Players
                     if (this.Inventory.MainHandItem != data.MainHandItem || this.Inventory.MainHandSlot != data.HotbarSlot)
                     {
                         this.Inventory.SendMainHand(this);
-                        Logger.Info(1);
                         return;
                     }
                     Item item = this.Inventory.MainHandItem;
                     if (!(item is IConsumeable))
                     {
-                        Logger.Info(2);
                         this.Inventory.SendMainHand(this);
                         return;
                     }
                     IConsumeable consume = (IConsumeable) item;
-                    PlayerItemConsumeableEventArgs playerItemConsumeableEvent = new PlayerItemConsumeableEventArgs(this, item);
+                    PlayerItemConsumeableEventArgs playerItemConsumeableEvent = new PlayerItemConsumeableEventArgs(this, consume);
                     PlayerEvents.OnPlayerItemConsumeable(playerItemConsumeableEvent);
                     if (playerItemConsumeableEvent.IsCancel)
                     {
-                        Logger.Info(3);
                         this.Inventory.SendMainHand(this);
                         return;
                     }

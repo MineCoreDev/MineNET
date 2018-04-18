@@ -1,5 +1,4 @@
-﻿using MineNET.Data;
-using MineNET.Entities.Data;
+﻿using MineNET.Entities.Data;
 using MineNET.Utils.Config;
 
 namespace MineNET
@@ -61,8 +60,5 @@ namespace MineNET
 
         [YamlDescription("%server_config_difficulty")]
         public int Difficulty { get; set; } = 1;
-
-        [YamlDescription("")]
-        public int OpPermissionLevel { get; set; } = (int) PlayerPermissions.OPERATOR;
     }
 }

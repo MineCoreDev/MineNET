@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using MineNET.Commands.Data;
 using MineNET.Commands.Parameters;
+using MineNET.Data;
 using MineNET.Entities.Players;
 using MineNET.Utils;
 
@@ -21,6 +22,14 @@ namespace MineNET.Commands.Defaults
             get
             {
                 return "%commands.banip.description";
+            }
+        }
+
+        public override PlayerPermissions CommandPermission
+        {
+            get
+            {
+                return PlayerPermissions.OPERATOR;
             }
         }
 

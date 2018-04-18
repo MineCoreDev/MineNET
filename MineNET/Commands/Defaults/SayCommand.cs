@@ -27,8 +27,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                //return PlayerPermissions.OPERATOR;
-                return PlayerPermissions.VISITOR;
+                return PlayerPermissions.OPERATOR;
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using MineNET.Commands.Data;
 using MineNET.Commands.Parameters;
+using MineNET.Data;
 using MineNET.Entities;
 using MineNET.Items;
 using MineNET.Items.Enchantments;
@@ -22,6 +23,14 @@ namespace MineNET.Commands.Defaults
             get
             {
                 return "%commands.enchant.description";
+            }
+        }
+
+        public override PlayerPermissions CommandPermission
+        {
+            get
+            {
+                return PlayerPermissions.OPERATOR;
             }
         }
 

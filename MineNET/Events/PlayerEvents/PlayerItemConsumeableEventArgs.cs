@@ -1,17 +1,17 @@
 ﻿using MineNET.Entities.Players;
-using MineNET.Items;
+using MineNET.Items.Data;
 
 namespace MineNET.Events.PlayerEvents
 {
     public class PlayerItemConsumeableEventArgs : PlayerEventArgs, ICancellable
     {
-        public Item Item { get; }
+        public IConsumeable Consumeable { get; }
 
         public bool IsCancel { get; set; }
 
-        public PlayerItemConsumeableEventArgs(Player player, Item item) : base(player)
+        public PlayerItemConsumeableEventArgs(Player player, IConsumeable consumeable) : base(player)
         {
-            this.Item = item;
+            this.Consumeable = consumeable;
         }
     }
 }

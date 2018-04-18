@@ -6,7 +6,7 @@ namespace MineNET.Items
     {
         public ItemRepeater() : base(ItemFactory.REPEATER)
         {
-            this.Block = new BlockUnpoweredRepeater();
+            this.Block = new BlockRepeaterUnpowered();
         }
 
         public override string Name
