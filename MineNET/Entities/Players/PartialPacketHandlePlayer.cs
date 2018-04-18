@@ -433,7 +433,7 @@ namespace MineNET.Entities.Players
                         return;
                     }
                     IConsumeable consume = (IConsumeable) item;
-                    PlayerItemConsumeableEventArgs playerItemConsumeableEvent = new PlayerItemConsumeableEventArgs(this, item);
+                    PlayerItemConsumeableEventArgs playerItemConsumeableEvent = new PlayerItemConsumeableEventArgs(this, consume);
                     PlayerEvents.OnPlayerItemConsumeable(playerItemConsumeableEvent);
                     if (playerItemConsumeableEvent.IsCancel)
                     {

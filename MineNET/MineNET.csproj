@@ -426,7 +426,7 @@
     <Compile Include="Inventories\Transactions\Data\UseItemData.cs" />
     <Compile Include="Inventories\Transactions\Data\UseItemOnEntityData.cs" />
     <Compile Include="Inventories\Transactions\InventoryTransaction.cs" />
-    <Compile Include="Items\Data\Consumeable.cs" />
+    <Compile Include="Items\Data\IConsumeable.cs" />
     <Compile Include="Items\Enchantments\Enchantment.cs" />
     <Compile Include="Items\Enchantments\EnchantmentAquaAffinity.cs" />
     <Compile Include="Items\Enchantments\EnchantmentBaneOfArthropods.cs" />

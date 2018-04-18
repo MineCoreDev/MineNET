@@ -3,7 +3,7 @@ using MineNET.Entities.Players;
 
 namespace MineNET.Items.Data
 {
-    interface IConsumeable
+    public interface IConsumeable
     {
         void OnConsume(Player player);
 
