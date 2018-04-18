@@ -266,7 +266,7 @@ namespace MineNET.Entities.Players
             }
 
             this.Closed = true;
-            this.World.RemoveEntity(this);
+            this.World.RemovePlayer(this);
 
             Server.Instance.RemovePlayer(this.EntityID);
 

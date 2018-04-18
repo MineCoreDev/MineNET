@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using MineNET.Blocks;
 using MineNET.Commands;
@@ -146,6 +147,12 @@ namespace MineNET
                 for (int i = 0; i < players?.Length; ++i)
                 {
                     players[i].OnUpdate(this.tick);
+                }
+
+                World[] worlds = this.worlds.Values.ToArray();
+                for (int i = 0; i < worlds.Length; ++i)
+                {
+                    worlds[i].OnUpdate(this.tick);
                 }
 
                 if (this.tick % 20 == 0)

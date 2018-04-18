@@ -11,7 +11,7 @@ namespace MineNET.Plugins
     public class PluginManager
     {
         public const string ZIPED_PLUGIN = ".zip";
-        public const string ZIPED_MINENET_PLUGIN = ".minenet";
+        public const string ZIPED_MINENET_PLUGIN = ".mnpackage";
 
         public const string PLUGIN_STRUCT = ".mnplugin";
         public const string PLUGIN_STRUCT_SHORT = ".mnp";

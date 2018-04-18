@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MineNET.Entities.Metadata;
 using MineNET.Entities.Players;
 using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
+using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
 
@@ -69,6 +71,10 @@ namespace MineNET.Entities
                     pos.GetTag<FloatTag>(0).Data,
                     pos.GetTag<FloatTag>(1).Data,
                     pos.GetTag<FloatTag>(2).Data);
+                ListTag rotation = tag.GetList("Rotation");
+                this.Yaw = pos.GetTag<FloatTag>(0).Data;
+                this.Pitch = pos.GetTag<FloatTag>(1).Data;
+
                 this.World = world;
                 this.World.AddEntity(this);
             }
@@ -145,31 +151,29 @@ namespace MineNET.Entities
 
         public virtual void SpawnToAll()
         {
-            if (this.Chunk == null && this.Closed)
+            if (this.Closed)
             {
                 return;
             }
 
-            Vector2 chunkPos = this.GetChunkVector();
-            Entity[] players = this.World.GetChunk(new Tuple<int, int>(chunkPos.FloorX, chunkPos.FloorY)).Entities;
+            Player[] players = this.World.Players.Values.ToArray();
             for (int i = 0; i < players.Length; ++i)
             {
-                if (players[i] is Player)
-                {
-                    this.SpawnTo((Player) players[i]);
-                }
+                this.SpawnTo(players[i]);
             }
         }
 
         public virtual void DespawnFrom(Player player)
         {
-            if (!this.viewers.Contains(player))
+            if (this.viewers.Contains(player))
             {
                 RemoveEntityPacket pk = new RemoveEntityPacket();
                 pk.EntityUniqueId = this.EntityID;
                 player.SendPacket(pk);
 
                 this.viewers.Remove(player);
+
+                Logger.Info("Despawn");
             }
         }
 

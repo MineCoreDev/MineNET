@@ -125,9 +125,9 @@ namespace MineNET.Worlds
 
         public Dictionary<Tuple<int, int>, Chunk> chunks = new Dictionary<Tuple<int, int>, Chunk>();
 
-        private Dictionary<long, Player> Players { get; set; } = new Dictionary<long, Player>();
+        public Dictionary<long, Player> Players { get; set; } = new Dictionary<long, Player>();
 
-        private Dictionary<long, Entity> Entities { get; set; } = new Dictionary<long, Entity>();
+        public Dictionary<long, Entity> Entities { get; set; } = new Dictionary<long, Entity>();
 
         private List<BlockEntity> BlockEntities { get; set; } = new List<BlockEntity>();
 
@@ -143,7 +143,17 @@ namespace MineNET.Worlds
 
         public void OnUpdate(int tick)
         {
+            Entity[] entities = this.Entities.Values.ToArray();
+            for (int i = 0; i < entities.Length; ++i)
+            {
+                entities[i].OnUpdate(tick);
+            }
 
+            BlockEntity[] blockEntities = this.BlockEntities.ToArray();
+            for (int i = 0; i < blockEntities.Length; ++i)
+            {
+                //blockEntities[i].OnUpdate(tick);
+            }
         }
 
         public Block GetBlock(Vector3 pos)
@@ -426,6 +436,26 @@ namespace MineNET.Worlds
             }
             this.Entities.Remove(entity.EntityID);
             entity.DespawnFromAll();
+        }
+
+        internal void AddPlayer(Player player)
+        {
+            if (player.World.Name != this.Name)
+            {
+                return;
+            }
+            this.Players[player.EntityID] = player;
+            player.SpawnToAll();
+        }
+
+        internal void RemovePlayer(Player player)
+        {
+            if (!this.Players.ContainsKey(player.EntityID))
+            {
+                return;
+            }
+            this.Players.Remove(player.EntityID);
+            player.DespawnFromAll();
         }
 
         public Entity GetEntity(long entityID)
