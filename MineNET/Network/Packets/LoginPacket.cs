@@ -80,10 +80,10 @@ namespace MineNET.Network.Packets
             this.ClientData.ServerAddress = clientDataJwt.Value<string>("ServerAddress");
             this.ClientData.Skin = new Skin(
                 clientDataJwt.Value<string>("SkinId"),
-                clientDataJwt.Value<string>("SkinData"),
-                clientDataJwt.Value<string>("CapeData"),
+                Convert.FromBase64String(clientDataJwt.Value<string>("SkinData")),
+                Convert.FromBase64String(clientDataJwt.Value<string>("CapeData")),
                 clientDataJwt.Value<string>("SkinGeometryName"),
-                clientDataJwt.Value<string>("SkinGeometry")
+                Encoding.UTF8.GetString(Convert.FromBase64String(clientDataJwt.Value<string>("SkinGeometry")))
                 );
             this.ClientData.UIProfile = clientDataJwt.Value<int>("UIProfile");
         }

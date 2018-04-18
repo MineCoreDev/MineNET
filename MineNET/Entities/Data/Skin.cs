@@ -3,12 +3,12 @@
     public class Skin
     {
         public string SkinId { get; set; }
-        public string SkinData { get; set; }
-        public string CapeData { get; set; }
+        public byte[] SkinData { get; set; }
+        public byte[] CapeData { get; set; }
         public string GeometryName { get; set; }
         public string GeometryData { get; set; }
 
-        public Skin(string skinId, string skinData, string capeData, string geometryName, string geometryData)
+        public Skin(string skinId, byte[] skinData, byte[] capeData, string geometryName, string geometryData)
         {
             this.SkinId = skinId;
             this.SkinData = skinData;

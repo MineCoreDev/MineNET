@@ -62,6 +62,18 @@ namespace MineNET.Utils
             this.WriteSVarInt(z);
         }
 
+        public byte[] ReadByteData()
+        {
+            int len = (int) this.ReadUVarInt();
+            return this.ReadBytes(len);
+        }
+
+        public void WriteByteData(byte[] data)
+        {
+            this.WriteUVarInt((uint) data.Length);
+            this.WriteBytes(data);
+        }
+
         public long ReadEntityUniqueId()
         {
             return this.ReadSVarLong();
@@ -151,14 +163,14 @@ namespace MineNET.Utils
 
         public Skin ReadSkin()
         {
-            return new Skin(this.ReadString(), this.ReadString(), this.ReadString(), this.ReadString(), this.ReadString());
+            return new Skin(this.ReadString(), this.ReadByteData(), this.ReadByteData(), this.ReadString(), this.ReadString());
         }
 
         public void WriteSkin(Skin skin)
         {
             this.WriteString(skin.SkinId);
-            this.WriteString(skin.SkinData);
-            this.WriteString(skin.CapeData);
+            this.WriteByteData(skin.SkinData);
+            this.WriteByteData(skin.CapeData);
             this.WriteString(skin.GeometryName);
             this.WriteString(skin.GeometryData);
         }
