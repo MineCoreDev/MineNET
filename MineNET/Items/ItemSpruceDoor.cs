@@ -6,7 +6,7 @@ namespace MineNET.Items
     {
         public ItemSpruceDoor() : base(ItemFactory.SPRUCE_DOOR)
         {
-            this.Block = new BlockSpruceDoor();
+            this.Block = new BlockDoorSpruce();
         }
 
         public override string Name

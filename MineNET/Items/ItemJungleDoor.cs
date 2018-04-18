@@ -6,7 +6,7 @@ namespace MineNET.Items
     {
         public ItemJungleDoor() : base(ItemFactory.JUNGLE_DOOR)
         {
-            this.Block = new BlockJungleDoor();
+            this.Block = new BlockDoorJungle();
         }
 
         public override string Name

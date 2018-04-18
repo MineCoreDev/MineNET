@@ -6,7 +6,7 @@ namespace MineNET.Items
     {
         public ItemComparator() : base(ItemFactory.COMPARATOR)
         {
-            this.Block = new BlockUnpoweredComparator();
+            this.Block = new BlockComparatorUnpowered();
         }
 
         public override string Name

@@ -394,7 +394,7 @@ namespace MineNET.Blocks
             }
             else if (id == STICKY_PISTON)
             {
-                return new BlockStickyPiston();
+                return new BlockPistonSticky();
             }
             else if (id == COBWEB)
             {
@@ -467,7 +467,7 @@ namespace MineNET.Blocks
             }
             else if (id == MOSSY_COBBLESTONE)
             {
-                return new BlockMossyCobblestone();
+                return new BlockCobblestoneMossy();
             }
             else if (id == OBSIDIAN)
             {
@@ -523,7 +523,7 @@ namespace MineNET.Blocks
             }
             else if (id == LIT_FURNACE)
             {
-                return new BlockLitFurnace();
+                return new BlockFurnaceLit();
             }
             else if (id == STANDING_SIGN)
             {
@@ -531,7 +531,7 @@ namespace MineNET.Blocks
             }
             else if (id == WOODEN_DOOR)
             {
-                return new BlockWoodenDoor();
+                return new BlockDoorWooden();
             }
             else if (id == LADDER)
             {
@@ -559,7 +559,7 @@ namespace MineNET.Blocks
             }
             else if (id == IRON_DOOR)
             {
-                return new BlockIronDoor();
+                return new BlockDoorIron();
             }
             else if (id == WOODEN_PRESSURE_PLATE)
             {
@@ -571,11 +571,11 @@ namespace MineNET.Blocks
             }
             else if (id == LIT_REDSTONE_ORE)
             {
-                return new BlockLitRedstoneOre();
+                return new BlockRedstoneOreLit();
             }
             else if (id == UNLIT_REDSTONE_TORCH)
             {
-                return new BlockUnlitRedstoneTorch();
+                return new BlockRedstoneTorchUnlit();
             }
             else if (id == REDSTONE_TORCH)
             {
@@ -583,7 +583,7 @@ namespace MineNET.Blocks
             }
             else if (id == STONE_BUTTON)
             {
-                return new BlockStoneButton();
+                return new BlockButtonStone();
             }
             else if (id == SNOW_LAYER)
             {
@@ -639,7 +639,7 @@ namespace MineNET.Blocks
             }
             else if (id == LIT_PUMPKIN)
             {
-                return new BlockLitPumpkin();
+                return new BlockPumpkinLit();
             }
             else if (id == CAKE)
             {
@@ -647,11 +647,11 @@ namespace MineNET.Blocks
             }
             else if (id == UNPOWERED_REPEATER)
             {
-                return new BlockUnpoweredRepeater();
+                return new BlockRepeaterUnpowered();
             }
             else if (id == POWERED_REPEATER)
             {
-                return new BlockPoweredRepeater();
+                return new BlockRepeaterPowered();
             }
             else if (id == INVISIBLEBEDROCK)
             {
@@ -707,11 +707,11 @@ namespace MineNET.Blocks
             }
             else if (id == BRICK_STAIRS)
             {
-                return new BlockBrickStairs();
+                return new BlockStairsBrick();
             }
             else if (id == STONE_BRICK_STAIRS)
             {
-                return new BlockStoneBrickStairs();
+                return new BlockStairsStoneBrick();
             }
             else if (id == MYCELIUM)
             {
@@ -727,11 +727,11 @@ namespace MineNET.Blocks
             }
             else if (id == NETHER_BRICK_FENCE)
             {
-                return new BlockNetherBrickFence();
+                return new BlockFenceNetherBrick();
             }
             else if (id == NETHER_BRICK_STAIRS)
             {
-                return new BlockNetherBrickStairs();
+                return new BlockStairsNetherBrick();
             }
             else if (id == NETHER_WART)
             {
@@ -771,7 +771,7 @@ namespace MineNET.Blocks
             }
             else if (id == LIT_REDSTONE_LAMP)
             {
-                return new BlockLitRedstoneLamp();
+                return new BlockRedstoneLampLit();
             }
             else if (id == DROPPER)
             {
@@ -779,7 +779,7 @@ namespace MineNET.Blocks
             }
             else if (id == ACTIVATOR_RAIL)
             {
-                return new BlockActivatorRail();
+                return new BlockRailActivator();
             }
             else if (id == COCOA)
             {
@@ -811,15 +811,15 @@ namespace MineNET.Blocks
             }
             else if (id == SPRUCE_STAIRS)
             {
-                return new BlockSpruceStairs();
+                return new BlockStairsSpruce();
             }
             else if (id == BIRCH_STAIRS)
             {
-                return new BlockBirchStairs();
+                return new BlockStairsBirch();
             }
             else if (id == JUNGLE_STAIRS)
             {
-                return new BlockJungleStairs();
+                return new BlockStairsJungle();
             }
             else if (id == COMMAND_BLOCK)
             {
@@ -847,7 +847,7 @@ namespace MineNET.Blocks
             }
             else if (id == WOODEN_BUTTON)
             {
-                return new BlockWoodenButton();
+                return new BlockButtonWooden();
             }
             else if (id == SKULL)
             {
@@ -871,11 +871,11 @@ namespace MineNET.Blocks
             }
             else if (id == UNPOWERED_COMPARATOR)
             {
-                return new BlockUnpoweredComparator();
+                return new BlockComparatorUnpowered();
             }
             else if (id == POWERED_COMPARATOR)
             {
-                return new BlockPoweredComparator();
+                return new BlockComparatorPowered();
             }
             else if (id == DAYLIGHT_DETECTOR)
             {
@@ -927,11 +927,11 @@ namespace MineNET.Blocks
             }
             else if (id == ACACIA_STAIRS)
             {
-                return new BlockAcaciaStairs();
+                return new BlockStairsAcacia();
             }
             else if (id == DARK_OAK_STAIRS)
             {
-                return new BlockDarkOakStairs();
+                return new BlockStairsDarkOak();
             }
             else if (id == SLIME)
             {
@@ -940,7 +940,7 @@ namespace MineNET.Blocks
 
             else if (id == IRON_TRAPDOOR)
             {
-                return new BlockIronTrapdoor();
+                return new BlockTrapdoorIron();
             }
             else if (id == PRISMARINE)
             {
@@ -960,7 +960,7 @@ namespace MineNET.Blocks
             }
             else if (id == HARDENED_CLAY)
             {
-                return new BlockHardenedClay();
+                return new BlockClayHardened();
             }
             else if (id == COAL_BLOCK)
             {
@@ -1004,52 +1004,52 @@ namespace MineNET.Blocks
             }
             else if (id == SPRUCE_FENCE_GATE)
             {
-                return new BlockSpruceFenceGate();
+                return new BlockFenceGateSpruce();
             }
             else if (id == BIRCH_FENCE_GATE)
             {
-                return new BlockBirchFenceGate();
+                return new BlockFenceGateBirch();
             }
             else if (id == JUNGLE_FENCE_GATE)
             {
-                return new BlockJungleFenceGate();
+                return new BlockFenceGateJungle();
             }
             else if (id == DARK_OAK_FENCE_GATE)
             {
-                return new BlockDarkOakFenceGate();
+                return new BlockFenceGateDarkOak();
             }
             else if (id == ACACIA_FENCE_GATE)
             {
-                return new BlockAcaciaFenceGate();
+                return new BlockFenceGateAcacia();
             }
             else if (id == REPEATING_COMMAND_BLOCK)
             {
-                return new BlockRepeatingCommandBlock();
+                return new BlockCommandBlockRepeating();
             }
             else if (id == CHAIN_COMMAND_BLOCK)
             {
-                return new BlockChainCommandBlock();
+                return new BlockCommandBlockChain();
             }
 
             else if (id == SPRUCE_DOOR)
             {
-                return new BlockSpruceDoor();
+                return new BlockDoorSpruce();
             }
             else if (id == BIRCH_DOOR)
             {
-                return new BlockBirchDoor();
+                return new BlockDoorBirch();
             }
             else if (id == JUNGLE_DOOR)
             {
-                return new BlockJungleDoor();
+                return new BlockDoorJungle();
             }
             else if (id == ACACIA_DOOR)
             {
-                return new BlockAcaciaDoor();
+                return new BlockDoorAcacia();
             }
             else if (id == DARK_OAK_DOOR)
             {
-                return new BlockDarkOakDoor();
+                return new BlockDoorDarkOak();
             }
             else if (id == GRASS_PATH)
             {
@@ -1074,7 +1074,7 @@ namespace MineNET.Blocks
 
             else if (id == UNDYED_SHULKER_BOX)
             {
-                return new BlockUndyedShulkerBox();
+                return new BlockShulkerBoxUndyed();
             }
             else if (id == END_BRICKS)
             {
@@ -1116,19 +1116,19 @@ namespace MineNET.Blocks
             }
             else if (id == PURPLE_GLAZED_TERRACOTTA)
             {
-                return new BlockPurpleGlazedTerracotta();
+                return new BlockGlazedTerracottaPurple();
             }
             else if (id == WHITE_GLAZED_TERRACOTTA)
             {
-                return new BlockWhiteGlazedTerracotta();
+                return new BlockGlazedTerracottaWhite();
             }
             else if (id == ORANGE_GLAZED_TERRACOTTA)
             {
-                return new BlockOrangeGlazedTerracotta();
+                return new BlockGlazedTerracottaOrange();
             }
             else if (id == MAGENTA_GLAZED_TERRACOTTA)
             {
-                return new BlockMagentaGlazedTerracotta();
+                return new BlockGlazedTerracottaMagenta();
             }
             else if (id == LIGHT_GLAZED_TERRACOTTA)
             {
@@ -1136,48 +1136,48 @@ namespace MineNET.Blocks
             }
             else if (id == YELLOW_GLAZED_TERRACOTTA)
             {
-                return new BlockYellowGlazedTerracotta();
+                return new BlockGlazedTerracottaYellow();
             }
             else if (id == LIME_GLAZED_TERRACOTTA)
             {
-                return new BlockLimeGlazedTerracotta();
+                return new BlockGlazedTerracottaLime();
             }
             else if (id == PINK_GLAZED_TERRACOTTA)
             {
-                return new BlockPinkGlazedTerracotta();
+                return new BlockGlazedTerracottaPink();
             }
             else if (id == GRAY_GLAZED_TERRACOTTA)
             {
-                return new BlockGrayGlazedTerracotta();
+                return new BlockGlazedTerracottaGray();
             }
             else if (id == SILVER_GLAZED_TERRACOTTA)
             {
-                return new BlockSilverGlazedTerracotta();
+                return new BlockGlazedTerracottaSilver();
             }
             else if (id == CYAN_GLAZED_TERRACOTTA)
             {
-                return new BlockCyanGlazedTerracotta();
+                return new BlockGlazedTerracottaCyan();
             }
 
             else if (id == BLUE_GLAZED_TERRACOTTA)
             {
-                return new BlockBlueGlazedTerracotta();
+                return new BlockGlazedTerracottaBlue();
             }
             else if (id == BROWN_GLAZED_TERRACOTTA)
             {
-                return new BlockBrownGlazedTerracotta();
+                return new BlockGlazedTerracottaBrown();
             }
             else if (id == GREEN_GLAZED_TERRACOTTA)
             {
-                return new BlockGreenGlazedTerracotta();
+                return new BlockGlazedTerracottaGreen();
             }
             else if (id == RED_GLAZED_TERRACOTTA)
             {
-                return new BlockRedGlazedTerracotta();
+                return new BlockGlazedTerracottaRed();
             }
             else if (id == BLACK_GLAZED_TERRACOTTA)
             {
-                return new BlockBlackGlazedTerracotta();
+                return new BlockGlazedTerracottaBlack();
             }
             else if (id == CONCRETE)
             {
