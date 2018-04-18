@@ -1,5 +1,4 @@
 ﻿using MineNET.Commands.Data;
-using MineNET.Data;
 using MineNET.Entities.Players;
 
 namespace MineNET.Commands.Defaults
@@ -19,14 +18,6 @@ namespace MineNET.Commands.Defaults
             get
             {
                 return "%commands.list.description";
-            }
-        }
-
-        public override PlayerPermissions CommandPermission
-        {
-            get
-            {
-                return PlayerPermissions.VISITOR;
             }
         }
 

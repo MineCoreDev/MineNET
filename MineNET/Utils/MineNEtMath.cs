@@ -1,6 +1,6 @@
 ﻿namespace MineNET.Utils
 {
-    public static class MineNEtMath
+    public static class MineNETMath
     {
         public static float Clamp(float value, float min, float max)
         {

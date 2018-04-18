@@ -30,8 +30,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return PlayerPermissions.VISITOR;
-                //return PlayerPermissions.OPERATOR;
+                return PlayerPermissions.OPERATOR;
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using MineNET.Utils;
 
 namespace MineNET.Values
 {
@@ -68,7 +69,7 @@ namespace MineNET.Values
 
         public static Vector2 Lerp(Vector2 a, Vector2 b, float t)
         {
-            t = Utils.MineNEtMath.ClampZeroOne(t);
+            t = MineNETMath.ClampZeroOne(t);
             return new Vector2(a.X + (b.X - a.X) * t, a.Y + (b.Y - a.Y) * t);
         }
 
@@ -165,7 +166,7 @@ namespace MineNET.Values
 
         public static float Angle(Vector2 from, Vector2 to)
         {
-            return (float) Math.Acos(Utils.MineNEtMath.Clamp(Vector2.Dot(from.Normalized, to.Normalized), -1f, 1f)) * 57.29578f;
+            return (float) Math.Acos(MineNETMath.Clamp(Vector2.Dot(from.Normalized, to.Normalized), -1f, 1f)) * 57.29578f;
         }
 
         public static float Distance(Vector2 a, Vector2 b)

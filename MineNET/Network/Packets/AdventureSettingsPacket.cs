@@ -1,4 +1,5 @@
-﻿using MineNET.Network.Packets.Data;
+﻿using MineNET.Data;
+using MineNET.Network.Packets.Data;
 
 namespace MineNET.Network.Packets
 {
@@ -46,6 +47,19 @@ namespace MineNET.Network.Packets
             this.WriteUVarInt((uint) this.Entry.PlayerPermission);
             this.WriteUVarInt(this.Entry.CustomFlags);
             this.WriteLLong((ulong) this.Entry.EntityUniqueId);
+        }
+
+        public override void Decode()
+        {
+            base.Decode();
+
+            this.Entry = new AdventureSettingsEntry();
+            this.Entry.Flags = this.ReadUVarInt();
+            this.Entry.CommandPermission = (PlayerPermissions) this.ReadUVarInt();
+            this.Entry.Flags2 = this.ReadUVarInt();
+            this.Entry.PlayerPermission = (PlayerPermissions) this.ReadUVarInt();
+            this.Entry.CustomFlags = this.ReadUVarInt();
+            this.Entry.EntityUniqueId = (long) this.ReadLLong();
         }
     }
 }
