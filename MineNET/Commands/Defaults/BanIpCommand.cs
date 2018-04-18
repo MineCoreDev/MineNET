@@ -20,7 +20,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "commands.banip.description";
+                return "%commands.banip.description";
             }
         }
 

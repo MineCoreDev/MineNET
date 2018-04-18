@@ -540,4 +540,19 @@
   <data name="commands.whitelist.remove.success" xml:space="preserve">
     <value>{0} をホワイトリストから削除しました</value>
   </data>
+  <data name="commands.deop.description" xml:space="preserve">
+    <value>プレイヤーからオペレーターのステータスを取り消す。</value>
+  </data>
+  <data name="commands.deop.success" xml:space="preserve">
+    <value>{0} からオペレーター権限を剥奪しました</value>
+  </data>
+  <data name="commands.generic.notimplemented" xml:space="preserve">
+    <value>実装されていません</value>
+  </data>
+  <data name="commands.op.description" xml:space="preserve">
+    <value>プレイヤーにオペレーターのステータスを与える。</value>
+  </data>
+  <data name="commands.op.success" xml:space="preserve">
+    <value>{0} にオペレーター権限を付与しました</value>
+  </data>
 </root>

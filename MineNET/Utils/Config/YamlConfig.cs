@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using MineNET.Utils.Config.Yaml;
 using YamlDotNet.Core;
@@ -148,11 +147,7 @@ namespace MineNET.Utils.Config
 
         public void RemoveAll()
         {
-            string[] keys = this.Root.Keys.ToArray();
-            for (int i = 0; i < keys.Length; ++i)
-            {
-                this.Remove(keys[i]);
-            }
+            this.Root.Clear();
         }
     }
 }

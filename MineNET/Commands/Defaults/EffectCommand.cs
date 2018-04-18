@@ -22,7 +22,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "commands.effect.description";
+                return "%commands.effect.description";
             }
         }
 

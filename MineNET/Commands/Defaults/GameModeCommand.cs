@@ -22,7 +22,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "commands.gamemode.description";
+                return "%commands.gamemode.description";
             }
         }
 

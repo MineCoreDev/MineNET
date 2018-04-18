@@ -19,7 +19,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "commands.say.description";
+                return "%commands.say.description";
             }
         }
 

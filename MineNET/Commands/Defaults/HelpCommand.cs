@@ -18,7 +18,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "commands.help.description";
+                return "%commands.help.description";
             }
         }
 
@@ -51,7 +51,21 @@ namespace MineNET.Commands.Defaults
                 {
                     KeyValuePair<string, Command> Data = list[i];
                     Command command = Data.Value;
-                    Logger.Info($" §2/{command.Name}§f : {this.GetTranslationDescription(command.Description)}");
+                    if (!string.IsNullOrEmpty(command.Description))
+                    {
+                        if (command.Description[0] == '%')
+                        {
+                            Logger.Info($" §2/{command.Name}§f : {this.GetTranslationDescription(command.Description.Remove(0, 1))}");
+                        }
+                        else
+                        {
+                            Logger.Info($" §2/{command.Name}§f : {command.Description}");
+                        }
+                    }
+                    else
+                    {
+                        Logger.Info($" §2/{command.Name}§f : ");
+                    }
                 }
             }
 

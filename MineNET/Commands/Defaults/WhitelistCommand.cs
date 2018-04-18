@@ -22,7 +22,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "commands.whitelist.description";
+                return "%commands.whitelist.description";
             }
         }
 

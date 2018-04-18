@@ -21,7 +21,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "commands.enchant.description";
+                return "%commands.enchant.description";
             }
         }
 

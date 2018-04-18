@@ -96,7 +96,6 @@ namespace MineNET.GUI.Forms
                 if (this.BaseForm.Config.EnableConsoleOutput)
                 {
                     this.inputOutput1.Output.Enabled = true;
-                    this.inputOutput1.OutputClearButton.Enabled = true;
                 }
 
                 ServerEvents.ServerStop += ServerEvents_ServerStop;
@@ -128,7 +127,6 @@ namespace MineNET.GUI.Forms
             this.inputOutput1.Input.Enabled = false;
             this.inputOutput1.InputSendButton.Enabled = false;
             this.inputOutput1.Output.Enabled = false;
-            this.inputOutput1.OutputClearButton.Enabled = false;
 
             this.Server = null;
         }

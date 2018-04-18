@@ -1,6 +1,7 @@
 ﻿using MineNET.Commands.Data;
 using MineNET.Commands.Parameters;
 using MineNET.Entities.Players;
+using MineNET.Utils;
 
 namespace MineNET.Commands.Defaults
 {
@@ -18,7 +19,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "プレイヤーにオペレーターのステータスを与える。";
+                return "%commands.op.description";
             }
         }
 
@@ -46,13 +47,13 @@ namespace MineNET.Commands.Defaults
             if (players == null)
             {
                 Server.Instance.AddOp(args[0]);
-                sender.SendMessage($"{args[0]} にオペレーターの権限を与えました");
+                sender.SendMessage(new TranslationMessage("commands.op.success", args[0]));
                 return true;
             }
             for (int i = 0; i < players.Length; ++i)
             {
                 players[i].Op = true;
-                sender.SendMessage($"{players[i].Name} にオペレーターの権限を与えました");
+                sender.SendMessage(new TranslationMessage("commands.op.success", players[i].Name));
             }
             return true;
         }

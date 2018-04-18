@@ -1,6 +1,7 @@
 ﻿using MineNET.Commands.Data;
 using MineNET.Commands.Parameters;
 using MineNET.Entities.Players;
+using MineNET.Utils;
 
 namespace MineNET.Commands.Defaults
 {
@@ -18,7 +19,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "プレイヤーからオペレーターのステータスを取り消す。";
+                return "%commands.deop.description";
             }
         }
 
@@ -46,13 +47,13 @@ namespace MineNET.Commands.Defaults
             if (players == null)
             {
                 Server.Instance.RemoveOp(args[0]);
-                sender.SendMessage($"{args[0]} からオペレーターの権限を剥奪しました");
+                sender.SendMessage(new TranslationMessage("commands.deop.success", args[0]));
                 return true;
             }
             for (int i = 0; i < players.Length; ++i)
             {
                 players[i].Op = false;
-                sender.SendMessage($"{players[i].Name} からオペレーターの権限を剥奪しました");
+                sender.SendMessage(new TranslationMessage("commands.deop.success", players[i].Name));
             }
             return true;
         }

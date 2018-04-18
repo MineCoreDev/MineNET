@@ -40,7 +40,21 @@ namespace MineNET.Network.Packets
                     }
 
                     stream.WriteString(command.Name);
-                    stream.WriteString(command.Description);
+                    if (!string.IsNullOrEmpty(command.Description))
+                    {
+                        if (command.Description[0] == '%')
+                        {
+                            stream.WriteString(command.Description.Remove(0, 1));
+                        }
+                        else
+                        {
+                            stream.WriteString(command.Description);
+                        }
+                    }
+                    else
+                    {
+                        stream.WriteString(command.Description);
+                    }
                     stream.WriteByte((byte) command.Flag);
                     stream.WriteByte((byte) command.CommandPermission);
 

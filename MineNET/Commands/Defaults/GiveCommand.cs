@@ -24,7 +24,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "commands.give.description";
+                return "%commands.give.description";
             }
         }
 

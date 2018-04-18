@@ -55,33 +55,36 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
             int regionZ = chunkZ >> 5;
             string key = $"{regionX}:{regionZ}";
 
-            RegionFile file = null;
-            if (!this.Files.ContainsKey(key))
+            lock (this.Files)
             {
-                file = new RegionFile(this.WorldName, regionX, regionZ);
-                this.Files.Add(key, file);
-
-                Chunk chunk = new Chunk(chunkX, chunkZ);
-                return chunk;
-            }
-            else
-            {
-                file = this.Files[key];
-                if (file.IsFileCreated)
+                RegionFile file = null;
+                if (!this.Files.ContainsKey(key))
                 {
-                    byte[] data = file.GetChunkBytes(chunkX, chunkZ);
-                    if (data == null)
+                    file = new RegionFile(this.WorldName, regionX, regionZ);
+                    this.Files.Add(key, file);
+
+                    Chunk chunk = new Chunk(chunkX, chunkZ);
+                    return chunk;
+                }
+                else
+                {
+                    file = this.Files[key];
+                    if (file.IsFileCreated)
+                    {
+                        byte[] data = file.GetChunkBytes(chunkX, chunkZ);
+                        if (data == null)
+                        {
+                            Chunk chunk = new Chunk(chunkX, chunkZ);
+                            return chunk;
+                        }
+
+                        return this.ChunkFormat.NBTDeserialize(NBTIO.ReadZLIBFile(data, NBT.Data.NBTEndian.BIG_ENDIAN));
+                    }
+                    else
                     {
                         Chunk chunk = new Chunk(chunkX, chunkZ);
                         return chunk;
                     }
-
-                    return this.ChunkFormat.NBTDeserialize(NBTIO.ReadZLIBFile(data, NBT.Data.NBTEndian.BIG_ENDIAN));
-                }
-                else
-                {
-                    Chunk chunk = new Chunk(chunkX, chunkZ);
-                    return chunk;
                 }
             }
         }
