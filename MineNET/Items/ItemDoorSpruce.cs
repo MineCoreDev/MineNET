@@ -2,9 +2,9 @@
 
 namespace MineNET.Items
 {
-    public class ItemSpruceDoor : Item
+    public class ItemDoorSpruce : Item
     {
-        public ItemSpruceDoor() : base(ItemFactory.SPRUCE_DOOR)
+        public ItemDoorSpruce() : base(ItemFactory.SPRUCE_DOOR)
         {
             this.Block = new BlockDoorSpruce();
         }

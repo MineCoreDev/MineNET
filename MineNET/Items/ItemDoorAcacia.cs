@@ -2,9 +2,9 @@
 
 namespace MineNET.Items
 {
-    public class ItemAcaciaDoor : Item
+    public class ItemDoorAcacia : Item
     {
-        public ItemAcaciaDoor() : base(ItemFactory.ACACIA_DOOR)
+        public ItemDoorAcacia() : base(ItemFactory.ACACIA_DOOR)
         {
             this.Block = new BlockDoorAcacia();
         }

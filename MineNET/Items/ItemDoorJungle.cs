@@ -2,9 +2,9 @@
 
 namespace MineNET.Items
 {
-    public class ItemJungleDoor : Item
+    public class ItemDoorJungle : Item
     {
-        public ItemJungleDoor() : base(ItemFactory.JUNGLE_DOOR)
+        public ItemDoorJungle() : base(ItemFactory.JUNGLE_DOOR)
         {
             this.Block = new BlockDoorJungle();
         }

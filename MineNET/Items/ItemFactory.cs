@@ -510,7 +510,7 @@ namespace MineNET.Items
             }
             else if (id == WOODEN_DOOR)
             {
-                return new ItemWoodenDoor();
+                return new ItemDoorWooden();
             }
             else if (id == BUCKET)
             {
@@ -527,7 +527,7 @@ namespace MineNET.Items
             }
             else if (id == IRON_DOOR)
             {
-                return new ItemIronDoor();
+                return new ItemDoorIron();
             }
             else if (id == REDSTONE)
             {
@@ -905,23 +905,23 @@ namespace MineNET.Items
             }
             else if (id == SPRUCE_DOOR)
             {
-                return new ItemSpruceDoor();
+                return new ItemDoorSpruce();
             }
             else if (id == BIRCH_DOOR)
             {
-                return new ItemBirchDoor();
+                return new ItemDoorBirch();
             }
             else if (id == JUNGLE_DOOR)
             {
-                return new ItemJungleDoor();
+                return new ItemDoorJungle();
             }
             else if (id == ACACIA_DOOR)
             {
-                return new ItemAcaciaDoor();
+                return new ItemDoorAcacia();
             }
             else if (id == DARK_OAK_DOOR)
             {
-                return new ItemDarkOakDoor();
+                return new ItemDoorDarkOak();
             }
             else if (id == CHORUS_FRUIT)
             {

@@ -2,18 +2,18 @@
 
 namespace MineNET.Items
 {
-    public class ItemBirchDoor : Item
+    public class ItemDoorIron : ItemDoor
     {
-        public ItemBirchDoor() : base(ItemFactory.BIRCH_DOOR)
+        public ItemDoorIron() : base(ItemFactory.IRON_DOOR)
         {
-            this.Block = new BlockDoorBirch();
+            this.Block = new BlockDoorIron();
         }
 
         public override string Name
         {
             get
             {
-                return "BirchDoor";
+                return "IronDoor";
             }
         }
     }
