@@ -20,11 +20,12 @@ namespace MineNET.Entities
         }
 
         public EntityInventory Inventory { get; protected set; }
+
         Inventory InventoryHolder.Inventory
         {
             get
             {
-                return Inventory;
+                return this.Inventory;
             }
         }
 
