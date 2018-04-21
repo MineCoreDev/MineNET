@@ -147,12 +147,12 @@ namespace MineNET.Utils
             this.WriteUVarInt((uint) entries.Length);
             for (int i = 0; i < entries.Length; ++i)
             {
-                this.WriteGuid(entries[i].Guid);
+                this.WriteBytes(entries[i].UUID.GetBytes());
                 if (type == PlayerListPacket.TYPE_ADD)
                 {
                     this.WriteEntityUniqueId(entries[i].EntityUniqueId);
                     this.WriteString(entries[i].Name);
-                    this.WriteString("");
+                    this.WriteString(entries[i].Name);
                     this.WriteSVarInt(entries[i].PlatForm);
                     this.WriteSkin(entries[i].Skin);
                     this.WriteString(entries[i].XboxUserId);

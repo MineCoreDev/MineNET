@@ -214,13 +214,16 @@ namespace MineNET
             {
                 if (players[i].HasSpawned)
                 {
-                    PlayerListPacket playerListPacket = new PlayerListPacket();
-                    playerListPacket.Type = PlayerListPacket.TYPE_ADD;
-                    playerListPacket.Entries = new PlayerListEntry[] { entry };
-                    await Task.Run(() =>
+                    if (players[i].Name != entry.Name)
                     {
-                        players[i].SendPacket(playerListPacket);
-                    });
+                        PlayerListPacket playerListPacket = new PlayerListPacket();
+                        playerListPacket.Type = PlayerListPacket.TYPE_ADD;
+                        playerListPacket.Entries = new PlayerListEntry[] { entry };
+                        await Task.Run(() =>
+                        {
+                            players[i].SendPacket(playerListPacket);
+                        });
+                    }
                 }
             }
         }

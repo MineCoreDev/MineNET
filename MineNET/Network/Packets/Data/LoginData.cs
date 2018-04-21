@@ -1,4 +1,4 @@
-﻿using System;
+﻿using MineNET.Values;
 
 namespace MineNET.Network.Packets.Data
 {
@@ -6,7 +6,7 @@ namespace MineNET.Network.Packets.Data
     {
         public string XUID { get; set; }
         public string DisplayName { get; set; }
-        public Guid ClientUUID { get; set; }
+        public UUID ClientUUID { get; set; }
         public string IdentityPublicKey { get; set; }
     }
 }

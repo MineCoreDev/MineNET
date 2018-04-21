@@ -1,18 +1,18 @@
-﻿using System;
-using MineNET.Entities.Data;
+﻿using MineNET.Entities.Data;
+using MineNET.Values;
 
 namespace MineNET.Network.Packets.Data
 {
     public class PlayerListEntry
     {
-        public PlayerListEntry(Guid guid)
+        public PlayerListEntry(UUID uuid)
         {
-            this.Guid = guid;
+            this.UUID = uuid;
         }
 
-        public PlayerListEntry(Guid guid, long entityUniqueId, string name, int platForm, Skin skin, string xboxUserId)
+        public PlayerListEntry(UUID uuid, long entityUniqueId, string name, int platForm, Skin skin, string xboxUserId)
         {
-            this.Guid = guid;
+            this.UUID = uuid;
             this.EntityUniqueId = entityUniqueId;
             this.Name = name;
             this.PlatForm = platForm;
@@ -20,7 +20,7 @@ namespace MineNET.Network.Packets.Data
             this.XboxUserId = xboxUserId;
         }
 
-        public Guid Guid { get; set; }
+        public UUID UUID { get; set; }
         public long EntityUniqueId { get; set; }
         public string Name { get; set; }
         public int PlatForm { get; set; }

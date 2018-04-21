@@ -4,6 +4,7 @@ using System.Text;
 using MineNET.Entities.Data;
 using MineNET.Network.Packets.Data;
 using MineNET.Utils;
+using MineNET.Values;
 using Newtonsoft.Json.Linq;
 
 namespace MineNET.Network.Packets
@@ -38,7 +39,6 @@ namespace MineNET.Network.Packets
             int len = this.ReadVarInt();
             using (BinaryStream stream = new BinaryStream(this.ReadBytes(len)))
             {
-
                 int chainLen = (int) stream.ReadLInt();
                 string chain = Encoding.UTF8.GetString(stream.ReadBytes(chainLen));
                 JObject chainObj = JObject.Parse(chain);
@@ -53,7 +53,7 @@ namespace MineNET.Network.Packets
                     {
                         this.LoginData.XUID = extraData.Value<string>("XUID");
                         this.LoginData.DisplayName = extraData.Value<string>("displayName");
-                        this.LoginData.ClientUUID = Guid.Parse(extraData.Value<string>("identity"));
+                        this.LoginData.ClientUUID = new UUID(extraData.Value<string>("identity"));
                         this.LoginData.IdentityPublicKey = jwt.Value<string>("identityPublicKey");
                     }
                 }

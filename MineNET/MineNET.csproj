@@ -872,6 +872,7 @@
     <Compile Include="Values\Color.cs" />
     <Compile Include="Values\IVector3.cs" />
     <Compile Include="Values\IVector3i.cs" />
+    <Compile Include="Values\UUID.cs" />
     <Compile Include="Values\Vector2.cs" />
     <Compile Include="Values\Vector3.cs" />
     <Compile Include="Values\ILocation.cs" />

@@ -177,10 +177,17 @@ namespace MineNET
 
         public void SendPlayerLists(Player player)
         {
+            long entityID = player.EntityID;
             PlayerListPacket pk = new PlayerListPacket();
             pk.Type = PlayerListPacket.TYPE_ADD;
             pk.Entries = this.playerListEntries.Values.ToArray();
             player.SendPacket(pk);
+
+            /*PlayerListEntry entry = this.playerListEntries[entityID];
+            PlayerListPacket playerListPacket = new PlayerListPacket();
+            playerListPacket.Type = PlayerListPacket.TYPE_REMOVE;
+            playerListPacket.Entries = new PlayerListEntry[] { entry };
+            player.SendPacket(playerListPacket);*/
         }
 
         public void SendAdventureSettings(Player player)
