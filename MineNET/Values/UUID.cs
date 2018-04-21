@@ -8,11 +8,10 @@ namespace MineNET.Values
         private ulong _a;
         private ulong _b;
 
-        public UUID(byte[] rfc4122Bytes)
+        public UUID(byte[] bytes)
         {
-            //Log.Warn($"Input hex\n{Package.HexDump(rfc4122Bytes)}");
-            _a = BitConverter.ToUInt64(rfc4122Bytes.Skip(0).Take(8).Reverse().ToArray(), 0);
-            _b = BitConverter.ToUInt64(rfc4122Bytes.Skip(8).Take(8).Reverse().ToArray(), 0);
+            _a = BitConverter.ToUInt64(bytes.Skip(0).Take(8).Reverse().ToArray(), 0);
+            _b = BitConverter.ToUInt64(bytes.Skip(8).Take(8).Reverse().ToArray(), 0);
         }
 
         public UUID(string uuidString)
@@ -71,7 +70,6 @@ namespace MineNET.Values
 
             return hex.Substring(0, 8) + "-" + hex.Substring(8, 4) + "-" + hex.Substring(12, 4) + "-" + hex.Substring(16, 4) + "-" + hex.Substring(20, 12);
             //xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx 8-4-4-12
-            //return Id.ToString();
         }
     }
 }
