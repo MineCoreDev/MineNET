@@ -62,6 +62,10 @@ namespace MineNET.Entities.Players
             {
                 this.PlayerActionHandle((PlayerActionPacket) pk);
             }
+            else if (pk is PlayerSkinPacket)
+            {
+                this.PlayerSkinHandle((PlayerSkinPacket) pk);
+            }
         }
 
         private void LoginPacketHandle(LoginPacket pk)
@@ -577,6 +581,17 @@ namespace MineNET.Entities.Players
 
             }
             this.Action = false;
+        }
+
+        public void PlayerSkinHandle(PlayerSkinPacket pk)
+        {
+            this.Skin = pk.Skin;
+
+            PlayerSkinPacket playerSkin = new PlayerSkinPacket();
+            playerSkin.NewSkinName = pk.NewSkinName;
+            playerSkin.OldSkinName = pk.OldSkinName;
+            playerSkin.Skin = this.Skin;
+            this.SendPacket(playerSkin);
         }
     }
 }
