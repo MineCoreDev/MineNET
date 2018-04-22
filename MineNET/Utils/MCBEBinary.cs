@@ -322,5 +322,15 @@ namespace MineNET.Utils
         {
             this.WriteSVarInt(face.GetIndex());
         }
+
+        public UUID ReadUUID()
+        {
+            return new UUID(this.ReadBytes(16));
+        }
+
+        public void WriteUUID(UUID uuid)
+        {
+            this.WriteBytes(uuid.GetBytes());
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using MineNET.Data;
+﻿using MineNET.Data;
 using MineNET.Entities.Metadata;
 using MineNET.Items;
 using MineNET.Values;
@@ -18,7 +17,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        public Guid Guid { get; set; }
+        public UUID Uuid { get; set; }
         public string Username { get; set; }
         public string ThirdPartyName { get; set; } = "";
         public int Platform { get; set; } = 0;
@@ -41,7 +40,7 @@ namespace MineNET.Network.Packets
         {
             base.Encode();
 
-            this.WriteGuid(this.Guid);
+            this.WriteUUID(this.Uuid);
             this.WriteString(this.Username);
             this.WriteString(this.ThirdPartyName);
             this.WriteSVarInt(this.Platform);

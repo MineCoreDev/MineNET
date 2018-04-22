@@ -1,5 +1,4 @@
-﻿using System;
-using MineNET.Entities.Data;
+﻿using MineNET.Entities.Data;
 using MineNET.Entities.Players;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
@@ -15,7 +14,7 @@ namespace MineNET.Entities
         {
         }
 
-        public Guid Guid { get; set; }
+        public UUID Uuid { get; set; }
 
         public Skin Skin { get; set; }
 
@@ -26,7 +25,7 @@ namespace MineNET.Entities
                 this.viewers.Add(player);
 
                 AddPlayerPacket pk = new AddPlayerPacket();
-                pk.Guid = this.Guid;
+                pk.Uuid = this.Uuid;
                 pk.Username = this.Name;
                 pk.EntityUniqueId = this.EntityID;
                 pk.EntityRuntimeId = this.EntityID;

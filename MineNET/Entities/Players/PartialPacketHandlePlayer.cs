@@ -91,6 +91,7 @@ namespace MineNET.Entities.Players
             this.LoginData = pk.LoginData;
             this.Name = pk.LoginData.DisplayName;
             this.DisplayName = this.Name;
+            this.Uuid = this.LoginData.ClientUUID;
 
             this.ClientData = pk.ClientData;
             this.Skin = this.ClientData.Skin;
@@ -583,13 +584,12 @@ namespace MineNET.Entities.Players
             this.Action = false;
         }
 
-        public void PlayerSkinHandle(PlayerSkinPacket pk)
+        private void PlayerSkinHandle(PlayerSkinPacket pk)
         {
             this.Skin = pk.Skin;
 
             PlayerSkinPacket playerSkin = new PlayerSkinPacket();
-            playerSkin.NewSkinName = pk.NewSkinName;
-            playerSkin.OldSkinName = pk.OldSkinName;
+            playerSkin.Uuid = this.Uuid;
             playerSkin.Skin = this.Skin;
             this.SendPacket(playerSkin);
         }
