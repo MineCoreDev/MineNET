@@ -23,8 +23,7 @@ namespace MineNET
         private MineNETConfig mineNETConfig;
         private ServerConfig serverConfig;
 
-        private Dictionary<long, PlayerListEntry> playerListEntries = new Dictionary<long, PlayerListEntry>();
-        private Dictionary<long, AdventureSettingsEntry> adventureSettingsEntry = new Dictionary<long, AdventureSettingsEntry>();
+        private Dictionary<long, Player> PlayerList { get; set; } = new Dictionary<long, Player>();
 
         internal Dictionary<string, World> worlds = new Dictionary<string, World>();
 
@@ -207,30 +206,26 @@ namespace MineNET
             this.isShutdown = true;
         }
 
-        private async void AddPlayerList(PlayerListEntry entry)
+        private async void AddPlayerList(Player player)
         {
-            Player[] players = this.GetPlayers();
+            this.PlayerList[player.EntityID] = player;
+            Player[] players = this.PlayerList.Values.ToArray();
             for (int i = 0; i < players.Length; ++i)
             {
-                if (players[i].HasSpawned)
+                PlayerListPacket playerListPacket = new PlayerListPacket();
+                playerListPacket.Type = PlayerListPacket.TYPE_ADD;
+                playerListPacket.Entries = new PlayerListEntry[] { player.PlayerListEntry };
+                await Task.Run(() =>
                 {
-                    if (players[i].Name != entry.Name)
-                    {
-                        PlayerListPacket playerListPacket = new PlayerListPacket();
-                        playerListPacket.Type = PlayerListPacket.TYPE_ADD;
-                        playerListPacket.Entries = new PlayerListEntry[] { entry };
-                        await Task.Run(() =>
-                        {
-                            players[i].SendPacket(playerListPacket);
-                        });
-                    }
-                }
+                    players[i].SendPacket(playerListPacket);
+                });
             }
         }
 
-        private void RemovePlayerList(PlayerListEntry entry)
+        private void RemovePlayerList(long eid)
         {
-            Player[] players = this.GetPlayers();
+            PlayerListEntry entry = this.PlayerList[eid].PlayerListEntry;
+            Player[] players = this.PlayerList.Values.ToArray();
             for (int i = 0; i < players.Length; ++i)
             {
                 PlayerListPacket playerListPacket = new PlayerListPacket();
@@ -240,17 +235,12 @@ namespace MineNET
             }
         }
 
-        private void AddAdventureSettings(AdventureSettingsEntry entry)
+        private void AddAdventureSettings(Player player)
         {
-            Player[] players = this.GetPlayers();
+            Player[] players = this.PlayerList.Values.ToArray();
             for (int i = 0; i < players.Length; ++i)
             {
-                if (players[i].HasSpawned)
-                {
-                    AdventureSettingsPacket pk = new AdventureSettingsPacket();
-                    pk.Entry = entry;
-                    players[i].SendPacket(pk);
-                }
+                player.AdventureSettingsEntry.Update(players[i]);
             }
         }
     }

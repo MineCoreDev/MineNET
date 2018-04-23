@@ -1,4 +1,4 @@
-﻿using System;
+﻿using MineNET.Values;
 
 namespace MineNET.Network.Packets.Data
 {
@@ -18,7 +18,7 @@ namespace MineNET.Network.Packets.Data
         public const int ORIGIN_ENTITY_SERVER = 11;
 
         public long Type { get; set; }
-        public Guid Guid { get; set; }
+        public UUID Uuid { get; set; }
         public string RequestId { get; set; }
         public long Unknown { get; set; }
     }

@@ -252,7 +252,8 @@ namespace MineNET.Entities.Players
                 gameRulesChangedPacket.GameRules = rules;
                 this.SendPacket(gameRulesChangedPacket);
 
-                PlayerListEntry entry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, this.ClientData.Skin, this.LoginData.XUID);
+                this.PlayerListEntry = new PlayerListEntry(this.LoginData.ClientUUID, this.EntityID, this.Name, this.ClientData.DeviceOS, this.ClientData.Skin, this.LoginData.XUID);
+
                 AdventureSettingsEntry adventureSettingsEntry = new AdventureSettingsEntry();
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, false);
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_PVP, false);
@@ -263,7 +264,9 @@ namespace MineNET.Entities.Players
                 adventureSettingsEntry.CommandPermission = this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
                 adventureSettingsEntry.PlayerPermission = this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
                 adventureSettingsEntry.EntityUniqueId = this.EntityID;
-                Server.Instance.AddPlayer(this, entry, adventureSettingsEntry);
+                this.AdventureSettingsEntry = adventureSettingsEntry;
+
+                Server.Instance.AddPlayer(this);
 
                 this.World.AddPlayer(this);
                 this.SendDataProperties();
