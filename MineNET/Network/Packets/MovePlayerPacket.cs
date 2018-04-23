@@ -39,12 +39,12 @@ namespace MineNET.Network.Packets
         {
             base.Encode();
 
-            this.WriteSVarLong(this.EntityRuntimeId);
+            this.WriteUVarLong((ulong) this.EntityRuntimeId);
             this.WriteVector3(this.Pos);
             this.WriteVector3(this.Direction);
             this.WriteByte(this.Mode);
             this.WriteBool(this.OnGround);
-            this.WriteSVarLong(this.OtherEntityRuntimeId);
+            this.WriteUVarLong((ulong) this.OtherEntityRuntimeId);
             if (this.Mode == MovePlayerPacket.MODE_TELEPORT)
             {
                 this.WriteLInt((uint) this.TeleportCuase);
@@ -56,12 +56,12 @@ namespace MineNET.Network.Packets
         {
             base.Decode();
 
-            this.EntityRuntimeId = this.ReadSVarLong();
+            this.EntityRuntimeId = (long) this.ReadUVarLong();
             this.Pos = this.ReadVector3();
             this.Direction = this.ReadVector3();
             this.Mode = this.ReadByte();
             this.OnGround = this.ReadBool();
-            this.OtherEntityRuntimeId = this.ReadSVarLong();
+            this.OtherEntityRuntimeId = (long) this.ReadUVarLong();
             if (this.Mode == MovePlayerPacket.MODE_TELEPORT)
             {
                 this.TeleportCuase = (int) this.ReadLInt();

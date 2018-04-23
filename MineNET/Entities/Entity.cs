@@ -50,7 +50,7 @@ namespace MineNET.Entities
 
         public Entity(World world, CompoundTag tag)
         {
-            this.EntityID = Entity.nextEntityId++;
+            this.EntityID = ++Entity.nextEntityId;
 
             this.SetDataProperty(new EntityDataLong(Entity.DATA_FLAGS, 0));
             this.SetDataProperty(new EntityDataShort(Entity.DATA_AIR, 400));
