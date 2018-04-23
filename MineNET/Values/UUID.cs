@@ -10,16 +10,16 @@ namespace MineNET.Values
 
         public UUID(byte[] bytes)
         {
-            _a = BitConverter.ToUInt64(bytes.Skip(0).Take(8).Reverse().ToArray(), 0);
-            _b = BitConverter.ToUInt64(bytes.Skip(8).Take(8).Reverse().ToArray(), 0);
+            this._a = BitConverter.ToUInt64(bytes.Skip(0).Take(8).Reverse().ToArray(), 0);
+            this._b = BitConverter.ToUInt64(bytes.Skip(8).Take(8).Reverse().ToArray(), 0);
         }
 
         public UUID(string uuidString)
         {
             uuidString = uuidString.Replace("-", "");
-            var bytes = StringToByteArray(uuidString);
-            _a = BitConverter.ToUInt64(bytes.Skip(0).Take(8).ToArray(), 0);
-            _b = BitConverter.ToUInt64(bytes.Skip(8).Take(8).ToArray(), 0);
+            byte[] bytes = StringToByteArray(uuidString);
+            this._a = BitConverter.ToUInt64(bytes.Skip(0).Take(8).ToArray(), 0);
+            this._b = BitConverter.ToUInt64(bytes.Skip(8).Take(8).ToArray(), 0);
         }
 
         public static byte[] StringToByteArray(string hex)
@@ -32,15 +32,15 @@ namespace MineNET.Values
 
         public byte[] GetBytes()
         {
-            var bytes = new byte[0];
-            return bytes.Concat(BitConverter.GetBytes(_a).Reverse())
-                .Concat(BitConverter.GetBytes(_b).Reverse())
+            byte[] bytes = new byte[0];
+            return bytes.Concat(BitConverter.GetBytes(this._a).Reverse())
+                .Concat(BitConverter.GetBytes(this._b).Reverse())
                 .ToArray();
         }
 
         public bool Equals(UUID other)
         {
-            return _a == other._a && _b == other._b;
+            return this._a == other._a && this._b == other._b;
         }
 
         public override bool Equals(object obj)
@@ -55,15 +55,15 @@ namespace MineNET.Values
         {
             unchecked
             {
-                return (_a.GetHashCode() * 397) ^ _b.GetHashCode();
+                return (this._a.GetHashCode() * 397) ^ this._b.GetHashCode();
             }
         }
 
         public override string ToString()
         {
-            var bytes = new byte[0];
-            bytes = bytes.Concat(BitConverter.GetBytes(_a))
-                .Concat(BitConverter.GetBytes(_b))
+            byte[] bytes = new byte[0];
+            bytes = bytes.Concat(BitConverter.GetBytes(this._a))
+                .Concat(BitConverter.GetBytes(this._b))
                 .ToArray();
 
             string hex = string.Join("", bytes.Select(b => b.ToString("x2")));

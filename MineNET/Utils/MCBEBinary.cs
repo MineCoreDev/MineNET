@@ -147,7 +147,7 @@ namespace MineNET.Utils
             this.WriteUVarInt((uint) entries.Length);
             for (int i = 0; i < entries.Length; ++i)
             {
-                this.WriteBytes(entries[i].UUID.GetBytes());
+                this.WriteUUID(entries[i].UUID);
                 if (type == PlayerListPacket.TYPE_ADD)
                 {
                     this.WriteEntityUniqueId(entries[i].EntityUniqueId);
