@@ -150,51 +150,44 @@ namespace MineNET
             this.Kill();
         }
 
-        public void AddPlayer(Player player, PlayerListEntry entry, AdventureSettingsEntry adventureSettingsEntry)
+        public void AddPlayer(Player player)
         {
-            if (!this.playerListEntries.ContainsValue(entry))
-            {
-                this.playerListEntries[player.EntityID] = entry;
-                this.SendPlayerLists(player);
-                this.AddPlayerList(entry);
-
-                this.adventureSettingsEntry[player.EntityID] = adventureSettingsEntry;
-                this.SendAdventureSettings(player);
-                this.AddAdventureSettings(adventureSettingsEntry);
-            }
+            this.SendPlayerLists(player);
+            this.AddPlayerList(player);
+            this.SendAdventureSettings(player);
+            this.AddAdventureSettings(player);
         }
 
         public void RemovePlayer(long entityID)
         {
-            if (this.playerListEntries.ContainsKey(entityID))
+            if (this.PlayerList.ContainsKey(entityID))
             {
-                PlayerListEntry entry = this.playerListEntries[entityID];
-                this.RemovePlayerList(entry);
-                this.playerListEntries.Remove(entityID);
-                this.adventureSettingsEntry.Remove(entityID);
+                this.RemovePlayerList(entityID);
+                this.PlayerList.Remove(entityID);
             }
         }
 
         public void SendPlayerLists(Player player)
         {
-            long entityID = player.EntityID;
+            List<PlayerListEntry> entries = new List<PlayerListEntry>();
+            Player[] players = this.PlayerList.Values.ToArray();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                entries.Add(players[i].PlayerListEntry);
+            }
+
             PlayerListPacket pk = new PlayerListPacket();
             pk.Type = PlayerListPacket.TYPE_ADD;
-            pk.Entries = this.playerListEntries.Values.ToArray();
+            pk.Entries = entries.ToArray();
             player.SendPacket(pk);
-
-            /*PlayerListEntry entry = this.playerListEntries[entityID];
-            PlayerListPacket playerListPacket = new PlayerListPacket();
-            playerListPacket.Type = PlayerListPacket.TYPE_REMOVE;
-            playerListPacket.Entries = new PlayerListEntry[] { entry };
-            player.SendPacket(playerListPacket);*/
         }
 
         public void SendAdventureSettings(Player player)
         {
-            foreach (AdventureSettingsEntry entry in this.adventureSettingsEntry.Values)
+            Player[] players = this.PlayerList.Values.ToArray();
+            for (int i = 0; i < players.Length; ++i)
             {
-                entry.Update(player);
+                players[i].AdventureSettingsEntry.Update(player);
             }
         }
 
@@ -330,45 +323,6 @@ namespace MineNET
             }
 
             Logger.Info(message);
-        }
-
-        public PlayerListEntry GetPlayerListEntry(Player player)
-        {
-            return this.GetPlayerListEntry(player.EntityID);
-        }
-
-        public PlayerListEntry GetPlayerListEntry(long entityID)
-        {
-            if (this.playerListEntries.ContainsKey(entityID))
-            {
-                return this.playerListEntries[entityID];
-            }
-            return null;
-        }
-
-        public AdventureSettingsEntry GetAdventureSettingsEntry(Player player)
-        {
-            return this.GetAdventureSettingsEntry(player.EntityID);
-        }
-
-        public AdventureSettingsEntry GetAdventureSettingsEntry(long entityID)
-        {
-            if (this.adventureSettingsEntry.ContainsKey(entityID))
-            {
-                return this.adventureSettingsEntry[entityID];
-            }
-            return null;
-        }
-
-        public void UpdateAdventureSettings(AdventureSettingsEntry entry)
-        {
-            Player[] players = this.GetPlayers();
-            for (int i = 0; i < players.Length; ++i)
-            {
-                AdventureSettingsPacket pk = new AdventureSettingsPacket();
-                pk.Entry = entry;
-                players[i].SendPacket(pk);
-            }
         }
 
         public bool Whitelist

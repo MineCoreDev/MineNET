@@ -304,7 +304,7 @@ namespace MineNET.Utils
         {
             CommandOriginData commandOriginData = new CommandOriginData();
             commandOriginData.Type = this.ReadUVarInt();
-            commandOriginData.Guid = this.ReadGuid();
+            commandOriginData.Uuid = this.ReadUUID();
             commandOriginData.RequestId = this.ReadString();
             if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE || commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
             {

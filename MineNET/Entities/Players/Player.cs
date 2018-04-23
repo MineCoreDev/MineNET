@@ -25,6 +25,9 @@ namespace MineNET.Entities.Players
         public LoginData LoginData { get; internal set; }
         public ClientData ClientData { get; internal set; }
 
+        public PlayerListEntry PlayerListEntry { get; private set; }
+        public AdventureSettingsEntry AdventureSettingsEntry { get; private set; }
+
         public bool IsPreLogined { get; private set; }
         public bool IsLogined { get; private set; }
         public bool HaveAllPacks { get; private set; }
@@ -274,6 +277,8 @@ namespace MineNET.Entities.Players
             {
                 Server.Instance.NetworkManager.PlayerClose(this.EndPoint, reason);
             }
+
+            this.PlayerListEntry = null;
         }
 
         public void Save()
@@ -521,10 +526,9 @@ namespace MineNET.Entities.Players
                         Server.Instance.RemoveOp(this);
                     }
                 }
-                AdventureSettingsEntry entry = Server.Instance.GetAdventureSettingsEntry(this);
-                entry.CommandPermission = this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
-                entry.PlayerPermission = this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
-                entry.Update(this);
+                this.AdventureSettingsEntry.CommandPermission = this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
+                this.AdventureSettingsEntry.PlayerPermission = this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
+                this.AdventureSettingsEntry.Update(this);
             }
         }
     }

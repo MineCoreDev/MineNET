@@ -8,7 +8,6 @@ using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
-using MineNET.Network.Packets.Data;
 using MineNET.Worlds;
 
 namespace MineNET.Entities.Players
@@ -91,15 +90,14 @@ namespace MineNET.Entities.Players
             pk.GameMode = this.GameMode;
             this.SendPacket(pk);
 
-            AdventureSettingsEntry entry = Server.Instance.GetAdventureSettingsEntry(this);
-            entry.SetFlag(AdventureSettingsPacket.BUILD_AND_MINE, !this.IsSpectator);
-            entry.SetFlag(AdventureSettingsPacket.WORLD_BUILDER, !this.IsSpectator);
-            entry.SetFlag(AdventureSettingsPacket.NO_CLIP, this.IsSpectator);
-            entry.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, this.IsSpectator);
-            entry.SetFlag(AdventureSettingsPacket.NO_PVP, this.IsSpectator);
-            entry.SetFlag(AdventureSettingsPacket.FLYING, this.IsCreative || this.IsSpectator);
-            entry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, this.IsCreative || this.IsSpectator);
-            Server.Instance.UpdateAdventureSettings(entry);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.BUILD_AND_MINE, !this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.WORLD_BUILDER, !this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_CLIP, this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_PVP, this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, this.IsCreative || this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, this.IsCreative || this.IsSpectator);
+            this.AdventureSettingsEntry.Update(this);
         }
     }
 }
