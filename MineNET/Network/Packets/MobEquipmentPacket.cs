@@ -24,17 +24,6 @@ namespace MineNET.Network.Packets
 
         public byte WindowId { get; set; }
 
-        public override void Decode()
-        {
-            base.Decode();
-
-            this.EntityRuntimeId = this.ReadEntityRuntimeId();
-            this.Item = this.ReadItem();
-            this.InventorySlot = this.ReadByte();
-            this.HotbarSlot = this.ReadByte();
-            this.WindowId = this.ReadByte();
-        }
-
         public override void Encode()
         {
             base.Encode();
@@ -44,6 +33,17 @@ namespace MineNET.Network.Packets
             this.WriteByte(this.InventorySlot);
             this.WriteByte(this.HotbarSlot);
             this.WriteByte(this.WindowId);
+        }
+
+        public override void Decode()
+        {
+            base.Decode();
+
+            this.EntityRuntimeId = this.ReadEntityRuntimeId();
+            this.Item = this.ReadItem();
+            this.InventorySlot = this.ReadByte();
+            this.HotbarSlot = this.ReadByte();
+            this.WindowId = this.ReadByte();
         }
     }
 }

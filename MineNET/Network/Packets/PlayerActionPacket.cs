@@ -42,6 +42,16 @@ namespace MineNET.Network.Packets
         public Vector3i Position { get; set; }
         public BlockFace Face { get; set; }
 
+        public override void Encode()
+        {
+            base.Encode();
+
+            this.WriteEntityRuntimeId(this.EntityRuntimeId);
+            this.WriteSVarInt(this.ActionType);
+            this.WriteBlockVector3(this.Position);
+            this.WriteBlockFace(this.Face);
+        }
+
         public override void Decode()
         {
             base.Decode();
