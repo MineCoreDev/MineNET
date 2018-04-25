@@ -288,6 +288,10 @@ namespace MineNET.Entities.Players
             //TODO: MoveCheck...
             Vector3 pos = pk.Pos;
             Vector3 direction = pk.Direction;
+            if ((Vector3) this != pos || this.Direction != direction)
+            {
+                this.SendPacketViewers(pk.Clone());
+            }
             this.X = pos.X;
             this.Y = pos.Y;
             this.Z = pos.Z;
@@ -517,6 +521,7 @@ namespace MineNET.Entities.Players
                     this.SendDataProperties();
                 }
                 this.Sprinting = true;
+                this.SendDataProperties();
             }
             else if (pk.ActionType == PlayerActionPacket.ACTION_STOP_SPRINT)
             {
@@ -527,6 +532,7 @@ namespace MineNET.Entities.Players
                     this.SendDataProperties();
                 }
                 this.Sprinting = false;
+                this.SendDataProperties();
             }
             else if (pk.ActionType == PlayerActionPacket.ACTION_START_SNEAK)
             {
@@ -537,6 +543,7 @@ namespace MineNET.Entities.Players
                     this.SendDataProperties();
                 }
                 this.Sneaking = true;
+                this.SendDataProperties();
             }
             else if (pk.ActionType == PlayerActionPacket.ACTION_STOP_SNEAK)
             {
@@ -547,6 +554,7 @@ namespace MineNET.Entities.Players
                     this.SendDataProperties();
                 }
                 this.Sneaking = false;
+                this.SendDataProperties();
             }
             else if (pk.ActionType == PlayerActionPacket.ACTION_DIMENSION_CHANGE_REQUEST)
             {
@@ -565,6 +573,7 @@ namespace MineNET.Entities.Players
                     this.SendDataProperties();
                 }
                 this.Gliding = true;
+                this.SendDataProperties();
             }
             else if (pk.ActionType == PlayerActionPacket.ACTION_STOP_GLIDE)
             {
@@ -575,6 +584,7 @@ namespace MineNET.Entities.Players
                     this.SendDataProperties();
                 }
                 this.Gliding = false;
+                this.SendDataProperties();
             }
             else if (pk.ActionType == PlayerActionPacket.ACTION_BUILD_DENIED)
             {

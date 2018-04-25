@@ -334,6 +334,11 @@ namespace MineNET.Values
             }
         }
 
+        public Position Position(World world)
+        {
+            return new Position(this.X, this.Y, this.Z, world);
+        }
+
         public static Vector3 operator +(Vector3 a, Vector3 b)
         {
             return new Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
@@ -372,11 +377,6 @@ namespace MineNET.Values
         public static bool operator !=(Vector3 lhs, Vector3 rhs)
         {
             return Vector3.SqrMagnitude(lhs - rhs) >= 9.99999944E-11f;
-        }
-
-        public Position Position(World world)
-        {
-            return new Position(this.X, this.Y, this.Z, world);
         }
 
         public static Position operator +(Vector3 p, World world)

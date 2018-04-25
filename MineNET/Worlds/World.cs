@@ -307,7 +307,7 @@ namespace MineNET.Worlds
             {
                 Block block = this.GetBlock(vector3[i]);
                 UpdateBlockPacket pk = new UpdateBlockPacket();
-                pk.Vector3 = vector3[i];
+                pk.Vector3 = (Vector3i) vector3[i];
                 pk.RuntimeId = block.RuntimeId;
                 pk.Flags = flags;
                 for (int j = 0; j < players.Length; ++j)

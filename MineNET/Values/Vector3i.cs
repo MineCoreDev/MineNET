@@ -30,14 +30,14 @@ namespace MineNET.Values
             return new Position(v.X, v.Y, v.Z, world);
         }
 
-        public static implicit operator Vector3i(Vector3 v)
-        {
-            return new Vector3i(v.FloorX, v.FloorY, v.FloorZ);
-        }
-
-        public static implicit operator Vector3i(Vector2 v)
+        public static explicit operator Vector3i(Vector2 v)
         {
             return new Vector3i(v.FloorX, v.FloorY, 0);
+        }
+
+        public static explicit operator Vector3i(Vector3 v)
+        {
+            return new Vector3i(v.FloorX, v.FloorY, v.FloorZ);
         }
 
         public static explicit operator Vector3i(Position p)

@@ -8,8 +8,6 @@ using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
-using MineNET.Network.Packets.Data;
-using MineNET.Values;
 using MineNET.Worlds;
 
 namespace MineNET.Entities.Players
@@ -72,13 +70,13 @@ namespace MineNET.Entities.Players
 
         internal override void OnUpdate(int tick)
         {
-            MovePlayerPacket pk = new MovePlayerPacket();
+            /*MovePlayerPacket pk = new MovePlayerPacket();
             pk.EntityRuntimeId = this.EntityID;
             pk.Pos = this.Vector3;
             pk.Direction = new Vector3(this.Pitch, this.Yaw, this.Yaw);
             pk.Mode = 0;
 
-            this.AsyncSendPacketViewers(pk);
+            this.AsyncSendPacketViewers(pk);*/
         }
 
         internal void SendChunk()

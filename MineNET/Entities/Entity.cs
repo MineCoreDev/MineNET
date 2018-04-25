@@ -28,6 +28,8 @@ namespace MineNET.Entities
         public float Yaw { get; set; }
         public float Pitch { get; set; }
 
+        public float HeadYaw { get; set; }
+
         public World World { get; set; }
         public Chunk Chunk { get; set; }
 
@@ -186,14 +188,6 @@ namespace MineNET.Entities
             }
         }
 
-        public Vector2 Vector2
-        {
-            get
-            {
-                return new Vector2(this.X, this.Z);
-            }
-        }
-
         public Vector3 Vector3
         {
             get
@@ -209,27 +203,11 @@ namespace MineNET.Entities
             }
         }
 
-        public Vector3i Vector3i
+        public Vector3 Direction
         {
             get
             {
-                return this.Vector3;
-            }
-        }
-
-        public Position Position
-        {
-            get
-            {
-                return new Position(this.X, this.Y, this.Z, this.World);
-            }
-        }
-
-        public Location Location
-        {
-            get
-            {
-                return new Location(this.X, this.Y, this.Z, this.Yaw, this.Pitch, this.World);
+                return new Vector3(this.Yaw, this.Pitch, this.HeadYaw);
             }
         }
 
@@ -268,6 +246,31 @@ namespace MineNET.Entities
             {
                 return new Vector2((float) -Math.Cos(this.Yaw * Math.PI / 180 - Math.PI / 2), (float) -Math.Sin(this.Yaw * Math.PI / 180 - Math.PI / 2)).Normalized;
             }
+        }
+
+        public static explicit operator Vector2(Entity entity)
+        {
+            return new Vector2(entity.X, entity.Y);
+        }
+
+        public static explicit operator Vector3(Entity entity)
+        {
+            return new Vector3(entity.X, entity.Y, entity.Z);
+        }
+
+        public static explicit operator Vector3i(Entity entity)
+        {
+            return new Vector3i((int) entity.X, (int) entity.Y, (int) entity.Z);
+        }
+
+        public static explicit operator Position(Entity entity)
+        {
+            return new Position(entity.X, entity.Y, entity.Z, entity.World);
+        }
+
+        public static explicit operator Location(Entity entity)
+        {
+            return new Location(entity.X, entity.Y, entity.Z, entity.Yaw, entity.Pitch, entity.World);
         }
     }
 }

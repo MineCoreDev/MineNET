@@ -55,11 +55,8 @@ namespace MineNET.Inventories
 
         public override void OnSlotChange(int index, Item item, bool send)
         {
-            if (send)
-            {
-                this.SendSlot(index, this.Viewers.ToArray());
-                this.SendArmorContents(((EntityLiving) this.Holder).Viewers);
-            }
+            this.SendSlot(index, this.Viewers.ToArray());
+            this.SendArmorContents(this.Holder.Viewers);
         }
 
         public override void SendSlot(int index, params Player[] players)

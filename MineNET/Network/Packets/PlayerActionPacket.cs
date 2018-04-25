@@ -58,7 +58,7 @@ namespace MineNET.Network.Packets
 
             this.EntityRuntimeId = this.ReadEntityRuntimeId();
             this.ActionType = this.ReadSVarInt();
-            this.Position = this.ReadBlockVector3();
+            this.Position = (Vector3i) this.ReadBlockVector3();
             this.Face = this.ReadBlockFace();
         }
     }

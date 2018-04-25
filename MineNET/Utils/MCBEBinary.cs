@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MineNET.Blocks.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Data;
@@ -257,8 +258,10 @@ namespace MineNET.Utils
             {
                 Dictionary<int, EntityData> entityDatas = data.GetEntityDatas();
                 stream.WriteUVarInt((uint) entityDatas.Count);
-                foreach (int id in entityDatas.Keys)
+                int[] keys = entityDatas.Keys.ToArray();
+                for (int i = 0; i < keys.Length; ++i)
                 {
+                    int id = keys[i];
                     EntityData entityData = entityDatas[id];
                     EntityMetadataType type = entityData.Type;
                     stream.WriteUVarInt((uint) id);
