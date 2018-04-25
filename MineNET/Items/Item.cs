@@ -43,22 +43,27 @@ namespace MineNET.Items
 
         public static void AddCreativeItem(Item item)
         {
-            creativeItems.Add(item);
+            Item.creativeItems.Add(item);
         }
 
         public static void RemoveCreativeItem(Item item)
         {
-            creativeItems.Remove(item);
+            Item.creativeItems.Remove(item);
         }
 
         public static void RemoveCreativeItem(int index)
         {
-            creativeItems.RemoveAt(index);
+            Item.creativeItems.RemoveAt(index);
         }
 
         public static void AddCreativeItems(params Item[] items)
         {
-            creativeItems.AddRange(items);
+            Item.creativeItems.AddRange(items);
+        }
+
+        public static void RemoveAllCreativeItems()
+        {
+            Item.creativeItems = new List<Item>();
         }
 
         public static Item[] GetCreativeItems()
