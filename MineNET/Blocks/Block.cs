@@ -56,15 +56,12 @@ namespace MineNET.Blocks
         }
 
         public float X { get; set; }
-
         public float Y { get; set; }
-
         public float Z { get; set; }
 
         public World World { get; set; } = null;
 
         public int ID { get; }
-
         public int Damage { get; set; }
 
         public Block(int id, int meta = 0)
@@ -88,13 +85,13 @@ namespace MineNET.Blocks
 
         public virtual bool Place(Block clicked, Block replace, BlockFace face, Vector3 clickPos, Player player, Item item)
         {
-            this.World.SetBlock(this.Vector3, this);
+            this.World.SetBlock((Vector3) this, this);
             return true;
         }
 
         public virtual bool Break(Player player, Item item)
         {
-            this.World.SetBlock(this.Vector3, new BlockAir());
+            this.World.SetBlock((Vector3) this, new BlockAir());
             return true;
         }
 
@@ -201,17 +198,9 @@ namespace MineNET.Blocks
         {
             if (this.HasPosition())
             {
-                return this.World.GetBlock(this.Vector3 + face.GetPosition());
+                return this.World.GetBlock((Vector3) this + face.GetPosition());
             }
             return null;
-        }
-
-        public Vector3 Vector3
-        {
-            get
-            {
-                return new Vector3(this.X, this.Y, this.Z);
-            }
         }
 
         public Position Position
@@ -221,7 +210,7 @@ namespace MineNET.Blocks
                 return new Position(this.X, this.Y, this.Z, this.World);
             }
 
-            set
+            internal set
             {
                 this.X = value.X;
                 this.Y = value.Y;
@@ -264,6 +253,11 @@ namespace MineNET.Blocks
             return true;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public static bool operator ==(Block A, Block B)
         {
             if (object.ReferenceEquals(A, B))
@@ -290,9 +284,14 @@ namespace MineNET.Blocks
             return !A.Equals(B);
         }
 
-        public override int GetHashCode()
+        public static explicit operator Vector3(Block block)
         {
-            return base.GetHashCode();
+            return new Vector3(block.X, block.Y, block.Z);
+        }
+
+        public static explicit operator Position(Block block)
+        {
+            return new Position(block.X, block.Y, block.Z, block.World);
         }
     }
 }

@@ -123,21 +123,6 @@ namespace MineNET.Values
             }
         }
 
-        public override int GetHashCode()
-        {
-            return this.X.GetHashCode() ^ this.Y.GetHashCode() << 2;
-        }
-
-        public override bool Equals(object other)
-        {
-            if (!(other is Vector2))
-            {
-                return false;
-            }
-            Vector2 vector = (Vector2) other;
-            return this.X.Equals(vector.X) && this.Y.Equals(vector.Y);
-        }
-
         public static Vector2 Reflect(Vector2 inDirection, Vector2 inNormal)
         {
             return -2f * Vector2.Dot(inNormal, inDirection) * inNormal + inDirection;
@@ -271,6 +256,21 @@ namespace MineNET.Values
             {
                 return new Vector2(1f, 0f);
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return this.X.GetHashCode() ^ this.Y.GetHashCode() << 2;
+        }
+
+        public override bool Equals(object other)
+        {
+            if (!(other is Vector2))
+            {
+                return false;
+            }
+            Vector2 vector = (Vector2) other;
+            return this.X.Equals(vector.X) && this.Y.Equals(vector.Y);
         }
 
         public static Vector2 operator +(Vector2 a, Vector2 b)

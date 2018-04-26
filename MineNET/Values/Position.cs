@@ -44,6 +44,47 @@ namespace MineNET.Values
             }
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object other)
+        {
+            if (!(other is Position))
+            {
+                return false;
+            }
+            Position position = (Position) other;
+            return (Vector3) this == (Vector3) position && this.World.Name == position.World.Name;
+        }
+
+        public static bool operator ==(Position A, Position B)
+        {
+            if (object.ReferenceEquals(A, B))
+            {
+                return true;
+            }
+            if ((object) A == null || (object) B == null)
+            {
+                return false;
+            }
+            return A.Equals(B);
+        }
+
+        public static bool operator !=(Position A, Position B)
+        {
+            if (object.ReferenceEquals(A, B))
+            {
+                return false;
+            }
+            if ((object) A == null || (object) B == null)
+            {
+                return true;
+            }
+            return !A.Equals(B);
+        }
+
         public static Location operator +(Position p, Vector2 v)
         {
             return new Location(p.X, p.Y, p.Z, v.X, v.Y, p.World);
