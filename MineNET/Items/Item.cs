@@ -27,6 +27,10 @@ namespace MineNET.Items
         {
             Item item = ItemFactory.GetItem(id);
             item.Damage = meta;
+            if (item.block != null)
+            {
+                item.block.Damage = meta;
+            }
             item.Count = count;
             if (item.ID == 0)
             {

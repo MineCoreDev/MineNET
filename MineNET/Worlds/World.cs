@@ -334,7 +334,7 @@ namespace MineNET.Worlds
                 playerInteractEvent.IsCancel = true;
             }
 
-            if (Server.ServerConfig.SpawnProtection > 0) //player.IsOp()
+            if (Server.ServerConfig.SpawnProtection > 0 || player.Op)
             {
                 //TODO
             }

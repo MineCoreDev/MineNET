@@ -14,9 +14,9 @@ namespace MineNET.GUI.Items
 
         private void SetupLanguage()
         {
-            this.tabPage1.Text = LangManager.GetString("versionForm_text");
-            this.tabPage2.Text = LangManager.GetString("versionForm_tabPage2_text");
-            this.label4.Text = LangManager.GetString("versionForm_tabPage2_text");
+            this.tabPage1.Text = LangManager.GetString("versionForm_label");
+            this.tabPage2.Text = LangManager.GetString("versionForm_tabPage2_label");
+            this.label4.Text = LangManager.GetString("versionForm_tabPage2_label");
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

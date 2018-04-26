@@ -12,7 +12,7 @@ namespace MineNET.GUI.Forms
 
         private void SetupLanguage()
         {
-            this.Text = LangManager.GetString("versionForm_text");
+            this.Text = LangManager.GetString("versionForm_label");
         }
     }
 }
