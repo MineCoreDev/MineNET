@@ -114,12 +114,20 @@ namespace MineNET.Entities.Players
         public void AddHunger(float value)
         {
             float hunger = this.Hunger + value;
+            if (hunger > 20)
+            {
+                hunger = 20;
+            }
             this.Hunger = hunger;
         }
 
         public void TakeHunger(float value)
         {
             float hunger = this.Hunger - value;
+            if (hunger < 0)
+            {
+                hunger = 0;
+            }
             this.Hunger = hunger;
         }
 
@@ -142,12 +150,20 @@ namespace MineNET.Entities.Players
         public void AddSaturation(float value)
         {
             float saturation = this.Saturation + value;
+            if (saturation > 20)
+            {
+                saturation = 20;
+            }
             this.Saturation = saturation;
         }
 
         public void TakeSaturation(float value)
         {
             float saturation = this.Saturation - value;
+            if (saturation < 0)
+            {
+                saturation = 0;
+            }
             this.Saturation = saturation;
         }
 

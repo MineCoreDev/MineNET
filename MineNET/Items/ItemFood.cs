@@ -2,6 +2,7 @@
 using MineNET.Entities.Players;
 using MineNET.Events.PlayerEvents;
 using MineNET.Items.Data;
+using MineNET.Utils;
 
 namespace MineNET.Items
 {
@@ -42,6 +43,8 @@ namespace MineNET.Items
             }
 
             this.Count--;
+            Logger.Info(player.Inventory.MainHandSlot);
+            Logger.Info(player.Inventory.MainHandSlot);
             player.Inventory.MainHandItem = this;
         }
 

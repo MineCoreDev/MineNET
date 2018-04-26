@@ -3,6 +3,7 @@ using MineNET.Entities.Players;
 using MineNET.Items;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
+using MineNET.Utils;
 
 namespace MineNET.Inventories
 {
@@ -190,6 +191,7 @@ namespace MineNET.Inventories
                 pk.InventorySlot = (byte) this.MainHandSlot;
                 pk.WindowId = this.Type;
                 players[i].SendPacket(pk);
+                Logger.Info(this.MainHandItem);
             }
         }
 

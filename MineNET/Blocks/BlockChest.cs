@@ -25,7 +25,7 @@ namespace MineNET.Blocks
         {
             base.Place(clicked, replace, face, clickPos, player, item);
 
-            BlockEntityChest blockEntity = new BlockEntityChest(this.Position);
+            BlockEntityChest blockEntity = new BlockEntityChest((Position) this);
 
             return true;
         }

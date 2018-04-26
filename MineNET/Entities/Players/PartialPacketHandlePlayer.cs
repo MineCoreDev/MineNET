@@ -460,6 +460,7 @@ namespace MineNET.Entities.Players
         private void MobEquipmentHandle(MobEquipmentPacket pk)
         {
             this.Inventory.MainHandSlot = pk.HotbarSlot;
+            this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ACTION, false, true);
         }
 
         private void PlayerActionHandle(PlayerActionPacket pk)
