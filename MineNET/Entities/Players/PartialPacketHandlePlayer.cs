@@ -38,6 +38,10 @@ namespace MineNET.Entities.Players
             {
                 this.MovePlayerPacketHandle((MovePlayerPacket) pk);
             }
+            else if (pk is LevelSoundEventPacket)
+            {
+                this.LevelSoundEventHandle((LevelSoundEventPacket) pk);
+            }
             else if (pk is TextPacket)
             {
                 this.TextPacketHandle((TextPacket) pk);
@@ -297,6 +301,11 @@ namespace MineNET.Entities.Players
             this.Z = pos.Z;
             this.Pitch = direction.X;
             this.Yaw = direction.Y;
+        }
+
+        private void LevelSoundEventHandle(LevelSoundEventPacket pk)
+        {
+            Server.Instance.BroadcastPacket(pk, this.Viewers);
         }
 
         private void TextPacketHandle(TextPacket pk)

@@ -743,6 +743,7 @@
     <Compile Include="Network\Packets\InventoryContentPacket.cs" />
     <Compile Include="Network\Packets\InventorySlotPacket.cs" />
     <Compile Include="Network\Packets\InventoryTransactionPacket.cs" />
+    <Compile Include="Network\Packets\LevelSoundEventPacket.cs" />
     <Compile Include="Network\Packets\MobArmorEquipmentPacket.cs" />
     <Compile Include="Network\Packets\MobEffectPacket.cs" />
     <Compile Include="Network\Packets\MobEquipmentPacket.cs" />

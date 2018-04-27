@@ -206,6 +206,7 @@ namespace MineNET.Network
             this.RegisterPacket(new ResourcePackClientResponsePacket());
             this.RegisterPacket(new TextPacket());
             this.RegisterPacket(new MovePlayerPacket());
+            this.RegisterPacket(new LevelSoundEventPacket());
             this.RegisterPacket(new RequestChunkRadiusPacket());
             this.RegisterPacket(new CommandRequestPacket());
             this.RegisterPacket(new EntityEventPacket());
