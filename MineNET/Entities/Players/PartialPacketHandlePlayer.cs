@@ -326,26 +326,8 @@ namespace MineNET.Entities.Players
 
         private void EntityEventHandle(EntityEventPacket pk)
         {
-            if (pk.EventId == EntityEventPacket.EATING_ITEM)
-            {
-                if (pk.Data != this.Inventory.MainHandItem.ID)
-                {
-                    this.Inventory.SendMainHand(this);
-                    return;
-                }
-                pk = new EntityEventPacket();
-                pk.EventId = EntityEventPacket.EATING_ITEM;
-                pk.Data = this.Inventory.MainHandItem.ID;
-                this.SendPacket(pk);
-                Player[] players = this.Viewers;
-                for (int i = 0; i < players.Length; ++i)
-                {
-                    pk = new EntityEventPacket();
-                    pk.EventId = EntityEventPacket.EATING_ITEM;
-                    pk.Data = this.Inventory.MainHandItem.ID;
-                    players[i].SendPacket(pk);
-                }
-            }
+            Server.Instance.BroadcastPacket(pk, this.Viewers);
+            this.SendPacket(pk);
         }
 
         private void InventoryTransactionHandle(InventoryTransactionPacket pk)

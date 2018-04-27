@@ -64,6 +64,16 @@ namespace MineNET.Inventories
             player.SendPacket(pk);
         }
 
+        public override void OnSlotChange(int index, Item item, bool send)
+        {
+            base.OnSlotChange(index, item, send);
+
+            if (send && index == this.MainHandSlot)
+            {
+                this.SendMainHand(this.Holder);
+            }
+        }
+
         public new Player Holder
         {
             get

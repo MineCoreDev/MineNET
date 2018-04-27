@@ -1,4 +1,5 @@
-﻿using MineNET.Entities.Data;
+﻿using MineNET.Blocks;
+using MineNET.Entities.Data;
 using MineNET.Entities.Players;
 using MineNET.Items.Data;
 
@@ -72,12 +73,12 @@ namespace MineNET.Items
             {
                 player.AddEffect(effects[i]);
             }
-            if (player.IsCreative)
+            player.Inventory.AddItem(Item.Get(ItemFactory.GLASS_BOTTLE));
+            if (!player.IsCreative)
             {
-                player.Inventory.AddItem(Item.Get(ItemFactory.GLASS_BOTTLE));
+                player.Inventory.SetItem(player.Inventory.MainHandSlot, Item.Get(BlockFactory.AIR), false);
                 return;
             }
-            player.Inventory.MainHandItem = Item.Get(ItemFactory.GLASS_BOTTLE);
         }
 
         public Effect[] AdditionalEffects

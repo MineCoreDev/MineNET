@@ -3,7 +3,6 @@ using MineNET.Entities.Players;
 using MineNET.Items;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
-using MineNET.Utils;
 
 namespace MineNET.Inventories
 {
@@ -63,12 +62,8 @@ namespace MineNET.Inventories
         {
             base.OnSlotChange(index, item, send);
 
-            if (index == this.MainHandSlot)
+            if (send && index == this.MainHandSlot)
             {
-                if (this.Holder is Player)
-                {
-                    this.SendMainHand((Player) this.Holder);
-                }
                 this.SendMainHand(this.Holder.Viewers);
             }
         }
@@ -191,7 +186,6 @@ namespace MineNET.Inventories
                 pk.InventorySlot = (byte) this.MainHandSlot;
                 pk.WindowId = this.Type;
                 players[i].SendPacket(pk);
-                Logger.Info(this.MainHandItem);
             }
         }
 

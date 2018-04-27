@@ -250,12 +250,8 @@ namespace MineNET
             }
         }
 
-        public void BroadcastPacket(DataPacket pk, Player[] players = null)
+        public void BroadcastPacket(DataPacket pk, params Player[] players)
         {
-            if (players == null)
-            {
-                players = this.GetPlayers();
-            }
             for (int i = 0; i < players.Length; ++i)
             {
                 players[i].SendPacket(pk);

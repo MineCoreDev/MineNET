@@ -1,8 +1,8 @@
-﻿using MineNET.Entities.Data;
+﻿using MineNET.Blocks;
+using MineNET.Entities.Data;
 using MineNET.Entities.Players;
 using MineNET.Events.PlayerEvents;
 using MineNET.Items.Data;
-using MineNET.Utils;
 
 namespace MineNET.Items
 {
@@ -43,9 +43,10 @@ namespace MineNET.Items
             }
 
             this.Count--;
-            Logger.Info(player.Inventory.MainHandSlot);
-            Logger.Info(player.Inventory.MainHandSlot);
-            player.Inventory.MainHandItem = this;
+            if (this.Count < 1)
+            {
+                player.Inventory.SetItem(player.Inventory.MainHandSlot, Item.Get(BlockFactory.AIR), false);
+            }
         }
 
         public virtual Effect[] AdditionalEffects
