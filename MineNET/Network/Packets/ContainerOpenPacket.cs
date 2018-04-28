@@ -18,7 +18,7 @@ namespace MineNET.Network.Packets
 
         public byte Type { get; set; }
 
-        public Vector3 Vector3 { get; set; }
+        public Vector3 Position { get; set; }
 
         public long EntityUniqueId { get; set; } = -1;
 
@@ -28,7 +28,7 @@ namespace MineNET.Network.Packets
 
             this.WriteByte(this.WindowId);
             this.WriteByte(this.Type);
-            this.WriteBlockVector3(this.Vector3);
+            this.WriteBlockVector3(this.Position);
             this.WriteEntityUniqueId(this.EntityUniqueId);
         }
     }

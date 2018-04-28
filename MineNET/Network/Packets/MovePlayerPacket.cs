@@ -21,7 +21,7 @@ namespace MineNET.Network.Packets
 
         public long EntityRuntimeId { get; set; }
 
-        public Vector3 Pos { get; set; }
+        public Vector3 Position { get; set; }
 
         public Vector3 Direction { get; set; }
 
@@ -40,7 +40,7 @@ namespace MineNET.Network.Packets
             base.Encode();
 
             this.WriteUVarLong((ulong) this.EntityRuntimeId);
-            this.WriteVector3(this.Pos);
+            this.WriteVector3(this.Position);
             this.WriteVector3(this.Direction);
             this.WriteByte(this.Mode);
             this.WriteBool(this.OnGround);
@@ -57,7 +57,7 @@ namespace MineNET.Network.Packets
             base.Decode();
 
             this.EntityRuntimeId = (long) this.ReadUVarLong();
-            this.Pos = this.ReadVector3();
+            this.Position = this.ReadVector3();
             this.Direction = this.ReadVector3();
             this.Mode = this.ReadByte();
             this.OnGround = this.ReadBool();

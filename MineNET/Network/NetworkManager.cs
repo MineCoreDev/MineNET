@@ -209,6 +209,7 @@ namespace MineNET.Network
             this.RegisterPacket(new EntityEventPacket());
             this.RegisterPacket(new InventoryTransactionPacket());
             this.RegisterPacket(new MobEquipmentPacket());
+            this.RegisterPacket(new BlockPickRequestPacket());
             this.RegisterPacket(new PlayerActionPacket());
             this.RegisterPacket(new AnimatePacket());
             this.RegisterPacket(new ContainerClosePacket());

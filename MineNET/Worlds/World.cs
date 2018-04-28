@@ -307,7 +307,7 @@ namespace MineNET.Worlds
             {
                 Block block = this.GetBlock(vector3[i]);
                 UpdateBlockPacket pk = new UpdateBlockPacket();
-                pk.Vector3 = (Vector3i) vector3[i];
+                pk.Position = (Vector3i) vector3[i];
                 pk.RuntimeId = block.RuntimeId;
                 pk.Flags = flags;
                 for (int j = 0; j < players.Length; ++j)
@@ -379,7 +379,12 @@ namespace MineNET.Worlds
             }
             hand.Place(clicked, replace, blockFace, clickPos, player, item);
 
-            //TODO : block sound
+            LevelSoundEventPacket pk = new LevelSoundEventPacket();
+            pk.Position = (Vector3) hand.Position;
+            pk.Sound = LevelSoundEventPacket.SOUND_PLACE;
+            pk.ExtraData = hand.RuntimeId;
+            pk.Pitch = 1;
+            player.SendPacket(pk); //TODO : near players
         }
 
         public void UseBreak(Vector3 pos, Item item, Player player)
@@ -397,7 +402,10 @@ namespace MineNET.Worlds
                 blockBreakEvent.IsCancel = true;
             }
 
-            //TODO : spawn protection
+            if (Server.ServerConfig.SpawnProtection > 0 || player.Op)
+            {
+                //TODO
+            }
 
             BlockEvents.OnBlockBreak(blockBreakEvent);
             if (blockBreakEvent.IsCancel)
@@ -409,7 +417,11 @@ namespace MineNET.Worlds
 
             //TODO : can destroy
 
-            //TODO : particle
+            LevelEventPacket pk = new LevelEventPacket();
+            pk.EventId = LevelEventPacket.EVENT_PARTICLE_DESTROY;
+            pk.Position = pos + new Vector3(0.5f, 0.5f, 0.5f);
+            pk.Data = block.RuntimeId;
+            player.SendPacket(pk); //TODO : near players
 
             block.Break(player, item);
 

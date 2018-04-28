@@ -242,7 +242,7 @@ namespace MineNET.Entities.Players
         {
             MovePlayerPacket pk = new MovePlayerPacket();
             pk.EntityRuntimeId = this.EntityID;
-            pk.Pos = pos;
+            pk.Position = pos;
             pk.Direction = new Vector3(yawPitch.X, yawPitch.Y, yawPitch.X);
             pk.Mode = mode;
 

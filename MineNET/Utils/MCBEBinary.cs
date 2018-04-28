@@ -48,18 +48,34 @@ namespace MineNET.Utils
 
         public void WriteBlockVector3(Vector3 pos)
         {
-            this.WriteBlockVector3(pos);
-        }
-
-        public void WriteBlockVector3(Vector3i pos)
-        {
-            this.WriteBlockVector3(pos.X, pos.Y, pos.Z);
+            this.WriteBlockVector3(pos.FloorX, pos.FloorY, pos.FloorZ);
         }
 
         public void WriteBlockVector3(int x, int y, int z)
         {
             this.WriteSVarInt(x);
             this.WriteUVarInt((uint) y);
+            this.WriteSVarInt(z);
+        }
+
+        public Vector3 ReadSBlockVector3()
+        {
+            return new Vector3(
+                this.ReadSVarInt(),
+                this.ReadSVarInt(),
+                this.ReadSVarInt()
+            );
+        }
+
+        public void WriteSBlockVector3(Vector3 pos)
+        {
+            this.WriteSBlockVector3(pos.FloorX, pos.FloorY, pos.FloorZ);
+        }
+
+        public void WriteSBlockVector3(int x, int y, int z)
+        {
+            this.WriteSVarInt(x);
+            this.WriteSVarInt(y);
             this.WriteSVarInt(z);
         }
 

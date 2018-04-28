@@ -184,6 +184,7 @@ namespace MineNET.Inventories
                 pk.EntityRuntimeId = this.Holder.EntityID;
                 pk.Item = this.MainHandItem;
                 pk.InventorySlot = (byte) this.MainHandSlot;
+                pk.HotbarSlot = (byte) this.MainHandSlot;
                 pk.WindowId = this.Type;
                 players[i].SendPacket(pk);
             }

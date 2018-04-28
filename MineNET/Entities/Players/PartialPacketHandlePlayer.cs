@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MineNET.Blocks;
 using MineNET.Blocks.Data;
 using MineNET.Data;
 using MineNET.Entities.Data;
@@ -54,6 +55,10 @@ namespace MineNET.Entities.Players
             else if (pk is MobEquipmentPacket)
             {
                 this.MobEquipmentHandle((MobEquipmentPacket) pk);
+            }
+            else if (pk is BlockPickRequestPacket)
+            {
+                this.BlockPickRequestHandle((BlockPickRequestPacket) pk);
             }
             else if (pk is PlayerActionPacket)
             {
@@ -308,7 +313,7 @@ namespace MineNET.Entities.Players
         private void MovePlayerPacketHandle(MovePlayerPacket pk)
         {
             //TODO: MoveCheck...
-            Vector3 pos = pk.Pos;
+            Vector3 pos = pk.Position;
             Vector3 direction = pk.Direction;
             if ((Vector3) this != pos || this.Direction != direction)
             {
@@ -446,6 +451,41 @@ namespace MineNET.Entities.Players
         {
             this.Inventory.MainHandSlot = pk.HotbarSlot;
             this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ACTION, false, true);
+        }
+
+        private void BlockPickRequestHandle(BlockPickRequestPacket pk)
+        {
+            if (!this.IsCreative)
+            {
+                return;
+            }
+            Block block = this.World.GetBlock(pk.Position);
+            Item item = block.Item; //TODO : block entity nbt
+            List<int> air = new List<int>();
+            for (int i = 0; i < pk.HotbarSlot; ++i)
+            {
+                Item slot = this.Inventory.GetItem(i);
+                if (slot == item)
+                {
+                    this.Inventory.MainHandSlot = i;
+                    this.Inventory.SendMainHand(this);
+                    return;
+                }
+                if (slot.ID == BlockFactory.AIR)
+                {
+                    air.Add(i);
+                }
+            }
+            if (air.Count == 0 || this.Inventory.MainHandItem.ID == BlockFactory.AIR)
+            {
+                this.Inventory.MainHandItem = item;
+                this.Inventory.SendMainHand(this);
+                return;
+            }
+            this.Inventory.MainHandSlot = air[0];
+            this.Inventory.MainHandItem = item;
+            this.Inventory.SendMainHand(this);
+
         }
 
         private void PlayerActionHandle(PlayerActionPacket pk)

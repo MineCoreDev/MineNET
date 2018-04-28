@@ -459,6 +459,7 @@
     <Compile Include="Network\Packets\AddEntityPacket.cs" />
     <Compile Include="Network\Packets\AddPlayerPacket.cs" />
     <Compile Include="Network\Packets\AnimatePacket.cs" />
+    <Compile Include="Network\Packets\BlockPickRequestPacket.cs" />
     <Compile Include="Network\Packets\CommandRequestPacket.cs" />
     <Compile Include="Network\Packets\Data\AdventureSettingsEntry.cs" />
     <Compile Include="Network\Packets\Data\ClientData.cs" />
@@ -744,6 +745,7 @@
     <Compile Include="Network\Packets\InventoryContentPacket.cs" />
     <Compile Include="Network\Packets\InventorySlotPacket.cs" />
     <Compile Include="Network\Packets\InventoryTransactionPacket.cs" />
+    <Compile Include="Network\Packets\LevelEventPacket.cs" />
     <Compile Include="Network\Packets\LevelSoundEventPacket.cs" />
     <Compile Include="Network\Packets\MobArmorEquipmentPacket.cs" />
     <Compile Include="Network\Packets\MobEffectPacket.cs" />

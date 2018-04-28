@@ -19,7 +19,7 @@ namespace MineNET.Network.Packets
         public long EntityUniqueId { get; set; }
         public long EntityRuntimeId { get; set; }
         public int Type { get; set; }
-        public Vector3 Vector3 { get; set; }
+        public Vector3 Position { get; set; }
         public Vector3 Speed { get; set; }
         public Vector2 Direction { get; set; }
         public EntityAttributeDictionary Attributes { get; set; }
@@ -33,7 +33,7 @@ namespace MineNET.Network.Packets
             this.WriteEntityUniqueId(this.EntityUniqueId);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteUVarInt((uint) this.Type);
-            this.WriteVector3(this.Vector3);
+            this.WriteVector3(this.Position);
             this.WriteVector3(this.Speed);
             this.WriteVector2(this.Direction);
             this.WriteAttributes(this.Attributes);

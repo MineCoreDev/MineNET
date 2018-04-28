@@ -21,7 +21,7 @@ namespace MineNET.Inventories
             pk.WindowId = this.Type;
             pk.Type = this.Type;
             InventoryHolder holder = this.Holder;
-            pk.Vector3 = new Vector3(holder.X, holder.Y, holder.Z);
+            pk.Position = new Vector3(holder.X, holder.Y, holder.Z);
             player.SendPacket(pk);
         }
 

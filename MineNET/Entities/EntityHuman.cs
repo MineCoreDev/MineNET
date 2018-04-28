@@ -29,7 +29,7 @@ namespace MineNET.Entities
                 pk.Username = this.Name;
                 pk.EntityUniqueId = this.EntityID;
                 pk.EntityRuntimeId = this.EntityID;
-                pk.Vector3 = this.Vector3;
+                pk.Position = this.Vector3;
                 pk.Speed = new Vector3(this.MotionX, this.MotionY, this.MotionZ);
                 pk.Direction = new Vector3(this.Yaw, this.Pitch, this.Yaw);
                 pk.Metadata = this.DataProperties;

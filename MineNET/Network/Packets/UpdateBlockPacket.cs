@@ -26,7 +26,7 @@ namespace MineNET.Network.Packets
             }
         }
 
-        public Vector3i Vector3 { get; set; }
+        public Vector3i Position { get; set; }
         public int RuntimeId { get; set; }
         public int Flags { get; set; }
         public int DataLayerId { get; set; }
@@ -35,7 +35,7 @@ namespace MineNET.Network.Packets
         {
             base.Encode();
 
-            this.WriteBlockVector3(this.Vector3);
+            this.WriteBlockVector3(this.Position);
             this.WriteUVarInt((uint) this.RuntimeId);
             this.WriteUVarInt((uint) this.Flags);
             this.WriteUVarInt((uint) this.DataLayerId);
