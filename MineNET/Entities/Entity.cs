@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MineNET.Blocks.Data;
 using MineNET.Entities.Metadata;
 using MineNET.Entities.Players;
 using MineNET.NBT.Data;
@@ -243,6 +244,35 @@ namespace MineNET.Entities
             get
             {
                 return new Vector2((float) -Math.Cos(this.Yaw * Math.PI / 180 - Math.PI / 2), (float) -Math.Sin(this.Yaw * Math.PI / 180 - Math.PI / 2)).Normalized;
+            }
+        }
+
+        public BlockFace DirectionBlockFace
+        {
+            get
+            {
+                float rotation = this.Yaw;
+                if (rotation < 0)
+                {
+                    rotation += 360;
+                }
+                if ((0 <= rotation && rotation < 45) || (315 <= rotation && rotation < 360))
+                {
+                    return BlockFace.SOUTH;
+                }
+                else if (45 <= rotation && rotation < 135)
+                {
+                    return BlockFace.WEST;
+                }
+                else if (135 <= rotation && rotation < 225)
+                {
+                    return BlockFace.NORTH;
+                }
+                else if (225 < rotation && rotation < 315)
+                {
+                    return BlockFace.EAST;
+                }
+                return BlockFace.NORTH;
             }
         }
 

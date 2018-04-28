@@ -288,7 +288,7 @@ namespace MineNET.Entities.Players
 
             if (!clientDisconnect)
             {
-                this.World.RemovePlayer(this);
+                this.World?.RemovePlayer(this);
             }
 
             Server.Instance.RemovePlayer(this.EntityID);
