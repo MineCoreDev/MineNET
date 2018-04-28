@@ -4,6 +4,7 @@ using MineNET.Blocks.Data;
 using MineNET.Data;
 using MineNET.Entities.Data;
 using MineNET.Events.PlayerEvents;
+using MineNET.Inventories.Data;
 using MineNET.Inventories.Transactions;
 using MineNET.Inventories.Transactions.Action;
 using MineNET.Inventories.Transactions.Data;
@@ -30,9 +31,9 @@ namespace MineNET.Entities.Players
             {
                 this.ResourcePackClientResponsePacketHandle((ResourcePackClientResponsePacket) pk);
             }
-            else if (pk is RequestChunkRadiusPacket)
+            else if (pk is TextPacket)
             {
-                this.RequestChunkRadiusPacketHandle((RequestChunkRadiusPacket) pk);
+                this.TextPacketHandle((TextPacket) pk);
             }
             else if (pk is MovePlayerPacket)
             {
@@ -41,14 +42,6 @@ namespace MineNET.Entities.Players
             else if (pk is LevelSoundEventPacket)
             {
                 this.LevelSoundEventHandle((LevelSoundEventPacket) pk);
-            }
-            else if (pk is TextPacket)
-            {
-                this.TextPacketHandle((TextPacket) pk);
-            }
-            else if (pk is CommandRequestPacket)
-            {
-                this.CommandRequestPacketHandle((CommandRequestPacket) pk);
             }
             else if (pk is EntityEventPacket)
             {
@@ -65,6 +58,22 @@ namespace MineNET.Entities.Players
             else if (pk is PlayerActionPacket)
             {
                 this.PlayerActionHandle((PlayerActionPacket) pk);
+            }
+            else if (pk is AnimatePacket)
+            {
+                this.AnimateHandle((AnimatePacket) pk);
+            }
+            else if (pk is ContainerClosePacket)
+            {
+                this.ContainerCloseHandle((ContainerClosePacket) pk);
+            }
+            else if (pk is RequestChunkRadiusPacket)
+            {
+                this.RequestChunkRadiusPacketHandle((RequestChunkRadiusPacket) pk);
+            }
+            else if (pk is CommandRequestPacket)
+            {
+                this.CommandRequestPacketHandle((CommandRequestPacket) pk);
             }
             else if (pk is PlayerSkinPacket)
             {
@@ -277,14 +286,23 @@ namespace MineNET.Entities.Players
             }
         }
 
-        private void RequestChunkRadiusPacketHandle(RequestChunkRadiusPacket pk)
+        private void TextPacketHandle(TextPacket pk)
         {
-            int chunkSize = this.FixRadius(pk.Radius);
-            ChunkRadiusUpdatedPacket chunkRadiusUpdatedPacket = new ChunkRadiusUpdatedPacket();
-            chunkRadiusUpdatedPacket.Radius = chunkSize;
-            this.RequestChunkRadius = chunkSize;
-            //Logger.Info("%server_chunkRadius", pk.Radius, chunkRadiusUpdatedPacket.Radius);
-            SendPacket(chunkRadiusUpdatedPacket);
+            if (pk.Type == TextPacket.TYPE_CHAT)
+            {
+                string message = pk.Message.Trim();
+                if (message != "" && message.Length < 256)
+                {
+                    PlayerChatEventArgs playerChatEvent = new PlayerChatEventArgs(this, message);
+                    PlayerEvents.OnPlayerChat(playerChatEvent);
+                    if (playerChatEvent.IsCancel)
+                    {
+                        return;
+                    }
+                    message = $"<{this.Name}§f> {playerChatEvent.Message}§f";
+                    Server.Instance.BroadcastChat(message);
+                }
+            }
         }
 
         private void MovePlayerPacketHandle(MovePlayerPacket pk)
@@ -306,31 +324,7 @@ namespace MineNET.Entities.Players
         private void LevelSoundEventHandle(LevelSoundEventPacket pk)
         {
             Server.Instance.BroadcastPacket(pk, this.Viewers);
-        }
-
-        private void TextPacketHandle(TextPacket pk)
-        {
-            if (pk.Type == TextPacket.TYPE_CHAT)
-            {
-                string message = pk.Message.Trim();
-                if (message != "" && message.Length < 256)
-                {
-                    PlayerChatEventArgs playerChatEvent = new PlayerChatEventArgs(this, message);
-                    PlayerEvents.OnPlayerChat(playerChatEvent);
-                    if (playerChatEvent.IsCancel)
-                    {
-                        return;
-                    }
-                    message = $"<{this.Name}§f> {playerChatEvent.Message}§f";
-                    Server.Instance.BroadcastChat(message);
-                }
-            }
-        }
-
-        private void CommandRequestPacketHandle(CommandRequestPacket pk)
-        {
-            string command = pk.Command.Remove(0, 1);
-            Server.Instance.CommandManager.HandlePlayerCommand(this, command);
+            this.SendPacket(pk);
         }
 
         private void EntityEventHandle(EntityEventPacket pk)
@@ -587,6 +581,36 @@ namespace MineNET.Entities.Players
 
             }
             this.Action = false;
+        }
+
+        private void AnimateHandle(AnimatePacket pk)
+        {
+            Server.Instance.BroadcastPacket(pk, this.Viewers);
+        }
+
+        private void ContainerCloseHandle(ContainerClosePacket pk)
+        {
+            //TODO
+            if (pk.WindowId == InventoryType.CONTAINER.GetIndex())
+            {
+                return;
+            }
+        }
+
+        private void RequestChunkRadiusPacketHandle(RequestChunkRadiusPacket pk)
+        {
+            int chunkSize = this.FixRadius(pk.Radius);
+            ChunkRadiusUpdatedPacket chunkRadiusUpdatedPacket = new ChunkRadiusUpdatedPacket();
+            chunkRadiusUpdatedPacket.Radius = chunkSize;
+            this.RequestChunkRadius = chunkSize;
+            //Logger.Info("%server_chunkRadius", pk.Radius, chunkRadiusUpdatedPacket.Radius);
+            SendPacket(chunkRadiusUpdatedPacket);
+        }
+
+        private void CommandRequestPacketHandle(CommandRequestPacket pk)
+        {
+            string command = pk.Command.Remove(0, 1);
+            Server.Instance.CommandManager.HandlePlayerCommand(this, command);
         }
 
         private void PlayerSkinHandle(PlayerSkinPacket pk)

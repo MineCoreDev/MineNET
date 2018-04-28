@@ -202,17 +202,18 @@ namespace MineNET.Network
         private void RegisterPackets()
         {
             this.RegisterPacket(new LoginPacket());
-            this.RegisterPacket(new PlayStatusPacket());
             this.RegisterPacket(new ResourcePackClientResponsePacket());
             this.RegisterPacket(new TextPacket());
             this.RegisterPacket(new MovePlayerPacket());
             this.RegisterPacket(new LevelSoundEventPacket());
-            this.RegisterPacket(new RequestChunkRadiusPacket());
-            this.RegisterPacket(new CommandRequestPacket());
             this.RegisterPacket(new EntityEventPacket());
             this.RegisterPacket(new InventoryTransactionPacket());
             this.RegisterPacket(new MobEquipmentPacket());
             this.RegisterPacket(new PlayerActionPacket());
+            this.RegisterPacket(new AnimatePacket());
+            this.RegisterPacket(new ContainerClosePacket());
+            this.RegisterPacket(new RequestChunkRadiusPacket());
+            this.RegisterPacket(new CommandRequestPacket());
             this.RegisterPacket(new PlayerSkinPacket());
         }
     }
