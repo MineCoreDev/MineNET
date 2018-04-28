@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -43,15 +43,15 @@ namespace MineNET.RakNet
         UdpClient client;
         bool clientClosed;
 
-        Dictionary<byte, Packet> packetPool = new Dictionary<byte, Packet>();
+        ConcurrentDictionary<byte, Packet> packetPool = new ConcurrentDictionary<byte, Packet>();
 
         long serverID;
         ushort port;
 
-        Dictionary<string, int> blockUsers = new Dictionary<string, int>();
-        Dictionary<string, RakNetSession> sessions = new Dictionary<string, RakNetSession>();
+        ConcurrentDictionary<string, int> blockUsers = new ConcurrentDictionary<string, int>();
+        ConcurrentDictionary<string, RakNetSession> sessions = new ConcurrentDictionary<string, RakNetSession>();
 
-        Queue<ReceiveData> receiveDataQueue = new Queue<ReceiveData>();
+        ConcurrentQueue<ReceiveData> receiveDataQueue = new ConcurrentQueue<ReceiveData>();
 
         public RakNetServer(ushort port)
         {
@@ -83,6 +83,8 @@ namespace MineNET.RakNet
             uint IOC_VENDOR = 0x18000000;
             uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
             this.client.Client.IOControl((int) SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
+
+            ClockConstantController.CreateController("raknetUpdate", UPDATE_TICK);
 
             this.client.BeginReceive(this.OnReceive, null);
         }
@@ -116,9 +118,12 @@ namespace MineNET.RakNet
         {
             while (!Server.Instance.IsShutdown())
             {
+                ClockConstantController.Start("raknetUpdate");
+
                 if (this.receiveDataQueue.Count > 0)
                 {
-                    ReceiveData data = this.receiveDataQueue.Dequeue();
+                    ReceiveData data = null;
+                    this.receiveDataQueue.TryDequeue(out data);
                     this.HandlePacket(data.Point, data.Data);
                 }
 
@@ -128,7 +133,8 @@ namespace MineNET.RakNet
                     this.blockUsers[bl[i]] -= 1;
                     if (this.blockUsers[bl[i]] <= 0)
                     {
-                        this.blockUsers.Remove(bl[i]);
+                        int r = 0;
+                        this.blockUsers.TryRemove(bl[i], out r);
                     }
                 }
 
@@ -138,7 +144,7 @@ namespace MineNET.RakNet
                     sl[i].Update();
                 }
 
-                await Task.Delay(1000 / UPDATE_TICK);
+                await ClockConstantController.Stop("raknetUpdate");
             }
         }
 
@@ -322,7 +328,7 @@ namespace MineNET.RakNet
             }
 
             RakNetSession session = new RakNetSession(this, point, clientID, mtuSize);
-            this.sessions.Add(id, session);
+            this.sessions.TryAdd(id, session);
 
             Server.Instance.NetworkManager.CreatePlayer(point, IPEndPointToID(point));
 
@@ -332,11 +338,12 @@ namespace MineNET.RakNet
         public void RemoveSession(IPEndPoint point, string msg)
         {
             string id = IPEndPointToID(point);
+            RakNetSession session = null;
 
             Logger.Info("%raknet_sessionClose", IPEndPointToID(point));
             Logger.Log("%raknet_sessionClose_reason", msg);
 
-            this.sessions.Remove(id);
+            this.sessions.TryRemove(id, out session);
         }
 
         /// <summary>
@@ -346,18 +353,19 @@ namespace MineNET.RakNet
         /// <param name="blockTime">Ticks</param>
         public void BlockUser(IPEndPoint point, int blockTime)
         {
-            this.blockUsers.Add(IPEndPointToID(point), blockTime);
+            this.blockUsers.TryAdd(IPEndPointToID(point), blockTime);
             Logger.Warning("%raknet_userBlock", IPEndPointToID(point), blockTime / UPDATE_TICK);
         }
 
         public void UnBlockUser(IPEndPoint point)
         {
-            this.blockUsers.Remove(IPEndPointToID(point));
+            int id = 0;
+            this.blockUsers.TryRemove(IPEndPointToID(point), out id);
         }
 
         private void RegisterPacket(byte id, Packet packet)
         {
-            this.packetPool.Add(id, packet);
+            this.packetPool.TryAdd(id, packet);
         }
 
         public Packet GetPacketPool(byte id, byte[] buffer)

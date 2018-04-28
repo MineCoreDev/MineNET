@@ -2,7 +2,6 @@
 using MineNET.Entities.Players;
 using MineNET.NBT.Tags;
 using MineNET.Network.Packets;
-using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
 
@@ -34,8 +33,6 @@ namespace MineNET.Entities
                 pk.Direction = new Vector3(this.Yaw, this.Pitch, this.Yaw);
                 pk.Metadata = this.DataProperties;
                 player.SendPacket(pk);
-
-                Logger.Info("AddPlayer");
             }
         }
     }

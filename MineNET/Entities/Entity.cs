@@ -174,8 +174,6 @@ namespace MineNET.Entities
                 player.SendPacket(pk);
 
                 this.viewers.Remove(player);
-
-                Logger.Info("Despawn");
             }
         }
 

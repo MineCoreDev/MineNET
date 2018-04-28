@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IO;
 
 namespace MineNET.Utils
@@ -27,8 +27,8 @@ namespace MineNET.Utils
 
         public bool UseGUI { get; set; }
 
-        Queue<LoggerInfo> loggerTexts = new Queue<LoggerInfo>();
-        public Queue<LoggerInfo> GuiLoggerTexts { get; } = new Queue<LoggerInfo>();
+        ConcurrentQueue<LoggerInfo> loggerTexts = new ConcurrentQueue<LoggerInfo>();
+        public ConcurrentQueue<LoggerInfo> GuiLoggerTexts { get; } = new ConcurrentQueue<LoggerInfo>();
 
         public virtual void Init()
         {
@@ -287,7 +287,8 @@ namespace MineNET.Utils
                     return;
                 }
 
-                LoggerInfo info = this.loggerTexts.Dequeue();
+                LoggerInfo info = null;
+                this.loggerTexts.TryDequeue(out info);
                 if (info != null)
                 {
                     string log = info.Text;

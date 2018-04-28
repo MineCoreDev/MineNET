@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MineNET.Utils;
@@ -26,7 +26,7 @@ namespace MineNET.GUI.Items
             while (!Server.Instance.IsShutdown())
             {
                 ClockConstantController.Start("gui_outputUpdate");
-                Queue<LoggerInfo> queue = Server.Instance.Logger.GuiLoggerTexts;
+                ConcurrentQueue<LoggerInfo> queue = Server.Instance.Logger.GuiLoggerTexts;
                 if (queue.Count == 0)
                 {
                     await Task.Delay(1000 / 200);
@@ -34,7 +34,8 @@ namespace MineNET.GUI.Items
                 }
                 else
                 {
-                    LoggerInfo info = queue.Dequeue();
+                    LoggerInfo info = null;
+                    queue.TryDequeue(out info);
                     if (this.CheckShowOutput(info.Level))
                     {
                         if (!string.IsNullOrEmpty(info.Text))
