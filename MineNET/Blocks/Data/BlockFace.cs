@@ -94,13 +94,46 @@ namespace MineNET.Blocks.Data
             {
                 return new Vector3(-1, 0, 0);
             }
-            else if (face == BlockFace.WEST)
+            else if (face == BlockFace.EAST)
             {
                 return new Vector3(1, 0, 0);
             }
             else
             {
                 return new Vector3(0, 0, 0);
+            }
+        }
+
+        public static BlockFace GetReverseBlockFace(this BlockFace face)
+        {
+
+            if (face == BlockFace.DOWN)
+            {
+                return BlockFace.UP;
+            }
+            else if (face == BlockFace.UP)
+            {
+                return BlockFace.DOWN;
+            }
+            else if (face == BlockFace.NORTH)
+            {
+                return BlockFace.SOUTH;
+            }
+            else if (face == BlockFace.SOUTH)
+            {
+                return BlockFace.NORTH;
+            }
+            else if (face == BlockFace.WEST)
+            {
+                return BlockFace.EAST;
+            }
+            else if (face == BlockFace.EAST)
+            {
+                return BlockFace.WEST;
+            }
+            else
+            {
+                return BlockFace.UP;
             }
         }
     }
