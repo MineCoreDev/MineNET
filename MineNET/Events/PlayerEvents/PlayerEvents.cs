@@ -2,6 +2,12 @@
 {
     public class PlayerEvents : MineNETEvents
     {
+        public static event EventHandler<PlayerBlockPickRequestEventArgs> PlayerBlockPickRequest;
+        public static void OnPlayerBlockPickRequest(PlayerBlockPickRequestEventArgs args)
+        {
+            PlayerBlockPickRequest?.Invoke(args);
+        }
+
         public static event EventHandler<PlayerChatEventArgs> PlayerChat;
         public static void OnPlayerChat(PlayerChatEventArgs args)
         {

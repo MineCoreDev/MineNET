@@ -405,6 +405,7 @@
     <Compile Include="Events\InventoryEvents\InventoryEvents.cs" />
     <Compile Include="Events\InventoryEvents\InventoryOpenEventArgs.cs" />
     <Compile Include="Events\InventoryEvents\InventoryTransactionEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerBlockPickRequestEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerChatEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCommandPreprocessEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCreateDataEventArgs.cs" />

@@ -461,6 +461,12 @@ namespace MineNET.Entities.Players
             }
             Block block = this.World.GetBlock(pk.Position);
             Item item = block.Item; //TODO : block entity nbt
+            PlayerBlockPickRequestEventArgs args = new PlayerBlockPickRequestEventArgs(this, item);
+            PlayerEvents.OnPlayerBlockPickRequest(args);
+            if (args.IsCancel)
+            {
+                return;
+            }
             List<int> air = new List<int>();
             for (int i = 0; i < pk.HotbarSlot; ++i)
             {
