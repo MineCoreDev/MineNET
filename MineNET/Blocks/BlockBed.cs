@@ -69,5 +69,13 @@ namespace MineNET.Blocks
                 return true;
             }
         }
+
+        public override Item Item
+        {
+            get
+            {
+                return Item.Get(ItemFactory.BED, 0, 1);
+            }
+        }
     }
 }

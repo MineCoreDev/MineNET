@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MineNET.Items;
 
 namespace MineNET.Blocks
 {
@@ -18,6 +14,14 @@ namespace MineNET.Blocks
             get
             {
                 return "BrewingStand";
+            }
+        }
+
+        public override Item Item
+        {
+            get
+            {
+                return Item.Get(ItemFactory.BREWING_STAND, 0, 1);
             }
         }
     }

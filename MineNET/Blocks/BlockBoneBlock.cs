@@ -1,4 +1,6 @@
-﻿namespace MineNET.Blocks
+﻿using MineNET.Items;
+
+namespace MineNET.Blocks
 {
     public class BlockBoneBlock : BlockSolid
     {
@@ -12,6 +14,14 @@
             get
             {
                 return "BoneBlock";
+            }
+        }
+
+        public override Item Item
+        {
+            get
+            {
+                return Item.Get(BlockFactory.BONE_BLOCK, 0, 1);
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace MineNET.Blocks
+﻿using MineNET.Items;
+
+namespace MineNET.Blocks
 {
     public class BlockButtonStone : BlockTransparent
     {
@@ -12,6 +14,14 @@
             get
             {
                 return "StoneButton";
+            }
+        }
+
+        public override Item Item
+        {
+            get
+            {
+                return Item.Get(BlockFactory.STONE_BUTTON, 0, 1);
             }
         }
     }
