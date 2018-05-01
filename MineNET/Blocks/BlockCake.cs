@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MineNET.Entities.Players;
+using MineNET.Items;
 
 namespace MineNET.Blocks
 {
@@ -18,6 +15,19 @@ namespace MineNET.Blocks
             get
             {
                 return "Cake";
+            }
+        }
+
+        public override bool Activate(Player player, Item item)
+        {
+            return base.Activate(player, item);
+        }
+
+        public override bool CanBeActivated
+        {
+            get
+            {
+                return true;
             }
         }
     }

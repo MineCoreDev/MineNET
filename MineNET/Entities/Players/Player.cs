@@ -551,5 +551,27 @@ namespace MineNET.Entities.Players
                 this.AdventureSettingsEntry.Update(this);
             }
         }
+
+        public override Skin Skin
+        {
+            get
+            {
+                return base.Skin;
+            }
+
+            set
+            {
+                base.Skin = value;
+                this.SendSkin(value);
+            }
+        }
+
+        public void SendSkin(Skin skin)
+        {
+            PlayerSkinPacket playerSkin = new PlayerSkinPacket();
+            playerSkin.Uuid = this.Uuid;
+            playerSkin.Skin = skin;
+            this.SendPacket(playerSkin);
+        }
     }
 }

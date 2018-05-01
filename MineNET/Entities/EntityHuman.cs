@@ -15,7 +15,7 @@ namespace MineNET.Entities
 
         public UUID Uuid { get; set; }
 
-        public Skin Skin { get; set; }
+        public virtual Skin Skin { get; set; }
 
         public override void SpawnTo(Player player)
         {

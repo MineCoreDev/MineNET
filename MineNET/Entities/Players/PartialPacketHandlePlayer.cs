@@ -662,11 +662,6 @@ namespace MineNET.Entities.Players
         private void PlayerSkinHandle(PlayerSkinPacket pk)
         {
             this.Skin = pk.Skin;
-
-            PlayerSkinPacket playerSkin = new PlayerSkinPacket();
-            playerSkin.Uuid = this.Uuid;
-            playerSkin.Skin = this.Skin;
-            this.SendPacket(playerSkin);
         }
     }
 }
