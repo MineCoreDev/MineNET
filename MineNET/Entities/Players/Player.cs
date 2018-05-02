@@ -552,22 +552,9 @@ namespace MineNET.Entities.Players
             }
         }
 
-        public override Skin Skin
+        public override void SendSkin(Skin skin)
         {
-            get
-            {
-                return base.Skin;
-            }
-
-            set
-            {
-                base.Skin = value;
-                this.SendSkin(value);
-            }
-        }
-
-        public void SendSkin(Skin skin)
-        {
+            base.SendSkin(skin);
             PlayerSkinPacket playerSkin = new PlayerSkinPacket();
             playerSkin.Uuid = this.Uuid;
             playerSkin.Skin = skin;

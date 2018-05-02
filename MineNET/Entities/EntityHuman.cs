@@ -9,13 +9,13 @@ namespace MineNET.Entities
 {
     public abstract class EntityHuman : EntityLiving
     {
+        private Skin skin;
+
         public EntityHuman(World world, CompoundTag tag) : base(world, tag)
         {
         }
 
         public UUID Uuid { get; set; }
-
-        public virtual Skin Skin { get; set; }
 
         public override void SpawnTo(Player player)
         {
@@ -33,6 +33,32 @@ namespace MineNET.Entities
                 pk.Direction = new Vector3(this.Yaw, this.Pitch, this.Yaw);
                 pk.Metadata = this.DataProperties;
                 player.SendPacket(pk);
+            }
+        }
+
+        public Skin Skin
+        {
+            get
+            {
+                return this.skin;
+            }
+
+            set
+            {
+                this.skin = value;
+                this.SendSkin(value);
+            }
+        }
+
+        public virtual void SendSkin(Skin skin)
+        {
+            Player[] players = this.Viewers;
+            for (int i = 0; i < players.Length; ++i)
+            {
+                PlayerSkinPacket playerSkin = new PlayerSkinPacket();
+                playerSkin.Uuid = this.Uuid;
+                playerSkin.Skin = skin;
+                players[i].SendPacket(playerSkin);
             }
         }
     }
