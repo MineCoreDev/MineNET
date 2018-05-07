@@ -145,6 +145,8 @@ namespace MineNET.GUI.Forms
             {
                 e.Cancel = true;
             }
+
+            this.notifyIcon1.Visible = false;
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -209,6 +211,45 @@ namespace MineNET.GUI.Forms
              tag.PutCompound("com", subTag);*/
             Form f = new NBTViewer();
             f.ShowDialog();
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            this.Visible = true;
+
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+
+            this.Activate();
+        }
+
+        private void MainForm_ClientSizeChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.notifyIcon1.Visible = true;
+            }
+            else
+            {
+                this.notifyIcon1.Visible = false;
+            }
+        }
+
+        private void serverStartSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void serverStopEToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exitEToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
