@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -131,6 +132,8 @@ namespace MineNET.Worlds
 
         private List<BlockEntity> BlockEntities { get; set; } = new List<BlockEntity>();
 
+        private ConcurrentDictionary<Block, int> updateQueue = new ConcurrentDictionary<Block, int>();
+
         public World()
         {
             string generatorName = Server.ServerConfig.WorldGenerator.ToUpper();
@@ -153,6 +156,19 @@ namespace MineNET.Worlds
             for (int i = 0; i < blockEntities.Length; ++i)
             {
                 //blockEntities[i].OnUpdate(tick);
+            }
+
+            foreach (KeyValuePair<Block, int> pair in this.updateQueue)
+            {
+                int time = pair.Value - 1;
+                Block block = pair.Key;
+                if (time < 1)
+                {
+                    block.Update(World.BLOCK_UPDATE_SCHEDULED);
+                    this.updateQueue.TryRemove(block, out time);
+                    continue;
+                }
+                this.updateQueue.TryAdd(block, time);
             }
         }
 
@@ -502,6 +518,11 @@ namespace MineNET.Worlds
                 return;
             }
             this.BlockEntities.Remove(blockEntity);
+        }
+
+        internal void ScheduleUpdate(Block block, int tick)
+        {
+            this.updateQueue.TryAdd(block, tick);
         }
     }
 }

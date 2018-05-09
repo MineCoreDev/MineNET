@@ -103,6 +103,7 @@
     <Compile Include="BlockEntities\BlockEntityChest.cs" />
     <Compile Include="BlockEntities\BlockEntitySpawnable.cs" />
     <Compile Include="Blocks\Block.cs" />
+    <Compile Include="Blocks\BlockButtonBase.cs" />
     <Compile Include="Blocks\BlockDoorAcacia.cs" />
     <Compile Include="Blocks\BlockFenceGateAcacia.cs" />
     <Compile Include="Blocks\BlockStairsAcacia.cs" />
