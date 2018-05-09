@@ -85,13 +85,13 @@ namespace MineNET.Blocks
 
         public virtual bool Place(Block clicked, Block replace, BlockFace face, Vector3 clickPos, Player player, Item item)
         {
-            this.World.SetBlock((Vector3) this, this);
+            this.World.SetBlock((Vector3) this, this, true);
             return true;
         }
 
         public virtual bool Break(Player player, Item item)
         {
-            this.World.SetBlock((Vector3) this, new BlockAir());
+            this.World.SetBlock((Vector3) this, new BlockAir(), true);
             return true;
         }
 

@@ -168,7 +168,7 @@ namespace MineNET.Worlds
                     this.updateQueue.TryRemove(block, out time);
                     continue;
                 }
-                this.updateQueue.TryAdd(block, time);
+                this.updateQueue[block] = time;
             }
         }
 
@@ -188,13 +188,25 @@ namespace MineNET.Worlds
 
         public void SetBlock(Vector3 pos, Block block)
         {
+            this.SetBlock(pos, block, false);
+        }
+
+        public void SetBlock(Vector3 pos, Block block, bool flagAll)
+        {
             Tuple<int, int> chunkPos = new Tuple<int, int>(pos.FloorX >> 4, pos.FloorZ >> 4);
             Chunk chunk = this.GetChunk(chunkPos);
 
             chunk.SetBlock(pos.FloorX & 0x0f, pos.FloorY & 0xff, pos.FloorZ & 0x0f, (byte) block.ID);
             chunk.SetMetadata(pos.FloorX & 0x0f, pos.FloorY & 0xff, pos.FloorZ & 0x0f, (byte) block.Damage);
 
-            this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos });
+            if (flagAll)
+            {
+                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos }, UpdateBlockPacket.FLAG_ALL_PRIORITY);
+            }
+            else
+            {
+                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos });
+            }
         }
 
         public Chunk GetChunk(Tuple<int, int> chunkPos)
@@ -362,9 +374,17 @@ namespace MineNET.Worlds
             }
 
             clicked.Update(World.BLOCK_UPDATE_TOUCH);
-            if (item.CanBeActivate && (!clicked.CanBeActivated || player.Sneaking) && item.Activate(player, this, clicked, blockFace, clickPos))
+            if (!player.Sneaking && clicked.CanBeActivated && clicked.Activate(player, item))
             {
-                //TODO
+                return;
+            }
+
+            if (!player.Sneaking && item.CanBeActivate && item.Activate(player, this, clicked, blockFace, clickPos))
+            {
+                if (item.Count <= 0)
+                {
+                    return;
+                }
             }
 
             if (!item.CanBePlace)
@@ -520,7 +540,7 @@ namespace MineNET.Worlds
             this.BlockEntities.Remove(blockEntity);
         }
 
-        internal void ScheduleUpdate(Block block, int tick)
+        public void ScheduleUpdate(Block block, int tick)
         {
             this.updateQueue.TryAdd(block, tick);
         }

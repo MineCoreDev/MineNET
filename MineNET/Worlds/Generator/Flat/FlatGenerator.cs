@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using MineNET.Blocks;
 using MineNET.Utils;
-using MineNET.Values;
-using MineNET.Worlds.Structures.NaturalObjects;
 
 namespace MineNET.Worlds.Generator.Flat
 {

@@ -21,7 +21,7 @@ namespace MineNET.Blocks
         public override bool Activate(Player player, Item item)
         {
             this.Damage ^= 0x08;
-            this.World.SetBlock((Vector3) this, this);
+            this.World.SetBlock((Vector3) this, this, true);
             this.World.ScheduleUpdate(this, 30);
             return base.Activate(player, item);
         }
@@ -39,7 +39,7 @@ namespace MineNET.Blocks
             if (type == Worlds.World.BLOCK_UPDATE_SCHEDULED)
             {
                 this.Damage ^= 0x08;
-                this.World.SetBlock((Vector3) this, this);
+                this.World.SetBlock((Vector3) this, this, true);
             }
         }
 
