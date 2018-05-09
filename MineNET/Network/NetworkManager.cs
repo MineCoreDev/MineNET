@@ -135,7 +135,7 @@ namespace MineNET.Network
             enc.reliability = RakNet.Packets.PacketReliability.RELIABLE;
             enc.messageIndex = ++session.MessageIndex;
 
-            //Logger.Log("%server_packet_send", buffer[0].ToString("X"), buffer.Length);
+            Logger.Log("%server_packet_send", buffer[0].ToString("X"), buffer.Length);
 
             session.SendPacket(enc, immediate);
         }
@@ -154,7 +154,7 @@ namespace MineNET.Network
                         {
                             if (packet != null)
                             {
-                                //Logger.Log("%server_packet_handle", buffer[0].ToString("X"), buffer.Length);
+                                Logger.Log("%server_packet_handle", buffer[0].ToString("X"), buffer.Length);
                                 packet.SetBuffer(buffer);
                                 packet.Decode();
 

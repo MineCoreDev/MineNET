@@ -17,45 +17,53 @@ namespace MineNET.Worlds.Structures.NaturalObjects
         public override Vector3 GenerationStruct(World world, Vector3 center)
         {
             Random r = new Random((int) world.Seed + center.GetHashCode());
-            int h = r.Next(4, 6);
+            int val = r.Next(2);
 
-            Block block1 = Block.Get(17, 0);
-            Block block2 = Block.Get(18);
-
-            for (int i = 0; i < h; ++i)
+            string[,,] structureData = null;
+            if (val <= 0 && val >= 1)
             {
-                Vector3 pos = new Vector3(center.X, center.Y + i, center.Z);
-                world.SetBlock(pos, block1);
-            }
-
-            int lsh = h - r.Next(3, 4);
-            if (lsh == 0)
-            {
-                lsh = 1;
-            }
-
-            int maxW = r.Next(2, 3);
-
-            int type = lsh >= 3 ? r.Next(0, 1) : 0;
-            if (type == 0)//Down FlatType
-            {
-                for (int y = 0; y < h - lsh + 1; ++y)
+                structureData = new string[,,]
                 {
-                    for (int i = -maxW; i < maxW + 1; ++i)
                     {
-                        for (int j = -maxW; j < maxW + 1; ++j)
                         {
-                            Vector3 pos = new Vector3(center.X + i, center.Y + lsh + y, center.Z + j);
-                            if (world.GetBlock(pos).ID == BlockFactory.AIR)
-                            {
-                                world.SetBlock(pos, block2);
-                            }
-                        }
+                            "1", "1", "1", "1", "1",
+                        },
+                    },
+                };
+            }
+            else
+            {
+                structureData = new string[,,]
+                {
+                    {
+                        {
+                            "1", "1", "1", "1", "1",
+                        },
+                    },
+                };
+            }
+
+            Vector3 pos = new Vector3();
+            int xl = structureData.GetLength(0);
+            int yl = structureData.GetLength(1);
+            int zl = structureData.GetLength(2);
+            float cx = center.X - (xl / 2);
+            float cz = center.Z - (zl / 2);
+            for (float x = cx; x < cx + xl; ++x)
+            {
+                for (float z = cz; z < cz + zl; ++z)
+                {
+                    for (float y = center.Y; y < yl; ++y)
+                    {
+                        pos.X = x;
+                        pos.Y = y;
+                        pos.Z = z;
+                        world.SetBlock(pos, Block.Get(structureData[(int) x, (int) y, (int) z]));
                     }
                 }
             }
 
-            return new Vector3(1f, h, 1f);
+            return new Vector3();
         }
     }
 }

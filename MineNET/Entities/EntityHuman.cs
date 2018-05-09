@@ -9,7 +9,7 @@ namespace MineNET.Entities
 {
     public abstract class EntityHuman : EntityLiving
     {
-        private Skin skin;
+        protected Skin skin;
 
         public EntityHuman(World world, CompoundTag tag) : base(world, tag)
         {
@@ -36,7 +36,7 @@ namespace MineNET.Entities
             }
         }
 
-        public Skin Skin
+        public virtual Skin Skin
         {
             get
             {
