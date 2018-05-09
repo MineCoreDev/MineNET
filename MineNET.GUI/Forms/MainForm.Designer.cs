@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,9 +41,16 @@
             this.mineNETGUIVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.serverStartSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.serverStopEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitEToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.inputOutput1 = new MineNET.GUI.Items.InputOutput();
             this.playerList1 = new MineNET.GUI.Items.PlayerList();
             this.menuStrip1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -140,6 +148,49 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "MineNET GUI";
+            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.serverStartSToolStripMenuItem,
+            this.serverStopEToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.exitEToolStripMenuItem1});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(166, 76);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(162, 6);
+            // 
+            // serverStartSToolStripMenuItem
+            // 
+            this.serverStartSToolStripMenuItem.Name = "serverStartSToolStripMenuItem";
+            this.serverStartSToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.serverStartSToolStripMenuItem.Text = "Server Start(&S)";
+            this.serverStartSToolStripMenuItem.Click += new System.EventHandler(this.serverStartSToolStripMenuItem_Click);
+            // 
+            // serverStopEToolStripMenuItem
+            // 
+            this.serverStopEToolStripMenuItem.Name = "serverStopEToolStripMenuItem";
+            this.serverStopEToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.serverStopEToolStripMenuItem.Text = "Server Stop(&E)";
+            this.serverStopEToolStripMenuItem.Click += new System.EventHandler(this.serverStopEToolStripMenuItem_Click);
+            // 
+            // exitEToolStripMenuItem1
+            // 
+            this.exitEToolStripMenuItem1.Name = "exitEToolStripMenuItem1";
+            this.exitEToolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
+            this.exitEToolStripMenuItem1.Text = "Exit(&E)";
+            this.exitEToolStripMenuItem1.Click += new System.EventHandler(this.exitEToolStripMenuItem1_Click);
+            // 
             // inputOutput1
             // 
             this.inputOutput1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -180,8 +231,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.ClientSizeChanged += new System.EventHandler(this.MainForm_ClientSizeChanged);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,5 +255,11 @@
         private System.Windows.Forms.ToolStripMenuItem helpHToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mineNETGUIVersionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nBTViewerNToolStripMenuItem;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem serverStartSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem serverStopEToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitEToolStripMenuItem1;
     }
 }
