@@ -211,6 +211,23 @@ namespace MineNET.Entities.Players
             this.Exhaustion = exhaustion;
         }
 
+        public override Skin Skin
+        {
+            get
+            {
+                return this.skin;
+            }
+
+            set
+            {
+                this.skin = value;
+                if (this.HasSpawned)
+                {
+                    this.SendSkin(value);
+                }
+            }
+        }
+
         public GameMode GameMode
         {
             get

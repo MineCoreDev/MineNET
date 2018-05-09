@@ -284,6 +284,8 @@ namespace MineNET.Entities.Players
                 adventureSettingsEntry.EntityUniqueId = this.EntityID;
                 this.AdventureSettingsEntry = adventureSettingsEntry;
 
+                this.SendSkin(this.Skin);
+
                 Server.Instance.AddPlayer(this);
 
                 this.World.AddPlayer(this);
