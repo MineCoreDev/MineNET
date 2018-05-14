@@ -12,7 +12,7 @@ namespace MineNET.Inventories
     {
         public PlayerCursorInventory(Player player) : base(player)
         {
-            if (!player.NamedTag.Exist("Cursor"))
+            /*if (!player.NamedTag.Exist("Cursor"))
             {
                 ListTag initItems = new ListTag("Cursor", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
@@ -27,7 +27,7 @@ namespace MineNET.Inventories
             {
                 Item item = NBTIO.ReadItem((CompoundTag) items[i]);
                 this.SetItem(i, item, false);
-            }
+            }*/
         }
 
         public override int Size

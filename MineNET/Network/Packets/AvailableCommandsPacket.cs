@@ -159,7 +159,7 @@ namespace MineNET.Network.Packets
         }
     }
 
-    public class CommandEnumCash
+    internal class CommandEnumCash
     {
         public string Name { get; }
         public int[] Index { get; }

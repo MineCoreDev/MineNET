@@ -194,26 +194,36 @@ namespace MineNET.Inventories.Transactions
             for (int i = 0; i < this.Actions.Count; ++i)
             {
                 InventoryAction action = this.Actions[i];
-                if (action.TargetItem.ID != BlockFactory.AIR)
+                if (action.TargetItem.ID != BlockFactory.AIR && action.TargetItem.Count > 0)
                 {
-                    needItems.Add(action.TargetItem);
+                    needItems.Add(action.TargetItem.Clone());
                 }
                 if (!action.IsValid(this.Player))
                 {
                     return false;
                 }
-                if (action.SourceItem.ID != BlockFactory.AIR)
+                if (action.SourceItem.ID != BlockFactory.AIR && action.SourceItem.Count > 0)
                 {
-                    haveItems.Add(action.SourceItem);
+                    haveItems.Add(action.SourceItem.Clone());
                 }
             }
 
+            List<Item> have = new List<Item>();
             for (int i = 0; i < haveItems.Count; ++i)
             {
-                for (int j = 0; j < needItems.Count; ++j)
+                have.Add(haveItems[i]);
+            }
+            List<Item> need = new List<Item>();
+            for (int i = 0; i < needItems.Count; ++i)
+            {
+                need.Add(needItems[i]);
+            }
+            for (int i = 0; i < have.Count; ++i)
+            {
+                for (int j = 0; j < need.Count; ++j)
                 {
-                    Item haveItem = haveItems[i].Clone();
-                    Item needItem = needItems[i].Clone();
+                    Item haveItem = have[i];
+                    Item needItem = need[j];
                     if (haveItem.Equals(needItem, true, false))
                     {
                         int amount = Math.Min(haveItem.Count, needItem.Count);
@@ -221,12 +231,11 @@ namespace MineNET.Inventories.Transactions
                         needItem.Count -= amount;
                         if (haveItem.Count == 0)
                         {
-                            haveItems.Remove(haveItems[i]);
+                            haveItems.Remove(haveItem);
                         }
                         if (needItem.Count == 0)
                         {
-                            needItems.Remove(needItems[i]);
-                            break;
+                            needItems.Remove(needItem);
                         }
                     }
                 }

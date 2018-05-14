@@ -761,6 +761,21 @@ namespace MineNET.Items
             return true;
         }
 
+        public override string ToString()
+        {
+            string data = $"ID {this.ID} : Damage {this.Damage} : Count {this.Count}";
+            if (this.HasTags)
+            {
+                data = $"{data} : NBT {this.GetNamedTag().ToString()}";
+            }
+            return data;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public static bool operator ==(Item A, Item B)
         {
             if (object.ReferenceEquals(A, B))
@@ -785,11 +800,6 @@ namespace MineNET.Items
                 return true;
             }
             return !A.Equals(B);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }
