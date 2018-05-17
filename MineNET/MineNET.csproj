@@ -419,6 +419,10 @@
     <Compile Include="Events\PlayerEvents\PlayerToggleSprintEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerCommandEventArgs.cs" />
     <Compile Include="Inventories\EntityInventory.cs" />
+    <Compile Include="Inventories\Recipe\CraftingManager.cs" />
+    <Compile Include="Inventories\Recipe\IRecipe.cs" />
+    <Compile Include="Inventories\Recipe\ShapedRecipe.cs" />
+    <Compile Include="Inventories\Recipe\ShapelessRecipe.cs" />
     <Compile Include="Inventories\Transactions\Action\CreativeInventoryAction.cs" />
     <Compile Include="Inventories\Transactions\Action\InventoryAction.cs" />
     <Compile Include="Inventories\Transactions\Action\SlotChangeAction.cs" />
@@ -462,6 +466,8 @@
     <Compile Include="Network\Packets\AnimatePacket.cs" />
     <Compile Include="Network\Packets\BlockPickRequestPacket.cs" />
     <Compile Include="Network\Packets\CommandRequestPacket.cs" />
+    <Compile Include="Network\Packets\CraftingDataPacket.cs" />
+    <Compile Include="Network\Packets\CraftingEventPacket.cs" />
     <Compile Include="Network\Packets\Data\AdventureSettingsEntry.cs" />
     <Compile Include="Network\Packets\Data\ClientData.cs" />
     <Compile Include="Network\Packets\Data\CommandOriginData.cs" />
