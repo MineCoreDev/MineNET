@@ -49,6 +49,8 @@ namespace MineNET.Network.Packets
 
         public bool EduMode { get; set; } = false;
 
+        public bool HasEduFeaturesEnabled { get; set; } = false;
+
         public float RainLevel { get; set; } = 0;
 
         public float LightningLevel { get; set; } = 0;
@@ -83,6 +85,12 @@ namespace MineNET.Network.Packets
 
         public bool XboxLiveBroadcastIntent { get; set; } = false;
 
+        public bool HasLockedBehaviour { get; set; } = false;
+
+        public bool HasLockedResourcePack { get; set; } = false;
+
+        public bool IsFromLockedWorldTemplate { get; set; } = false;
+
         public string LevelId { get; set; } = "";
 
         public string WorldName { get; set; } = "";
@@ -114,6 +122,7 @@ namespace MineNET.Network.Packets
             this.WriteBool(this.HasAchievementsDisabled);
             this.WriteSVarInt(this.DayCycleStopTime);
             this.WriteBool(this.EduMode);
+            this.WriteBool(this.HasEduFeaturesEnabled);
             this.WriteLFloat(this.RainLevel);
             this.WriteLFloat(this.LightningLevel);
             this.WriteBool(this.MultiplayerGame);
@@ -129,8 +138,11 @@ namespace MineNET.Network.Packets
             this.WriteSVarInt(this.GamePublish);
             this.WriteLInt((uint) this.ServerChunkTickRadius);
             this.WriteBool(this.HasPlatformBroadcast);
-            this.WriteUVarInt((uint) this.PlatformBroadcastMode);
+            this.WriteSVarInt(this.PlatformBroadcastMode);
             this.WriteBool(this.XboxLiveBroadcastIntent);
+            this.WriteBool(this.HasLockedBehaviour);
+            this.WriteBool(this.HasLockedResourcePack);
+            this.WriteBool(this.IsFromLockedWorldTemplate);
             this.WriteString(this.LevelId);
             this.WriteString(this.WorldName);
             this.WriteString(this.PremiumWorldTemplateId);

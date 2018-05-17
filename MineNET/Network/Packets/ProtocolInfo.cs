@@ -2,8 +2,8 @@
 {
     public sealed class ProtocolInfo
     {
-        public const string CLIENT_VERSION = "1.2.13";
-        public const int CLIENT_PROTOCOL = 223;
+        public const string CLIENT_VERSION = "1.4.0";
+        public const int CLIENT_PROTOCOL = 261;
 
         public const byte LOGIN_PACKET = 0x01;
         public const byte PLAY_STATUS_PACKET = 0x02;

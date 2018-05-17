@@ -303,10 +303,7 @@ namespace MineNET.Entities.Players
 
             this.Closed = true;
 
-            if (!clientDisconnect)
-            {
-                this.World?.RemovePlayer(this);
-            }
+            this.World?.RemovePlayer(this);
 
             Server.Instance.RemovePlayer(this.EntityID);
 

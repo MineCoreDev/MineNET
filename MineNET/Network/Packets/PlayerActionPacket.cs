@@ -26,6 +26,10 @@ namespace MineNET.Network.Packets
         public const int ACTION_CONTINUE_BREAK = 18;
 
         public const int ACTION_SET_ENCHANTMENT_SEED = 20;
+        public const int ACTION_SET_START_SWIMMING = 21;
+        public const int ACTION_SET_STOP_SWIMMING = 22;
+        public const int ACTION_SET_START_SPIN_ATTACK = 23;
+        public const int ACTION_SET_STOP_SPIN_ATTACK = 24;
 
         public const int ID = ProtocolInfo.PLAYER_ACTION_PACKET;
 

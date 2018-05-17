@@ -496,7 +496,10 @@ namespace MineNET.Worlds
             Player[] players = this.Players.Values.ToArray();
             for (int i = 0; i < players.Length; ++i)
             {
-                players[i].SpawnTo(player);
+                if (players[i].Uuid.ToString() != player.Uuid.ToString())
+                {
+                    players[i].SpawnTo(player);
+                }
             }
 
             this.Players[player.EntityID] = player;

@@ -19,6 +19,7 @@ namespace MineNET.Network.Packets
         public Skin Skin { get; set; }
         public string NewSkinName { get; set; } = "";
         public string OldSkinName { get; set; } = "";
+        public bool Premium { get; set; }
 
         public override void Encode()
         {
@@ -32,6 +33,7 @@ namespace MineNET.Network.Packets
             this.WriteByteData(this.Skin.CapeData);
             this.WriteString(this.Skin.GeometryName);
             this.WriteString(this.Skin.GeometryData);
+            this.WriteBool(this.Premium);
         }
 
         public override void Decode()
@@ -43,6 +45,7 @@ namespace MineNET.Network.Packets
             this.NewSkinName = this.ReadString();
             this.OldSkinName = this.ReadString();
             this.Skin = new Skin(skinId, this.ReadByteData(), this.ReadByteData(), this.ReadString(), this.ReadString());
+            this.Premium = this.ReadBool();
         }
     }
 }
