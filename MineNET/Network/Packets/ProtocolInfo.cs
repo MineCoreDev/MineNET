@@ -109,6 +109,11 @@
         public const byte SERVER_SETTINGS_RESPONSE_PACKET = 0x67;
         public const byte SHOW_PROFILE_PACKET = 0x68;
         public const byte SET_DEFAULT_GAME_TYPE_PACKET = 0x69;
+        public const byte REMOVE_OBJECTIVE_PACKET = 0x6a;
+        public const byte SET_DISPLAY_OBJECTIVE_PACKET = 0x6b;
+        public const byte SET_SCORE_PACKET = 0x6c;
+        public const byte LAB_TABLE_PACKET = 0x6d;
+        public const byte UPDATE_BLOCK_SYNCED_PACKET = 0x6e;
 
         public const byte BATCH_PACKET = 0xfe;
     }

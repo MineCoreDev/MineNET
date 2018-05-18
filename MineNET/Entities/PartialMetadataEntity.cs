@@ -52,9 +52,9 @@ namespace MineNET.Entities
         public const int DATA_URL_TAG = 41; //string
         public const int DATA_MAX_AIR = 42; //short
         public const int DATA_MARK_VARIANT = 43; //int
-                                                 /* 44 (byte) container stuff
-                                                  * 45 (int) container stuff
-                                                  * 46 (int) container stuff */
+        public const int DATA_CONTAINER_TYPE = 44; //byte (ContainerComponent) 
+        public const int DATA_CONTAINER_BASE_SIZE = 45; //int (ContainerComponent) 
+        public const int DATA_CONTAINER_EXTRA_SLOTS_PER_STRENGTH = 46; //int (used for llamas, inventory size is baseSize + thisProp * strength) 
         public const int DATA_BLOCK_TARGET = 47; //block coords (ender crystal)
         public const int DATA_WITHER_INVULNERABLE_TICKS = 48; //int
         public const int DATA_WITHER_TARGET_1 = 49; //long
@@ -84,8 +84,16 @@ namespace MineNET.Entities
         public const int DATA_CONTROLLING_RIDER_SEAT_NUMBER = 73; //byte
         public const int DATA_STRENGTH = 74; //int
         public const int DATA_MAX_STRENGTH = 75; //int
-                                                 /* 76 (int)
-                                                  * 77 (int) */
+                                                 /* 76 (int) */
+        public const int DATA_LIMITED_LIFE = 77;
+        public const int DATA_ARMOR_STAND_POSE_INDEX = 78; //int
+        public const int DATA_ENDER_CRYSTAL_TIME_OFFSET = 79; //int
+                                                              /* 80 (byte) something to do with nametag visibility? */
+        public const int DATA_COLOR_2 = 81; //byte
+                                            /* 82 (unknown) */
+        public const int DATA_SCORE_TAG = 83; //string
+        public const int DATA_BALLOON_ATTACHED_ENTITY = 84; //int64, entity unique ID of owner
+        public const int DATA_PUFFERFISH_SIZE = 85; //byte
 
 
         public const int DATA_FLAG_ONFIRE = 0;
@@ -139,6 +147,12 @@ namespace MineNET.Entities
         public const int DATA_FLAG_FIRE_IMMUNE = 48;
         public const int DATA_FLAG_DANCING = 49;
         public const int DATA_FLAG_ENCHANTED = 50;
+        //51 is something to do with tridents
+        public const int DATA_FLAG_CONTAINER_PRIVATE = 52; //inventory is private, doesn't drop contents when killed if true
+        //53 TransformationComponent
+        public const int DATA_FLAG_SPIN_ATTACK = 54;
+        public const int DATA_FLAG_SWIMMING = 55;
+        public const int DATA_FLAG_BRIBED = 56; //dolphins have this set when they go to find treasure for the player
 
         public bool GetFlag(int id, int flagID)
         {

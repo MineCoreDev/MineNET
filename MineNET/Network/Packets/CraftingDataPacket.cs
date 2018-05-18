@@ -11,6 +11,8 @@ namespace MineNET.Network.Packets
         public const int ENTRY_FURNACE_DATA = 3;
         public const int ENTRY_MULTI = 4;
         public const int ENTRY_SHULKER_BOX = 5;
+        public const int ENTRY_SHAPELESS_CHEMISTRY = 6;
+        public const int ENTRY_SHAPED_CHEMISTRY = 7;
 
         public const int ID = ProtocolInfo.CRAFTING_DATA_PACKET;
 
