@@ -41,7 +41,7 @@ namespace MineNET.Blocks
         public const int PISTON = 33;
         public const int PISTON_HEAD = 34;
         public const int WOOL = 35;
-
+        public const int ELEMENT_0 = 36;
         public const int YELLOW_FLOWER = 37;
         public const int RED_FLOWER = 38;
         public const int BROWN_MUSHROOM = 39;
@@ -171,7 +171,7 @@ namespace MineNET.Blocks
         public const int ACACIA_STAIRS = 163;
         public const int DARK_OAK_STAIRS = 164;
         public const int SLIME = 165;
-
+        public const int GLOW_STICK = 166;
         public const int IRON_TRAPDOOR = 167;
         public const int PRISMARINE = 168;
         public const int SEA_LANTERN = 169;
@@ -195,7 +195,9 @@ namespace MineNET.Blocks
         public const int ACACIA_FENCE_GATE = 187;
         public const int REPEATING_COMMAND_BLOCK = 188;
         public const int CHAIN_COMMAND_BLOCK = 189;
-
+        public const int HARD_GLASS_PANE = 190;
+        public const int HARD_STAINED_GLASS_PANE = 191;
+        public const int CHEMICAL_HEAT = 192;
         public const int SPRUCE_DOOR = 193;
         public const int BIRCH_DOOR = 194;
         public const int JUNGLE_DOOR = 195;
@@ -205,8 +207,9 @@ namespace MineNET.Blocks
         public const int FRAME = 199;
         public const int CHORUS_FLOWER = 200;
         public const int PURPUR_BLOCK = 201;
-        public const int PURPUR_STAIRS = 202;
-
+        public const int COLORED_TORCH_RG = 202;
+        public const int PURPUR_STAIRS = 203;
+        public const int COLORED_TORCH_BP = 204;
         public const int UNDYED_SHULKER_BOX = 205;
         public const int END_BRICKS = 206;
         public const int FROSTED_ICE = 207;
@@ -238,7 +241,8 @@ namespace MineNET.Blocks
         public const int BLACK_GLAZED_TERRACOTTA = 235;
         public const int CONCRETE = 236;
         public const int CONCRETE_POWDER = 237;
-
+        public const int CHEMISTRY_TABLE = 238;
+        public const int UNDERWATER_TORCH = 239;
         public const int CHORUS_PLANT = 240;
         public const int STAINED_GLASS = 241;
 
@@ -252,6 +256,9 @@ namespace MineNET.Blocks
         public const int MOVING_BLOCK = 250;
         public const int OBSERVER = 251;
         public const int STRUCTURE_BLOCK = 252;
+        public const int HARD_GLASS = 253;
+        public const int HARD_STAINED_GLASS = 254;
+        public const int RESERVED6 = 255;
 
         public const int PRISMARINE_STAIRS = 257;
         public const int DARK_PRISMARINE_STAIRS = 258;
@@ -262,6 +269,37 @@ namespace MineNET.Blocks
         public const int STRIPPED_ACACIA_LOG = 263;
         public const int STRIPPED_DARK_OAK_LOG = 264;
         public const int STRIPPED_OAK_LOG = 265;
+        public const int BLUE_ICE = 266;
+        public const int ELEMENT_1 = 267;
+        //TODO
+        public const int ELEMENT_118 = 384;
+        public const int SEAGRASS = 385;
+        public const int CORAL = 386;
+        public const int CORAL_BLOCK = 387;
+        public const int CORAL_FAN = 388;
+        public const int CORALFAN_DEAD = 389;
+        public const int CORAL_FAN_HANG = 390;
+        public const int CORAL_FAN_HANG2 = 391;
+        public const int CORAL_FAN_HANG3 = 392;
+        public const int KELP = 393;
+        public const int DRIED_KELP_BLOCK = 394;
+        public const int ACACIA_BUTTON = 395;
+        public const int BIRCH_BUTTON = 396;
+        public const int DARK_OAK_BUTTON = 397;
+        public const int JUNGLE_BUTTON = 398;
+        public const int SPRUCE_BUTTON = 399;
+        public const int ACACIA_TRAPDOOR = 400;
+        public const int BIRCH_TRAPDOOR = 401;
+        public const int DARK_OAK_TRAPDOOR = 402;
+        public const int JUNGLE_TRAPDOOR = 403;
+        public const int SPRUCE_TRAPDOOR = 404;
+        public const int ACACIA_PRESSURE_PLATE = 405;
+        public const int BIRCH_PRESSURE_PLATE = 406;
+        public const int DARK_OAK_PRESSURE_PLATE = 407;
+        public const int JUNGLE_PRESSURE_PLATE = 408;
+        public const int SPRUCE_PRESSURE_PLATE = 409;
+        public const int CARVED_PUMPKIN = 410;
+        public const int SEA_PICKLE = 411;
 
         private static Dictionary<int, Type> Blocks = new Dictionary<int, Type>();
 
