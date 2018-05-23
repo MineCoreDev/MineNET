@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using MineNET.Commands;
+﻿using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Data;
@@ -12,6 +10,8 @@ using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Utils;
 using MineNET.Values;
+using System.Collections.Generic;
+using System.Net;
 
 namespace MineNET.Entities.Players
 {
@@ -390,6 +390,7 @@ namespace MineNET.Entities.Players
             TextPacket pk = new TextPacket();
             pk.Type = TextPacket.TYPE_TRANSLATION;
             pk.Message = message;
+            pk.IsLocalized = true;
             pk.Parameters = list.ToArray();
             this.SendPacket(pk);
         }

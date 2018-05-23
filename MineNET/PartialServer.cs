@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using MineNET.Blocks;
+﻿using MineNET.Blocks;
 using MineNET.Commands;
 using MineNET.Entities.Players;
 using MineNET.Items;
@@ -13,6 +9,10 @@ using MineNET.Plugins;
 using MineNET.Utils;
 using MineNET.Utils.Config;
 using MineNET.Worlds;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MineNET
 {
