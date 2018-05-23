@@ -195,7 +195,7 @@ namespace MineNET.Utils
         public Item ReadItem()
         {
             int id = this.ReadSVarInt();
-            if (id <= 0)
+            if (id == 0)
             {
                 return Item.Get(0, 0, 0);
             }
@@ -239,7 +239,7 @@ namespace MineNET.Utils
 
         public void WriteItem(Item item)
         {
-            if (item == null || item.ID <= 0)
+            if (item == null || item.ID == 0)
             {
                 this.WriteSVarInt(0);
                 return;
