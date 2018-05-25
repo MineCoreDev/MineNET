@@ -41,7 +41,7 @@ namespace MineNET.Blocks
         public const int PISTON = 33;
         public const int PISTON_HEAD = 34;
         public const int WOOL = 35;
-        public const int ELEMENT_0 = 36;
+
         public const int YELLOW_FLOWER = 37;
         public const int RED_FLOWER = 38;
         public const int BROWN_MUSHROOM = 39;
@@ -171,7 +171,7 @@ namespace MineNET.Blocks
         public const int ACACIA_STAIRS = 163;
         public const int DARK_OAK_STAIRS = 164;
         public const int SLIME = 165;
-        public const int GLOW_STICK = 166;
+
         public const int IRON_TRAPDOOR = 167;
         public const int PRISMARINE = 168;
         public const int SEA_LANTERN = 169;
@@ -195,9 +195,7 @@ namespace MineNET.Blocks
         public const int ACACIA_FENCE_GATE = 187;
         public const int REPEATING_COMMAND_BLOCK = 188;
         public const int CHAIN_COMMAND_BLOCK = 189;
-        public const int HARD_GLASS_PANE = 190;
-        public const int HARD_STAINED_GLASS_PANE = 191;
-        public const int CHEMICAL_HEAT = 192;
+
         public const int SPRUCE_DOOR = 193;
         public const int BIRCH_DOOR = 194;
         public const int JUNGLE_DOOR = 195;
@@ -207,9 +205,9 @@ namespace MineNET.Blocks
         public const int FRAME = 199;
         public const int CHORUS_FLOWER = 200;
         public const int PURPUR_BLOCK = 201;
-        public const int COLORED_TORCH_RG = 202;
+
         public const int PURPUR_STAIRS = 203;
-        public const int COLORED_TORCH_BP = 204;
+
         public const int UNDYED_SHULKER_BOX = 205;
         public const int END_BRICKS = 206;
         public const int FROSTED_ICE = 207;
@@ -241,8 +239,7 @@ namespace MineNET.Blocks
         public const int BLACK_GLAZED_TERRACOTTA = 235;
         public const int CONCRETE = 236;
         public const int CONCRETE_POWDER = 237;
-        public const int CHEMISTRY_TABLE = 238;
-        public const int UNDERWATER_TORCH = 239;
+
         public const int CHORUS_PLANT = 240;
         public const int STAINED_GLASS = 241;
 
@@ -256,9 +253,6 @@ namespace MineNET.Blocks
         public const int MOVING_BLOCK = 250;
         public const int OBSERVER = 251;
         public const int STRUCTURE_BLOCK = 252;
-        public const int HARD_GLASS = 253;
-        public const int HARD_STAINED_GLASS = 254;
-        public const int RESERVED6 = 255;
 
         public const int PRISMARINE_STAIRS = 257;
         public const int DARK_PRISMARINE_STAIRS = 258;
@@ -270,9 +264,7 @@ namespace MineNET.Blocks
         public const int STRIPPED_DARK_OAK_LOG = 264;
         public const int STRIPPED_OAK_LOG = 265;
         public const int BLUE_ICE = 266;
-        public const int ELEMENT_1 = 267;
-        //TODO
-        public const int ELEMENT_118 = 384;
+
         public const int SEAGRASS = 385;
         public const int CORAL = 386;
         public const int CORAL_BLOCK = 387;
@@ -300,6 +292,146 @@ namespace MineNET.Blocks
         public const int SPRUCE_PRESSURE_PLATE = 409;
         public const int CARVED_PUMPKIN = 410;
         public const int SEA_PICKLE = 411;
+
+        #region Education Edition constant
+        public const int ELEMENT_0 = 36;
+
+        public const int GLOW_STICK = 166;
+
+        public const int HARD_GLASS_PANE = 190;
+        public const int HARD_STAINED_GLASS_PANE = 191;
+        public const int CHEMICAL_HEAT = 192;
+
+        public const int COLORED_TORCH_RG = 202;
+
+        public const int COLORED_TORCH_BP = 204;
+
+        public const int CHEMISTRY_TABLE = 238;
+        public const int UNDERWATER_TORCH = 239;
+
+        public const int HARD_GLASS = 253;
+        public const int HARD_STAINED_GLASS = 254;
+        public const int RESERVED6 = 255;
+
+        public const int ELEMENT_1 = 267;
+        public const int ELEMENT_2 = 268;
+        public const int ELEMENT_3 = 269;
+        public const int ELEMENT_4 = 270;
+        public const int ELEMENT_5 = 271;
+        public const int ELEMENT_6 = 272;
+        public const int ELEMENT_7 = 273;
+        public const int ELEMENT_8 = 274;
+        public const int ELEMENT_9 = 275;
+        public const int ELEMENT_10 = 276;
+        public const int ELEMENT_11 = 277;
+        public const int ELEMENT_12 = 278;
+        public const int ELEMENT_13 = 279;
+        public const int ELEMENT_14 = 280;
+        public const int ELEMENT_15 = 281;
+        public const int ELEMENT_16 = 282;
+        public const int ELEMENT_17 = 283;
+        public const int ELEMENT_18 = 284;
+        public const int ELEMENT_19 = 285;
+        public const int ELEMENT_20 = 286;
+        public const int ELEMENT_21 = 287;
+        public const int ELEMENT_22 = 288;
+        public const int ELEMENT_23 = 289;
+        public const int ELEMENT_24 = 290;
+        public const int ELEMENT_25 = 291;
+        public const int ELEMENT_26 = 292;
+        public const int ELEMENT_27 = 293;
+        public const int ELEMENT_28 = 294;
+        public const int ELEMENT_29 = 295;
+        public const int ELEMENT_30 = 296;
+        public const int ELEMENT_31 = 297;
+        public const int ELEMENT_32 = 298;
+        public const int ELEMENT_33 = 299;
+        public const int ELEMENT_34 = 300;
+        public const int ELEMENT_35 = 301;
+        public const int ELEMENT_36 = 302;
+        public const int ELEMENT_37 = 303;
+        public const int ELEMENT_38 = 304;
+        public const int ELEMENT_39 = 305;
+        public const int ELEMENT_40 = 306;
+        public const int ELEMENT_41 = 307;
+        public const int ELEMENT_42 = 308;
+        public const int ELEMENT_43 = 309;
+        public const int ELEMENT_44 = 310;
+        public const int ELEMENT_45 = 311;
+        public const int ELEMENT_46 = 312;
+        public const int ELEMENT_47 = 313;
+        public const int ELEMENT_48 = 314;
+        public const int ELEMENT_49 = 315;
+        public const int ELEMENT_50 = 316;
+        public const int ELEMENT_51 = 317;
+        public const int ELEMENT_52 = 318;
+        public const int ELEMENT_53 = 319;
+        public const int ELEMENT_54 = 320;
+        public const int ELEMENT_55 = 321;
+        public const int ELEMENT_56 = 322;
+        public const int ELEMENT_57 = 323;
+        public const int ELEMENT_58 = 324;
+        public const int ELEMENT_59 = 325;
+        public const int ELEMENT_60 = 326;
+        public const int ELEMENT_61 = 327;
+        public const int ELEMENT_62 = 328;
+        public const int ELEMENT_63 = 329;
+        public const int ELEMENT_64 = 330;
+        public const int ELEMENT_65 = 331;
+        public const int ELEMENT_66 = 332;
+        public const int ELEMENT_67 = 333;
+        public const int ELEMENT_68 = 334;
+        public const int ELEMENT_69 = 335;
+        public const int ELEMENT_70 = 336;
+        public const int ELEMENT_71 = 337;
+        public const int ELEMENT_72 = 338;
+        public const int ELEMENT_73 = 339;
+        public const int ELEMENT_74 = 340;
+        public const int ELEMENT_75 = 341;
+        public const int ELEMENT_76 = 342;
+        public const int ELEMENT_77 = 343;
+        public const int ELEMENT_78 = 344;
+        public const int ELEMENT_79 = 345;
+        public const int ELEMENT_80 = 346;
+        public const int ELEMENT_81 = 347;
+        public const int ELEMENT_82 = 348;
+        public const int ELEMENT_83 = 349;
+        public const int ELEMENT_84 = 350;
+        public const int ELEMENT_85 = 351;
+        public const int ELEMENT_86 = 352;
+        public const int ELEMENT_87 = 353;
+        public const int ELEMENT_88 = 354;
+        public const int ELEMENT_89 = 355;
+        public const int ELEMENT_90 = 356;
+        public const int ELEMENT_91 = 357;
+        public const int ELEMENT_92 = 358;
+        public const int ELEMENT_93 = 359;
+        public const int ELEMENT_94 = 360;
+        public const int ELEMENT_95 = 361;
+        public const int ELEMENT_96 = 362;
+        public const int ELEMENT_97 = 363;
+        public const int ELEMENT_98 = 364;
+        public const int ELEMENT_99 = 365;
+        public const int ELEMENT_100 = 366;
+        public const int ELEMENT_101 = 367;
+        public const int ELEMENT_102 = 368;
+        public const int ELEMENT_103 = 369;
+        public const int ELEMENT_104 = 370;
+        public const int ELEMENT_105 = 371;
+        public const int ELEMENT_106 = 372;
+        public const int ELEMENT_107 = 373;
+        public const int ELEMENT_108 = 374;
+        public const int ELEMENT_109 = 375;
+        public const int ELEMENT_110 = 376;
+        public const int ELEMENT_111 = 377;
+        public const int ELEMENT_112 = 378;
+        public const int ELEMENT_113 = 379;
+        public const int ELEMENT_114 = 380;
+        public const int ELEMENT_115 = 381;
+        public const int ELEMENT_116 = 382;
+        public const int ELEMENT_117 = 383;
+        public const int ELEMENT_118 = 384;
+        #endregion
 
         private static Dictionary<int, Type> Blocks = new Dictionary<int, Type>();
 
@@ -1298,8 +1430,6 @@ namespace MineNET.Blocks
                 int.TryParse(data[0], out id);
                 int.TryParse(data[1], out meta);
             }
-
-            id = id > 255 ? 0 : id;
 
             try
             {
