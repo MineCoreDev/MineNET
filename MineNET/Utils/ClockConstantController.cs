@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MineNET.Utils
@@ -71,6 +72,21 @@ namespace MineNET.Utils
             else
             {
                 return Task.Delay((int) wait);
+            }
+        }
+
+        public static void StopByThread(string name)
+        {
+            ControllerInstance instance = instances[name];
+            instance.StopWatch.Stop();
+            long wait = instance.StopWatch.ElapsedMilliseconds - instance.ClockTime;
+            if (wait <= 0)
+            {
+                Thread.Sleep(1);
+            }
+            else
+            {
+                Thread.Sleep((int) wait);
             }
         }
 

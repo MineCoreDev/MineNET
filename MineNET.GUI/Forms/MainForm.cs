@@ -151,6 +151,7 @@ namespace MineNET.GUI.Forms
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            this.Server?.Stop();
             this.ConfigSave();
             this.BaseForm.Close();
         }

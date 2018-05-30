@@ -18,19 +18,20 @@ namespace MineNET
 {
     public sealed partial class Server
     {
-        private static Server instance;
-
+        #region Field
         private MineNETConfig mineNETConfig;
         private ServerConfig serverConfig;
 
-        private Dictionary<long, Player> PlayerList { get; set; } = new Dictionary<long, Player>();
+        private Dictionary<long, Player> playerList = new Dictionary<long, Player>();
 
         internal Dictionary<string, World> worlds = new Dictionary<string, World>();
 
         private int tick = 0;
 
         private bool isShutdown;
+        #endregion
 
+        #region Init Method
         private void Init()
         {
             this.InitConfig();
@@ -114,7 +115,9 @@ namespace MineNET
             }
             Logger.Info("%server_world_loaded", worldName);
         }
+        #endregion
 
+        #region World Unload Method
         private void UnloadWorld()
         {
             foreach (World w in this.worlds.Values)
@@ -122,7 +125,9 @@ namespace MineNET
                 w.Format.WorldData.Save(w);
             }
         }
+        #endregion
 
+        #region AsyncLoadFile
         private async void LoadFiles()
         {
             await Task.Run(() =>
@@ -131,7 +136,9 @@ namespace MineNET
                 Block.LoadRuntimeIds();
             });
         }
+        #endregion
 
+        #region Update Method
         private async void Update()
         {
             while (!IsShutdown())
@@ -164,6 +171,17 @@ namespace MineNET
             }
         }
 
+        private async void UpdateLogger()
+        {
+            while (!IsShutdown())
+            {
+                await Task.Delay(1);
+                this.Logger.Update();
+            }
+        }
+        #endregion
+
+        #region Send Chunk Method
         private void SendPlayersChunk()
         {
             Task.Run(() =>
@@ -175,16 +193,9 @@ namespace MineNET
                 }
             });
         }
+        #endregion
 
-        private async void UpdateLogger()
-        {
-            while (!IsShutdown())
-            {
-                await Task.Delay(1000 / 20);
-                this.Logger.Update();
-            }
-        }
-
+        #region Handle Method
         private void CommandHandle()
         {
             string cmd = this.ConsoleInput.GetCommand();
@@ -193,7 +204,9 @@ namespace MineNET
                 this.CommandManager.HandleConsoleCommand(cmd);
             }
         }
+        #endregion
 
+        #region Task Kill Method
         private void Kill()
         {
             Logger.Info("%server_stoped");
@@ -205,11 +218,13 @@ namespace MineNET
             await Task.Delay(1000);
             this.isShutdown = true;
         }
+        #endregion
 
+        #region Add / Remove Method
         private async void AddPlayerList(Player player)
         {
-            this.PlayerList[player.EntityID] = player;
-            Player[] players = this.PlayerList.Values.ToArray();
+            this.playerList[player.EntityID] = player;
+            Player[] players = this.playerList.Values.ToArray();
             for (int i = 0; i < players.Length; ++i)
             {
                 PlayerListPacket playerListPacket = new PlayerListPacket();
@@ -224,8 +239,8 @@ namespace MineNET
 
         private void RemovePlayerList(long eid)
         {
-            PlayerListEntry entry = this.PlayerList[eid].PlayerListEntry;
-            Player[] players = this.PlayerList.Values.ToArray();
+            PlayerListEntry entry = this.playerList[eid].PlayerListEntry;
+            Player[] players = this.playerList.Values.ToArray();
             for (int i = 0; i < players.Length; ++i)
             {
                 PlayerListPacket playerListPacket = new PlayerListPacket();
@@ -237,11 +252,12 @@ namespace MineNET
 
         private void AddAdventureSettings(Player player)
         {
-            Player[] players = this.PlayerList.Values.ToArray();
+            Player[] players = this.playerList.Values.ToArray();
             for (int i = 0; i < players.Length; ++i)
             {
                 player.AdventureSettingsEntry.Update(players[i]);
             }
         }
+        #endregion
     }
 }

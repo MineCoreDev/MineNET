@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using MineNET.Commands;
+﻿using MineNET.Commands;
 using MineNET.Entities.Players;
 using MineNET.Events.ServerEvents;
 using MineNET.Network;
@@ -12,18 +7,18 @@ using MineNET.Network.Packets.Data;
 using MineNET.Plugins;
 using MineNET.Utils;
 using MineNET.Utils.Config;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
 
 namespace MineNET
 {
     public sealed partial class Server
     {
-        public static Server Instance
-        {
-            get
-            {
-                return Server.instance;
-            }
-        }
+        #region Static Property
+        public static Server Instance { get; private set; }
 
         public static MineNETConfig MineNETConfig
         {
@@ -48,7 +43,9 @@ namespace MineNET
                 return Environment.CurrentDirectory;
             }
         }
+        #endregion
 
+        #region Property & Field
         public YamlConfig BanConfig { get; private set; }
         public YamlConfig BanIpConfig { get; private set; }
         public YamlConfig OpsConfig { get; private set; }
@@ -63,15 +60,19 @@ namespace MineNET
         public Logger Logger { get; set; }
 
         public IConsoleInput ConsoleInput { get; set; }
+        #endregion
 
+        #region Kill Check Method
         public bool IsShutdown()
         {
             return this.isShutdown;
         }
+        #endregion
 
+        #region Start & Stop Method
         public void Start()
         {
-            instance = this;
+            Server.Instance = this;
 
             Stopwatch s = new Stopwatch();
             s.Start();
@@ -149,7 +150,9 @@ namespace MineNET
 
             this.Kill();
         }
+        #endregion
 
+        #region Add / Remove Player Method
         public void AddPlayer(Player player)
         {
             this.SendPlayerLists(player);
@@ -160,17 +163,19 @@ namespace MineNET
 
         public void RemovePlayer(long entityID)
         {
-            if (this.PlayerList.ContainsKey(entityID))
+            if (this.playerList.ContainsKey(entityID))
             {
                 this.RemovePlayerList(entityID);
-                this.PlayerList.Remove(entityID);
+                this.playerList.Remove(entityID);
             }
         }
+        #endregion
 
+        #region PlayerList & AdventureSetting Send Method
         public void SendPlayerLists(Player player)
         {
             List<PlayerListEntry> entries = new List<PlayerListEntry>();
-            Player[] players = this.PlayerList.Values.ToArray();
+            Player[] players = this.playerList.Values.ToArray();
             for (int i = 0; i < players.Length; ++i)
             {
                 entries.Add(players[i].PlayerListEntry);
@@ -184,13 +189,15 @@ namespace MineNET
 
         public void SendAdventureSettings(Player player)
         {
-            Player[] players = this.PlayerList.Values.ToArray();
+            Player[] players = this.playerList.Values.ToArray();
             for (int i = 0; i < players.Length; ++i)
             {
                 players[i].AdventureSettingsEntry.Update(player);
             }
         }
+        #endregion
 
+        #region Player Get Method
         public Player[] GetPlayers()
         {
             return this.NetworkManager?.players.Values.ToArray();
@@ -249,7 +256,9 @@ namespace MineNET
                 return false;
             }
         }
+        #endregion
 
+        #region Broadcast Method
         public void BroadcastPacket(DataPacket pk, params Player[] players)
         {
             for (int i = 0; i < players.Length; ++i)
@@ -320,7 +329,9 @@ namespace MineNET
 
             Logger.Info(message);
         }
+        #endregion
 
+        #region Whitelist Method
         public bool Whitelist
         {
             get
@@ -370,7 +381,9 @@ namespace MineNET
             this.WhitelistConfig.Remove(name);
             this.WhitelistConfig.Save();
         }
+        #endregion
 
+        #region Ban Method
         public bool IsBan(Player player)
         {
             return this.IsBan(player.Name);
@@ -406,7 +419,9 @@ namespace MineNET
             this.BanConfig.Remove(name);
             this.BanConfig.Save();
         }
+        #endregion
 
+        #region BanIp Method
         public bool IsBanIp(Player player)
         {
             return this.IsBanIp(player.EndPoint);
@@ -467,7 +482,9 @@ namespace MineNET
             this.BanIpConfig.Remove(ip);
             this.BanIpConfig.Save();
         }
+        #endregion
 
+        #region OP Method
         public bool IsOp(Player player)
         {
             return this.IsOp(player.Name);
@@ -503,5 +520,6 @@ namespace MineNET
             this.OpsConfig.Remove(name);
             this.OpsConfig.Save();
         }
+        #endregion
     }
 }
