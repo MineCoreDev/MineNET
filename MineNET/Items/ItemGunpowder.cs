@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
-    public class ItemGunpowder : ItemTool
+    public class ItemGunpowder : Item
     {
         public ItemGunpowder() : base(ItemFactory.GUNPOWDER)
         {

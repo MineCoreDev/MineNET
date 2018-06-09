@@ -201,12 +201,12 @@ namespace MineNET.Items
             return false;
         }
 
-        public virtual bool Use(Block block)
+        public virtual bool BlockDestroyed(Block block, EntityLiving entity)
         {
             return false;
         }
 
-        public virtual bool Use(Entity entity)
+        public virtual bool HitEntity(EntityLiving attacker, EntityLiving target)
         {
             return false;
         }
@@ -367,6 +367,29 @@ namespace MineNET.Items
             }
         }
 
+        public virtual int AttackDamage
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        #region NBT CustomName
+
+        public string CustomName
+        {
+            get
+            {
+                return this.GetCustomName();
+            }
+
+            set
+            {
+                this.SetCustomName(value);
+            }
+        }
+
         public string GetCustomName()
         {
             if (!this.HasTags)
@@ -436,6 +459,23 @@ namespace MineNET.Items
             }
             this.SetNamedTag(tag);
             return this;
+        }
+
+        #endregion
+
+        #region NBT Lore
+
+        public string[] Lore
+        {
+            get
+            {
+                return this.GetLore();
+            }
+
+            set
+            {
+                this.SetLore(value);
+            }
         }
 
         public string[] GetLore()
@@ -541,6 +581,70 @@ namespace MineNET.Items
             return this;
         }
 
+        #endregion
+
+        #region NBT Unbreakable
+
+        public bool Unbreakable
+        {
+            get
+            {
+                return this.GetUnbreakable();
+            }
+
+            set
+            {
+                this.SetUnbreakable(value);
+            }
+        }
+
+        public bool GetUnbreakable()
+        {
+            if (!this.HasTags)
+            {
+                return false;
+            }
+
+            CompoundTag tag = this.GetNamedTag();
+            if (!tag.Exist("Unbreakable"))
+            {
+                return false;
+            }
+            return tag.GetBool("Unbreakable");
+        }
+
+        public void SetUnbreakable(bool value)
+        {
+            CompoundTag tag;
+            if (this.HasTags)
+            {
+                tag = this.GetNamedTag();
+            }
+            else
+            {
+                tag = new CompoundTag();
+            }
+            tag.PutBool("Unbreakable", value);
+            this.SetNamedTag(tag);
+        }
+
+        #endregion
+
+        #region NBT Enchantment
+
+        public Enchantment[] Enchant
+        {
+            get
+            {
+                return this.GetEnchantments();
+            }
+
+            set
+            {
+                //TODO
+            }
+        }
+
         public bool HasEnchantment(int id)
         {
             if (!this.HasTags)
@@ -643,6 +747,8 @@ namespace MineNET.Items
             this.SetNamedTag(tag);
             return this;
         }
+
+        #endregion
 
         public string[] CanPlaceOn
         {

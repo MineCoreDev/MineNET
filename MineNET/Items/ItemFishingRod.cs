@@ -1,6 +1,6 @@
 ﻿namespace MineNET.Items
 {
-    public class ItemFishingRod : Item
+    public class ItemFishingRod : ItemTool
     {
         public ItemFishingRod() : base(ItemFactory.FISHING_ROD)
         {
@@ -20,6 +20,14 @@
             get
             {
                 return 1;
+            }
+        }
+
+        public override int MaxDurability
+        {
+            get
+            {
+                return 65;
             }
         }
     }

@@ -22,5 +22,13 @@
                 return true;
             }
         }
+
+        public override int MaxDurability
+        {
+            get
+            {
+                return 239;
+            }
+        }
     }
 }

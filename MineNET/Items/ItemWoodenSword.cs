@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public class ItemWoodenSword : ItemTool
     {
@@ -26,6 +20,14 @@ namespace MineNET.Items
             get
             {
                 return true;
+            }
+        }
+
+        public override int MaxDurability
+        {
+            get
+            {
+                return 60;
             }
         }
     }

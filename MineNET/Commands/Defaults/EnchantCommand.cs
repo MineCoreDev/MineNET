@@ -83,7 +83,7 @@ namespace MineNET.Commands.Defaults
                 {
                     EntityLiving entity = (EntityLiving) entities[i];
                     Enchantment enchant = Enchantment.GetEnchantment(args[1], level);
-                    if (enchant.MinLevel < level || level > enchant.MaxLevel)
+                    if (enchant.MinLevel > level || level > enchant.MaxLevel)
                     {
                         sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.enchant.invalidLevel", enchant.Name, level));
                         continue;

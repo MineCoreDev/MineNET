@@ -23,13 +23,13 @@ namespace MineNET.Blocks
         {
             if (item.IsHoe)
             {
-                item.Use(this);
+                item.BlockDestroyed(this, player);
                 this.World.SetBlock((Vector3) this, new BlockFarmland());
                 return true;
             }
             else if (item.IsShovel)
             {
-                item.Use(this);
+                item.BlockDestroyed(this, player);
                 this.World.SetBlock((Vector3) this, new BlockGrassPath());
                 return true;
             }
