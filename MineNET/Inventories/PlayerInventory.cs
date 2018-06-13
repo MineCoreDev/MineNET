@@ -11,11 +11,12 @@ namespace MineNET.Inventories
 {
     public class PlayerInventory : EntityInventory
     {
-        private PlayerCursorInventory cursor;
+        public PlayerCursorInventory PlayerCursorInventory { get; }
+        public PlayerEnderChestInventory PlayerEnderChestInventory { get; }
+        public Inventory OpendInventory { get; private set; } = null;
 
-        private PlayerEnderChestInventory ender;
 
-        private Inventory opend = null;
+        public CraftingGridInventory CraftingGridInventory { get; }
 
         public PlayerInventory(Player player) : base(player, 36)
         {
@@ -36,9 +37,10 @@ namespace MineNET.Inventories
                 this.SetItem(i, item, false);
             }
 
-            this.cursor = new PlayerCursorInventory(player);
+            this.PlayerCursorInventory = new PlayerCursorInventory(player);
+            this.PlayerEnderChestInventory = new PlayerEnderChestInventory(player);
 
-            this.ender = new PlayerEnderChestInventory(player);
+            this.CraftingGridInventory = new CraftingGridInventory(player);
         }
 
         public override void SendSlot(int index, params Player[] players)
@@ -98,12 +100,12 @@ namespace MineNET.Inventories
 
         internal void OpenInventory(Inventory inventory)
         {
-            this.opend = inventory;
+            this.OpendInventory = inventory;
         }
 
         internal void CloseInventory()
         {
-            this.opend = null;
+            this.OpendInventory = null;
         }
 
         public Inventory GetInventory(byte id)
@@ -131,30 +133,6 @@ namespace MineNET.Inventories
             else
             {
                 return null;
-            }
-        }
-
-        public PlayerCursorInventory PlayerCursorInventory
-        {
-            get
-            {
-                return this.cursor;
-            }
-        }
-
-        public PlayerEnderChestInventory PlayerEnderChestInventory
-        {
-            get
-            {
-                return this.ender;
-            }
-        }
-
-        public Inventory OpendInventory
-        {
-            get
-            {
-                return this.opend;
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using MineNET.Items;
+﻿using MineNET.Items;
 using MineNET.Network.Packets;
 using MineNET.Utils;
 using MineNET.Values;
@@ -8,8 +7,8 @@ namespace MineNET.Inventories.Recipe
 {
     public class ShapelessRecipe : IRecipe
     {
-        public List<Item> Ingredients { get; }
-        public Item Output { get; }
+        public Item[] RecipeItems { get; }
+        public Item[] Output { get; }
 
         public UUID UUID { get; }
 
@@ -21,9 +20,9 @@ namespace MineNET.Inventories.Recipe
             }
         }
 
-        public ShapelessRecipe(List<Item> ingredients, Item output, UUID uuid = new UUID())
+        public ShapelessRecipe(Item[] recipeItems, Item[] output, UUID uuid = new UUID())
         {
-            this.Ingredients = ingredients;
+            this.RecipeItems = recipeItems;
             this.Output = output;
             this.UUID = uuid;
         }
@@ -32,13 +31,18 @@ namespace MineNET.Inventories.Recipe
         {
             stream.WriteSVarInt(this.ID);
 
-            stream.WriteUVarInt((uint) this.Ingredients.Count);
-            for (int i = 0; i < this.Ingredients.Count; ++i)
+            stream.WriteUVarInt((uint) this.RecipeItems.Length);
+            for (int i = 0; i < this.RecipeItems.Length; ++i)
             {
-                stream.WriteItem(this.Ingredients[i]);
+                stream.WriteItem(this.RecipeItems[i]);
             }
-            stream.WriteVarInt(1);
-            stream.WriteItem(this.Output);
+
+            stream.WriteUVarInt((uint) this.Output.Length);
+            for (int i = 0; i < this.Output.Length; ++i)
+            {
+                stream.WriteItem(this.Output[i]);
+            }
+
             stream.WriteUUID(this.UUID);
         }
     }

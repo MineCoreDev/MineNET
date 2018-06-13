@@ -17,10 +17,10 @@ namespace MineNET.Inventories.Recipe
 
         public void RegisterRecipe()
         {
-            this.AddShapedRecipe(Item.Get(5, 0, 4), new object[] { new string[] { "#" }, "#", Item.Get(17) });
+            this.AddShapedRecipe(new Item[] { Item.Get(5, 0, 4) }, new object[] { new string[] { "#" }, "#", Item.Get(17) });
         }
 
-        public ShapedRecipe AddShapedRecipe(Item output, object[] recipeComponents)
+        public ShapedRecipe AddShapedRecipe(Item[] output, object[] recipeComponents)
         {
             if (!(recipeComponents[0] is string[]))
             {
@@ -72,9 +72,9 @@ namespace MineNET.Inventories.Recipe
             return recipe;
         }
 
-        public ShapelessRecipe AddShapelessRecipe(Item item, Item[] recipeComponents)
+        public ShapelessRecipe AddShapelessRecipe(Item[] output, Item[] recipeItems)
         {
-            ShapelessRecipe recipe = new ShapelessRecipe(new List<Item>(recipeComponents), item);
+            ShapelessRecipe recipe = new ShapelessRecipe(recipeItems, output);
             this.Recipes.Add(recipe);
             return recipe;
         }
