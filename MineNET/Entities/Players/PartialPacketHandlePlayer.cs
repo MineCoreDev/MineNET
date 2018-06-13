@@ -290,6 +290,8 @@ namespace MineNET.Entities.Players
 
                 this.World.AddPlayer(this);
                 this.SendDataProperties();
+
+                Server.Instance.CraftingManager.SendPacket(this);
             }
         }
 

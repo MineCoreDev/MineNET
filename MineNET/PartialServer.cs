@@ -1,6 +1,11 @@
-﻿using MineNET.Blocks;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using MineNET.Blocks;
 using MineNET.Commands;
 using MineNET.Entities.Players;
+using MineNET.Inventories.Recipe;
 using MineNET.Items;
 using MineNET.Network;
 using MineNET.Network.Packets;
@@ -9,10 +14,6 @@ using MineNET.Plugins;
 using MineNET.Utils;
 using MineNET.Utils.Config;
 using MineNET.Worlds;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MineNET
 {
@@ -59,6 +60,7 @@ namespace MineNET
             this.CommandManager = new CommandManager();
             this.PluginManager = new PluginManager();
             this.NetworkManager = new NetworkManager();
+            this.CraftingManager = new CraftingManager();
 
             this.PluginManager.EnablePlugins();
         }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Blocks
+﻿namespace MineNET.Blocks
 {
     public class BlockCraftingTable : BlockSolid
     {
@@ -18,6 +12,14 @@ namespace MineNET.Blocks
             get
             {
                 return "CraftingTable";
+            }
+        }
+
+        public override bool CanBeActivated
+        {
+            get
+            {
+                return true;
             }
         }
     }

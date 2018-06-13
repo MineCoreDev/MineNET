@@ -1,17 +1,18 @@
-﻿using MineNET.Commands;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
+using MineNET.Commands;
 using MineNET.Entities.Players;
 using MineNET.Events.ServerEvents;
+using MineNET.Inventories.Recipe;
 using MineNET.Network;
 using MineNET.Network.Packets;
 using MineNET.Network.Packets.Data;
 using MineNET.Plugins;
 using MineNET.Utils;
 using MineNET.Utils.Config;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
 
 namespace MineNET
 {
@@ -56,6 +57,8 @@ namespace MineNET
         public CommandManager CommandManager { get; private set; }
 
         public PluginManager PluginManager { get; private set; }
+
+        public CraftingManager CraftingManager { get; private set; }
 
         public Logger Logger { get; set; }
 
