@@ -46,6 +46,15 @@ namespace MineNET.Utils
             );
         }
 
+        public Vector3i ReadBlockVector3i()
+        {
+            return new Vector3i(
+                this.ReadSVarInt(),
+                (int) this.ReadUVarInt(),
+                this.ReadSVarInt()
+            );
+        }
+
         public void WriteBlockVector3(Vector3 pos)
         {
             this.WriteBlockVector3(pos.FloorX, pos.FloorY, pos.FloorZ);
