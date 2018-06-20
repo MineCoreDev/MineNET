@@ -29,6 +29,48 @@
         public uint Color { get; set; }
         public uint Overlay { get; set; }
 
+        public override void Encode()
+        {
+            base.Encode();
+
+            this.WriteEntityUniqueId(this.BossEid);
+            this.WriteUVarInt(this.EventType);
+            switch (this.EventType)
+            {
+                case BossEventPacket.TYPE_REGISTER_PLAYER:
+                case BossEventPacket.TYPE_UNREGISTER_PLAYER:
+                    this.WriteEntityUniqueId(this.PlayerEid);
+                    break;
+
+                case BossEventPacket.TYPE_SHOW:
+                    this.WriteString(this.Title);
+                    this.WriteLFloat(this.HealthPercent);
+                    this.WriteLShort(this.UnknownShort);
+                    this.WriteUVarInt(this.Color);
+                    this.WriteUVarInt(this.Overlay);
+                    break;
+
+                case BossEventPacket.TYPE_UNKNOWN_6:
+                    this.WriteLShort(this.UnknownShort);
+                    this.WriteUVarInt(this.Color);
+                    this.WriteUVarInt(this.Overlay);
+                    break;
+
+                case BossEventPacket.TYPE_TEXTURE:
+                    this.WriteUVarInt(this.Color);
+                    this.WriteUVarInt(this.Overlay);
+                    break;
+
+                case BossEventPacket.TYPE_HEALTH_PERCENT:
+                    this.WriteLFloat(this.HealthPercent);
+                    break;
+
+                case BossEventPacket.TYPE_TITLE:
+                    this.WriteString(this.Title);
+                    break;
+            }
+        }
+
         public override void Decode()
         {
             base.Decode();
@@ -59,6 +101,10 @@
                 case BossEventPacket.TYPE_TEXTURE:
                     this.Color = this.ReadUVarInt();
                     this.Overlay = this.ReadUVarInt();
+                    break;
+
+                case BossEventPacket.TYPE_HEALTH_PERCENT:
+                    this.HealthPercent = this.ReadLFloat();
                     break;
 
                 case BossEventPacket.TYPE_TITLE:

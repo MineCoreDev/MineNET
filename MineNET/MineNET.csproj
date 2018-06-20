@@ -475,6 +475,9 @@
     <Compile Include="Network\Packets\BlockPickRequestPacket.cs" />
     <Compile Include="Network\Packets\BookEditPacket.cs" />
     <Compile Include="Network\Packets\BossEventPacket.cs" />
+    <Compile Include="Network\Packets\CameraPacket.cs" />
+    <Compile Include="Network\Packets\ChangeDimensionPacket.cs" />
+    <Compile Include="Network\Packets\ClientboundMapItemDataPacket.cs" />
     <Compile Include="Network\Packets\CommandRequestPacket.cs" />
     <Compile Include="Network\Packets\CraftingDataPacket.cs" />
     <Compile Include="Network\Packets\CraftingEventPacket.cs" />
