@@ -127,11 +127,14 @@
     <Compile Include="Entities\Metadata\EntityMetadataManager.cs" />
     <Compile Include="Entities\Metadata\EntityMetadataType.cs" />
     <Compile Include="Entities\Players\PlayerPermissions.cs" />
+    <Compile Include="Events\NetworkEvents\CloseSessionEventArgs.cs" />
     <Compile Include="Events\NetworkEvents\CreateSessionEventArgs.cs" />
     <Compile Include="Events\NetworkEvents\NetworkEvent.cs" />
     <Compile Include="Events\NetworkEvents\NetworkEventArgs.cs" />
     <Compile Include="Events\NetworkEvents\RakNetDataPacketReceiveEventArgs.cs" />
     <Compile Include="Events\NetworkEvents\RakNetDataPacketSendEventArgs.cs" />
+    <Compile Include="Events\NetworkEvents\RakNetEncapsulatedReceiveEventArgs.cs" />
+    <Compile Include="Events\NetworkEvents\RakNetEncapsulatedSendEventArgs.cs" />
     <Compile Include="Events\NetworkEvents\RakNetPacketReceiveEventArgs.cs" />
     <Compile Include="Events\NetworkEvents\RakNetPacketSendEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCreateEventArgs.cs" />

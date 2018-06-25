@@ -214,6 +214,14 @@ namespace MineNET.Network
                     return;
                 }
 
+                RakNetEncapsulatedReceiveEventArgs ev = new RakNetEncapsulatedReceiveEventArgs(this, packet);
+                Server.Instance.Event.Network.OnRakNetEncapsulatedReceive(this, ev);
+
+                if (ev.IsCancel)
+                {
+                    return;
+                }
+
                 //TODO: Ordered & Sequenced
                 this.HandleEncapsulatedPacketRoute(packet);
             }
@@ -268,7 +276,7 @@ namespace MineNET.Network
                     }
                     else if (id == RakNetProtocol.OnlinePong)
                     {
-                        //TODO: 
+
                     }
                 }
                 else if (this.State == SessionState.Connected)
@@ -453,6 +461,14 @@ namespace MineNET.Network
             pk.OrderChannel = orderChannel;
             pk.Buffer = packet.ToArray();
 
+            RakNetEncapsulatedSendEventArgs ev = new RakNetEncapsulatedSendEventArgs(this, pk);
+            Server.Instance.Event.Network.OnRakNetEncapsulatedSend(this, ev);
+
+            if (ev.IsCancel)
+            {
+                return;
+            }
+
             this.AddEncapsulatedToQueue(pk, flags);
         }
 
@@ -557,6 +573,9 @@ namespace MineNET.Network
 
                 ClientDisconnectDataPacket pk = new ClientDisconnectDataPacket();
                 this.QueueConnectedPacket(pk, RakNetPacketReliability.UNRELIABLE, 0, RakNetProtocol.FlagImmediate);
+
+                CloseSessionEventArgs ev = new CloseSessionEventArgs(this.EndPoint, this);
+                Server.Instance.Event.Network.OnCloseSession(this, ev);
 
                 OutLog.Log("%server.network.raknet.sessionClose", this.EndPoint);
                 this.Manager?.RemoveSession(this.EndPoint);
