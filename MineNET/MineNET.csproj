@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1F471258-4C9F-4E08-9515-769957CE1E23}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MineNET</RootNamespace>
+    <AssemblyName>MineNET</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.5.0.1\lib\net45\YamlDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Blocks\Block.cs" />
+    <Compile Include="Blocks\BlockAir.cs" />
+    <Compile Include="Blocks\BlockIDs.cs" />
+    <Compile Include="Blocks\BlockSolid.cs" />
+    <Compile Include="Blocks\BlockTransparent.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\CommandData.cs" />
+    <Compile Include="Commands\CommandHandler.cs" />
+    <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Commands\CommandSender.cs" />
+    <Compile Include="Commands\ConsoleCommandSender.cs" />
+    <Compile Include="Commands\Defaults\StopCommand.cs" />
+    <Compile Include="Commands\ICommandHandler.cs" />
+    <Compile Include="Data\ClientData.cs" />
+    <Compile Include="Data\LoginData.cs" />
+    <Compile Include="Data\Skin.cs" />
+    <Compile Include="Entities\Attributes\EntityAttribute.cs" />
+    <Compile Include="Entities\Attributes\EntityAttributeDictionary.cs" />
+    <Compile Include="Entities\Effect.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\EntityLiving.cs" />
+    <Compile Include="Entities\Metadata\EntityData.cs" />
+    <Compile Include="Entities\Metadata\EntityDataByte.cs" />
+    <Compile Include="Entities\Metadata\EntityDataFloat.cs" />
+    <Compile Include="Entities\Metadata\EntityDataInt.cs" />
+    <Compile Include="Entities\Metadata\EntityDataLong.cs" />
+    <Compile Include="Entities\Metadata\EntityDataPos.cs" />
+    <Compile Include="Entities\Metadata\EntityDataProperty.cs" />
+    <Compile Include="Entities\Metadata\EntityDataShort.cs" />
+    <Compile Include="Entities\Metadata\EntityDataSlot.cs" />
+    <Compile Include="Entities\Metadata\EntityDataString.cs" />
+    <Compile Include="Entities\Metadata\EntityDataVector.cs" />
+    <Compile Include="Entities\Metadata\EntityMetadataManager.cs" />
+    <Compile Include="Entities\Metadata\EntityMetadataType.cs" />
+    <Compile Include="Entities\Players\PlayerPermissions.cs" />
+    <Compile Include="Events\NetworkEvents\CreateSessionEventArgs.cs" />
+    <Compile Include="Events\NetworkEvents\NetworkEvent.cs" />
+    <Compile Include="Events\NetworkEvents\NetworkEventArgs.cs" />
+    <Compile Include="Events\NetworkEvents\RakNetDataPacketReceiveEventArgs.cs" />
+    <Compile Include="Events\NetworkEvents\RakNetDataPacketSendEventArgs.cs" />
+    <Compile Include="Events\NetworkEvents\RakNetPacketReceiveEventArgs.cs" />
+    <Compile Include="Events\NetworkEvents\RakNetPacketSendEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerCreateEventArgs.cs" />
+    <Compile Include="Init\BlockInit.cs" />
+    <Compile Include="Init\EffectInit.cs" />
+    <Compile Include="Init\ItemInit.cs" />
+    <Compile Include="IServerListInfo.cs" />
+    <Compile Include="Items\Item.cs" />
+    <Compile Include="Items\ItemBlock.cs" />
+    <Compile Include="Items\ItemIDs.cs" />
+    <Compile Include="Items\ItemStack.cs" />
+    <Compile Include="NBT\Data\NBTEndian.cs" />
+    <Compile Include="NBT\Data\NBTTagType.cs" />
+    <Compile Include="NBT\IO\NBTIO.cs" />
+    <Compile Include="NBT\IO\NBTJsonSerializer.cs" />
+    <Compile Include="NBT\IO\NBTStream.cs" />
+    <Compile Include="NBT\Tags\ArrayDataTag.cs" />
+    <Compile Include="NBT\Tags\ByteArrayTag.cs" />
+    <Compile Include="NBT\Tags\ByteTag.cs" />
+    <Compile Include="NBT\Tags\CompoundTag.cs" />
+    <Compile Include="NBT\Tags\DataTag.cs" />
+    <Compile Include="NBT\Tags\DoubleTag.cs" />
+    <Compile Include="NBT\Tags\EndTag.cs" />
+    <Compile Include="NBT\Tags\FloatTag.cs" />
+    <Compile Include="NBT\Tags\IntArrayTag.cs" />
+    <Compile Include="NBT\Tags\IntTag.cs" />
+    <Compile Include="NBT\Tags\ListTag.cs" />
+    <Compile Include="NBT\Tags\LongArrayTag.cs" />
+    <Compile Include="NBT\Tags\LongTag.cs" />
+    <Compile Include="NBT\Tags\ShortTag.cs" />
+    <Compile Include="NBT\Tags\StringTag.cs" />
+    <Compile Include="NBT\Tags\Tag.cs" />
+    <Compile Include="Network\MinecraftPackets\DisconnectPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\FullChunkDataPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\LoginPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\MinecraftPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\MinecraftProtocol.cs" />
+    <Compile Include="Network\MinecraftPackets\MobEffectPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\PlayStatusPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\ResourcePackClientResponsePacket.cs" />
+    <Compile Include="Network\MinecraftPackets\ResourcePacksInfoPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\ResourcePackStackPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\SetEntityDataPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\StartGamePacket.cs" />
+    <Compile Include="Network\MinecraftPackets\UpdateAttributesPacket.cs" />
+    <Compile Include="Network\RakNetPackets\Ack.cs" />
+    <Compile Include="Network\RakNetPackets\AcknowledgePacket.cs" />
+    <Compile Include="Network\RakNetPackets\BatchPacket.cs" />
+    <Compile Include="Network\RakNetPackets\ClientConnectDataPacket.cs" />
+    <Compile Include="Network\RakNetPackets\ClientDisconnectDataPacket.cs" />
+    <Compile Include="Network\RakNetPackets\ClientHandShakeDataPacket.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacket5.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacket.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacket0.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacket1.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacket2.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacket3.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacket4.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacket6.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacket7.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacket8.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacket9.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacketA.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacketB.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacketC.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacketD.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacketE.cs" />
+    <Compile Include="Network\RakNetPackets\DataPacketF.cs" />
+    <Compile Include="Network\RakNetPackets\EncapsulatedPacket.cs" />
+    <Compile Include="Network\RakNetPackets\Nack.cs" />
+    <Compile Include="Network\RakNetPackets\OnlinePing.cs" />
+    <Compile Include="Network\RakNetPackets\OnlinePong.cs" />
+    <Compile Include="Network\RakNetPackets\OpenConnectingReply1.cs" />
+    <Compile Include="Network\RakNetPackets\OpenConnectingReply2.cs" />
+    <Compile Include="Network\RakNetPackets\OpenConnectingRequest1.cs" />
+    <Compile Include="Network\RakNetPackets\OpenConnectingRequest2.cs" />
+    <Compile Include="Network\RakNetPackets\ServerHandShakeDataPacket.cs" />
+    <Compile Include="Network\RakNetPackets\RakNetPacketReliability.cs" />
+    <Compile Include="Network\SessionState.cs" />
+    <Compile Include="Plugins\ApiVersion.cs" />
+    <Compile Include="Plugins\IPlugin.cs" />
+    <Compile Include="Plugins\PluginBase.cs" />
+    <Compile Include="Plugins\PluginFlags.cs" />
+    <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="Registry\BlockRegistry.cs" />
+    <Compile Include="Registry\EffectRegistry.cs" />
+    <Compile Include="Registry\EntityRegistry.cs" />
+    <Compile Include="Events\EventManager.cs" />
+    <Compile Include="Events\ICancelable.cs" />
+    <Compile Include="Events\IOEvents\InputActionEventArgs.cs" />
+    <Compile Include="Events\IOEvents\IOEvent.cs" />
+    <Compile Include="Events\IOEvents\IOEventArgs.cs" />
+    <Compile Include="Events\IOEvents\OutputActionEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerCommandEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerEvent.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerEventArgs.cs" />
+    <Compile Include="Events\ServerEvents\ServerCommandEventArgs.cs" />
+    <Compile Include="Events\ServerEvents\ServerEvent.cs" />
+    <Compile Include="Events\ServerEvents\ServerEventArgs.cs" />
+    <Compile Include="Events\ServerEvents\ServerStartEventArgs.cs" />
+    <Compile Include="Events\ServerEvents\ServerStopEventArgs.cs" />
+    <Compile Include="ICloneable.cs" />
+    <Compile Include="IO\ILogger.cs" />
+    <Compile Include="IO\Input.cs" />
+    <Compile Include="IO\InputInterface.cs" />
+    <Compile Include="IO\Logger.cs" />
+    <Compile Include="IO\LoggerData.cs" />
+    <Compile Include="IO\LoggerLevel.cs" />
+    <Compile Include="IO\Output.cs" />
+    <Compile Include="IO\OutputInterface.cs" />
+    <Compile Include="LanguageService.cs" />
+    <Compile Include="Manager\ConstantClockManager.cs" />
+    <Compile Include="MineNETConfig.cs" />
+    <Compile Include="Network\INetworkSocket.cs" />
+    <Compile Include="Network\NetworkManager.cs" />
+    <Compile Include="Network\NetworkSession.cs" />
+    <Compile Include="Network\RakNetPackets\OfflineMessage.cs" />
+    <Compile Include="Network\RakNetPackets\OfflinePing.cs" />
+    <Compile Include="Network\RakNetPackets\OfflinePong.cs" />
+    <Compile Include="Network\RakNetPackets\RakNetProtocol.cs" />
+    <Compile Include="Network\RakNetPackets\RakNetPacket.cs" />
+    <Compile Include="Network\UDPSocket.cs" />
+    <Compile Include="OutLog.cs" />
+    <Compile Include="Entities\Players\Player.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registry\CommandRegistry.cs" />
+    <Compile Include="Registry\IDictionaryRegistry.cs" />
+    <Compile Include="Registry\IListRegistry.cs" />
+    <Compile Include="Registry\ItemRegistry.cs" />
+    <Compile Include="Registry\MinecraftPacketRegistry.cs" />
+    <Compile Include="Registry\MineNET_Registries.cs" />
+    <Compile Include="Registry\RakNetPacketRegistry.cs" />
+    <Compile Include="ResourcePack\IResourcePack.cs" />
+    <Compile Include="ResourcePack\ResourcePackInfo.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="ServerConfig.cs" />
+    <Compile Include="ServerListInfo.cs" />
+    <Compile Include="ServerStatus.cs" />
+    <Compile Include="TranslationMessage.cs" />
+    <Compile Include="Utils\ArrayUtils.cs" />
+    <Compile Include="Utils\Binary.cs" />
+    <Compile Include="Utils\BinaryStream.cs" />
+    <Compile Include="Utils\ColorText.cs" />
+    <Compile Include="Utils\Config\JsonConfig.cs" />
+    <Compile Include="Utils\Config\JsonStaticConfig.cs" />
+    <Compile Include="Utils\Config\YamlConfig.cs" />
+    <Compile Include="Utils\Config\YamlStaticConfig.cs" />
+    <Compile Include="Utils\Config\Yaml\Attributes\YamlDescriptionAttribute.cs" />
+    <Compile Include="Utils\Config\Yaml\CommentObjectDescriptor.cs" />
+    <Compile Include="Utils\Config\Yaml\CommentObjectGraphVisitor.cs" />
+    <Compile Include="Utils\Config\Yaml\CommentPropertyDescriptor.cs" />
+    <Compile Include="Utils\Config\Yaml\CommentTypeInspector.cs" />
+    <Compile Include="Utils\JWT.cs" />
+    <Compile Include="Utils\MemorySpan.cs" />
+    <Compile Include="Utils\MineNETMath.cs" />
+    <Compile Include="Utils\Random.cs" />
+    <Compile Include="Utils\VarInt.cs" />
+    <Compile Include="Utils\ZlibStream.cs" />
+    <Compile Include="Values\AxisAlignedBB.cs" />
+    <Compile Include="Values\BlockCoordinate2D.cs" />
+    <Compile Include="Values\BlockCoordinate3D.cs" />
+    <Compile Include="Values\Color.cs" />
+    <Compile Include="Values\UUID.cs" />
+    <Compile Include="Values\Vector2.cs" />
+    <Compile Include="Values\Vector3.cs" />
+    <Compile Include="Worlds\Chunk.cs" />
+    <Compile Include="Worlds\Difficulty.cs" />
+    <Compile Include="Worlds\Dimensions\DimensionID.cs" />
+    <Compile Include="Worlds\GameMode.cs" />
+    <Compile Include="Worlds\Generators\GeneratorID.cs" />
+    <Compile Include="Worlds\Rule\GameRule.cs" />
+    <Compile Include="Worlds\Rule\GameRuleBase.cs" />
+    <Compile Include="Worlds\Rule\GameRules.cs" />
+    <Compile Include="Worlds\SubChunk.cs" />
+    <Compile Include="Worlds\World.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Lang\ja_JP.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>cd "$(ProjectDir)\.nuget"
+nuget pack $(ProjectPath)</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
