@@ -37,6 +37,9 @@ namespace MineNET.Entities.Players
         public Skin Skin { get; private set; }
         public UUID Uuid { get; private set; }
 
+        public PlayerListEntry PlayerListEntry { get; private set; }
+        public AdventureSettingsEntry AdventureSettingsEntry { get; private set; }
+
         public GameMode GameMode { get; private set; } = GameMode.Survival;
 
         public bool PackSyncCompleted { get; private set; }
@@ -248,6 +251,35 @@ namespace MineNET.Entities.Players
                     }
                 }
 
+                this.PlayerListEntry = new PlayerListEntry(this.LoginData.ClientUUID)
+                {
+                    EntityUniqueId = this.EntityID,
+                    Name = this.DisplayName,
+                    PlatForm = this.ClientData.DeviceOS,
+                    Skin = this.Skin,
+                    UUID = this.Uuid,
+                    XboxUserId = this.LoginData.XUID
+                };
+                this.PlayerListEntry.UpdateAll();
+
+                AdventureSettingsEntry adventureSettingsEntry = new AdventureSettingsEntry();
+                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, false);
+                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_PVP, false);
+                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.AUTO_JUMP, false);
+                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, true);
+                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
+                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, false);
+                adventureSettingsEntry.CommandPermission = PlayerPermissions.MEMBER;//this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
+                adventureSettingsEntry.PlayerPermission = PlayerPermissions.MEMBER;//this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
+                adventureSettingsEntry.EntityUniqueId = this.EntityID;
+                this.AdventureSettingsEntry = adventureSettingsEntry;
+                this.AdventureSettingsEntry.Update(this);
+
+                this.SendDataProperties();
+                this.Attributes.Update(this);
+
+                this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+
                 foreach (var pair in newOrders.OrderBy(pair => pair.Value))
                 {
                     Chunk c = new Chunk(pair.Key.Item1, pair.Key.Item2);
@@ -255,16 +287,11 @@ namespace MineNET.Entities.Players
                     {
                         for (int k = 0; k < 16; ++k)
                         {
-                            c.SetBlock(i, 0, k, 20);
+                            c.SetBlock(i, 0, k, 2);
                         }
                     }
                     c.SendChunk(this);
                 }
-
-                this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
-
-                this.SendDataProperties();
-                this.Attributes.Update(this);
             }
         }
         #endregion

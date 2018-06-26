@@ -1,4 +1,4 @@
-﻿namespace MineNET.Entities.Players
+﻿namespace MineNET.Data
 {
     public enum PlayerPermissions
     {

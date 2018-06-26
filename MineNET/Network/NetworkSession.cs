@@ -51,7 +51,7 @@ namespace MineNET.Network
         public ConcurrentDictionary<int, bool> ReliableWindow { get; private set; } = new ConcurrentDictionary<int, bool>();
 
         public ConcurrentDictionary<int, DataPacket> SendedPacket { get; private set; } = new ConcurrentDictionary<int, DataPacket>();
-        public Queue<DataPacket> ResendQueue { get; set; } = new Queue<DataPacket>();
+        public ConcurrentQueue<DataPacket> ResendQueue { get; set; } = new ConcurrentQueue<DataPacket>();
 
         public SessionState State { get; private set; } = SessionState.Connecting;
         #endregion
@@ -112,11 +112,10 @@ namespace MineNET.Network
             {
                 for (int i = 0; i < this.ResendQueue.Count; ++i)
                 {
-                    DataPacket pk = this.ResendQueue.Dequeue();
+                    DataPacket pk;
+                    this.ResendQueue.TryDequeue(out pk);
                     pk.SeqNumber = this.LastSeqNumber++;
                     this.SendPacket(pk);
-
-                    OutLog.Info("Resend");
                 }
             }
 
@@ -397,6 +396,8 @@ namespace MineNET.Network
                         DataPacket remove;
                         this.SendedPacket.TryRemove(p, out remove);
                         this.ResendQueue.Enqueue(pk);
+
+                        OutLog.Log("%server.network.dataPacket.resend");
                     }
                 }
             }
@@ -438,7 +439,7 @@ namespace MineNET.Network
                         pk.MessageIndex = this.MessageIndex;
                     }
 
-                    this.AddToQueue(pk, flags | RakNetProtocol.FlagImmediate);
+                    this.AddToQueue(pk, RakNetProtocol.FlagImmediate);
                 }
             }
             else
@@ -482,14 +483,17 @@ namespace MineNET.Network
             st.WriteVarInt((int) packet.Length);
             st.WriteBytes(buffer);
 
-            List<byte> list = new List<byte>(this.BatchPacketQueue.Payload);
-            list.AddRange(st.ToArray());
-            this.BatchPacketQueue.Payload = list.ToArray();
+            //if (flag == RakNetProtocol.FlagImmediate)
+            //{
+                BatchPacket pk = new BatchPacket();
+                pk.Payload = st.ToArray();
+                this.QueueConnectedPacket(pk, reliability, flag);
+            //    return;
+            //}
 
-            if (flag == RakNetProtocol.FlagImmediate)
-            {
-                this.SendBatchPacket(reliability, flag);
-            }
+            /*List<byte> list = new List<byte>(this.BatchPacketQueue.Payload);
+            list.AddRange(st.ToArray());
+            this.BatchPacketQueue.Payload = list.ToArray();*/
         }
 
         public void SendBatchPacket(int reliability, int flag = RakNetProtocol.FlagNormal)
@@ -497,14 +501,21 @@ namespace MineNET.Network
             if (this.BatchPacketQueue.Payload.Length > 0)
             {
                 this.QueueConnectedPacket(this.BatchPacketQueue, reliability, flag);
-                this.BatchPacketQueue = (BatchPacket) this.Manager.GetRakNetPacket(RakNetProtocol.BatchPacket);
+                this.BatchPacketQueue = new BatchPacket();
             }
         }
 
         public void AddToQueue(EncapsulatedPacket pk, int flags = RakNetProtocol.FlagNormal)
         {
-            int length = this.SendQueue.Length;
+            if (flags == RakNetProtocol.FlagImmediate)
+            {
+                DataPacket p = new DataPacket0();
+                p.Packets = new object[] { pk };
+                this.SendDatagram(p);
+                return;
+            }
 
+            int length = this.SendQueue.Length;
             if (length + pk.GetTotalLength() > this.MTUSize - 36)//IP header (20 bytes) + UDP header (8 bytes) + RakNet weird (8 bytes) = 36 bytes
             {
                 this.SendQueuePacket();
@@ -513,11 +524,6 @@ namespace MineNET.Network
             List<object> list = new List<object>(this.SendQueue.Packets);
             list.Add(pk);
             this.SendQueue.Packets = list.ToArray();
-
-            if (flags == RakNetProtocol.FlagImmediate)
-            {
-                this.SendQueuePacket();
-            }
         }
 
         public void SendQueuePacket()
@@ -531,11 +537,6 @@ namespace MineNET.Network
 
         public void SendDatagram(DataPacket pk)
         {
-            if (pk.SeqNumber != -1)
-            {
-                //this.SendedPacket.TryAdd(pk.SeqNumber, (DataPacket) pk.Clone());
-            }
-
             RakNetDataPacketSendEventArgs ev = new RakNetDataPacketSendEventArgs(this, pk);
             Server.Instance.Event.Network.OnRakNetDataPacketSend(this, ev);
 
@@ -545,9 +546,8 @@ namespace MineNET.Network
             }
 
             pk.SeqNumber = this.LastSeqNumber++;
-            this.SendedPacket.TryAdd(pk.SeqNumber, (DataPacket) pk.Clone());
-            this.SendPacket(pk);
-
+            this.SendedPacket.TryAdd(pk.SeqNumber, (DataPacket) pk);
+            this.SendPacket(pk.Clone());
         }
 
         public void SendPacket(RakNetPacket pk)

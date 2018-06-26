@@ -182,7 +182,7 @@ namespace MineNET.Network.MinecraftPackets
             }
         }
 
-        /*public void WritePlayerListEntries(PlayerListEntry[] entries, byte type)
+        public void WritePlayerListEntries(PlayerListEntry[] entries, byte type)
         {
             this.WriteByte(type);
             this.WriteUVarInt((uint) entries.Length);
@@ -200,7 +200,7 @@ namespace MineNET.Network.MinecraftPackets
                     this.WriteString("");
                 }
             }
-        }*/
+        }
 
         public Skin ReadSkin()
         {

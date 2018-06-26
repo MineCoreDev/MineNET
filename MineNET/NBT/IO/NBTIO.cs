@@ -1,3 +1,4 @@
+using MineNET.Items;
 using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
@@ -207,7 +208,7 @@ namespace MineNET.NBT.IO
             return tag;
         }
 
-        /*public static CompoundTag WriteItem(ItemStack itemStack, int slot = -1)
+        public static CompoundTag WriteItem(ItemStack itemStack, int slot = -1)
         {
             CompoundTag nbt = new CompoundTag()
                 .PutShort("id", (short) itemStack.Item.ID)
@@ -244,9 +245,9 @@ namespace MineNET.NBT.IO
             return nbt;
         }
 
-        public static Item ReadItem(CompoundTag nbt)
+        public static ItemStack ReadItem(CompoundTag nbt)
         {
-            Item item = Item.Get(nbt.GetShort("id"), nbt.GetShort("damage"), nbt.GetByte("count"));
+            ItemStack item = new ItemStack(Item.Get(nbt.GetShort("id")), nbt.GetShort("damage"), nbt.GetByte("count"));
             if (nbt.Exist("tag"))
             {
                 CompoundTag tag = (CompoundTag) nbt.GetCompound("tag").Clone();
@@ -270,6 +271,6 @@ namespace MineNET.NBT.IO
                 }
             }
             return item;
-        }*/
+        }
     }
 }

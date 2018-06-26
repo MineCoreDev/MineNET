@@ -105,8 +105,10 @@
     <Compile Include="Commands\ConsoleCommandSender.cs" />
     <Compile Include="Commands\Defaults\StopCommand.cs" />
     <Compile Include="Commands\ICommandHandler.cs" />
+    <Compile Include="Data\AdventureSettingsEntry.cs" />
     <Compile Include="Data\ClientData.cs" />
     <Compile Include="Data\LoginData.cs" />
+    <Compile Include="Data\PlayerListEntry.cs" />
     <Compile Include="Data\Skin.cs" />
     <Compile Include="Entities\Attributes\EntityAttribute.cs" />
     <Compile Include="Entities\Attributes\EntityAttributeDictionary.cs" />
@@ -126,7 +128,7 @@
     <Compile Include="Entities\Metadata\EntityDataVector.cs" />
     <Compile Include="Entities\Metadata\EntityMetadataManager.cs" />
     <Compile Include="Entities\Metadata\EntityMetadataType.cs" />
-    <Compile Include="Entities\Players\PlayerPermissions.cs" />
+    <Compile Include="Data\PlayerPermissions.cs" />
     <Compile Include="Events\NetworkEvents\CloseSessionEventArgs.cs" />
     <Compile Include="Events\NetworkEvents\CreateSessionEventArgs.cs" />
     <Compile Include="Events\NetworkEvents\NetworkEvent.cs" />
@@ -167,12 +169,14 @@
     <Compile Include="NBT\Tags\ShortTag.cs" />
     <Compile Include="NBT\Tags\StringTag.cs" />
     <Compile Include="NBT\Tags\Tag.cs" />
+    <Compile Include="Network\MinecraftPackets\AdventureSettingsPacket.cs" />
     <Compile Include="Network\MinecraftPackets\DisconnectPacket.cs" />
     <Compile Include="Network\MinecraftPackets\FullChunkDataPacket.cs" />
     <Compile Include="Network\MinecraftPackets\LoginPacket.cs" />
     <Compile Include="Network\MinecraftPackets\MinecraftPacket.cs" />
     <Compile Include="Network\MinecraftPackets\MinecraftProtocol.cs" />
     <Compile Include="Network\MinecraftPackets\MobEffectPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\PlayerListPacket.cs" />
     <Compile Include="Network\MinecraftPackets\PlayStatusPacket.cs" />
     <Compile Include="Network\MinecraftPackets\ResourcePackClientResponsePacket.cs" />
     <Compile Include="Network\MinecraftPackets\ResourcePacksInfoPacket.cs" />

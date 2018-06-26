@@ -1,4 +1,5 @@
 ﻿using MineNET.Blocks;
+using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using System;
 
@@ -10,11 +11,26 @@ namespace MineNET.Items
         public int Damage { get; set; } = 0;
         public int Count { get; set; } = 1;
 
-        public CompoundTag Tags { get; set; } = null;
-        public byte[] BinaryTags { get; } = null;
+        public byte[] BinaryTags { get; private set; } = null;
+        public bool HasTags
+        {
+            get
+            {
+                if (this.BinaryTags != null)
+                {
+                    return this.BinaryTags.Length > 0;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
         public string[] CanPlaceOn { get; private set; } = new string[0];
         public string[] CanDestroy { get; private set; } = new string[0];
+
+        private CompoundTag Tags { get; set; } = null;
 
         public ItemStack(Item item)
         {
@@ -86,6 +102,32 @@ namespace MineNET.Items
         public void AddCanDestroy(string v)
         {
             throw new NotImplementedException();
+        }
+
+        public void SetNamedTag(CompoundTag tag)
+        {
+            tag.Name = "";
+            this.Tags = tag;
+            this.BinaryTags = NBTIO.WriteTag(tag);
+        }
+
+        public CompoundTag GetNamedTag()
+        {
+            if (!this.HasTags)
+            {
+                return new CompoundTag();
+            }
+
+            if (this.Tags == null)
+            {
+                this.Tags = NBTIO.ReadTag(this.BinaryTags);
+            }
+
+            if (this.Tags != null)
+            {
+                this.Tags.Name = "";
+            }
+            return this.Tags;
         }
     }
 }

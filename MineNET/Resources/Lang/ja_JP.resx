@@ -138,6 +138,9 @@
   <data name="server.network.dataPacket.notHandle" xml:space="preserve">
     <value>ハンドルされていないデータパケット {0} を受信しました。</value>
   </data>
+  <data name="server.network.dataPacket.resend" xml:space="preserve">
+    <value>データパケットの再送信が行われました。</value>
+  </data>
   <data name="server.network.minecraft.notHandle" xml:space="preserve">
     <value>ハンドルされていないMinecraftパケット {0} を受信しました。</value>
   </data>

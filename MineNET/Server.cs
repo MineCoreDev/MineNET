@@ -6,6 +6,7 @@ using MineNET.Init;
 using MineNET.IO;
 using MineNET.Manager;
 using MineNET.Network;
+using MineNET.Network.MinecraftPackets;
 using MineNET.Plugins;
 using MineNET.Worlds;
 using System;
@@ -254,6 +255,19 @@ namespace MineNET
             return list.ToArray();
         }
         #endregion
+
+        public void BroadcastSendPacket(MinecraftPacket packet, Player[] players = null)
+        {
+            if (players == null)
+            {
+                players = Server.Instance.GetPlayers();
+            }
+
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendPacket(packet);
+            }
+        }
 
         #region Dispose Method
         public void Dispose()
