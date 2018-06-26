@@ -214,6 +214,13 @@
     <Compile Include="Network\RakNetPackets\ServerHandShakeDataPacket.cs" />
     <Compile Include="Network\RakNetPackets\RakNetPacketReliability.cs" />
     <Compile Include="Network\SessionState.cs" />
+    <Compile Include="Permissions\IPermissible.cs" />
+    <Compile Include="Permissions\IPermissionRemovedExecutor.cs" />
+    <Compile Include="Permissions\IServerOperator.cs" />
+    <Compile Include="Permissions\PermissibleBase.cs" />
+    <Compile Include="Permissions\Permission.cs" />
+    <Compile Include="Permissions\PermissionAttachment.cs" />
+    <Compile Include="Permissions\PermissionAttachmentInfo.cs" />
     <Compile Include="Plugins\ApiVersion.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Plugins\PluginBase.cs" />
