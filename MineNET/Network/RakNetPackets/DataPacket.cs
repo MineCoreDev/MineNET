@@ -7,6 +7,8 @@ namespace MineNET.Network.RakNetPackets
         public object[] Packets { get; set; } = new object[0];
         public int SeqNumber { get; set; }
 
+        public int SendTimedOut { get; set; } = NetworkSession.TimedOutTime;
+
         public override void Encode()
         {
             base.Encode();

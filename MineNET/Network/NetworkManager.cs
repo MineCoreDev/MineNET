@@ -118,7 +118,7 @@ namespace MineNET.Network
             //10
             //11
             //12
-            //13
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.MOVE_PLAYER_PACKET, new MovePlayerPacket());
             //14
             //15
             //16
@@ -154,7 +154,7 @@ namespace MineNET.Network
             //34
             //35
             //36
-            //37
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ADVENTURE_SETTINGS_PACKET, new AdventureSettingsPacket());
             //38
             //39
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.FULL_CHUNK_DATA_PACKET, new FullChunkDataPacket());
@@ -162,7 +162,7 @@ namespace MineNET.Network
             //3C
             //3D
             //3E
-            //3F
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.PLAYER_LIST_PACKET, new PlayerListPacket());
             //40
             //41
             //42

@@ -15,6 +15,7 @@ namespace MineNET.Network
         #region Static Property
         public static int WindowSize { get; } = 2048;
         public static int TimedOutTime { get; } = 3000;
+        public static int SendTimedOut { get; } = 500;
         #endregion
 
         #region Property & Field
@@ -25,6 +26,7 @@ namespace MineNET.Network
         public NetworkManager Manager { get; private set; }
 
         public int LastUpdateTime { get; private set; }
+        public int LastSendTime { get; private set; }
 
         public int MessageIndex { get; private set; }
 
@@ -44,7 +46,7 @@ namespace MineNET.Network
 
         public BatchPacket BatchPacketQueue { get; private set; } = new BatchPacket();
         public DataPacket SendQueue { get; private set; } = new DataPacket4();
-        public Dictionary<int, Dictionary<int, EncapsulatedPacket>> SplitPackets { get; set; } = new Dictionary<int, Dictionary<int, EncapsulatedPacket>>();
+        public ConcurrentDictionary<int, ConcurrentDictionary<int, EncapsulatedPacket>> SplitPackets { get; set; } = new ConcurrentDictionary<int, ConcurrentDictionary<int, EncapsulatedPacket>>();
 
         public int ReliableWindowStart { get; private set; }
         public int ReliableWindowEnd { get; private set; } = NetworkSession.WindowSize;
@@ -116,6 +118,23 @@ namespace MineNET.Network
                     this.ResendQueue.TryDequeue(out pk);
                     pk.SeqNumber = this.LastSeqNumber++;
                     this.SendPacket(pk);
+
+                    OutLog.Log("%server.network.dataPacket.resend");
+                }
+            }
+
+            if (this.SendedPacket.Count > 0)
+            {
+                foreach (DataPacket pk in this.SendedPacket.Values)
+                {
+                    if (pk.SendTimedOut < 0)
+                    {
+                        DataPacket remove;
+                        this.SendedPacket.TryRemove(pk.SeqNumber, out remove);
+                        this.ResendQueue.Enqueue(pk);
+                        return;
+                    }
+                    --pk.SendTimedOut;
                 }
             }
 
@@ -326,7 +345,7 @@ namespace MineNET.Network
                         }
                         else
                         {
-                            //OutLog.Log(buffer[0].ToString("X"));
+                            OutLog.Log(buffer[0].ToString("X"));
                         }
                     }
                 }
@@ -335,30 +354,31 @@ namespace MineNET.Network
 
         public EncapsulatedPacket HandleSplit(EncapsulatedPacket packet)
         {
-            if (!SplitPackets.ContainsKey(packet.SplitID))
+            if (!this.SplitPackets.ContainsKey(packet.SplitID))
             {
-                SplitPackets.Add(packet.SplitID, new Dictionary<int, EncapsulatedPacket>());
-                if (!SplitPackets[packet.SplitID].ContainsKey(packet.SplitIndex))
+                this.SplitPackets.TryAdd(packet.SplitID, new ConcurrentDictionary<int, EncapsulatedPacket>());
+                if (!this.SplitPackets[packet.SplitID].ContainsKey(packet.SplitIndex))
                 {
-                    SplitPackets[packet.SplitID].Add(packet.SplitIndex, packet);
+                    this.SplitPackets[packet.SplitID].TryAdd(packet.SplitIndex, packet);
                 }
             }
             else
             {
-                if (!SplitPackets[packet.SplitID].ContainsKey(packet.SplitIndex))
+                if (!this.SplitPackets[packet.SplitID].ContainsKey(packet.SplitIndex))
                 {
-                    SplitPackets[packet.SplitID].Add(packet.SplitIndex, packet);
+                    this.SplitPackets[packet.SplitID].TryAdd(packet.SplitIndex, packet);
                 }
             }
 
-            if (SplitPackets[packet.SplitID].Count == packet.SplitCount)
+            if (this.SplitPackets[packet.SplitID].Count == packet.SplitCount)
             {
                 EncapsulatedPacket pk = new EncapsulatedPacket();
+                ConcurrentDictionary<int, EncapsulatedPacket> d;
                 int offset = 0;
                 pk.Buffer = new byte[0];
                 for (int i = 0; i < packet.SplitCount; ++i)
                 {
-                    EncapsulatedPacket p = SplitPackets[packet.SplitID][i];
+                    EncapsulatedPacket p = this.SplitPackets[packet.SplitID][i];
                     byte[] buffer = pk.Buffer;
                     Array.Resize(ref buffer, pk.Buffer.Length + p.Buffer.Length);
                     pk.Buffer = buffer;
@@ -368,7 +388,7 @@ namespace MineNET.Network
 
                 pk.Length = pk.Buffer.Length;
 
-                SplitPackets.Remove(pk.SplitID);
+                this.SplitPackets.TryRemove(pk.SplitID, out d);
 
                 return pk;
             }
@@ -396,8 +416,6 @@ namespace MineNET.Network
                         DataPacket remove;
                         this.SendedPacket.TryRemove(p, out remove);
                         this.ResendQueue.Enqueue(pk);
-
-                        OutLog.Log("%server.network.dataPacket.resend");
                     }
                 }
             }
@@ -485,9 +503,9 @@ namespace MineNET.Network
 
             //if (flag == RakNetProtocol.FlagImmediate)
             //{
-                BatchPacket pk = new BatchPacket();
-                pk.Payload = st.ToArray();
-                this.QueueConnectedPacket(pk, reliability, flag);
+            BatchPacket pk = new BatchPacket();
+            pk.Payload = st.ToArray();
+            this.QueueConnectedPacket(pk, reliability, flag);
             //    return;
             //}
 
@@ -509,7 +527,7 @@ namespace MineNET.Network
         {
             if (flags == RakNetProtocol.FlagImmediate)
             {
-                DataPacket p = new DataPacket0();
+                DataPacket p = new DataPacket4();
                 p.Packets = new object[] { pk };
                 this.SendDatagram(p);
                 return;
@@ -531,7 +549,7 @@ namespace MineNET.Network
             if (this.SendQueue.Packets?.Length > 0)
             {
                 this.SendDatagram(this.SendQueue);
-                this.SendQueue = new DataPacket4();
+                this.SendQueue = new DataPacket0();
             }
         }
 

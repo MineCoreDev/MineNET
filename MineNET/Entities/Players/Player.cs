@@ -8,6 +8,7 @@ using MineNET.Values;
 using MineNET.Worlds;
 using MineNET.Worlds.Rule;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -44,6 +45,10 @@ namespace MineNET.Entities.Players
 
         public bool PackSyncCompleted { get; private set; }
         public bool HaveAllPacks { get; private set; }
+
+        public bool HasSpawned { get; private set; }
+
+        public ConcurrentDictionary<Tuple<int, int>, double> LoadedChunks { get; private set; } = new ConcurrentDictionary<Tuple<int, int>, double>();
         #endregion
 
         #region Ctor
@@ -109,6 +114,61 @@ namespace MineNET.Entities.Players
         }
         #endregion
 
+        #region Update Method
+        internal override bool UpdateTick(long tick)
+        {
+            if (tick % 20 == 0 && this.HasSpawned)
+            {
+                Dictionary<Tuple<int, int>, double> newOrders = new Dictionary<Tuple<int, int>, double>();
+                int radius = 16;
+                double radiusSquared = Math.Pow(radius, 2);
+                Vector2 center = new Vector2((int) this.X >> 4, (int) this.Z >> 4);
+
+                for (int x = -radius; x <= radius; ++x)
+                {
+                    for (int z = -radius; z <= radius; ++z)
+                    {
+                        int distance = (x * x) + (z * z);
+                        if (distance > radiusSquared)
+                        {
+                            continue;
+                        }
+                        int chunkX = (int) (x + center.X);
+                        int chunkZ = (int) (z + center.Y);
+                        Tuple<int, int> index = new Tuple<int, int>(chunkX, chunkZ);
+                        newOrders[index] = distance;
+                    }
+                }
+
+                foreach (Tuple<int, int> chunkKey in this.LoadedChunks.Keys)
+                {
+                    if (!newOrders.ContainsKey(chunkKey))
+                    {
+                        double r;
+                        this.LoadedChunks.TryRemove(chunkKey, out r);
+                    }
+                }
+
+                foreach (var pair in newOrders.OrderBy(pair => pair.Value))
+                {
+                    if (this.LoadedChunks.ContainsKey(pair.Key)) continue;
+
+                    Chunk c = new Chunk(pair.Key.Item1, pair.Key.Item2);
+                    this.LoadedChunks.TryAdd(pair.Key, pair.Value);
+                    for (int i = 0; i < 16; ++i)
+                    {
+                        for (int k = 0; k < 16; ++k)
+                        {
+                            c.SetBlock(i, 0, k, 2);
+                        }
+                    }
+                    c.SendChunk(this);
+                }
+            }
+            return true;
+        }
+        #endregion
+
         #region Packet Handle Method
         public void OnPacketHandle(MinecraftPacket packet)
         {
@@ -120,8 +180,13 @@ namespace MineNET.Entities.Players
             {
                 this.HandleResourcePackClientResponsePacket((ResourcePackClientResponsePacket) packet);
             }
+            else if (packet is MovePlayerPacket)
+            {
+                this.HandleMovePlayerPacket((MovePlayerPacket) packet);
+            }
         }
 
+        //0x01
         public void HandleLoginPacket(LoginPacket pk)
         {
             if (this.IsPreLogined)
@@ -175,6 +240,7 @@ namespace MineNET.Entities.Players
             this.SendPacket(info);
         }
 
+        //0x08
         public void HandleResourcePackClientResponsePacket(ResourcePackClientResponsePacket pk)
         {
             if (this.PackSyncCompleted)
@@ -230,27 +296,6 @@ namespace MineNET.Entities.Players
                 startGamePacket.GameRules.Add(new GameRule<bool>("ShowCoordinates", true));
                 this.SendPacket(startGamePacket);
 
-                Dictionary<Tuple<int, int>, double> newOrders = new Dictionary<Tuple<int, int>, double>();
-                int radius = 16;
-                double radiusSquared = Math.Pow(radius, 2);
-                Vector2 center = new Vector2(128 >> 4, 128 >> 4);
-
-                for (int x = -radius; x <= radius; ++x)
-                {
-                    for (int z = -radius; z <= radius; ++z)
-                    {
-                        int distance = (x * x) + (z * z);
-                        if (distance > radiusSquared)
-                        {
-                            continue;
-                        }
-                        int chunkX = (int) (x + center.X);
-                        int chunkZ = (int) (z + center.Y);
-                        Tuple<int, int> index = new Tuple<int, int>(chunkX, chunkZ);
-                        newOrders[index] = distance;
-                    }
-                }
-
                 this.PlayerListEntry = new PlayerListEntry(this.LoginData.ClientUUID)
                 {
                     EntityUniqueId = this.EntityID,
@@ -280,19 +325,24 @@ namespace MineNET.Entities.Players
 
                 this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
 
-                foreach (var pair in newOrders.OrderBy(pair => pair.Value))
-                {
-                    Chunk c = new Chunk(pair.Key.Item1, pair.Key.Item2);
-                    for (int i = 0; i < 16; ++i)
-                    {
-                        for (int k = 0; k < 16; ++k)
-                        {
-                            c.SetBlock(i, 0, k, 2);
-                        }
-                    }
-                    c.SendChunk(this);
-                }
+                this.HasSpawned = true;
             }
+        }
+
+        //0x13
+        public void HandleMovePlayerPacket(MovePlayerPacket pk)
+        {
+            Vector3 pos = pk.Position;
+            Vector3 direction = pk.Direction;
+            //if ((Vector3) this.X != pos || this.Direction != direction)
+            //{
+            //this.SendPacketViewers(pk.Clone());
+            //}
+            this.X = pos.X;
+            this.Y = pos.Y;
+            this.Z = pos.Z;
+            this.Pitch = direction.X;
+            this.Yaw = direction.Y;
         }
         #endregion
 

@@ -393,5 +393,12 @@ namespace MineNET.Entities
             this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_AFFECTED_BY_GRAVITY);
         }
         #endregion
+
+        #region Update Method
+        internal virtual bool UpdateTick(long tick)
+        {
+            return true;
+        }
+        #endregion
     }
 }

@@ -194,6 +194,7 @@
     <Compile Include="Network\MinecraftPackets\MinecraftPacket.cs" />
     <Compile Include="Network\MinecraftPackets\MinecraftProtocol.cs" />
     <Compile Include="Network\MinecraftPackets\MobEffectPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\MovePlayerPacket.cs" />
     <Compile Include="Network\MinecraftPackets\PlayerListPacket.cs" />
     <Compile Include="Network\MinecraftPackets\PlayStatusPacket.cs" />
     <Compile Include="Network\MinecraftPackets\ResourcePackClientResponsePacket.cs" />
