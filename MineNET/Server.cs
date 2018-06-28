@@ -29,7 +29,6 @@ namespace MineNET
 
         #region Property & Field
         public ServerStatus Status { get; private set; } = ServerStatus.Stop;
-        public long Tick { get; private set; }
 
         public ConstantClockManager Clock { get; private set; }
 
@@ -215,12 +214,10 @@ namespace MineNET
             Player[] players = this.GetPlayers();
             for (int i = 0; i < players.Length; ++i)
             {
-                players[i].UpdateTick(this.Tick);
+                players[i].UpdateTick(tick);
             }
 
             this.Logger.Input.GetQueueCommand();
-
-            this.Tick++;
         }
         #endregion
 

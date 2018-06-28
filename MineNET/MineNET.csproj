@@ -188,6 +188,7 @@
     <Compile Include="NBT\Tags\StringTag.cs" />
     <Compile Include="NBT\Tags\Tag.cs" />
     <Compile Include="Network\MinecraftPackets\AdventureSettingsPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\ChunkRadiusUpdatedPacket.cs" />
     <Compile Include="Network\MinecraftPackets\DisconnectPacket.cs" />
     <Compile Include="Network\MinecraftPackets\FullChunkDataPacket.cs" />
     <Compile Include="Network\MinecraftPackets\LoginPacket.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Network\MinecraftPackets\MovePlayerPacket.cs" />
     <Compile Include="Network\MinecraftPackets\PlayerListPacket.cs" />
     <Compile Include="Network\MinecraftPackets\PlayStatusPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\RequestChunkRadiusPacket.cs" />
     <Compile Include="Network\MinecraftPackets\ResourcePackClientResponsePacket.cs" />
     <Compile Include="Network\MinecraftPackets\ResourcePacksInfoPacket.cs" />
     <Compile Include="Network\MinecraftPackets\ResourcePackStackPacket.cs" />

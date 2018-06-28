@@ -168,8 +168,8 @@ namespace MineNET.Network
             //42
             //43
             //44
-            //45
-            //46
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.REQUEST_CHUNK_RADIUS_PACKET, new RequestChunkRadiusPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.CHUNK_RADIUS_UPDATED_PACKET, new ChunkRadiusUpdatedPacket());
             //47
             //48
             //49

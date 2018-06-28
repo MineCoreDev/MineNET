@@ -12,5 +12,7 @@ namespace MineNET
 
         [YamlDescription("%server.config.maxPlayer")]
         public int MaxPlayers { get; set; } = 20;
+
+        public int MaxChunkRadius { get; set; } = 8;
     }
 }

@@ -47,6 +47,8 @@ namespace MineNET.Entities.Players
         public bool HaveAllPacks { get; private set; }
 
         public bool HasSpawned { get; private set; }
+        public int RequestChunkRadius { get; private set; }
+
 
         public ConcurrentDictionary<Tuple<int, int>, double> LoadedChunks { get; private set; } = new ConcurrentDictionary<Tuple<int, int>, double>();
         #endregion
@@ -101,6 +103,16 @@ namespace MineNET.Entities.Players
         }
         #endregion
 
+        #region Send ChunkRadius Packet
+        public void SendChunkRadiusUpdated()
+        {
+            ChunkRadiusUpdatedPacket pk = new ChunkRadiusUpdatedPacket();
+            pk.Radius = this.RequestChunkRadius;
+
+            this.SendPacket(pk);
+        }
+        #endregion
+
         #region Send Packet Method
         public void SendPacket(MinecraftPacket packet, int reliability = RakNetPacketReliability.RELIABLE, int flag = RakNetProtocol.FlagNormal)
         {
@@ -117,12 +129,12 @@ namespace MineNET.Entities.Players
         #region Update Method
         internal override bool UpdateTick(long tick)
         {
-            if (tick % 20 == 0 && this.HasSpawned)
+            if (tick % 200 == 0 && this.HasSpawned)
             {
                 Dictionary<Tuple<int, int>, double> newOrders = new Dictionary<Tuple<int, int>, double>();
-                int radius = 16;
+                int radius = this.RequestChunkRadius;
                 double radiusSquared = Math.Pow(radius, 2);
-                Vector2 center = new Vector2((int) this.X >> 4, (int) this.Z >> 4);
+                Vector2 center = new Vector2(((int) this.X) >> 4, ((int) this.Z) >> 4);
 
                 for (int x = -radius; x <= radius; ++x)
                 {
@@ -172,17 +184,21 @@ namespace MineNET.Entities.Players
         #region Packet Handle Method
         public void OnPacketHandle(MinecraftPacket packet)
         {
-            if (packet is LoginPacket)
+            if (packet is LoginPacket)//0x01
             {
                 this.HandleLoginPacket((LoginPacket) packet);
             }
-            else if (packet is ResourcePackClientResponsePacket)
+            else if (packet is ResourcePackClientResponsePacket)//0x08
             {
                 this.HandleResourcePackClientResponsePacket((ResourcePackClientResponsePacket) packet);
             }
-            else if (packet is MovePlayerPacket)
+            else if (packet is MovePlayerPacket)//0x13
             {
                 this.HandleMovePlayerPacket((MovePlayerPacket) packet);
+            }
+            else if (packet is RequestChunkRadiusPacket)//0x45
+            {
+                this.HandleRequestChunkRadiusPacket((RequestChunkRadiusPacket) packet);
             }
         }
 
@@ -343,6 +359,20 @@ namespace MineNET.Entities.Players
             this.Z = pos.Z;
             this.Pitch = direction.X;
             this.Yaw = direction.Y;
+        }
+
+        //0x45
+        public void HandleRequestChunkRadiusPacket(RequestChunkRadiusPacket pk)
+        {
+            int r = pk.Radius;
+            int m = Server.Instance.ServerProperty.MaxChunkRadius;
+            if (r > m)
+            {
+                r = m;
+            }
+
+            this.RequestChunkRadius = r;
+            this.SendChunkRadiusUpdated();
         }
         #endregion
 
