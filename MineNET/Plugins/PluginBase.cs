@@ -13,7 +13,7 @@ namespace MineNET.Plugins
         public virtual PluginFlags Flag { get; } = PluginFlags.Package;
         public virtual string[] PremisePlugins { get; set; } = null;
 
-        public YamlConfig Config { get; private set; }
+        public YamlConfig Config { get; private set; }//TODO:
 
         public virtual void OnDisable()
         {
