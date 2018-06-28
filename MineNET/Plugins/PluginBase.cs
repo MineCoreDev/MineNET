@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MineNET.Utils.Config;
+using System;
+using System.IO;
 
 namespace MineNET.Plugins
 {
@@ -10,6 +12,8 @@ namespace MineNET.Plugins
         public virtual ApiVersion ApiVersion { get; } = ApiVersion.Version_1_0_0_0;
         public virtual PluginFlags Flag { get; } = PluginFlags.Package;
         public virtual string[] PremisePlugins { get; set; } = null;
+
+        public YamlConfig Config { get; private set; }//TODO:
 
         public virtual void OnDisable()
         {
@@ -25,6 +29,21 @@ namespace MineNET.Plugins
 
         public virtual void OnLoad()
         {
+        }
+
+        public string GetPluginPath()
+        {
+            return Path.GetDirectoryName(this.GetPluginLocation());
+        }
+
+        public string GetPluginLocation()
+        {
+            return this.GetType().Assembly.Location;
+        }
+
+        public string GetPluginFileName()
+        {
+            return Path.GetFileName(this.GetPluginLocation());
         }
     }
 }
