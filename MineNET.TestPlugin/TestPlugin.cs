@@ -33,6 +33,8 @@ namespace MineNET.TestPlugin
         public override void OnEnable()
         {
             OutLog.Info("Hello MineNET plugin!");
+            OutLog.Info(this.GetPluginPath());
+            OutLog.Info(this.GetPluginLocation());
 
             Server.Instance.Event.IO.InputAction += IO_InputAction;
             Server.Instance.Event.IO.OutputAction += IO_OutputAction;
