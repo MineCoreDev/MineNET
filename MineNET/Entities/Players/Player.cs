@@ -93,7 +93,7 @@ namespace MineNET.Entities.Players
         }
         #endregion
 
-        #region Send Status Packet
+        #region Send Status Method
         public void SendPlayStatus(int status, int flag = RakNetProtocol.FlagNormal)
         {
             PlayStatusPacket pk = new PlayStatusPacket();
@@ -103,13 +103,64 @@ namespace MineNET.Entities.Players
         }
         #endregion
 
-        #region Send ChunkRadius Packet
+        #region Send ChunkRadius Method
         public void SendChunkRadiusUpdated()
         {
             ChunkRadiusUpdatedPacket pk = new ChunkRadiusUpdatedPacket();
             pk.Radius = this.RequestChunkRadius;
 
             this.SendPacket(pk);
+        }
+        #endregion
+
+        #region Send Chunk Method
+        public void SendChunk()
+        {
+            Dictionary<Tuple<int, int>, double> newOrders = new Dictionary<Tuple<int, int>, double>();
+            int radius = this.RequestChunkRadius;
+            double radiusSquared = Math.Pow(radius, 2);
+            Vector2 center = new Vector2(((int) this.X) >> 4, ((int) this.Z) >> 4);
+
+            for (int x = -radius; x <= radius; ++x)
+            {
+                for (int z = -radius; z <= radius; ++z)
+                {
+                    int distance = (x * x) + (z * z);
+                    if (distance > radiusSquared)
+                    {
+                        continue;
+                    }
+                    int chunkX = (int) (x + center.X);
+                    int chunkZ = (int) (z + center.Y);
+                    Tuple<int, int> index = new Tuple<int, int>(chunkX, chunkZ);
+                    newOrders[index] = distance;
+                }
+            }
+
+            foreach (Tuple<int, int> chunkKey in this.LoadedChunks.Keys)
+            {
+                if (!newOrders.ContainsKey(chunkKey))
+                {
+                    double r;
+                    this.LoadedChunks.TryRemove(chunkKey, out r);
+                }
+            }
+
+            foreach (var pair in newOrders.OrderBy(pair => pair.Value))
+            {
+                if (this.LoadedChunks.ContainsKey(pair.Key)) continue;
+
+                Chunk c = new Chunk(pair.Key.Item1, pair.Key.Item2);
+                this.LoadedChunks.TryAdd(pair.Key, pair.Value);
+                for (int i = 0; i < 16; ++i)
+                {
+                    for (int k = 0; k < 16; ++k)
+                    {
+                        c.SetBlock(i, 0, k, 2);
+                    }
+                }
+                c.SendChunk(this);
+            }
         }
         #endregion
 
@@ -129,53 +180,9 @@ namespace MineNET.Entities.Players
         #region Update Method
         internal override bool UpdateTick(long tick)
         {
-            if (tick % 200 == 0 && this.HasSpawned)
+            if (tick % 200000 == 0 && this.HasSpawned)
             {
-                Dictionary<Tuple<int, int>, double> newOrders = new Dictionary<Tuple<int, int>, double>();
-                int radius = this.RequestChunkRadius;
-                double radiusSquared = Math.Pow(radius, 2);
-                Vector2 center = new Vector2(((int) this.X) >> 4, ((int) this.Z) >> 4);
-
-                for (int x = -radius; x <= radius; ++x)
-                {
-                    for (int z = -radius; z <= radius; ++z)
-                    {
-                        int distance = (x * x) + (z * z);
-                        if (distance > radiusSquared)
-                        {
-                            continue;
-                        }
-                        int chunkX = (int) (x + center.X);
-                        int chunkZ = (int) (z + center.Y);
-                        Tuple<int, int> index = new Tuple<int, int>(chunkX, chunkZ);
-                        newOrders[index] = distance;
-                    }
-                }
-
-                foreach (Tuple<int, int> chunkKey in this.LoadedChunks.Keys)
-                {
-                    if (!newOrders.ContainsKey(chunkKey))
-                    {
-                        double r;
-                        this.LoadedChunks.TryRemove(chunkKey, out r);
-                    }
-                }
-
-                foreach (var pair in newOrders.OrderBy(pair => pair.Value))
-                {
-                    if (this.LoadedChunks.ContainsKey(pair.Key)) continue;
-
-                    Chunk c = new Chunk(pair.Key.Item1, pair.Key.Item2);
-                    this.LoadedChunks.TryAdd(pair.Key, pair.Value);
-                    for (int i = 0; i < 16; ++i)
-                    {
-                        for (int k = 0; k < 16; ++k)
-                        {
-                            c.SetBlock(i, 0, k, 2);
-                        }
-                    }
-                    c.SendChunk(this);
-                }
+                this.SendChunk();
             }
             return true;
         }
@@ -312,6 +319,8 @@ namespace MineNET.Entities.Players
                 startGamePacket.GameRules.Add(new GameRule<bool>("ShowCoordinates", true));
                 this.SendPacket(startGamePacket);
 
+                this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+
                 this.PlayerListEntry = new PlayerListEntry(this.LoginData.ClientUUID)
                 {
                     EntityUniqueId = this.EntityID,
@@ -336,12 +345,10 @@ namespace MineNET.Entities.Players
                 this.AdventureSettingsEntry = adventureSettingsEntry;
                 this.AdventureSettingsEntry.Update(this);
 
+                this.HasSpawned = true;
+
                 this.SendDataProperties();
                 this.Attributes.Update(this);
-
-                this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
-
-                this.HasSpawned = true;
             }
         }
 
