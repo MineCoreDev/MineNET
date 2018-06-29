@@ -20,21 +20,29 @@ namespace MineNET.TestPlugin
             }
         }
 
+        public override PluginFlags Flag
+        {
+            get
+            {
+                return base.Flag | PluginFlags.GenerateConfig;
+            }
+        }
+
         public override void OnLoad()
         {
             OutLog.Info("Good morning MineNET plugin!");
+            this.Config.Set("key1", "ウンチーコング");
         }
 
         public override void OnDisable()
         {
             OutLog.Info("Goodbye MineNET plugin!");
+            this.Config.Save();
         }
 
         public override void OnEnable()
         {
             OutLog.Info("Hello MineNET plugin!");
-            OutLog.Info(this.GetPluginPath());
-            OutLog.Info(this.GetPluginLocation());
 
             Server.Instance.Event.IO.InputAction += IO_InputAction;
             Server.Instance.Event.IO.OutputAction += IO_OutputAction;

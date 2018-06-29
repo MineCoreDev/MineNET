@@ -15,6 +15,20 @@ namespace MineNET.Plugins
 
         public YamlConfig Config { get; private set; }//TODO:
 
+        public PluginBase()
+        {
+            string saveFolder = this.GetPluginPath() + "\\" + this.Name;
+            string saveFile = saveFolder + "\\" + "config.yml";
+            if (this.Flag.HasFlag(PluginFlags.GenerateConfig))
+            {
+                if (!Directory.Exists(saveFolder))
+                {
+                    Directory.CreateDirectory(saveFolder);
+                }
+                this.Config = YamlConfig.Load(saveFile);
+            }
+        }
+
         public virtual void OnDisable()
         {
         }

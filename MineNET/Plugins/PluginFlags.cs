@@ -14,5 +14,6 @@ namespace MineNET.Plugins
         Fast = 16,
         Slow = 32,
         Normal = PluginFlags.Fast | PluginFlags.Slow,
+        GenerateConfig = 64
     }
 }
