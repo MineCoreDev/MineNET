@@ -171,6 +171,12 @@
   <data name="server.network.stop" xml:space="preserve">
     <value>ネットワークリスナーを終了しました。 終了経過時間: {0}</value>
   </data>
+  <data name="server.player.requestChunkRadius" xml:space="preserve">
+    <value>{0} から {1} チャンクのリクエストを受け取りました。</value>
+  </data>
+  <data name="server.player.updateChunkRadius" xml:space="preserve">
+    <value>{0} の リクエストチャンクを {1} から {2} に変更しました。</value>
+  </data>
   <data name="server.plugin.disable_library" xml:space="preserve">
     <value>[{0}] ライブラリ {0} を無効にしました。</value>
   </data>

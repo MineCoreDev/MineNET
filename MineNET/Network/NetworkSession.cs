@@ -491,7 +491,7 @@ namespace MineNET.Network
             this.AddEncapsulatedToQueue(pk, flags);
         }
 
-        public void AddPacketBatchQueue(MinecraftPacket packet, int reliability, int flag = RakNetProtocol.FlagNormal)
+        public void AddPacketBatchQueue(MinecraftPacket packet, int reliability, int flags = RakNetProtocol.FlagNormal)
         {
             packet.Encode();
 
@@ -501,24 +501,16 @@ namespace MineNET.Network
             st.WriteVarInt((int) packet.Length);
             st.WriteBytes(buffer);
 
-            //if (flag == RakNetProtocol.FlagImmediate)
-            //{
             BatchPacket pk = new BatchPacket();
             pk.Payload = st.ToArray();
-            this.QueueConnectedPacket(pk, reliability, flag);
-            //    return;
-            //}
-
-            /*List<byte> list = new List<byte>(this.BatchPacketQueue.Payload);
-            list.AddRange(st.ToArray());
-            this.BatchPacketQueue.Payload = list.ToArray();*/
+            this.QueueConnectedPacket(pk, reliability, flags);
         }
 
-        public void SendBatchPacket(int reliability, int flag = RakNetProtocol.FlagNormal)
+        public void SendBatchPacket(int reliability, int flags = RakNetProtocol.FlagNormal)
         {
             if (this.BatchPacketQueue.Payload.Length > 0)
             {
-                this.QueueConnectedPacket(this.BatchPacketQueue, reliability, flag);
+                this.QueueConnectedPacket(this.BatchPacketQueue, reliability, flags);
                 this.BatchPacketQueue = new BatchPacket();
             }
         }
@@ -527,7 +519,7 @@ namespace MineNET.Network
         {
             if (flags == RakNetProtocol.FlagImmediate)
             {
-                DataPacket p = new DataPacket4();
+                DataPacket p = new DataPacket0();
                 p.Packets = new object[] { pk };
                 this.SendDatagram(p);
                 return;
@@ -549,7 +541,7 @@ namespace MineNET.Network
             if (this.SendQueue.Packets?.Length > 0)
             {
                 this.SendDatagram(this.SendQueue);
-                this.SendQueue = new DataPacket0();
+                this.SendQueue = new DataPacket4();
             }
         }
 

@@ -371,15 +371,21 @@ namespace MineNET.Entities.Players
         //0x45
         public void HandleRequestChunkRadiusPacket(RequestChunkRadiusPacket pk)
         {
-            int r = pk.Radius;
-            int m = Server.Instance.ServerProperty.MaxChunkRadius;
-            if (r > m)
-            {
-                r = m;
-            }
+            int request = pk.Radius;
+            int max = Server.Instance.ServerProperty.MaxChunkRadius;
 
-            this.RequestChunkRadius = r;
-            this.SendChunkRadiusUpdated();
+            OutLog.Log("%server.player.requestChunkRadius", this.DisplayName, request);
+            if (request > max)
+            {
+                OutLog.Log("%server.player.updateChunkRadius", this.DisplayName, request, max);
+                this.RequestChunkRadius = max;
+                this.SendChunkRadiusUpdated();
+            }
+            else
+            {
+                this.RequestChunkRadius = request;
+                this.SendChunkRadiusUpdated();
+            }
         }
         #endregion
 

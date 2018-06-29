@@ -12,7 +12,7 @@ namespace MineNET.Entities
     public abstract class EntityLiving : Entity
     {
         public EntityAttributeDictionary Attributes { get; private set; }
-        protected Dictionary<int, Effect> effects { get; } = new Dictionary<int, Effect>();
+        protected Dictionary<int, Effect> Effects { get; } = new Dictionary<int, Effect>();
 
         public EntityLiving(World world, CompoundTag tag) : base(world, tag)
         {
@@ -76,21 +76,21 @@ namespace MineNET.Entities
 
         public bool HasEffect(int id)
         {
-            return this.effects.ContainsKey(id);
+            return this.Effects.ContainsKey(id);
         }
 
         public Effect GetEffect(int id)
         {
             if (this.HasEffect(id))
             {
-                return this.effects[id];
+                return this.Effects[id];
             }
             return null;
         }
 
         public Effect[] GetEffects()
         {
-            return this.effects.Values.ToArray();
+            return this.Effects.Values.ToArray();
         }
 
         public void AddEffect(Effect effect)
@@ -116,7 +116,7 @@ namespace MineNET.Entities
             {
                 effect.Add(this, false);
             }
-            this.effects[effect.ID] = effect;
+            this.Effects[effect.ID] = effect;
 
             this.RecalculateEffectColor();
         }
@@ -130,17 +130,17 @@ namespace MineNET.Entities
             Effect effect = this.GetEffect(id);
             effect.Remove(this);
 
-            this.effects.Remove(id);
+            this.Effects.Remove(id);
             this.RecalculateEffectColor();
         }
 
         public void RemoveAllEffect()
         {
-            if (this.effects.Count < 1)
+            if (this.Effects.Count < 1)
             {
                 return;
             }
-            int[] ids = this.effects.Keys.ToArray();
+            int[] ids = this.Effects.Keys.ToArray();
             for (int i = 0; i < ids.Length; ++i)
             {
                 this.RemoveEffect(ids[i]);
@@ -152,7 +152,7 @@ namespace MineNET.Entities
             int[] color = new int[3];
             int count = 0;
             bool ambient = true;
-            foreach (int id in this.effects.Keys)
+            foreach (int id in this.Effects.Keys)
             {
                 Effect effect = this.GetEffect(id);
                 if (effect.Visible)

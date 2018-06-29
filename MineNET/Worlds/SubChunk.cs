@@ -1,4 +1,5 @@
-﻿using MineNET.Utils;
+﻿using MineNET.Blocks;
+using MineNET.Utils;
 using System.Linq;
 
 namespace MineNET.Worlds
@@ -17,7 +18,7 @@ namespace MineNET.Worlds
             {
                 return this.BlockDatas.All(b =>
                 {
-                    return b == 0;
+                    return b == BlockIDs.AIR;
                 });
             }
         }

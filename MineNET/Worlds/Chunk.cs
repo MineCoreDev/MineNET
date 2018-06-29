@@ -39,7 +39,7 @@ namespace MineNET.Worlds
         List<Entity> entities = new List<Entity>();
         ListTag entitiesTag = new ListTag(NBTTagType.COMPOUND);
         //List<BlockEntity> blockEntities = new List<BlockEntity>();
-        //ListTag blockEntitiesTag = new ListTag(NBTTagType.COMPOUND);
+        ListTag blockEntitiesTag = new ListTag(NBTTagType.COMPOUND);
 
         public Chunk(int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null, short[] heightMap = null, ListTag entitiesTag = null, ListTag blockEntitiesTag = null)
         {
@@ -62,7 +62,7 @@ namespace MineNET.Worlds
             }
 
             this.entitiesTag = entitiesTag;
-            //this.blockEntitiesTag = blockEntitiesTag;
+            this.blockEntitiesTag = blockEntitiesTag;
         }
 
         public void SendChunk(Player player)
