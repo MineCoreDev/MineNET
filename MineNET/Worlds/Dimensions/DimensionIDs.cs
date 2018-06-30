@@ -1,6 +1,6 @@
 ﻿namespace MineNET.Worlds.Dimensions
 {
-    public sealed class DimensionID
+    public sealed class DimensionIDs
     {
         public const byte OverWorld = 0;
         public const byte Nether = 1;

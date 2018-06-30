@@ -9,6 +9,7 @@ namespace MineNET.Init
         public ItemInit()
         {
             ItemInit.In = this;
+            this.Init();
         }
 
         public void Init()

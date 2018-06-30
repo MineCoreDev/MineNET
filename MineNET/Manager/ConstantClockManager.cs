@@ -22,6 +22,12 @@ namespace MineNET.Manager
 
         private Dictionary<string, ClockInstance> Datas { get; } = new Dictionary<string, ClockInstance>();
 
+        public ConstantClockManager()
+        {
+            this.Create("server.update", 1000 / 20);
+            this.Create("network.update", 1000 / 1000);
+        }
+
         public void Create(string name, int time)
         {
             this.Datas[name] = new ClockInstance(name, time);
@@ -41,10 +47,10 @@ namespace MineNET.Manager
         {
             ClockInstance instance = this.Datas[name];
             instance.StopWatch.Stop();
-            int wait = instance.StopWatch.Elapsed.Milliseconds - instance.ClockTime;
+            int wait = instance.ClockTime - instance.StopWatch.Elapsed.Milliseconds;
             if (wait <= 0)
             {
-                Thread.Sleep(1);
+                OutLog.Log("%server.constantClock.lowTickRate", name);
             }
             else
             {

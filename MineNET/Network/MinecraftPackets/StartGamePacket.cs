@@ -20,8 +20,8 @@ namespace MineNET.Network.MinecraftPackets
         public Vector2 Direction { get; set; }
 
         public int Seed { get; set; } = -1;
-        public byte Dimension { get; set; } = DimensionID.OverWorld;
-        public int Generator { get; set; } = GeneratorID.Infinite;
+        public byte Dimension { get; set; } = DimensionIDs.OverWorld;
+        public int Generator { get; set; } = GeneratorIDs.Infinite;
         public GameMode WorldGamemode { get; set; } = GameMode.Survival;
         public Difficulty Difficulty { get; set; } = Difficulty.Normal;
 

@@ -95,10 +95,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlockEntities\BlockEntity.cs" />
+    <Compile Include="BlockEntities\BlockEntitySpawnable.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Blocks\BlockAir.cs" />
+    <Compile Include="Blocks\BlockDirt.cs" />
+    <Compile Include="Blocks\BlockGrass.cs" />
     <Compile Include="Blocks\BlockIDs.cs" />
     <Compile Include="Blocks\BlockSolid.cs" />
+    <Compile Include="Blocks\BlockStone.cs" />
     <Compile Include="Blocks\BlockTransparent.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CommandData.cs" />
@@ -332,14 +337,32 @@
     <Compile Include="Values\BlockCoordinate2D.cs" />
     <Compile Include="Values\BlockCoordinate3D.cs" />
     <Compile Include="Values\Color.cs" />
+    <Compile Include="Values\ILocation.cs" />
+    <Compile Include="Values\IPosition.cs" />
+    <Compile Include="Values\IVector3.cs" />
+    <Compile Include="Values\IVector3i.cs" />
+    <Compile Include="Values\Location.cs" />
+    <Compile Include="Values\Position.cs" />
     <Compile Include="Values\UUID.cs" />
     <Compile Include="Values\Vector2.cs" />
     <Compile Include="Values\Vector3.cs" />
     <Compile Include="Worlds\Chunk.cs" />
     <Compile Include="Worlds\Difficulty.cs" />
-    <Compile Include="Worlds\Dimensions\DimensionID.cs" />
+    <Compile Include="Worlds\Dimensions\DimensionIDs.cs" />
+    <Compile Include="Worlds\Formats\ChunkFormats\IChunkFormat.cs" />
+    <Compile Include="Worlds\Formats\ChunkFormats\McaChunkFormat.cs" />
+    <Compile Include="Worlds\Formats\RegionFile.cs" />
+    <Compile Include="Worlds\Formats\WorldDataFormats\IWorldDataFormat.cs" />
+    <Compile Include="Worlds\Formats\WorldDataFormats\LevelDBFormat.cs" />
+    <Compile Include="Worlds\Formats\WorldSaveFormats\IWorldSaveFormat.cs" />
+    <Compile Include="Worlds\Formats\WorldSaveFormats\MineNETWorldSaveFormat.cs" />
+    <Compile Include="Worlds\Formats\WorldSaveFormats\RegionWorldSaveFormat.cs" />
     <Compile Include="Worlds\GameMode.cs" />
-    <Compile Include="Worlds\Generators\GeneratorID.cs" />
+    <Compile Include="Worlds\Generators\Flat\FlatGenerator.cs" />
+    <Compile Include="Worlds\Generators\GeneratorBase.cs" />
+    <Compile Include="Worlds\Generators\GeneratorIDs.cs" />
+    <Compile Include="Worlds\Generators\GeneratorManager.cs" />
+    <Compile Include="Worlds\Generators\IGenerator.cs" />
     <Compile Include="Worlds\Rule\GameRule.cs" />
     <Compile Include="Worlds\Rule\GameRuleBase.cs" />
     <Compile Include="Worlds\Rule\GameRules.cs" />
@@ -352,6 +375,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

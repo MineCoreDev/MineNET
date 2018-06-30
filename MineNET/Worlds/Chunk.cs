@@ -1,4 +1,5 @@
-﻿using MineNET.Blocks;
+﻿using MineNET.BlockEntities;
+using MineNET.Blocks;
 using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.NBT.Data;
@@ -24,7 +25,7 @@ namespace MineNET.Worlds
             }
         }
 
-        //public World World { get; private set; }
+        public World World { get; private set; }
 
         public bool LightPopulated { get; set; }
         public bool TerrainPopulated { get; set; }
@@ -36,10 +37,10 @@ namespace MineNET.Worlds
         public short[] HeightMap { get; private set; } = ArrayUtils.CreateArray<short>(256);
 
         public SubChunk[] SubChunks { get; set; } = ArrayUtils.CreateArray<SubChunk>(16);
-        List<Entity> entities = new List<Entity>();
-        ListTag entitiesTag = new ListTag(NBTTagType.COMPOUND);
-        //List<BlockEntity> blockEntities = new List<BlockEntity>();
-        ListTag blockEntitiesTag = new ListTag(NBTTagType.COMPOUND);
+        private List<Entity> Entities { get; } = new List<Entity>();
+        private ListTag EntitiesTag { get; } = new ListTag(NBTTagType.COMPOUND);
+        private List<BlockEntity> blockEntities { get; } = new List<BlockEntity>();
+        private ListTag BlockEntitiesTag { get; } = new ListTag(NBTTagType.COMPOUND);
 
         public Chunk(int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null, short[] heightMap = null, ListTag entitiesTag = null, ListTag blockEntitiesTag = null)
         {
@@ -61,8 +62,8 @@ namespace MineNET.Worlds
                 this.SubChunks = chunkDatas;
             }
 
-            this.entitiesTag = entitiesTag;
-            this.blockEntitiesTag = blockEntitiesTag;
+            this.EntitiesTag = entitiesTag;
+            this.BlockEntitiesTag = blockEntitiesTag;
         }
 
         public void SendChunk(Player player)
@@ -131,21 +132,15 @@ namespace MineNET.Worlds
             chunk.SetMetaData(bx, by - 16 * (by >> 4), bz, data);
         }
 
-        public Entity[] Entities
+        public Entity[] GetEntities()
         {
-            get
-            {
-                return this.entities.ToArray();
-            }
+            return this.Entities.ToArray();
         }
 
-        /*public BlockEntity[] BlockEntities
+        public BlockEntity[] GetBlockEntities()
         {
-            get
-            {
-                return this.blockEntities.ToArray();
-            }
-        }*/
+            return this.blockEntities.ToArray();
+        }
 
         public int GetBlockHighest(Vector2 pos)
         {
@@ -190,6 +185,11 @@ namespace MineNET.Worlds
 
                 return stream.ToArray();
             }
+        }
+
+        internal void InternalSetWorld(World world)
+        {
+            this.World = world;
         }
     }
 }

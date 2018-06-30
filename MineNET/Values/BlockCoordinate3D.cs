@@ -1,6 +1,6 @@
 ﻿namespace MineNET.Values
 {
-    public struct BlockCoordinate3D
+    public struct BlockCoordinate3D : IVector3i
     {
         public int X { get; set; }
         public int Y { get; set; }

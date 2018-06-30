@@ -1,9 +1,10 @@
 ﻿using MineNET.Utils;
+using MineNET.Worlds;
 using System;
 
 namespace MineNET.Values
 {
-    public struct Vector3
+    public struct Vector3 : IVector3
     {
         public float X { get; set; }
         public float Y { get; set; }
@@ -333,10 +334,10 @@ namespace MineNET.Values
             }
         }
 
-        /*public Position Position(World world)
+        public Position Position(World world)
         {
             return new Position(this.X, this.Y, this.Z, world);
-        }*/
+        }
 
         public static Vector3 operator +(Vector3 a, Vector3 b)
         {
@@ -381,6 +382,16 @@ namespace MineNET.Values
         public static implicit operator Vector3(Vector2 v)
         {
             return new Vector3(v.X, v.Y, 0f);
+        }
+
+        public static explicit operator Vector3(Position p)
+        {
+            return new Vector3(p.X, p.Y, p.Z);
+        }
+
+        public static explicit operator Vector3(Location l)
+        {
+            return new Vector3(l.X, l.Y, l.Z);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace MineNET.Init
         public EffectInit()
         {
             EffectInit.In = this;
+            this.Init();
         }
 
         public void Init()

@@ -6,16 +6,52 @@ namespace MineNET.Blocks
     public class Block : ICloneable<Block>
     {
         public int ID { get; }
-        public int Damage { get; }
+        public int Damage { get; set; }
 
-        public static Block Get(int id)
+        public Position Position { get; internal set; }
+
+        public static Block Get(int id, int meta = 0)
         {
             if (MineNET_Registries.Block.ContainsKey(id))
             {
-                return MineNET_Registries.Block[id];
+                Block b = MineNET_Registries.Block[id];
+                b.Damage = meta;
+                return b;
             }
 
             return Init.BlockInit.In.Air;
+        }
+
+        public static Block Get(string name)
+        {
+            string[] data = name.Replace("minecraft:", "").Replace(" ", "_").ToUpper().Split(':');
+            int id = 0;
+            int meta = 0;
+
+            if (data.Length == 1)
+            {
+                int.TryParse(data[0], out id);
+            }
+
+            if (data.Length == 2)
+            {
+                int.TryParse(data[0], out id);
+                int.TryParse(data[1], out meta);
+            }
+
+            try
+            {
+                BlockIDs factory = new BlockIDs();
+                id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
+            }
+            catch
+            {
+
+            }
+
+            Block block = Block.Get(id);
+
+            return block;
         }
 
         public Block(string name, int id)
@@ -24,7 +60,7 @@ namespace MineNET.Blocks
             this.ID = id;
         }
 
-        public string Name { get; } = "Unknown";
+        public virtual string Name { get; } = "Unknown";
 
         public Block Clone()
         {
@@ -53,6 +89,10 @@ namespace MineNET.Blocks
             {
                 return false;
             }
+        }
+
+        public void UpdateTick(int type)
+        {
         }
     }
 }

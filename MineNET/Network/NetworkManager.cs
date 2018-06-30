@@ -244,11 +244,12 @@ namespace MineNET.Network
         {
             while (IsRunNetwork)
             {
+                Server.Instance.Clock.Start("network.update");
                 foreach (KeyValuePair<string, NetworkSession> session in this.Sessions)
                 {
                     session.Value.OnUpdate();
                 }
-                Thread.Sleep(1);
+                Server.Instance.Clock.Stop("network.update");
             }
         }
         #endregion

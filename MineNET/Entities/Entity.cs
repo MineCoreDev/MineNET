@@ -1,6 +1,7 @@
 ﻿using MineNET.Entities.Metadata;
 using MineNET.Entities.Players;
 using MineNET.NBT.Tags;
+using MineNET.Values;
 using MineNET.Worlds;
 using System;
 using System.Collections;
@@ -398,6 +399,18 @@ namespace MineNET.Entities
         internal virtual bool UpdateTick(long tick)
         {
             return true;
+        }
+        #endregion
+
+        public Vector2 GetChunkVector()
+        {
+            return new Vector2(((int) this.X) >> 4, ((int) this.Z) >> 4);
+        }
+
+        #region Save Method
+        public void SaveNBT()
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

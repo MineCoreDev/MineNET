@@ -12,6 +12,8 @@ using MineNET.Worlds;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 
@@ -47,8 +49,7 @@ namespace MineNET
         public NetworkManager Network { get; private set; }
         public IPEndPoint EndPoint { get; private set; }
 
-        public World MainWorld { get; private set; }
-        public List<World> SubWorlds { get; } = new List<World>();
+        public Dictionary<string, World> Worlds { get; } = new Dictionary<string, World>();
         #endregion
 
         #region Ctor
@@ -158,17 +159,44 @@ namespace MineNET
                 return false;
             }
         }
+
+        public void StartUpdate()
+        {
+            long tick = 0;
+            while (this.Status == ServerStatus.Running)
+            {
+                this.Clock.Start("server.update");
+                this.OnUpdate(tick);
+                tick++;
+                this.Clock.Stop("server.update");
+            }
+        }
         #endregion
 
         #region Init Method
         public void Init(Stopwatch sw)
         {
-            this.Clock = new ConstantClockManager();
+            this.OnServerStart();
 
+            this.LoadConfigs();
+            this.LoadWorlds(sw);
+
+            this.StartNetwork(sw);
+        }
+
+        private void InitRegistries()
+        {
             MineNET_Registries.Init();
             new BlockInit();
             new ItemInit();
             new EffectInit();
+        }
+
+        private void OnServerStart()
+        {
+            this.Clock = new ConstantClockManager();
+
+            this.InitRegistries();
 
             this.Event = new EventManager();
             this.Logger = new Logger();
@@ -177,11 +205,10 @@ namespace MineNET
             this.Command = new CommandManager();
 
             this.Event.Server.OnServerStart(this, new ServerStartEventArgs());
+        }
 
-            this.MainWorld = new World();
-
-            this.LoadConfig();
-
+        private void StartNetwork(Stopwatch sw)
+        {
             this.ServerList = new ServerListInfo();
 
             if (this.NetworkSocket == null)
@@ -196,7 +223,43 @@ namespace MineNET
             OutLog.Info("%server.network.start.done", sw.Elapsed.ToString(@"mm\:ss\.fff"));
         }
 
-        public void LoadConfig()
+        private void LoadWorlds(Stopwatch sw)
+        {
+            string worldFolder = Server.ExecutePath + "\\worlds";
+            if (Directory.Exists(worldFolder))
+            {
+                Directory.CreateDirectory(worldFolder);
+            }
+
+            string mainWorld = this.ServerProperty.MainWorldName;
+            if (!World.Exists(mainWorld))
+            {
+                World.CreateWorld(mainWorld);
+                OutLog.Notice("%server.world.create", mainWorld);
+            }
+            else
+            {
+                World.LoadWorld(mainWorld);
+                OutLog.Info("%server.world.load", mainWorld);
+            }
+
+            string[] subWorlds = this.ServerProperty.LoadWorldNames;
+            for (int i = 0; i < subWorlds.Length; ++i)
+            {
+                if (!World.Exists(subWorlds[i]))
+                {
+                    World.CreateWorld(subWorlds[i]);
+                    OutLog.Notice("%server.world.create", subWorlds[i]);
+                }
+                else
+                {
+                    World.LoadWorld(subWorlds[i]);
+                    OutLog.Info("%server.world.load", subWorlds[i]);
+                }
+            }
+        }
+
+        private void LoadConfigs()
         {
             this.Config = MineNETConfig.Load<MineNETConfig>($"{ExecutePath}\\MineNET.yml");
             this.ServerProperty = ServerConfig.Load<ServerConfig>($"{ExecutePath}\\ServerProperties.yml");
@@ -215,6 +278,12 @@ namespace MineNET
             for (int i = 0; i < players.Length; ++i)
             {
                 players[i].UpdateTick(tick);
+            }
+
+            World[] worlds = this.GetWorlds();
+            for (int i = 0; i < worlds.Length; ++i)
+            {
+                worlds[i].UpdateTick(tick);
             }
 
             this.Logger.Input.GetQueueCommand();
@@ -259,6 +328,13 @@ namespace MineNET
             }
 
             return list.ToArray();
+        }
+        #endregion
+
+        #region World Method
+        public World[] GetWorlds()
+        {
+            return this.Worlds.Values.ToArray();
         }
         #endregion
 

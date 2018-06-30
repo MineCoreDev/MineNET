@@ -330,9 +330,6 @@ namespace MineNET.Network
                     {
                         if (packet != null)
                         {
-                            packet.SetBuffer(buffer);
-                            packet.Decode();
-
                             /*DataPacketReceiveArgs args = new DataPacketReceiveArgs(player, pk);
                             ServerEvents.OnPacketReceive(args);
 
@@ -341,11 +338,13 @@ namespace MineNET.Network
                                 return;
                             }*/
 
+                            OutLog.Log("%server.network.minecraft.receivePacket", buffer[0].ToString("X"), buffer.Length);
+
                             player.OnPacketHandle(packet);
                         }
                         else
                         {
-                            OutLog.Log(buffer[0].ToString("X"));
+                            OutLog.Log("%server.network.minecraft.notHandle", buffer[0].ToString("X"));
                         }
                     }
                 }
@@ -500,6 +499,8 @@ namespace MineNET.Network
             BinaryStream st = new BinaryStream();
             st.WriteVarInt((int) packet.Length);
             st.WriteBytes(buffer);
+
+            OutLog.Log("%server.network.minecraft.sendPacket", packet.PacketID.ToString("X"), packet.Length);
 
             BatchPacket pk = new BatchPacket();
             pk.Payload = st.ToArray();

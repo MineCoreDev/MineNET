@@ -9,8 +9,6 @@ using MineNET.Worlds;
 using MineNET.Worlds.Rule;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 
 namespace MineNET.Entities.Players
@@ -116,49 +114,8 @@ namespace MineNET.Entities.Players
         #region Send Chunk Method
         public void SendChunk()
         {
-            Dictionary<Tuple<int, int>, double> newOrders = new Dictionary<Tuple<int, int>, double>();
-            int radius = this.RequestChunkRadius;
-            double radiusSquared = Math.Pow(radius, 2);
-            Vector2 center = new Vector2(((int) this.X) >> 4, ((int) this.Z) >> 4);
-
-            for (int x = -radius; x <= radius; ++x)
+            foreach (Chunk c in this.World.LoadChunks(this, this.RequestChunkRadius))
             {
-                for (int z = -radius; z <= radius; ++z)
-                {
-                    int distance = (x * x) + (z * z);
-                    if (distance > radiusSquared)
-                    {
-                        continue;
-                    }
-                    int chunkX = (int) (x + center.X);
-                    int chunkZ = (int) (z + center.Y);
-                    Tuple<int, int> index = new Tuple<int, int>(chunkX, chunkZ);
-                    newOrders[index] = distance;
-                }
-            }
-
-            foreach (Tuple<int, int> chunkKey in this.LoadedChunks.Keys)
-            {
-                if (!newOrders.ContainsKey(chunkKey))
-                {
-                    double r;
-                    this.LoadedChunks.TryRemove(chunkKey, out r);
-                }
-            }
-
-            foreach (var pair in newOrders.OrderBy(pair => pair.Value))
-            {
-                if (this.LoadedChunks.ContainsKey(pair.Key)) continue;
-
-                Chunk c = new Chunk(pair.Key.Item1, pair.Key.Item2);
-                this.LoadedChunks.TryAdd(pair.Key, pair.Value);
-                for (int i = 0; i < 16; ++i)
-                {
-                    for (int k = 0; k < 16; ++k)
-                    {
-                        c.SetBlock(i, 0, k, 2);
-                    }
-                }
                 c.SendChunk(this);
             }
         }
@@ -180,7 +137,7 @@ namespace MineNET.Entities.Players
         #region Update Method
         internal override bool UpdateTick(long tick)
         {
-            if (tick % 200000 == 0 && this.HasSpawned)
+            if (tick % 20 == 0 && this.HasSpawned)
             {
                 this.SendChunk();
             }
@@ -220,13 +177,13 @@ namespace MineNET.Entities.Players
             if (pk.Protocol < MinecraftProtocol.ClientProtocol)
             {
                 this.SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_CLIENT, RakNetProtocol.FlagImmediate);
-                this.Close("disconnectionScreen.outdatedClient");
+                //this.Close("disconnectionScreen.outdatedClient");
                 return;
             }
             else if (pk.Protocol > MinecraftProtocol.ClientProtocol)
             {
                 this.SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_SERVER, RakNetProtocol.FlagImmediate);
-                this.Close("disconnectionScreen.outdatedServer");
+                //this.Close("disconnectionScreen.outdatedServer");
                 return;
             }
 
@@ -243,6 +200,13 @@ namespace MineNET.Entities.Players
                 }
             }
 
+            int maxplayers = Server.Instance.ServerProperty.MaxPlayers;
+            if (players.Length > maxplayers)
+            {
+                this.SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_SERVER_FULL, RakNetProtocol.FlagImmediate);
+                //this.Close("disconnectionScreen.outdatedServer");
+            }
+
             //TODO: Auth MS Server
 
             this.LoginData = pk.LoginData;
@@ -257,7 +221,7 @@ namespace MineNET.Entities.Players
 
             this.IsPreLogined = true;
 
-            this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
+            this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS, RakNetProtocol.FlagImmediate);
 
             ResourcePacksInfoPacket info = new ResourcePacksInfoPacket();
             this.SendPacket(info);
@@ -299,13 +263,13 @@ namespace MineNET.Entities.Players
 
                 //TODO: Load NBT
 
-                this.World = Server.Instance.MainWorld;
+                this.World = World.GetMainWorld();
 
                 StartGamePacket startGamePacket = new StartGamePacket();
                 startGamePacket.EntityUniqueId = this.EntityID;
                 startGamePacket.EntityRuntimeId = this.EntityID;
                 startGamePacket.PlayerGamemode = this.GameMode;
-                startGamePacket.PlayerPosition = new Vector3(128, 5, 128);//new Vector3(this.X, this.Y, this.Z);
+                startGamePacket.PlayerPosition = new Vector3(128, 60, 128);//new Vector3(this.X, this.Y, this.Z);
                 startGamePacket.Direction = new Vector2(this.Yaw, this.Pitch);
 
                 startGamePacket.WorldGamemode = this.World.Gamemode;
@@ -345,8 +309,6 @@ namespace MineNET.Entities.Players
                 this.AdventureSettingsEntry = adventureSettingsEntry;
                 this.AdventureSettingsEntry.Update(this);
 
-                this.HasSpawned = true;
-
                 this.SendDataProperties();
                 this.Attributes.Update(this);
             }
@@ -372,7 +334,7 @@ namespace MineNET.Entities.Players
         public void HandleRequestChunkRadiusPacket(RequestChunkRadiusPacket pk)
         {
             int request = pk.Radius;
-            int max = Server.Instance.ServerProperty.MaxChunkRadius;
+            int max = Server.Instance.ServerProperty.MaxViewDistance;
 
             OutLog.Log("%server.player.requestChunkRadius", this.DisplayName, request);
             if (request > max)
@@ -386,6 +348,8 @@ namespace MineNET.Entities.Players
                 this.RequestChunkRadius = request;
                 this.SendChunkRadiusUpdated();
             }
+
+            this.HasSpawned = true;
         }
         #endregion
 
