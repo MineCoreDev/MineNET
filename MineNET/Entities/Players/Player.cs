@@ -105,6 +105,7 @@ namespace MineNET.Entities.Players
         public void SendChunkRadiusUpdated()
         {
             ChunkRadiusUpdatedPacket pk = new ChunkRadiusUpdatedPacket();
+            OutLog.Log(this.RequestChunkRadius);
             pk.Radius = this.RequestChunkRadius;
 
             this.SendPacket(pk);
@@ -221,10 +222,10 @@ namespace MineNET.Entities.Players
 
             this.IsPreLogined = true;
 
-            this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS, RakNetProtocol.FlagImmediate);
+            this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
 
             ResourcePacksInfoPacket info = new ResourcePacksInfoPacket();
-            this.SendPacket(info);
+            this.SendPacket(info, flag: RakNetProtocol.FlagImmediate);
         }
 
         //0x08
@@ -269,7 +270,7 @@ namespace MineNET.Entities.Players
                 startGamePacket.EntityUniqueId = this.EntityID;
                 startGamePacket.EntityRuntimeId = this.EntityID;
                 startGamePacket.PlayerGamemode = this.GameMode;
-                startGamePacket.PlayerPosition = new Vector3(128, 60, 128);//new Vector3(this.X, this.Y, this.Z);
+                startGamePacket.PlayerPosition = new Vector3(128, 5, 128);//new Vector3(this.X, this.Y, this.Z);
                 startGamePacket.Direction = new Vector2(this.Yaw, this.Pitch);
 
                 startGamePacket.WorldGamemode = this.World.Gamemode;

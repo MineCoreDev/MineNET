@@ -576,4 +576,7 @@
   <data name="server.world.load" xml:space="preserve">
     <value>ワールド "{0}" が読み込まれました。</value>
   </data>
+  <data name="server.network.packetThreadAbort" xml:space="preserve">
+    <value>パケットの受信を強制終了しました。</value>
+  </data>
 </root>

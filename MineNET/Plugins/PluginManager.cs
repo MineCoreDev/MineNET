@@ -212,8 +212,10 @@ namespace MineNET.Plugins
 
             this.Plugins.Clear();
             this.Libraries.Clear();
+            this.Packages.Clear();
             this.Plugins = null;
             this.Libraries = null;
+            this.Packages = null;
         }
         #endregion
     }

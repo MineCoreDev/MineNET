@@ -17,18 +17,27 @@ namespace MineNET.Network
 
         public UDPSocket(IPEndPoint point)
         {
-            this.client = new UdpClient(point);
+            try
+            {
+                this.client = new UdpClient(point);
 
-            this.client.Client.ReceiveBufferSize = int.MaxValue;
-            this.client.Client.SendBufferSize = int.MaxValue;
-            this.client.DontFragment = false;
-            this.client.EnableBroadcast = false;
+                this.client.Client.ReceiveBufferSize = int.MaxValue;
+                this.client.Client.SendBufferSize = int.MaxValue;
+                this.client.DontFragment = false;
+                this.client.EnableBroadcast = false;
 
-            uint IOC_IN = 0x80000000;
-            uint IOC_VENDOR = 0x18000000;
-            uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
+                uint IOC_IN = 0x80000000;
+                uint IOC_VENDOR = 0x18000000;
+                uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
 
-            this.client.Client.IOControl((int) SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
+                this.client.Client.IOControl((int) SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
+
+            }
+            catch (SocketException e1)
+            {
+                OutLog.Error(e1.Message);
+                Server.Instance.ErrorStop(null);
+            }
         }
 
         public void Dispose()

@@ -137,27 +137,22 @@ namespace MineNET
             }
         }
 
-        public bool ErrorStop(Exception e)
+        public void ErrorStop(Exception e)
         {
-            if (this.Status == ServerStatus.Running)
+            //TODO: ServerErrorStopEvent...
+            OutLog.Fatal("%server.error.stop");
+            if (e != null)
             {
-                //TODO: ServerErrorStopEvent...
-                OutLog.Fatal("%server.error.stop");
                 OutLog.Error(e.ToString());
-                OutLog.Info("%server.stoping");
-                this.Dispose();
-                BlockInit.In.Dispose();
-                ItemInit.In.Dispose();
-
-                this.Status = ServerStatus.Stop;
-
-                //TODO: ServerErrorStopedEvent...
-                return true;
             }
-            else
-            {
-                return false;
-            }
+            OutLog.Info("%server.stoping");
+            this.Dispose();
+            BlockInit.In?.Dispose();
+            ItemInit.In?.Dispose();
+
+            this.Status = ServerStatus.Stop;
+
+            //TODO: ServerErrorStopedEvent...
         }
 
         public void StartUpdate()
@@ -357,7 +352,7 @@ namespace MineNET
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            this.Clock?.Dispose();
+            this.Worlds.Clear();
             this.Plugin?.Dispose();
             this.Command?.Dispose();
             this.Network?.Dispose();
@@ -366,6 +361,7 @@ namespace MineNET
             sw.Stop();
             OutLog.Info("%server.stoped", sw.Elapsed.ToString(@"mm\:ss\.fff"));
             this.Logger?.Dispose();
+            this.Clock?.Dispose();
 
             Server.Instance = null;
         }

@@ -39,22 +39,23 @@ namespace MineNET.Network
         private void Init()
         {
             UdpClient client = Server.Instance.NetworkSocket.Socket;
-            client.DontFragment = false;
-            client.EnableBroadcast = false;
-            this.Client = client;
+            if (client != null)
+            {
+                this.Client = client;
 
-            this.RegisterRakNetPackets();
-            this.RegisterMinecraftPackets();
+                this.RegisterRakNetPackets();
+                this.RegisterMinecraftPackets();
 
-            this.IsRunNetwork = true;
+                this.IsRunNetwork = true;
 
-            this.ReceiveThread = new Thread(this.ReceiveClock);
-            this.ReceiveThread.Name = "PacketThread";
-            this.ReceiveThread.Start();
+                this.ReceiveThread = new Thread(this.ReceiveClock);
+                this.ReceiveThread.Name = "PacketThread";
+                this.ReceiveThread.Start();
 
-            this.UpdateThread = new Thread(this.OnUpdate);
-            this.UpdateThread.Name = "SessionUpdateThread";
-            this.UpdateThread.Start();
+                this.UpdateThread = new Thread(this.OnUpdate);
+                this.UpdateThread.Name = "SessionUpdateThread";
+                this.UpdateThread.Start();
+            }
         }
 
         private void RegisterRakNetPackets()
@@ -234,9 +235,13 @@ namespace MineNET.Network
                     this.HandleRakNetPacket(point, bytes);
                 }
             }
-            catch (Exception e)
+            catch (ThreadAbortException e1)
             {
-                OutLog.Notice(e);
+                OutLog.Log("%server.network.packetThreadAbort", e1.GetType().Name);
+            }
+            catch (Exception e2)
+            {
+                OutLog.Notice(e2);
             }
         }
 

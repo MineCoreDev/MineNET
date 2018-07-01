@@ -38,24 +38,38 @@ namespace MineNET.Manager
             return this.Datas.Remove(name);
         }
 
-        public void Start(string name)
+        public bool Start(string name)
         {
-            this.Datas[name].StopWatch.Restart();
+            if (this.Datas.ContainsKey(name))
+            {
+                this.Datas[name].StopWatch.Restart();
+
+                return true;
+            }
+
+            return false;
         }
 
-        public void Stop(string name)
+        public bool Stop(string name)
         {
-            ClockInstance instance = this.Datas[name];
-            instance.StopWatch.Stop();
-            int wait = instance.ClockTime - instance.StopWatch.Elapsed.Milliseconds;
-            if (wait <= 0)
+            if (this.Datas.ContainsKey(name))
             {
-                OutLog.Log("%server.constantClock.lowTickRate", name);
+                ClockInstance instance = this.Datas[name];
+                instance.StopWatch.Stop();
+                int wait = instance.ClockTime - instance.StopWatch.Elapsed.Milliseconds;
+                if (wait <= 0)
+                {
+                    OutLog.Log("%server.constantClock.lowTickRate", name);
+                }
+                else
+                {
+                    Thread.Sleep(wait);
+                }
+
+                return true;
             }
-            else
-            {
-                Thread.Sleep(wait);
-            }
+
+            return false;
         }
 
         public void Dispose()
