@@ -335,8 +335,8 @@ namespace MineNET.Entities
         #region Property & Field
         public abstract string Name { get; protected set; }
 
-        public float Width { get; private set; }
-        public float Height { get; private set; }
+        public virtual float Width { get; }
+        public virtual float Height { get; }
 
         public float X { get; set; }
         public float Y { get; set; }

@@ -12,7 +12,6 @@ namespace MineNET.Network.MinecraftPackets
         public override byte PacketID { get; } = MinecraftProtocol.START_GAME_PACKET;
 
         public long EntityUniqueId { get; set; }
-
         public long EntityRuntimeId { get; set; }
 
         public GameMode PlayerGamemode { get; set; }

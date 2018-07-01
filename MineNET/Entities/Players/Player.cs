@@ -45,8 +45,10 @@ namespace MineNET.Entities.Players
         public bool HaveAllPacks { get; private set; }
 
         public bool HasSpawned { get; private set; }
-        public int RequestChunkRadius { get; private set; }
+        public int RequestChunkRadius { get; private set; } = 8;
 
+        public override float Width { get; } = 0.60f;
+        public override float Height { get; } = 1.80f;
 
         public ConcurrentDictionary<Tuple<int, int>, double> LoadedChunks { get; private set; } = new ConcurrentDictionary<Tuple<int, int>, double>();
         #endregion
@@ -102,13 +104,14 @@ namespace MineNET.Entities.Players
         #endregion
 
         #region Send ChunkRadius Method
-        public void SendChunkRadiusUpdated()
+        public void SendChunkRadiusUpdated(int radius)
         {
             ChunkRadiusUpdatedPacket pk = new ChunkRadiusUpdatedPacket();
-            OutLog.Log(this.RequestChunkRadius);
-            pk.Radius = this.RequestChunkRadius;
+            pk.Radius = radius;
 
             this.SendPacket(pk);
+
+            this.RequestChunkRadius = radius;
         }
         #endregion
 
@@ -222,10 +225,10 @@ namespace MineNET.Entities.Players
 
             this.IsPreLogined = true;
 
-            this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
+            this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS, RakNetProtocol.FlagImmediate);
 
             ResourcePacksInfoPacket info = new ResourcePacksInfoPacket();
-            this.SendPacket(info, flag: RakNetProtocol.FlagImmediate);
+            this.SendPacket(info);
         }
 
         //0x08
@@ -284,7 +287,10 @@ namespace MineNET.Entities.Players
                 startGamePacket.GameRules.Add(new GameRule<bool>("ShowCoordinates", true));
                 this.SendPacket(startGamePacket);
 
+                this.Attributes.Update(this);
+
                 this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+                this.HasSpawned = true;
 
                 this.PlayerListEntry = new PlayerListEntry(this.LoginData.ClientUUID)
                 {
@@ -311,7 +317,6 @@ namespace MineNET.Entities.Players
                 this.AdventureSettingsEntry.Update(this);
 
                 this.SendDataProperties();
-                this.Attributes.Update(this);
             }
         }
 
@@ -341,16 +346,12 @@ namespace MineNET.Entities.Players
             if (request > max)
             {
                 OutLog.Log("%server.player.updateChunkRadius", this.DisplayName, request, max);
-                this.RequestChunkRadius = max;
-                this.SendChunkRadiusUpdated();
+                this.SendChunkRadiusUpdated(request);//HACK:
             }
             else
             {
-                this.RequestChunkRadius = request;
-                this.SendChunkRadiusUpdated();
+                this.SendChunkRadiusUpdated(request);
             }
-
-            this.HasSpawned = true;
         }
         #endregion
 

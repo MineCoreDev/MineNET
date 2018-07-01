@@ -6,6 +6,7 @@ using MineNET.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Net;
 
 namespace MineNET.Network
@@ -240,7 +241,7 @@ namespace MineNET.Network
                     return;
                 }
 
-                //TODO: Ordered & Sequenced
+
                 this.HandleEncapsulatedPacketRoute(packet);
             }
         }
@@ -268,7 +269,7 @@ namespace MineNET.Network
                             shd.SendPing = ccd.SendPing;
                             shd.SendPong = ccd.SendPing + 1000;
 
-                            this.QueueConnectedPacket(shd, RakNetPacketReliability.UNRELIABLE, 0, RakNetProtocol.FlagImmediate);
+                            this.QueueConnectedPacket(shd, RakNetPacketReliability.UNRELIABLE, -1, RakNetProtocol.FlagImmediate);
                         }
                         else if (id == RakNetProtocol.ClientHandShakeDataPacket)
                         {
@@ -290,7 +291,7 @@ namespace MineNET.Network
                         OnlinePong pong = (OnlinePong) this.Manager.GetRakNetPacket(RakNetProtocol.OnlinePong);
                         pong.PingID = ping.PingID;
 
-                        this.QueueConnectedPacket(pong, RakNetPacketReliability.UNRELIABLE, 0, RakNetProtocol.FlagImmediate);
+                        this.QueueConnectedPacket(pong, RakNetPacketReliability.UNRELIABLE, -1, RakNetProtocol.FlagImmediate);
                     }
                     else if (id == RakNetProtocol.OnlinePong)
                     {
@@ -426,11 +427,11 @@ namespace MineNET.Network
         {
             if (RakNetPacketReliability.IsOrdered(packet.Reliability))
             {
-                packet.OrderIndex = this.OrderIndex;
+                packet.OrderIndex = this.OrderIndex++;
             }
             else if (RakNetPacketReliability.IsSequenced(packet.Reliability))
             {
-                packet.OrderIndex = this.OrderIndex;
+                packet.OrderIndex = this.OrderIndex++;
                 packet.MessageIndex = this.MessageIndex++;
             }
 
@@ -497,21 +498,25 @@ namespace MineNET.Network
             byte[] buffer = packet.ToArray();
 
             BinaryStream st = new BinaryStream();
-            st.WriteVarInt((int) packet.Length);
+            st.WriteVarInt((int) buffer.Length);
             st.WriteBytes(buffer);
 
             OutLog.Log("%server.network.minecraft.sendPacket", packet.PacketID.ToString("X"), packet.Length);
 
             BatchPacket pk = new BatchPacket();
+            if (packet is FullChunkDataPacket)
+            {
+                pk.CompressionLevel = CompressionLevel.Optimal;
+            }
             pk.Payload = st.ToArray();
-            this.QueueConnectedPacket(pk, reliability, flags);
+            this.QueueConnectedPacket(pk, reliability, -1, flags);
         }
 
         public void SendBatchPacket(int reliability, int flags = RakNetProtocol.FlagNormal)
         {
             if (this.BatchPacketQueue.Payload.Length > 0)
             {
-                this.QueueConnectedPacket(this.BatchPacketQueue, reliability, flags);
+                this.QueueConnectedPacket(this.BatchPacketQueue, reliability, -1, flags);
                 this.BatchPacketQueue = new BatchPacket();
             }
         }
@@ -583,7 +588,7 @@ namespace MineNET.Network
                 this.State = SessionState.Disconnected;
 
                 ClientDisconnectDataPacket pk = new ClientDisconnectDataPacket();
-                this.QueueConnectedPacket(pk, RakNetPacketReliability.UNRELIABLE, 0, RakNetProtocol.FlagImmediate);
+                this.QueueConnectedPacket(pk, RakNetPacketReliability.UNRELIABLE, -1, RakNetProtocol.FlagImmediate);
 
                 CloseSessionEventArgs ev = new CloseSessionEventArgs(this.EndPoint, this);
                 Server.Instance.Event.Network.OnCloseSession(this, ev);
