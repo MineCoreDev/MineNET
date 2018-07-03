@@ -118,10 +118,14 @@ namespace MineNET.Entities.Players
         #region Send Chunk Method
         public void SendChunk()
         {
+            //Task.Run(() =>
+            //{
+            //    Thread.CurrentThread.Name = "ChunkSendThread";
             foreach (Chunk c in this.World.LoadChunks(this, this.RequestChunkRadius))
             {
                 c.SendChunk(this);
             }
+            //});
         }
         #endregion
 
@@ -268,12 +272,15 @@ namespace MineNET.Entities.Players
                 //TODO: Load NBT
 
                 this.World = World.GetMainWorld();
+                this.X = 128;
+                this.Y = 5;
+                this.Z = 128;
 
                 StartGamePacket startGamePacket = new StartGamePacket();
                 startGamePacket.EntityUniqueId = this.EntityID;
                 startGamePacket.EntityRuntimeId = this.EntityID;
                 startGamePacket.PlayerGamemode = this.GameMode;
-                startGamePacket.PlayerPosition = new Vector3(128, 5, 128);//new Vector3(this.X, this.Y, this.Z);
+                startGamePacket.PlayerPosition = new Vector3(this.X, this.Y, this.Z);
                 startGamePacket.Direction = new Vector2(this.Yaw, this.Pitch);
 
                 startGamePacket.WorldGamemode = this.World.Gamemode;
@@ -346,7 +353,7 @@ namespace MineNET.Entities.Players
             if (request > max)
             {
                 OutLog.Log("%server.player.updateChunkRadius", this.DisplayName, request, max);
-                this.SendChunkRadiusUpdated(request);//HACK:
+                this.SendChunkRadiusUpdated(max);
             }
             else
             {

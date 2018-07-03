@@ -17,6 +17,7 @@ namespace MineNET.Network
         public static int WindowSize { get; } = 2048;
         public static int TimedOutTime { get; } = 3000;
         public static int SendTimedOut { get; } = 500;
+        public static int SendPingTime { get; } = 5000;
         #endregion
 
         #region Property & Field
@@ -28,6 +29,7 @@ namespace MineNET.Network
 
         public int LastUpdateTime { get; private set; }
         public int LastSendTime { get; private set; }
+        public int LastPingTime { get; private set; } = NetworkSession.SendPingTime;
 
         public int MessageIndex { get; private set; }
 
@@ -139,9 +141,17 @@ namespace MineNET.Network
                 }
             }
 
-            this.SendBatchPacket(RakNetPacketReliability.RELIABLE, RakNetProtocol.FlagNormal);
+            if (this.LastPingTime < 0)
+            {
+                OnlinePing ping = new OnlinePing();
+                ping.PingID = DateTime.Now.Ticks;
+
+                this.QueueConnectedPacket(ping, RakNetPacketReliability.UNRELIABLE, -1, RakNetProtocol.FlagImmediate);
+            }
+
             this.SendQueuePacket();
 
+            --this.LastPingTime;
             --this.LastUpdateTime;
         }
         #endregion
@@ -241,6 +251,15 @@ namespace MineNET.Network
                     return;
                 }
 
+                /*if (RakNetPacketReliability.IsSequenced(packet.Reliability))
+                {
+                    OutLog.Info("IsSequenced");
+                }
+
+                if (RakNetPacketReliability.IsOrdered(packet.Reliability))
+                {
+                    OutLog.Info(packet.OrderChannel + ":" + packet.OrderIndex);
+                }*/
 
                 this.HandleEncapsulatedPacketRoute(packet);
             }
@@ -264,7 +283,7 @@ namespace MineNET.Network
                         if (id == RakNetProtocol.ClientConnectDataPacket)
                         {
                             ClientConnectDataPacket ccd = (ClientConnectDataPacket) pk;
-                            ServerHandShakeDataPacket shd = (ServerHandShakeDataPacket) this.Manager.GetRakNetPacket(RakNetProtocol.ServerHandShakeDataPacket);
+                            ServerHandShakeDataPacket shd = new ServerHandShakeDataPacket();
                             shd.EndPoint = this.EndPoint;
                             shd.SendPing = ccd.SendPing;
                             shd.SendPong = ccd.SendPing + 1000;
@@ -288,8 +307,10 @@ namespace MineNET.Network
                     else if (id == RakNetProtocol.OnlinePing)
                     {
                         OnlinePing ping = (OnlinePing) pk;
-                        OnlinePong pong = (OnlinePong) this.Manager.GetRakNetPacket(RakNetProtocol.OnlinePong);
+                        OnlinePong pong = new OnlinePong();
                         pong.PingID = ping.PingID;
+
+                        this.LastPingTime = NetworkSession.SendPingTime;
 
                         this.QueueConnectedPacket(pong, RakNetPacketReliability.UNRELIABLE, -1, RakNetProtocol.FlagImmediate);
                     }
