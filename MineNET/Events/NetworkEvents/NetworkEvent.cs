@@ -40,6 +40,18 @@ namespace MineNET.Events.NetworkEvents
             this.RakNetEncapsulatedSend?.Invoke(sender, e);
         }
 
+        public event EventHandler<RakNetBatchPacketReceiveEventArgs> RakNetBatchPacketReceive;
+        public void OnRakNetBatchPacketReceive(object sender, RakNetBatchPacketReceiveEventArgs e)
+        {
+            this.RakNetBatchPacketReceive?.Invoke(sender, e);
+        }
+
+        public event EventHandler<RakNetBatchPacketSendEventArgs> RakNetBatchPacketSend;
+        public void OnRakNetBatchPacketSend(object sender, RakNetBatchPacketSendEventArgs e)
+        {
+            this.RakNetBatchPacketSend.Invoke(sender, e);
+        }
+
         public event EventHandler<CreateSessionEventArgs> CreateSession;
         public void OnCreateSession(object sender, CreateSessionEventArgs e)
         {

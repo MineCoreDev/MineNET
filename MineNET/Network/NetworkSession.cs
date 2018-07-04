@@ -47,7 +47,6 @@ namespace MineNET.Network
         public int SplitID { get; private set; }
         public int OrderIndex { get; private set; }
 
-        public BatchPacket BatchPacketQueue { get; private set; } = new BatchPacket();
         public DataPacket SendQueue { get; private set; } = new DataPacket4();
         public ConcurrentDictionary<int, ConcurrentDictionary<int, EncapsulatedPacket>> SplitPackets { get; set; } = new ConcurrentDictionary<int, ConcurrentDictionary<int, EncapsulatedPacket>>();
 
@@ -171,6 +170,7 @@ namespace MineNET.Network
             {
                 return;
             }
+            packet = ev.Packet;
 
             this.LastUpdateTime = this.LastUpdateTime = NetworkSession.TimedOutTime;
 
@@ -250,6 +250,7 @@ namespace MineNET.Network
                 {
                     return;
                 }
+                packet = ev.Packet;
 
                 /*if (RakNetPacketReliability.IsSequenced(packet.Reliability))
                 {
@@ -336,6 +337,15 @@ namespace MineNET.Network
             if (this.Manager.Players.ContainsKey(endPointStr))
             {
                 Player player = this.Manager.Players[endPointStr];
+                RakNetBatchPacketReceiveEventArgs ev = new RakNetBatchPacketReceiveEventArgs(this, player, packet);
+                Server.Instance.Event.Network.OnRakNetBatchPacketReceive(this, ev);
+
+                if (ev.IsCancel)
+                {
+                    return;
+                }
+                packet = ev.Packet;
+
                 this.HandleMinecraftPacket(packet, player);
             }
         }
@@ -508,6 +518,7 @@ namespace MineNET.Network
             {
                 return;
             }
+            pk = ev.Packet;
 
             this.AddEncapsulatedToQueue(pk, flags);
         }
@@ -530,16 +541,19 @@ namespace MineNET.Network
                 pk.CompressionLevel = CompressionLevel.Optimal;
             }
             pk.Payload = st.ToArray();
-            this.QueueConnectedPacket(pk, reliability, -1, flags);
-        }
 
-        public void SendBatchPacket(int reliability, int flags = RakNetProtocol.FlagNormal)
-        {
-            if (this.BatchPacketQueue.Payload.Length > 0)
+            string endPointStr = this.EndPoint.ToString();
+            Player player = Server.Instance.Network.Players[endPointStr];
+            RakNetBatchPacketSendEventArgs ev = new RakNetBatchPacketSendEventArgs(this, player, pk);
+            Server.Instance.Event.Network.OnRakNetBatchPacketSend(this, ev);
+
+            if (ev.IsCancel)
             {
-                this.QueueConnectedPacket(this.BatchPacketQueue, reliability, -1, flags);
-                this.BatchPacketQueue = new BatchPacket();
+                return;
             }
+            pk = ev.Packet;
+
+            this.QueueConnectedPacket(pk, reliability, -1, flags);
         }
 
         public void AddToQueue(EncapsulatedPacket pk, int flags = RakNetProtocol.FlagNormal)
@@ -581,6 +595,7 @@ namespace MineNET.Network
             {
                 return;
             }
+            pk = ev.Packet;
 
             pk.SeqNumber = this.LastSeqNumber++;
             this.SendedPacket.TryAdd(pk.SeqNumber, (DataPacket) pk);

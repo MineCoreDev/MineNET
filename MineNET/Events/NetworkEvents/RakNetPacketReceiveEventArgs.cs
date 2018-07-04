@@ -6,7 +6,7 @@ namespace MineNET.Events.NetworkEvents
     public class RakNetPacketReceiveEventArgs : NetworkEventArgs, ICancelable
     {
         public IPEndPoint EndPoint { get; }
-        public RakNetPacket Packet { get; }
+        public RakNetPacket Packet { get; set; }
         public bool IsCancel { get; set; }
 
         public RakNetPacketReceiveEventArgs(IPEndPoint endPoint, RakNetPacket packet)

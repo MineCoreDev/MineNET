@@ -275,6 +275,7 @@ namespace MineNET.Network
                     {
                         return;
                     }
+                    pk = ev.Packet;
 
                     if (pk is OfflineMessage)
                     {
@@ -476,6 +477,7 @@ namespace MineNET.Network
             {
                 return;
             }
+            msg = ev.Packet;
 
             byte[] buffer = msg.ToArray();
             this.Client.Send(buffer, buffer.Length, point);

@@ -6,7 +6,7 @@ namespace MineNET.Events.NetworkEvents
     public class RakNetEncapsulatedReceiveEventArgs : NetworkEventArgs, ICancelable
     {
         public NetworkSession Session { get; }
-        public EncapsulatedPacket Packet { get; }
+        public EncapsulatedPacket Packet { get; set; }
         public bool IsCancel { get; set; }
 
         public RakNetEncapsulatedReceiveEventArgs(NetworkSession session, EncapsulatedPacket packet)
