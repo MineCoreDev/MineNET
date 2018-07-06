@@ -103,7 +103,6 @@ namespace MineNET
         {
             if (this.Status == ServerStatus.Running)
             {
-                throw new System.InvalidOperationException();
                 try
                 {
                     this.Event.Server.OnServerStop(this, new ServerStopEventArgs());
