@@ -8,6 +8,7 @@ using MineNET.Manager;
 using MineNET.Network;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Plugins;
+using MineNET.Reports;
 using MineNET.Worlds;
 using System;
 using System.Collections.Generic;
@@ -102,6 +103,7 @@ namespace MineNET
         {
             if (this.Status == ServerStatus.Running)
             {
+                throw new System.InvalidOperationException();
                 try
                 {
                     this.Event.Server.OnServerStop(this, new ServerStopEventArgs());
@@ -146,6 +148,7 @@ namespace MineNET
                 OutLog.Error(e.ToString());
             }
             OutLog.Info("%server.stoping");
+            CrashReport.ExportReport(e.GetType().Name, e);
             this.Dispose();
             BlockInit.In?.Dispose();
             ItemInit.In?.Dispose();

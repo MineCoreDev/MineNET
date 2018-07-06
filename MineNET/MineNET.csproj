@@ -309,6 +309,8 @@
     <Compile Include="Registry\MinecraftPacketRegistry.cs" />
     <Compile Include="Registry\MineNET_Registries.cs" />
     <Compile Include="Registry\RakNetPacketRegistry.cs" />
+    <Compile Include="Reports\CrashReport.cs" />
+    <Compile Include="Reports\IReport.cs" />
     <Compile Include="ResourcePack\IResourcePack.cs" />
     <Compile Include="ResourcePack\ResourcePackInfo.cs" />
     <Compile Include="Server.cs" />
