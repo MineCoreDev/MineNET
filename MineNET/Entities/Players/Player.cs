@@ -273,7 +273,7 @@ namespace MineNET.Entities.Players
 
                 this.World = World.GetMainWorld();
                 this.X = 128;
-                this.Y = 5;
+                this.Y = 6;
                 this.Z = 128;
 
                 StartGamePacket startGamePacket = new StartGamePacket();
