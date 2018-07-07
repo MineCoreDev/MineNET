@@ -20,15 +20,15 @@ namespace MineNET.Init
 
         public void Init()
         {
-            this.Add(BlockIDs.AIR, this.Air);
-            this.Add(BlockIDs.STONE, this.Stone);
-            this.Add(BlockIDs.GRASS, this.Grass);
-            this.Add(BlockIDs.DIRT, this.Dirt);
+            this.Add(this.Air);
+            this.Add(this.Stone);
+            this.Add(this.Grass);
+            this.Add(this.Dirt);
         }
 
-        public void Add(int id, Block block)
+        public void Add(Block block)
         {
-            MineNET_Registries.Block.Add(id, block);
+            MineNET_Registries.Block.Add(block.ID, block);
         }
 
         public void Dispose()

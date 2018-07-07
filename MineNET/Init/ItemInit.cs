@@ -16,9 +16,9 @@ namespace MineNET.Init
         {
         }
 
-        public void Add(int id, Item item)
+        public void Add(Item item)
         {
-            MineNET_Registries.Item.Add(id, item);
+            MineNET_Registries.Item.Add(item.ID, item);
         }
 
         public void Dispose()
