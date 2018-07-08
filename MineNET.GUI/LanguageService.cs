@@ -1,16 +1,15 @@
 ﻿using System.Resources;
 
-namespace MineNET
+namespace MineNET.GUI
 {
     public static class LanguageService
     {
-        public static string LangCode { get; }
+        public static string LangCode { get; internal set; }
         public static ResourceManager Manager { get; private set; }
 
-        static LanguageService()
+        internal static void LanguageServiceInit()
         {
-            LangCode = Server.Instance.Config.Language;
-            Manager = new ResourceManager("MineNET.Resources.Lang." + LangCode, typeof(LanguageService).Assembly);
+            Manager = new ResourceManager("MineNET.GUI.Resources.Lang." + LangCode, typeof(LanguageService).Assembly);
         }
 
         public static string GetString(string key)

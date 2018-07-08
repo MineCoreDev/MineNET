@@ -9,6 +9,7 @@ using MineNET.Network;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Plugins;
 using MineNET.Reports;
+using MineNET.Utils.Config;
 using MineNET.Worlds;
 using System;
 using System.Collections.Generic;
@@ -173,9 +174,9 @@ namespace MineNET
         #region Init Method
         public void Init(Stopwatch sw)
         {
+            this.LoadConfigs();
             this.OnServerStart();
 
-            this.LoadConfigs();
             this.LoadWorlds(sw);
 
             this.StartNetwork(sw);
@@ -258,8 +259,8 @@ namespace MineNET
 
         private void LoadConfigs()
         {
-            this.Config = MineNETConfig.Load<MineNETConfig>($"{ExecutePath}\\MineNET.yml");
-            this.ServerProperty = ServerConfig.Load<ServerConfig>($"{ExecutePath}\\ServerProperties.yml");
+            this.Config = YamlStaticConfig.Load<MineNETConfig>($"{ExecutePath}\\MineNET.yml");
+            this.ServerProperty = YamlStaticConfig.Load<ServerConfig>($"{ExecutePath}\\ServerProperties.yml");
         }
         #endregion
 
