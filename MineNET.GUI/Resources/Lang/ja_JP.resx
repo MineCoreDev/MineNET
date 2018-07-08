@@ -129,4 +129,7 @@
   <data name="app.loadForm.statusLabel.loadConfig" xml:space="preserve">
     <value>Configをロード中...</value>
   </data>
+  <data name="app.loadForm.statusLabel.success" xml:space="preserve">
+    <value>ロード完了!</value>
+  </data>
 </root>

@@ -71,12 +71,12 @@ namespace MineNET.GUI
             this.Config = YamlStaticConfig.Load<MineNETGUIConfig>(file);
         }
 
-        public void CheckVersion()
+        public async void CheckVersion()
         {
             WebClient client = new WebClient();
             try
             {
-                string newVersion = client.DownloadString("https://raw.githubusercontent.com/MineNETDevelopmentGroup/MineNET/master/MineNET.GUI/VERSION");
+                string newVersion = await client.DownloadStringTaskAsync("https://raw.githubusercontent.com/MineNETDevelopmentGroup/MineNET/master/MineNET.GUI/VERSION");
                 string version = this.GetType().Assembly.GetName().Version.ToString();
                 if (version != newVersion)
                 {
