@@ -107,7 +107,7 @@
   <ItemGroup>
     <Content Include="Resources\Icon\App.ico" />
     <Content Include="Resources\Image\icon.png" />
-    <None Include="VERSION" />
+    <Content Include="Resources\News\News.html" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
