@@ -76,7 +76,7 @@ namespace MineNET.GUI
             WebClient client = new WebClient();
             try
             {
-                string newVersion = client.DownloadString("");
+                string newVersion = client.DownloadString("https://raw.githubusercontent.com/MineNETDevelopmentGroup/MineNET/master/MineNET.GUI/VERSION");
                 string version = this.GetType().Assembly.GetName().Version.ToString();
                 if (version != newVersion)
                 {
