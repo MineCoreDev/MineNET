@@ -61,6 +61,25 @@ namespace MineNET.Reports
             return data;
         }
 
+        public static CrashReport ExportReport(string title, string cause)
+        {
+            DateTime time = DateTime.Now;
+            string path = Server.ExecutePath + "\\reports\\crash";
+            string file = path + "\\report-" + time.ToString("yyyy_M_d H_mm_ss") + ".report";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            CrashReport data = new CrashReport(title, cause, time);
+
+            YamlConfig report = YamlConfig.Load(file);
+            report.Set("reportData", data);
+            report.Save();
+
+            return data;
+        }
+
         public void SendReport()
         {
             throw new NotImplementedException();

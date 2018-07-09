@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MineNET.GUI
@@ -61,6 +62,7 @@ namespace MineNET.GUI
             {
                 config = YamlStaticConfig.Load<MineNETConfig>(file);
             }
+
             string language = config.Language;
             LanguageService.LangCode = language;
         }
@@ -88,6 +90,14 @@ namespace MineNET.GUI
             {
                 MessageBox.Show(e.Message + Environment.NewLine + LanguageService.GetString("app.loadForm.statusLabel.checkVersion.error"));
             }
+        }
+
+        public void ShowNews()
+        {
+            Task.Run(() =>
+            {
+                Process.Start("https://minenetdevelopmentgroup.github.io/MineNET-HomePage/Pages/News.html");
+            });
         }
     }
 }

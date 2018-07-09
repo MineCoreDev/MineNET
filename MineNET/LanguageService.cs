@@ -9,7 +9,7 @@ namespace MineNET
 
         static LanguageService()
         {
-            LangCode = Server.Instance.Config.Language;
+            LangCode = Server.Instance?.Config.Language ?? "ja_JP";
             Manager = new ResourceManager("MineNET.Resources.Lang." + LangCode, typeof(LanguageService).Assembly);
         }
 

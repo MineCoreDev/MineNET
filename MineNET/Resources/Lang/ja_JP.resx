@@ -466,7 +466,7 @@
     <value>ホワイトリストの有効化</value>
   </data>
   <data name="server.constantClock.lowTickRate" xml:space="preserve">
-    <value>クロックの低下を検知しました。 name: {0}</value>
+    <value>クロックの低下を検知しました。 名前: {0}</value>
   </data>
   <data name="server.error.stop" xml:space="preserve">
     <value>リカバリー不可能なエラーが発生しました。</value>
@@ -496,7 +496,7 @@
     <value>セッションが終了しました。&lt;{0}&gt;</value>
   </data>
   <data name="server.network.raknet.sessionCreate" xml:space="preserve">
-    <value>セッションが作成されました。 &lt;{0}&gt; mtuSize: {1}</value>
+    <value>セッションが作成されました。 &lt;{0}&gt; MTUサイズ: {1}</value>
   </data>
   <data name="server.network.raknet.sessionCreated" xml:space="preserve">
     <value>{0} は既にセッションが作成されています。</value>
@@ -578,5 +578,11 @@
   </data>
   <data name="server.network.packetThreadAbort" xml:space="preserve">
     <value>パケットの受信を強制終了しました。</value>
+  </data>
+  <data name="server.config.loadError" xml:space="preserve">
+    <value>設定ファイルの読み込みエラー</value>
+  </data>
+  <data name="server.config.loadError.description" xml:space="preserve">
+    <value>ファイル: {0} をバックアップして削除してから起動してください。{1}例外: {2}</value>
   </data>
 </root>

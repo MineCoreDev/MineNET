@@ -29,6 +29,11 @@ namespace MineNET.GUI.UI.Forms
             {
                 App.Instance.CheckVersion();
             }
+
+            if (config.ShowNews)
+            {
+                App.Instance.ShowNews();
+            }
             this.progressBar.Value = 100;
             this.ChangeStatus(LanguageService.GetString("app.loadForm.statusLabel.success"));
             await Task.Delay(100);
