@@ -17,5 +17,10 @@ namespace MineNET
         {
             return Manager.GetString(key);
         }
+
+        public static string GetFormatString(string key, params object[] args)
+        {
+            return string.Format(Manager.GetString(key), args);
+        }
     }
 }

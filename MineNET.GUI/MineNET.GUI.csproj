@@ -75,6 +75,12 @@
     <Compile Include="UI\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Modals\ConfigSetupModal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Modals\ConfigSetupModal.Designer.cs">
+      <DependentUpon>ConfigSetupModal.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Modals\LanguageSelectModal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +102,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Modals\ConfigSetupModal.resx">
+      <DependentUpon>ConfigSetupModal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Modals\LanguageSelectModal.resx">
       <DependentUpon>LanguageSelectModal.cs</DependentUpon>

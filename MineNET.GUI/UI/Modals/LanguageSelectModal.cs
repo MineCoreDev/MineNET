@@ -7,6 +7,8 @@ namespace MineNET.GUI.UI.Modals
     {
         public Language SelectResult { get; private set; }
 
+        private bool CloseFlag { get; set; }
+
         public LanguageSelectModal()
         {
             InitializeComponent();
@@ -24,7 +26,8 @@ namespace MineNET.GUI.UI.Modals
 
         private void LanguageSelect_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = false;
+            if (!this.CloseFlag)
+                e.Cancel = true;
         }
 
         private void button_Click(object sender, System.EventArgs e)
@@ -34,6 +37,7 @@ namespace MineNET.GUI.UI.Modals
             {
                 Language[] support = App.SupportLanguage;
                 this.SelectResult = support[index];
+                this.CloseFlag = true;
                 this.DialogResult = DialogResult.OK;
             }
         }

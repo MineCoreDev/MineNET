@@ -1,6 +1,6 @@
 ﻿namespace MineNET.GUI.UI.Modals
 {
-    partial class LanguageSelectModal
+    partial class ConfigSetupModal
     {
         /// <summary>
         /// Required designer variable.
@@ -28,53 +28,54 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.button = new System.Windows.Forms.Button();
-            this.comboBox = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(12, 12);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(80, 16);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(12, 34);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(80, 16);
+            this.checkBox2.TabIndex = 1;
+            this.checkBox2.Text = "checkBox2";
+            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // button
             // 
-            this.button.Location = new System.Drawing.Point(197, 41);
+            this.button.Location = new System.Drawing.Point(197, 226);
             this.button.Name = "button";
             this.button.Size = new System.Drawing.Size(75, 23);
-            this.button.TabIndex = 0;
+            this.button.TabIndex = 2;
             this.button.Text = "OK";
             this.button.UseVisualStyleBackColor = true;
             this.button.Click += new System.EventHandler(this.button_Click);
             // 
-            // comboBox
-            // 
-            this.comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox.FormattingEnabled = true;
-            this.comboBox.Location = new System.Drawing.Point(12, 43);
-            this.comboBox.Name = "comboBox";
-            this.comboBox.Size = new System.Drawing.Size(179, 20);
-            this.comboBox.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 12);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Select language...";
-            // 
-            // LanguageSelectModal
+            // ConfigSetupModal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 111);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox);
+            this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.button);
+            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.checkBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "LanguageSelectModal";
+            this.Name = "ConfigSetupModal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "LanguageSelect";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LanguageSelect_FormClosing);
-            this.Load += new System.EventHandler(this.LanguageSelectModal_Load);
+            this.Text = "ConfigSetupModal";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfigSetupModal_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -82,8 +83,8 @@
 
         #endregion
 
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Button button;
-        private System.Windows.Forms.ComboBox comboBox;
-        private System.Windows.Forms.Label label1;
     }
 }

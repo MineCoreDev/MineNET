@@ -68,6 +68,7 @@
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.pictureBox);
+            this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "LoadForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

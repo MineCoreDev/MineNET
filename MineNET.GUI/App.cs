@@ -6,7 +6,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MineNET.GUI
@@ -52,11 +51,9 @@ namespace MineNET.GUI
                 config = YamlStaticConfig.Load<MineNETConfig>(file);
                 LanguageSelectModal modal = new LanguageSelectModal();
                 modal.ShowDialog();
-                if (modal.DialogResult == DialogResult.OK)
-                {
-                    config.Language = modal.SelectResult.Code;
-                    config.Save<MineNETConfig>();
-                }
+
+                config.Language = modal.SelectResult.Code;
+                config.Save<MineNETConfig>();
             }
             else
             {
@@ -70,7 +67,21 @@ namespace MineNET.GUI
         public void LoadConfig()
         {
             string file = $"{ExecutePath}\\MineNET_GUI.yml";
-            this.Config = YamlStaticConfig.Load<MineNETGUIConfig>(file);
+            if (!File.Exists(file))
+            {
+                this.Config = YamlStaticConfig.Load<MineNETGUIConfig>(file);
+
+                ConfigSetupModal modal = new ConfigSetupModal();
+                modal.ShowDialog();
+
+                this.Config.CheckVersion = modal.CheckBoxResult1;
+                this.Config.ShowNews = modal.CheckBoxResult2;
+                this.Config.Save<MineNETGUIConfig>();
+            }
+            else
+            {
+                this.Config = YamlStaticConfig.Load<MineNETGUIConfig>(file);
+            }
         }
 
         public async void CheckVersion()
@@ -82,22 +93,32 @@ namespace MineNET.GUI
                 string version = this.GetType().Assembly.GetName().Version.ToString();
                 if (version != newVersion)
                 {
-                    MessageBox.Show(LanguageService.GetString("app.loadForm.statusLabel.checkVersion.newVersion"));
+                    MessageBox.Show(LanguageService.GetString("app.loadForm.checkVersion.newVersion"));
                     Process.Start("https://github.com/MineNETDevelopmentGroup/MineNET/releases");
                 }
             }
             catch (WebException e)
             {
-                MessageBox.Show(e.Message + Environment.NewLine + LanguageService.GetString("app.loadForm.statusLabel.checkVersion.error"));
+                MessageBox.Show(e.Message + Environment.NewLine + LanguageService.GetString("app.loadForm.checkVersion.error"));
             }
         }
 
         public void ShowNews()
         {
-            Task.Run(() =>
+            Process.Start("https://minenetdevelopmentgroup.github.io/MineNET-HomePage/Pages/News.html");
+        }
+
+        public bool OpenFileExproler(string folderPath)
+        {
+            if (Directory.Exists(folderPath))
             {
-                Process.Start("https://minenetdevelopmentgroup.github.io/MineNET-HomePage/Pages/News.html");
-            });
+                Process.Start(folderPath);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
