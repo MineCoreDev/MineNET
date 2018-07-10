@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace MineNET.GUI.UI.Forms
 {
     public partial class MainForm : Form
     {
+        public Server ServerInstance { get; private set; }
+        public Thread ServerThread { get; set; }
+
         public MainForm()
         {
             InitializeComponent();
@@ -73,6 +77,43 @@ namespace MineNET.GUI.UI.Forms
             {
                 e.Cancel = true;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (this.ServerInstance == null)
+            {
+                this.ServerInstance = new Server();
+                if (this.ServerInstance.Start())
+                {
+                    this.ServerInstance.Event.Server.ServerStop += Server_ServerStop;
+
+                    this.ServerThread = new Thread(this.ServerInstance.StartUpdate);
+                    this.ServerThread.Start();
+
+                    this.button1.Enabled = false;
+                    this.button2.Enabled = true;
+                }
+                MessageBox.Show(this.ServerInstance.Status.ToString());
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (this.ServerInstance != null)
+            {
+                this.ServerInstance.Stop();
+            }
+        }
+
+        private void Server_ServerStop(object sender, Events.ServerEvents.ServerStopEventArgs e)
+        {
+            this.ServerInstance = null;
+            
+            this.ServerThread = null;
+
+            this.button1.Enabled = true;
+            this.button2.Enabled = false;
         }
     }
 }

@@ -63,6 +63,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\Controls\ConsoleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ConsoleControl.Designer.cs">
+      <DependentUpon>ConsoleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\PlayerListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\PlayerListControl.Designer.cs">
+      <DependentUpon>PlayerListControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\LoadForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +109,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Lang\ja_JP.resx" />
+    <EmbeddedResource Include="UI\Controls\PlayerListControl.resx">
+      <DependentUpon>PlayerListControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\LoadForm.resx">
       <DependentUpon>LoadForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -71,7 +71,10 @@ namespace MineNET
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
 
-                    Thread.CurrentThread.Name = "ServerThread";
+                    if (Thread.CurrentThread.Name != "ServerThread")
+                    {
+                        Thread.CurrentThread.Name = "ServerThread";
+                    }
                     this.Init(sw);
                     sw.Stop();
 
@@ -86,6 +89,7 @@ namespace MineNET
                 {
                     Console.WriteLine(e);
                     this.Status = ServerStatus.Error;
+                    this.ErrorStop(e);
                     return false;
                 }
             }

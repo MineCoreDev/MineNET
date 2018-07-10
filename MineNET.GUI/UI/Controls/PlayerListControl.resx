@@ -117,40 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="app.config.checkVersion" xml:space="preserve">
-    <value>最新版の通知</value>
-  </data>
-  <data name="app.config.showNews" xml:space="preserve">
-    <value>起動時にs最新のニュースを表示する</value>
-  </data>
-  <data name="app.error" xml:space="preserve">
-    <value>エラー</value>
-  </data>
-  <data name="app.error.folderNotFound" xml:space="preserve">
-    <value>フォルダが見つかりません。</value>
-  </data>
-  <data name="app.loadForm.checkVersion.error" xml:space="preserve">
-    <value>バージョンチェックに失敗しました。</value>
-  </data>
-  <data name="app.loadForm.checkVersion.newVersion" xml:space="preserve">
-    <value>最新版のアップデートがあります。</value>
-  </data>
-  <data name="app.loadForm.statusLabel.checkVersion" xml:space="preserve">
-    <value>バージョンをチェック中..</value>
-  </data>
-  <data name="app.loadForm.statusLabel.loadConfig" xml:space="preserve">
-    <value>Configをロード中...</value>
-  </data>
-  <data name="app.loadForm.statusLabel.success" xml:space="preserve">
-    <value>ロード完了!</value>
-  </data>
-  <data name="app.playerListControl.label" xml:space="preserve">
-    <value>プレイヤーリスト</value>
-  </data>
-  <data name="app.warning" xml:space="preserve">
-    <value>警告</value>
-  </data>
-  <data name="app.warning.closeApplication" xml:space="preserve">
-    <value>アプリケーションを終了しますか?</value>
-  </data>
 </root>

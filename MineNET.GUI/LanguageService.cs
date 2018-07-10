@@ -7,6 +7,11 @@ namespace MineNET.GUI
         public static string LangCode { get; internal set; }
         public static ResourceManager Manager { get; private set; }
 
+        static LanguageService()
+        {
+            Manager = new ResourceManager("MineNET.GUI.Resources.Lang.ja_JP", typeof(LanguageService).Assembly);
+        }
+
         internal static void LanguageServiceInit()
         {
             Manager = new ResourceManager("MineNET.GUI.Resources.Lang." + LangCode, typeof(LanguageService).Assembly);
