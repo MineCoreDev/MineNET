@@ -109,6 +109,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Lang\ja_JP.resx" />
+    <EmbeddedResource Include="UI\Controls\ConsoleControl.resx">
+      <DependentUpon>ConsoleControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\PlayerListControl.resx">
       <DependentUpon>PlayerListControl.cs</DependentUpon>
     </EmbeddedResource>

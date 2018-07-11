@@ -61,13 +61,14 @@
             this.toolTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nBTViewerNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playerToolsPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.optionOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mineNETVersionInfomationVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer = new System.Windows.Forms.Timer(this.components);
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-            this.optionOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.consoleControl1 = new MineNET.GUI.UI.Controls.ConsoleControl();
             this.playerListControl1 = new MineNET.GUI.UI.Controls.PlayerListControl();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -301,6 +302,17 @@
             this.playerToolsPToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.playerToolsPToolStripMenuItem.Text = "Player Tools(&P)";
             // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(148, 6);
+            // 
+            // optionOToolStripMenuItem
+            // 
+            this.optionOToolStripMenuItem.Name = "optionOToolStripMenuItem";
+            this.optionOToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.optionOToolStripMenuItem.Text = "Option(&O)...";
+            // 
             // helpHToolStripMenuItem
             // 
             this.helpHToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -321,19 +333,9 @@
             this.timer.Interval = 500;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(148, 6);
-            // 
-            // optionOToolStripMenuItem
-            // 
-            this.optionOToolStripMenuItem.Name = "optionOToolStripMenuItem";
-            this.optionOToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-            this.optionOToolStripMenuItem.Text = "Option(&O)...";
-            // 
             // button1
             // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Location = new System.Drawing.Point(606, 504);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(80, 45);
@@ -344,6 +346,7 @@
             // 
             // button2
             // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Enabled = false;
             this.button2.Location = new System.Drawing.Point(692, 504);
             this.button2.Name = "button2";
@@ -353,8 +356,20 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // consoleControl1
+            // 
+            this.consoleControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.consoleControl1.Location = new System.Drawing.Point(168, 27);
+            this.consoleControl1.Name = "consoleControl1";
+            this.consoleControl1.Size = new System.Drawing.Size(604, 471);
+            this.consoleControl1.TabIndex = 4;
+            // 
             // playerListControl1
             // 
+            this.playerListControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.playerListControl1.Location = new System.Drawing.Point(12, 27);
             this.playerListControl1.Name = "playerListControl1";
             this.playerListControl1.Size = new System.Drawing.Size(150, 522);
@@ -365,6 +380,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.consoleControl1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.playerListControl1);
@@ -424,5 +440,6 @@
         private Controls.PlayerListControl playerListControl1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private Controls.ConsoleControl consoleControl1;
     }
 }

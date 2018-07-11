@@ -47,7 +47,7 @@ namespace MineNET
         public bool GenerateEnd { get; set; } = false;
 
         [YamlDescription("%server.config.maxViewDistance")]
-        public int MaxViewDistance { get; set; } = 5;
+        public int MaxViewDistance { get; set; } = 10;
 
         [YamlDescription("%server.config.onlineMode")]
         public bool OnlineMode { get; set; } = false;
