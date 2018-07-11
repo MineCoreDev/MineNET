@@ -45,6 +45,7 @@ namespace MineNET.Entities.Players
         public bool HaveAllPacks { get; private set; }
 
         public bool HasSpawned { get; private set; }
+        public bool AnySendChunk { get; private set; }
         public int RequestChunkRadius { get; private set; } = 8;
 
         public override float Width { get; } = 0.60f;
@@ -145,7 +146,7 @@ namespace MineNET.Entities.Players
         #region Update Method
         internal override bool UpdateTick(long tick)
         {
-            if (tick % 20 == 0 && this.HasSpawned)
+            if (tick % 20 == 0 && this.AnySendChunk)
             {
                 this.SendChunk();
             }
@@ -171,6 +172,10 @@ namespace MineNET.Entities.Players
             else if (packet is RequestChunkRadiusPacket)//0x45
             {
                 this.HandleRequestChunkRadiusPacket((RequestChunkRadiusPacket) packet);
+            }
+            else if (packet is SetLocalPlayerAsInitializedPacket)//0x70
+            {
+                this.HandleSetLocalPlayerAsInitializedPacket((SetLocalPlayerAsInitializedPacket) packet);
             }
         }
 
@@ -273,7 +278,7 @@ namespace MineNET.Entities.Players
 
                 this.World = World.GetMainWorld();
                 this.X = 128;
-                this.Y = 5;
+                this.Y = 6;
                 this.Z = 128;
 
                 StartGamePacket startGamePacket = new StartGamePacket();
@@ -293,8 +298,6 @@ namespace MineNET.Entities.Players
                 startGamePacket.GameRules = new GameRules();
                 startGamePacket.GameRules.Add(new GameRule<bool>("ShowCoordinates", true));
                 this.SendPacket(startGamePacket);
-
-                this.Attributes.Update(this);
 
                 this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
                 this.HasSpawned = true;
@@ -323,6 +326,7 @@ namespace MineNET.Entities.Players
                 this.AdventureSettingsEntry = adventureSettingsEntry;
                 this.AdventureSettingsEntry.Update(this);
 
+                this.Attributes.Update(this);
                 this.SendDataProperties();
             }
         }
@@ -359,6 +363,13 @@ namespace MineNET.Entities.Players
             {
                 this.SendChunkRadiusUpdated(request);
             }
+            this.AnySendChunk = true;
+        }
+
+        //0x70
+        public void HandleSetLocalPlayerAsInitializedPacket(SetLocalPlayerAsInitializedPacket pk)
+        {
+
         }
         #endregion
 

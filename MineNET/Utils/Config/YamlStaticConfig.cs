@@ -1,7 +1,9 @@
 ﻿using MineNET.Utils.Config.Yaml;
 using System;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Text;
+using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
 namespace MineNET.Utils.Config
@@ -34,9 +36,19 @@ namespace MineNET.Utils.Config
                     return (T) conv;
                 }
             }
-            catch (Exception e)
+            catch (SerializationException)
             {
-                throw e;
+                File.Move(filePath, filePath + ".old");
+                return YamlStaticConfig.Load<T>(filePath);
+            }
+            catch (YamlException)
+            {
+                File.Move(filePath, filePath + ".old");
+                return YamlStaticConfig.Load<T>(filePath);
+            }
+            catch (Exception e3)
+            {
+                throw e3;
             }
         }
 

@@ -9,6 +9,7 @@ using MineNET.Network;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Plugins;
 using MineNET.Reports;
+using MineNET.Utils.Config;
 using MineNET.Worlds;
 using System;
 using System.Collections.Generic;
@@ -70,7 +71,10 @@ namespace MineNET
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
 
-                    Thread.CurrentThread.Name = "ServerThread";
+                    if (Thread.CurrentThread.Name != "ServerThread")
+                    {
+                        Thread.CurrentThread.Name = "ServerThread";
+                    }
                     this.Init(sw);
                     sw.Stop();
 
@@ -85,6 +89,7 @@ namespace MineNET
                 {
                     Console.WriteLine(e);
                     this.Status = ServerStatus.Error;
+                    this.ErrorStop(e);
                     return false;
                 }
             }
@@ -173,9 +178,9 @@ namespace MineNET
         #region Init Method
         public void Init(Stopwatch sw)
         {
+            this.LoadConfigs();
             this.OnServerStart();
 
-            this.LoadConfigs();
             this.LoadWorlds(sw);
 
             this.StartNetwork(sw);
@@ -258,8 +263,8 @@ namespace MineNET
 
         private void LoadConfigs()
         {
-            this.Config = MineNETConfig.Load<MineNETConfig>($"{ExecutePath}\\MineNET.yml");
-            this.ServerProperty = ServerConfig.Load<ServerConfig>($"{ExecutePath}\\ServerProperties.yml");
+            this.Config = YamlStaticConfig.Load<MineNETConfig>($"{ExecutePath}\\MineNET.yml");
+            this.ServerProperty = YamlStaticConfig.Load<ServerConfig>($"{ExecutePath}\\ServerProperties.yml");
         }
         #endregion
 

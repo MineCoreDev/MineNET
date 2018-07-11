@@ -49,7 +49,7 @@ namespace MineNET.Events.NetworkEvents
         public event EventHandler<RakNetBatchPacketSendEventArgs> RakNetBatchPacketSend;
         public void OnRakNetBatchPacketSend(object sender, RakNetBatchPacketSendEventArgs e)
         {
-            this.RakNetBatchPacketSend.Invoke(sender, e);
+            this.RakNetBatchPacketSend?.Invoke(sender, e);
         }
 
         public event EventHandler<CreateSessionEventArgs> CreateSession;
