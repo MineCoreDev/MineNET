@@ -4,7 +4,7 @@ namespace MineNET.Blocks
 {
     public abstract class BlockSolid : Block
     {
-        public BlockSolid(string name, int id) : base(name, id)
+        public BlockSolid(int id, string name) : base(id, name)
         {
         }
 

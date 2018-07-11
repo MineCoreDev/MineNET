@@ -2,7 +2,7 @@
 {
     public abstract class BlockTransparent : Block
     {
-        public BlockTransparent(string name, int id) : base(name, id)
+        public BlockTransparent(int id, string name) : base(id, name)
         {
 
         }

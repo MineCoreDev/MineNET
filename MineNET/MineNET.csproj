@@ -99,10 +99,17 @@
     <Compile Include="BlockEntities\BlockEntitySpawnable.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Blocks\BlockAir.cs" />
+    <Compile Include="Blocks\BlockBush.cs" />
     <Compile Include="Blocks\BlockDirt.cs" />
+    <Compile Include="Blocks\BlockDynamicLiquid.cs" />
+    <Compile Include="Blocks\BlockEmptyDrops.cs" />
     <Compile Include="Blocks\BlockGrass.cs" />
     <Compile Include="Blocks\BlockIDs.cs" />
+    <Compile Include="Blocks\BlockLiquid.cs" />
+    <Compile Include="Blocks\BlockPlanks.cs" />
+    <Compile Include="Blocks\BlockSapling.cs" />
     <Compile Include="Blocks\BlockSolid.cs" />
+    <Compile Include="Blocks\BlockStaticLiquid.cs" />
     <Compile Include="Blocks\BlockStone.cs" />
     <Compile Include="Blocks\BlockTransparent.cs" />
     <Compile Include="Commands\Command.cs" />

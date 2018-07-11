@@ -22,7 +22,7 @@ namespace MineNET.Items
             }
             else
             {
-                return new ItemBlock(Init.BlockInit.In.Air);
+                return new ItemBlock(Block.Get(BlockIDs.AIR));
             }
         }
 
