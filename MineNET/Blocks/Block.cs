@@ -1,15 +1,10 @@
-﻿using MineNET.Values;
-using System;
+﻿using System;
+using MineNET.Values;
 
 namespace MineNET.Blocks
 {
     public class Block : ICloneable<Block>
     {
-        public int ID { get; }
-        public int Damage { get; set; }
-
-        public Position Position { get; internal set; }
-
         public static Block Get(int id, int meta = 0)
         {
             if (MineNET_Registries.Block.ContainsKey(id))
@@ -19,7 +14,7 @@ namespace MineNET.Blocks
                 return b;
             }
 
-            return Init.BlockInit.In.Air;
+            return new BlockAir();
         }
 
         public static Block Get(string name)
@@ -54,13 +49,26 @@ namespace MineNET.Blocks
             return block;
         }
 
-        public Block(string name, int id)
-        {
-            this.Name = name;
-            this.ID = id;
-        }
+        public int ID { get; }
+        public int Damage { get; set; }
 
-        public virtual string Name { get; } = "Unknown";
+        public Position Position { get; internal set; }
+
+        public string Name { get; }
+
+        public float Hardness { get; set; } = 0;
+        public float Resistance { get; set; } = 0;
+
+        public float LightLevel { get; set; } = 0;
+        public float LightOpacity { get; set; } = 0;
+
+        public Color MapColor { get; set; } = BlockColor.Air;
+
+        public Block(int id, string name)
+        {
+            this.ID = id;
+            this.Name = name;
+        }
 
         public Block Clone()
         {

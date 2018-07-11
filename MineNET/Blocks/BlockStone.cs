@@ -2,7 +2,7 @@
 {
     public class BlockStone : BlockSolid
     {
-        public BlockStone() : base("Stone", BlockIDs.STONE)
+        public BlockStone() : base(BlockIDs.STONE, "Stone")
         {
 
         }

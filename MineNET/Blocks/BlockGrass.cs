@@ -2,7 +2,7 @@
 {
     public class BlockGrass : BlockSolid
     {
-        public BlockGrass() : base("Glass", BlockIDs.GRASS)
+        public BlockGrass() : base(BlockIDs.GRASS, "Glass")
         {
 
         }

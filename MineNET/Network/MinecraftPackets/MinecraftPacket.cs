@@ -1,4 +1,7 @@
-﻿using MineNET.Blocks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using MineNET.Blocks;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
@@ -6,9 +9,6 @@ using MineNET.Items;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds.Rule;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MineNET.Network.MinecraftPackets
 {
@@ -61,18 +61,18 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteLFloat(value.Z);
         }
 
-        public Vector3 ReadBlockVector3()
+        public BlockCoordinate3D ReadBlockVector3()
         {
-            return new Vector3(
+            return new BlockCoordinate3D(
                 this.ReadSVarInt(),
-                this.ReadUVarInt(),
+                (int) this.ReadUVarInt(),
                 this.ReadSVarInt()
             );
         }
 
-        public void WriteBlockVector3(Vector3 pos)
+        public void WriteBlockVector3(BlockCoordinate3D pos)
         {
-            this.WriteBlockVector3(pos.FloorX, pos.FloorY, pos.FloorZ);
+            this.WriteBlockVector3(pos.X, pos.Y, pos.Z);
         }
 
         public void WriteBlockVector3(int x, int y, int z)
@@ -82,18 +82,18 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteSVarInt(z);
         }
 
-        public Vector3 ReadSBlockVector3()
+        public BlockCoordinate3D ReadSBlockVector3()
         {
-            return new Vector3(
+            return new BlockCoordinate3D(
                 this.ReadSVarInt(),
                 this.ReadSVarInt(),
                 this.ReadSVarInt()
             );
         }
 
-        public void WriteSBlockVector3(Vector3 pos)
+        public void WriteSBlockVector3(BlockCoordinate3D pos)
         {
-            this.WriteSBlockVector3(pos.FloorX, pos.FloorY, pos.FloorZ);
+            this.WriteSBlockVector3(pos.X, pos.Y, pos.Z);
         }
 
         public void WriteSBlockVector3(int x, int y, int z)

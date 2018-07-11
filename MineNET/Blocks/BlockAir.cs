@@ -2,7 +2,7 @@
 {
     public class BlockAir : BlockTransparent
     {
-        public BlockAir() : base("Air", BlockIDs.AIR)
+        public BlockAir() : base(BlockIDs.AIR, "Air")
         {
 
         }
