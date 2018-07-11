@@ -213,6 +213,7 @@
     <Compile Include="Network\MinecraftPackets\ResourcePacksInfoPacket.cs" />
     <Compile Include="Network\MinecraftPackets\ResourcePackStackPacket.cs" />
     <Compile Include="Network\MinecraftPackets\SetEntityDataPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\SetLocalPlayerAsInitializedPacket.cs" />
     <Compile Include="Network\MinecraftPackets\StartGamePacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateAttributesPacket.cs" />
     <Compile Include="Network\RakNetPackets\Ack.cs" />

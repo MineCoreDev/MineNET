@@ -211,6 +211,8 @@ namespace MineNET.Network
             //6C
             //6D
             //6E
+            //6F
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.SET_LOCAL_PLAYER_AS_INITIALIZED_PACKET, new SetLocalPlayerAsInitializedPacket());
         }
         #endregion
 

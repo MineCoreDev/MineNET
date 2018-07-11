@@ -553,7 +553,7 @@ namespace MineNET.Network
             }
             pk = ev.Packet;
 
-            this.QueueConnectedPacket(pk, reliability, -1, flags);
+            this.QueueConnectedPacket(pk, reliability, 0, flags);
         }
 
         public void AddToQueue(EncapsulatedPacket pk, int flags = RakNetProtocol.FlagNormal)
@@ -582,7 +582,7 @@ namespace MineNET.Network
             if (this.SendQueue.Packets?.Length > 0)
             {
                 this.SendDatagram(this.SendQueue);
-                this.SendQueue = new DataPacket4();
+                this.SendQueue = new DataPacket0();
             }
         }
 
