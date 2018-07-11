@@ -152,7 +152,7 @@ namespace MineNET
                 OutLog.Error(e.ToString());
             }
             OutLog.Info("%server.stoping");
-            CrashReport.ExportReport(e.GetType().Name, e);
+            CrashReport.ExportReport(e.GetType()?.Name, e);
             this.Dispose();
             BlockInit.In?.Dispose();
             ItemInit.In?.Dispose();

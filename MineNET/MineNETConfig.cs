@@ -7,6 +7,6 @@ namespace MineNET
     {
         public string Language { get; set; } = "ja_JP";
 
-        public LoggerLevel ShowLogLevel { get; set; }
+        public LoggerLevel ShowLogLevel { get; set; } = LoggerLevel.Info;
     }
 }

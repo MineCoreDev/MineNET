@@ -73,7 +73,7 @@ namespace MineNET.Worlds
             pk.ChunkY = this.Z;
             pk.Data = this.GetBytes();
 
-            player.SendPacket(pk, flag: 1);
+            player.SendPacket(pk);
         }
 
         public byte GetBlock(int bx, int by, int bz)

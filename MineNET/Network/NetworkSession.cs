@@ -553,11 +553,12 @@ namespace MineNET.Network
             }
             pk = ev.Packet;
 
-            this.QueueConnectedPacket(pk, reliability, 0, flags);
+            this.QueueConnectedPacket(pk, reliability, -1, flags);
         }
 
         public void AddToQueue(EncapsulatedPacket pk, int flags = RakNetProtocol.FlagNormal)
         {
+            flags = RakNetProtocol.FlagImmediate;//HACK: Packet Send Bug...
             if (flags == RakNetProtocol.FlagImmediate)
             {
                 DataPacket p = new DataPacket0();
@@ -566,7 +567,7 @@ namespace MineNET.Network
                 return;
             }
 
-            int length = this.SendQueue.Length;
+            /*int length = this.SendQueue.GetLength();
             if (length + pk.GetTotalLength() > this.MTUSize - 36)//IP header (20 bytes) + UDP header (8 bytes) + RakNet weird (8 bytes) = 36 bytes
             {
                 this.SendQueuePacket();
@@ -574,7 +575,7 @@ namespace MineNET.Network
 
             List<object> list = new List<object>(this.SendQueue.Packets);
             list.Add(pk);
-            this.SendQueue.Packets = list.ToArray();
+            this.SendQueue.Packets = list.ToArray();*/
         }
 
         public void SendQueuePacket()

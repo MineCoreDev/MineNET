@@ -55,9 +55,12 @@ namespace MineNET.IO
                 LoggerData data = null;
                 if (this.LoggerSystem.LoggerQueue.TryDequeue(out data))
                 {
-                    OutputActionEventArgs ev = new OutputActionEventArgs(data.Text);
-                    Server.Instance.Event.IO.OnOutputAction(this, ev);
-                    this.OutputAction(ev.OutputText);
+                    if (data.Level >= Server.Instance.Config.ShowLogLevel)
+                    {
+                        OutputActionEventArgs ev = new OutputActionEventArgs(data.Text);
+                        Server.Instance.Event.IO.OnOutputAction(this, ev);
+                        this.OutputAction(ev.OutputText);
+                    }
                 }
             }
         }

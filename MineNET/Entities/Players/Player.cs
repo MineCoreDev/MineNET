@@ -234,7 +234,7 @@ namespace MineNET.Entities.Players
 
             this.IsPreLogined = true;
 
-            this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS, RakNetProtocol.FlagImmediate);
+            this.SendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
 
             ResourcePacksInfoPacket info = new ResourcePacksInfoPacket();
             this.SendPacket(info);

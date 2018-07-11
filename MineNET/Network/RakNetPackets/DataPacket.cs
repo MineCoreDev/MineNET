@@ -44,10 +44,25 @@ namespace MineNET.Network.RakNetPackets
             this.Packets = list.ToArray();
         }
 
+        public int GetLength()
+        {
+            int len = 4;
+            foreach (object packet in this.Packets)
+            {
+                if (packet is EncapsulatedPacket)
+                {
+                    EncapsulatedPacket pk = (EncapsulatedPacket) packet;
+                    len += pk.GetTotalLength();
+                }
+            }
+
+            return len;
+        }
+
         public void Clear()
         {
             this.SeqNumber = 0;
-            this.Packets = null;
+            this.Packets = new object[0];
         }
     }
 }
