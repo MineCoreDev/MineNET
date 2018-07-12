@@ -68,7 +68,7 @@
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.consoleControl1 = new MineNET.GUI.UI.Controls.ConsoleControl();
+            this.consoleControl = new MineNET.GUI.UI.Controls.ConsoleControl();
             this.playerListControl1 = new MineNET.GUI.UI.Controls.PlayerListControl();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -358,13 +358,13 @@
             // 
             // consoleControl1
             // 
-            this.consoleControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.consoleControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.consoleControl1.Location = new System.Drawing.Point(168, 27);
-            this.consoleControl1.Name = "consoleControl1";
-            this.consoleControl1.Size = new System.Drawing.Size(604, 471);
-            this.consoleControl1.TabIndex = 4;
+            this.consoleControl.Location = new System.Drawing.Point(168, 27);
+            this.consoleControl.Name = "consoleControl1";
+            this.consoleControl.Size = new System.Drawing.Size(604, 471);
+            this.consoleControl.TabIndex = 4;
             // 
             // playerListControl1
             // 
@@ -380,7 +380,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this.consoleControl1);
+            this.Controls.Add(this.consoleControl);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.playerListControl1);
@@ -440,6 +440,6 @@
         private Controls.PlayerListControl playerListControl1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private Controls.ConsoleControl consoleControl1;
+        private Controls.ConsoleControl consoleControl;
     }
 }

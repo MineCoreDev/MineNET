@@ -1,5 +1,7 @@
 ﻿using MineNET.Events.IOEvents;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Threading;
 
 namespace MineNET.IO
@@ -16,21 +18,22 @@ namespace MineNET.IO
         public Output(Logger logger)
         {
             this.LoggerSystem = logger;
+            
             try
             {
                 Console.Clear();
                 Console.Title = LanguageService.GetString("server.name");
+
+                this.IsRunning = true;
+
+                this.OutputThread = new Thread(this.OnUpdate);
+                this.OutputThread.Name = "OutputThread";
+                this.OutputThread.Start();
             }
-            catch
+            catch (IOException)
             {
                 this.UsingGUI = true;
-                return;
             }
-            this.IsRunning = true;
-
-            this.OutputThread = new Thread(this.OnUpdate);
-            this.OutputThread.Name = "OutputThread";
-            this.OutputThread.Start();
         }
 
         public void OutputAction(string outputText)
