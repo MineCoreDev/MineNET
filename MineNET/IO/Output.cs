@@ -1,6 +1,6 @@
 ﻿using MineNET.Events.IOEvents;
 using System;
-using System.Diagnostics;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
 
@@ -8,17 +8,15 @@ namespace MineNET.IO
 {
     public class Output : OutputInterface
     {
-        private Logger LoggerSystem { get; set; }
-
         public Thread OutputThread { get; private set; }
+
+        public ConcurrentQueue<LoggerData> OutputQueue { get; } = new ConcurrentQueue<LoggerData>();
 
         public bool IsRunning { get; private set; }
         public bool UsingGUI { get; private set; }
 
-        public Output(Logger logger)
+        public Output()
         {
-            this.LoggerSystem = logger;
-            
             try
             {
                 Console.Clear();
@@ -41,14 +39,17 @@ namespace MineNET.IO
             this.ColorFormat(outputText);
         }
 
+        public void AddOutputQueue(LoggerData data)
+        {
+            this.OutputQueue.Enqueue(data);
+        }
+
         public void Dispose()
         {
             this.IsRunning = false;
 
             this.OutputThread?.Join();
             this.OutputThread = null;
-
-            this.LoggerSystem = null;
         }
 
         private void OnUpdate()
@@ -56,7 +57,7 @@ namespace MineNET.IO
             while (this.IsRunning)
             {
                 LoggerData data = null;
-                if (this.LoggerSystem.LoggerQueue.TryDequeue(out data))
+                if (this.OutputQueue.TryDequeue(out data))
                 {
                     if (data.Level >= Server.Instance.Config.ShowLogLevel)
                     {

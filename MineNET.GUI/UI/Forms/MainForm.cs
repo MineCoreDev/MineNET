@@ -104,6 +104,8 @@ namespace MineNET.GUI.UI.Forms
                 this.ServerInstance = new Server();
                 if (this.ServerInstance.Start())
                 {
+                    this.ServerInstance.Event.Server.ServerStop += Server_ServerStop;
+
                     this.ServerThread = new Thread(this.ServerInstance.StartUpdate);
                     this.ServerThread.Start();
 
@@ -117,15 +119,17 @@ namespace MineNET.GUI.UI.Forms
         {
             if (this.ServerInstance != null)
             {
-                if (this.ServerInstance.Stop())
-                {
-                    this.ServerInstance = null;
-                    this.ServerThread = null;
-
-                    this.button1.Enabled = true;
-                    this.button2.Enabled = false;
-                }
+                this.ServerInstance.Stop();
             }
+        }
+
+        private void Server_ServerStop(object sender, Events.ServerEvents.ServerStopEventArgs e)
+        {
+            this.ServerInstance = null;
+            this.ServerThread = null;
+
+            this.button1.Enabled = true;
+            this.button2.Enabled = false;
         }
     }
 }

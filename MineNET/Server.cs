@@ -288,7 +288,7 @@ namespace MineNET
                 worlds[i].UpdateTick(tick);
             }
 
-            this.Logger.Input.GetQueueCommand();
+            this.Logger.Input.GetInputQueue();
         }
         #endregion
 

@@ -79,6 +79,7 @@
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(311, 19);
             this.textBox.TabIndex = 3;
+            this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
             // comboBox
             // 

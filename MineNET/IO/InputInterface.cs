@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Concurrent;
 
 namespace MineNET.IO
 {
     public interface InputInterface : IDisposable
     {
-        void InputAction(string inputText);
+        ConcurrentQueue<string> InputQueue { get; }
 
-        void GetQueueCommand();
+        void InputAction(string inputText);
+        void AddInputQueue(string inputText);
+        void GetInputQueue();
     }
 }

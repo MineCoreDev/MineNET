@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Threading;
 
 namespace MineNET.IO
@@ -7,8 +6,6 @@ namespace MineNET.IO
     public class Logger : ILogger
     {
         #region Property & Field
-        public ConcurrentQueue<LoggerData> LoggerQueue { get; } = new ConcurrentQueue<LoggerData>();
-
         public bool IsRunConsole { get; private set; }
 
         public InputInterface Input { get; }
@@ -19,7 +16,7 @@ namespace MineNET.IO
         public Logger()
         {
             this.Input = new Input();
-            this.Output = new Output(this);
+            this.Output = new Output();
         }
         #endregion
 
@@ -229,7 +226,7 @@ namespace MineNET.IO
             LoggerData data = new LoggerData();
             data.Level = level;
             data.Text = text;
-            this.LoggerQueue.Enqueue(data);
+            this.Output.AddOutputQueue(data);
         }
         #endregion
 

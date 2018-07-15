@@ -123,6 +123,24 @@
   <data name="app.config.showNews" xml:space="preserve">
     <value>起動時にs最新のニュースを表示する</value>
   </data>
+  <data name="app.consoleControl.button" xml:space="preserve">
+    <value>送信</value>
+  </data>
+  <data name="app.consoleControl.comboBoxItem.consoleMode" xml:space="preserve">
+    <value>コンソールモード</value>
+  </data>
+  <data name="app.consoleControl.comboBoxItem.sayMode" xml:space="preserve">
+    <value>Sayコマンドモード</value>
+  </data>
+  <data name="app.consoleControl.label1" xml:space="preserve">
+    <value>出力</value>
+  </data>
+  <data name="app.consoleControl.label2" xml:space="preserve">
+    <value>入力</value>
+  </data>
+  <data name="app.consoleControl.label3" xml:space="preserve">
+    <value>入力モード</value>
+  </data>
   <data name="app.error" xml:space="preserve">
     <value>エラー</value>
   </data>

@@ -13,7 +13,7 @@ namespace MineNET.IO
         public bool IsRunning { get; private set; }
         public bool UsingGUI { get; private set; }
 
-        public ConcurrentQueue<string> CommandQueue { get; private set; } = new ConcurrentQueue<string>();
+        public ConcurrentQueue<string> InputQueue { get; private set; } = new ConcurrentQueue<string>();
 
         public Input()
         {
@@ -54,17 +54,22 @@ namespace MineNET.IO
                 string inputText = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(inputText))
                 {
-                    this.CommandQueue.Enqueue(inputText);
+                    this.AddInputQueue(inputText);
                 }
             }
         }
 
-        public void GetQueueCommand()
+        public void AddInputQueue(string inputText)
         {
-            if (!this.CommandQueue.IsEmpty)
+            this.InputQueue.Enqueue(inputText);
+        }
+
+        public void GetInputQueue()
+        {
+            if (!this.InputQueue.IsEmpty)
             {
                 string inputText;
-                this.CommandQueue.TryDequeue(out inputText);
+                this.InputQueue.TryDequeue(out inputText);
                 InputActionEventArgs ev = new InputActionEventArgs(inputText);
                 Server.Instance.Event.IO.OnInputAction(this, ev);
                 this.InputAction(ev.InputText);
