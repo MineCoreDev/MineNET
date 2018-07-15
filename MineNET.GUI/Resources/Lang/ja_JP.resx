@@ -153,4 +153,7 @@
   <data name="app.warning.closeApplication" xml:space="preserve">
     <value>アプリケーションを終了しますか?</value>
   </data>
+  <data name="app.warning.closeServerAndApplication" xml:space="preserve">
+    <value>サーバーが起動中です。アプリケーションを終了しますか?</value>
+  </data>
 </root>

@@ -1,7 +1,7 @@
 ﻿using MineNET.Network.RakNetPackets;
 using System.Net;
 
-namespace MineNET.Events.NetworkEvents
+namespace MineNET.Events.NetworkEvents.RakNet
 {
     public class RakNetPacketReceiveEventArgs : NetworkEventArgs, ICancelable
     {

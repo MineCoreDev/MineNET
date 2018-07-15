@@ -1,5 +1,4 @@
-﻿using MineNET.Events.IOEvents;
-using System;
+﻿using System;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -70,13 +69,31 @@ namespace MineNET.GUI.UI.Forms
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show(LanguageService.GetString("app.warning.closeApplication"),
+            if (this.ServerInstance == null)
+            {
+                DialogResult result = MessageBox.Show(LanguageService.GetString("app.warning.closeApplication"),
                                                   LanguageService.GetString("app.warning"),
                                                   MessageBoxButtons.YesNo,
                                                   MessageBoxIcon.Warning);
-            if (result != DialogResult.Yes)
+                if (result != DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                }
+            }
+            else
             {
-                e.Cancel = true;
+                DialogResult result = MessageBox.Show(LanguageService.GetString("app.warning.closeServerAndApplication"),
+                                                  LanguageService.GetString("app.warning"),
+                                                  MessageBoxButtons.YesNo,
+                                                  MessageBoxIcon.Warning);
+                if (result != DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    this.ServerInstance.Stop();
+                }
             }
         }
 

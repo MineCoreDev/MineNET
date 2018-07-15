@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MineNET.Events.NetworkEvents.RakNet;
+using System;
 
 namespace MineNET.Events.NetworkEvents
 {

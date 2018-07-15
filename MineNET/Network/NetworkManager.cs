@@ -1,5 +1,6 @@
 ﻿using MineNET.Entities.Players;
 using MineNET.Events.NetworkEvents;
+using MineNET.Events.NetworkEvents.RakNet;
 using MineNET.Events.PlayerEvents;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Network.RakNetPackets;
