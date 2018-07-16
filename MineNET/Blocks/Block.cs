@@ -1,10 +1,19 @@
-﻿using System;
-using MineNET.Values;
+﻿using MineNET.Values;
+using System;
 
 namespace MineNET.Blocks
 {
+    /// <summary>
+    /// Minecraft に存在するブロックを提供するクラス。
+    /// </summary>
     public class Block : ICloneable<Block>
     {
+        /// <summary>
+        /// 定義されているブロックをデータ値から取得します。
+        /// </summary>
+        /// <param name="id">ブロックのID</param>
+        /// <param name="meta">ブロックのメタデータ</param>
+        /// <returns>取得したブロック</returns>
         public static Block Get(int id, int meta = 0)
         {
             if (MineNET_Registries.Block.ContainsKey(id))
@@ -17,6 +26,11 @@ namespace MineNET.Blocks
             return new BlockAir();
         }
 
+        /// <summary>
+        /// 定義されているブロックを名前から取得します。
+        /// </summary>
+        /// <param name="name">ブロックの名前</param>
+        /// <returns>取得したブロック</returns>
         public static Block Get(string name)
         {
             string[] data = name.Replace("minecraft:", "").Replace(" ", "_").ToUpper().Split(':');
@@ -49,19 +63,43 @@ namespace MineNET.Blocks
             return block;
         }
 
+        /// <summary>
+        /// ブロックのID
+        /// </summary>
         public int ID { get; }
+        /// <summary>
+        /// ブロックのメタデータ
+        /// </summary>
         public int Damage { get; set; }
 
         public Position Position { get; internal set; }
 
+        /// <summary>
+        /// ブロックの名前
+        /// </summary>
         public string Name { get; }
 
+        /// <summary>
+        /// ブロックの硬さ
+        /// </summary>
         public float Hardness { get; set; } = 0;
+        /// <summary>
+        /// ブロックの耐性
+        /// </summary>
         public float Resistance { get; set; } = 0;
 
+        /// <summary>
+        /// ブロックの光源レベル
+        /// </summary>
         public float LightLevel { get; set; } = 0;
+        /// <summary>
+        /// ブロックの透明度
+        /// </summary>
         public float LightOpacity { get; set; } = 0;
 
+        /// <summary>
+        /// ブロックのマップ上での色
+        /// </summary>
         public Color MapColor { get; set; } = BlockColor.Air;
 
         public Block(int id, string name)
@@ -70,6 +108,10 @@ namespace MineNET.Blocks
             this.Name = name;
         }
 
+        /// <summary>
+        /// ブロックのインスタンスを複製します。
+        /// </summary>
+        /// <returns></returns>
         public Block Clone()
         {
             return (Block) this.MemberwiseClone();
@@ -80,6 +122,9 @@ namespace MineNET.Blocks
             return this.MemberwiseClone();
         }
 
+        /// <summary>
+        /// ブロックの当たり判定
+        /// </summary>
         public virtual AxisAlignedBB BoundingBox { get; } = AxisAlignedBB.None;
 
 
@@ -99,6 +144,10 @@ namespace MineNET.Blocks
             }
         }
 
+        /// <summary>
+        /// ブロックが更新された時に呼び出されるメソッド
+        /// </summary>
+        /// <param name="type"></param>
         public void UpdateTick(int type)
         {
         }

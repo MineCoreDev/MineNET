@@ -1,5 +1,8 @@
 ﻿namespace MineNET.Blocks
 {
+    /// <summary>
+    /// Minecraft に存在するブロックのIDが記載されたクラス
+    /// </summary>
     public sealed class BlockIDs
     {
         public const int AIR = 0;
