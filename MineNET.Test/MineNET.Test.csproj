@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="NBT\IO\NBTIOTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Values\AxisAlignedBBTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MineNET\MineNET.csproj">

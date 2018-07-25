@@ -2,37 +2,45 @@
 {
     public struct AxisAlignedBB
     {
-        public Vector3 Max { get; set; }
-        public Vector3 Min { get; set; }
+        public Vector3 Position { get; set; }
+        public Vector3 Size { get; set; }
 
-        public AxisAlignedBB(Vector3 max, Vector3 min)
+        public AxisAlignedBB(Vector3 pos, Vector3 size)
         {
-            this.Min = min;
-            this.Max = max;
+            this.Position = pos;
+            this.Size = size;
         }
 
-        public AxisAlignedBB(float maxX, float maxY, float maxZ, float minX, float minY, float minZ)
+        public AxisAlignedBB(float posX, float posY, float posZ, float sizeX, float sizeY, float sizeZ)
         {
-            this.Min = new Vector3(minX, minY, minZ);
-            this.Max = new Vector3(maxX, maxY, maxZ);
+            this.Position = new Vector3(posX, posY, posZ);
+            this.Size = new Vector3(sizeX, sizeY, sizeZ);
+        }
+
+        public bool ContainsVector(Vector3 pos)
+        {
+            Vector3 add = this.Position + this.Size;
+            if (this.Position.X <= pos.X && add.X >= pos.X)
+            {
+                if (this.Position.Y <= pos.Y && add.Y >= pos.Y)
+                {
+                    if (this.Position.Z <= pos.Z && add.Z >= pos.Z)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public Vector3 Center
         {
             get
             {
-                Vector3 center = this.Max - this.Min;
+                Vector3 center = this.Size;
                 center /= 2;
                 return center;
-            }
-        }
-
-        public Vector3 Size
-        {
-            get
-            {
-                Vector3 size = this.Max - this.Min;
-                return size;
             }
         }
 
