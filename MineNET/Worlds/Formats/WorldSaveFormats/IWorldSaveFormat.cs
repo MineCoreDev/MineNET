@@ -10,5 +10,6 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
 
         Chunk GetChunk(int chunkX, int chunkZ);
         void SetChunk(Chunk chunk);
+        void Save();
     }
 }

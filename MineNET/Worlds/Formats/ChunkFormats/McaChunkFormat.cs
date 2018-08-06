@@ -31,7 +31,10 @@ namespace MineNET.Worlds.Formats.ChunkFormats
             byte[] biomes = level.GetByteArray("Biomes");
             short[] cast = new short[256];
             int[] heightMap = level.GetIntArray("HeightMap");
-            heightMap.CopyTo(cast, 0);
+            for (int i = 0; i < 256; ++i)
+            {
+                cast[i] = (short) heightMap[i];
+            }
 
             Chunk chunk = new Chunk(x, z, subChunks, biomes, cast, level.GetList("Entities"), level.GetList("TileEntities"));
             chunk.LastUpdate = level.GetLong("LastUpdate");
@@ -88,6 +91,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
                 entities[i].SaveNBT();
                 entitiesTag.Add(entities[i].NamedTag);
             }
+            tag.PutList(entitiesTag);
 
             ListTag blockEntitiesTag = new ListTag("TileEntities", NBTTagType.COMPOUND);
             BlockEntity[] blockEntities = chunk.GetBlockEntities();
@@ -96,6 +100,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
                 blockEntities[i].SaveNBT();
                 blockEntitiesTag.Add(blockEntities[i].NamedTag);
             }
+            tag.PutList(blockEntitiesTag);
 
             CompoundTag outTag = new CompoundTag("");
             outTag.PutCompound(tag.Name, tag);
