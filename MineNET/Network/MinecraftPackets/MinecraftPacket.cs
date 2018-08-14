@@ -340,7 +340,7 @@ namespace MineNET.Network.MinecraftPackets
             }
         }
 
-        /*public CommandOriginData ReadCommandOriginData()
+        public CommandOriginData ReadCommandOriginData()
         {
             CommandOriginData commandOriginData = new CommandOriginData();
             commandOriginData.Type = this.ReadUVarInt();
@@ -348,9 +348,45 @@ namespace MineNET.Network.MinecraftPackets
             commandOriginData.RequestId = this.ReadString();
             if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE || commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
             {
-                commandOriginData.Unknown = this.ReadVarLong();
+                commandOriginData.VarLong1 = this.ReadVarLong();
             }
             return commandOriginData;
+        }
+
+        public void WriteCommandOriginData(CommandOriginData commandOriginData)
+        {
+            this.WriteUVarInt(commandOriginData.Type);
+            this.WriteUUID(commandOriginData.Uuid);
+            this.WriteString(commandOriginData.RequestId);
+            if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE || commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
+            {
+                this.WriteVarLong((int) commandOriginData.VarLong1);
+            }
+        }
+
+        public CommandOutputMessage ReadCommandOutputMessage()
+        {
+            CommandOutputMessage message = new CommandOutputMessage();
+            message.IsInternal = this.ReadBool();
+            message.MessageId = this.ReadString();
+            message.Parameters = new string[this.ReadUVarInt()];
+            for (int i = 0; i < message.Parameters.Length; ++i)
+            {
+                message.Parameters[i] = this.ReadString();
+            }
+
+            return message;
+        }
+
+        public void WriteCommandOutputMessage(CommandOutputMessage message)
+        {
+            this.WriteBool(message.IsInternal);
+            this.WriteString(message.MessageId);
+            this.WriteUVarInt((uint) message.Parameters.Length);
+            for (int i = 0; i < message.Parameters.Length; ++i)
+            {
+                this.WriteString(message.Parameters[i]);
+            }
         }
 
         public BlockFace ReadBlockFace()
@@ -361,7 +397,7 @@ namespace MineNET.Network.MinecraftPackets
         public void WriteBlockFace(BlockFace face)
         {
             this.WriteSVarInt(face.GetIndex());
-        }*/
+        }
 
         public UUID ReadUUID()
         {

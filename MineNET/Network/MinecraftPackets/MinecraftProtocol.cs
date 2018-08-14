@@ -83,6 +83,7 @@
         public const byte AVAILABLE_COMMANDS_PACKET = 0x4c;
         public const byte COMMAND_REQUEST_PACKET = 0x4d;
         public const byte COMMAND_BLOCK_UPDATE_PACKET = 0x4e;
+        public const byte COMMAND_OUTPUT_PACKET = 0x4f;
         public const byte UPDATE_TRADE_PACKET = 0x50;
         public const byte UPDATE_EQUIPMENT_PACKET = 0x51;
         public const byte RESOURCE_PACK_DATA_INFO_PACKET = 0x52;

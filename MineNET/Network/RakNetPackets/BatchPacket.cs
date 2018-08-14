@@ -1,7 +1,7 @@
-﻿using MineNET.Utils;
-using System;
+﻿using System;
 using System.IO;
 using System.IO.Compression;
+using MineNET.Utils;
 
 namespace MineNET.Network.RakNetPackets
 {
@@ -71,7 +71,7 @@ namespace MineNET.Network.RakNetPackets
             bs.Close();
         }
 
-        void WriteCompressionLevel(MemoryStream stream)
+        private void WriteCompressionLevel(MemoryStream stream)
         {
             if (this.CompressionLevel == CompressionLevel.NoCompression)
             {

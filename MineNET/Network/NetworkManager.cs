@@ -1,15 +1,15 @@
-﻿using MineNET.Entities.Players;
-using MineNET.Events.NetworkEvents;
-using MineNET.Events.NetworkEvents.RakNet;
-using MineNET.Events.PlayerEvents;
-using MineNET.Network.MinecraftPackets;
-using MineNET.Network.RakNetPackets;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using MineNET.Entities.Players;
+using MineNET.Events.NetworkEvents;
+using MineNET.Events.NetworkEvents.RakNet;
+using MineNET.Events.PlayerEvents;
+using MineNET.Network.MinecraftPackets;
+using MineNET.Network.RakNetPackets;
 
 namespace MineNET.Network
 {
@@ -220,7 +220,7 @@ namespace MineNET.Network
         #region Thread Method
         private void ReceiveClock()
         {
-            while (IsRunNetwork)
+            while (this.IsRunNetwork)
             {
                 this.ReceiveUpdate();
             }
@@ -250,7 +250,7 @@ namespace MineNET.Network
 
         public void OnUpdate()
         {
-            while (IsRunNetwork)
+            while (this.IsRunNetwork)
             {
                 Server.Instance.Clock.Start("network.update");
                 foreach (KeyValuePair<string, NetworkSession> session in this.Sessions)
