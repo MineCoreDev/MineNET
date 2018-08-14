@@ -1,15 +1,16 @@
-﻿using MineNET.Entities.Attributes;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
+using MineNET.Inventories;
 using MineNET.NBT.Tags;
 using MineNET.Values;
 using MineNET.Worlds;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MineNET.Entities
 {
-    public abstract class EntityLiving : Entity
+    public abstract class EntityLiving : Entity, InventoryHolder
     {
         public EntityAttributeDictionary Attributes { get; private set; }
         protected Dictionary<int, Effect> Effects { get; } = new Dictionary<int, Effect>();
@@ -73,6 +74,8 @@ namespace MineNET.Entities
                 this.Attributes.AddAttribute(attribute);
             }
         }
+
+        public Inventory Inventory => throw new NotImplementedException();
 
         public bool HasEffect(int id)
         {
