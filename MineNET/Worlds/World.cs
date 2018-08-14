@@ -31,7 +31,7 @@ namespace MineNET.Worlds
         #region Static Method
         public static void CreateWorld(string worldName)
         {
-            World.CreateWorld(worldName, new RegionWorldSaveFormat(worldName));
+            World.CreateWorld(worldName, new MineNETWorldSaveFormat(worldName));
         }
 
         public static void CreateWorld(string worldName, IWorldSaveFormat format)
@@ -44,7 +44,7 @@ namespace MineNET.Worlds
 
         public static void LoadWorld(string worldName)
         {
-            World.LoadWorld(worldName, new RegionWorldSaveFormat(worldName));
+            World.LoadWorld(worldName, new MineNETWorldSaveFormat(worldName));
         }
 
         public static void LoadWorld(string worldName, IWorldSaveFormat format)
@@ -262,7 +262,7 @@ namespace MineNET.Worlds
                     {
                         if (!this.HasChunkLoadedByPlayer(chunkKey, player))
                         {
-                            //this.Format.SetChunk(chunks[chunkKey]);//TODO:
+                            this.Format.SetChunk(chunks[chunkKey]);
                             this.chunks.Remove(chunkKey);
                         }
                         double value;
@@ -306,7 +306,7 @@ namespace MineNET.Worlds
                     {
                         if (!this.HasChunkLoadedByPlayer(chunkKey, player))
                         {
-                            //this.Format.SetChunk(chunks[chunkKey]);//TODO:
+                            this.Format.SetChunk(chunks[chunkKey]);
                             this.chunks.Remove(chunkKey);
                         }
                     }
@@ -334,6 +334,11 @@ namespace MineNET.Worlds
                 }
             }
             return false;
+        }
+
+        public void Save()
+        {
+            this.Format.Save();
         }
 
         /*public void SendBlocks(Player[] players, Vector3[] vector3, int flags = UpdateBlockPacket.FLAG_NONE)

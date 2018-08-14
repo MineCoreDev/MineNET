@@ -113,6 +113,9 @@ namespace MineNET
                     this.Event.Server.OnServerStop(this, new ServerStopEventArgs());
                     OutLog.Info("%server.stoping");
 
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+
                     this.Status = ServerStatus.Stoping;
 
                     foreach (Player player in this.GetPlayers())
@@ -125,7 +128,12 @@ namespace MineNET
                         player.Close(reason);
                     }
 
-                    this.Dispose();
+                    foreach (World world in this.GetWorlds())
+                    {
+                        world.Save();
+                    }
+
+                    this.Dispose(sw);
                     this.Status = ServerStatus.Stop;
 
                     //TODO: ServerStopedEvent...
@@ -356,9 +364,19 @@ namespace MineNET
         #region Dispose Method
         public void Dispose()
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            this.Worlds.Clear();
+            this.Plugin?.Dispose();
+            this.Command?.Dispose();
+            this.Network?.Dispose();
+            this.NetworkSocket?.Dispose();
+            this.Logger?.Dispose();
+            this.Clock?.Dispose();
 
+            Server.Instance = null;
+        }
+
+        public void Dispose(Stopwatch sw)
+        {
             this.Worlds.Clear();
             this.Plugin?.Dispose();
             this.Command?.Dispose();

@@ -1,6 +1,6 @@
-﻿using System;
-using MineNET.NBT.Data;
+﻿using MineNET.NBT.Data;
 using MineNET.NBT.IO;
+using System;
 
 namespace MineNET.NBT.Tags
 {
@@ -33,10 +33,7 @@ namespace MineNET.NBT.Tags
         {
             int len = this.Data.Length;
             stream.WriteInt(len);
-            for (int i = 0; i < len; ++i)
-            {
-                stream.WriteByte(this.Data[i]);
-            }
+            stream.WriteBytes(this.Data);
         }
 
         internal override void WriteTag(NBTStream stream)
@@ -47,10 +44,7 @@ namespace MineNET.NBT.Tags
                 stream.WriteByte((byte) this.TagType);
                 stream.WriteString(this.Name);
                 stream.WriteInt(len);
-                for (int i = 0; i < len; ++i)
-                {
-                    stream.WriteByte(this.Data[i]);
-                }
+                stream.WriteBytes(this.Data);
             }
             else
             {
@@ -62,10 +56,7 @@ namespace MineNET.NBT.Tags
         {
             int len = stream.ReadInt();
             this.Data = new byte[len];
-            for (int i = 0; i < len; ++i)
-            {
-                this.Data[i] = stream.ReadByte();
-            }
+            this.Data = stream.ReadBytes();
         }
 
         internal override void ReadTag(NBTStream stream)

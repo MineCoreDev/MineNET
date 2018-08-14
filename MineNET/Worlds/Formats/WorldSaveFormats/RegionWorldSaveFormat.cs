@@ -92,5 +92,10 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
         {
             throw new NotImplementedException();
         }
+
+        public void Save()
+        {
+
+        }
     }
 }

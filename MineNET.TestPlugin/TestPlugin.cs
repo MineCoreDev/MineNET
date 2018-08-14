@@ -86,22 +86,22 @@ namespace MineNET.TestPlugin
             OutLog.Notice(e.GetType().Name);
         }
 
-        private void Network_RakNetPacketSend(object sender, Events.NetworkEvents.RakNetPacketSendEventArgs e)
+        private void Network_RakNetPacketSend(object sender, Events.NetworkEvents.RakNet.RakNetPacketSendEventArgs e)
         {
             OutLog.Notice(e.GetType().Name);
         }
 
-        private void Network_RakNetPacketReceive(object sender, Events.NetworkEvents.RakNetPacketReceiveEventArgs e)
+        private void Network_RakNetPacketReceive(object sender, Events.NetworkEvents.RakNet.RakNetPacketReceiveEventArgs e)
         {
             OutLog.Notice(e.GetType().Name);
         }
 
-        private void Network_RakNetDataPacketSend(object sender, Events.NetworkEvents.RakNetDataPacketSendEventArgs e)
+        private void Network_RakNetDataPacketSend(object sender, Events.NetworkEvents.RakNet.RakNetDataPacketSendEventArgs e)
         {
             OutLog.Notice(e.GetType().Name);
         }
 
-        private void Network_RakNetDataPacketReceive(object sender, Events.NetworkEvents.RakNetDataPacketReceiveEventArgs e)
+        private void Network_RakNetDataPacketReceive(object sender, Events.NetworkEvents.RakNet.RakNetDataPacketReceiveEventArgs e)
         {
             OutLog.Notice(e.GetType().Name);
         }
