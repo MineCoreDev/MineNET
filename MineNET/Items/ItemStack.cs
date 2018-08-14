@@ -1,7 +1,8 @@
-﻿using MineNET.Blocks;
+﻿using System;
+using System.Collections;
+using MineNET.Blocks;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
-using System;
 
 namespace MineNET.Items
 {
@@ -128,6 +129,86 @@ namespace MineNET.Items
                 this.Tags.Name = "";
             }
             return this.Tags;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj);
+        }
+
+        public bool Equals(object obj, bool checkDamage = true, bool checkCount = true, bool checkNBT = true, bool checkComponents = true)
+        {
+            if (!(obj is ItemStack))
+            {
+                return false;
+            }
+            ItemStack stack = (ItemStack) obj;
+            if (!this.Item.Equals(stack, checkDamage))
+            {
+                return false;
+            }
+            if (checkDamage && this.Damage != stack.Damage)
+            {
+                return false;
+            }
+            if (checkCount && this.Count != stack.Count)
+            {
+                return false;
+            }
+            if (checkNBT)
+            {
+                if (this.HasTags != stack.HasTags)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (this.HasTags && this.GetNamedTag() != stack.GetNamedTag())
+                    {
+                        return false;
+                    }
+                }
+            }
+            if (checkComponents)
+            {
+                if (!((IStructuralEquatable) this.CanPlaceOn).Equals(stack.CanPlaceOn, StructuralComparisons.StructuralEqualityComparer) ||
+                    !((IStructuralEquatable) this.CanDestroy).Equals(stack.CanDestroy, StructuralComparisons.StructuralEqualityComparer))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool operator ==(ItemStack A, ItemStack B)
+        {
+            if (object.ReferenceEquals(A, B))
+            {
+                return true;
+            }
+            if ((object) A == null || (object) B == null)
+            {
+                return false;
+            }
+            return A.Equals(B);
+        }
+
+        public static bool operator !=(ItemStack A, ItemStack B)
+        {
+            if (object.ReferenceEquals(A, B))
+            {
+                return false;
+            }
+            if ((object) A == null || (object) B == null)
+            {
+                return true;
+            }
+            return !A.Equals(B);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

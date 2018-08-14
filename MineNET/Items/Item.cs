@@ -184,5 +184,62 @@ namespace MineNET.Items
                 return false;
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj);
+        }
+
+        public bool Equals(object obj, bool checkDamage = true)
+        {
+            if (!(obj is Item))
+            {
+                return false;
+            }
+            Item item = (Item) obj;
+            if (this.ID != item.ID)
+            {
+                return false;
+            }
+            if (checkDamage)
+            {
+                if (this.Damage != item.Damage)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool operator ==(Item A, Item B)
+        {
+            if (object.ReferenceEquals(A, B))
+            {
+                return true;
+            }
+            if ((object) A == null || (object) B == null)
+            {
+                return false;
+            }
+            return A.Equals(B);
+        }
+
+        public static bool operator !=(Item A, Item B)
+        {
+            if (object.ReferenceEquals(A, B))
+            {
+                return false;
+            }
+            if ((object) A == null || (object) B == null)
+            {
+                return true;
+            }
+            return !A.Equals(B);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
