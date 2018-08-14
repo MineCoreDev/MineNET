@@ -105,7 +105,7 @@ namespace MineNET.Network
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.LOGIN_PACKET, new LoginPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.PLAY_STATUS_PACKET, new PlayStatusPacket());
             //3
-            //4
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.CLIENT_TO_SERVER_HANDSHAKE_PACKET, new ClientToServerHandshakePacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.DISCONNECT_PACKET, new DisconnectPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.RESOURCE_PACKS_INFO_PACKET, new ResourcePacksInfoPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.RESOURCE_PACK_STACK_PACKET, new ResourcePackStackPacket());
@@ -113,74 +113,74 @@ namespace MineNET.Network
             //9
             //A
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.START_GAME_PACKET, new StartGamePacket());
-            //C
-            //D
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ADD_PLAYER_PACKET, new AddPlayerPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ADD_ENTITY_PACKET, new AddEntityPacket());
             //E
-            //F
-            //10
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ADD_ITEM_ENTITY_PACKET, new AddItemEntityPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ADD_HANGING_ENTITY_PACKET, new AddHangingEntityPacket());
             //11
             //12
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.MOVE_PLAYER_PACKET, new MovePlayerPacket());
             //14
             //15
-            //16
-            //17
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ADD_PAINTING_PACKET, new AddPaintingPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.EXPLODE_PACKET, new ExplodePacket());
             //18
             //19
-            //1A
-            //1B
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.BLOCK_EVENT_PACKET, new BlockEventPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ENTITY_EVENT_PACKET, new EntityEventPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.MOB_EFFECT_PACKET, new MobEffectPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.UPDATE_ATTRIBUTES_PACKET, new UpdateAttributesPacket());
-            //1E
-            //1F
-            //20
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.INVENTORY_TRANSACTION_PACKET, new InventoryTransactionPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.MOB_EQUIPMENT_PACKET, new MobEquipmentPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.MOB_ARMOR_EQUIPMENT_PACKET, new MobArmorEquipmentPacket());
             //21
-            //22
-            //23
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.BLOCK_PICK_REQUEST_PACKET, new BlockPickRequestPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ENTITY_PICK_REQUEST_PACKET, new EntityPickRequestPacket());
             //24
-            //25
-            //26
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ENTITY_FALL_PACKET, new EntityFallPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.HURT_ARMOR_PACKET, new HurtArmorPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.SET_ENTITY_DATA_PACKET, new SetEntityDataPacket());
             //28
             //29
             //2A
             //2B
-            //2C
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ANIMATE_PACKET, new AnimatePacket());
             //2D
-            //2E
-            //2F
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.CONTAINER_OPEN_PACKET, new ContainerOpenPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.CONTAINER_CLOSE_PACKET, new ContainerClosePacket());
             //30
-            //31
-            //32
-            //33
-            //34
-            //35
-            //36
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.INVENTORY_CONTENT_PACKET, new InventoryContentPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.INVENTORY_SLOT_PACKET, new InventorySlotPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.CONTAINER_SET_DATA_PACKET, new ContainerSetDataPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.CRAFTING_DATA_PACKET, new CraftingDataPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.CRAFTING_EVENT_PACKET, new CraftingEventPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.GUI_DATA_PICK_ITEM_PACKET, new GuiDataPickItemPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ADVENTURE_SETTINGS_PACKET, new AdventureSettingsPacket());
-            //38
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.BLOCK_ENTITY_DATA_PACKET, new BlockEntityDataPacket());
             //39
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.FULL_CHUNK_DATA_PACKET, new FullChunkDataPacket());
             //3B
             //3C
-            //3D
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.CHANGE_DIMENSION_PACKET, new ChangeDimensionPacket());
             //3E
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.PLAYER_LIST_PACKET, new PlayerListPacket());
             //40
-            //41
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.EVENT_PACKET, new EventPacket());
             //42
-            //43
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.CLIENTBOUND_MAP_ITEM_DATA_PACKET, new ClientboundMapItemDataPacket());
             //44
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.REQUEST_CHUNK_RADIUS_PACKET, new RequestChunkRadiusPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.CHUNK_RADIUS_UPDATED_PACKET, new ChunkRadiusUpdatedPacket());
             //47
-            //48
-            //49
-            //4A
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.GAME_RULES_CHANGED_PACKET, new GameRulesChangedPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.CAMERA_PACKET, new CameraPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.BOSS_EVENT_PACKET, new BossEventPacket());
             //4B
-            //4C
-            //4D
-            //4E
-            //4F
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.AVAILABLE_COMMANDS_PACKET, new AvailableCommandsPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.COMMAND_REQUEST_PACKET, new CommandRequestPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.COMMAND_BLOCK_UPDATE_PACKET, new CommandBlockUpdatePacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.COMMAND_OUTPUT_PACKET, new CommandOutputPacket());
             //50
             //51
             //52
@@ -190,7 +190,7 @@ namespace MineNET.Network
             //56
             //57
             //58
-            //59
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ADD_BEHAVIOR_TREE_PACKET, new AddBehaviorTreePacket());
             //5A
             //5B
             //5C
@@ -198,7 +198,7 @@ namespace MineNET.Network
             //5E
             //5F
             //60
-            //61
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.BOOK_EDIT_PACKET, new BookEditPacket());
             //62
             //63
             //64

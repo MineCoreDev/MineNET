@@ -36,7 +36,6 @@ namespace MineNET.Items
         public ItemStack(Item item)
         {
             this.Item = item;
-            this.Damage = item.Damage;
         }
 
         public ItemStack(Item item, int damage) : this(item)
@@ -143,7 +142,7 @@ namespace MineNET.Items
                 return false;
             }
             ItemStack stack = (ItemStack) obj;
-            if (!this.Item.Equals(stack, checkDamage))
+            if (!this.Item.Equals(stack))
             {
                 return false;
             }

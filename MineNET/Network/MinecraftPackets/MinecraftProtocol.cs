@@ -69,7 +69,7 @@
         public const byte SET_PLAYER_GAME_TYPE_PACKET = 0x3e;
         public const byte PLAYER_LIST_PACKET = 0x3f;
         public const byte SIMPLE_EVENT_PACKET = 0x40;
-        public const byte TELEMETRY_EVENT_PACKET = 0x41;
+        public const byte EVENT_PACKET = 0x41;
         public const byte SPAWN_EXPERIENCE_ORB_PACKET = 0x42;
         public const byte CLIENTBOUND_MAP_ITEM_DATA_PACKET = 0x43;
         public const byte MAP_INFO_REQUEST_PACKET = 0x44;

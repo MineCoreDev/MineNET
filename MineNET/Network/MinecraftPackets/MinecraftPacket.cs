@@ -360,7 +360,7 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteString(commandOriginData.RequestId);
             if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE || commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
             {
-                this.WriteVarLong((int) commandOriginData.VarLong1);
+                this.WriteVarLong(commandOriginData.VarLong1);
             }
         }
 

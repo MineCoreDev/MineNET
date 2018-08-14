@@ -5,7 +5,6 @@ namespace MineNET.Items
     public class Item
     {
         public int ID { get; }
-        public int Damage { get; }
 
         public static Item Get(int id)
         {
@@ -62,13 +61,6 @@ namespace MineNET.Items
         {
             this.Name = name;
             this.ID = id;
-        }
-
-        public Item(string name, int id, int damage)
-        {
-            this.Name = name;
-            this.ID = id;
-            this.Damage = damage;
         }
 
         public virtual string Name { get; } = "Unknown";
@@ -187,11 +179,6 @@ namespace MineNET.Items
 
         public override bool Equals(object obj)
         {
-            return this.Equals(obj);
-        }
-
-        public bool Equals(object obj, bool checkDamage = true)
-        {
             if (!(obj is Item))
             {
                 return false;
@@ -200,13 +187,6 @@ namespace MineNET.Items
             if (this.ID != item.ID)
             {
                 return false;
-            }
-            if (checkDamage)
-            {
-                if (this.Damage != item.Damage)
-                {
-                    return false;
-                }
             }
             return true;
         }

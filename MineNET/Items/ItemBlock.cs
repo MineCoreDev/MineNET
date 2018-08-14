@@ -6,7 +6,7 @@ namespace MineNET.Items
     {
         public Block Block { get; }
 
-        public ItemBlock(Block block) : base(block.Name, block.ID, block.Damage)
+        public ItemBlock(Block block) : base(block.Name, block.ID)
         {
             this.Block = block.Clone();
         }

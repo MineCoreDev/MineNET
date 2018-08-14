@@ -269,7 +269,15 @@
     <Compile Include="Network\MinecraftPackets\CraftingDataPacket.cs" />
     <Compile Include="Network\MinecraftPackets\CraftingEventPacket.cs" />
     <Compile Include="Network\MinecraftPackets\DisconnectPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\EntityEventPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\EntityFallPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\EntityPickRequestPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\EventPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\ExplodePacket.cs" />
     <Compile Include="Network\MinecraftPackets\FullChunkDataPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\GameRulesChangedPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\GuiDataPickItemPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\HurtArmorPacket.cs" />
     <Compile Include="Network\MinecraftPackets\InventoryContentPacket.cs" />
     <Compile Include="Network\MinecraftPackets\InventorySlotPacket.cs" />
     <Compile Include="Network\MinecraftPackets\InventoryTransactionPacket.cs" />

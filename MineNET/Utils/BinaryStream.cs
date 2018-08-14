@@ -230,7 +230,7 @@ namespace MineNET.Utils
             return Binary.ReadVarLong(ref this.buffer);
         }
 
-        public void WriteVarLong(int value)
+        public void WriteVarLong(long value)
         {
             Binary.WriteVarLong(ref this.buffer, value);
         }
