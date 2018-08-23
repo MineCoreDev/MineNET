@@ -103,6 +103,16 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteSVarInt(z);
         }
 
+        public float ReadByteRotation()
+        {
+            return this.ReadByte() * (360 / 256);
+        }
+
+        public void WriteByteRotation(float rotation)
+        {
+            this.WriteByte((byte) (rotation / (360 / 256)));
+        }
+
         public byte[] ReadByteData()
         {
             int len = (int) this.ReadUVarInt();

@@ -99,7 +99,7 @@
         public const byte PURCHASE_RECEIPT_PACKET = 0x5c;
         public const byte PLAYER_SKIN_PACKET = 0x5d;
         public const byte SUB_CLIENT_LOGIN_PACKET = 0x5e;
-        public const byte INITIATE_WEB_SOCKET_CONNECTION_PACKET = 0x5f;
+        public const byte W_S_CONNECT_PACKET = 0x5f;
         public const byte SET_LAST_HURT_BY_PACKET = 0x60;
         public const byte BOOK_EDIT_PACKET = 0x61;
         public const byte NPC_REQUEST_PACKET = 0x62;
