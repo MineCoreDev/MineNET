@@ -213,7 +213,10 @@ namespace MineNET.Network
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.LAB_TABLE_PACKET, new LabTablePacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.UPDATE_BLOCK_SYNCED_PACKET, new UpdateBlockSyncedPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.MOVE_ENTITY_DELTA_PACKET, new MoveEntityDeltaPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.SET_SCOREBOARD_IDENTITY_PACKET, new SetScoreboardIdentityPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.SET_LOCAL_PLAYER_AS_INITIALIZED_PACKET, new SetLocalPlayerAsInitializedPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.UPDATE_SOFT_ENUM_PACKET, new UpdateSoftEnumPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.NETWORK_STACK_LATENCY_PACKET, new NetworkStackLatencyPacket());
         }
         #endregion
 

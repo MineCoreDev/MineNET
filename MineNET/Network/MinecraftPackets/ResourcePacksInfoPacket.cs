@@ -24,6 +24,7 @@ namespace MineNET.Network.MinecraftPackets
                 this.WriteLLong((ulong) entry.GetPackSize());
                 this.WriteString("");//TODO:
                 this.WriteString("");//TODO:
+                this.WriteString("");//TODO:
             }
             this.WriteShort((short) this.ResourcePackEntries.Length);
             for (int i = 0; i < this.ResourcePackEntries.Length; ++i)
@@ -32,6 +33,7 @@ namespace MineNET.Network.MinecraftPackets
                 this.WriteString(entry.GetPackId());
                 this.WriteString(entry.GetPackVersion());
                 this.WriteLLong((ulong) entry.GetPackSize());
+                this.WriteString("");//TODO:
                 this.WriteString("");//TODO:
                 this.WriteString("");//TODO:
             }

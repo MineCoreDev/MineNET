@@ -148,6 +148,7 @@
     <Compile Include="Data\LoginData.cs" />
     <Compile Include="Data\NetworkInventoryAction.cs" />
     <Compile Include="Data\PlayerListEntry.cs" />
+    <Compile Include="Data\ScoreboardIdentityPacketEntry.cs" />
     <Compile Include="Data\Skin.cs" />
     <Compile Include="Entities\Attributes\EntityAttribute.cs" />
     <Compile Include="Entities\Attributes\EntityAttributeDictionary.cs" />
@@ -298,6 +299,7 @@
     <Compile Include="Network\MinecraftPackets\MoveEntityAbsolutePacket.cs" />
     <Compile Include="Network\MinecraftPackets\MoveEntityDeltaPacket.cs" />
     <Compile Include="Network\MinecraftPackets\MovePlayerPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\NetworkStackLatencyPacket.cs" />
     <Compile Include="Network\MinecraftPackets\NpcRequestPacket.cs" />
     <Compile Include="Network\MinecraftPackets\PhotoTransferPacket.cs" />
     <Compile Include="Network\MinecraftPackets\PlayerActionPacket.cs" />
@@ -333,6 +335,7 @@
     <Compile Include="Network\MinecraftPackets\SetLastHurtByPacket.cs" />
     <Compile Include="Network\MinecraftPackets\SetLocalPlayerAsInitializedPacket.cs" />
     <Compile Include="Network\MinecraftPackets\SetPlayerGameTypePacket.cs" />
+    <Compile Include="Network\MinecraftPackets\SetScoreboardIdentityPacket.cs" />
     <Compile Include="Network\MinecraftPackets\SetScorePacket.cs" />
     <Compile Include="Network\MinecraftPackets\SetSpawnPositionPacket.cs" />
     <Compile Include="Network\MinecraftPackets\SetTimePacket.cs" />
@@ -353,6 +356,7 @@
     <Compile Include="Network\MinecraftPackets\UpdateBlockPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateBlockSyncedPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateEquipPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\UpdateSoftEnumPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateTradePacket.cs" />
     <Compile Include="Network\MinecraftPackets\WSConnectPacket.cs" />
     <Compile Include="Network\RakNetPackets\Ack.cs" />

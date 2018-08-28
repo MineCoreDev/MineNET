@@ -2,8 +2,8 @@
 {
     public static class MinecraftProtocol
     {
-        public const string ClientVersion = "1.5.0";
-        public const int ClientProtocol = 274;
+        public const string ClientVersion = "1.6.0";
+        public const int ClientProtocol = 282;
 
         public const byte LOGIN_PACKET = 0x01;
         public const byte PLAY_STATUS_PACKET = 0x02;
@@ -116,6 +116,9 @@
         public const byte LAB_TABLE_PACKET = 0x6d;
         public const byte UPDATE_BLOCK_SYNCED_PACKET = 0x6e;
         public const byte MOVE_ENTITY_DELTA_PACKET = 0x6f;
-        public const byte SET_LOCAL_PLAYER_AS_INITIALIZED_PACKET = 0x70;
+        public const byte SET_SCOREBOARD_IDENTITY_PACKET = 0x70;
+        public const byte SET_LOCAL_PLAYER_AS_INITIALIZED_PACKET = 0x71;
+        public const byte UPDATE_SOFT_ENUM_PACKET = 0x72;
+        public const byte NETWORK_STACK_LATENCY_PACKET = 0x73;
     }
 }

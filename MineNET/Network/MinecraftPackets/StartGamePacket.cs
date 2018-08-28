@@ -69,6 +69,8 @@ namespace MineNET.Network.MinecraftPackets
         public long CurrentTick { get; set; } = 0;
         public int EnchantmentSeed { get; set; } = 0;
 
+        public string MultiplayerCorrelationId { get; set; } = "";
+
         public override void Encode()
         {
             base.Encode();
@@ -114,6 +116,8 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteBool(this.Unknown);
             this.WriteLLong((ulong) this.CurrentTick);
             this.WriteSVarInt(this.EnchantmentSeed);
+            //this.WriteUVarInt(0);
+            //this.WriteString(this.MultiplayerCorrelationId);
         }
     }
 }
