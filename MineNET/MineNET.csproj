@@ -457,6 +457,11 @@
     <Compile Include="Reports\IReport.cs" />
     <Compile Include="ResourcePack\IResourcePack.cs" />
     <Compile Include="ResourcePack\ResourcePackInfo.cs" />
+    <Compile Include="Resources\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Server.cs" />
     <Compile Include="ServerConfig.cs" />
     <Compile Include="ServerListInfo.cs" />
@@ -511,6 +516,7 @@
     <Compile Include="Worlds\Generators\GeneratorIDs.cs" />
     <Compile Include="Worlds\Generators\GeneratorManager.cs" />
     <Compile Include="Worlds\Generators\IGenerator.cs" />
+    <Compile Include="Worlds\GlobalBlockPalette.cs" />
     <Compile Include="Worlds\Rule\GameRule.cs" />
     <Compile Include="Worlds\Rule\GameRuleBase.cs" />
     <Compile Include="Worlds\Rule\GameRules.cs" />
@@ -519,10 +525,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Lang\ja_JP.resx" />
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\File\runtimeid_table.json" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>:cd "$(ProjectDir)\.nuget" 

@@ -14,13 +14,7 @@ namespace MineNET.Worlds
 
         public bool IsEnpty
         {
-            get
-            {
-                return this.BlockDatas.All(b =>
-                {
-                    return b == BlockIDs.AIR;
-                });
-            }
+            get { return this.BlockDatas.All(b => { return b == BlockIDs.AIR; }); }
         }
 
         public int GetArrayIndex(int x, int y, int z)

@@ -1,4 +1,7 @@
-﻿using MineNET.Commands;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Net;
+using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Network;
@@ -7,21 +10,16 @@ using MineNET.Network.RakNetPackets;
 using MineNET.Values;
 using MineNET.Worlds;
 using MineNET.Worlds.Rule;
-using System;
-using System.Collections.Concurrent;
-using System.Net;
 
 namespace MineNET.Entities.Players
 {
     public class Player : EntityLiving, CommandSender
     {
         #region Property & Field
+
         public override bool IsPlayer
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
         public override string Name { get; protected set; }
@@ -51,17 +49,21 @@ namespace MineNET.Entities.Players
         public override float Width { get; } = 0.60f;
         public override float Height { get; } = 1.80f;
 
-        public ConcurrentDictionary<Tuple<int, int>, double> LoadedChunks { get; private set; } = new ConcurrentDictionary<Tuple<int, int>, double>();
+        public ConcurrentDictionary<Tuple<int, int>, double> LoadedChunks { get; private set; } =
+            new ConcurrentDictionary<Tuple<int, int>, double>();
+
         #endregion
 
         #region Ctor
+
         public Player() : base(null, null)
         {
-
         }
+
         #endregion
 
         #region Init Method
+
         protected override void EntityInit()
         {
             base.EntityInit();
@@ -72,12 +74,14 @@ namespace MineNET.Entities.Players
             this.Attributes.AddAttribute(EntityAttribute.EXPERIENCE);
             this.Attributes.AddAttribute(EntityAttribute.EXPERIENCE_LEVEL);
 
-            this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_BREATHING);
-            this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_CAN_CLIMB);
+            this.SetFlag(DATA_FLAGS, DATA_FLAG_BREATHING);
+            this.SetFlag(DATA_FLAGS, DATA_FLAG_CAN_CLIMB);
         }
+
         #endregion
 
         #region Send Message Method
+
         public void SendMessage(TranslationMessage message)
         {
             throw new NotImplementedException();
@@ -92,9 +96,11 @@ namespace MineNET.Entities.Players
         {
             throw new NotImplementedException();
         }
+
         #endregion
 
         #region Send Status Method
+
         public void SendPlayStatus(int status, int flag = RakNetProtocol.FlagNormal)
         {
             PlayStatusPacket pk = new PlayStatusPacket();
@@ -102,9 +108,11 @@ namespace MineNET.Entities.Players
 
             this.SendPacket(pk, flag: flag);
         }
+
         #endregion
 
         #region Send ChunkRadius Method
+
         public void SendChunkRadiusUpdated(int radius)
         {
             ChunkRadiusUpdatedPacket pk = new ChunkRadiusUpdatedPacket();
@@ -114,9 +122,11 @@ namespace MineNET.Entities.Players
 
             this.RequestChunkRadius = radius;
         }
+
         #endregion
 
         #region Send Chunk Method
+
         public void SendChunk()
         {
             //Task.Run(() =>
@@ -126,12 +136,16 @@ namespace MineNET.Entities.Players
             {
                 c.SendChunk(this);
             }
+
             //});
         }
+
         #endregion
 
         #region Send Packet Method
-        public void SendPacket(MinecraftPacket packet, int reliability = RakNetPacketReliability.RELIABLE, int flag = RakNetProtocol.FlagNormal)
+
+        public void SendPacket(MinecraftPacket packet, int reliability = RakNetPacketReliability.RELIABLE,
+            int flag = RakNetProtocol.FlagNormal)
         {
             NetworkSession session = Server.Instance.Network.GetSession(this.EndPoint);
             if (session == null)
@@ -141,39 +155,44 @@ namespace MineNET.Entities.Players
 
             session.AddPacketBatchQueue(packet, reliability, flag);
         }
+
         #endregion
 
         #region Update Method
+
         internal override bool UpdateTick(long tick)
         {
             if (tick % 20 == 0 && this.AnySendChunk)
             {
                 this.SendChunk();
             }
+
             return true;
         }
+
         #endregion
 
         #region Packet Handle Method
+
         public void OnPacketHandle(MinecraftPacket packet)
         {
-            if (packet is LoginPacket)//0x01
+            if (packet is LoginPacket) //0x01
             {
                 this.HandleLoginPacket((LoginPacket) packet);
             }
-            else if (packet is ResourcePackClientResponsePacket)//0x08
+            else if (packet is ResourcePackClientResponsePacket) //0x08
             {
                 this.HandleResourcePackClientResponsePacket((ResourcePackClientResponsePacket) packet);
             }
-            else if (packet is MovePlayerPacket)//0x13
+            else if (packet is MovePlayerPacket) //0x13
             {
                 this.HandleMovePlayerPacket((MovePlayerPacket) packet);
             }
-            else if (packet is RequestChunkRadiusPacket)//0x45
+            else if (packet is RequestChunkRadiusPacket) //0x45
             {
                 this.HandleRequestChunkRadiusPacket((RequestChunkRadiusPacket) packet);
             }
-            else if (packet is SetLocalPlayerAsInitializedPacket)//0x70
+            else if (packet is SetLocalPlayerAsInitializedPacket) //0x70
             {
                 this.HandleSetLocalPlayerAsInitializedPacket((SetLocalPlayerAsInitializedPacket) packet);
             }
@@ -184,6 +203,12 @@ namespace MineNET.Entities.Players
         {
             if (this.IsPreLogined)
             {
+                return;
+            }
+
+            if (!pk.Result)
+            {
+                this.Close("disconnectionScreen.outdatedClient");
                 return;
             }
 
@@ -291,7 +316,7 @@ namespace MineNET.Entities.Players
                 startGamePacket.WorldGamemode = this.World.Gamemode;
                 startGamePacket.Difficulty = this.World.Difficulty;
                 startGamePacket.SpawnX = this.World.SpawnX;
-                startGamePacket.SpawnY = 5;//TODO: Safe Spawn
+                startGamePacket.SpawnY = 5; //TODO: Safe Spawn
                 startGamePacket.SpawnZ = this.World.SpawnZ;
                 startGamePacket.WorldName = this.World.Name;
 
@@ -320,8 +345,10 @@ namespace MineNET.Entities.Players
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, true);
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, false);
-                adventureSettingsEntry.CommandPermission = PlayerPermissions.MEMBER;//this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
-                adventureSettingsEntry.PlayerPermission = PlayerPermissions.MEMBER;//this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
+                adventureSettingsEntry.CommandPermission =
+                    PlayerPermissions.MEMBER; //this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
+                adventureSettingsEntry.PlayerPermission =
+                    PlayerPermissions.MEMBER; //this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
                 adventureSettingsEntry.EntityUniqueId = this.EntityID;
                 this.AdventureSettingsEntry = adventureSettingsEntry;
                 this.AdventureSettingsEntry.Update(this);
@@ -363,17 +390,19 @@ namespace MineNET.Entities.Players
             {
                 this.SendChunkRadiusUpdated(request);
             }
+
             this.AnySendChunk = true;
         }
 
         //0x70
         public void HandleSetLocalPlayerAsInitializedPacket(SetLocalPlayerAsInitializedPacket pk)
         {
-
         }
+
         #endregion
 
         #region Close Player Method
+
         public void Close(string reason)
         {
             if (!string.IsNullOrEmpty(reason))
@@ -386,6 +415,7 @@ namespace MineNET.Entities.Players
 
             Server.Instance.Network.GetSession(this.EndPoint)?.Disconnect(reason);
         }
+
         #endregion
     }
 }

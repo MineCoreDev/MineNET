@@ -1,10 +1,10 @@
-﻿using MineNET.Data;
+﻿using System;
+using System.Linq;
+using System.Text;
+using MineNET.Data;
 using MineNET.Utils;
 using MineNET.Values;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Linq;
-using System.Text;
 
 namespace MineNET.Network.MinecraftPackets
 {
@@ -15,6 +15,8 @@ namespace MineNET.Network.MinecraftPackets
         public int Protocol { get; set; }
         public LoginData LoginData { get; set; }
         public ClientData ClientData { get; set; }
+
+        public bool Result { get; private set; } = true;
 
         public override void Decode()
         {
@@ -28,29 +30,36 @@ namespace MineNET.Network.MinecraftPackets
             int len = this.ReadVarInt();
             using (BinaryStream stream = new BinaryStream(this.ReadBytes(len)))
             {
-                int chainLen = (int) stream.ReadLInt();
-                string chain = Encoding.UTF8.GetString(stream.ReadBytes(chainLen));
-                JObject chainObj = JObject.Parse(chain);
-                chain = chainObj.ToString();
-
-                JToken chainToken = chainObj["chain"];
-                for (int i = 0; i < chainToken.Count(); ++i)
+                try
                 {
-                    JObject jwt = JObject.Parse(JWT.Decode(chainToken[i].ToString()));
-                    JToken extraData = null;
-                    if (jwt.TryGetValue("extraData", out extraData))
+                    int chainLen = (int) stream.ReadLInt();
+                    string chain = Encoding.UTF8.GetString(stream.ReadBytes(chainLen));
+                    JObject chainObj = JObject.Parse(chain);
+                    chain = chainObj.ToString();
+
+                    JToken chainToken = chainObj["chain"];
+                    for (int i = 0; i < chainToken.Count(); ++i)
                     {
-                        this.LoginData.XUID = extraData.Value<string>("XUID");
-                        this.LoginData.DisplayName = extraData.Value<string>("displayName");
-                        this.LoginData.ClientUUID = new UUID(extraData.Value<string>("identity"));
-                        this.LoginData.IdentityPublicKey = jwt.Value<string>("identityPublicKey");
+                        JObject jwt = JObject.Parse(JWT.Decode(chainToken[i].ToString()));
+                        JToken extraData = null;
+                        if (jwt.TryGetValue("extraData", out extraData))
+                        {
+                            this.LoginData.XUID = extraData.Value<string>("XUID");
+                            this.LoginData.DisplayName = extraData.Value<string>("displayName");
+                            this.LoginData.ClientUUID = new UUID(extraData.Value<string>("identity"));
+                            this.LoginData.IdentityPublicKey = jwt.Value<string>("identityPublicKey");
+                        }
                     }
+
+                    int clientDataLen = (int) stream.ReadLInt();
+                    string clientDataJson = Encoding.UTF8.GetString(stream.ReadBytes(clientDataLen));
+
+                    this.SetClientData(clientDataJson);
                 }
-
-                int clientDataLen = (int) stream.ReadLInt();
-                string clientDataJson = Encoding.UTF8.GetString(stream.ReadBytes(clientDataLen));
-
-                this.SetClientData(clientDataJson);
+                catch (Exception e)
+                {
+                    this.Result = false;
+                }
             }
         }
 
@@ -73,7 +82,7 @@ namespace MineNET.Network.MinecraftPackets
                 Convert.FromBase64String(clientDataJwt.Value<string>("CapeData")),
                 clientDataJwt.Value<string>("SkinGeometryName"),
                 Encoding.UTF8.GetString(Convert.FromBase64String(clientDataJwt.Value<string>("SkinGeometry")))
-                );
+            );
             this.ClientData.UIProfile = clientDataJwt.Value<int>("UIProfile");
         }
 

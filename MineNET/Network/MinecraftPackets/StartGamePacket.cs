@@ -116,8 +116,8 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteBool(this.Unknown);
             this.WriteLLong((ulong) this.CurrentTick);
             this.WriteSVarInt(this.EnchantmentSeed);
-            //this.WriteUVarInt(0);
-            //this.WriteString(this.MultiplayerCorrelationId);
+            this.WriteBytes(GlobalBlockPalette.PaletteBytes);
+            this.WriteString(this.MultiplayerCorrelationId);
         }
     }
 }

@@ -206,6 +206,8 @@ namespace MineNET
         {
             this.Clock = new ConstantClockManager();
 
+            GlobalBlockPalette.Init();
+
             this.InitRegistries();
 
             this.Event = new EventManager();
