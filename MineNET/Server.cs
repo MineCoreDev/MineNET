@@ -3,7 +3,6 @@ using MineNET.Entities.Players;
 using MineNET.Events;
 using MineNET.Events.ServerEvents;
 using MineNET.Init;
-using MineNET.IO;
 using MineNET.Manager;
 using MineNET.Network;
 using MineNET.Network.MinecraftPackets;
@@ -11,6 +10,7 @@ using MineNET.Plugins;
 using MineNET.Reports;
 using MineNET.Utils.Config;
 using MineNET.Worlds;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -42,7 +42,7 @@ namespace MineNET
         public MineNETConfig Config { get; private set; }
         public ServerConfig ServerProperty { get; private set; }
 
-        public ILogger Logger { get; private set; }
+        public ILogger Logger { get; private set; } = MineNET.Logger.CurrentLogger;
         public CommandManager Command { get; private set; }
 
         public IServerListInfo ServerList { get; set; }
@@ -78,8 +78,8 @@ namespace MineNET
                     this.Init(sw);
                     sw.Stop();
 
-                    OutLog.Info("%server.start.done");
-                    OutLog.Info("%server.start.done2", sw.Elapsed.ToString(@"mm\:ss\.fff"));
+                    MineNET.Logger.Info("%server.start.done");
+                    MineNET.Logger.Info("%server.start.done2", sw.Elapsed.ToString(@"mm\:ss\.fff"));
                     this.Status = ServerStatus.Running;
 
                     //TODO: ServerStartedEvent...
@@ -111,7 +111,7 @@ namespace MineNET
                 try
                 {
                     this.Event.Server.OnServerStop(this, new ServerStopEventArgs());
-                    OutLog.Info("%server.stoping");
+                    MineNET.Logger.Info("%server.stoping");
 
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
@@ -154,12 +154,12 @@ namespace MineNET
         public void ErrorStop(Exception e)
         {
             //TODO: ServerErrorStopEvent...
-            OutLog.Fatal("%server.error.stop");
+            MineNET.Logger.Fatal("%server.error.stop");
             if (e != null)
             {
-                OutLog.Error(e.ToString());
+                MineNET.Logger.Error(e.ToString());
             }
-            OutLog.Info("%server.stoping");
+            MineNET.Logger.Info("%server.stoping");
             CrashReport.ExportReport(e.GetType()?.Name, e);
             this.Dispose();
             BlockInit.In?.Dispose();
@@ -211,8 +211,7 @@ namespace MineNET
             this.InitRegistries();
 
             this.Event = new EventManager();
-            this.Logger = new Logger();
-            OutLog.Info("%server.start");
+            MineNET.Logger.Info("%server.start");
             this.Plugin = new PluginManager();
             this.Command = new CommandManager();
 
@@ -226,13 +225,13 @@ namespace MineNET
             if (this.NetworkSocket == null)
             {
                 int port = this.ServerProperty.ServerPort;
-                OutLog.Info("%server.network.start", port);
+                MineNET.Logger.Info("%server.network.start", port);
 
                 this.EndPoint = new IPEndPoint(IPAddress.Any, port);
                 this.SetNetworkSocket(new UDPSocket(this.EndPoint));
             }
             this.Network = new NetworkManager();
-            OutLog.Info("%server.network.start.done", sw.Elapsed.ToString(@"mm\:ss\.fff"));
+            MineNET.Logger.Info("%server.network.start.done", sw.Elapsed.ToString(@"mm\:ss\.fff"));
         }
 
         private void LoadWorlds(Stopwatch sw)
@@ -247,12 +246,12 @@ namespace MineNET
             if (!World.Exists(mainWorld))
             {
                 World.CreateWorld(mainWorld);
-                OutLog.Notice("%server.world.create", mainWorld);
+                MineNET.Logger.Info("%server.world.create", mainWorld);
             }
             else
             {
                 World.LoadWorld(mainWorld);
-                OutLog.Info("%server.world.load", mainWorld);
+                MineNET.Logger.Info("%server.world.load", mainWorld);
             }
 
             string[] subWorlds = this.ServerProperty.LoadWorldNames;
@@ -261,12 +260,12 @@ namespace MineNET
                 if (!World.Exists(subWorlds[i]))
                 {
                     World.CreateWorld(subWorlds[i]);
-                    OutLog.Notice("%server.world.create", subWorlds[i]);
+                    MineNET.Logger.Info("%server.world.create", subWorlds[i]);
                 }
                 else
                 {
                     World.LoadWorld(subWorlds[i]);
-                    OutLog.Info("%server.world.load", subWorlds[i]);
+                    MineNET.Logger.Info("%server.world.load", subWorlds[i]);
                 }
             }
         }
@@ -297,8 +296,6 @@ namespace MineNET
             {
                 worlds[i].UpdateTick(tick);
             }
-
-            this.Logger.Input.GetInputQueue();
         }
         #endregion
 
@@ -371,7 +368,6 @@ namespace MineNET
             this.Command?.Dispose();
             this.Network?.Dispose();
             this.NetworkSocket?.Dispose();
-            this.Logger?.Dispose();
             this.Clock?.Dispose();
 
             Server.Instance = null;
@@ -383,11 +379,10 @@ namespace MineNET
             this.Plugin?.Dispose();
             this.Command?.Dispose();
             this.Network?.Dispose();
-            OutLog.Info("%server.network.stop", sw.Elapsed.ToString(@"mm\:ss\.fff"));
+            MineNET.Logger.Info("%server.network.stop", sw.Elapsed.ToString(@"mm\:ss\.fff"));
             this.NetworkSocket?.Dispose();
             sw.Stop();
-            OutLog.Info("%server.stoped", sw.Elapsed.ToString(@"mm\:ss\.fff"));
-            this.Logger?.Dispose();
+            MineNET.Logger.Info("%server.stoped", sw.Elapsed.ToString(@"mm\:ss\.fff"));
             this.Clock?.Dispose();
 
             Server.Instance = null;

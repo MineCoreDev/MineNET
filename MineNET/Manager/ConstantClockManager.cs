@@ -59,7 +59,7 @@ namespace MineNET.Manager
                 int wait = instance.ClockTime - instance.StopWatch.Elapsed.Milliseconds;
                 if (wait <= 0)
                 {
-                    OutLog.Log("%server.constantClock.lowTickRate", name);
+                    Logger.Debug("%server.constantClock.lowTickRate", name);
                 }
                 else
                 {

@@ -42,7 +42,7 @@ namespace MineNET.Commands
             }
             else
             {
-                //data.Sender.SendMessage(new TranslationMessage(ColorText.RED, "commands.generic.unknown", data.Command));
+                //data.Sender.SendMessage(new TranslationMessage(TextFormat.RED, "commands.generic.unknown", data.Command));
             }
         }
     }

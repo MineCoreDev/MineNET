@@ -7,6 +7,7 @@ using MineNET.Entities.Attributes;
 using MineNET.Network;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Network.RakNetPackets;
+using MineNET.Text;
 using MineNET.Values;
 using MineNET.Worlds;
 using MineNET.Worlds.Rule;
@@ -82,7 +83,7 @@ namespace MineNET.Entities.Players
 
         #region Send Message Method
 
-        public void SendMessage(TranslationMessage message)
+        public void SendMessage(TranslationContainer message)
         {
             throw new NotImplementedException();
         }
@@ -380,10 +381,10 @@ namespace MineNET.Entities.Players
             int request = pk.Radius;
             int max = Server.Instance.ServerProperty.MaxViewDistance;
 
-            OutLog.Log("%server.player.requestChunkRadius", this.DisplayName, request);
+            Logger.Debug("%server.player.requestChunkRadius", this.DisplayName, request);
             if (request > max)
             {
-                OutLog.Log("%server.player.updateChunkRadius", this.DisplayName, request, max);
+                Logger.Debug("%server.player.updateChunkRadius", this.DisplayName, request, max);
                 this.SendChunkRadiusUpdated(max);
             }
             else

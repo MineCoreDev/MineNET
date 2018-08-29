@@ -78,12 +78,22 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.5.9\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -423,15 +433,6 @@
     <Compile Include="Events\ServerEvents\ServerStartEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerStopEventArgs.cs" />
     <Compile Include="ICloneable.cs" />
-    <Compile Include="IO\ILogger.cs" />
-    <Compile Include="IO\Input.cs" />
-    <Compile Include="IO\InputInterface.cs" />
-    <Compile Include="IO\Logger.cs" />
-    <Compile Include="IO\LoggerData.cs" />
-    <Compile Include="IO\LoggerLevel.cs" />
-    <Compile Include="IO\Output.cs" />
-    <Compile Include="IO\OutputInterface.cs" />
-    <Compile Include="LanguageService.cs" />
     <Compile Include="Manager\ConstantClockManager.cs" />
     <Compile Include="MineNETConfig.cs" />
     <Compile Include="Network\INetworkSocket.cs" />
@@ -443,7 +444,7 @@
     <Compile Include="Network\RakNetPackets\RakNetProtocol.cs" />
     <Compile Include="Network\RakNetPackets\RakNetPacket.cs" />
     <Compile Include="Network\UDPSocket.cs" />
-    <Compile Include="OutLog.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Entities\Players\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry\CommandRegistry.cs" />
@@ -457,6 +458,11 @@
     <Compile Include="Reports\IReport.cs" />
     <Compile Include="ResourcePack\IResourcePack.cs" />
     <Compile Include="ResourcePack\ResourcePackInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -466,11 +472,13 @@
     <Compile Include="ServerConfig.cs" />
     <Compile Include="ServerListInfo.cs" />
     <Compile Include="ServerStatus.cs" />
-    <Compile Include="TranslationMessage.cs" />
+    <Compile Include="Text\ITextContainer.cs" />
+    <Compile Include="Text\CultureTextContainer.cs" />
+    <Compile Include="Text\TranslationContainer.cs" />
     <Compile Include="Utils\ArrayUtils.cs" />
     <Compile Include="Utils\Binary.cs" />
     <Compile Include="Utils\BinaryStream.cs" />
-    <Compile Include="Utils\ColorText.cs" />
+    <Compile Include="Utils\TextFormat.cs" />
     <Compile Include="Utils\Config\JsonConfig.cs" />
     <Compile Include="Utils\Config\JsonStaticConfig.cs" />
     <Compile Include="Utils\Config\YamlConfig.cs" />
@@ -524,13 +532,23 @@
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Lang\ja_JP.resx" />
+    <EmbeddedResource Include="Properties\Resources.ja-jp.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Resources\File\runtimeid_table.json" />
   </ItemGroup>

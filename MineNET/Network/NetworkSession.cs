@@ -122,7 +122,7 @@ namespace MineNET.Network
                     pk.SeqNumber = this.LastSeqNumber++;
                     this.SendPacket(pk);
 
-                    OutLog.Log("%server.network.dataPacket.resend");
+                    Logger.Debug("%server.network.dataPacket.resend");
                 }
             }
 
@@ -371,13 +371,13 @@ namespace MineNET.Network
                                 return;
                             }*/
 
-                            OutLog.Log("%server.network.minecraft.receivePacket", buffer[0].ToString("X"), buffer.Length);
+                            Logger.Debug("%server.network.minecraft.receivePacket", buffer[0].ToString("X"), buffer.Length);
 
                             player.OnPacketHandle(packet);
                         }
                         else
                         {
-                            OutLog.Log("%server.network.minecraft.notHandle", buffer[0].ToString("X"));
+                            Logger.Debug("%server.network.minecraft.notHandle", buffer[0].ToString("X"));
                         }
                     }
                 }
@@ -534,7 +534,7 @@ namespace MineNET.Network
             st.WriteVarInt((int) buffer.Length);
             st.WriteBytes(buffer);
 
-            OutLog.Log("%server.network.minecraft.sendPacket", packet.PacketID.ToString("X"), packet.Length);
+            Logger.Debug("%server.network.minecraft.sendPacket", packet.PacketID.ToString("X"), packet.Length);
 
             BatchPacket pk = new BatchPacket();
             if (packet is FullChunkDataPacket)
@@ -614,7 +614,7 @@ namespace MineNET.Network
         public void Disconnect(string reason)
         {
             this.State = SessionState.Disconnecting;
-            OutLog.Info("%server.network.raknet.sessionDisconnect", this.EndPoint, reason);
+            Logger.Info("%server.network.raknet.sessionDisconnect", this.EndPoint, reason);
 
             this.Close();
         }
@@ -631,7 +631,7 @@ namespace MineNET.Network
                 CloseSessionEventArgs ev = new CloseSessionEventArgs(this.EndPoint, this);
                 Server.Instance.Event.Network.OnCloseSession(this, ev);
 
-                OutLog.Log("%server.network.raknet.sessionClose", this.EndPoint);
+                Logger.Debug("%server.network.raknet.sessionClose", this.EndPoint);
                 this.Manager?.RemoveSession(this.EndPoint);
                 this.Manager = null;
             }

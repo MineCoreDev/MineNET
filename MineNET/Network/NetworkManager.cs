@@ -243,11 +243,11 @@ namespace MineNET.Network
             }
             catch (ThreadAbortException e1)
             {
-                OutLog.Log("%server.network.packetThreadAbort", e1.GetType().Name);
+                Logger.Debug("%server.network.packetThreadAbort", e1.GetType().Name);
             }
             catch (Exception e2)
             {
-                OutLog.Notice(e2);
+                Logger.Warn(e2);
             }
         }
 
@@ -287,7 +287,7 @@ namespace MineNET.Network
                     {
                         if (this.SessionCreated(endPoint))
                         {
-                            OutLog.Log("%server.network.raknet.sessionCreated", endPoint);
+                            Logger.Debug("%server.network.raknet.sessionCreated", endPoint);
                             return;
                         }
 
@@ -298,7 +298,7 @@ namespace MineNET.Network
 
                     if (!this.SessionCreated(endPoint))
                     {
-                        OutLog.Log("%server.network.raknet.sessionNotCreated", endPoint);
+                        Logger.Debug("%server.network.raknet.sessionNotCreated", endPoint);
                         return;
                     }
 
@@ -319,7 +319,7 @@ namespace MineNET.Network
                     }
                 }
 
-                OutLog.Log("%server.network.raknet.notHandle", msgId.ToString("X"));
+                Logger.Debug("%server.network.raknet.notHandle", msgId.ToString("X"));
             }
         }
 
@@ -377,7 +377,7 @@ namespace MineNET.Network
 
                 this.Sessions.TryAdd(endPoint.ToString(), ev.Session);
                 this.CreatePlayer(endPoint);
-                OutLog.Info("%server.network.raknet.sessionCreate", endPoint, mtuSize);
+                Logger.Info("%server.network.raknet.sessionCreate", endPoint, mtuSize);
             }
         }
 

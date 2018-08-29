@@ -64,7 +64,7 @@ namespace MineNET.Worlds.Generators.Flat
                             {
                                 if (World.MAX_HEIGHT == y)
                                 {
-                                    OutLog.Notice("World MaxHeight 256");
+                                    Logger.Warn("World MaxHeight 256");
                                     break;
                                 }
                                 chunk.SetBlock(i, y, j, (byte) layer.block.ID);
@@ -158,20 +158,20 @@ namespace MineNET.Worlds.Generators.Flat
 
                         if (layers.layers.Count == 0)
                         {
-                            OutLog.Notice("FlatOptions Error");
+                            Logger.Warn("FlatOptions Error");
                             this.flatOption = null;
                         }
                     }
                     else
                     {
-                        OutLog.Notice("FlatOptions Error");
+                        Logger.Warn("FlatOptions Error");
                         this.flatOption = null;
                     }
                 }
                 catch (Exception e)
                 {
-                    OutLog.Error(e);
-                    OutLog.Notice("FlatOptions Error");
+                    Logger.Error(e);
+                    Logger.Warn("FlatOptions Error");
                     this.flatOption = null;
                 }
             }

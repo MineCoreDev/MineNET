@@ -35,7 +35,7 @@ namespace MineNET.Network
             }
             catch (SocketException e1)
             {
-                OutLog.Error(e1.Message);
+                Logger.Error(e1.Message);
                 Server.Instance.ErrorStop(null);
             }
         }

@@ -1,4 +1,6 @@
-﻿namespace MineNET.Commands
+﻿using MineNET.Text;
+
+namespace MineNET.Commands
 {
     public class ConsoleCommandSender : CommandSender
     {
@@ -18,27 +20,27 @@
             }
         }
 
-        public void SendMessage(TranslationMessage message)
+        public void SendMessage(TranslationContainer message)
         {
-            string msg = $"%{message.TranslationKey}";
-            if (message.TranslationFills == null)
+            string msg = $"%{message.Key}";
+            if (message.Args == null)
             {
-                OutLog.Info(msg);
+                Logger.Info(msg);
             }
             else
             {
-                OutLog.Info(msg, message.TranslationFills);
+                Logger.Info(msg, message.Args);
             }
         }
 
         public void SendMessage(string message)
         {
-            OutLog.Info(message);
+            Logger.Info(message);
         }
 
         public void SendMessage(string message, params object[] args)
         {
-            OutLog.Info(message, args);
+            Logger.Info(message, args);
         }
     }
 }

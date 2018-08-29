@@ -1,4 +1,6 @@
-﻿namespace MineNET.Commands
+﻿using MineNET.Text;
+
+namespace MineNET.Commands
 {
     public interface CommandSender
     {
@@ -7,7 +9,7 @@
         string Name { get; }
 
         void SendMessage(string message);
-        void SendMessage(TranslationMessage message);
+        void SendMessage(TranslationContainer message);
         void SendMessage(string message, params object[] args);
     }
 }

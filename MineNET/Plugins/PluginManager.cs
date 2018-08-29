@@ -85,7 +85,7 @@ namespace MineNET.Plugins
 
                     if (plugin.Flag.HasFlag(PluginFlags.Library) && versionCheck)
                     {
-                        OutLog.Info("%server.plugin.load_library", plugin.Name);
+                        Logger.Info("%server.plugin.load_library", plugin.Name);
                         plugin.OnLoad();
                         this.Libraries.Add(plugin);
                     }
@@ -118,7 +118,7 @@ namespace MineNET.Plugins
 
                     if (plugin.Flag.HasFlag(PluginFlags.Plugin) && versionCheck)
                     {
-                        OutLog.Info("%server.plugin.load_plugin", plugin.Name);
+                        Logger.Info("%server.plugin.load_plugin", plugin.Name);
                         plugin.OnLoad();
                         this.Plugins.Add(plugin);
                     }
@@ -150,7 +150,7 @@ namespace MineNET.Plugins
 
                     if (plugin.Flag.HasFlag(PluginFlags.Package) && versionCheck)
                     {
-                        OutLog.Info("%server.plugin.load_package", plugin.Name);
+                        Logger.Info("%server.plugin.load_package", plugin.Name);
                         plugin.OnLoad();
                         this.Packages.Add(plugin);
                     }
@@ -164,19 +164,19 @@ namespace MineNET.Plugins
         {
             foreach (IPlugin plugin in this.Libraries)
             {
-                OutLog.Info("%server.plugin.enable_library", plugin.Name);
+                Logger.Info("%server.plugin.enable_library", plugin.Name);
                 plugin.OnEnable();
             }
 
             foreach (IPlugin plugin in this.Plugins)
             {
-                OutLog.Info("%server.plugin.enable_plugin", plugin.Name);
+                Logger.Info("%server.plugin.enable_plugin", plugin.Name);
                 plugin.OnEnable();
             }
 
             foreach (IPlugin plugin in this.Packages)
             {
-                OutLog.Info("%server.plugin.enable_package", plugin.Name);
+                Logger.Info("%server.plugin.enable_package", plugin.Name);
                 plugin.OnEnable();
             }
         }
@@ -187,19 +187,19 @@ namespace MineNET.Plugins
         {
             foreach (IPlugin plugin in this.Libraries)
             {
-                OutLog.Info("%server.plugin.disable_library", plugin.Name);
+                Logger.Info("%server.plugin.disable_library", plugin.Name);
                 plugin.OnDisable();
             }
 
             foreach (IPlugin plugin in this.Plugins)
             {
-                OutLog.Info("%server.plugin.disable_plugin", plugin.Name);
+                Logger.Info("%server.plugin.disable_plugin", plugin.Name);
                 plugin.OnDisable();
             }
 
             foreach (IPlugin plugin in this.Packages)
             {
-                OutLog.Info("%server.plugin.disable_package", plugin.Name);
+                Logger.Info("%server.plugin.disable_package", plugin.Name);
                 plugin.OnDisable();
             }
         }

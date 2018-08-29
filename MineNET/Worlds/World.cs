@@ -288,7 +288,7 @@ namespace MineNET.Worlds
                     }
                     catch (Exception e)
                     {
-                        OutLog.Error(e);
+                        Logger.Error(e);
                     }
 
                     yield return chunk;
