@@ -56,7 +56,7 @@ namespace MineNET.Network.MinecraftPackets
 
                     this.SetClientData(clientDataJson);
                 }
-                catch (Exception e)
+                catch
                 {
                     this.Result = false;
                 }
