@@ -75,7 +75,10 @@ namespace MineNET.Entities
             }
         }
 
-        public Inventory Inventory => throw new NotImplementedException();
+        public Inventory Inventory
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         public bool HasEffect(int id)
         {
