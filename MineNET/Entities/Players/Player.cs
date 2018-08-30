@@ -4,6 +4,7 @@ using System.Net;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
+using MineNET.IO;
 using MineNET.Network;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Network.RakNetPackets;

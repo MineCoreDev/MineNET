@@ -1,4 +1,5 @@
-﻿using MineNET.Text;
+﻿using MineNET.IO;
+using MineNET.Text;
 
 namespace MineNET.Commands
 {

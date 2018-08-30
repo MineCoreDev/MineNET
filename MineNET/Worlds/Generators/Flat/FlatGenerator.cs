@@ -1,6 +1,7 @@
 ﻿using MineNET.Blocks;
 using System;
 using System.Collections.Generic;
+using MineNET.IO;
 
 namespace MineNET.Worlds.Generators.Flat
 {

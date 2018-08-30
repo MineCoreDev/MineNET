@@ -1,13 +1,10 @@
-﻿using MineNET.IO;
-using System;
-using System.Collections.Concurrent;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace MineNET.GUI.UI.Controls
 {
     public partial class ConsoleControl : UserControl
     {
-        public ConcurrentQueue<LoggerData> OutputQueue { get; private set; }
+        /*public ConcurrentQueue<LoggerData> OutputQueue { get; private set; }
         public ConsoleControl()
         {
             InitializeComponent();
@@ -76,6 +73,6 @@ namespace MineNET.GUI.UI.Controls
                 Server.Instance.Logger.Input.AddInputQueue(text);
                 this.textBox.Clear();
             }
-        }
+        }*/
     }
 }

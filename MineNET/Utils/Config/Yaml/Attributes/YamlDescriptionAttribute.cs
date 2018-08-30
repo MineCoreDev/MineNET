@@ -24,7 +24,7 @@ namespace MineNET.Utils.Config
             }
             else
             {
-                this.Manager = new ResourceManager($"{resourceName}{LanguageService.LangCode}", target.Assembly);
+                this.Manager = new ResourceManager($"{resourceName}", target.Assembly);
             }
 
         }

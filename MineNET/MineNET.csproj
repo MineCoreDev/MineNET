@@ -226,6 +226,9 @@
     <Compile Include="Inventories\Transactions\Data\UseItemData.cs" />
     <Compile Include="Inventories\Transactions\Data\UseItemOnEntityData.cs" />
     <Compile Include="Inventories\Transactions\InventoryTransaction.cs" />
+    <Compile Include="IO\Input.cs" />
+    <Compile Include="IO\InputInterface.cs" />
+    <Compile Include="IO\IServerLogger.cs" />
     <Compile Include="IServerListInfo.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemBlock.cs" />
@@ -444,7 +447,7 @@
     <Compile Include="Network\RakNetPackets\RakNetProtocol.cs" />
     <Compile Include="Network\RakNetPackets\RakNetPacket.cs" />
     <Compile Include="Network\UDPSocket.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="IO\Logger.cs" />
     <Compile Include="Entities\Players\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry\CommandRegistry.cs" />
@@ -478,6 +481,7 @@
     <Compile Include="Utils\ArrayUtils.cs" />
     <Compile Include="Utils\Binary.cs" />
     <Compile Include="Utils\BinaryStream.cs" />
+    <Compile Include="Utils\TextContainerUtils.cs" />
     <Compile Include="Utils\TextFormat.cs" />
     <Compile Include="Utils\Config\JsonConfig.cs" />
     <Compile Include="Utils\Config\JsonStaticConfig.cs" />
@@ -532,7 +536,6 @@
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.ja-jp.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

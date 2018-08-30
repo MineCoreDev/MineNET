@@ -9,6 +9,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Net;
+using MineNET.IO;
 
 namespace MineNET.Network
 {

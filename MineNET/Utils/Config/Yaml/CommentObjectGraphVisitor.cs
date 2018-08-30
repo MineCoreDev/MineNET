@@ -25,7 +25,7 @@ namespace MineNET.Utils.Config.Yaml
                     }
                     else
                     {
-                        string msg = LanguageService.GetString(comment.Comment.Remove(0, 1));
+                        string msg = TextContainerUtils.ToString(comment.Comment.Remove(0, 1));
                         context.Emit(new Comment(msg, false));
                     }
                 }

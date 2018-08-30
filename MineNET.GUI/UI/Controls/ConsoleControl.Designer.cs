@@ -79,7 +79,7 @@
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(311, 19);
             this.textBox.TabIndex = 3;
-            this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
+            //this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
             // comboBox
             // 
@@ -110,13 +110,13 @@
             this.button.TabIndex = 6;
             this.button.Text = "Send";
             this.button.UseVisualStyleBackColor = true;
-            this.button.Click += new System.EventHandler(this.button_Click);
+            //this.button.Click += new System.EventHandler(this.button_Click);
             // 
             // timer
             // 
             this.timer.Enabled = true;
             this.timer.Interval = 1;
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            //this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // ConsoleControl
             // 
