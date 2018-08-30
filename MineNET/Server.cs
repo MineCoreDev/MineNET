@@ -365,7 +365,7 @@ namespace MineNET
         #region Dispose Method
         public void Dispose()
         {
-            this.Logger.Dispose();
+            this.Logger?.Dispose();
             this.Worlds.Clear();
             this.Plugin?.Dispose();
             this.Command?.Dispose();

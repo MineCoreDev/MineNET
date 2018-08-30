@@ -9,11 +9,5 @@ namespace MineNET.Events.IOEvents
         {
             this.InputAction?.Invoke(sender, e);
         }
-
-        public event EventHandler<OutputActionEventArgs> OutputAction;
-        public void OnOutputAction(object sender, OutputActionEventArgs e)
-        {
-            this.OutputAction?.Invoke(sender, e);
-        }
     }
 }

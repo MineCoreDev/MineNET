@@ -244,11 +244,11 @@ namespace MineNET.Network
             }
             catch (ThreadAbortException e1)
             {
-                Logger.Debug("%server.network.packetThreadAbort", e1.GetType().Name);
+                Logger.Warn("%server.network.packetThreadAbort", e1.GetType().Name);
             }
             catch (Exception e2)
             {
-                Logger.Warn(e2);
+                Logger.Error(e2);
             }
         }
 

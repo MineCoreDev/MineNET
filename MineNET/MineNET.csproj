@@ -426,7 +426,6 @@
     <Compile Include="Events\IOEvents\InputActionEventArgs.cs" />
     <Compile Include="Events\IOEvents\IOEvent.cs" />
     <Compile Include="Events\IOEvents\IOEventArgs.cs" />
-    <Compile Include="Events\IOEvents\OutputActionEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCommandEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerEvent.cs" />
     <Compile Include="Events\PlayerEvents\PlayerEventArgs.cs" />
