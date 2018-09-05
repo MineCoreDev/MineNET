@@ -320,7 +320,10 @@ namespace MineNET.Network
                     }
                 }
 
-                Logger.Debug("%server.network.raknet.notHandle", msgId.ToString("X"));
+                if (Server.Instance.Config.PacketDebug)
+                {
+                    Logger.Debug("%server.network.raknet.notHandle", msgId.ToString("X"));
+                }
             }
         }
 

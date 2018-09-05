@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MineNET.IO;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using MineNET.IO;
 
 namespace MineNET.Manager
 {
@@ -13,6 +13,7 @@ namespace MineNET.Manager
             public string Name { get; set; }
             public int ClockTime { get; set; }
             public Stopwatch StopWatch { get; set; } = new Stopwatch();
+            public int NextDelayDiff { get; set; }
 
             public ClockInstance(string name, int clockTime)
             {
@@ -57,13 +58,19 @@ namespace MineNET.Manager
             {
                 ClockInstance instance = this.Datas[name];
                 instance.StopWatch.Stop();
-                int wait = instance.ClockTime - instance.StopWatch.Elapsed.Milliseconds;
+                int wait = instance.ClockTime - instance.StopWatch.Elapsed.Milliseconds - instance.NextDelayDiff;
                 if (wait <= 0)
                 {
-                    Logger.Debug("%server.constantClock.lowTickRate", name);
+                    if (Server.Instance.Config.ClockDelayDebug)
+                    {
+                        Logger.Debug("%server.constantClock.lowTickRate", name);
+                    }
+
+                    instance.NextDelayDiff = Math.Abs(wait);
                 }
                 else
                 {
+                    instance.NextDelayDiff = 0;
                     Thread.Sleep(wait);
                 }
 

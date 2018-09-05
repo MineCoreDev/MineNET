@@ -1,6 +1,7 @@
 ﻿using MineNET.Entities.Players;
 using MineNET.Events.NetworkEvents;
 using MineNET.Events.NetworkEvents.RakNet;
+using MineNET.IO;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Network.RakNetPackets;
 using MineNET.Utils;
@@ -9,7 +10,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Net;
-using MineNET.IO;
 
 namespace MineNET.Network
 {
@@ -372,13 +372,19 @@ namespace MineNET.Network
                                 return;
                             }*/
 
-                            Logger.Debug("%server.network.minecraft.receivePacket", buffer[0].ToString("X"), buffer.Length);
+                            if (Server.Instance.Config.PacketDebug)
+                            {
+                                Logger.Debug("%server.network.minecraft.receivePacket", buffer[0].ToString("X"), buffer.Length);
+                            }
 
                             player.OnPacketHandle(packet);
                         }
                         else
                         {
-                            Logger.Debug("%server.network.minecraft.notHandle", buffer[0].ToString("X"));
+                            if (Server.Instance.Config.PacketDebug)
+                            {
+                                Logger.Debug("%server.network.minecraft.notHandle", buffer[0].ToString("X"));
+                            }
                         }
                     }
                 }
@@ -535,7 +541,10 @@ namespace MineNET.Network
             st.WriteVarInt((int) buffer.Length);
             st.WriteBytes(buffer);
 
-            Logger.Debug("%server.network.minecraft.sendPacket", packet.PacketID.ToString("X"), packet.Length);
+            if (Server.Instance.Config.PacketDebug)
+            {
+                Logger.Debug("%server.network.minecraft.sendPacket", packet.PacketID.ToString("X"), packet.Length);
+            }
 
             BatchPacket pk = new BatchPacket();
             if (packet is FullChunkDataPacket)
