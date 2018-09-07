@@ -1,7 +1,7 @@
-﻿using System;
+﻿using MineNET.Utils;
+using System;
 using System.IO;
 using System.IO.Compression;
-using MineNET.Utils;
 
 namespace MineNET.Network.RakNetPackets
 {
@@ -56,9 +56,10 @@ namespace MineNET.Network.RakNetPackets
         private void Decode_ZLIB()
         {
             MemoryStream bs = new MemoryStream(this.Payload);
-            if (bs.ReadByte() != 0x78)
+            byte head = (byte) bs.ReadByte();
+            if (head != 0x78)
             {
-                throw new InvalidDataException("Incorrect ZLib header. Expected 0x78 0x9C");
+                throw new InvalidDataException("Incorrect ZLib header. (" + head.ToString("X") + ") Expected 0x78 0x9C");
             }
             bs.ReadByte();
             using (ZlibStream ds = new ZlibStream(bs, CompressionMode.Decompress, false))

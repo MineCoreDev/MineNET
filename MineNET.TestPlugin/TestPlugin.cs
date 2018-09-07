@@ -46,7 +46,6 @@ namespace MineNET.TestPlugin
             Logger.Info("Hello MineNET plugin!");
 
             Server.Instance.Event.IO.InputAction += IO_InputAction;
-            Server.Instance.Event.IO.OutputAction += IO_OutputAction;
 
             Server.Instance.Event.Network.CreateSession += Network_CreateSession;
             Server.Instance.Event.Network.RakNetDataPacketReceive += Network_RakNetDataPacketReceive;
@@ -110,11 +109,6 @@ namespace MineNET.TestPlugin
         private void Network_CreateSession(object sender, Events.NetworkEvents.CreateSessionEventArgs e)
         {
             Logger.Trace(e.GetType().Name);
-        }
-
-        private void IO_OutputAction(object sender, Events.IOEvents.OutputActionEventArgs e)
-        {
-            //OutLog.Notice(e.GetType().Name);
         }
 
         private void IO_InputAction(object sender, Events.IOEvents.InputActionEventArgs e)
