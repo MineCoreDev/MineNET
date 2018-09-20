@@ -37,6 +37,11 @@ namespace MineNET.GUI.UI.Controls
             this.SendCommand();
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.ConsoleClear();
+        }
+
         internal void LoggerSettings()
         {
             LoggingConfiguration conf = LogManager.Configuration;

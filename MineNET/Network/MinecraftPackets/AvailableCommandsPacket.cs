@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using MineNET.Commands;
+﻿using MineNET.Commands;
 using MineNET.Commands.Data;
 using MineNET.Commands.Enums;
 using MineNET.Commands.Parameters;
 using MineNET.Utils;
+using System.Collections.Generic;
 
 namespace MineNET.Network.MinecraftPackets
 {
@@ -93,7 +93,7 @@ namespace MineNET.Network.MinecraftPackets
                                 enumIndex = enums.Count - 1;
                                 type = CommandParameter.ARG_FLAG_ENUM | CommandParameter.ARG_FLAG_VALID | enumIndex;
                             }
-                            else if (parameter.Postfix != null && parameter.Postfix.Length > 0)
+                            else if (!string.IsNullOrEmpty(parameter.Postfix))
                             {
                                 postFixes.Add(parameter.Postfix);
                                 int key = postFixes.Count - 1;

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading;
-using MineNET.Commands;
+﻿using MineNET.Commands;
 using MineNET.Entities.Players;
 using MineNET.Events;
 using MineNET.Events.ServerEvents;
@@ -19,6 +12,14 @@ using MineNET.Reports;
 using MineNET.Text;
 using MineNET.Utils.Config;
 using MineNET.Worlds;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading;
 
 namespace MineNET
 {
@@ -53,6 +54,9 @@ namespace MineNET
         public IPEndPoint EndPoint { get; private set; }
 
         public Dictionary<string, World> Worlds { get; } = new Dictionary<string, World>();
+
+        public ConcurrentQueue<Action> InvokeMainThreadActions { get; } = new ConcurrentQueue<Action>();
+
         #endregion
 
         #region Ctor
@@ -303,6 +307,15 @@ namespace MineNET
                 worlds[i].UpdateTick(tick);
             }
 
+            if (this.InvokeMainThreadActions.Count > 0)
+            {
+                Action action = null;
+                if (this.InvokeMainThreadActions.TryDequeue(out action))
+                {
+                    action();
+                }
+            }
+
             this.Logger.InputLogger.GetInputQueue();
         }
         #endregion
@@ -408,6 +421,15 @@ namespace MineNET
                 players[i].SendPacket(packet);
             }
         }
+
+        #region Update Thread Invoke Method
+
+        public void Invoke(Action action)
+        {
+            this.InvokeMainThreadActions.Enqueue(action);
+        }
+
+        #endregion
 
         #region Broadcast Method
 

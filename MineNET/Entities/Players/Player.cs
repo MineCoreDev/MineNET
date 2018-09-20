@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Net;
+﻿using MineNET.Blocks;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
@@ -19,6 +16,10 @@ using MineNET.Text;
 using MineNET.Values;
 using MineNET.Worlds;
 using MineNET.Worlds.Rule;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Net;
 
 namespace MineNET.Entities.Players
 {
@@ -189,6 +190,30 @@ namespace MineNET.Entities.Players
 
         #endregion
 
+        #region Send AvailableCommands Method
+
+        public void SendAvailableCommands()
+        {
+            AvailableCommandsPacket availableCommandsPacket = new AvailableCommandsPacket();
+            availableCommandsPacket.commands = MineNET_Registries.Command.Dictionary;
+            this.SendPacket(availableCommandsPacket);
+        }
+
+        #endregion
+
+        #region Send Inventory Method
+
+        public void SendAllInventories()
+        {
+            this.Inventory.SendContents(this);
+            this.Inventory.ArmorInventory.SendContents(this);
+            this.Inventory.PlayerOffhandInventory.SendContents(this);
+            this.Inventory.PlayerCursorInventory.SendContents(this);
+            this.Inventory.OpendInventory?.SendContents(this);
+        }
+
+        #endregion
+
         #region Update Method
 
         internal override bool UpdateTick(long tick)
@@ -223,9 +248,17 @@ namespace MineNET.Entities.Players
             {
                 this.HandleInventoryTransactionPacket((InventoryTransactionPacket) packet);
             }
+            else if (packet is BlockPickRequestPacket)//0x22
+            {
+                this.HandleBlockPickRequestPacket((BlockPickRequestPacket) packet);
+            }
             else if (packet is RequestChunkRadiusPacket) //0x45
             {
                 this.HandleRequestChunkRadiusPacket((RequestChunkRadiusPacket) packet);
+            }
+            else if (packet is CommandRequestPacket)//0x4d
+            {
+                this.HandleCommandRequestPacket((CommandRequestPacket) packet);
             }
             else if (packet is SetLocalPlayerAsInitializedPacket) //0x70
             {
@@ -359,6 +392,8 @@ namespace MineNET.Entities.Players
                 startGamePacket.GameRules.Add(new GameRule<bool>("ShowCoordinates", true));
                 this.SendPacket(startGamePacket);
 
+                this.SendAvailableCommands();
+
                 this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
                 this.HasSpawned = true;
 
@@ -487,8 +522,51 @@ namespace MineNET.Entities.Players
             }
             else if (pk.TransactionType == InventoryTransactionPacket.TYPE_RELEASE_ITEM)
             {
+
             }
         }
+
+        //0x22
+        private void HandleBlockPickRequestPacket(BlockPickRequestPacket pk)
+        {
+            if (!this.IsCreative)
+            {
+                return;
+            }
+            Block block = this.World.GetBlock(pk.Position);
+            ItemStack item = new ItemStack(block); //TODO : block entity nbt
+            /*PlayerBlockPickRequestEventArgs args = new PlayerBlockPickRequestEventArgs(this, item);
+            PlayerEvents.OnPlayerBlockPickRequest(args);
+            if (args.IsCancel)
+            {
+                return;
+            }*/
+            List<int> air = new List<int>();
+            for (int i = 0; i < pk.HotbarSlot; ++i)
+            {
+                ItemStack slot = this.Inventory.GetItem(i);
+                if (slot == item)
+                {
+                    this.Inventory.MainHandSlot = i;
+                    this.Inventory.SendMainHand(this);
+                    return;
+                }
+                if (slot.Item.ID == BlockIDs.AIR)
+                {
+                    air.Add(i);
+                }
+            }
+            if (air.Count == 0 || this.Inventory.MainHandItem.Item.ID == BlockIDs.AIR)
+            {
+                this.Inventory.MainHandItem = item;
+                this.Inventory.SendMainHand(this);
+                return;
+            }
+            this.Inventory.MainHandSlot = air[0];
+            this.Inventory.MainHandItem = item;
+            this.Inventory.SendMainHand(this);
+        }
+
 
         //0x45
         private void HandleRequestChunkRadiusPacket(RequestChunkRadiusPacket pk)
@@ -508,6 +586,14 @@ namespace MineNET.Entities.Players
             }
 
             this.AnySendChunk = true;
+        }
+
+        //0x4d
+        public void HandleCommandRequestPacket(CommandRequestPacket pk)
+        {
+            string command = pk.Command.Remove(0, 1);
+            CommandData data = new CommandData(this, command);
+            Server.Instance.Command.CommandHandler.OnCommandExecute(data);
         }
 
         //0x70
@@ -545,15 +631,6 @@ namespace MineNET.Entities.Players
             {
                 base.Inventory = value;
             }
-        }
-
-        public void SendAllInventories()
-        {
-            this.Inventory.SendContents(this);
-            this.Inventory.ArmorInventory.SendContents(this);
-            this.Inventory.PlayerOffhandInventory.SendContents(this);
-            this.Inventory.PlayerCursorInventory.SendContents(this);
-            this.Inventory.OpendInventory?.SendContents(this);
         }
 
         #region Gamemode Property

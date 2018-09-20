@@ -1,5 +1,7 @@
 ﻿using MineNET.Events.PlayerEvents;
 using MineNET.Events.ServerEvents;
+using MineNET.Text;
+using MineNET.Utils;
 
 namespace MineNET.Commands
 {
@@ -42,7 +44,7 @@ namespace MineNET.Commands
             }
             else
             {
-                //data.Sender.SendMessage(new TranslationMessage(TextFormat.RED, "commands.generic.unknown", data.Command));
+                data.Sender.SendMessage(new TranslationContainer(TextFormat.RED, "commands.generic.unknown", data.Command));
             }
         }
     }

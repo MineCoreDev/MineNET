@@ -35,6 +35,7 @@
             this.comboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.button = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -59,6 +60,7 @@
             this.richTextBox.Size = new System.Drawing.Size(394, 282);
             this.richTextBox.TabIndex = 1;
             this.richTextBox.Text = "";
+            this.richTextBox.WordWrap = false;
             // 
             // label2
             // 
@@ -78,6 +80,7 @@
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(311, 19);
             this.textBox.TabIndex = 3;
+            this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
             // comboBox
             // 
@@ -108,11 +111,23 @@
             this.button.TabIndex = 6;
             this.button.Text = "Send";
             this.button.UseVisualStyleBackColor = true;
+            this.button.Click += new System.EventHandler(this.button_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(322, 424);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "OutputClear";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // ConsoleControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBox);
@@ -136,5 +151,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button;
         private System.Windows.Forms.RichTextBox richTextBox;
+        private System.Windows.Forms.Button button2;
     }
 }

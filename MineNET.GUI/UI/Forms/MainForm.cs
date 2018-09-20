@@ -8,7 +8,7 @@ namespace MineNET.GUI.UI.Forms
     public partial class MainForm : Form
     {
         public Server ServerInstance { get; private set; }
-        public Thread ServerThread { get; set; }
+        public Thread ServerThread { get; private set; }
 
         public MainForm()
         {
@@ -104,16 +104,19 @@ namespace MineNET.GUI.UI.Forms
             {
                 this.ServerInstance = new Server();
                 this.consoleControl.LoggerSettings();
-                if (this.ServerInstance.Start())
+                this.ServerThread = new Thread(() =>
                 {
-                    this.ServerInstance.Event.Server.ServerStop += Server_ServerStop;
+                    if (this.ServerInstance.Start())
+                    {
+                        this.ServerInstance.Event.Server.ServerStop += Server_ServerStop;
 
-                    this.ServerThread = new Thread(this.ServerInstance.StartUpdate);
-                    this.ServerThread.Start();
+                        this.button1.Enabled = false;
+                        this.button2.Enabled = true;
 
-                    this.button1.Enabled = false;
-                    this.button2.Enabled = true;
-                }
+                        this.ServerInstance.StartUpdate();
+                    }
+                });
+                this.ServerThread.Start();
             }
         }
 
@@ -121,7 +124,8 @@ namespace MineNET.GUI.UI.Forms
         {
             if (this.ServerInstance != null)
             {
-                this.ServerInstance.Stop();
+                this.ServerInstance.Invoke(() => this.ServerInstance.Stop());
+
             }
         }
 
