@@ -130,6 +130,8 @@
     <Compile Include="Commands\Data\CommandOverload.cs" />
     <Compile Include="Commands\CommandSender.cs" />
     <Compile Include="Commands\ConsoleCommandSender.cs" />
+    <Compile Include="Commands\Defaults\GameModeCommand.cs" />
+    <Compile Include="Commands\Defaults\GiveCommand.cs" />
     <Compile Include="Commands\Defaults\StopCommand.cs" />
     <Compile Include="Commands\Enums\CommandEnum.cs" />
     <Compile Include="Commands\Enums\CommandEnumBlocks.cs" />
@@ -179,6 +181,10 @@
     <Compile Include="Entities\Metadata\EntityMetadataManager.cs" />
     <Compile Include="Entities\Metadata\EntityMetadataType.cs" />
     <Compile Include="Data\PlayerPermissions.cs" />
+    <Compile Include="Events\BlockEvents\BlockBreakEventArgs.cs" />
+    <Compile Include="Events\BlockEvents\BlockEventArgs.cs" />
+    <Compile Include="Events\BlockEvents\BlockEvents.cs" />
+    <Compile Include="Events\BlockEvents\BlockPlaceEventArgs.cs" />
     <Compile Include="Events\InventoryEvents\InventoryCloseEventArgs.cs" />
     <Compile Include="Events\InventoryEvents\InventoryEventArgs.cs" />
     <Compile Include="Events\InventoryEvents\InventoryEvents.cs" />
@@ -197,6 +203,7 @@
     <Compile Include="Events\NetworkEvents\RakNet\PacketReceiveEventArgs.cs" />
     <Compile Include="Events\NetworkEvents\RakNet\PacketSendEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCreateEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerInteractEventArgs.cs" />
     <Compile Include="Init\BlockInit.cs" />
     <Compile Include="Init\EffectInit.cs" />
     <Compile Include="Init\ItemInit.cs" />
@@ -419,6 +426,7 @@
     <Compile Include="Plugins\PluginFlags.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Registry\BlockRegistry.cs" />
+    <Compile Include="Registry\CreativeItemRegistry.cs" />
     <Compile Include="Registry\EffectRegistry.cs" />
     <Compile Include="Registry\EntityRegistry.cs" />
     <Compile Include="Events\EventManager.cs" />
@@ -480,6 +488,7 @@
     <Compile Include="Utils\ArrayUtils.cs" />
     <Compile Include="Utils\Binary.cs" />
     <Compile Include="Utils\BinaryStream.cs" />
+    <Compile Include="Utils\LinqExtention.cs" />
     <Compile Include="Utils\CryptoUtils.cs" />
     <Compile Include="Utils\TextContainerUtils.cs" />
     <Compile Include="Utils\TextFormat.cs" />
@@ -553,6 +562,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Resources\File\CreativeItems.json" />
     <None Include="Resources\File\runtimeid_table.json" />
   </ItemGroup>
   <ItemGroup />

@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Net;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
+using MineNET.Inventories;
+using MineNET.Inventories.Transactions;
+using MineNET.Inventories.Transactions.Action;
+using MineNET.Inventories.Transactions.Data;
 using MineNET.IO;
+using MineNET.Items;
+using MineNET.NBT.Tags;
 using MineNET.Network;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Network.RakNetPackets;
@@ -39,8 +46,6 @@ namespace MineNET.Entities.Players
         public PlayerListEntry PlayerListEntry { get; private set; }
         public AdventureSettingsEntry AdventureSettingsEntry { get; private set; }
 
-        public GameMode GameMode { get; private set; } = GameMode.Survival;
-
         public bool PackSyncCompleted { get; private set; }
         public bool HaveAllPacks { get; private set; }
 
@@ -54,11 +59,13 @@ namespace MineNET.Entities.Players
         public ConcurrentDictionary<Tuple<int, int>, double> LoadedChunks { get; private set; } =
             new ConcurrentDictionary<Tuple<int, int>, double>();
 
+        private GameMode gameMode;
+
         #endregion
 
         #region Ctor
 
-        public Player() : base(null, null)
+        public Player() : base(null, new CompoundTag())
         {
         }
 
@@ -78,6 +85,8 @@ namespace MineNET.Entities.Players
 
             this.SetFlag(DATA_FLAGS, DATA_FLAG_BREATHING);
             this.SetFlag(DATA_FLAGS, DATA_FLAG_CAN_CLIMB);
+
+            this.Inventory = new PlayerInventory(this);
         }
 
         #endregion
@@ -86,17 +95,37 @@ namespace MineNET.Entities.Players
 
         public void SendMessage(TranslationContainer message)
         {
-            throw new NotImplementedException();
+            if (message.Args == null)
+            {
+                this.SendMessage($"%{message.Key}");
+            }
+            else
+            {
+                this.SendMessage($"%{message.Key}", message.Args);
+            }
         }
 
         public void SendMessage(string message)
         {
-            throw new NotImplementedException();
+            TextPacket pk = new TextPacket();
+            pk.Type = TextPacket.TYPE_RAW;
+            pk.Message = message;
+            this.SendPacket(pk);
         }
 
         public void SendMessage(string message, params object[] args)
         {
-            throw new NotImplementedException();
+            List<string> list = new List<string>();
+            for (int i = 0; i < args.Length; ++i)
+            {
+                list.Add(args[i].ToString());
+            }
+
+            TextPacket pk = new TextPacket();
+            pk.Type = TextPacket.TYPE_TRANSLATION;
+            pk.Message = message;
+            pk.Parameters = list.ToArray();
+            this.SendPacket(pk);
         }
 
         #endregion
@@ -190,6 +219,10 @@ namespace MineNET.Entities.Players
             {
                 this.HandleMovePlayerPacket((MovePlayerPacket) packet);
             }
+            else if (packet is InventoryTransactionPacket) //0x1e
+            {
+                this.HandleInventoryTransactionPacket((InventoryTransactionPacket) packet);
+            }
             else if (packet is RequestChunkRadiusPacket) //0x45
             {
                 this.HandleRequestChunkRadiusPacket((RequestChunkRadiusPacket) packet);
@@ -201,7 +234,7 @@ namespace MineNET.Entities.Players
         }
 
         //0x01
-        public void HandleLoginPacket(LoginPacket pk)
+        private void HandleLoginPacket(LoginPacket pk)
         {
             if (this.IsPreLogined)
             {
@@ -268,7 +301,7 @@ namespace MineNET.Entities.Players
         }
 
         //0x08
-        public void HandleResourcePackClientResponsePacket(ResourcePackClientResponsePacket pk)
+        private void HandleResourcePackClientResponsePacket(ResourcePackClientResponsePacket pk)
         {
             if (this.PackSyncCompleted)
             {
@@ -361,7 +394,7 @@ namespace MineNET.Entities.Players
         }
 
         //0x13
-        public void HandleMovePlayerPacket(MovePlayerPacket pk)
+        private void HandleMovePlayerPacket(MovePlayerPacket pk)
         {
             Vector3 pos = pk.Position;
             Vector3 direction = pk.Direction;
@@ -376,8 +409,89 @@ namespace MineNET.Entities.Players
             this.Yaw = direction.Y;
         }
 
+        //0x1e
+        private void HandleInventoryTransactionPacket(InventoryTransactionPacket pk)
+        {
+            List<InventoryAction> actions = new List<InventoryAction>();
+            for (int i = 0; i < pk.Actions.Length; ++i)
+            {
+                try
+                {
+                    InventoryAction action = pk.Actions[i].GetInventoryAction(this);
+                    actions.Add(action);
+                }
+                catch (Exception e)
+                {
+                    Logger.Info($"Unhandled inventory action from {this.Name}: {e.Message}");
+                    this.SendAllInventories();
+                    return;
+                }
+            }
+            if (pk.TransactionType == InventoryTransactionPacket.TYPE_NORMAL)
+            {
+                InventoryTransaction transaction = new InventoryTransaction(this, actions);
+                if (this.IsSpectator)
+                {
+                    this.SendAllInventories();
+                    return;
+                }
+                if (!transaction.Execute())
+                {
+                    Logger.Info($"Failed to execute inventory transaction from {this.Name} with actions");
+                }
+            }
+            else if (pk.TransactionType == InventoryTransactionPacket.TYPE_MISMATCH)
+            {
+                this.SendAllInventories();
+                return;
+            }
+            else if (pk.TransactionType == InventoryTransactionPacket.TYPE_USE_ITEM)
+            {
+                UseItemData data = (UseItemData) pk.TransactionData;
+                BlockCoordinate3D blockPos = data.BlockPos;
+                BlockFace face = data.Face;
+
+                if (data.ActionType == InventoryTransactionPacket.USE_ITEM_ACTION_CLICK_BLOCK)
+                {
+                    this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ACTION, false, true);
+                    if (this.CanInteract(blockPos + new Vector3(0.5f, 0.5f, 0.5f), this.IsCreative ? 13 : 7))
+                    {
+                        ItemStack item = this.Inventory.MainHandItem;
+                        this.World.UseItem(blockPos, item, face, data.ClickPos, this);
+                    }
+
+                    //Send MainHand
+
+                }
+                else if (data.ActionType == InventoryTransactionPacket.USE_ITEM_ACTION_BREAK_BLOCK)
+                {
+                    ItemStack item = this.Inventory.MainHandItem;
+                    if (this.CanInteract(blockPos + new Vector3(0.5f, 0.5f, 0.5f), this.IsCreative ? 13 : 7))
+                    {
+                        this.World.UseBreak(data.BlockPos, item, this);
+                        if (this.IsSurvival)
+                        {
+                            //TODO : food
+                            this.Inventory.SendMainHand();
+                        }
+                    }
+                    else
+                    {
+                        this.World.SendBlocks(new Player[] { this }, new Vector3[] { data.BlockPos });
+                    }
+                }
+            }
+            else if (pk.TransactionType == InventoryTransactionPacket.TYPE_USE_ITEM_ON_ENTITY)
+            {
+
+            }
+            else if (pk.TransactionType == InventoryTransactionPacket.TYPE_RELEASE_ITEM)
+            {
+            }
+        }
+
         //0x45
-        public void HandleRequestChunkRadiusPacket(RequestChunkRadiusPacket pk)
+        private void HandleRequestChunkRadiusPacket(RequestChunkRadiusPacket pk)
         {
             int request = pk.Radius;
             int max = Server.Instance.ServerProperty.MaxViewDistance;
@@ -419,5 +533,105 @@ namespace MineNET.Entities.Players
         }
 
         #endregion
+
+        public new PlayerInventory Inventory
+        {
+            get
+            {
+                return (PlayerInventory) base.Inventory;
+            }
+
+            protected set
+            {
+                base.Inventory = value;
+            }
+        }
+
+        public void SendAllInventories()
+        {
+            this.Inventory.SendContents(this);
+            this.Inventory.ArmorInventory.SendContents(this);
+            this.Inventory.PlayerOffhandInventory.SendContents(this);
+            this.Inventory.PlayerCursorInventory.SendContents(this);
+            this.Inventory.OpendInventory?.SendContents(this);
+        }
+
+        #region Gamemode Property
+
+        public GameMode GameMode
+        {
+            get
+            {
+                return this.gameMode;
+            }
+
+            set
+            {
+                this.gameMode = value;
+                this.SendGameMode();
+            }
+        }
+
+        public bool IsSurvival
+        {
+            get
+            {
+                return this.GameMode == GameMode.Survival;
+            }
+        }
+
+        public bool IsCreative
+        {
+            get
+            {
+                return this.GameMode == GameMode.Creative;
+            }
+        }
+
+        public bool IsAdventure
+        {
+            get
+            {
+                return this.GameMode == GameMode.Adventure;
+            }
+        }
+
+        public bool IsSpectator
+        {
+            get
+            {
+                return this.GameMode == GameMode.Spectator;
+            }
+        }
+
+        public void SendGameMode()
+        {
+            SetPlayerGameTypePacket pk = new SetPlayerGameTypePacket();
+            pk.GameMode = this.GameMode;
+            this.SendPacket(pk);
+
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.BUILD_AND_MINE, !this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.WORLD_BUILDER, !this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_CLIP, this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_PVP, this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, this.IsCreative || this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, this.IsCreative || this.IsSpectator);
+            this.AdventureSettingsEntry.Update(this);
+        }
+
+        #endregion
+
+        public bool CanInteract(Vector3 pos, double maxDistance)
+        {
+            if (Vector3.DistanceSquared((Vector3) this.Position, pos) > maxDistance * maxDistance)
+            {
+                return false;
+            }
+            Vector2 dv = this.DirectionPlane;
+            float dot1 = Vector2.Dot(dv, new Vector2(this.X, this.Z));
+            float dot2 = Vector2.Dot(dv, new Vector2(pos.X, this.Z));
+            return (dot2 - dot1) >= -0.5;
+        }
     }
 }

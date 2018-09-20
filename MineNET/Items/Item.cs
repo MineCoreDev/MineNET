@@ -1,9 +1,21 @@
-﻿using MineNET.Blocks;
+﻿using System;
+using System.Linq;
+using System.Text;
+using MineNET.Blocks;
+using MineNET.Data;
+using MineNET.Entities;
+using MineNET.Entities.Players;
+using MineNET.Resources;
+using MineNET.Values;
+using MineNET.Worlds;
+using Newtonsoft.Json.Linq;
 
 namespace MineNET.Items
 {
     public class Item
     {
+        private Block block = null;
+
         public int ID { get; }
 
         public static Item Get(int id)
@@ -55,6 +67,59 @@ namespace MineNET.Items
 
             Item item = Item.Get(id);
             return item;
+        }
+
+        public static void AddCreativeItem(ItemStack item)
+        {
+            MineNET_Registries.Creative.Add(item);
+        }
+
+        public static void RemoveCreativeItem(ItemStack item)
+        {
+            MineNET_Registries.Creative.Remove(item);
+        }
+
+        public static void RemoveCreativeItem(int index)
+        {
+            MineNET_Registries.Creative.RemoveAt(index);
+        }
+
+        public static void AddCreativeItems(params ItemStack[] items)
+        {
+            for (int i = 0; i < items.Length; ++i)
+            {
+                Item.AddCreativeItem(items[i]);
+            }
+        }
+
+        public static void RemoveAllCreativeItems()
+        {
+            MineNET_Registries.Creative.Clear();
+        }
+
+        public static ItemStack[] GetCreativeItems()
+        {
+            return MineNET_Registries.Creative.ToArray();
+        }
+
+        public static void LoadCreativeItems()
+        {
+            string data = Encoding.UTF8.GetString(Resource.CreativeItems);
+            JObject json = JObject.Parse(data);
+            JToken items = json.GetValue("items");
+            foreach (JObject item in items)
+            {
+                int id = item.Value<int>("id");
+                int damage = item.Value<int>("damage");
+                string tags = item.Value<string>("nbt_hex");
+                byte[] nbt = null;
+                if (!string.IsNullOrEmpty(tags))
+                {
+                    nbt = tags.Chunks(2).Select(x => Convert.ToByte(new string(x.ToArray()), 16)).ToArray();
+                }
+
+                Item.AddCreativeItem(new ItemStack(Item.Get(id), damage, 1, nbt));
+            }
         }
 
         public Item(string name, int id)
@@ -174,6 +239,73 @@ namespace MineNET.Items
             get
             {
                 return false;
+            }
+        }
+
+        public virtual bool Activate(Player player, World world, Block clicked, BlockFace blockFace, Vector3 clickPos)
+        {
+            return false;
+        }
+
+        public virtual bool BlockDestroyed(Block block, EntityLiving entity)
+        {
+            return false;
+        }
+
+        public virtual bool HitEntity(EntityLiving attacker, EntityLiving target)
+        {
+            return false;
+        }
+
+        public Block Block
+        {
+            get
+            {
+                if (this.block == null)
+                {
+                    return Block.Get(BlockIDs.AIR);
+                }
+                else
+                {
+                    return this.block.Clone();
+                }
+            }
+
+            set
+            {
+                this.block = value;
+            }
+        }
+
+        public virtual bool CanBeConsumed
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool CanBePlace
+        {
+            get
+            {
+                return this.Block != null && this.Block.CanBePlaced;
+            }
+        }
+
+        public virtual bool CanBeActivate
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual int AttackDamage
+        {
+            get
+            {
+                return 1;
             }
         }
 

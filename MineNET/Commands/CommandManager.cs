@@ -1,5 +1,5 @@
-﻿using MineNET.Commands.Defaults;
-using System;
+﻿using System;
+using MineNET.Commands.Defaults;
 
 namespace MineNET.Commands
 {
@@ -103,6 +103,8 @@ namespace MineNET.Commands
         private void RegisterDefaultCommands()
         {
             this.RegisterCommand(new StopCommand());
+            this.RegisterCommand(new GiveCommand());
+            this.RegisterCommand(new GameModeCommand());
         }
         #endregion
 

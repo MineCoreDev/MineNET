@@ -1,4 +1,11 @@
-﻿using MineNET.Commands;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading;
+using MineNET.Commands;
 using MineNET.Entities.Players;
 using MineNET.Events;
 using MineNET.Events.ServerEvents;
@@ -9,15 +16,9 @@ using MineNET.Network;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Plugins;
 using MineNET.Reports;
+using MineNET.Text;
 using MineNET.Utils.Config;
 using MineNET.Worlds;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading;
 
 namespace MineNET
 {
@@ -345,6 +346,47 @@ namespace MineNET
 
             return list.ToArray();
         }
+
+        public Player[] GetOnlinePlayers()
+        {
+            Player[] players = this.Network.Players.Values.ToArray();
+            List<Player> online = new List<Player>();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (players[i].HasSpawned)
+                {
+                    online.Add(players[i]);
+                }
+            }
+
+            return online.ToArray();
+        }
+
+        public Player GetPlayer(string name)
+        {
+            Player found = null;
+            Player[] players = this.GetPlayers();
+            int delta = 100;
+            name = name.ToLower();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (players[i].Name.ToLower().StartsWith(name))
+                {
+                    int curDelta = players[i].Name.Length - name.Length;
+                    if (curDelta < delta)
+                    {
+                        found = players[i];
+                        delta = curDelta;
+                    }
+                    if (curDelta == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return found;
+        }
         #endregion
 
         #region World Method
@@ -366,6 +408,72 @@ namespace MineNET
                 players[i].SendPacket(packet);
             }
         }
+
+        #region Broadcast Method
+
+        public void BroadcastMessage(string message, Player[] players = null)
+        {
+            if (players == null)
+            {
+                players = this.GetPlayers();
+            }
+
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendMessage(message);
+            }
+        }
+
+        public void BroadcastMessage(TranslationContainer message, Player[] players = null)
+        {
+            if (players == null)
+            {
+                players = this.GetPlayers();
+            }
+
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendMessage(message);
+            }
+        }
+
+        public void BroadcastMessageAndLoggerSend(TranslationContainer message, Player[] players = null)
+        {
+            if (players == null)
+            {
+                players = this.GetPlayers();
+            }
+
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendMessage(message);
+            }
+
+            if (message.Args == null)
+            {
+                this.Logger.OutputLogger.Info($"%{message.Key}");
+            }
+            else
+            {
+                this.Logger.OutputLogger.Info($"%{message.Key}", message.Args);
+            }
+        }
+
+        public void BroadcastChat(string message, Player[] players = null)
+        {
+            if (players == null)
+            {
+                players = this.GetPlayers();
+            }
+
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendMessage(message);
+            }
+
+            this.Logger.OutputLogger.Info(message);
+        }
+        #endregion
 
         #region Dispose Method
         public void Dispose()

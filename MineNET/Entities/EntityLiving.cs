@@ -75,10 +75,7 @@ namespace MineNET.Entities
             }
         }
 
-        public Inventory Inventory
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public Inventory Inventory { get; protected set; }
 
         public bool HasEffect(int id)
         {

@@ -1,11 +1,11 @@
-﻿using MineNET.Entities.Metadata;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using MineNET.Entities.Metadata;
 using MineNET.Entities.Players;
 using MineNET.NBT.Tags;
 using MineNET.Values;
 using MineNET.Worlds;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace MineNET.Entities
 {
@@ -413,5 +413,21 @@ namespace MineNET.Entities
             throw new NotImplementedException();
         }
         #endregion
+
+        public Position Position
+        {
+            get
+            {
+                return new Position(this.X, this.Y, this.Z, this.World);
+            }
+        }
+
+        public Vector2 DirectionPlane
+        {
+            get
+            {
+                return new Vector2((float) -Math.Cos(this.Yaw * Math.PI / 180 - Math.PI / 2), (float) -Math.Sin(this.Yaw * Math.PI / 180 - Math.PI / 2)).Normalized;
+            }
+        }
     }
 }
