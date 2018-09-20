@@ -15,5 +15,11 @@ namespace MineNET.Events.PlayerEvents
         {
             this.PlayerCreate?.Invoke(sender, e);
         }
+
+        public event EventHandler<PlayerInteractEventArgs> PlayerInteract;
+        public void onPlayerInteract(object sender, PlayerInteractEventArgs e)
+        {
+            this.PlayerInteract?.Invoke(sender, e);
+        }
     }
 }

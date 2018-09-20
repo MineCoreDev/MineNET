@@ -1,6 +1,6 @@
-﻿using MineNET.Utils;
+﻿using System;
+using MineNET.Utils;
 using MineNET.Worlds;
-using System;
 
 namespace MineNET.Values
 {
@@ -392,6 +392,16 @@ namespace MineNET.Values
         public static explicit operator Vector3(Location l)
         {
             return new Vector3(l.X, l.Y, l.Z);
+        }
+
+        public static implicit operator Vector3(BlockCoordinate2D v)
+        {
+            return new Vector3(v.X, v.Y, 0);
+        }
+
+        public static implicit operator Vector3(BlockCoordinate3D v)
+        {
+            return new Vector3(v.X, v.Y, v.Z);
         }
     }
 }

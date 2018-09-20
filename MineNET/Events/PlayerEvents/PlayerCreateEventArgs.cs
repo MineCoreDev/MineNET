@@ -6,9 +6,8 @@ namespace MineNET.Events.PlayerEvents
     {
         public Player CustomPlayer { get; set; }
 
-        public PlayerCreateEventArgs(Player player)
+        public PlayerCreateEventArgs(Player player) : base(player)
         {
-            this.Player = player;
             this.CustomPlayer = player;
         }
     }

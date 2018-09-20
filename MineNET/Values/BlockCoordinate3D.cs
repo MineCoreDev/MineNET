@@ -12,5 +12,10 @@
             this.Y = y;
             this.Z = z;
         }
+
+        public static explicit operator BlockCoordinate3D(Vector3 v)
+        {
+            return new BlockCoordinate3D(v.FloorX, v.FloorY, v.FloorZ);
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace MineNET
         //BlockEntity
         public static BlockRegistry Block { get; } = new BlockRegistry();
         public static CommandRegistry Command { get; } = new CommandRegistry();
+        public static CreativeItemRegistry Creative { get; } = new CreativeItemRegistry();
         public static EffectRegistry Effect { get; } = new EffectRegistry();
         public static EntityRegistry Entity { get; } = new EntityRegistry();
         public static ItemRegistry Item { get; } = new ItemRegistry();
@@ -18,6 +19,7 @@ namespace MineNET
             //BlockEntity
             MineNET_Registries.Block.Clear();
             MineNET_Registries.Command.Clear();
+            MineNET_Registries.Creative.Clear();
             MineNET_Registries.Effect.Clear();
             MineNET_Registries.Item.Clear();
             MineNET_Registries.RakNetPacket.Clear();

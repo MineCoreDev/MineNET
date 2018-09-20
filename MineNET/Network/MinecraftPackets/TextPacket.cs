@@ -16,13 +16,13 @@
 
         public byte Type { get; set; }
         public bool NeedsTranslation { get; set; } = false;
-        public string SourceName { get; set; }
+        public string SourceName { get; set; } = "";
         public string SourceThirdPartyName { get; set; } = "";
-        public int SourcePlatForm { get; set; }
+        public int SourcePlatForm { get; set; } = 0;
         public string Message { get; set; }
-        public string[] Paramters { get; set; }
+        public string[] Parameters { get; set; }
         public string XboxUserId { get; set; } = "";
-        public string PlatformChatId { get; set; }
+        public string PlatformChatId { get; set; } = "";
 
         public override void Encode()
         {
@@ -51,10 +51,10 @@
                 case TextPacket.TYPE_POPUP:
                 case TextPacket.TYPE_JUKEBOX_POPUP:
                     this.WriteString(this.Message);
-                    this.WriteUVarInt((uint) this.Paramters.Length);
-                    for (int i = 0; i < this.Paramters.Length; ++i)
+                    this.WriteUVarInt((uint) this.Parameters.Length);
+                    for (int i = 0; i < this.Parameters.Length; ++i)
                     {
-                        this.WriteString(this.Paramters[i]);
+                        this.WriteString(this.Parameters[i]);
                     }
                     break;
             }
@@ -90,10 +90,10 @@
                 case TextPacket.TYPE_POPUP:
                 case TextPacket.TYPE_JUKEBOX_POPUP:
                     this.Message = this.ReadString();
-                    this.Paramters = new string[this.ReadUVarInt()];
-                    for (int i = 0; i < this.Paramters.Length; ++i)
+                    this.Parameters = new string[this.ReadUVarInt()];
+                    for (int i = 0; i < this.Parameters.Length; ++i)
                     {
-                        this.Paramters[i] = this.ReadString();
+                        this.Parameters[i] = this.ReadString();
                     }
                     break;
             }

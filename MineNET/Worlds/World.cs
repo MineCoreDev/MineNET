@@ -1,17 +1,21 @@
-﻿using MineNET.BlockEntities;
-using MineNET.Blocks;
-using MineNET.Entities;
-using MineNET.Entities.Players;
-using MineNET.Values;
-using MineNET.Worlds.Dimensions;
-using MineNET.Worlds.Formats.WorldSaveFormats;
-using MineNET.Worlds.Generators;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using MineNET.BlockEntities;
+using MineNET.Blocks;
+using MineNET.Data;
+using MineNET.Entities;
+using MineNET.Entities.Players;
+using MineNET.Events.PlayerEvents;
 using MineNET.IO;
+using MineNET.Items;
+using MineNET.Network.MinecraftPackets;
+using MineNET.Values;
+using MineNET.Worlds.Dimensions;
+using MineNET.Worlds.Formats.WorldSaveFormats;
+using MineNET.Worlds.Generators;
 
 namespace MineNET.Worlds
 {
@@ -263,7 +267,7 @@ namespace MineNET.Worlds
                     {
                         if (!this.HasChunkLoadedByPlayer(chunkKey, player))
                         {
-                            this.Format.SetChunk(chunks[chunkKey]);
+                            this.Format.SetChunk(this.chunks[chunkKey]);
                             this.chunks.Remove(chunkKey);
                         }
                         double value;
@@ -307,7 +311,7 @@ namespace MineNET.Worlds
                     {
                         if (!this.HasChunkLoadedByPlayer(chunkKey, player))
                         {
-                            this.Format.SetChunk(chunks[chunkKey]);
+                            this.Format.SetChunk(this.chunks[chunkKey]);
                             this.chunks.Remove(chunkKey);
                         }
                     }
@@ -342,14 +346,14 @@ namespace MineNET.Worlds
             this.Format.Save();
         }
 
-        /*public void SendBlocks(Player[] players, Vector3[] vector3, int flags = UpdateBlockPacket.FLAG_NONE)
+        public void SendBlocks(Player[] players, Vector3[] vector3, uint flags = UpdateBlockPacket.FLAG_NONE)
         {
             for (int i = 0; i < vector3.Length; ++i)
             {
                 Block block = this.GetBlock(vector3[i]);
                 UpdateBlockPacket pk = new UpdateBlockPacket();
-                pk.Position = (Vector3i) vector3[i];
-                pk.RuntimeId = block.RuntimeId;
+                pk.Position = (BlockCoordinate3D) vector3[i];
+                pk.RuntimeId = (uint) block.RuntimeId;
                 pk.Flags = flags;
                 for (int j = 0; j < players.Length; ++j)
                 {
@@ -358,12 +362,12 @@ namespace MineNET.Worlds
             }
         }
 
-        public void UseItem(Vector3 pos, Item item, BlockFace blockFace, Vector3 clickPos, Player player)
+        public void UseItem(Vector3 pos, ItemStack item, BlockFace blockFace, Vector3 clickPos, Player player)
         {
             Block clicked = this.GetBlock(pos);
             Block replace = clicked.GetSideBlock(blockFace);
 
-            if (clicked.Y > 255 || clicked.Y < 0 || clicked.ID == BlockFactory.AIR)
+            if (clicked.Position.Y > 255 || clicked.Position.Y < 0 || clicked.ID == BlockIDs.AIR)
             {
                 return;
             }
@@ -375,24 +379,24 @@ namespace MineNET.Worlds
                 playerInteractEvent.IsCancel = true;
             }
 
-            if (Server.ServerConfig.SpawnProtection > 0 || player.Op)
+            /*if (Server.ServerConfig.SpawnProtection > 0 || player.Op)
             {
                 //TODO
-            }
+            }*/
 
-            PlayerEvents.OnPlayerInteract(playerInteractEvent);
+            /*PlayerEvents.OnPlayerInteract(playerInteractEvent);
             if (playerInteractEvent.IsCancel)
             {
                 return;
-            }
+            }*/
 
-            clicked.Update(World.BLOCK_UPDATE_TOUCH);
+            clicked.UpdateTick(World.BLOCK_UPDATE_TOUCH);
             if (!player.Sneaking && clicked.CanBeActivated && clicked.Activate(player, item))
             {
                 return;
             }
 
-            if (!player.Sneaking && item.CanBeActivate && item.Activate(player, this, clicked, blockFace, clickPos))
+            if (!player.Sneaking && item.Item.CanBeActivate && item.Item.Activate(player, this, clicked, blockFace, clickPos))
             {
                 if (item.Count <= 0)
                 {
@@ -400,11 +404,11 @@ namespace MineNET.Worlds
                 }
             }
 
-            if (!item.CanBePlace)
+            if (!item.Item.CanBePlace)
             {
                 return;
             }
-            Block hand = item.Block;
+            Block hand = item.Item.Block;
             hand.Position = replace.Position;
 
             if (clicked.CanBeReplaced)
@@ -417,15 +421,15 @@ namespace MineNET.Worlds
 
             //TODO : check can place on
 
-            BlockPlaceEventArgs blockPlaceEvent = new BlockPlaceEventArgs(player, hand, replace, clicked, item);
+            //BlockPlaceEventArgs blockPlaceEvent = new BlockPlaceEventArgs(player, hand, replace, clicked, item);
 
             //TODO : check spawn protection
 
-            BlockEvents.OnBlockPlace(blockPlaceEvent);
+            /*BlockEvents.OnBlockPlace(blockPlaceEvent);
             if (blockPlaceEvent.IsCancel)
             {
                 return;
-            }
+            }*/
             hand.Place(clicked, replace, blockFace, clickPos, player, item);
 
             LevelSoundEventPacket pk = new LevelSoundEventPacket();
@@ -436,7 +440,7 @@ namespace MineNET.Worlds
             player.SendPacket(pk); //TODO : near players
         }
 
-        public void UseBreak(Vector3 pos, Item item, Player player)
+        public void UseBreak(Vector3 pos, ItemStack item, Player player)
         {
             if (player.IsSpectator)
             {
@@ -444,25 +448,26 @@ namespace MineNET.Worlds
             }
             Block block = this.GetBlock(pos);
 
-            BlockBreakEventArgs blockBreakEvent = new BlockBreakEventArgs(player, block, item);
+            //BlockBreakEventArgs blockBreakEvent = new BlockBreakEventArgs(player, block, item);
 
-            if (player.IsSurvival && !block.CanBreak)
+            /*if (player.IsSurvival && !block.CanBreak)
             {
                 blockBreakEvent.IsCancel = true;
-            }
+            }*/
 
-            if (Server.ServerConfig.SpawnProtection > 0 || player.Op)
+            /*if (Server.ServerConfig.SpawnProtection > 0 || player.Op)
             {
                 //TODO
-            }
+            }*/
 
-            BlockEvents.OnBlockBreak(blockBreakEvent);
+            /*BlockEvents.OnBlockBreak(blockBreakEvent);
             if (blockBreakEvent.IsCancel)
             {
                 return;
-            }
+            }*/
 
-            Item[] drops = blockBreakEvent.Drops;
+            //ItemStack[] drops = blockBreakEvent.Drops;
+            ItemStack[] drops = block.GetDrops(item);
 
             //TODO : can destroy
 
@@ -474,12 +479,12 @@ namespace MineNET.Worlds
 
             block.Break(player, item);
 
-            item.BlockDestroyed(block, player);
+            item.Item.BlockDestroyed(block, player);
 
             //TODO : item drop
         }
 
-        public void AddEntity(Entity entity)
+        /*public void AddEntity(Entity entity)
         {
             if (entity.World.Name != this.Name)
             {

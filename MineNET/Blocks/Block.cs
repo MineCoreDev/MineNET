@@ -1,5 +1,9 @@
-﻿using MineNET.Values;
-using System;
+﻿using System;
+using MineNET.Data;
+using MineNET.Entities.Players;
+using MineNET.Items;
+using MineNET.Values;
+using MineNET.Worlds;
 
 namespace MineNET.Blocks
 {
@@ -108,6 +112,14 @@ namespace MineNET.Blocks
             this.Name = name;
         }
 
+        public int RuntimeId
+        {
+            get
+            {
+                return GlobalBlockPalette.GetRuntimeID(this.ID, this.Damage);
+            }
+        }
+
         /// <summary>
         /// ブロックのインスタンスを複製します。
         /// </summary>
@@ -151,5 +163,86 @@ namespace MineNET.Blocks
         public void UpdateTick(int type)
         {
         }
+
+        public bool HasPosition()
+        {
+            return this.Position != null;
+        }
+
+        public Block GetSideBlock(BlockFace face)
+        {
+            if (this.HasPosition())
+            {
+                return this.Position.World.GetBlock((Vector3) this.Position + face.GetPosition());
+            }
+            return null;
+        }
+
+        public virtual bool CanBePlaced
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public virtual bool CanBeReplaced
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool CanBreak
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public virtual bool CanBeActivated
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual bool Place(Block clicked, Block replace, BlockFace face, Vector3 clickPos, Player player, ItemStack item)
+        {
+            this.Position.World.SetBlock((Vector3) this.Position, this, true);
+            return true;
+        }
+
+        public virtual bool Break(Player player, ItemStack item)
+        {
+            this.Position.World.SetBlock((Vector3) this.Position, new BlockAir(), true);
+            return true;
+        }
+
+        public virtual bool Activate(Player player, ItemStack item)
+        {
+            return false;
+        }
+
+        public virtual ItemStack[] GetDrops(ItemStack item)
+        {
+            if (this.ID < 1)
+            {
+                return new ItemStack[] { new ItemStack(Item.Get(BlockIDs.AIR)) };
+            }
+            return new ItemStack[] { this.ItemStack };
+        }
+
+        public virtual ItemStack ItemStack
+        {
+            get
+            {
+                return new ItemStack(Item.Get(this.ID), this.Damage);
+            }
+        }
+
     }
 }

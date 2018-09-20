@@ -8,9 +8,8 @@ namespace MineNET.Events.PlayerEvents
         public CommandData CommandData { get; set; }
         public bool IsCancel { get; set; }
 
-        public PlayerCommandEventArgs(CommandData command)
+        public PlayerCommandEventArgs(CommandData command) : base((Player) command.Sender)
         {
-            this.Player = (Player) command.Sender;
             this.CommandData = command;
         }
     }
