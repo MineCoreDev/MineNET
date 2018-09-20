@@ -2,6 +2,7 @@
 using NLog;
 using NLog.Config;
 using System;
+using System.IO;
 
 namespace MineNET.IO
 {
@@ -13,14 +14,14 @@ namespace MineNET.IO
         public Logger()
         {
             LogManager.Configuration = new XmlLoggingConfiguration(Environment.CurrentDirectory + "\\NLog.config");
+
             this.OutputLogger = LogManager.GetCurrentClassLogger();
             this.InputLogger = new Input();
             try
             {
                 Console.Title = "MineNET";
-                Console.OpenStandardInput();
             }
-            catch (InvalidOperationException)
+            catch (IOException)
             {
 
             }

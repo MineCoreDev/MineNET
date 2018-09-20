@@ -111,7 +111,7 @@ namespace MineNET
                 try
                 {
                     this.Event.Server.OnServerStop(this, new ServerStopEventArgs());
-                    IO.Logger.Info("%server.stoping");
+                    IO.Logger.Info("%server.stopping");
 
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
@@ -159,8 +159,9 @@ namespace MineNET
             {
                 IO.Logger.Error(e.ToString());
             }
-            IO.Logger.Info("%server.stoping");
+            IO.Logger.Info("%server.stopping");
             CrashReport.ExportReport(e.GetType()?.Name, e);
+
             this.Dispose();
             BlockInit.In?.Dispose();
             ItemInit.In?.Dispose();
@@ -168,6 +169,8 @@ namespace MineNET
             this.Status = ServerStatus.Stop;
 
             //TODO: ServerErrorStopedEvent...
+
+            Environment.Exit(-1);
         }
 
         public void StartUpdate()
@@ -228,7 +231,9 @@ namespace MineNET
                 IO.Logger.Info("%server.network.start", port);
 
                 this.EndPoint = new IPEndPoint(IPAddress.Any, port);
-                this.SetNetworkSocket(new UDPSocket(this.EndPoint));
+                INetworkSocket socket = new UDPSocket();
+                socket.Init(this.EndPoint);
+                this.SetNetworkSocket(socket);
             }
             this.Network = new NetworkManager();
             IO.Logger.Info("%server.network.start.done", sw.Elapsed.ToString(@"mm\:ss\.fff"));
@@ -365,6 +370,8 @@ namespace MineNET
         #region Dispose Method
         public void Dispose()
         {
+            GlobalBlockPalette.Clear();
+
             this.Logger?.Dispose();
             this.Worlds.Clear();
             this.Plugin?.Dispose();
@@ -378,6 +385,8 @@ namespace MineNET
 
         public void Dispose(Stopwatch sw)
         {
+            GlobalBlockPalette.Clear();
+
             this.Worlds.Clear();
             this.Plugin?.Dispose();
             this.Command?.Dispose();

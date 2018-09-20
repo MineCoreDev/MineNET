@@ -1440,9 +1440,9 @@ namespace MineNET.Properties {
         /// <summary>
         ///   サーバーを終了しています。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string server_stoping {
+        internal static string server_stopping {
             get {
-                return ResourceManager.GetString("server_stoping", resourceCulture);
+                return ResourceManager.GetString("server_stopping", resourceCulture);
             }
         }
         

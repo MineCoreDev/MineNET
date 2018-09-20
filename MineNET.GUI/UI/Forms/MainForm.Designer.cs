@@ -356,13 +356,13 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // consoleControl1
+            // consoleControl
             // 
             this.consoleControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.consoleControl.Location = new System.Drawing.Point(168, 27);
-            this.consoleControl.Name = "consoleControl1";
+            this.consoleControl.Name = "consoleControl";
             this.consoleControl.Size = new System.Drawing.Size(604, 471);
             this.consoleControl.TabIndex = 4;
             // 

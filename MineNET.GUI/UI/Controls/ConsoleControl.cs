@@ -1,10 +1,13 @@
-﻿using System.Windows.Forms;
+﻿using NLog;
+using NLog.Config;
+using NLog.Windows.Forms;
+using System;
+using System.Windows.Forms;
 
 namespace MineNET.GUI.UI.Controls
 {
     public partial class ConsoleControl : UserControl
     {
-        /*public ConcurrentQueue<LoggerData> OutputQueue { get; private set; }
         public ConsoleControl()
         {
             InitializeComponent();
@@ -18,19 +21,6 @@ namespace MineNET.GUI.UI.Controls
             this.label3.Text = LanguageService.GetString("app.consoleControl.label3");
 
             this.button.Text = LanguageService.GetString("app.consoleControl.button");
-        }
-
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            this.AttachQueue(Server.Instance);
-            if (this.OutputQueue != null)
-            {
-                LoggerData data;
-                if (this.OutputQueue.TryDequeue(out data))
-                {
-                    this.WriteOutputLine(data.Text);
-                }
-            }
         }
 
         private void textBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -47,17 +37,25 @@ namespace MineNET.GUI.UI.Controls
             this.SendCommand();
         }
 
-        public void AttachQueue(Server server)
+        internal void LoggerSettings()
         {
-            if (server != null)
-            {
-                this.OutputQueue = server.Logger.Output.OutputQueue;
-            }
-        }
+            LoggingConfiguration conf = LogManager.Configuration;
+            RichTextBoxTarget target = new RichTextBoxTarget();
+            String back = "Black";
+            target.TargetRichTextBox = this.richTextBox;
+            target.AutoScroll = true;
+            target.Layout = "[${longdate}] [${threadname} /${uppercase:${level:padding=5}}] ${message}";
+            target.UseDefaultRowColoringRules = false;
+            target.RowColoringRules.Add(new RichTextBoxRowColoringRule("level == LogLevel.Debug", "DarkGray", back));
+            target.RowColoringRules.Add(new RichTextBoxRowColoringRule("level == LogLevel.Trace", "Cyan", back));
+            target.RowColoringRules.Add(new RichTextBoxRowColoringRule("level == LogLevel.Info", "Gray", back));
+            target.RowColoringRules.Add(new RichTextBoxRowColoringRule("level == LogLevel.Warn", "Yellow", back));
+            target.RowColoringRules.Add(new RichTextBoxRowColoringRule("level == LogLevel.Error", "Red", back));
+            target.RowColoringRules.Add(new RichTextBoxRowColoringRule("level == LogLevel.Fatal", "White", "Red"));
+            conf.AddTarget("richTextBox", target);
+            conf.AddRuleForAllLevels(target);
 
-        public void WriteOutputLine(string text)
-        {
-            this.richTextBox.AppendText(text + Environment.NewLine);
+            SimpleConfigurator.ConfigureForTargetLogging(target);
         }
 
         public void ConsoleClear()
@@ -70,9 +68,9 @@ namespace MineNET.GUI.UI.Controls
             string text = this.textBox.Text;
             if (Server.Instance != null && !string.IsNullOrEmpty(text))
             {
-                Server.Instance.Logger.Input.AddInputQueue(text);
+                Server.Instance.Logger.InputLogger.AddInputQueue(text);
                 this.textBox.Clear();
             }
-        }*/
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MineNET.Events.ServerEvents;
+using System;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -102,6 +103,7 @@ namespace MineNET.GUI.UI.Forms
             if (this.ServerInstance == null)
             {
                 this.ServerInstance = new Server();
+                this.consoleControl.LoggerSettings();
                 if (this.ServerInstance.Start())
                 {
                     this.ServerInstance.Event.Server.ServerStop += Server_ServerStop;
@@ -123,7 +125,7 @@ namespace MineNET.GUI.UI.Forms
             }
         }
 
-        private void Server_ServerStop(object sender, Events.ServerEvents.ServerStopEventArgs e)
+        private void Server_ServerStop(object sender, ServerStopEventArgs e)
         {
             this.ServerInstance = null;
             this.ServerThread = null;

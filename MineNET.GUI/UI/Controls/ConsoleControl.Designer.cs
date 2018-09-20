@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.richTextBox = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -36,7 +35,6 @@
             this.comboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.button = new System.Windows.Forms.Button();
-            this.timer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -53,6 +51,7 @@
             this.richTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox.BackColor = System.Drawing.SystemColors.WindowText;
             this.richTextBox.Location = new System.Drawing.Point(3, 15);
             this.richTextBox.Name = "richTextBox";
             this.richTextBox.ReadOnly = true;
@@ -79,7 +78,6 @@
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(311, 19);
             this.textBox.TabIndex = 3;
-            //this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
             // comboBox
             // 
@@ -110,13 +108,6 @@
             this.button.TabIndex = 6;
             this.button.Text = "Send";
             this.button.UseVisualStyleBackColor = true;
-            //this.button.Click += new System.EventHandler(this.button_Click);
-            // 
-            // timer
-            // 
-            this.timer.Enabled = true;
-            this.timer.Interval = 1;
-            //this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // ConsoleControl
             // 
@@ -139,12 +130,11 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RichTextBox richTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox;
         private System.Windows.Forms.ComboBox comboBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button;
-        private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.RichTextBox richTextBox;
     }
 }

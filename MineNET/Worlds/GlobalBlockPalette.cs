@@ -65,5 +65,11 @@ namespace MineNET.Worlds
 
             return -1;
         }
+
+        public static void Clear()
+        {
+            _runtimeFromLegacy.Clear();
+            _legacyFromRuntime.Clear();
+        }
     }
 }

@@ -44,7 +44,7 @@ namespace MineNET.IO
         {
             this.IsRunning = false;
 
-            this.InputThread.Abort();
+            this.InputThread?.Abort();
             this.InputThread = null;
         }
 

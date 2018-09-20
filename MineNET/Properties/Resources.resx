@@ -576,7 +576,7 @@
   <data name="server_stoped" xml:space="preserve">
     <value>サーバーは終了しました。 終了経過時間: {0}</value>
   </data>
-  <data name="server_stoping" xml:space="preserve">
+  <data name="server_stopping" xml:space="preserve">
     <value>サーバーを終了しています。</value>
   </data>
   <data name="server_world_create" xml:space="preserve">

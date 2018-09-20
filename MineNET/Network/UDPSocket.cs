@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using MineNET.IO;
 
 namespace MineNET.Network
 {
@@ -16,7 +15,7 @@ namespace MineNET.Network
             }
         }
 
-        public UDPSocket(IPEndPoint point)
+        public void Init(IPEndPoint point)
         {
             try
             {
@@ -36,8 +35,7 @@ namespace MineNET.Network
             }
             catch (SocketException e1)
             {
-                Logger.Error(e1.Message);
-                Server.Instance.ErrorStop(null);
+                Server.Instance.ErrorStop(e1);
             }
         }
 
