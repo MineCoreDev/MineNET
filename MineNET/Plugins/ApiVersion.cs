@@ -2,7 +2,8 @@
 {
     public enum ApiVersion
     {
-        Version_1_0_0_0,
+        Version1000,
+        Version1100,
         Other = 4096
     }
 }

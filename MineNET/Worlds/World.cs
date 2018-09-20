@@ -2,6 +2,7 @@
 using MineNET.Blocks;
 using MineNET.Entities;
 using MineNET.Entities.Players;
+using MineNET.IO;
 using MineNET.Values;
 using MineNET.Worlds.Dimensions;
 using MineNET.Worlds.Formats.WorldSaveFormats;
@@ -11,7 +12,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using MineNET.IO;
 
 namespace MineNET.Worlds
 {
@@ -339,6 +339,10 @@ namespace MineNET.Worlds
 
         public void Save()
         {
+            foreach (Chunk chunk in this.chunks.Values)
+            {
+                this.Format.SetChunk(chunk);
+            }
             this.Format.Save();
         }
 
