@@ -11,7 +11,8 @@ namespace MineNET.Network.MinecraftPackets
     {
         public override byte PacketID { get; } = MinecraftProtocol.AVAILABLE_COMMANDS_PACKET;
 
-        public Dictionary<string, Command> commands = new Dictionary<string, Command>();
+        public Dictionary<string, Command> Commands { get; set; } = new Dictionary<string, Command>();
+        public Dictionary<string, List<string>> SoftEnums { get; set; } = new Dictionary<string, List<string>>();
 
         public override void Encode()
         {
@@ -24,7 +25,7 @@ namespace MineNET.Network.MinecraftPackets
             byte[] result = null;
             using (BinaryStream stream = new BinaryStream())
             {
-                foreach (Command command in this.commands.Values)
+                foreach (Command command in this.Commands.Values)
                 {
                     if (command.Name == "help")
                     {
@@ -48,7 +49,7 @@ namespace MineNET.Network.MinecraftPackets
                         stream.WriteString(command.Description);
                     }
                     stream.WriteByte((byte) command.Flag);
-                    //stream.WriteByte((byte) command.CommandPermission);
+                    stream.WriteByte((byte) command.PermissionLevel);
 
                     int enumIndex = -1;
                     if (command.Aliases != null && command.Aliases.Length > 0)
@@ -146,8 +147,20 @@ namespace MineNET.Network.MinecraftPackets
                 }
             }
 
-            this.WriteUVarInt((uint) this.commands.Count);
+            this.WriteUVarInt((uint) this.Commands.Count);
             this.WriteBytes(result);
+
+            this.WriteUVarInt((uint) this.SoftEnums.Count);
+            foreach (KeyValuePair<string, List<string>> softEnum in this.SoftEnums)
+            {
+                int count = softEnum.Value.Count;
+                this.WriteString(softEnum.Key);
+                this.WriteUVarInt((uint) count);
+                for (int i = 0; i < count; i++)
+                {
+                    this.WriteString(softEnum.Value[i]);
+                }
+            }
         }
     }
 

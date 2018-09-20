@@ -6,11 +6,10 @@
         public const byte TYPE_CHAT = 1;
         public const byte TYPE_TRANSLATION = 2;
         public const byte TYPE_POPUP = 3;
-        public const byte TYPE_JUKEBOX_POPUP = 4;
-        public const byte TYPE_TIP = 5;
-        public const byte TYPE_SYSTEM = 6;
-        public const byte TYPE_WHISPER = 7;
-        public const byte TYPE_ANNOUNCEMENT = 8;
+        public const byte TYPE_TIP = 4;
+        public const byte TYPE_SYSTEM = 5;
+        public const byte TYPE_WHISPER = 6;
+        public const byte TYPE_ANNOUNCEMENT = 7;
 
         public override byte PacketID { get; } = MinecraftProtocol.TEXT_PACKET;
 
@@ -49,7 +48,6 @@
 
                 case TextPacket.TYPE_TRANSLATION:
                 case TextPacket.TYPE_POPUP:
-                case TextPacket.TYPE_JUKEBOX_POPUP:
                     this.WriteString(this.Message);
                     this.WriteUVarInt((uint) this.Parameters.Length);
                     for (int i = 0; i < this.Parameters.Length; ++i)
@@ -59,7 +57,6 @@
                     break;
             }
 
-            this.WriteString(this.XboxUserId);
             this.WriteString(this.PlatformChatId);
         }
 
@@ -88,7 +85,6 @@
 
                 case TextPacket.TYPE_TRANSLATION:
                 case TextPacket.TYPE_POPUP:
-                case TextPacket.TYPE_JUKEBOX_POPUP:
                     this.Message = this.ReadString();
                     this.Parameters = new string[this.ReadUVarInt()];
                     for (int i = 0; i < this.Parameters.Length; ++i)
@@ -98,7 +94,6 @@
                     break;
             }
 
-            this.XboxUserId = this.ReadString();
             this.PlatformChatId = this.ReadString();
         }
     }

@@ -98,11 +98,11 @@ namespace MineNET.Entities.Players
         {
             if (message.Args == null)
             {
-                this.SendMessage($"%{message.Key}");
+                this.SendMessage(message.GetText(), new object[0]);
             }
             else
             {
-                this.SendMessage($"%{message.Key}", message.Args);
+                this.SendMessage(message.GetText(), message.Args);
             }
         }
 
@@ -124,6 +124,7 @@ namespace MineNET.Entities.Players
 
             TextPacket pk = new TextPacket();
             pk.Type = TextPacket.TYPE_TRANSLATION;
+            pk.NeedsTranslation = true;
             pk.Message = message;
             pk.Parameters = list.ToArray();
             this.SendPacket(pk);
@@ -195,7 +196,7 @@ namespace MineNET.Entities.Players
         public void SendAvailableCommands()
         {
             AvailableCommandsPacket availableCommandsPacket = new AvailableCommandsPacket();
-            availableCommandsPacket.commands = MineNET_Registries.Command.Dictionary;
+            availableCommandsPacket.Commands = MineNET_Registries.Command.Dictionary;
             this.SendPacket(availableCommandsPacket);
         }
 
@@ -416,9 +417,9 @@ namespace MineNET.Entities.Players
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
                 adventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, false);
                 adventureSettingsEntry.CommandPermission =
-                    PlayerPermissions.MEMBER; //this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
+                    PlayerPermissions.OPERATOR; //this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
                 adventureSettingsEntry.PlayerPermission =
-                    PlayerPermissions.MEMBER; //this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
+                    PlayerPermissions.OPERATOR; //this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
                 adventureSettingsEntry.EntityUniqueId = this.EntityID;
                 this.AdventureSettingsEntry = adventureSettingsEntry;
                 this.AdventureSettingsEntry.Update(this);

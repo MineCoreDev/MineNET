@@ -1,4 +1,6 @@
-﻿namespace MineNET.Commands.Defaults
+﻿using MineNET.Data;
+
+namespace MineNET.Commands.Defaults
 {
     public class StopCommand : Command
     {
@@ -15,6 +17,14 @@
             get
             {
                 return "%commands.stop.description";
+            }
+        }
+
+        public override PlayerPermissions PermissionLevel
+        {
+            get
+            {
+                return PlayerPermissions.OPERATOR;
             }
         }
 

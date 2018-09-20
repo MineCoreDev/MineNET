@@ -23,14 +23,13 @@ namespace MineNET.Commands
 
         public void SendMessage(TranslationContainer message)
         {
-            string msg = $"%{message.Key}";
             if (message.Args == null)
             {
-                Logger.Info(msg);
+                Logger.Info(new CultureTextContainer(message.Key));
             }
             else
             {
-                Logger.Info(msg, message.Args);
+                Logger.Info(new CultureTextContainer(message.Key, message.Args));
             }
         }
 

@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using MineNET.Utils;
+﻿using MineNET.Utils;
+using System.Globalization;
 
 namespace MineNET.Text
 {
@@ -35,7 +35,7 @@ namespace MineNET.Text
 
         public override string GetText()
         {
-            return this.Header + base.GetText();
+            return this.Header + "%" + this.Key;
         }
     }
 }

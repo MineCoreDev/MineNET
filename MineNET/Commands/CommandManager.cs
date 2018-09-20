@@ -1,5 +1,5 @@
-﻿using System;
-using MineNET.Commands.Defaults;
+﻿using MineNET.Commands.Defaults;
+using System;
 
 namespace MineNET.Commands
 {
