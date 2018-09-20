@@ -489,6 +489,7 @@
     <Compile Include="Utils\Binary.cs" />
     <Compile Include="Utils\BinaryStream.cs" />
     <Compile Include="Utils\LinqExtention.cs" />
+    <Compile Include="Utils\CryptoUtils.cs" />
     <Compile Include="Utils\TextContainerUtils.cs" />
     <Compile Include="Utils\TextFormat.cs" />
     <Compile Include="Utils\Config\JsonConfig.cs" />

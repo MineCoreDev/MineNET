@@ -13,7 +13,7 @@ namespace MineNET.Plugins
         public const string Package = ".mnpkg";
         public const string Package_Sub = ".zip";
         public const string Library = ".mnlib";
-        public const ApiVersion NowVersion = ApiVersion.Version_1_0_0_0;
+        public const ApiVersion NowVersion = ApiVersion.Version1000;
         #endregion
 
         #region Property & Field

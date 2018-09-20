@@ -343,6 +343,10 @@ namespace MineNET.Worlds
 
         public void Save()
         {
+            foreach (Chunk chunk in this.chunks.Values)
+            {
+                this.Format.SetChunk(chunk);
+            }
             this.Format.Save();
         }
 
