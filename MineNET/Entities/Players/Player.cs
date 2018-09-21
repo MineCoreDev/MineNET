@@ -265,6 +265,8 @@ namespace MineNET.Entities.Players
             {
                 this.HandleSetLocalPlayerAsInitializedPacket((SetLocalPlayerAsInitializedPacket) packet);
             }
+
+            packet.Clone();
         }
 
         //0x01

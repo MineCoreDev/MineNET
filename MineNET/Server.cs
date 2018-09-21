@@ -144,8 +144,9 @@ namespace MineNET
                     //TODO: ServerStopedEvent...
                     return true;
                 }
-                catch
+                catch (Exception e)
                 {
+                    IO.Logger.Error(e);
                     this.Status = ServerStatus.Error;
                     return false;
                 }
@@ -409,19 +410,6 @@ namespace MineNET
         }
         #endregion
 
-        public void BroadcastSendPacket(MinecraftPacket packet, Player[] players = null)
-        {
-            if (players == null)
-            {
-                players = Server.Instance.GetPlayers();
-            }
-
-            for (int i = 0; i < players.Length; ++i)
-            {
-                players[i].SendPacket(packet);
-            }
-        }
-
         #region Update Thread Invoke Method
 
         public void Invoke(Action action)
@@ -494,6 +482,19 @@ namespace MineNET
             }
 
             this.Logger.OutputLogger.Info(message);
+        }
+
+        public void BroadcastSendPacket(MinecraftPacket packet, Player[] players = null)
+        {
+            if (players == null)
+            {
+                players = Server.Instance.GetPlayers();
+            }
+
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendPacket(packet);
+            }
         }
         #endregion
 

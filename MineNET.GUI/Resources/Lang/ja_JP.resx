@@ -126,6 +126,9 @@
   <data name="app.consoleControl.button" xml:space="preserve">
     <value>送信</value>
   </data>
+  <data name="app.consoleControl.button2" xml:space="preserve">
+    <value>出力をクリア</value>
+  </data>
   <data name="app.consoleControl.comboBoxItem.consoleMode" xml:space="preserve">
     <value>コンソールモード</value>
   </data>

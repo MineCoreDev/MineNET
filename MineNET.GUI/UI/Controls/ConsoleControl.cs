@@ -20,7 +20,8 @@ namespace MineNET.GUI.UI.Controls
             this.label2.Text = LanguageService.GetString("app.consoleControl.label2");
             this.label3.Text = LanguageService.GetString("app.consoleControl.label3");
 
-            this.button.Text = LanguageService.GetString("app.consoleControl.button");
+            this.button1.Text = LanguageService.GetString("app.consoleControl.button1");
+            this.button2.Text = LanguageService.GetString("app.consoleControl.button2");
         }
 
         private void textBox_KeyPress(object sender, KeyPressEventArgs e)

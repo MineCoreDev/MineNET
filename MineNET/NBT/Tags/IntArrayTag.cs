@@ -34,7 +34,7 @@ namespace MineNET.NBT.Tags
             int len = this.Data.Length;
             stream.WriteInt(len);
             stream.Reservation(len * sizeof(int));
-            for (int i = 0; i < len; ++i)
+            for (int i = 0; i < len; i++)
             {
                 stream.WriteInt(this.Data[i]);
             }
@@ -49,7 +49,7 @@ namespace MineNET.NBT.Tags
                 stream.WriteString(this.Name);
                 stream.WriteInt(len);
                 stream.Reservation(len * sizeof(int));
-                for (int i = 0; i < len; ++i)
+                for (int i = 0; i < len; i++)
                 {
                     stream.WriteInt(this.Data[i]);
                 }
@@ -64,7 +64,7 @@ namespace MineNET.NBT.Tags
         {
             int len = stream.ReadInt();
             this.Data = new int[len];
-            for (int i = 0; i < len; ++i)
+            for (int i = 0; i < len; i++)
             {
                 this.Data[i] = stream.ReadInt();
             }
@@ -92,7 +92,7 @@ namespace MineNET.NBT.Tags
             {
                 return false;
             }
-            for (int i = 0; i < this.Data.Length; ++i)
+            for (int i = 0; i < this.Data.Length; i++)
             {
                 if (this.Data[i] != tag.Data[i])
                 {

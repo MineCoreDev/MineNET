@@ -360,31 +360,30 @@ namespace MineNET.Network
                 {
                     int len = stream.ReadVarInt();
                     byte[] buffer = stream.ReadBytes(len);
-                    using (MinecraftPacket packet = this.Manager.GetMinecraftPacket(buffer[0], buffer))
+                    MinecraftPacket packet = this.Manager.GetMinecraftPacket(buffer[0], buffer);
+                    if (packet != null)
                     {
-                        if (packet != null)
+                        /*DataPacketReceiveArgs args = new DataPacketReceiveArgs(player, pk);
+                        ServerEvents.OnPacketReceive(args);
+
+                        if (args.IsCancel)
                         {
-                            /*DataPacketReceiveArgs args = new DataPacketReceiveArgs(player, pk);
-                            ServerEvents.OnPacketReceive(args);
+                            return;
+                        }*/
 
-                            if (args.IsCancel)
-                            {
-                                return;
-                            }*/
-
-                            if (Server.Instance.Config.PacketDebug)
-                            {
-                                Logger.Debug("%server.network.minecraft.receivePacket", buffer[0].ToString("X"), buffer.Length);
-                            }
-
-                            player.OnPacketHandle(packet);
+                        if (Server.Instance.Config.PacketDebug)
+                        {
+                            Logger.Debug("%server.network.minecraft.receivePacket", buffer[0].ToString("X"), buffer.Length);
                         }
-                        else
+
+
+                        Server.Instance.Invoke(() => player.OnPacketHandle(packet.Clone()));
+                    }
+                    else
+                    {
+                        if (Server.Instance.Config.PacketDebug)
                         {
-                            if (Server.Instance.Config.PacketDebug)
-                            {
-                                Logger.Debug("%server.network.minecraft.notHandle", buffer[0].ToString("X"));
-                            }
+                            Logger.Debug("%server.network.minecraft.notHandle", buffer[0].ToString("X"));
                         }
                     }
                 }

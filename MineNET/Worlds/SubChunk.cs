@@ -13,10 +13,7 @@ namespace MineNET.Worlds
         public NibbleArray SkyLights { get; set; } = ArrayUtils.CreateNibbleArray(4096, 0xff);
         public NibbleArray BlockLigths { get; set; } = ArrayUtils.CreateNibbleArray(4096, 0);
 
-        public bool IsEnpty
-        {
-            get { return this.BlockDatas.All(b => { return b == BlockIDs.AIR; }); }
-        }
+        public bool IsEnpty => this.BlockDatas.All(b => b == BlockIDs.AIR);
 
         public int GetArrayIndex(int x, int y, int z)
         {
