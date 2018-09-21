@@ -427,6 +427,7 @@
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Registry\BlockRegistry.cs" />
     <Compile Include="Registry\CreativeItemRegistry.cs" />
+    <Compile Include="Registry\DictionaryRegistryBase.cs" />
     <Compile Include="Registry\EffectRegistry.cs" />
     <Compile Include="Registry\EntityRegistry.cs" />
     <Compile Include="Events\EventManager.cs" />
@@ -461,6 +462,7 @@
     <Compile Include="Registry\IDictionaryRegistry.cs" />
     <Compile Include="Registry\IListRegistry.cs" />
     <Compile Include="Registry\ItemRegistry.cs" />
+    <Compile Include="Registry\ListRegistryBase.cs" />
     <Compile Include="Registry\MinecraftPacketRegistry.cs" />
     <Compile Include="Registry\MineNET_Registries.cs" />
     <Compile Include="Registry\RakNetPacketRegistry.cs" />

@@ -1,9 +1,9 @@
-﻿using System;
-using MineNET.Data;
+﻿using MineNET.Data;
 using MineNET.Entities.Players;
 using MineNET.Items;
 using MineNET.Values;
 using MineNET.Worlds;
+using System;
 
 namespace MineNET.Blocks
 {
@@ -22,7 +22,7 @@ namespace MineNET.Blocks
         {
             if (MineNET_Registries.Block.ContainsKey(id))
             {
-                Block b = MineNET_Registries.Block[id];
+                Block b = MineNET_Registries.Block[id].Clone();
                 b.Damage = meta;
                 return b;
             }

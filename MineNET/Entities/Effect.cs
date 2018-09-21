@@ -37,6 +37,7 @@ namespace MineNET.Entities
         {
             Effect effect;
             MineNET_Registries.Effect.TryGetValue(id, out effect);
+            effect = effect?.Clone();
 
             if (effect == null)
             {

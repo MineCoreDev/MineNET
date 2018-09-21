@@ -12,14 +12,14 @@ namespace MineNET.Network.MinecraftPackets
         {
             base.Encode();
 
-            this.WriteVarInt((int) this.GameMode);
+            this.WriteSVarInt((int) this.GameMode);
         }
 
         public override void Decode()
         {
             base.Decode();
 
-            this.GameMode = (GameMode) this.ReadVarInt();
+            this.GameMode = (GameMode) this.ReadSVarInt();
         }
     }
 }

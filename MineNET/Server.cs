@@ -473,11 +473,11 @@ namespace MineNET
 
             if (message.Args == null)
             {
-                this.Logger.OutputLogger.Info($"%{message.Key}");
+                IO.Logger.Info(new CultureTextContainer(message.Key));
             }
             else
             {
-                this.Logger.OutputLogger.Info($"%{message.Key}", message.Args);
+                IO.Logger.Info(new CultureTextContainer(message.Key, message.Args));
             }
         }
 

@@ -113,8 +113,8 @@ namespace MineNET.Commands.Defaults
 
                 Player player = (Player) sender;
                 player.GameMode = GameModeExtention.FromIndex(gamemode);
-                player.SendMessage(new TranslationContainer("commands.gamemode.success.self", GameModeExtention.GetGameModeString(player.GameMode)));
-                Server.Instance.BroadcastMessageAndLoggerSend(new TranslationContainer("commands.gamemode.success.other", GameModeExtention.GetGameModeString(player.GameMode), player.Name));
+                player.SendMessage(new TranslationContainer("commands.gamemode.success.self", player.GameMode.GetGameModeString()));
+                Server.Instance.BroadcastMessageAndLoggerSend(new TranslationContainer("commands.gamemode.success.other", player.GameMode.GetGameModeString(), player.Name));
             }
             else
             {
@@ -162,8 +162,8 @@ namespace MineNET.Commands.Defaults
                 for (int i = 0; i < players.Length; ++i)
                 {
                     players[i].GameMode = GameModeExtention.FromIndex(gamemode);
-                    players[i].SendMessage(new TranslationContainer("commands.gamemode.success.self", GameModeExtention.GetGameModeString(players[i].GameMode)));
-                    Server.Instance.BroadcastMessageAndLoggerSend(new TranslationContainer("commands.gamemode.success.other", GameModeExtention.GetGameModeString(players[i].GameMode), players[i].Name));
+                    players[i].SendMessage(new TranslationContainer("commands.gamemode.success.self", players[i].GameMode.GetGameModeString()));
+                    Server.Instance.BroadcastMessageAndLoggerSend(new TranslationContainer("commands.gamemode.success.other", players[i].GameMode.GetGameModeString(), players[i].Name));
                 }
 
                 //TODO: need send message at op

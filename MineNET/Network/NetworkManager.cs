@@ -450,6 +450,7 @@ namespace MineNET.Network
         {
             RakNetPacket pk = null;
             MineNET_Registries.RakNetPacket.TryGetValue(msgId, out pk);
+            pk = pk?.Clone();
 
             if (pk != null && buffer != null)
             {
@@ -464,6 +465,7 @@ namespace MineNET.Network
         {
             MinecraftPacket pk = null;
             MineNET_Registries.MinecraftPacket.TryGetValue(msgId, out pk);
+            pk = pk?.Clone();
 
             if (pk != null && buffer != null)
             {

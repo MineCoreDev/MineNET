@@ -196,7 +196,7 @@ namespace MineNET.Entities.Players
         public void SendAvailableCommands()
         {
             AvailableCommandsPacket availableCommandsPacket = new AvailableCommandsPacket();
-            availableCommandsPacket.Commands = MineNET_Registries.Command.Dictionary;
+            availableCommandsPacket.Commands = MineNET_Registries.Command.ToDictionary();
             this.SendPacket(availableCommandsPacket);
         }
 

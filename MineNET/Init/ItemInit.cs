@@ -10,6 +10,8 @@ namespace MineNET.Init
         {
             ItemInit.In = this;
             this.Init();
+
+            Item.LoadCreativeItems();
         }
 
         public void Init()
