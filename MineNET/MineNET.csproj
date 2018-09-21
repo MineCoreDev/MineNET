@@ -527,7 +527,6 @@
     <Compile Include="Worlds\Dimensions\DimensionIDs.cs" />
     <Compile Include="Worlds\Formats\ChunkFormats\IChunkFormat.cs" />
     <Compile Include="Worlds\Formats\ChunkFormats\McaChunkFormat.cs" />
-    <Compile Include="Worlds\Formats\RegionFile.cs" />
     <Compile Include="Worlds\Formats\WorldDataFormats\IWorldDataFormat.cs" />
     <Compile Include="Worlds\Formats\WorldDataFormats\LevelDBFormat.cs" />
     <Compile Include="Worlds\Formats\WorldSaveFormats\IWorldSaveFormat.cs" />

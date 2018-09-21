@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using MineNET.BlockEntities;
+﻿using MineNET.BlockEntities;
 using MineNET.Blocks;
 using MineNET.Data;
 using MineNET.Entities;
@@ -16,6 +11,11 @@ using MineNET.Values;
 using MineNET.Worlds.Dimensions;
 using MineNET.Worlds.Formats.WorldSaveFormats;
 using MineNET.Worlds.Generators;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace MineNET.Worlds
 {
@@ -186,7 +186,7 @@ namespace MineNET.Worlds
             Tuple<int, int> chunkPos = new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4);
             Chunk chunk = this.GetChunk(chunkPos);
 
-            byte id = chunk.GetBlock(pos.FloorX & 0x0f, (int) pos.Y & 0xff, pos.FloorZ & 0x0f);
+            int id = chunk.GetBlock(pos.FloorX & 0x0f, (int) pos.Y & 0xff, pos.FloorZ & 0x0f);
             byte meta = chunk.GetMetadata(pos.FloorX & 0x0f, (int) pos.Y & 0xff, pos.FloorZ & 0x0f);
 
             Block block = Block.Get(id, meta);
@@ -205,16 +205,16 @@ namespace MineNET.Worlds
             Tuple<int, int> chunkPos = new Tuple<int, int>(pos.FloorX >> 4, pos.FloorZ >> 4);
             Chunk chunk = this.GetChunk(chunkPos);
 
-            chunk.SetBlock(pos.FloorX & 0x0f, pos.FloorY & 0xff, pos.FloorZ & 0x0f, (byte) block.ID);
+            chunk.SetBlock(pos.FloorX & 0x0f, pos.FloorY & 0xff, pos.FloorZ & 0x0f, block.ID);
             chunk.SetMetadata(pos.FloorX & 0x0f, pos.FloorY & 0xff, pos.FloorZ & 0x0f, (byte) block.Damage);
 
             if (flagAll)
             {
-                //this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos }, UpdateBlockPacket.FLAG_ALL_PRIORITY);
+                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos }, UpdateBlockPacket.FLAG_ALL_PRIORITY);
             }
             else
             {
-                //this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos });
+                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos });
             }
         }
         #endregion

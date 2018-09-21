@@ -21,7 +21,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
                 CompoundTag section = ((CompoundTag) sections[i]);
                 SubChunk subChunk = new SubChunk();
                 byte y = section.GetByte("Y");
-                subChunk.BlockDatas = section.GetByteArray("Blocks");
+                subChunk.BlockDatas = section.GetIntArray("Blocks");
                 subChunk.MetaDatas = new NibbleArray(section.GetByteArray("Data"));
                 subChunk.SkyLights = new NibbleArray(section.GetByteArray("SkyLight"));
                 subChunk.BlockLigths = new NibbleArray(section.GetByteArray("BlockLight"));
@@ -76,7 +76,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
                 }
                 CompoundTag data = new CompoundTag();
                 data.PutByte("Y", (byte) i);
-                data.PutByteArray("Blocks", subChunks[i].BlockDatas);
+                data.PutIntArray("Blocks", subChunks[i].BlockDatas);
                 data.PutByteArray("Data", subChunks[i].MetaDatas.ArrayData);
                 data.PutByteArray("SkyLight", subChunks[i].SkyLights.ArrayData);
                 data.PutByteArray("BlockLight", subChunks[i].BlockLigths.ArrayData);

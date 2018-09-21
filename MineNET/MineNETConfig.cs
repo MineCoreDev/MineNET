@@ -8,5 +8,6 @@ namespace MineNET
         public bool PacketDebug { get; set; } = false;
         public bool ClockDelayDebug { get; set; } = false;
         public bool TraceLogDisable { get; set; } = true;
+        public bool NewVersionChunkFormat { get; set; } = true;
     }
 }

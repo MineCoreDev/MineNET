@@ -76,13 +76,13 @@ namespace MineNET.Worlds
             player.SendPacket(pk);
         }
 
-        public byte GetBlock(int bx, int by, int bz)
+        public int GetBlock(int bx, int by, int bz)
         {
             SubChunk chunk = this.SubChunks[by >> 4];
             return chunk.GetBlock(bx, by - 16 * (by >> 4), bz);
         }
 
-        public void SetBlock(int bx, int by, int bz, byte bid)
+        public void SetBlock(int bx, int by, int bz, int bid)
         {
             SubChunk chunk = this.SubChunks[by >> 4];
             chunk.SetBlock(bx, by - 16 * (by >> 4), bz, bid);
