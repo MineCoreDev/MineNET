@@ -36,7 +36,7 @@ namespace MineNET.Worlds
         #region Static Method
         public static void CreateWorld(string worldName)
         {
-            World.CreateWorld(worldName, new MineNETWorldSaveFormat(worldName));
+            World.CreateWorld(worldName, new AnvilWorldSaveFormat(worldName));
         }
 
         public static void CreateWorld(string worldName, IWorldSaveFormat format)
@@ -49,7 +49,7 @@ namespace MineNET.Worlds
 
         public static void LoadWorld(string worldName)
         {
-            World.LoadWorld(worldName, new MineNETWorldSaveFormat(worldName));
+            World.LoadWorld(worldName, new AnvilWorldSaveFormat(worldName));
         }
 
         public static void LoadWorld(string worldName, IWorldSaveFormat format)
@@ -126,7 +126,7 @@ namespace MineNET.Worlds
 
         public long LastPlayed { get; internal set; }
 
-        public Dictionary<Tuple<int, int>, Chunk> chunks = new Dictionary<Tuple<int, int>, Chunk>();
+        private Dictionary<Tuple<int, int>, Chunk> Chunks { get; } = new Dictionary<Tuple<int, int>, Chunk>();
 
         private Dictionary<long, Player> Players { get; } = new Dictionary<long, Player>();
         private Dictionary<long, Entity> Entities { get; } = new Dictionary<long, Entity>();
@@ -222,9 +222,9 @@ namespace MineNET.Worlds
         public Chunk GetChunk(Tuple<int, int> chunkPos)
         {
             Chunk chunk = null;
-            if (this.chunks.ContainsKey(chunkPos))
+            if (this.Chunks.ContainsKey(chunkPos))
             {
-                chunk = this.chunks[chunkPos];
+                chunk = this.Chunks[chunkPos];
             }
             else
             {
@@ -242,7 +242,7 @@ namespace MineNET.Worlds
             double radiusSquared = Math.Pow(radius, 2);
             Vector2 center = player.GetChunkVector();
 
-            lock (this.chunks)
+            lock (this.Chunks)
             {
                 for (int x = -radius; x <= radius; ++x)
                 {
@@ -261,14 +261,14 @@ namespace MineNET.Worlds
                     }
                 }
 
-                foreach (Tuple<int, int> chunkKey in this.chunks.Keys.ToArray())
+                foreach (Tuple<int, int> chunkKey in this.Chunks.Keys.ToArray())
                 {
                     if (!newOrders.ContainsKey(chunkKey))
                     {
                         if (!this.HasChunkLoadedByPlayer(chunkKey, player))
                         {
-                            this.Format.SetChunk(this.chunks[chunkKey]);
-                            this.chunks.Remove(chunkKey);
+                            this.Format.SetChunk(this.Chunks[chunkKey]);
+                            this.Chunks.Remove(chunkKey);
                         }
                         double value;
                         player.LoadedChunks.TryRemove(chunkKey, out value);
@@ -284,9 +284,9 @@ namespace MineNET.Worlds
                     {
                         chunk = this.GetChunk(pair.Key);
 
-                        if (!this.chunks.ContainsKey(pair.Key))
+                        if (!this.Chunks.ContainsKey(pair.Key))
                         {
-                            this.chunks.Add(pair.Key, chunk);
+                            this.Chunks.Add(pair.Key, chunk);
                         }
                         player.LoadedChunks.TryAdd(pair.Key, pair.Value);
                         this.Generator.ChunkGeneration(chunk);
@@ -303,16 +303,16 @@ namespace MineNET.Worlds
 
         public void UnLoadChunks(Player player)
         {
-            lock (this.chunks)
+            lock (this.Chunks)
             {
-                foreach (Tuple<int, int> chunkKey in this.chunks.Keys.ToArray())
+                foreach (Tuple<int, int> chunkKey in this.Chunks.Keys.ToArray())
                 {
                     if (!player.LoadedChunks.ContainsKey(chunkKey))
                     {
                         if (!this.HasChunkLoadedByPlayer(chunkKey, player))
                         {
-                            this.Format.SetChunk(this.chunks[chunkKey]);
-                            this.chunks.Remove(chunkKey);
+                            this.Format.SetChunk(this.Chunks[chunkKey]);
+                            this.Chunks.Remove(chunkKey);
                         }
                     }
                 }
@@ -343,11 +343,7 @@ namespace MineNET.Worlds
 
         public void Save()
         {
-            foreach (Chunk chunk in this.chunks.Values)
-            {
-                this.Format.SetChunk(chunk);
-            }
-            this.Format.Save();
+            this.Format.Save(this.Chunks);
         }
 
         public void SendBlocks(Player[] players, Vector3[] vector3, uint flags = UpdateBlockPacket.FLAG_NONE)

@@ -60,8 +60,17 @@ namespace MineNET.Utils
 
         public void WriteByte(byte value)
         {
-            Array.Resize(ref this._buffer, this._offset + 1);
-            Buffer.BlockCopy(new byte[] { value }, 0, this._buffer, this._offset++, 1);
+            int nextSize = this._offset + 1;
+            if (this._buffer.Length <= nextSize)
+            {
+                Array.Resize(ref this._buffer, nextSize);
+                Buffer.BlockCopy(new byte[] { value }, 0, this._buffer, this._offset++, 1);
+            }
+            else
+            {
+                this._buffer[nextSize] = value;
+                this._offset++;
+            }
         }
 
         public byte[] ReadBytes(int offset, int length)
@@ -87,14 +96,27 @@ namespace MineNET.Utils
 
         public void WriteBytes(byte[] value)
         {
-            Array.Resize(ref this._buffer, this.Length + value.Length);
-            Buffer.BlockCopy(value, 0, this._buffer, this._offset, value.Length);
-            this._offset += value.Length;
+            int nextSize = this._offset + value.Length;
+            if (this._buffer.Length < nextSize)
+            {
+                Array.Resize(ref this._buffer, this.Length + value.Length);
+                Buffer.BlockCopy(value, 0, this._buffer, this._offset, value.Length);
+                this._offset += value.Length;
+            }
+            else
+            {
+                for (int i = 0; i < value.Length; i++)
+                {
+                    this._buffer[this._offset + i] = value[i];
+                }
+
+                this._offset += value.Length;
+            }
         }
 
-        public void Resize(int length)
+        public void Reservation(int length)
         {
-            Array.Resize(ref this._buffer, length);
+            Array.Resize(ref this._buffer, this.Length + length);
         }
 
         public void Dispose()

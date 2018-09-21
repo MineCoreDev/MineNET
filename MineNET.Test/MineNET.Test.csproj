@@ -55,6 +55,7 @@
     <Compile Include="NBT\IO\NBTIOTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Text\CultureTextContainerTests.cs" />
+    <Compile Include="Utils\BinaryStreamTests.cs" />
     <Compile Include="Values\AxisAlignedBBTest.cs" />
   </ItemGroup>
   <ItemGroup>

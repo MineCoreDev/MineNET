@@ -391,6 +391,11 @@ namespace MineNET.Utils
             return this.buffer.ToArray();
         }
 
+        public void Reservation(int len)
+        {
+            this.buffer.Reservation(len);
+        }
+
         public virtual void Dispose()
         {
             this.buffer.Dispose();
