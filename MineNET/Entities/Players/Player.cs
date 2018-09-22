@@ -286,13 +286,11 @@ namespace MineNET.Entities.Players
             if (pk.Protocol < MinecraftProtocol.ClientProtocol)
             {
                 this.SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_CLIENT, RakNetProtocol.FlagImmediate);
-                //this.Close("disconnectionScreen.outdatedClient");
                 return;
             }
             else if (pk.Protocol > MinecraftProtocol.ClientProtocol)
             {
                 this.SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_SERVER, RakNetProtocol.FlagImmediate);
-                //this.Close("disconnectionScreen.outdatedServer");
                 return;
             }
 
@@ -698,6 +696,20 @@ namespace MineNET.Entities.Players
             this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, this.IsCreative || this.IsSpectator);
             this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, this.IsCreative || this.IsSpectator);
             this.AdventureSettingsEntry.Update(this);
+        }
+
+        #endregion
+
+        #region Load & Save Method
+
+        public void Load()
+        {
+
+        }
+
+        public void Save()
+        {
+
         }
 
         #endregion

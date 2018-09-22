@@ -27,6 +27,7 @@ namespace MineNET
     {
         #region Static Method
         public static string ExecutePath { get; } = Environment.CurrentDirectory;
+        public static string PlayerDataPath { get; } = $"{Server.ExecutePath}\\players";
         #endregion
 
         #region Singleton Instance
@@ -196,6 +197,7 @@ namespace MineNET
         public void Init(Stopwatch sw)
         {
             this.LoadConfigs();
+            this.LoadFiles();
             this.OnServerStart();
 
             this.LoadWorlds(sw);
@@ -285,6 +287,16 @@ namespace MineNET
         {
             this.Config = YamlStaticConfig.Load<MineNETConfig>($"{ExecutePath}\\MineNET.yml");
             this.ServerProperty = YamlStaticConfig.Load<ServerConfig>($"{ExecutePath}\\ServerProperties.yml");
+        }
+
+        private void LoadFiles()
+        {
+            if (!Directory.Exists(Server.PlayerDataPath))
+            {
+                Directory.CreateDirectory(Server.PlayerDataPath);
+            }
+
+            //TODO OP File & WhiteList File & BanList File...
         }
         #endregion
 

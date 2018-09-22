@@ -1,4 +1,7 @@
-﻿using MineNET.Blocks;
+﻿using System;
+using System.Linq;
+using System.Text;
+using MineNET.Blocks;
 using MineNET.Data;
 using MineNET.Entities;
 using MineNET.Entities.Players;
@@ -6,9 +9,6 @@ using MineNET.Resources;
 using MineNET.Values;
 using MineNET.Worlds;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Linq;
-using System.Text;
 
 namespace MineNET.Items
 {
@@ -22,14 +22,7 @@ namespace MineNET.Items
         {
             if (MineNET_Registries.Item.ContainsKey(id))
             {
-                if (id <= 0xff)
-                {
-                    return new ItemBlock(Block.Get(id));
-                }
-                else
-                {
-                    return MineNET_Registries.Item[id];
-                }
+                return MineNET_Registries.Item[id];
             }
             else
             {
