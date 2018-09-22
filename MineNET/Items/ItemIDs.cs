@@ -2,44 +2,6 @@
 {
     public class ItemIDs
     {
-        public const int SEA_PICKLE = -156;
-        public const int CARVED_PUMPKIN = -155;
-        public const int SPRUCE_PRESSURE_PLATE = -154;
-        public const int JUNGLE_PRESSURE_PLATE = -153;
-        public const int DARK_OAK_PRESSURE_PLATE = -152;
-        public const int BIRCH_PRESSURE_PLATE = -151;
-        public const int ACACIA_PRESSURE_PLATE = -150;
-        public const int SPRUCE_TRAPDOOR = -149;
-        public const int JUNGLE_TRAPDOOR = -148;
-        public const int DARK_OAK_TRAPDOOR = -147;
-        public const int BIRCH_TRAPDOOR = -146;
-        public const int ACACIA_TRAPDOOR = -145;
-        public const int SPRUCE_BUTTON = -144;
-        public const int JUNGLE_BUTTON = -143;
-        public const int DARK_OAK_BUTTON = -142;
-        public const int BIRCH_BUTTON = -141;
-        public const int ACACIA_BUTTON = -140;
-        public const int DRIED_KELP_BLOCK = -139;
-        public const int TILE_KELP = -138;
-        public const int CORAL_FAN_HANG3 = -137;
-        public const int CORAL_FAN_HANG2 = -136;
-        public const int CORAL_FAN_HANG = -135;
-        public const int CORALFAN_DEAD = -134;
-        public const int CORAL_FAN = -133;
-        public const int CORAL_BLOCK = -132;
-        public const int CORAL = -131;
-        public const int SEAGRASS = -130;
-        public const int BLUE_ICE = -11;
-        public const int STRIPPED_OAK_LOG = -10;
-        public const int STRIPPED_DARK_OAK_LOG = -9;
-        public const int STRIPPED_ACACIA_LOG = -8;
-        public const int STRIPPED_JUNGLE_LOG = -7;
-        public const int STRIPPED_BIRCH_LOG = -6;
-        public const int STRIPPED_SPRUCE_LOG = -5;
-        public const int PRISMARINE_BRICKS_STAIRS = -4;
-        public const int DARK_PRISMARINE_STAIRS = -3;
-        public const int PRISMARINE_STAIRS = -2;
-
         public const int IRON_SHOVEL = 256;
         public const int IRON_PICKAXE = 257;
         public const int IRON_AXE = 258;

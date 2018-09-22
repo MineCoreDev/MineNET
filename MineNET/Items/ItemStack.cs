@@ -12,7 +12,7 @@ namespace MineNET.Items
         public int Damage { get; set; } = 0;
         public int Count { get; set; } = 1;
 
-        public byte[] BinaryTags { get; private set; } = null;
+        public byte[] BinaryTags { get; private set; } = new byte[0];
         public bool HasTags
         {
             get
@@ -33,6 +33,7 @@ namespace MineNET.Items
 
         private CompoundTag Tags { get; set; } = null;
 
+        #region construct
         public ItemStack(Item item)
         {
             this.Item = item;
@@ -83,6 +84,7 @@ namespace MineNET.Items
         {
             this.Tags = tag;
         }
+        #endregion
 
         public ItemStack Clone()
         {

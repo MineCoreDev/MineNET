@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using MineNET.Blocks;
 
 namespace MineNET.Init
@@ -15,6 +16,7 @@ namespace MineNET.Init
 
         public void Init()
         {
+            /*
             this.Add(new BlockAir());
             this.Add(new BlockStone() { Hardness = 1.5f, Resistance = 30f });
             this.Add(new BlockGrass() { Hardness = 0.6f, Resistance = 3f });
@@ -25,6 +27,13 @@ namespace MineNET.Init
             this.Add(new BlockEmptyDrops(7, "Bedrock") { Resistance = 18000000f });
             this.Add(new BlockDynamicLiquid(8, "FlowingWater") { Hardness = 500f, LightOpacity = 3 });
             this.Add(new BlockStaticLiquid(9, "Water") { Hardness = 500f, LightOpacity = 3 });
+            */
+            FieldInfo[] fields = new BlockIDs().GetType().GetFields(); //TODO
+            for (int i = 0; i < fields.Length; ++i)
+            {
+                FieldInfo field = fields[i];
+                this.Add(new Block((int) field.GetValue(null), field.Name));
+            }
         }
 
         public void Add(Block block)

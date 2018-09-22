@@ -1,4 +1,12 @@
-﻿using MineNET.Commands;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading;
+using MineNET.Commands;
 using MineNET.Entities.Players;
 using MineNET.Events;
 using MineNET.Events.ServerEvents;
@@ -12,14 +20,6 @@ using MineNET.Reports;
 using MineNET.Text;
 using MineNET.Utils.Config;
 using MineNET.Worlds;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading;
 
 namespace MineNET
 {
