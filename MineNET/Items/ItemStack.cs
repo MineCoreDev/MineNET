@@ -51,12 +51,18 @@ namespace MineNET.Items
 
         public ItemStack(Item item, int damage, int count, byte[] nbt) : this(item, damage, count)
         {
-            this.BinaryTags = nbt;
+            if (nbt != null)
+            {
+                this.BinaryTags = nbt;
+            }
         }
 
         public ItemStack(Item item, int damage, int count, CompoundTag tag) : this(item, damage, count)
         {
-            this.Tags = tag;
+            if (tag != null)
+            {
+                this.Tags = tag;
+            }
         }
 
         public ItemStack(Block block)
@@ -77,12 +83,18 @@ namespace MineNET.Items
 
         public ItemStack(Block block, int damage, int count, byte[] nbt) : this(block, damage, count)
         {
-            this.BinaryTags = nbt;
+            if (nbt != null)
+            {
+                this.BinaryTags = nbt;
+            }
         }
 
         public ItemStack(Block block, int damage, int count, CompoundTag tag) : this(block, damage, count)
         {
-            this.Tags = tag;
+            if (tag != null)
+            {
+                this.Tags = tag;
+            }
         }
         #endregion
 

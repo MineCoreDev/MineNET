@@ -1,4 +1,8 @@
-﻿using MineNET.Blocks;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Net;
+using MineNET.Blocks;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
@@ -16,10 +20,6 @@ using MineNET.Text;
 using MineNET.Values;
 using MineNET.Worlds;
 using MineNET.Worlds.Rule;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Net;
 
 namespace MineNET.Entities.Players
 {
@@ -428,6 +428,11 @@ namespace MineNET.Entities.Players
 
                 this.Attributes.Update(this);
                 this.SendDataProperties();
+
+                this.Inventory.SendContents(this);
+                this.Inventory.SendMainHand(this);
+                this.Inventory.ArmorInventory.SendContents(this);
+                this.Inventory.SendCreativeItems();
             }
         }
 
