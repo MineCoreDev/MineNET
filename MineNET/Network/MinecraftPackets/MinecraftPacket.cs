@@ -22,15 +22,11 @@ namespace MineNET.Network.MinecraftPackets
         public virtual void Encode()
         {
             this.WriteByte(this.PacketID);
-            /*this.WriteByte(this.Extra1);
-            this.WriteByte(this.Extra2);*/
         }
 
         public virtual void Decode()
         {
             this.ReadByte();
-            /*this.Extra1 = this.ReadByte();
-            this.Extra2 = this.ReadByte();*/
         }
 
         public new MinecraftPacket Clone()

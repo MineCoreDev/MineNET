@@ -1,4 +1,5 @@
-﻿using MineNET.Entities.Players;
+﻿using MineNET.Data;
+using MineNET.Entities.Players;
 using MineNET.Items;
 using MineNET.NBT.Data;
 using MineNET.NBT.IO;
@@ -12,7 +13,6 @@ namespace MineNET.Inventories
         public PlayerCursorInventory PlayerCursorInventory { get; }
         public PlayerEnderChestInventory PlayerEnderChestInventory { get; }
         public Inventory OpendInventory { get; private set; } = null;
-
 
         public CraftingGridInventory CraftingGridInventory { get; }
 
@@ -89,11 +89,11 @@ namespace MineNET.Inventories
 
         public void SendCreativeItems()
         {
-            /*Player player = this.Holder;
+            Player player = this.Holder;
             InventoryContentPacket pk = new InventoryContentPacket();
             pk.InventoryId = ContainerIds.CREATIVE.GetIndex();
             pk.Items = Item.GetCreativeItems();
-            player.SendPacket(pk);*/
+            player.SendPacket(pk);
         }
 
         internal void OpenInventory(Inventory inventory)

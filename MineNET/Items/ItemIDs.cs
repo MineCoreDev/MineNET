@@ -2,44 +2,6 @@
 {
     public class ItemIDs
     {
-        public const int SEA_PICKLE = -156;
-        public const int CARVED_PUMPKIN = -155;
-        public const int SPRUCE_PRESSURE_PLATE = -154;
-        public const int JUNGLE_PRESSURE_PLATE = -153;
-        public const int DARK_OAK_PRESSURE_PLATE = -152;
-        public const int BIRCH_PRESSURE_PLATE = -151;
-        public const int ACACIA_PRESSURE_PLATE = -150;
-        public const int SPRUCE_TRAPDOOR = -149;
-        public const int JUNGLE_TRAPDOOR = -148;
-        public const int DARK_OAK_TRAPDOOR = -147;
-        public const int BIRCH_TRAPDOOR = -146;
-        public const int ACACIA_TRAPDOOR = -145;
-        public const int SPRUCE_BUTTON = -144;
-        public const int JUNGLE_BUTTON = -143;
-        public const int DARK_OAK_BUTTON = -142;
-        public const int BIRCH_BUTTON = -141;
-        public const int ACACIA_BUTTON = -140;
-        public const int DRIED_KELP_BLOCK = -139;
-        public const int TILE_KELP = -138;
-        public const int CORAL_FAN_HANG3 = -137;
-        public const int CORAL_FAN_HANG2 = -136;
-        public const int CORAL_FAN_HANG = -135;
-        public const int CORALFAN_DEAD = -134;
-        public const int CORAL_FAN = -133;
-        public const int CORAL_BLOCK = -132;
-        public const int CORAL = -131;
-        public const int SEAGRASS = -130;
-        public const int BLUE_ICE = -11;
-        public const int STRIPPED_OAK_LOG = -10;
-        public const int STRIPPED_DARK_OAK_LOG = -9;
-        public const int STRIPPED_ACACIA_LOG = -8;
-        public const int STRIPPED_JUNGLE_LOG = -7;
-        public const int STRIPPED_BIRCH_LOG = -6;
-        public const int STRIPPED_SPRUCE_LOG = -5;
-        public const int PRISMARINE_BRICKS_STAIRS = -4;
-        public const int DARK_PRISMARINE_STAIRS = -3;
-        public const int PRISMARINE_STAIRS = -2;
-
         public const int IRON_SHOVEL = 256;
         public const int IRON_PICKAXE = 257;
         public const int IRON_AXE = 258;
@@ -169,7 +131,8 @@
         public const int SPAWN_EGG = 383;
         public const int EXPERIENCE_BOTTLE = 384;
         public const int FIRE_CHARGE = 385;
-        public const int WRITABLE_BOOK = 387;
+        public const int WRITABLE_BOOK = 386;
+        public const int WRITTEN_BOOK = 387;
         public const int EMERALD = 388;
         public const int ITEM_FRAME = 389;
         public const int FLOWER_POT = 390;
@@ -227,7 +190,9 @@
         public const int SHULKER_SHELL = 445;
         public const int BANNER = 446;
 
-        public const int TOTEM = 452;
+        public const int TOTEM = 450;
+
+        public const int IRON_NUGGET = 452;
 
         public const int TRIDENT = 455;
 
@@ -238,9 +203,13 @@
         public const int CLOWNFISH = 461;
         public const int PUFFERFISH = 462;
         public const int COOKED_SALMON = 463;
-
+        public const int DRIED_KELP = 464;
+        public const int NAUTILUS_SHELL = 465;
         public const int APPLEENCHANTED = 466;
         public const int HEART_OF_THE_SEA = 467;
+        public const int SCUTE = 468;
+        public const int TURTLE_SHELL = 469;
+        public const int PHANTOM_MEMBRANE = 470;
 
         public const int RECORD_13 = 500;
         public const int RECORD_CAT = 501;
@@ -254,126 +223,5 @@
         public const int RECORD_WARD = 509;
         public const int RECORD_11 = 510;
         public const int RECORD_WAIT = 511;
-
-        #region Education Edition constant
-        public const int ELEMENT_118 = -129;
-        public const int ELEMENT_117 = -128;
-        public const int ELEMENT_116 = -127;
-        public const int ELEMENT_115 = -126;
-        public const int ELEMENT_114 = -125;
-        public const int ELEMENT_113 = -124;
-        public const int ELEMENT_112 = -123;
-        public const int ELEMENT_111 = -122;
-        public const int ELEMENT_110 = -121;
-        public const int ELEMENT_109 = -120;
-        public const int ELEMENT_108 = -119;
-        public const int ELEMENT_107 = -118;
-        public const int ELEMENT_106 = -117;
-        public const int ELEMENT_105 = -116;
-        public const int ELEMENT_104 = -115;
-        public const int ELEMENT_103 = -114;
-        public const int ELEMENT_102 = -113;
-        public const int ELEMENT_101 = -112;
-        public const int ELEMENT_100 = -111;
-        public const int ELEMENT_99 = -110;
-        public const int ELEMENT_98 = -109;
-        public const int ELEMENT_97 = -108;
-        public const int ELEMENT_96 = -107;
-        public const int ELEMENT_95 = -106;
-        public const int ELEMENT_94 = -105;
-        public const int ELEMENT_93 = -104;
-        public const int ELEMENT_92 = -103;
-        public const int ELEMENT_91 = -102;
-        public const int ELEMENT_90 = -101;
-        public const int ELEMENT_89 = -100;
-        public const int ELEMENT_88 = -99;
-        public const int ELEMENT_87 = -98;
-        public const int ELEMENT_86 = -97;
-        public const int ELEMENT_85 = -96;
-        public const int ELEMENT_84 = -95;
-        public const int ELEMENT_83 = -94;
-        public const int ELEMENT_82 = -93;
-        public const int ELEMENT_81 = -92;
-        public const int ELEMENT_80 = -91;
-        public const int ELEMENT_79 = -90;
-        public const int ELEMENT_78 = -89;
-        public const int ELEMENT_77 = -88;
-        public const int ELEMENT_76 = -87;
-        public const int ELEMENT_75 = -86;
-        public const int ELEMENT_74 = -85;
-        public const int ELEMENT_73 = -84;
-        public const int ELEMENT_72 = -83;
-        public const int ELEMENT_71 = -82;
-        public const int ELEMENT_70 = -81;
-        public const int ELEMENT_69 = -80;
-        public const int ELEMENT_68 = -79;
-        public const int ELEMENT_67 = -78;
-        public const int ELEMENT_66 = -77;
-        public const int ELEMENT_65 = -76;
-        public const int ELEMENT_64 = -75;
-        public const int ELEMENT_63 = -74;
-        public const int ELEMENT_62 = -73;
-        public const int ELEMENT_61 = -72;
-        public const int ELEMENT_60 = -71;
-        public const int ELEMENT_59 = -70;
-        public const int ELEMENT_58 = -69;
-        public const int ELEMENT_57 = -68;
-        public const int ELEMENT_56 = -67;
-        public const int ELEMENT_55 = -66;
-        public const int ELEMENT_54 = -65;
-        public const int ELEMENT_53 = -64;
-        public const int ELEMENT_52 = -63;
-        public const int ELEMENT_51 = -62;
-        public const int ELEMENT_50 = -61;
-        public const int ELEMENT_49 = -60;
-        public const int ELEMENT_48 = -59;
-        public const int ELEMENT_47 = -58;
-        public const int ELEMENT_46 = -57;
-        public const int ELEMENT_45 = -56;
-        public const int ELEMENT_44 = -55;
-        public const int ELEMENT_43 = -54;
-        public const int ELEMENT_42 = -53;
-        public const int ELEMENT_41 = -52;
-        public const int ELEMENT_40 = -51;
-        public const int ELEMENT_39 = -50;
-        public const int ELEMENT_38 = -49;
-        public const int ELEMENT_37 = -48;
-        public const int ELEMENT_36 = -47;
-        public const int ELEMENT_35 = -46;
-        public const int ELEMENT_34 = -45;
-        public const int ELEMENT_33 = -44;
-        public const int ELEMENT_32 = -43;
-        public const int ELEMENT_31 = -42;
-        public const int ELEMENT_30 = -41;
-        public const int ELEMENT_29 = -40;
-        public const int ELEMENT_28 = -39;
-        public const int ELEMENT_27 = -38;
-        public const int ELEMENT_26 = -37;
-        public const int ELEMENT_25 = -36;
-        public const int ELEMENT_24 = -35;
-        public const int ELEMENT_23 = -34;
-        public const int ELEMENT_22 = -33;
-        public const int ELEMENT_21 = -32;
-        public const int ELEMENT_20 = -31;
-        public const int ELEMENT_19 = -30;
-        public const int ELEMENT_18 = -29;
-        public const int ELEMENT_17 = -28;
-        public const int ELEMENT_16 = -27;
-        public const int ELEMENT_15 = -26;
-        public const int ELEMENT_14 = -25;
-        public const int ELEMENT_13 = -24;
-        public const int ELEMENT_12 = -23;
-        public const int ELEMENT_11 = -22;
-        public const int ELEMENT_10 = -21;
-        public const int ELEMENT_9 = -20;
-        public const int ELEMENT_8 = -19;
-        public const int ELEMENT_7 = -18;
-        public const int ELEMENT_6 = -17;
-        public const int ELEMENT_5 = -16;
-        public const int ELEMENT_4 = -15;
-        public const int ELEMENT_3 = -14;
-        public const int ELEMENT_2 = -13;
-        public const int ELEMENT_1 = -12;
-        #endregion
     }
 }

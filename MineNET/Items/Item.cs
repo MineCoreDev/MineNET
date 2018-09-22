@@ -51,6 +51,12 @@ namespace MineNET.Items
                 {
                     BlockIDs factory = new BlockIDs();
                     id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
+                    if (id > 255)
+                    {
+                        Server.Instance.Logger.OutputLogger.Info(id);
+                        id = -id + 255;
+                        Server.Instance.Logger.OutputLogger.Info(id);
+                    }
                 }
                 catch
                 {

@@ -292,8 +292,13 @@
         public const int SPRUCE_PRESSURE_PLATE = 409;
         public const int CARVED_PUMPKIN = 410;
         public const int SEA_PICKLE = 411;
+        public const int CONDUIT = 412;
 
-        #region Education Edition constant
+        public const int TURTLE_EGG = 414;
+        public const int BUBBLE_COLUMN = 415;
+        public const int BARRIER = 416;
+
+        /*#region Education Edition constant
         public const int ELEMENT_0 = 36;
 
         public const int GLOW_STICK = 166;
@@ -432,5 +437,7 @@
         public const int ELEMENT_117 = 383;
         public const int ELEMENT_118 = 384;
         #endregion
+        */
     }
 }
+
