@@ -1,4 +1,9 @@
-﻿using MineNET.BlockEntities;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using MineNET.BlockEntities;
 using MineNET.Blocks;
 using MineNET.Data;
 using MineNET.Entities;
@@ -11,11 +16,6 @@ using MineNET.Values;
 using MineNET.Worlds.Dimensions;
 using MineNET.Worlds.Formats.WorldSaveFormats;
 using MineNET.Worlds.Generators;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace MineNET.Worlds
 {
@@ -564,6 +564,18 @@ namespace MineNET.Worlds
         public void ScheduleUpdate(Block block, int tick)
         {
             this.updateQueue.TryAdd(block, tick);
+        }
+
+        public Vector3 GetWorldSpawn()
+        {
+            return new Vector3(this.SpawnX, this.SpawnY, this.SpawnZ);
+        }
+
+        public void SetWorldSpawn(Vector3 spawn)
+        {
+            this.SpawnX = spawn.FloorX;
+            this.SpawnY = spawn.FloorY;
+            this.SpawnZ = spawn.FloorZ;
         }
     }
 }
