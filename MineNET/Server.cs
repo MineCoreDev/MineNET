@@ -176,8 +176,6 @@ namespace MineNET
             this.Status = ServerStatus.Stop;
 
             //TODO: ServerErrorStopedEvent...
-
-            Environment.Exit(-1);
         }
 
         public void StartUpdate()

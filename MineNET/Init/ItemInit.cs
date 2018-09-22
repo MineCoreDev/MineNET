@@ -20,7 +20,8 @@ namespace MineNET.Init
         {
             foreach (int key in MineNET_Registries.Block.Keys)
             {
-                if (MineNET_Registries.Block.TryGetValue(key, out Block block))
+                Block block = null;
+                if (MineNET_Registries.Block.TryGetValue(key, out block))
                 {
                     this.Add(new ItemBlock(block));
                 }
