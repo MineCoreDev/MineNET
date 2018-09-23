@@ -45,6 +45,7 @@ namespace MineNET.Network
         public ConcurrentDictionary<int, int> ReceivedWindow { get; private set; } = new ConcurrentDictionary<int, int>();
 
         public int LastSeqNumber { get; private set; } = -1;
+        public int LastSendSeqNumber { get; private set; } = 0;
 
         public int SplitID { get; private set; }
         public int OrderIndex { get; private set; }
@@ -93,6 +94,7 @@ namespace MineNET.Network
                     pks.Add(kv.Value);
                 }
                 pks.Sort();
+
                 pk.Packets = pks.ToArray();
                 this.SendPacket(pk);
 
@@ -108,6 +110,7 @@ namespace MineNET.Network
                     pks.Add(kv.Value);
                 }
                 pks.Sort();
+
                 pk.Packets = pks.ToArray();
                 this.SendPacket(pk);
 
@@ -120,7 +123,7 @@ namespace MineNET.Network
                 {
                     DataPacket pk;
                     this.ResendQueue.TryDequeue(out pk);
-                    pk.SeqNumber = this.LastSeqNumber++;
+                    pk.SeqNumber = this.LastSendSeqNumber++;
                     this.SendPacket(pk);
 
                     Logger.Debug("%server.network.dataPacket.resend");
@@ -186,7 +189,6 @@ namespace MineNET.Network
             this.ReceivedWindow.TryAdd(packet.SeqNumber, packet.SeqNumber);
 
             int diff = packet.SeqNumber - this.LastSeqNumber;
-
             if (diff != 1)
             {
                 for (int i = 0; i < diff; ++i)
@@ -208,7 +210,7 @@ namespace MineNET.Network
                 this.WindowEnd += diff;
             }
 
-            for (int i = 0; i < packet.Packets.Length; ++i)
+            for (int i = 0; i < packet.Packets.Length; i++)
             {
                 if (packet.Packets[i] is EncapsulatedPacket)
                 {
@@ -228,9 +230,10 @@ namespace MineNET.Network
 
                 this.ReliableWindow[packet.MessageIndex] = true;
 
-                if (packet.MessageIndex == this.ReliableWindowStart)
+                ++this.ReliableWindowStart;
+                ++this.ReliableWindowEnd;
+                /*if (packet.MessageIndex == this.ReliableWindowStart)
                 {
-
                     for (; this.ReliableWindow.ContainsKey(this.ReliableWindowStart); ++this.ReliableWindowStart)
                     {
                         bool v;
@@ -238,7 +241,7 @@ namespace MineNET.Network
 
                         ++this.ReliableWindowEnd;
                     }
-                }
+                }*/
 
                 if (packet.HasSplit && (packet = this.HandleSplit(packet)) == null)
                 {
@@ -254,16 +257,10 @@ namespace MineNET.Network
                 }
                 packet = ev.Packet;
 
-                /*if (RakNetPacketReliability.IsSequenced(packet.Reliability))
-                {
-                    OutLog.Info("IsSequenced");
-                }
-
-                if (RakNetPacketReliability.IsOrdered(packet.Reliability))
-                {
-                    OutLog.Info(packet.OrderChannel + ":" + packet.OrderIndex);
-                }*/
-
+                this.HandleEncapsulatedPacketRoute(packet);
+            }
+            else
+            {
                 this.HandleEncapsulatedPacketRoute(packet);
             }
         }
@@ -608,14 +605,14 @@ namespace MineNET.Network
             }
             pk = ev.Packet;
 
-            pk.SeqNumber = this.LastSeqNumber++;
+            pk.SeqNumber = this.LastSendSeqNumber++;
             this.SendedPacket.TryAdd(pk.SeqNumber, (DataPacket) pk);
             this.SendPacket(pk.Clone());
         }
 
         public void SendPacket(RakNetPacket pk)
         {
-            this.Manager.Send(this.EndPoint, pk);
+            this.Manager?.Send(this.EndPoint, pk);
         }
         #endregion
 

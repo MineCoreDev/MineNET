@@ -1,9 +1,9 @@
-﻿using MineNET.Utils.Config.Yaml;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
+using MineNET.Utils.Config.Yaml;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
@@ -19,7 +19,7 @@ namespace MineNET.Utils.Config
                 {
                     using (StreamReader r = new StreamReader(filePath, Encoding.UTF8, false))
                     {
-                        Deserializer s = new DeserializerBuilder()
+                        Deserializer s = (Deserializer) new DeserializerBuilder()
                             .Build();
                         YamlConfig conv = new YamlConfig();
                         conv.Root = s.Deserialize<Dictionary<string, object>>(r);
@@ -64,7 +64,7 @@ namespace MineNET.Utils.Config
                     .EmitDefaults()
                     .WithTypeInspector(inner => new CommentTypeInspector(inner))
                     .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
-                Serializer s = sb.Build();
+                Serializer s = (Serializer) sb.Build();
                 s.Serialize(w, this.Root, typeof(Dictionary<string, object>));
                 w.Close();
             }
@@ -77,7 +77,7 @@ namespace MineNET.Utils.Config
                     .EmitDefaults()
                     .WithTypeInspector(inner => new CommentTypeInspector(inner))
                     .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
-                Serializer s = sb.Build();
+                Serializer s = (Serializer) sb.Build();
                 s.Serialize(w, this.Root, typeof(Dictionary<string, object>));
                 w.Close();
             }

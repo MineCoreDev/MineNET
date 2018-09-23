@@ -1,8 +1,8 @@
-﻿using MineNET.Utils.Config.Yaml;
-using System;
+﻿using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
+using MineNET.Utils.Config.Yaml;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
@@ -20,7 +20,7 @@ namespace MineNET.Utils.Config
                 {
                     using (StreamReader r = new StreamReader(filePath, false))
                     {
-                        Deserializer s = new DeserializerBuilder()
+                        Deserializer s = (Deserializer) new DeserializerBuilder()
                             .Build();
                         YamlStaticConfig conv = s.Deserialize<T>(r);
                         conv.filePath = filePath;
@@ -63,7 +63,7 @@ namespace MineNET.Utils.Config
                         .EmitDefaults()
                         .WithTypeInspector(inner => new CommentTypeInspector(inner))
                         .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
-                    Serializer s = sb.Build();
+                    Serializer s = (Serializer) sb.Build();
                     s.Serialize(w, this, typeof(T));
                     w.Close();
                 }
@@ -76,7 +76,7 @@ namespace MineNET.Utils.Config
                         .EmitDefaults()
                         .WithTypeInspector(inner => new CommentTypeInspector(inner))
                         .WithEmissionPhaseObjectGraphVisitor(args => new CommentObjectGraphVisitor(args.InnerVisitor));
-                    Serializer s = sb.Build();
+                    Serializer s = (Serializer) sb.Build();
                     s.Serialize(w, this, typeof(T));
                     w.Close();
                 }

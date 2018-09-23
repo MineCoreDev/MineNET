@@ -121,7 +121,7 @@
     <value>最新版の通知</value>
   </data>
   <data name="app.config.showNews" xml:space="preserve">
-    <value>起動時にs最新のニュースを表示する</value>
+    <value>起動時に最新のニュースを表示する</value>
   </data>
   <data name="app.consoleControl.button" xml:space="preserve">
     <value>送信</value>
