@@ -109,6 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\InternalCallAttribute.cs" />
     <Compile Include="BlockEntities\BlockEntity.cs" />
     <Compile Include="BlockEntities\BlockEntityChest.cs" />
     <Compile Include="BlockEntities\BlockEntitySpawnable.cs" />
@@ -208,6 +209,8 @@
     <Compile Include="Events\NetworkEvents\RakNet\PacketSendEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCreateEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerInteractEventArgs.cs" />
+    <Compile Include="Events\ServerEvents\ServerStoppedEventArgs.cs" />
+    <Compile Include="Events\ServerEvents\ServerStartedEventArgs.cs" />
     <Compile Include="Init\BlockInit.cs" />
     <Compile Include="Init\EffectInit.cs" />
     <Compile Include="Init\ItemInit.cs" />
@@ -486,6 +489,7 @@
     </Compile>
     <Compile Include="Server.cs" />
     <Compile Include="ServerConfig.cs" />
+    <Compile Include="ServerInternal.cs" />
     <Compile Include="ServerListInfo.cs" />
     <Compile Include="ServerStatus.cs" />
     <Compile Include="Text\ITextContainer.cs" />
@@ -569,7 +573,6 @@
     <None Include="Resources\File\CreativeItems.json" />
     <None Include="Resources\File\runtimeid_table.json" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

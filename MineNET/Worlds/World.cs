@@ -19,9 +19,8 @@ using MineNET.Worlds.Generators;
 
 namespace MineNET.Worlds
 {
-    public class World
+    public sealed class World
     {
-        #region Const
         public const int MAX_HEIGHT = 256;
 
         public const int BLOCK_UPDATE_NORMAL = 1;
@@ -31,9 +30,9 @@ namespace MineNET.Worlds
         public const int BLOCK_UPDATE_TOUCH = 5;
         public const int BLOCK_UPDATE_REDSTONE = 6;
         public const int BLOCK_UPDATE_TICK = 7;
-        #endregion
 
         #region Static Method
+
         public static void CreateWorld(string worldName)
         {
             World.CreateWorld(worldName, new AnvilWorldSaveFormat(worldName));
@@ -107,9 +106,9 @@ namespace MineNET.Worlds
 
             return false;
         }
+
         #endregion
 
-        #region Property & Field
         public string Name { get; set; } = "World";
         public int Seed { get; private set; } = -1;
         public byte Dimension { get; private set; } = DimensionIDs.OverWorld;
@@ -133,10 +132,8 @@ namespace MineNET.Worlds
         private List<BlockEntity> BlockEntities { get; set; } = new List<BlockEntity>();
 
         private ConcurrentDictionary<Block, int> updateQueue = new ConcurrentDictionary<Block, int>();
-        #endregion
 
-        #region Ctor
-        public World(string worldName, IWorldSaveFormat format)
+        private World(string worldName, IWorldSaveFormat format)
         {
             this.Name = worldName;
             this.Format = format;
@@ -148,9 +145,7 @@ namespace MineNET.Worlds
                 this.Generator = GeneratorManager.GetGenerator("FLAT");
             }
         }
-        #endregion
-
-        #region Update Method
+        
         public void UpdateTick(long tick)
         {
             Entity[] entities = this.Entities.Values.ToArray();
@@ -175,12 +170,11 @@ namespace MineNET.Worlds
                     this.updateQueue.TryRemove(block, out time);
                     continue;
                 }
+
                 this.updateQueue[block] = time;
             }
         }
-        #endregion
 
-        #region Get Block Method
         public Block GetBlock(Vector3 pos)
         {
             Tuple<int, int> chunkPos = new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4);
@@ -210,14 +204,13 @@ namespace MineNET.Worlds
 
             if (flagAll)
             {
-                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos }, UpdateBlockPacket.FLAG_ALL_PRIORITY);
+                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] {pos}, UpdateBlockPacket.FLAG_ALL_PRIORITY);
             }
             else
             {
-                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos });
+                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] {pos});
             }
         }
-        #endregion
 
         public Chunk GetChunk(Tuple<int, int> chunkPos)
         {
@@ -230,6 +223,7 @@ namespace MineNET.Worlds
             {
                 chunk = this.Format.GetChunk(chunkPos.Item1, chunkPos.Item2);
             }
+
             chunk.InternalSetWorld(this);
 
             return chunk;
@@ -270,6 +264,7 @@ namespace MineNET.Worlds
                             this.Format.SetChunk(this.Chunks[chunkKey]);
                             this.Chunks.Remove(chunkKey);
                         }
+
                         double value;
                         player.LoadedChunks.TryRemove(chunkKey, out value);
                     }
@@ -288,6 +283,7 @@ namespace MineNET.Worlds
                         {
                             this.Chunks.Add(pair.Key, chunk);
                         }
+
                         player.LoadedChunks.TryAdd(pair.Key, pair.Value);
                         this.Generator.ChunkGeneration(chunk);
                     }
@@ -338,6 +334,7 @@ namespace MineNET.Worlds
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -396,7 +393,8 @@ namespace MineNET.Worlds
                 return;
             }
 
-            if (!player.Sneaking && item.Item.CanBeActivate && item.Item.Activate(player, this, clicked, blockFace, clickPos))
+            if (!player.Sneaking && item.Item.CanBeActivate &&
+                item.Item.Activate(player, this, clicked, blockFace, clickPos))
             {
                 if (item.Count <= 0)
                 {
@@ -408,6 +406,7 @@ namespace MineNET.Worlds
             {
                 return;
             }
+
             Block hand = item.Item.Block;
             hand.Position = replace.Position;
 
@@ -446,6 +445,7 @@ namespace MineNET.Worlds
             {
                 return;
             }
+
             Block block = this.GetBlock(pos);
 
             //BlockBreakEventArgs blockBreakEvent = new BlockBreakEventArgs(player, block, item);
@@ -558,6 +558,7 @@ namespace MineNET.Worlds
             {
                 return;
             }
+
             this.BlockEntities.Remove(blockEntity);
         }
 

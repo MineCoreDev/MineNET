@@ -13,6 +13,7 @@ namespace MineNET.Items
         public int Count { get; set; } = 1;
 
         public byte[] BinaryTags { get; private set; } = new byte[0];
+
         public bool HasTags
         {
             get
@@ -33,7 +34,6 @@ namespace MineNET.Items
 
         private CompoundTag Tags { get; set; } = null;
 
-        #region construct
         public ItemStack(Item item)
         {
             this.Item = item;
@@ -96,7 +96,6 @@ namespace MineNET.Items
                 this.Tags = tag;
             }
         }
-        #endregion
 
         public ItemStack Clone()
         {
@@ -141,6 +140,7 @@ namespace MineNET.Items
             {
                 this.Tags.Name = "";
             }
+
             return this.Tags;
         }
 
@@ -149,25 +149,30 @@ namespace MineNET.Items
             return this.Equals(obj);
         }
 
-        public bool Equals(object obj, bool checkDamage = true, bool checkCount = true, bool checkNBT = true, bool checkComponents = true)
+        public bool Equals(object obj, bool checkDamage = true, bool checkCount = true, bool checkNBT = true,
+            bool checkComponents = true)
         {
             if (!(obj is ItemStack))
             {
                 return false;
             }
+
             ItemStack stack = (ItemStack) obj;
             if (!this.Item.Equals(stack))
             {
                 return false;
             }
+
             if (checkDamage && this.Damage != stack.Damage)
             {
                 return false;
             }
+
             if (checkCount && this.Count != stack.Count)
             {
                 return false;
             }
+
             if (checkNBT)
             {
                 if (this.HasTags != stack.HasTags)
@@ -182,14 +187,18 @@ namespace MineNET.Items
                     }
                 }
             }
+
             if (checkComponents)
             {
-                if (!((IStructuralEquatable) this.CanPlaceOn).Equals(stack.CanPlaceOn, StructuralComparisons.StructuralEqualityComparer) ||
-                    !((IStructuralEquatable) this.CanDestroy).Equals(stack.CanDestroy, StructuralComparisons.StructuralEqualityComparer))
+                if (!((IStructuralEquatable) this.CanPlaceOn).Equals(stack.CanPlaceOn,
+                        StructuralComparisons.StructuralEqualityComparer) ||
+                    !((IStructuralEquatable) this.CanDestroy).Equals(stack.CanDestroy,
+                        StructuralComparisons.StructuralEqualityComparer))
                 {
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -199,10 +208,12 @@ namespace MineNET.Items
             {
                 return true;
             }
+
             if ((object) A == null || (object) B == null)
             {
                 return false;
             }
+
             return A.Equals(B);
         }
 
@@ -212,10 +223,12 @@ namespace MineNET.Items
             {
                 return false;
             }
+
             if ((object) A == null || (object) B == null)
             {
                 return true;
             }
+
             return !A.Equals(B);
         }
 

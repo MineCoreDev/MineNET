@@ -2,9 +2,5 @@
 {
     public class ServerStopEventArgs : ServerEventArgs
     {
-        public ServerStopEventArgs()
-        {
-            this.Server = Server.Instance;
-        }
     }
 }

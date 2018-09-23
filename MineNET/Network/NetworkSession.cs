@@ -15,14 +15,11 @@ namespace MineNET.Network
 {
     public class NetworkSession
     {
-        #region Static Property
         public static int WindowSize { get; } = 2048;
         public static int TimedOutTime { get; } = 3000;
         public static int SendTimedOut { get; } = 500;
         public static int SendPingTime { get; } = 5000;
-        #endregion
 
-        #region Property & Field
         public IPEndPoint EndPoint { get; }
         public long ClientID { get; }
         public short MTUSize { get; }
@@ -61,9 +58,7 @@ namespace MineNET.Network
         public ConcurrentQueue<DataPacket> ResendQueue { get; set; } = new ConcurrentQueue<DataPacket>();
 
         public SessionState State { get; private set; } = SessionState.Connecting;
-        #endregion
 
-        #region Ctor Method
         public NetworkSession(IPEndPoint endPoint, long clientID, short mtuSize)
         {
             this.Manager = Server.Instance.Network;
@@ -74,9 +69,7 @@ namespace MineNET.Network
 
             this.LastUpdateTime = NetworkSession.TimedOutTime;
         }
-        #endregion
 
-        #region Update Method
         public void OnUpdate()
         {
             if (this.LastUpdateTime < 0)
@@ -158,7 +151,6 @@ namespace MineNET.Network
             --this.LastPingTime;
             --this.LastUpdateTime;
         }
-        #endregion
 
         #region Handle Packet Method
         public void HandleDataPacket(DataPacket packet)
@@ -616,7 +608,6 @@ namespace MineNET.Network
         }
         #endregion
 
-        #region Close Session
         public void Disconnect(string reason)
         {
             this.State = SessionState.Disconnecting;
@@ -642,6 +633,5 @@ namespace MineNET.Network
                 this.Manager = null;
             }
         }
-        #endregion
     }
 }

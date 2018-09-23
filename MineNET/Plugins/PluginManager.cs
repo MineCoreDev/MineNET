@@ -8,21 +8,16 @@ namespace MineNET.Plugins
 {
     public class PluginManager : IDisposable
     {
-        #region Const
         public const string Plugin = ".mnp";
         public const string Package = ".mnpkg";
         public const string Package_Sub = ".zip";
         public const string Library = ".mnlib";
         public const ApiVersion NowVersion = ApiVersion.Version1000;
-        #endregion
 
-        #region Property & Field
         public List<IPlugin> Plugins { get; private set; } = new List<IPlugin>();
         public List<IPlugin> Libraries { get; private set; } = new List<IPlugin>();
         public List<IPlugin> Packages { get; private set; } = new List<IPlugin>();
-        #endregion
 
-        #region Ctor
         public PluginManager()
         {
             string path = Server.ExecutePath;
@@ -59,7 +54,6 @@ namespace MineNET.Plugins
 
             this.EnableAll();
         }
-        #endregion
 
         #region Load Method
         public void LoadLibrary(string path)
@@ -160,7 +154,6 @@ namespace MineNET.Plugins
         }
         #endregion
 
-        #region Enable Method
         public void EnableAll()
         {
             foreach (IPlugin plugin in this.Libraries)
@@ -181,9 +174,7 @@ namespace MineNET.Plugins
                 plugin.OnEnable();
             }
         }
-        #endregion
 
-        #region Disable Method
         public void DisableAll()
         {
             foreach (IPlugin plugin in this.Libraries)
@@ -204,9 +195,7 @@ namespace MineNET.Plugins
                 plugin.OnDisable();
             }
         }
-        #endregion
-
-        #region Close Method
+        
         public void Dispose()
         {
             this.DisableAll();
@@ -218,6 +207,5 @@ namespace MineNET.Plugins
             this.Libraries = null;
             this.Packages = null;
         }
-        #endregion
     }
 }

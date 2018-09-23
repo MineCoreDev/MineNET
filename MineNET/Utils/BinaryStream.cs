@@ -9,34 +9,20 @@ namespace MineNET.Utils
 
         public int Offset
         {
-            get
-            {
-                return this.buffer.Offset;
-            }
+            get { return this.buffer.Offset; }
 
-            set
-            {
-                this.buffer.Offset = value;
-            }
+            set { this.buffer.Offset = value; }
         }
 
         public int Length
         {
-            get
-            {
-                return this.buffer.Length;
-            }
+            get { return this.buffer.Length; }
         }
 
         public bool EndOfStream
         {
-            get
-            {
-                return this.Offset >= this.Length;
-            }
+            get { return this.Offset >= this.Length; }
         }
-
-        #region Ctor Method
 
         public BinaryStream()
         {
@@ -50,8 +36,6 @@ namespace MineNET.Utils
                 this.Reset();
             }
         }
-
-        #endregion
 
         #region Public Method
 

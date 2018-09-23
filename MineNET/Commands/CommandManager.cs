@@ -1,29 +1,25 @@
-﻿using MineNET.Commands.Defaults;
-using System;
+﻿using System;
+using MineNET.Commands.Defaults;
 
 namespace MineNET.Commands
 {
     public class CommandManager : IDisposable
     {
-        #region Property & Field
         public ICommandHandler CommandHandler { get; set; }
-        #endregion
 
-        #region Ctor
         public CommandManager()
         {
             this.CommandHandler = new CommandHandler(this);
             this.RegisterDefaultCommands();
         }
-        #endregion
 
-        #region Get Command Method
         public Command GetCommand(string cmd)
         {
             if (MineNET_Registries.Command.ContainsKey(cmd))
             {
                 return MineNET_Registries.Command[cmd];
             }
+
             return null;
         }
 
@@ -39,9 +35,7 @@ namespace MineNET.Commands
                 return false;
             }
         }
-        #endregion
 
-        #region Register / UnRegister Command Method
         public bool RegisterCommand(Command cmd)
         {
             bool result = false;
@@ -60,6 +54,7 @@ namespace MineNET.Commands
                         MineNET_Registries.Command.Add(cmd.Aliases[i], cmd);
                     }
                 }
+
                 result = true;
             }
 
@@ -92,27 +87,23 @@ namespace MineNET.Commands
                         MineNET_Registries.Command.Remove(cmd.Aliases[i]);
                     }
                 }
+
                 result = true;
             }
 
             return result;
         }
-        #endregion
 
-        #region Default Command Register Method
         private void RegisterDefaultCommands()
         {
             this.RegisterCommand(new StopCommand());
             this.RegisterCommand(new GiveCommand());
             this.RegisterCommand(new GameModeCommand());
         }
-        #endregion
 
-        #region Dispose Method
         public void Dispose()
         {
             this.CommandHandler = null;
         }
-        #endregion
     }
 }

@@ -2,9 +2,5 @@
 {
     public class ServerStartEventArgs : ServerEventArgs
     {
-        public ServerStartEventArgs()
-        {
-            this.Server = Server.Instance;
-        }
     }
 }
