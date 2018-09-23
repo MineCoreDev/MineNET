@@ -4,6 +4,18 @@ namespace MineNET.Events.PlayerEvents
 {
     public sealed class PlayerEvent
     {
+        public event EventHandler<PlayerBlockPickRequestEventArgs> PlayerBlockPickRequest;
+        public void OnPlayerBlockPickRequest(object sender, PlayerBlockPickRequestEventArgs e)
+        {
+            this.PlayerBlockPickRequest?.Invoke(sender, e);
+        }
+
+        public event EventHandler<PlayerChatEventArgs> PlayerChat;
+        public void OnPlayerChant(object sender, PlayerChatEventArgs e)
+        {
+            this.PlayerChat?.Invoke(sender, e);
+        }
+
         public event EventHandler<PlayerCommandEventArgs> PlayerCommand;
         public void OnPlayerCommand(object sender, PlayerCommandEventArgs e)
         {
@@ -17,9 +29,45 @@ namespace MineNET.Events.PlayerEvents
         }
 
         public event EventHandler<PlayerInteractEventArgs> PlayerInteract;
-        public void onPlayerInteract(object sender, PlayerInteractEventArgs e)
+        public void OnPlayerInteract(object sender, PlayerInteractEventArgs e)
         {
             this.PlayerInteract?.Invoke(sender, e);
+        }
+
+        public event EventHandler<PlayerJumpEventArgs> PlayerJump;
+        public void OnPlayerJump(object sender, PlayerJumpEventArgs e)
+        {
+            this.PlayerJump?.Invoke(sender, e);
+        }
+
+        public event EventHandler<PlayerLoginEventArgs> PlayerLogin;
+        public void OnPlayerLogin(object sender, PlayerLoginEventArgs e)
+        {
+            this.PlayerLogin?.Invoke(sender, e);
+        }
+
+        public event EventHandler<PlayerPreLoginEventArgs> PlayerPreLogin;
+        public void OnPlayerPreLogin(object sender, PlayerPreLoginEventArgs e)
+        {
+            this.PlayerPreLogin?.Invoke(sender, e);
+        }
+
+        public event EventHandler<PlayerToggleGlideEventArgs> PlayerToggleGlide;
+        public void OnPlayerToggleGlide(object sender, PlayerToggleGlideEventArgs e)
+        {
+            this.PlayerToggleGlide?.Invoke(sender, e);
+        }
+
+        public event EventHandler<PlayerToggleSneakEventArgs> PlayerToggleSneak;
+        public void OnPlayerToggleSneak(object sender, PlayerToggleSneakEventArgs e)
+        {
+            this.PlayerToggleSneak?.Invoke(sender, e);
+        }
+
+        public event EventHandler<PlayerToggleSprintEventArgs> PlayerToggleSprint;
+        public void OnPlayerToggleSprint(object sender, PlayerToggleSprintEventArgs e)
+        {
+            this.PlayerToggleSprint?.Invoke(sender, e);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using MineNET.Blocks;
+using MineNET.IO;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 
@@ -156,7 +157,7 @@ namespace MineNET.Items
                 return false;
             }
             ItemStack stack = (ItemStack) obj;
-            if (!this.Item.Equals(stack))
+            if (!this.Item.Equals(stack.Item))
             {
                 return false;
             }
@@ -187,6 +188,7 @@ namespace MineNET.Items
                 if (!((IStructuralEquatable) this.CanPlaceOn).Equals(stack.CanPlaceOn, StructuralComparisons.StructuralEqualityComparer) ||
                     !((IStructuralEquatable) this.CanDestroy).Equals(stack.CanDestroy, StructuralComparisons.StructuralEqualityComparer))
                 {
+                    Logger.Info("7");
                     return false;
                 }
             }
