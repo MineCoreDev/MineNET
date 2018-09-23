@@ -616,12 +616,21 @@ namespace MineNET.Entities.Players
                 this.SendPacket(pk, flag: RakNetProtocol.FlagImmediate);
             }
 
+            this.Close();
+
+            Server.Instance.Network.GetSession(this.EndPoint)?.Disconnect(reason);
+        }
+
+        public override void Close()
+        {
             if (this.HasSpawned)
             {
                 this.Save();
             }
 
-            Server.Instance.Network.GetSession(this.EndPoint)?.Disconnect(reason);
+            this.World?.UnLoadChunks(this);
+
+            this.Closed = true;
         }
 
         #endregion

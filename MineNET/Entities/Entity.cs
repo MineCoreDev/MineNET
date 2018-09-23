@@ -423,6 +423,16 @@ namespace MineNET.Entities
         }
         #endregion
 
+        public virtual void Kill()
+        {
+            this.Close();
+        }
+
+        public virtual void Close()
+        {
+            this.Closed = true;
+        }
+
         public Position Position
         {
             get
