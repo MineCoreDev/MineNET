@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using MineNET.Blocks;
 using MineNET.Commands;
@@ -12,6 +13,8 @@ using MineNET.Inventories.Transactions.Action;
 using MineNET.Inventories.Transactions.Data;
 using MineNET.IO;
 using MineNET.Items;
+using MineNET.NBT.Data;
+using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network;
 using MineNET.Network.MinecraftPackets;
@@ -19,6 +22,7 @@ using MineNET.Network.RakNetPackets;
 using MineNET.Text;
 using MineNET.Values;
 using MineNET.Worlds;
+using MineNET.Worlds.Dimensions;
 using MineNET.Worlds.Rule;
 
 namespace MineNET.Entities.Players
@@ -53,6 +57,10 @@ namespace MineNET.Entities.Players
         public bool HasSpawned { get; private set; }
         public bool AnySendChunk { get; private set; }
         public int RequestChunkRadius { get; private set; } = 8;
+
+        public int SpawnX { get; set; }
+        public int SpawnY { get; set; }
+        public int SpawnZ { get; set; }
 
         public override float Width { get; } = 0.60f;
         public override float Height { get; } = 1.80f;
@@ -368,12 +376,7 @@ namespace MineNET.Entities.Players
 
                 this.IsLogined = true;
 
-                //TODO: Load NBT
-
-                this.World = World.GetMainWorld();
-                this.X = 128;
-                this.Y = 6;
-                this.Z = 128;
+                this.Load();
 
                 StartGamePacket startGamePacket = new StartGamePacket();
                 startGamePacket.EntityUniqueId = this.EntityID;
@@ -385,7 +388,7 @@ namespace MineNET.Entities.Players
                 startGamePacket.WorldGamemode = this.World.Gamemode;
                 startGamePacket.Difficulty = this.World.Difficulty;
                 startGamePacket.SpawnX = this.World.SpawnX;
-                startGamePacket.SpawnY = 5; //TODO: Safe Spawn
+                startGamePacket.SpawnY = this.World.SpawnY;
                 startGamePacket.SpawnZ = this.World.SpawnZ;
                 startGamePacket.WorldName = this.World.Name;
 
@@ -409,19 +412,11 @@ namespace MineNET.Entities.Players
                 };
                 this.PlayerListEntry.UpdateAll();
 
-                AdventureSettingsEntry adventureSettingsEntry = new AdventureSettingsEntry();
-                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, false);
-                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_PVP, false);
-                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.AUTO_JUMP, false);
-                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, true);
-                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_CLIP, false);
-                adventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, false);
-                adventureSettingsEntry.CommandPermission =
+                this.AdventureSettingsEntry.CommandPermission =
                     PlayerPermissions.OPERATOR; //this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
-                adventureSettingsEntry.PlayerPermission =
+                this.AdventureSettingsEntry.PlayerPermission =
                     PlayerPermissions.OPERATOR; //this.Op ? PlayerPermissions.OPERATOR : PlayerPermissions.MEMBER;
-                adventureSettingsEntry.EntityUniqueId = this.EntityID;
-                this.AdventureSettingsEntry = adventureSettingsEntry;
+                this.AdventureSettingsEntry.EntityUniqueId = this.EntityID;
                 this.AdventureSettingsEntry.Update(this);
 
                 this.Attributes.Update(this);
@@ -621,7 +616,21 @@ namespace MineNET.Entities.Players
                 this.SendPacket(pk, flag: RakNetProtocol.FlagImmediate);
             }
 
+            this.Close();
+
             Server.Instance.Network.GetSession(this.EndPoint)?.Disconnect(reason);
+        }
+
+        public override void Close()
+        {
+            if (this.HasSpawned)
+            {
+                this.Save();
+            }
+
+            this.World?.UnLoadChunks(this);
+
+            this.Closed = true;
         }
 
         #endregion
@@ -705,16 +714,79 @@ namespace MineNET.Entities.Players
 
         #endregion
 
+        #region Init NBT
+
+        public override void InitNBT()
+        {
+            CompoundTag tag = this.NamedTag;
+            tag.PutInt("Dimension", DimensionIDs.OverWorld);
+            tag.PutInt("PlayerGameType", Server.Instance.ServerProperty.GameMode.GetIndex());
+
+            tag.PutInt("Score", 0);
+
+            tag.PutInt("SelectedItemSlot", 0);
+            tag.PutCompound("SelectedItem", NBTIO.WriteItem(new ItemStack(Item.Get(BlockIDs.AIR))));
+
+            this.World = World.GetMainWorld();
+            tag.PutString("LastWorldName", this.World.Name);
+
+            tag.PutInt("SpawnX", this.World.SpawnX);
+            tag.PutInt("SpawnY", this.World.SpawnY);
+            tag.PutInt("SpawnZ", this.World.SpawnZ);
+
+            tag.PutFloat("LastX", this.World.SpawnX);
+            tag.PutFloat("LastY", this.World.SpawnY);
+            tag.PutFloat("LastZ", this.World.SpawnZ);
+        }
+
+        #endregion
+
         #region Load & Save Method
 
         public void Load()
         {
+            string path = $"{Server.PlayerDataPath}\\{this.LoginData.XUID}.dat";
+            if (!File.Exists(path))
+            {
+                this.InitNBT();
+                NBTIO.WriteGZIPFile(path, this.NamedTag, NBTEndian.BIG_ENDIAN);
+            }
+            else
+            {
+                this.NamedTag = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
+            }
 
+            this.World = World.GetWorld(this.NamedTag.GetString("LastWorld")) ?? World.GetMainWorld();
+
+            this.X = this.NamedTag.GetFloat("LastX");
+            this.Y = this.NamedTag.GetFloat("LastY");
+            this.Z = this.NamedTag.GetFloat("LastZ");
+
+            this.SpawnX = this.NamedTag.GetInt("SpawnX");
+            this.SpawnY = this.NamedTag.GetInt("SpawnY");
+            this.SpawnZ = this.NamedTag.GetInt("SpawnZ");
+
+            this.AdventureSettingsEntry = new AdventureSettingsEntry();
+
+            this.GameMode = GameModeExtention.FromIndex(this.NamedTag.GetInt("PlayerGameType"));
         }
 
         public void Save()
         {
+            this.NamedTag.PutInt("PlayerGameType", this.GameMode.GetIndex());
 
+            this.NamedTag.PutString("LastWorldName", this.World.Name);
+
+            this.NamedTag.PutInt("SpawnX", this.SpawnX);
+            this.NamedTag.PutInt("SpawnY", this.SpawnY);
+            this.NamedTag.PutInt("SpawnZ", this.SpawnZ);
+
+            this.NamedTag.PutFloat("LastX", this.X);
+            this.NamedTag.PutFloat("LastY", this.Y);
+            this.NamedTag.PutFloat("LastZ", this.Z);
+
+            string path = $"{Server.PlayerDataPath}\\{this.LoginData.XUID}.dat";
+            NBTIO.WriteGZIPFile(path, this.NamedTag, NBTEndian.BIG_ENDIAN);
         }
 
         #endregion

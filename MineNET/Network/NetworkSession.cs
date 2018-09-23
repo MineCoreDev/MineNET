@@ -1,15 +1,15 @@
-﻿using MineNET.Entities.Players;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO.Compression;
+using System.Net;
+using MineNET.Entities.Players;
 using MineNET.Events.NetworkEvents;
 using MineNET.Events.NetworkEvents.RakNet;
 using MineNET.IO;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Network.RakNetPackets;
 using MineNET.Utils;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO.Compression;
-using System.Net;
 
 namespace MineNET.Network
 {

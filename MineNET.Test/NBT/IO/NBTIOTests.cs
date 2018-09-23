@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
-using System;
 
 namespace MineNET.NBT.IO.Tests
 {

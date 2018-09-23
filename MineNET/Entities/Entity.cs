@@ -358,7 +358,7 @@ namespace MineNET.Entities
         public virtual bool IsPlayer { get { return false; } }
         public bool Closed { get; protected set; }
 
-        public CompoundTag NamedTag { get; }
+        public CompoundTag NamedTag { get; protected set; }
         public EntityMetadataManager DataProperties { get; private set; }
         #endregion
 
@@ -407,12 +407,31 @@ namespace MineNET.Entities
             return new Vector2(((int) this.X) >> 4, ((int) this.Z) >> 4);
         }
 
+        #region Init NBT
+
+        public virtual void InitNBT()
+        {
+
+        }
+
+        #endregion
+
         #region Save Method
-        public void SaveNBT()
+        public virtual void SaveNBT()
         {
             throw new NotImplementedException();
         }
         #endregion
+
+        public virtual void Kill()
+        {
+            this.Close();
+        }
+
+        public virtual void Close()
+        {
+            this.Closed = true;
+        }
 
         public Position Position
         {

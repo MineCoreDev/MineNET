@@ -1,16 +1,16 @@
-﻿using MineNET.Entities.Players;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+using MineNET.Entities.Players;
 using MineNET.Events.NetworkEvents;
 using MineNET.Events.NetworkEvents.RakNet;
 using MineNET.Events.PlayerEvents;
 using MineNET.IO;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Network.RakNetPackets;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading;
 
 namespace MineNET.Network
 {
@@ -441,6 +441,10 @@ namespace MineNET.Network
             {
                 Player player;
                 this.Players.TryRemove(endPointStr, out player);
+                if (!player.Closed)
+                {
+                    player.Close();
+                }
             }
         }
         #endregion

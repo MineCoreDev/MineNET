@@ -176,8 +176,6 @@ namespace MineNET
             this.Status = ServerStatus.Stop;
 
             //TODO: ServerErrorStopedEvent...
-
-            Environment.Exit(-1);
         }
 
         public void StartUpdate()
@@ -309,23 +307,26 @@ namespace MineNET
             }
 
             Player[] players = this.GetPlayers();
-            for (int i = 0; i < players.Length; ++i)
+            for (int i = 0; i < players.Length; i++)
             {
                 players[i].UpdateTick(tick);
             }
 
             World[] worlds = this.GetWorlds();
-            for (int i = 0; i < worlds.Length; ++i)
+            for (int i = 0; i < worlds.Length; i++)
             {
                 worlds[i].UpdateTick(tick);
             }
 
             if (this.InvokeMainThreadActions.Count > 0)
             {
-                Action action = null;
-                if (this.InvokeMainThreadActions.TryDequeue(out action))
+                for (int i = 0; i < this.InvokeMainThreadActions.Count; i++)
                 {
-                    action();
+                    Action action = null;
+                    if (this.InvokeMainThreadActions.TryDequeue(out action))
+                    {
+                        action();
+                    }
                 }
             }
 
