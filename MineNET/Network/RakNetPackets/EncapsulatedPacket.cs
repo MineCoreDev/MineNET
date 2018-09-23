@@ -62,7 +62,7 @@ namespace MineNET.Network.RakNetPackets
                 pk.SplitIndex = stream.ReadInt();
             }
 
-            pk.Buffer = stream.ReadBytes();
+            pk.Buffer = stream.ReadBytes(length);
             pk.Length = pk.Buffer.Length;
 
             buffer = stream.ReadBytes();
@@ -72,7 +72,8 @@ namespace MineNET.Network.RakNetPackets
 
         public int GetTotalLength()
         {
-            return 3 + this.Buffer.Length + (this.MessageIndex != -1 ? 3 : 0) + (this.OrderIndex != -1 ? 4 : 0) + (this.HasSplit ? 10 : 0);
+            return 3 + this.Buffer.Length + (this.MessageIndex != -1 ? 3 : 0) + (this.OrderIndex != -1 ? 4 : 0) +
+                   (this.HasSplit ? 10 : 0);
         }
 
         public byte[] ToResult(bool internalCall = false)
@@ -91,11 +92,14 @@ namespace MineNET.Network.RakNetPackets
 
             if (this.Reliability > RakNetPacketReliability.UNRELIABLE)
             {
-                if (this.Reliability >= RakNetPacketReliability.RELIABLE && this.Reliability != RakNetPacketReliability.UNRELIABLE_WITH_ACK_RECEIPT)
+                if (this.Reliability >= RakNetPacketReliability.RELIABLE &&
+                    this.Reliability != RakNetPacketReliability.UNRELIABLE_WITH_ACK_RECEIPT)
                 {
                     stream.WriteLTriad(this.MessageIndex);
                 }
-                if (this.Reliability <= RakNetPacketReliability.RELIABLE_SEQUENCED && this.Reliability != RakNetPacketReliability.RELIABLE)
+
+                if (this.Reliability <= RakNetPacketReliability.RELIABLE_SEQUENCED &&
+                    this.Reliability != RakNetPacketReliability.RELIABLE)
                 {
                     stream.WriteLTriad(this.OrderIndex);
                     stream.WriteByte((byte) this.OrderChannel);

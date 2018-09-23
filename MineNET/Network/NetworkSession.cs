@@ -28,18 +28,21 @@ namespace MineNET.Network
 
         public int LastUpdateTime { get; private set; }
         public int LastSendTime { get; private set; }
-        public int LastPingTime { get; private set; } = NetworkSession.SendPingTime;
+        public int LastPingTime { get; private set; } = SendPingTime;
 
         public int MessageIndex { get; private set; }
 
         public ConcurrentDictionary<int, int> ACKQueue { get; private set; } = new ConcurrentDictionary<int, int>();
         public ConcurrentDictionary<int, int> NACKQueue { get; private set; } = new ConcurrentDictionary<int, int>();
 
-        public ConcurrentDictionary<int, DataPacket> PacketToSend { get; private set; } = new ConcurrentDictionary<int, DataPacket>();
+        public ConcurrentDictionary<int, DataPacket> PacketToSend { get; private set; } =
+            new ConcurrentDictionary<int, DataPacket>();
 
         public int WindowStart { get; private set; }
-        public int WindowEnd { get; private set; } = NetworkSession.WindowSize;
-        public ConcurrentDictionary<int, int> ReceivedWindow { get; private set; } = new ConcurrentDictionary<int, int>();
+        public int WindowEnd { get; private set; } = WindowSize;
+
+        public ConcurrentDictionary<int, int> ReceivedWindow { get; private set; } =
+            new ConcurrentDictionary<int, int>();
 
         public int LastSeqNumber { get; private set; } = -1;
         public int LastSendSeqNumber { get; private set; } = 0;
@@ -48,13 +51,19 @@ namespace MineNET.Network
         public int OrderIndex { get; private set; }
 
         public DataPacket SendQueue { get; private set; } = new DataPacket4();
-        public ConcurrentDictionary<int, ConcurrentDictionary<int, EncapsulatedPacket>> SplitPackets { get; set; } = new ConcurrentDictionary<int, ConcurrentDictionary<int, EncapsulatedPacket>>();
+
+        public ConcurrentDictionary<int, ConcurrentDictionary<int, EncapsulatedPacket>> SplitPackets { get; set; } =
+            new ConcurrentDictionary<int, ConcurrentDictionary<int, EncapsulatedPacket>>();
 
         public int ReliableWindowStart { get; private set; }
-        public int ReliableWindowEnd { get; private set; } = NetworkSession.WindowSize;
-        public ConcurrentDictionary<int, bool> ReliableWindow { get; private set; } = new ConcurrentDictionary<int, bool>();
+        public int ReliableWindowEnd { get; private set; } = WindowSize;
 
-        public ConcurrentDictionary<int, DataPacket> SendedPacket { get; private set; } = new ConcurrentDictionary<int, DataPacket>();
+        public ConcurrentDictionary<int, bool> ReliableWindow { get; private set; } =
+            new ConcurrentDictionary<int, bool>();
+
+        public ConcurrentDictionary<int, DataPacket> SendedPacket { get; private set; } =
+            new ConcurrentDictionary<int, DataPacket>();
+
         public ConcurrentQueue<DataPacket> ResendQueue { get; set; } = new ConcurrentQueue<DataPacket>();
 
         public SessionState State { get; private set; } = SessionState.Connecting;
@@ -67,7 +76,7 @@ namespace MineNET.Network
             this.ClientID = clientID;
             this.MTUSize = mtuSize;
 
-            this.LastUpdateTime = NetworkSession.TimedOutTime;
+            this.LastUpdateTime = TimedOutTime;
         }
 
         public void OnUpdate()
@@ -86,6 +95,7 @@ namespace MineNET.Network
                 {
                     pks.Add(kv.Value);
                 }
+
                 pks.Sort();
 
                 pk.Packets = pks.ToArray();
@@ -102,6 +112,7 @@ namespace MineNET.Network
                 {
                     pks.Add(kv.Value);
                 }
+
                 pks.Sort();
 
                 pk.Packets = pks.ToArray();
@@ -134,6 +145,7 @@ namespace MineNET.Network
                         this.ResendQueue.Enqueue(pk);
                         return;
                     }
+
                     --pk.SendTimedOut;
                 }
             }
@@ -153,9 +165,11 @@ namespace MineNET.Network
         }
 
         #region Handle Packet Method
+
         public void HandleDataPacket(DataPacket packet)
         {
-            if (packet.SeqNumber < this.WindowStart || packet.SeqNumber > this.WindowEnd || this.ACKQueue.ContainsKey(packet.SeqNumber))
+            if (packet.SeqNumber < this.WindowStart || packet.SeqNumber > this.WindowEnd ||
+                this.ACKQueue.ContainsKey(packet.SeqNumber))
             {
                 return;
             }
@@ -167,9 +181,10 @@ namespace MineNET.Network
             {
                 return;
             }
+
             packet = ev.Packet;
 
-            this.LastUpdateTime = this.LastUpdateTime = NetworkSession.TimedOutTime;
+            this.LastUpdateTime = this.LastUpdateTime = TimedOutTime;
 
             if (this.NACKQueue.ContainsKey(packet.SeqNumber))
             {
@@ -215,16 +230,15 @@ namespace MineNET.Network
         {
             if (packet.MessageIndex != -1)
             {
-                if (packet.MessageIndex < this.ReliableWindowStart || packet.MessageIndex > this.ReliableWindowEnd || this.ReliableWindow.ContainsKey(packet.MessageIndex))
+                if (packet.MessageIndex < this.ReliableWindowStart || packet.MessageIndex > this.ReliableWindowEnd ||
+                    this.ReliableWindow.ContainsKey(packet.MessageIndex))
                 {
                     return;
                 }
 
                 this.ReliableWindow[packet.MessageIndex] = true;
 
-                ++this.ReliableWindowStart;
-                ++this.ReliableWindowEnd;
-                /*if (packet.MessageIndex == this.ReliableWindowStart)
+                if (packet.MessageIndex == this.ReliableWindowStart)
                 {
                     for (; this.ReliableWindow.ContainsKey(this.ReliableWindowStart); ++this.ReliableWindowStart)
                     {
@@ -233,7 +247,7 @@ namespace MineNET.Network
 
                         ++this.ReliableWindowEnd;
                     }
-                }*/
+                }
 
                 if (packet.HasSplit && (packet = this.HandleSplit(packet)) == null)
                 {
@@ -247,6 +261,7 @@ namespace MineNET.Network
                 {
                     return;
                 }
+
                 packet = ev.Packet;
 
                 this.HandleEncapsulatedPacketRoute(packet);
@@ -280,7 +295,8 @@ namespace MineNET.Network
                             shd.SendPing = ccd.SendPing;
                             shd.SendPong = ccd.SendPing + 1000;
 
-                            this.QueueConnectedPacket(shd, RakNetPacketReliability.UNRELIABLE, -1, RakNetProtocol.FlagImmediate);
+                            this.QueueConnectedPacket(shd, RakNetPacketReliability.UNRELIABLE, -1,
+                                RakNetProtocol.FlagImmediate);
                         }
                         else if (id == RakNetProtocol.ClientHandShakeDataPacket)
                         {
@@ -302,13 +318,13 @@ namespace MineNET.Network
                         OnlinePong pong = new OnlinePong();
                         pong.PingID = ping.PingID;
 
-                        this.LastPingTime = NetworkSession.SendPingTime;
+                        this.LastPingTime = SendPingTime;
 
-                        this.QueueConnectedPacket(pong, RakNetPacketReliability.UNRELIABLE, -1, RakNetProtocol.FlagImmediate);
+                        this.QueueConnectedPacket(pong, RakNetPacketReliability.UNRELIABLE, -1,
+                            RakNetProtocol.FlagImmediate);
                     }
                     else if (id == RakNetProtocol.OnlinePong)
                     {
-
                     }
                 }
                 else if (this.State == SessionState.Connected)
@@ -335,6 +351,7 @@ namespace MineNET.Network
                 {
                     return;
                 }
+
                 packet = ev.Packet;
 
                 this.HandleMinecraftPacket(packet, player);
@@ -362,7 +379,8 @@ namespace MineNET.Network
 
                         if (Server.Instance.Config.PacketDebug)
                         {
-                            Logger.Debug("%server.network.minecraft.receivePacket", buffer[0].ToString("X"), buffer.Length);
+                            Logger.Debug("%server.network.minecraft.receivePacket", buffer[0].ToString("X"),
+                                buffer.Length);
                         }
 
 
@@ -447,9 +465,11 @@ namespace MineNET.Network
                 }
             }
         }
+
         #endregion
 
         #region Send Packet Method
+
         public void AddEncapsulatedToQueue(EncapsulatedPacket packet, int flags = RakNetProtocol.FlagNormal)
         {
             if (RakNetPacketReliability.IsOrdered(packet.Reliability))
@@ -498,7 +518,8 @@ namespace MineNET.Network
             }
         }
 
-        public void QueueConnectedPacket(RakNetPacket packet, int reliability, int orderChannel, int flags = RakNetProtocol.FlagNormal)
+        public void QueueConnectedPacket(RakNetPacket packet, int reliability, int orderChannel,
+            int flags = RakNetProtocol.FlagNormal)
         {
             packet.Encode();
 
@@ -514,6 +535,7 @@ namespace MineNET.Network
             {
                 return;
             }
+
             pk = ev.Packet;
 
             this.AddEncapsulatedToQueue(pk, flags);
@@ -539,6 +561,7 @@ namespace MineNET.Network
             {
                 pk.CompressionLevel = CompressionLevel.Optimal;
             }
+
             pk.Payload = st.ToArray();
 
             string endPointStr = this.EndPoint.ToString();
@@ -550,6 +573,7 @@ namespace MineNET.Network
             {
                 return;
             }
+
             pk = ev.Packet;
 
             this.QueueConnectedPacket(pk, reliability, -1, flags);
@@ -557,11 +581,11 @@ namespace MineNET.Network
 
         public void AddToQueue(EncapsulatedPacket pk, int flags = RakNetProtocol.FlagNormal)
         {
-            flags = RakNetProtocol.FlagImmediate;//HACK: Packet Send Bug...
+            flags = RakNetProtocol.FlagImmediate; //HACK: Packet Send Bug...
             if (flags == RakNetProtocol.FlagImmediate)
             {
                 DataPacket p = new DataPacket0();
-                p.Packets = new object[] { pk };
+                p.Packets = new object[] {pk};
                 this.SendDatagram(p);
                 return;
             }
@@ -595,6 +619,7 @@ namespace MineNET.Network
             {
                 return;
             }
+
             pk = ev.Packet;
 
             pk.SeqNumber = this.LastSendSeqNumber++;
@@ -606,6 +631,7 @@ namespace MineNET.Network
         {
             this.Manager?.Send(this.EndPoint, pk);
         }
+
         #endregion
 
         public void Disconnect(string reason)
