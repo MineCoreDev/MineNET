@@ -2,7 +2,7 @@
 
 namespace MineNET.Events.InventoryEvents
 {
-    public sealed class InventoryEvents
+    public sealed class InventoryEvent
     {
         public event EventHandler<InventoryCloseEventArgs> InventoryClose;
         public void OnInventoryClose(object sender, InventoryCloseEventArgs e)

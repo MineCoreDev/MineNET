@@ -1,4 +1,5 @@
-﻿using MineNET.Values;
+﻿using MineNET.Data;
+using MineNET.Values;
 
 namespace MineNET.Network.MinecraftPackets
 {
@@ -35,7 +36,7 @@ namespace MineNET.Network.MinecraftPackets
         public long EntityRuntimeId { get; set; }
         public int Action { get; set; }
         public BlockCoordinate3D Position { get; set; }
-        public int Face { get; set; }
+        public BlockFace Face { get; set; }
 
         public override void Encode()
         {
@@ -44,7 +45,7 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteVarInt(this.Action);
             this.WriteBlockVector3(this.Position);
-            this.WriteVarInt(this.Face);
+            this.WriteBlockFace(this.Face);
         }
 
         public override void Decode()
@@ -54,7 +55,7 @@ namespace MineNET.Network.MinecraftPackets
             this.EntityRuntimeId = this.ReadEntityRuntimeId();
             this.Action = this.ReadVarInt();
             this.Position = this.ReadBlockVector3();
-            this.Face = this.ReadVarInt();
+            this.Face = this.ReadBlockFace();
         }
     }
 }

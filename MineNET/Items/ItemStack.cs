@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using MineNET.Blocks;
+using MineNET.IO;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 
@@ -158,7 +159,7 @@ namespace MineNET.Items
             }
 
             ItemStack stack = (ItemStack) obj;
-            if (!this.Item.Equals(stack))
+            if (!this.Item.Equals(stack.Item))
             {
                 return false;
             }
@@ -195,6 +196,7 @@ namespace MineNET.Items
                     !((IStructuralEquatable) this.CanDestroy).Equals(stack.CanDestroy,
                         StructuralComparisons.StructuralEqualityComparer))
                 {
+                    Logger.Info("7");
                     return false;
                 }
             }

@@ -7,6 +7,7 @@ using MineNET.Blocks;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
+using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
 using MineNET.Inventories.Transactions;
 using MineNET.Inventories.Transactions.Action;
@@ -249,6 +250,10 @@ namespace MineNET.Entities.Players
             {
                 this.HandleResourcePackClientResponsePacket((ResourcePackClientResponsePacket) packet);
             }
+            else if (packet is TextPacket) //0x09
+            {
+                this.HandleTextPacket((TextPacket) packet);
+            }
             else if (packet is MovePlayerPacket) //0x13
             {
                 this.HandleMovePlayerPacket((MovePlayerPacket) packet);
@@ -257,9 +262,21 @@ namespace MineNET.Entities.Players
             {
                 this.HandleInventoryTransactionPacket((InventoryTransactionPacket) packet);
             }
-            else if (packet is BlockPickRequestPacket)//0x22
+            else if (packet is MobEquipmentPacket) //0x1f
+            {
+                this.MobEquipmentHandle((MobEquipmentPacket) packet);
+            }
+            else if (packet is BlockPickRequestPacket) //0x22
             {
                 this.HandleBlockPickRequestPacket((BlockPickRequestPacket) packet);
+            }
+            else if (packet is PlayerActionPacket) //0x24
+            {
+                this.HandlePlayerActionPacket((PlayerActionPacket) packet);
+            }
+            else if (packet is AnimatePacket) //0x2c
+            {
+                this.HandleAnimatePacket((AnimatePacket) packet);
             }
             else if (packet is RequestChunkRadiusPacket) //0x45
             {
@@ -274,11 +291,11 @@ namespace MineNET.Entities.Players
                 this.HandleSetLocalPlayerAsInitializedPacket((SetLocalPlayerAsInitializedPacket) packet);
             }
 
-            packet.Clone();
+            packet.Dispose();
         }
 
-        //0x01
-        private void HandleLoginPacket(LoginPacket pk)
+        #region LoginPacket 0x01
+        protected virtual void HandleLoginPacket(LoginPacket pk)
         {
             if (this.IsPreLogined)
             {
@@ -332,7 +349,14 @@ namespace MineNET.Entities.Players
             this.ClientData = pk.ClientData;
             this.Skin = this.ClientData.Skin;
 
-            //TODO: Event
+            PlayerPreLoginEventArgs args = new PlayerPreLoginEventArgs(this);
+            Server.Instance.Event.Player.OnPlayerPreLogin(this, args);
+            if (args.IsCancel)
+            {
+                this.Close(args.KickMessage);
+                return;
+            }
+
 
             this.IsPreLogined = true;
 
@@ -341,9 +365,10 @@ namespace MineNET.Entities.Players
             ResourcePacksInfoPacket info = new ResourcePacksInfoPacket();
             this.SendPacket(info);
         }
+        #endregion
 
-        //0x08
-        private void HandleResourcePackClientResponsePacket(ResourcePackClientResponsePacket pk)
+        #region ResourcePackClientResponsePacket 0x08
+        protected virtual void HandleResourcePackClientResponsePacket(ResourcePackClientResponsePacket pk)
         {
             if (this.PackSyncCompleted)
             {
@@ -372,7 +397,13 @@ namespace MineNET.Entities.Players
                     return;
                 }
 
-                //TODO: Event
+                PlayerLoginEventArgs args = new PlayerLoginEventArgs(this);
+                Server.Instance.Event.Player.OnPlayerLogin(this, args);
+                if (args.IsCancel)
+                {
+                    this.Close(args.KickMessage);
+                    return;
+                }
 
                 this.IsLogined = true;
 
@@ -428,9 +459,31 @@ namespace MineNET.Entities.Players
                 this.Inventory.SendCreativeItems();
             }
         }
+        #endregion
 
-        //0x13
-        private void HandleMovePlayerPacket(MovePlayerPacket pk)
+        #region TextPacket 0x09
+        protected virtual void HandleTextPacket(TextPacket pk)
+        {
+            if (pk.Type == TextPacket.TYPE_CHAT)
+            {
+                string message = pk.Message.Trim();
+                if (message != "" && message.Length < 256)
+                {
+                    PlayerChatEventArgs args = new PlayerChatEventArgs(this, message);
+                    Server.Instance.Event.Player.OnPlayerChant(this, args);
+                    if (args.IsCancel)
+                    {
+                        return;
+                    }
+                    message = $"<{this.Name}§f> {args.Message}§f";
+                    Server.Instance.BroadcastChat(message);
+                }
+            }
+        }
+        #endregion
+
+        #region MovePlayerPacket 0x13
+        protected virtual void HandleMovePlayerPacket(MovePlayerPacket pk)
         {
             Vector3 pos = pk.Position;
             Vector3 direction = pk.Direction;
@@ -444,9 +497,10 @@ namespace MineNET.Entities.Players
             this.Pitch = direction.X;
             this.Yaw = direction.Y;
         }
+        #endregion
 
-        //0x1e
-        private void HandleInventoryTransactionPacket(InventoryTransactionPacket pk)
+        #region InventoryTransactionPacket 0x1e
+        protected virtual void HandleInventoryTransactionPacket(InventoryTransactionPacket pk)
         {
             List<InventoryAction> actions = new List<InventoryAction>();
             for (int i = 0; i < pk.Actions.Length; ++i)
@@ -526,9 +580,18 @@ namespace MineNET.Entities.Players
 
             }
         }
+        #endregion
 
-        //0x22
-        private void HandleBlockPickRequestPacket(BlockPickRequestPacket pk)
+        #region MobEquipmentPacket 0x1f
+        protected virtual void MobEquipmentHandle(MobEquipmentPacket pk)
+        {
+            this.Inventory.MainHandSlot = pk.HotbarSlot;
+            this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ACTION, false, true);
+        }
+        #endregion
+
+        #region BlockPickRequestPacket 0x22
+        protected virtual void HandleBlockPickRequestPacket(BlockPickRequestPacket pk)
         {
             if (!this.IsCreative)
             {
@@ -536,12 +599,12 @@ namespace MineNET.Entities.Players
             }
             Block block = this.World.GetBlock(pk.Position);
             ItemStack item = new ItemStack(block); //TODO : block entity nbt
-            /*PlayerBlockPickRequestEventArgs args = new PlayerBlockPickRequestEventArgs(this, item);
-            PlayerEvents.OnPlayerBlockPickRequest(args);
+            PlayerBlockPickRequestEventArgs args = new PlayerBlockPickRequestEventArgs(this, item);
+            Server.Instance.Event.Player.OnPlayerBlockPickRequest(this, args);
             if (args.IsCancel)
             {
                 return;
-            }*/
+            }
             List<int> air = new List<int>();
             for (int i = 0; i < pk.HotbarSlot; ++i)
             {
@@ -567,10 +630,106 @@ namespace MineNET.Entities.Players
             this.Inventory.MainHandItem = item;
             this.Inventory.SendMainHand(this);
         }
+        #endregion
 
+        #region PlayerActionPacket 0x24
+        protected virtual void HandlePlayerActionPacket(PlayerActionPacket pk)
+        {
 
-        //0x45
-        private void HandleRequestChunkRadiusPacket(RequestChunkRadiusPacket pk)
+            Vector3 pos = pk.Position;
+            BlockFace face = pk.Face;
+            if (pk.Action == PlayerActionPacket.ACTION_JUMP)
+            {
+                PlayerJumpEventArgs args = new PlayerJumpEventArgs(this);
+                Server.Instance.Event.Player.OnPlayerJump(this, args);
+                if (this.Sprinting)
+                {
+                    //this.AddExhaustion(0.8f, PlayerExhaustEventArgs.CAUSE_SPRINT_JUMPING);
+                }
+                else
+                {
+                    //this.AddExhaustion(0.2f, PlayerExhaustEventArgs.CAUSE_JUMPING);
+                }
+            }
+            else if (pk.Action == PlayerActionPacket.ACTION_START_SPRINT)
+            {
+                PlayerToggleSprintEventArgs args = new PlayerToggleSprintEventArgs(this, true);
+                Server.Instance.Event.Player.OnPlayerToggleSprint(this, args);
+                if (args.IsCancel)
+                {
+                    this.SendDataProperties();
+                }
+                this.Sprinting = true;
+                this.SendDataProperties();
+            }
+            else if (pk.Action == PlayerActionPacket.ACTION_STOP_SPRINT)
+            {
+                PlayerToggleSprintEventArgs args = new PlayerToggleSprintEventArgs(this, false);
+                Server.Instance.Event.Player.OnPlayerToggleSprint(this, args);
+                if (args.IsCancel)
+                {
+                    this.SendDataProperties();
+                }
+                this.Sprinting = false;
+                this.SendDataProperties();
+            }
+            else if (pk.Action == PlayerActionPacket.ACTION_START_SNEAK)
+            {
+                PlayerToggleSneakEventArgs args = new PlayerToggleSneakEventArgs(this, true);
+                Server.Instance.Event.Player.OnPlayerToggleSneak(this, args);
+                if (args.IsCancel)
+                {
+                    this.SendDataProperties();
+                }
+                this.Sneaking = true;
+                this.SendDataProperties();
+            }
+            else if (pk.Action == PlayerActionPacket.ACTION_STOP_SNEAK)
+            {
+                PlayerToggleSneakEventArgs args = new PlayerToggleSneakEventArgs(this, false);
+                Server.Instance.Event.Player.OnPlayerToggleSneak(this, args);
+                if (args.IsCancel)
+                {
+                    this.SendDataProperties();
+                }
+                this.Sneaking = false;
+                this.SendDataProperties();
+            }
+            else if (pk.Action == PlayerActionPacket.ACTION_START_GLIDE)
+            {
+                PlayerToggleGlideEventArgs args = new PlayerToggleGlideEventArgs(this, true);
+                Server.Instance.Event.Player.OnPlayerToggleGlide(this, args);
+                if (args.IsCancel)
+                {
+                    this.SendDataProperties();
+                }
+                this.Gliding = true;
+                this.SendDataProperties();
+            }
+            else if (pk.Action == PlayerActionPacket.ACTION_STOP_GLIDE)
+            {
+                PlayerToggleGlideEventArgs args = new PlayerToggleGlideEventArgs(this, false);
+                Server.Instance.Event.Player.OnPlayerToggleGlide(this, args);
+                if (args.IsCancel)
+                {
+                    this.SendDataProperties();
+                }
+                this.Gliding = false;
+                this.SendDataProperties();
+            }
+            this.Action = false;
+        }
+        #endregion
+
+        #region AnimatePacket 0x2c
+        protected virtual void HandleAnimatePacket(AnimatePacket pk)
+        {
+            //Server.Instance.BroadcastPacket(pk, this.Viewers);
+        }
+        #endregion
+
+        #region RequestChunkRadiusPacket 0x45
+        protected virtual void HandleRequestChunkRadiusPacket(RequestChunkRadiusPacket pk)
         {
             int request = pk.Radius;
             int max = Server.Instance.ServerProperty.MaxViewDistance;
@@ -588,19 +747,22 @@ namespace MineNET.Entities.Players
 
             this.AnySendChunk = true;
         }
+        #endregion
 
-        //0x4d
-        public void HandleCommandRequestPacket(CommandRequestPacket pk)
+        #region CommandRequestPacket 0x4d
+        protected virtual void HandleCommandRequestPacket(CommandRequestPacket pk)
         {
             string command = pk.Command.Remove(0, 1);
             CommandData data = new CommandData(this, command);
             Server.Instance.Command.CommandHandler.OnCommandExecute(data);
         }
+        #endregion
 
-        //0x70
-        public void HandleSetLocalPlayerAsInitializedPacket(SetLocalPlayerAsInitializedPacket pk)
+        #region SetLocalPlayerAsInitializedPacket 0x70
+        protected virtual void HandleSetLocalPlayerAsInitializedPacket(SetLocalPlayerAsInitializedPacket pk)
         {
         }
+        #endregion
 
         #endregion
 

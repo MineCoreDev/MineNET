@@ -2,7 +2,7 @@
 
 namespace MineNET.Events.BlockEvents
 {
-    public class BlockEvents
+    public class BlockEvent
     {
         public event EventHandler<BlockBreakEventArgs> BlockBreak;
         public void OnBlockBreak(object sender, BlockBreakEventArgs args)

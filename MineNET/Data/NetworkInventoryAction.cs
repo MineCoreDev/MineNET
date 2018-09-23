@@ -1,5 +1,6 @@
 ﻿using System;
 using MineNET.Entities.Players;
+using MineNET.Inventories;
 using MineNET.Inventories.Transactions.Action;
 using MineNET.Items;
 using MineNET.Network.MinecraftPackets;
@@ -80,11 +81,11 @@ namespace MineNET.Data
         {
             if (this.SourceType == NetworkInventoryAction.SOURCE_CONTAINER)
             {
-                /*Inventory inventory = player.Inventory.GetInventory((byte) this.WindowId);
+                Inventory inventory = player.Inventory.GetInventory((byte) this.WindowId);
                 if (inventory != null)
                 {
                     return new SlotChangeAction(inventory, this.InventorySlot, this.OldItem, this.NewItem);
-                }*/
+                }
             }
             else if (this.SourceType == NetworkInventoryAction.SOURCE_WORLD)
             {
