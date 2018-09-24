@@ -7,6 +7,7 @@ using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.Text;
 using MineNET.Utils;
+using Random = MineNET.Utils.Random;
 
 namespace MineNET.Commands
 {
@@ -18,7 +19,9 @@ namespace MineNET.Commands
         public virtual string Permission { get; } = null;
         public virtual PlayerPermissions PermissionLevel { get; } = PlayerPermissions.VISITOR;
         public virtual int Flag { get; } = 0;
-        public virtual CommandOverload[] CommandOverloads { get; } = new CommandOverload[] { new CommandOverload(new CommandParameterString("args")) };
+
+        public virtual CommandOverload[] CommandOverloads { get; } = new CommandOverload[]
+            {new CommandOverload(new CommandParameterString("args"))};
 
         public abstract bool OnExecute(CommandSender sender, params string[] args);
 
@@ -36,7 +39,6 @@ namespace MineNET.Commands
             }
             else if (selector == "@e")
             {
-
             }
             else if (selector == "@p")
             {
@@ -49,7 +51,7 @@ namespace MineNET.Commands
             else if (selector == "@r")
             {
                 Player[] online = Server.Instance.GetPlayers();
-                players.Add(online[new System.Random().Next(online.Length)]);
+                players.Add(online[Random.GetRandom().Next(online.Length)]);
             }
             else if (selector == "@s")
             {
@@ -96,7 +98,7 @@ namespace MineNET.Commands
             else if (selector == "@r")
             {
                 Player[] online = Server.Instance.GetPlayers();
-                entities.Add(online[new System.Random().Next(online.Length)]);
+                entities.Add(online[Random.GetRandom().Next(online.Length)]);
             }
             else if (selector == "@s")
             {
