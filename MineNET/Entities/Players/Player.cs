@@ -37,7 +37,7 @@ namespace MineNET.Entities.Players
         public IPEndPoint EndPoint { get; internal set; }
 
         public bool IsPreLogined { get; private set; }
-        public bool IsLogined { get; private set; }
+        public bool IsLoggedIn { get; private set; }
         public LoginData LoginData { get; private set; }
         public ClientData ClientData { get; private set; }
         public Skin Skin { get; private set; }
@@ -65,7 +65,7 @@ namespace MineNET.Entities.Players
 
         private GameMode gameMode;
 
-        public Player() : base(null, new CompoundTag())
+        public Player() : base(Server.Instance.GetWorld("World").GetChunk(new Tuple<int, int>(128 >> 4, 128 >> 4)), new CompoundTag())
         {
         }
 
@@ -155,7 +155,7 @@ namespace MineNET.Entities.Players
         public void SendPacket(MinecraftPacket packet, int reliability = RakNetPacketReliability.RELIABLE,
             int flag = RakNetProtocol.FlagNormal)
         {
-            NetworkSession session = Server.Instance.Network.GetSession(this.EndPoint);
+            NetworkSession session = this.GetSession();
             if (session == null)
             {
                 return;
@@ -188,6 +188,19 @@ namespace MineNET.Entities.Players
             }
 
             return true;
+        }
+
+        public bool IsOnline
+        {
+            get
+            {
+                return this.GetSession() != null && this.IsLoggedIn;
+            }
+        }
+
+        public NetworkSession GetSession()
+        {
+            return Server.Instance.Network.GetSession(this.EndPoint);
         }
 
         #region Close Player Method
@@ -223,9 +236,15 @@ namespace MineNET.Entities.Players
 
         public new PlayerInventory Inventory
         {
-            get { return (PlayerInventory) base.Inventory; }
+            get
+            {
+                return (PlayerInventory) base.Inventory;
+            }
 
-            protected set { base.Inventory = value; }
+            protected set
+            {
+                base.Inventory = value;
+            }
         }
 
         #region Gamemode Property
@@ -359,12 +378,12 @@ namespace MineNET.Entities.Players
 
         public bool CanInteract(Vector3 pos, double maxDistance)
         {
-            if (Vector3.DistanceSquared((Vector3) this.Position, pos) > maxDistance * maxDistance)
+            if (Vector3.DistanceSquared(this.GetVector3(), pos) > maxDistance * maxDistance)
             {
                 return false;
             }
 
-            Vector2 dv = this.DirectionPlane;
+            Vector2 dv = this.GetDirectionPlane();
             float dot1 = Vector2.Dot(dv, new Vector2(this.X, this.Z));
             float dot2 = Vector2.Dot(dv, new Vector2(pos.X, this.Z));
             return (dot2 - dot1) >= -0.5;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
 using MineNET.Entities.Players;
@@ -46,7 +47,7 @@ namespace MineNET.Entities
 
         public bool Closed { get; protected set; }
 
-        public List<Player> Viewers { get; protected set; } = new List<Player>();
+        protected Dictionary<long, Player> _hasSpawned = new Dictionary<long, Player>();
 
         public CompoundTag NamedTag { get; protected set; }
         public EntityMetadataManager DataProperties { get; private set; }
@@ -61,6 +62,8 @@ namespace MineNET.Entities
 
             this.NamedTag = tag;
             this.EntityInit();
+
+            this.World.AddEntity(this);
         }
 
         protected virtual void EntityInit()
@@ -106,14 +109,38 @@ namespace MineNET.Entities
             {
                 return;
             }
+            Player[] players = this.World.GetPlayers(); //TODO : ChunkPlayers
+            for (int i = 0; i < players.Length; ++i)
+            {
+                Player player = players[i];
+                if (this.IsPlayer && this.Name == player.Name)
+                {
+                    continue;
+                }
+                if (player.IsOnline)
+                {
+                    this.SpawnTo(player);
+                }
+            }
         }
 
         public virtual void SpawnTo(Player player)
         {
+            this.SendSpawnPacket(player);
+
+            if (!this._hasSpawned.ContainsKey(player.EntityID)) //TODO : UsedChunk?
+            {
+                this._hasSpawned[player.EntityID] = player;
+            }
         }
 
         public virtual void DespawnFromAll()
         {
+            Player[] players = this.Viewers;
+            for (int i = 0; i < players.Length; ++i)
+            {
+                this.DespawnFrom(players[i]);
+            }
         }
 
         public virtual void DespawnFrom(Player player)
@@ -122,6 +149,11 @@ namespace MineNET.Entities
             pk.EntityUniqueId = this.EntityID;
 
             player.SendPacket(pk);
+
+            if (this._hasSpawned.ContainsKey(player.EntityID))
+            {
+                this._hasSpawned.Remove(player.EntityID);
+            }
         }
 
         public virtual void SendSpawnPacket(Player player)
@@ -130,13 +162,21 @@ namespace MineNET.Entities
             pk.EntityUniqueId = this.EntityID;
             pk.EntityRuntimeId = this.EntityID;
             pk.Type = this.NetworkId;
-            pk.Position = (Vector3) this.Position;
+            pk.Position = this.GetVector3();
             pk.Motion = new Vector3();
             pk.Direction = new Vector2(this.Yaw, this.Pitch);
             pk.Attributes = this.Attributes;
             pk.Metadata = this.DataProperties;
 
             player.SendPacket(pk);
+        }
+
+        public Player[] Viewers
+        {
+            get
+            {
+                return this._hasSpawned.Values.ToArray();
+            }
         }
 
         public virtual void Kill()
@@ -149,18 +189,30 @@ namespace MineNET.Entities
             this.Closed = true;
         }
 
-        public Position Position
+        public Vector2 GetDirection()
         {
-            get { return new Position(this.X, this.Y, this.Z, this.World); }
+            return new Vector2(this.Yaw, this.Pitch);
         }
 
-        public Vector2 DirectionPlane
+        public Vector3 GetVector3()
         {
-            get
-            {
-                return new Vector2((float) -Math.Cos(this.Yaw * Math.PI / 180 - Math.PI / 2),
-                    (float) -Math.Sin(this.Yaw * Math.PI / 180 - Math.PI / 2)).Normalized;
-            }
+            return new Vector3(this.X, this.Y, this.Z);
+        }
+
+        public Position GetPosition()
+        {
+            return new Position(this.X, this.Y, this.Z, this.World);
+        }
+
+        public Location GetLocation()
+        {
+            return new Location(this.X, this.Y, this.Z, this.Yaw, this.Pitch, this.World);
+        }
+
+        public Vector2 GetDirectionPlane()
+        {
+            return new Vector2((float) -Math.Cos(this.Yaw * Math.PI / 180 - Math.PI / 2),
+                (float) -Math.Sin(this.Yaw * Math.PI / 180 - Math.PI / 2)).Normalized;
         }
     }
 }

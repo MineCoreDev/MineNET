@@ -297,6 +297,19 @@ namespace MineNET
             return this.Worlds.Values.ToArray();
         }
 
+        public World GetWorld(String name)
+        {
+            World[] worlds = this.GetWorlds();
+            for (int i = 0; i < worlds.Length; ++i)
+            {
+                if (worlds[i].Name == name)
+                {
+                    return worlds[i];
+                }
+            }
+            return null;
+        }
+
         public void Invoke(Action action)
         {
             this.InvokeMainThreadActions.Enqueue(action);

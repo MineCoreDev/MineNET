@@ -127,9 +127,9 @@ namespace MineNET.Worlds
 
         private Dictionary<Tuple<int, int>, Chunk> Chunks { get; } = new Dictionary<Tuple<int, int>, Chunk>();
 
-        private Dictionary<long, Player> Players { get; } = new Dictionary<long, Player>();
-        private Dictionary<long, Entity> Entities { get; } = new Dictionary<long, Entity>();
-        private List<BlockEntity> BlockEntities { get; set; } = new List<BlockEntity>();
+        private Dictionary<long, Player> _players = new Dictionary<long, Player>();
+        private Dictionary<long, Entity> _entities = new Dictionary<long, Entity>();
+        private List<BlockEntity> _blockEntities = new List<BlockEntity>();
 
         private ConcurrentDictionary<Block, int> updateQueue = new ConcurrentDictionary<Block, int>();
 
@@ -148,13 +148,13 @@ namespace MineNET.Worlds
 
         public void UpdateTick(long tick)
         {
-            Entity[] entities = this.Entities.Values.ToArray();
+            Entity[] entities = this._entities.Values.ToArray();
             for (int i = 0; i < entities.Length; ++i)
             {
                 entities[i].UpdateTick(tick);
             }
 
-            BlockEntity[] blockEntities = this.BlockEntities.ToArray();
+            BlockEntity[] blockEntities = this._blockEntities.ToArray();
             for (int i = 0; i < blockEntities.Length; ++i)
             {
                 //blockEntities[i].OnUpdate(tick);
@@ -490,55 +490,44 @@ namespace MineNET.Worlds
             {
                 return;
             }
-            this.Entities[entity.EntityID] = entity;
-            entity.SpawnToAll();
+            this._entities[entity.EntityID] = entity;
+            if (entity.IsPlayer)
+            {
+                this._players[entity.EntityID] = (Player) entity;
+            }
         }
 
         public void RemoveEntity(Entity entity)
         {
-            if (!this.Entities.ContainsKey(entity.EntityID))
+            if (!this._entities.ContainsKey(entity.EntityID))
             {
                 return;
             }
-            this.Entities.Remove(entity.EntityID);
-            entity.DespawnFromAll();
-        }
-
-        internal void AddPlayer(Player player)
-        {
-            if (player.World.Name != this.Name)
+            this._entities.Remove(entity.EntityID);
+            if (entity.IsPlayer)
             {
-                return;
-            }
-
-            Player[] players = this.Players.Values.ToArray();
-            for (int i = 0; i < players.Length; ++i)
-            {
-                if (players[i].Uuid.ToString() != player.Uuid.ToString())
+                if (this._players.ContainsKey(entity.EntityID))
                 {
-                    players[i].SpawnTo(player);
+                    this._players.Remove(entity.EntityID);
                 }
             }
-
-            this.Players[player.EntityID] = player;
-            player.SpawnToAll();
         }
 
-        internal void RemovePlayer(Player player)
+        public Entity[] GetEntities()
         {
-            if (!this.Players.ContainsKey(player.EntityID))
-            {
-                return;
-            }
-            this.Players.Remove(player.EntityID);
-            player.DespawnFromAll();
+            return this._entities.Values.ToArray();
+        }
+
+        public Player[] GetPlayers()
+        {
+            return this._players.Values.ToArray();
         }
 
         public Entity GetEntity(long entityID)
         {
-            if (this.Entities.ContainsKey(entityID))
+            if (this._entities.ContainsKey(entityID))
             {
-                return this.Entities[entityID];
+                return this._entities[entityID];
             }
             return null;
         }
@@ -549,17 +538,17 @@ namespace MineNET.Worlds
             {
                 return;
             }
-            this.BlockEntities.Add(blockEntity);
+            this._blockEntities.Add(blockEntity);
         }
 
         public void RemoveBlockEntity(BlockEntity blockEntity)
         {
-            if (!this.BlockEntities.Contains(blockEntity))
+            if (!this._blockEntities.Contains(blockEntity))
             {
                 return;
             }
 
-            this.BlockEntities.Remove(blockEntity);
+            this._blockEntities.Remove(blockEntity);
         }
 
         public void ScheduleUpdate(Block block, int tick)

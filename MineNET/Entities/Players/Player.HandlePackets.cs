@@ -175,7 +175,7 @@ namespace MineNET.Entities.Players
             }
             else if (pk.ResponseStatus == ResourcePackClientResponsePacket.STATUS_COMPLETED && this.HaveAllPacks)
             {
-                if (this.IsLogined)
+                if (this.IsLoggedIn)
                 {
                     return;
                 }
@@ -188,7 +188,7 @@ namespace MineNET.Entities.Players
                     return;
                 }
 
-                this.IsLogined = true;
+                this.IsLoggedIn = true;
 
                 this.Load();
 
@@ -240,6 +240,18 @@ namespace MineNET.Entities.Players
                 this.Inventory.SendMainHand(this);
                 this.Inventory.ArmorInventory.SendContents(this);
                 this.Inventory.SendCreativeItems();
+
+                Player[] players = this.World.GetPlayers();
+                for (int i = 0; i < players.Length; ++i)
+                {
+                    if (players[i].Name == this.Name)
+                    {
+                        continue;
+                    }
+                    players[i].SpawnTo(this);
+                }
+
+                this.SpawnToAll();
             }
         }
 
@@ -358,7 +370,7 @@ namespace MineNET.Entities.Players
                     }
                     else
                     {
-                        this.World.SendBlocks(new Player[] {this}, new Vector3[] {data.BlockPos});
+                        this.World.SendBlocks(new Player[] { this }, new Vector3[] { data.BlockPos });
                     }
                 }
             }

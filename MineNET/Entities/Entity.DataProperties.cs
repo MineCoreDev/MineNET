@@ -250,58 +250,107 @@ namespace MineNET.Entities
 
         public virtual string DisplayName
         {
-            get { return ((EntityDataString) this.GetDataProperty(DATA_NAMETAG)).Data; }
+            get
+            {
+                return ((EntityDataString) this.GetDataProperty(DATA_NAMETAG)).Data;
+            }
 
-            set { this.SetDataProperty(new EntityDataString(DATA_NAMETAG, value)); }
+            set
+            {
+                this.SetDataProperty(new EntityDataString(DATA_NAMETAG, value));
+            }
         }
 
         public virtual string InteractiveTag //カーソルを合わせたときに出るボタン
         {
-            get { return ((EntityDataString) this.GetDataProperty(DATA_INTERACTIVE_TAG)).Data; }
+            get
+            {
+                return ((EntityDataString) this.GetDataProperty(DATA_INTERACTIVE_TAG)).Data;
+            }
 
-            set { this.SetDataProperty(new EntityDataString(DATA_INTERACTIVE_TAG, value)); }
+
+            set
+            {
+                this.SetDataProperty(new EntityDataString(DATA_INTERACTIVE_TAG, value));
+            }
         }
 
         public virtual bool ShowNameTag
         {
-            get { return this.GetFlag(DATA_FLAGS, DATA_FLAG_CAN_SHOW_NAMETAG); }
+            get
+            {
+                return this.GetFlag(DATA_FLAGS, DATA_FLAG_CAN_SHOW_NAMETAG);
+            }
 
-            set { this.SetFlag(DATA_FLAGS, DATA_FLAG_CAN_SHOW_NAMETAG, value); }
+            set
+            {
+                this.SetFlag(DATA_FLAGS, DATA_FLAG_CAN_SHOW_NAMETAG, value);
+            }
         }
 
         public virtual bool AlwaysShowNameTag
         {
-            get { return this.GetFlag(DATA_FLAGS, DATA_FLAG_ALWAYS_SHOW_NAMETAG); }
+            get
+            {
+                return this.GetFlag(DATA_FLAGS, DATA_FLAG_ALWAYS_SHOW_NAMETAG);
+            }
 
-            set { this.SetFlag(DATA_FLAGS, DATA_FLAG_ALWAYS_SHOW_NAMETAG, value); }
+            set
+            {
+                this.SetFlag(DATA_FLAGS, DATA_FLAG_ALWAYS_SHOW_NAMETAG, value);
+            }
         }
 
         public virtual bool Sprinting
         {
-            get { return this.GetFlag(DATA_FLAGS, DATA_FLAG_SPRINTING); }
+            get
+            {
+                return this.GetFlag(DATA_FLAGS, DATA_FLAG_SPRINTING);
+            }
 
-            set { this.SetFlag(DATA_FLAGS, DATA_FLAG_SPRINTING, value); }
+            set
+            {
+                this.SetFlag(DATA_FLAGS, DATA_FLAG_SPRINTING, value);
+            }
         }
 
         public virtual bool Sneaking
         {
-            get { return this.GetFlag(DATA_FLAGS, DATA_FLAG_SNEAKING); }
+            get
+            {
+                return this.GetFlag(DATA_FLAGS, DATA_FLAG_SNEAKING);
+            }
 
-            set { this.SetFlag(DATA_FLAGS, DATA_FLAG_SNEAKING, value); }
+            set
+            {
+                this.SetFlag(DATA_FLAGS, DATA_FLAG_SNEAKING, value);
+            }
         }
 
         public virtual bool Gliding
         {
-            get { return this.GetFlag(DATA_FLAGS, DATA_FLAG_GLIDING); }
+            get
+            {
+                return this.GetFlag(DATA_FLAGS, DATA_FLAG_GLIDING);
+            }
 
-            set { this.SetFlag(DATA_FLAGS, DATA_FLAG_GLIDING, value); }
+            set
+            {
+                this.SetFlag(DATA_FLAGS, DATA_FLAG_GLIDING, value);
+            }
         }
 
         public virtual bool Action
         {
-            get { return this.GetFlag(DATA_FLAGS, DATA_FLAG_ACTION); }
+            get
+            {
+                return this.GetFlag(DATA_FLAGS, DATA_FLAG_ACTION);
+            }
 
-            set { this.SetFlag(DATA_FLAGS, DATA_FLAG_ACTION, value); }
+            set
+            {
+                this.SetFlag(DATA_FLAGS, DATA_FLAG_ACTION, value);
+            }
         }
 
         #endregion
