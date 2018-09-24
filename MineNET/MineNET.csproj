@@ -171,6 +171,7 @@
     <Compile Include="Entities\Attributes\EntityAttributeDictionary.cs" />
     <Compile Include="Entities\Effect.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Entity.DataProperties.cs" />
     <Compile Include="Entities\EntityLiving.cs" />
     <Compile Include="Entities\Metadata\EntityData.cs" />
     <Compile Include="Entities\Metadata\EntityDataByte.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Entities\Metadata\EntityMetadataManager.cs" />
     <Compile Include="Entities\Metadata\EntityMetadataType.cs" />
     <Compile Include="Data\PlayerPermissions.cs" />
+    <Compile Include="Entities\Players\Player.HandlePackets.cs" />
     <Compile Include="Events\BlockEvents\BlockBreakEventArgs.cs" />
     <Compile Include="Events\BlockEvents\BlockEventArgs.cs" />
     <Compile Include="Events\BlockEvents\BlockEvent.cs" />
@@ -497,7 +499,7 @@
     </Compile>
     <Compile Include="Server.cs" />
     <Compile Include="ServerConfig.cs" />
-    <Compile Include="ServerInternal.cs" />
+    <Compile Include="Server.Init.cs" />
     <Compile Include="ServerListInfo.cs" />
     <Compile Include="ServerStatus.cs" />
     <Compile Include="Text\ITextContainer.cs" />
