@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
+using MineNET.Entities.Players;
 using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Values;
@@ -10,9 +13,6 @@ namespace MineNET.Entities
     public abstract partial class Entity
     {
         private static long nextEntityId = 0;
-
-
-        #region Property & Field
 
         public abstract string Name { get; protected set; }
         public abstract int NetworkId { get; }
@@ -52,29 +52,16 @@ namespace MineNET.Entities
         public EntityMetadataManager DataProperties { get; private set; }
         public EntityAttributeDictionary Attributes { get; private set; }
 
-        #endregion
-
-        #region Ctor
-
-        public Entity(World world, CompoundTag tag)
+        public Entity(Chunk chunk, CompoundTag tag)
         {
             this.EntityID = ++nextEntityId;
 
             this.Chunk = chunk;
             this.World = chunk.World;
 
-            if (!this.IsPlayer)
-            {
-                this.World = world;
-            }
-
             this.NamedTag = tag;
             this.EntityInit();
         }
-
-        #endregion
-
-        #region Init Method
 
         protected virtual void EntityInit()
         {
@@ -94,38 +81,24 @@ namespace MineNET.Entities
             this.Attributes = new EntityAttributeDictionary(this.EntityID);
         }
 
-        #endregion
-
-        #region Update Method
-
         internal virtual bool UpdateTick(long tick)
         {
             return true;
         }
-
-        #endregion
 
         public Vector2 GetChunkVector()
         {
             return new Vector2(((int) this.X) >> 4, ((int) this.Z) >> 4);
         }
 
-        #region Init NBT
-
         public virtual void InitNBT()
         {
         }
-
-        #endregion
-
-        #region Save Method
 
         public virtual void SaveNBT()
         {
             throw new NotImplementedException();
         }
-
-        #endregion
 
         public virtual void SpawnToAll()
         {
@@ -137,12 +110,10 @@ namespace MineNET.Entities
 
         public virtual void SpawnTo(Player player)
         {
-
         }
 
         public virtual void DespawnFromAll()
         {
-
         }
 
         public virtual void DespawnFrom(Player player)

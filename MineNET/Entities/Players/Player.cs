@@ -29,6 +29,8 @@ namespace MineNET.Entities.Players
             get { return true; }
         }
 
+        public override int NetworkId { get; } = EntityIDs.PLAYER;
+
         public override string Name { get; protected set; }
         public new string DisplayName { get; private set; }
 

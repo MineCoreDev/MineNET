@@ -499,8 +499,8 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="Server.cs" />
+    <Compile Include="Server.Init.cs" />
     <Compile Include="ServerConfig.cs" />
-    <Compile Include="ServerInternal.cs" />
     <Compile Include="ServerListInfo.cs" />
     <Compile Include="ServerStatus.cs" />
     <Compile Include="Text\ITextContainer.cs" />

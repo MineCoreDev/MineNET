@@ -12,10 +12,9 @@ namespace MineNET.Entities
 {
     public abstract class EntityLiving : Entity, InventoryHolder
     {
-        public EntityAttributeDictionary Attributes { get; private set; }
         protected Dictionary<int, Effect> Effects { get; } = new Dictionary<int, Effect>();
 
-        public EntityLiving(World world, CompoundTag tag) : base(world, tag)
+        public EntityLiving(Chunk chunk, CompoundTag tag) : base(chunk, tag)
         {
         }
 
@@ -23,7 +22,6 @@ namespace MineNET.Entities
         {
             base.EntityInit();
 
-            this.Attributes = new EntityAttributeDictionary(this.EntityID);
             this.Attributes.AddAttribute(EntityAttribute.HEALTH);
             this.Attributes.AddAttribute(EntityAttribute.ABSORPTION);
             this.Attributes.AddAttribute(EntityAttribute.KNOCKBACK_RESISTANCE);
@@ -32,10 +30,7 @@ namespace MineNET.Entities
 
         public virtual float Health
         {
-            get
-            {
-                return this.Attributes.GetAttribute("minecraft:health").Value;
-            }
+            get { return this.Attributes.GetAttribute("minecraft:health").Value; }
 
             set
             {
@@ -47,10 +42,7 @@ namespace MineNET.Entities
 
         public virtual float MaxHealth
         {
-            get
-            {
-                return this.Attributes.GetAttribute("minecraft:health").MaxValue;
-            }
+            get { return this.Attributes.GetAttribute("minecraft:health").MaxValue; }
 
             set
             {
@@ -62,10 +54,7 @@ namespace MineNET.Entities
 
         public virtual float Absorption
         {
-            get
-            {
-                return this.Attributes.GetAttribute("minecraft:absorption").Value;
-            }
+            get { return this.Attributes.GetAttribute("minecraft:absorption").Value; }
 
             set
             {
@@ -88,6 +77,7 @@ namespace MineNET.Entities
             {
                 return this.Effects[id];
             }
+
             return null;
         }
 
@@ -102,6 +92,7 @@ namespace MineNET.Entities
             {
                 return;
             }
+
             Effect old = this.GetEffect(effect.ID);
             if (old != null)
             {
@@ -109,16 +100,19 @@ namespace MineNET.Entities
                 {
                     return;
                 }
+
                 if (Math.Abs(effect.Amplifier) == Math.Abs(old.Amplifier) && effect.Duration < old.Duration)
                 {
                     return;
                 }
+
                 effect.Add(this, true);
             }
             else
             {
                 effect.Add(this, false);
             }
+
             this.Effects[effect.ID] = effect;
 
             this.RecalculateEffectColor();
@@ -130,6 +124,7 @@ namespace MineNET.Entities
             {
                 return;
             }
+
             Effect effect = this.GetEffect(id);
             effect.Remove(this);
 
@@ -143,6 +138,7 @@ namespace MineNET.Entities
             {
                 return;
             }
+
             int[] ids = this.Effects.Keys.ToArray();
             for (int i = 0; i < ids.Length; ++i)
             {
@@ -179,13 +175,13 @@ namespace MineNET.Entities
                 int b = (color[2] / count) & 0xff;
                 Color rgb = new Color(r, g, b);
 
-                this.SetDataProperty(new EntityDataInt(Entity.DATA_POTION_COLOR, rgb.RGB), false);
-                this.SetDataProperty(new EntityDataByte(Entity.DATA_POTION_AMBIENT, (byte) (ambient ? 1 : 0)), true);
+                this.SetDataProperty(new EntityDataInt(DATA_POTION_COLOR, rgb.RGB), false);
+                this.SetDataProperty(new EntityDataByte(DATA_POTION_AMBIENT, (byte) (ambient ? 1 : 0)), true);
             }
             else
             {
-                this.SetDataProperty(new EntityDataInt(Entity.DATA_POTION_COLOR, 0), false);
-                this.SetDataProperty(new EntityDataByte(Entity.DATA_POTION_AMBIENT, 0), true);
+                this.SetDataProperty(new EntityDataInt(DATA_POTION_COLOR, 0), false);
+                this.SetDataProperty(new EntityDataByte(DATA_POTION_AMBIENT, 0), true);
             }
         }
     }
