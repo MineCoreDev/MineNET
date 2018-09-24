@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using MineNET.Utils;
 using MineNET.Worlds;
 
@@ -55,26 +56,17 @@ namespace MineNET.Values
 
         public int FloorX
         {
-            get
-            {
-                return (int) Math.Floor(this.X);
-            }
+            get { return (int) Math.Floor(this.X); }
         }
 
         public int FloorY
         {
-            get
-            {
-                return (int) Math.Floor(this.Y);
-            }
+            get { return (int) Math.Floor(this.Y); }
         }
 
         public int FloorZ
         {
-            get
-            {
-                return (int) Math.Floor(this.Z);
-            }
+            get { return (int) Math.Floor(this.Z); }
         }
 
         public override string ToString()
@@ -101,10 +93,12 @@ namespace MineNET.Values
             {
                 return target;
             }
+
             return current + a / magnitude * maxDistanceDelta;
         }
 
-        public static Vector3 SmoothDamp(Vector3 current, Vector3 target, ref Vector3 currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
+        public static Vector3 SmoothDamp(Vector3 current, Vector3 target, ref Vector3 currentVelocity, float smoothTime, float maxSpeed,
+            float deltaTime)
         {
             smoothTime = Math.Max(0.0001f, smoothTime);
             float num = 2f / smoothTime;
@@ -113,16 +107,17 @@ namespace MineNET.Values
             Vector3 vector = current - target;
             Vector3 vector2 = target;
             float maxLength = maxSpeed * smoothTime;
-            vector = Vector3.ClampMagnitude(vector, maxLength);
+            vector = ClampMagnitude(vector, maxLength);
             target = current - vector;
             Vector3 vector3 = (currentVelocity + num * vector) * deltaTime;
             currentVelocity = (currentVelocity - num * vector3) * d;
             Vector3 vector4 = target + (vector + vector3) * d;
-            if (Vector3.Dot(vector2 - current, vector4 - vector2) > 0f)
+            if (Dot(vector2 - current, vector4 - vector2) > 0f)
             {
                 vector4 = vector2;
                 currentVelocity = (vector4 - vector2) / deltaTime;
             }
+
             return vector4;
         }
 
@@ -140,7 +135,8 @@ namespace MineNET.Values
 
         public static Vector3 Cross(Vector3 lhs, Vector3 rhs)
         {
-            return new Vector3(lhs.Y * rhs.Z - lhs.Z * rhs.Y, lhs.Z * rhs.X - lhs.X * rhs.Z, lhs.X * rhs.Y - lhs.Y * rhs.X);
+            return new Vector3(lhs.Y * rhs.Z - lhs.Z * rhs.Y, lhs.Z * rhs.X - lhs.X * rhs.Z,
+                lhs.X * rhs.Y - lhs.Y * rhs.X);
         }
 
         public override int GetHashCode()
@@ -154,13 +150,14 @@ namespace MineNET.Values
             {
                 return false;
             }
+
             Vector3 vector = (Vector3) other;
             return this.X.Equals(vector.X) && this.Y.Equals(vector.Y) && this.Z.Equals(vector.Z);
         }
 
         public static Vector3 Reflect(Vector3 inDirection, Vector3 inNormal)
         {
-            return -2f * Vector3.Dot(inNormal, inDirection) * inNormal + inDirection;
+            return -2f * Dot(inNormal, inDirection) * inNormal + inDirection;
         }
 
         public static Vector3 Normalize(Vector3 value)
@@ -170,7 +167,8 @@ namespace MineNET.Values
             {
                 return value / num;
             }
-            return Vector3.Zero;
+
+            return Zero;
         }
 
         public void Normalize()
@@ -182,16 +180,13 @@ namespace MineNET.Values
             }
             else
             {
-                this = Vector3.Zero;
+                this = Zero;
             }
         }
 
         public Vector3 Normalized
         {
-            get
-            {
-                return Vector3.Normalize(this);
-            }
+            get { return Normalize(this); }
         }
 
         public static float Dot(Vector3 lhs, Vector3 rhs)
@@ -201,22 +196,23 @@ namespace MineNET.Values
 
         public static Vector3 Project(Vector3 vector, Vector3 onNormal)
         {
-            float num = Vector3.Dot(onNormal, onNormal);
+            float num = Dot(onNormal, onNormal);
             if (num < float.Epsilon)
             {
-                return Vector3.Zero;
+                return Zero;
             }
-            return onNormal * Vector3.Dot(vector, onNormal) / num;
+
+            return onNormal * Dot(vector, onNormal) / num;
         }
 
         public static Vector3 ProjectOnPlane(Vector3 vector, Vector3 planeNormal)
         {
-            return vector - Vector3.Project(vector, planeNormal);
+            return vector - Project(vector, planeNormal);
         }
 
         public static float Angle(Vector3 from, Vector3 to)
         {
-            return (float) Math.Acos(MineNETMath.Clamp(Vector3.Dot(from.Normalized, to.Normalized), -1f, 1f)) * 57.29578f;
+            return (float) Math.Acos(MineNETMath.Clamp(Dot(from.Normalized, to.Normalized), -1f, 1f)) * 57.29578f;
         }
 
         public static float Distance(Vector3 a, Vector3 b)
@@ -236,15 +232,13 @@ namespace MineNET.Values
             {
                 return vector.Normalized * maxLength;
             }
+
             return vector;
         }
 
         public float Magnitude
         {
-            get
-            {
-                return (float) Math.Sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z);
-            }
+            get { return (float) Math.Sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z); }
         }
 
         public static float SqrMagnitude(Vector3 a)
@@ -254,10 +248,7 @@ namespace MineNET.Values
 
         public float SqrtMagnitude
         {
-            get
-            {
-                return this.X * this.X + this.Y * this.Y + this.Z * this.Z;
-            }
+            get { return this.X * this.X + this.Y * this.Y + this.Z * this.Z; }
         }
 
         public static Vector3 Min(Vector3 lhs, Vector3 rhs)
@@ -272,65 +263,77 @@ namespace MineNET.Values
 
         public static Vector3 Zero
         {
-            get
-            {
-                return new Vector3(0f, 0f, 0f);
-            }
+            get { return new Vector3(0f, 0f, 0f); }
         }
 
         public static Vector3 One
         {
-            get
-            {
-                return new Vector3(1f, 1f, 1f);
-            }
+            get { return new Vector3(1f, 1f, 1f); }
         }
 
         public static Vector3 Forward
         {
-            get
-            {
-                return new Vector3(0f, 0f, 1f);
-            }
+            get { return new Vector3(0f, 0f, 1f); }
         }
 
         public static Vector3 Back
         {
-            get
-            {
-                return new Vector3(0f, 0f, -1f);
-            }
+            get { return new Vector3(0f, 0f, -1f); }
         }
 
         public static Vector3 Up
         {
-            get
-            {
-                return new Vector3(0f, 1f, 0f);
-            }
+            get { return new Vector3(0f, 1f, 0f); }
         }
 
         public static Vector3 Down
         {
-            get
-            {
-                return new Vector3(0f, -1f, 0f);
-            }
+            get { return new Vector3(0f, -1f, 0f); }
         }
 
         public static Vector3 Left
         {
-            get
-            {
-                return new Vector3(-1f, 0f, 0f);
-            }
+            get { return new Vector3(-1f, 0f, 0f); }
         }
 
         public static Vector3 Right
         {
-            get
+            get { return new Vector3(1f, 0f, 0f); }
+        }
+
+        public static bool TryParse(string s1, string s2, string s3, out Vector3 vector)
+        {
+            try
             {
-                return new Vector3(1f, 0f, 0f);
+                float v1 = float.Parse(s1);
+                float v2 = float.Parse(s2);
+                float v3 = float.Parse(s3);
+
+                vector = new Vector3(v1, v2, v3);
+                return true;
+            }
+            catch (Exception e)
+            {
+                vector = Zero;
+                return false;
+            }
+        }
+
+        public static bool TryParse(string s1, string s2, string s3, NumberStyles styles, IFormatProvider provider, out Vector3 vector)
+        {
+            try
+            {
+                float v1 = float.Parse(s1, styles, provider);
+                float v2 = float.Parse(s2, styles, provider);
+                float v3 = float.Parse(s3, styles, provider);
+
+                vector = new Vector3(v1, v2, v3);
+                return true;
+            }
+            catch (Exception e)
+            {
+                vector = Zero;
+                return false;
             }
         }
 
@@ -371,12 +374,12 @@ namespace MineNET.Values
 
         public static bool operator ==(Vector3 lhs, Vector3 rhs)
         {
-            return Vector3.SqrMagnitude(lhs - rhs) < 9.99999944E-11f;
+            return SqrMagnitude(lhs - rhs) < 9.99999944E-11f;
         }
 
         public static bool operator !=(Vector3 lhs, Vector3 rhs)
         {
-            return Vector3.SqrMagnitude(lhs - rhs) >= 9.99999944E-11f;
+            return SqrMagnitude(lhs - rhs) >= 9.99999944E-11f;
         }
 
         public static implicit operator Vector3(Vector2 v)
