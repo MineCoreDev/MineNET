@@ -171,6 +171,7 @@
     <Compile Include="Entities\Attributes\EntityAttributeDictionary.cs" />
     <Compile Include="Entities\Effect.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\EntityIDs.cs" />
     <Compile Include="Entities\EntityLiving.cs" />
     <Compile Include="Entities\Metadata\EntityData.cs" />
     <Compile Include="Entities\Metadata\EntityDataByte.cs" />

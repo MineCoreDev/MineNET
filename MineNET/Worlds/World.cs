@@ -145,7 +145,7 @@ namespace MineNET.Worlds
                 this.Generator = GeneratorManager.GetGenerator("FLAT");
             }
         }
-        
+
         public void UpdateTick(long tick)
         {
             Entity[] entities = this.Entities.Values.ToArray();
@@ -204,11 +204,11 @@ namespace MineNET.Worlds
 
             if (flagAll)
             {
-                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] {pos}, UpdateBlockPacket.FLAG_ALL_PRIORITY);
+                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos }, UpdateBlockPacket.FLAG_ALL_PRIORITY);
             }
             else
             {
-                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] {pos});
+                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos });
             }
         }
 
@@ -484,7 +484,7 @@ namespace MineNET.Worlds
             //TODO : item drop
         }
 
-        /*public void AddEntity(Entity entity)
+        public void AddEntity(Entity entity)
         {
             if (entity.World.Name != this.Name)
             {
@@ -550,7 +550,7 @@ namespace MineNET.Worlds
                 return;
             }
             this.BlockEntities.Add(blockEntity);
-        }*/
+        }
 
         public void RemoveBlockEntity(BlockEntity blockEntity)
         {

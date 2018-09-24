@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
 using MineNET.Entities.Players;
 using MineNET.NBT.Tags;
+using MineNET.Network.MinecraftPackets;
 using MineNET.Values;
 using MineNET.Worlds;
 
@@ -334,6 +336,7 @@ namespace MineNET.Entities
 
         #region Property & Field
         public abstract string Name { get; protected set; }
+        public abstract int NetworkId { get; }
 
         public virtual float Width { get; }
         public virtual float Height { get; }
@@ -343,6 +346,8 @@ namespace MineNET.Entities
         public float Z { get; set; }
 
         public World World { get; protected set; }
+
+        public Chunk Chunk { get; private set; }
 
         public float Yaw { get; set; }
         public float Pitch { get; set; }
@@ -358,20 +363,21 @@ namespace MineNET.Entities
         public virtual bool IsPlayer { get { return false; } }
         public bool Closed { get; protected set; }
 
+        public List<Player> Viewers { get; protected set; } = new List<Player>();
+
         public CompoundTag NamedTag { get; protected set; }
         public EntityMetadataManager DataProperties { get; private set; }
+        public EntityAttributeDictionary Attributes { get; private set; }
         #endregion
 
         #region Ctor
-        public Entity(World world, CompoundTag tag)
+        public Entity(Chunk chunk, CompoundTag tag)
         {
             this.EntityID = ++Entity.nextEntityId;
 
+            this.Chunk = chunk;
+            this.World = chunk.World;
 
-            if (!this.IsPlayer)
-            {
-                this.World = world;
-            }
             this.NamedTag = tag;
             this.EntityInit();
         }
@@ -392,6 +398,8 @@ namespace MineNET.Entities
 
             this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_HAS_COLLISION);
             this.SetFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_AFFECTED_BY_GRAVITY);
+
+            this.Attributes = new EntityAttributeDictionary(this.EntityID);
         }
         #endregion
 
@@ -422,6 +430,47 @@ namespace MineNET.Entities
             throw new NotImplementedException();
         }
         #endregion
+
+        public virtual void SpawnToAll()
+        {
+            if (this.Chunk == null || this.Closed)
+            {
+                return;
+            }
+        }
+
+        public virtual void SpawnTo(Player player)
+        {
+
+        }
+
+        public virtual void DespawnFromAll()
+        {
+
+        }
+
+        public virtual void DespawnFrom(Player player)
+        {
+            RemoveEntityPacket pk = new RemoveEntityPacket();
+            pk.EntityUniqueId = this.EntityID;
+
+            player.SendPacket(pk);
+        }
+
+        public virtual void SendSpawnPacket(Player player)
+        {
+            AddEntityPacket pk = new AddEntityPacket();
+            pk.EntityUniqueId = this.EntityID;
+            pk.EntityRuntimeId = this.EntityID;
+            pk.Type = this.NetworkId;
+            pk.Position = (Vector3) this.Position;
+            pk.Motion = new Vector3();
+            pk.Direction = new Vector2(this.Yaw, this.Pitch);
+            pk.Attributes = this.Attributes;
+            pk.Metadata = this.DataProperties;
+
+            player.SendPacket(pk);
+        }
 
         public virtual void Kill()
         {

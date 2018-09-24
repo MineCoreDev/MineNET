@@ -1,4 +1,6 @@
-﻿using MineNET.BlockEntities;
+﻿using System;
+using System.Collections.Generic;
+using MineNET.BlockEntities;
 using MineNET.Blocks;
 using MineNET.Entities;
 using MineNET.Entities.Players;
@@ -7,8 +9,6 @@ using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Utils;
 using MineNET.Values;
-using System;
-using System.Collections.Generic;
 
 namespace MineNET.Worlds
 {
@@ -39,7 +39,7 @@ namespace MineNET.Worlds
         public SubChunk[] SubChunks { get; set; } = ArrayUtils.CreateArray<SubChunk>(16);
         private List<Entity> Entities { get; } = new List<Entity>();
         private ListTag EntitiesTag { get; } = new ListTag(NBTTagType.COMPOUND);
-        private List<BlockEntity> blockEntities { get; } = new List<BlockEntity>();
+        private List<BlockEntity> BlockEntities { get; } = new List<BlockEntity>();
         private ListTag BlockEntitiesTag { get; } = new ListTag(NBTTagType.COMPOUND);
 
         public Chunk(int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null, short[] heightMap = null, ListTag entitiesTag = null, ListTag blockEntitiesTag = null)
@@ -139,7 +139,7 @@ namespace MineNET.Worlds
 
         public BlockEntity[] GetBlockEntities()
         {
-            return this.blockEntities.ToArray();
+            return this.BlockEntities.ToArray();
         }
 
         public int GetBlockHighest(Vector2 pos)
