@@ -171,6 +171,7 @@
     <Compile Include="Entities\Attributes\EntityAttributeDictionary.cs" />
     <Compile Include="Entities\Effect.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\EntityIDs.cs" />
     <Compile Include="Entities\Entity.DataProperties.cs" />
     <Compile Include="Entities\EntityLiving.cs" />
     <Compile Include="Entities\Metadata\EntityData.cs" />
@@ -499,7 +500,7 @@
     </Compile>
     <Compile Include="Server.cs" />
     <Compile Include="ServerConfig.cs" />
-    <Compile Include="Server.Init.cs" />
+    <Compile Include="ServerInternal.cs" />
     <Compile Include="ServerListInfo.cs" />
     <Compile Include="ServerStatus.cs" />
     <Compile Include="Text\ITextContainer.cs" />

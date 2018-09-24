@@ -12,7 +12,7 @@ namespace MineNET.Network.MinecraftPackets
         public long EntityRuntimeId { get; set; }
         public int Type { get; set; }
         public Vector3 Position { get; set; }
-        public Vector3 Speed { get; set; }
+        public Vector3 Motion { get; set; }
         public Vector2 Direction { get; set; }
         public EntityAttributeDictionary Attributes { get; set; }
         public EntityMetadataManager Metadata { get; set; }
@@ -26,7 +26,7 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteUVarInt((uint) this.Type);
             this.WriteVector3(this.Position);
-            this.WriteVector3(this.Speed);
+            this.WriteVector3(this.Motion);
             this.WriteVector2(this.Direction);
             this.WriteAttributes(this.Attributes);
             this.WriteEntityMetadata(this.Metadata);
