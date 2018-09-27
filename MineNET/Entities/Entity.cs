@@ -4,6 +4,7 @@ using System.Linq;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
 using MineNET.Entities.Players;
+using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Values;
@@ -49,25 +50,31 @@ namespace MineNET.Entities
 
         protected Dictionary<long, Player> _hasSpawned = new Dictionary<long, Player>();
 
-        public CompoundTag NamedTag { get; protected set; }
         public EntityMetadataManager DataProperties { get; private set; }
         public EntityAttributeDictionary Attributes { get; private set; }
 
-        public Entity(Chunk chunk, CompoundTag tag)
+        public Entity(Chunk chunk, CompoundTag nbt)
         {
             this.EntityID = ++nextEntityId;
 
             this.Chunk = chunk;
             this.World = chunk.World;
 
-            this.NamedTag = tag;
-            this.EntityInit();
+            if (nbt != null)
+            {
+                this.EntityInit(nbt);
 
+            }
             this.World.AddEntity(this);
         }
 
-        protected virtual void EntityInit()
+        protected virtual void EntityInit(CompoundTag nbt)
         {
+            ListTag list = nbt.GetList("Pos");
+            this.X = ((FloatTag) list[0]).Data;
+            this.Y = ((FloatTag) list[1]).Data;
+            this.Z = ((FloatTag) list[2]).Data;
+
             this.DataProperties = new EntityMetadataManager(this.EntityID);
             this.SetDataProperty(new EntityDataLong(DATA_FLAGS, 0));
             this.SetDataProperty(new EntityDataShort(DATA_AIR, 400));
@@ -94,13 +101,22 @@ namespace MineNET.Entities
             return new Vector2(((int) this.X) >> 4, ((int) this.Z) >> 4);
         }
 
-        public virtual void InitNBT()
+        public virtual CompoundTag SaveNBT()
         {
-        }
+            CompoundTag nbt = new CompoundTag();
 
-        public virtual void SaveNBT()
-        {
-            throw new NotImplementedException();
+            nbt.PutList(new ListTag("Pos", NBTTagType.FLOAT)
+                    .Add(new FloatTag("", this.X))
+                    .Add(new FloatTag("", this.Y))
+                    .Add(new FloatTag("", this.Z)));
+            nbt.PutList(new ListTag("Motion", NBTTagType.FLOAT)
+                    .Add(new FloatTag("", this.MotionX))
+                    .Add(new FloatTag("", this.MotionY))
+                    .Add(new FloatTag("", this.MotionZ)));
+            nbt.PutList(new ListTag("Rotation", NBTTagType.FLOAT)
+                    .Add(new FloatTag("", this.Yaw))
+                    .Add(new FloatTag("", this.Pitch)));
+            return nbt;
         }
 
         public virtual void SpawnToAll()
@@ -158,15 +174,17 @@ namespace MineNET.Entities
 
         public virtual void SendSpawnPacket(Player player)
         {
-            AddEntityPacket pk = new AddEntityPacket();
-            pk.EntityUniqueId = this.EntityID;
-            pk.EntityRuntimeId = this.EntityID;
-            pk.Type = this.NetworkId;
-            pk.Position = this.GetVector3();
-            pk.Motion = new Vector3();
-            pk.Direction = new Vector2(this.Yaw, this.Pitch);
-            pk.Attributes = this.Attributes;
-            pk.Metadata = this.DataProperties;
+            AddEntityPacket pk = new AddEntityPacket
+            {
+                EntityUniqueId = this.EntityID,
+                EntityRuntimeId = this.EntityID,
+                Type = this.NetworkId,
+                Position = this.GetVector3(),
+                Motion = new Vector3(),
+                Direction = new Vector3(this.Yaw, this.Pitch, this.HeadYaw),
+                Attributes = this.Attributes,
+                Metadata = this.DataProperties
+            };
 
             player.SendPacket(pk);
         }

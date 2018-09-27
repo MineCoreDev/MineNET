@@ -287,15 +287,13 @@ namespace MineNET.Entities.Players
         {
             Vector3 pos = pk.Position;
             Vector3 direction = pk.Direction;
-            //if ((Vector3) this.X != pos || this.Direction != direction)
-            //{
-            //this.SendPacketViewers(pk.Clone());
-            //}
             this.X = pos.X;
             this.Y = pos.Y;
             this.Z = pos.Z;
             this.Pitch = direction.X;
             this.Yaw = direction.Y;
+
+            this.SendPacketViewers(pk.Clone());
         }
 
         #endregion

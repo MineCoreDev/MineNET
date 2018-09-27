@@ -312,7 +312,7 @@ namespace MineNET.Values
                 vector = new Vector3(v1, v2, v3);
                 return true;
             }
-            catch (Exception e)
+            catch
             {
                 vector = Zero;
                 return false;
@@ -330,7 +330,7 @@ namespace MineNET.Values
                 vector = new Vector3(v1, v2, v3);
                 return true;
             }
-            catch (Exception e)
+            catch
             {
                 vector = Zero;
                 return false;

@@ -2,9 +2,6 @@
 using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.Items;
-using MineNET.NBT.Data;
-using MineNET.NBT.IO;
-using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
 
 namespace MineNET.Inventories
@@ -13,22 +10,6 @@ namespace MineNET.Inventories
     {
         public EntityOffhandInventory(EntityLiving holder) : base(holder)
         {
-            if (!holder.NamedTag.Exist("Offhand"))
-            {
-                ListTag newTag = new ListTag("Offhand", NBTTagType.COMPOUND);
-                for (int i = 0; i < this.Size; ++i)
-                {
-                    newTag.Add(NBTIO.WriteItem(new ItemStack(Item.Get(0), 0, 0)));
-                }
-                holder.NamedTag.PutList(newTag);
-            }
-
-            ListTag items = holder.NamedTag.GetList("Offhand");
-            for (int i = 0; i < this.Size; ++i)
-            {
-                ItemStack item = NBTIO.ReadItem((CompoundTag) items[i]);
-                this.SetItem(i, item, false);
-            }
         }
 
         public override int Size
@@ -44,6 +25,14 @@ namespace MineNET.Inventories
             get
             {
                 return ContainerIds.OFFHAND.GetIndex();
+            }
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "Inventory";
             }
         }
 
@@ -98,16 +87,6 @@ namespace MineNET.Inventories
                 pk.WindowId = this.Type;
                 players[i].SendPacket(pk);
             }
-        }
-
-        public override void SaveNBT()
-        {
-            ListTag inventory = new ListTag("Offhand", NBTTagType.COMPOUND);
-            for (int i = 0; i < this.Size; ++i)
-            {
-                inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
-            }
-            this.Holder.NamedTag.PutList(inventory);
         }
     }
 }

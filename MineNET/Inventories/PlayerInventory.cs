@@ -1,8 +1,7 @@
-﻿using MineNET.Data;
+﻿using System.Collections.Generic;
+using MineNET.Data;
 using MineNET.Entities.Players;
 using MineNET.Items;
-using MineNET.NBT.Data;
-using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
 
@@ -18,23 +17,6 @@ namespace MineNET.Inventories
 
         public PlayerInventory(Player player) : base(player, 36)
         {
-            if (!player.NamedTag.Exist("Inventory"))
-            {
-                ListTag initItems = new ListTag("Inventory", NBTTagType.COMPOUND);
-                for (int i = 0; i < this.Size; ++i)
-                {
-                    initItems.Add(NBTIO.WriteItem(new ItemStack(Item.Get(0), 0, 0), i));
-                }
-                player.NamedTag.PutList(initItems);
-            }
-
-            ListTag items = player.NamedTag.GetList("Inventory");
-            for (int i = 0; i < this.Size; ++i)
-            {
-                ItemStack item = NBTIO.ReadItem((CompoundTag) items[i]);
-                this.SetItem(i, item, false);
-            }
-
             this.PlayerCursorInventory = new PlayerCursorInventory(player);
             this.PlayerEnderChestInventory = new PlayerEnderChestInventory(player);
 
@@ -116,9 +98,9 @@ namespace MineNET.Inventories
             {
                 return this.PlayerCursorInventory;
             }
-            else if (id == this.PlayerOffhandInventory.Type)
+            else if (id == this.EntityOffhandInventory.Type)
             {
-                return this.PlayerOffhandInventory;
+                return this.EntityOffhandInventory;
             }
             else if (id == this.ArmorInventory.Type)
             {
@@ -134,20 +116,29 @@ namespace MineNET.Inventories
             }
         }
 
-        public override void SaveNBT()
+        public override void LoadNBT(CompoundTag nbt)
         {
-            base.SaveNBT();
+            base.LoadNBT(nbt);
 
-            ListTag inventory = new ListTag("Inventory", NBTTagType.COMPOUND);
-            for (int i = 0; i < this.Size; ++i)
+            this.PlayerCursorInventory.LoadNBT(nbt);
+            this.PlayerEnderChestInventory.LoadNBT(nbt);
+        }
+
+        public override CompoundTag SaveNBT()
+        {
+            CompoundTag nbt = base.SaveNBT();
+
+            Dictionary<string, Tag> tags = this.PlayerCursorInventory.SaveNBT().Tags;
+            foreach (string key in tags.Keys)
             {
-                inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
+                nbt.PutTag(key, tags[key]);
             }
-            this.Holder.NamedTag.PutList(inventory);
-
-            this.PlayerCursorInventory.SaveNBT();
-
-            this.PlayerEnderChestInventory.SaveNBT();
+            tags = this.PlayerEnderChestInventory.SaveNBT().Tags;
+            foreach (string key in tags.Keys)
+            {
+                nbt.PutTag(key, tags[key]);
+            }
+            return nbt;
         }
     }
 }

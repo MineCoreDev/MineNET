@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
-using MineNET.Blocks;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Inventories;
-using MineNET.Items;
-using MineNET.NBT.Data;
-using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network;
 using MineNET.Network.MinecraftPackets;
@@ -18,7 +13,6 @@ using MineNET.Network.RakNetPackets;
 using MineNET.Text;
 using MineNET.Values;
 using MineNET.Worlds;
-using MineNET.Worlds.Dimensions;
 
 namespace MineNET.Entities.Players
 {
@@ -65,13 +59,13 @@ namespace MineNET.Entities.Players
 
         private GameMode gameMode;
 
-        public Player() : base(Server.Instance.GetWorld("World").GetChunk(new Tuple<int, int>(128 >> 4, 128 >> 4)), new CompoundTag())
+        public Player() : base(World.GetMainWorld().GetChunk(new Tuple<int, int>(128 >> 4, 128 >> 4)), null)
         {
         }
 
-        protected override void EntityInit()
+        protected override void EntityInit(CompoundTag nbt)
         {
-            base.EntityInit();
+            base.EntityInit(nbt);
 
             this.Attributes.AddAttribute(EntityAttribute.HUNGER);
             this.Attributes.AddAttribute(EntityAttribute.SATURATION);
@@ -83,6 +77,17 @@ namespace MineNET.Entities.Players
             this.SetFlag(DATA_FLAGS, DATA_FLAG_CAN_CLIMB);
 
             this.Inventory = new PlayerInventory(this);
+            this.Inventory.LoadNBT(nbt);
+
+            this.World = World.GetWorld(nbt.GetString("World")) ?? World.GetMainWorld();
+
+            this.SpawnX = nbt.GetInt("SpawnX");
+            this.SpawnY = nbt.GetInt("SpawnY");
+            this.SpawnZ = nbt.GetInt("SpawnZ");
+
+            this.AdventureSettingsEntry = new AdventureSettingsEntry();
+
+            this.GameMode = GameModeExtention.FromIndex(nbt.GetInt("PlayerGameType"));
         }
 
         public void SendMessage(TranslationContainer message)
@@ -152,8 +157,7 @@ namespace MineNET.Entities.Players
             //});
         }
 
-        public void SendPacket(MinecraftPacket packet, int reliability = RakNetPacketReliability.RELIABLE,
-            int flag = RakNetProtocol.FlagNormal)
+        public void SendPacket(MinecraftPacket packet, int reliability = RakNetPacketReliability.RELIABLE, int flag = RakNetProtocol.FlagNormal)
         {
             NetworkSession session = this.GetSession();
             if (session == null)
@@ -162,6 +166,15 @@ namespace MineNET.Entities.Players
             }
 
             session.AddPacketBatchQueue(packet, reliability, flag);
+        }
+
+        public void SendPacketViewers(MinecraftPacket packet)
+        {
+            Player[] players = this.Viewers;
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendPacket(packet);
+            }
         }
 
         public void SendAvailableCommands()
@@ -175,9 +188,26 @@ namespace MineNET.Entities.Players
         {
             this.Inventory.SendContents(this);
             this.Inventory.ArmorInventory.SendContents(this);
-            this.Inventory.PlayerOffhandInventory.SendContents(this);
+            this.Inventory.EntityOffhandInventory.SendContents(this);
             this.Inventory.PlayerCursorInventory.SendContents(this);
             this.Inventory.OpendInventory?.SendContents(this);
+        }
+
+        public override void SendSpawnPacket(Player player)
+        {
+            AddPlayerPacket pk = new AddPlayerPacket
+            {
+                Uuid = this.Uuid,
+                Username = this.Name,
+                EntityUniqueId = this.EntityID,
+                EntityRuntimeId = this.EntityID,
+                Position = this.GetVector3(),
+                Motion = new Vector3(),
+                Direction = new Vector3(this.Yaw, this.Pitch, this.HeadYaw),
+                Metadata = this.DataProperties
+            };
+
+            player.SendPacket(pk);
         }
 
         internal override bool UpdateTick(long tick)
@@ -292,36 +322,8 @@ namespace MineNET.Entities.Players
             this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.WORLD_IMMUTABLE, this.IsSpectator);
             this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.NO_PVP, this.IsSpectator);
             this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.FLYING, this.IsCreative || this.IsSpectator);
-            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT,
-                this.IsCreative || this.IsSpectator);
+            this.AdventureSettingsEntry.SetFlag(AdventureSettingsPacket.ALLOW_FLIGHT, this.IsCreative || this.IsSpectator);
             this.AdventureSettingsEntry.Update(this);
-        }
-
-        #endregion
-
-        #region Init NBT
-
-        public override void InitNBT()
-        {
-            CompoundTag tag = this.NamedTag;
-            tag.PutInt("Dimension", DimensionIDs.OverWorld);
-            tag.PutInt("PlayerGameType", Server.Instance.ServerProperty.GameMode.GetIndex());
-
-            tag.PutInt("Score", 0);
-
-            tag.PutInt("SelectedItemSlot", 0);
-            tag.PutCompound("SelectedItem", NBTIO.WriteItem(new ItemStack(Item.Get(BlockIDs.AIR))));
-
-            this.World = World.GetMainWorld();
-            tag.PutString("LastWorldName", this.World.Name);
-
-            tag.PutInt("SpawnX", this.World.SpawnX);
-            tag.PutInt("SpawnY", this.World.SpawnY);
-            tag.PutInt("SpawnZ", this.World.SpawnZ);
-
-            tag.PutFloat("LastX", this.World.SpawnX);
-            tag.PutFloat("LastY", this.World.SpawnY);
-            tag.PutFloat("LastZ", this.World.SpawnZ);
         }
 
         #endregion
@@ -330,48 +332,30 @@ namespace MineNET.Entities.Players
 
         public void Load()
         {
-            string path = $"{Server.PlayerDataPath}\\{this.LoginData.XUID}.dat";
-            if (!File.Exists(path))
-            {
-                this.InitNBT();
-                NBTIO.WriteGZIPFile(path, this.NamedTag, NBTEndian.BIG_ENDIAN);
-            }
-            else
-            {
-                this.NamedTag = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
-            }
+            CompoundTag nbt = Server.Instance.GetOfflinePlayerData(this.LoginData.XUID);
 
-            this.World = World.GetWorld(this.NamedTag.GetString("LastWorld")) ?? World.GetMainWorld();
-
-            this.X = this.NamedTag.GetFloat("LastX");
-            this.Y = this.NamedTag.GetFloat("LastY");
-            this.Z = this.NamedTag.GetFloat("LastZ");
-
-            this.SpawnX = this.NamedTag.GetInt("SpawnX");
-            this.SpawnY = this.NamedTag.GetInt("SpawnY");
-            this.SpawnZ = this.NamedTag.GetInt("SpawnZ");
-
-            this.AdventureSettingsEntry = new AdventureSettingsEntry();
-
-            this.GameMode = GameModeExtention.FromIndex(this.NamedTag.GetInt("PlayerGameType"));
+            this.EntityInit(nbt);
         }
 
         public void Save()
         {
-            this.NamedTag.PutInt("PlayerGameType", this.GameMode.GetIndex());
+            CompoundTag nbt = this.SaveNBT();
 
-            this.NamedTag.PutString("LastWorldName", this.World.Name);
+            nbt.PutInt("PlayerGameType", this.GameMode.GetIndex());
 
-            this.NamedTag.PutInt("SpawnX", this.SpawnX);
-            this.NamedTag.PutInt("SpawnY", this.SpawnY);
-            this.NamedTag.PutInt("SpawnZ", this.SpawnZ);
+            nbt.PutString("World", this.World.Name);
 
-            this.NamedTag.PutFloat("LastX", this.X);
-            this.NamedTag.PutFloat("LastY", this.Y);
-            this.NamedTag.PutFloat("LastZ", this.Z);
+            nbt.PutInt("SpawnX", this.SpawnX);
+            nbt.PutInt("SpawnY", this.SpawnY);
+            nbt.PutInt("SpawnZ", this.SpawnZ);
 
-            string path = $"{Server.PlayerDataPath}\\{this.LoginData.XUID}.dat";
-            NBTIO.WriteGZIPFile(path, this.NamedTag, NBTEndian.BIG_ENDIAN);
+            Dictionary<string, Tag> tags = this.Inventory.SaveNBT().Tags;
+            foreach (string name in tags.Keys)
+            {
+                nbt.PutTag(name, tags[name]);
+            }
+
+            Server.Instance.SaveOfflinePlayerData(this.LoginData.XUID, nbt);
         }
 
         #endregion

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -12,12 +13,17 @@ using MineNET.Events.ServerEvents;
 using MineNET.Init;
 using MineNET.IO;
 using MineNET.Manager;
+using MineNET.NBT.Data;
+using MineNET.NBT.IO;
+using MineNET.NBT.Tags;
 using MineNET.Network;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Plugins;
 using MineNET.Reports;
 using MineNET.Text;
+using MineNET.Values;
 using MineNET.Worlds;
+using MineNET.Worlds.Dimensions;
 
 namespace MineNET
 {
@@ -389,6 +395,57 @@ namespace MineNET
             {
                 players[i].SendPacket(packet);
             }
+        }
+
+        public CompoundTag GetOfflinePlayerData(string xuid)
+        {
+            string path = $"{Server.PlayerDataPath}\\{xuid}.dat";
+            CompoundTag nbt;
+            if (!File.Exists(path))
+            {
+                World world = World.GetMainWorld();
+                Position pos = world.GetWorldSpawn();
+                this.Logger.OutputLogger.Info("a");
+                nbt = new CompoundTag()
+                    .PutLong("firstPlayed", DateTime.Now.ToBinary())
+                    .PutLong("lastPlayed", DateTime.Now.ToBinary())
+
+                    .PutList(new ListTag("Pos", NBTTagType.FLOAT)
+                        .Add(new FloatTag("", pos.X))
+                        .Add(new FloatTag("", pos.Y))
+                        .Add(new FloatTag("", pos.Z)))
+                    .PutList(new ListTag("Motion", NBTTagType.FLOAT)
+                        .Add(new FloatTag("", 0))
+                        .Add(new FloatTag("", 0))
+                        .Add(new FloatTag("", 0)))
+                    .PutList(new ListTag("Rotation", NBTTagType.FLOAT)
+                        .Add(new FloatTag("", 0))
+                        .Add(new FloatTag("", 0)))
+                    .PutString("World", pos.World.Name)
+
+                    .PutInt("Dimension", DimensionIDs.OverWorld)
+                    .PutInt("PlayerGameType", Server.Instance.ServerProperty.GameMode.GetIndex())
+
+
+                    .PutInt("SpawnX", world.SpawnX)
+                    .PutInt("SpawnY", world.SpawnY)
+                    .PutInt("SpawnZ", world.SpawnZ)
+
+                    .PutInt("Score", 0);
+
+                this.SaveOfflinePlayerData(xuid, nbt);
+            }
+            else
+            {
+                nbt = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
+            }
+            return nbt;
+        }
+
+        public void SaveOfflinePlayerData(string xuid, CompoundTag nbt)
+        {
+            string path = $"{Server.PlayerDataPath}\\{xuid}.dat";
+            NBTIO.WriteGZIPFile(path, nbt, NBTEndian.BIG_ENDIAN);
         }
 
         public void Dispose()

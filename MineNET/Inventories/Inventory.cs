@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MineNET.Entities.Players;
 using MineNET.Items;
+using MineNET.NBT.Tags;
 
 namespace MineNET.Inventories
 {
@@ -17,6 +18,11 @@ namespace MineNET.Inventories
         }
 
         int MaxStackSize
+        {
+            get;
+        }
+
+        string Name
         {
             get;
         }
@@ -62,6 +68,8 @@ namespace MineNET.Inventories
 
         void OnClose(Player player);
 
-        void SaveNBT();
+        void LoadNBT(CompoundTag nbt);
+
+        CompoundTag SaveNBT();
     }
 }

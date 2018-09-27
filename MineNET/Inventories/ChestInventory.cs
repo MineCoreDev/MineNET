@@ -1,9 +1,5 @@
 ﻿using MineNET.BlockEntities;
 using MineNET.Inventories.Data;
-using MineNET.Items;
-using MineNET.NBT.Data;
-using MineNET.NBT.IO;
-using MineNET.NBT.Tags;
 
 namespace MineNET.Inventories
 {
@@ -11,22 +7,6 @@ namespace MineNET.Inventories
     {
         public ChestInventory(BlockEntityChest holder) : base(holder)
         {
-            if (!holder.NamedTag.Exist("Items"))
-            {
-                ListTag initItems = new ListTag("Items", NBTTagType.COMPOUND);
-                for (int i = 0; i < this.Size; ++i)
-                {
-                    initItems.Add(NBTIO.WriteItem(new ItemStack(Item.Get(0), 0, 0), i));
-                }
-                holder.NamedTag.PutList(initItems);
-            }
-
-            ListTag items = holder.NamedTag.GetList("Items");
-            for (int i = 0; i < this.Size; ++i)
-            {
-                ItemStack item = NBTIO.ReadItem((CompoundTag) items[i]);
-                this.SetItem(i, item, false);
-            }
         }
 
         public override int Size
@@ -45,6 +25,14 @@ namespace MineNET.Inventories
             }
         }
 
+        public override string Name
+        {
+            get
+            {
+                return "Chest";
+            }
+        }
+
         public new BlockEntityChest Holder
         {
             get
@@ -56,16 +44,6 @@ namespace MineNET.Inventories
             {
                 base.Holder = value;
             }
-        }
-
-        public override void SaveNBT()
-        {
-            ListTag inventory = new ListTag("Items", NBTTagType.COMPOUND);
-            for (int i = 0; i < this.Size; ++i)
-            {
-                inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
-            }
-            this.Holder.NamedTag.PutList(inventory);
         }
     }
 }

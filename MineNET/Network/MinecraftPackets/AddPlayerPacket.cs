@@ -17,7 +17,7 @@ namespace MineNET.Network.MinecraftPackets
         public long EntityRuntimeId { get; set; }
         public string PlatformChatId { get; set; } = "";
         public Vector3 Position { get; set; }
-        public Vector3 Speed { get; set; }
+        public Vector3 Motion { get; set; }
         public Vector3 Direction { get; set; }
         public ItemStack ItemStack { get; set; } = new ItemStack(Item.Get(0));
         public EntityMetadataManager Metadata { get; set; }
@@ -40,7 +40,7 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteString(this.PlatformChatId);
             this.WriteVector3(this.Position);
-            this.WriteVector3(this.Speed);
+            this.WriteVector3(this.Motion);
             this.WriteVector3(this.Direction);
             this.WriteItem(this.ItemStack);
             this.WriteEntityMetadata(this.Metadata);

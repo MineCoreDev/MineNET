@@ -18,9 +18,9 @@ namespace MineNET.Entities
         {
         }
 
-        protected override void EntityInit()
+        protected override void EntityInit(CompoundTag nbt)
         {
-            base.EntityInit();
+            base.EntityInit(nbt);
 
             this.Attributes.AddAttribute(EntityAttribute.HEALTH);
             this.Attributes.AddAttribute(EntityAttribute.ABSORPTION);

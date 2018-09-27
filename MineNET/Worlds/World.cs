@@ -556,9 +556,9 @@ namespace MineNET.Worlds
             this.updateQueue.TryAdd(block, tick);
         }
 
-        public Vector3 GetWorldSpawn()
+        public Position GetWorldSpawn()
         {
-            return new Vector3(this.SpawnX, this.SpawnY, this.SpawnZ);
+            return new Position(this.SpawnX, this.SpawnY, this.SpawnZ, this);
         }
 
         public void SetWorldSpawn(Vector3 spawn)

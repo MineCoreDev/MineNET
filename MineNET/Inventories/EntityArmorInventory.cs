@@ -2,9 +2,6 @@
 using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.Items;
-using MineNET.NBT.Data;
-using MineNET.NBT.IO;
-using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
 
 namespace MineNET.Inventories
@@ -18,22 +15,6 @@ namespace MineNET.Inventories
 
         public EntityArmorInventory(EntityLiving entity) : base(entity)
         {
-            if (!entity.NamedTag.Exist("Armor"))
-            {
-                ListTag newTag = new ListTag("Armor", NBTTagType.COMPOUND);
-                for (int i = 0; i < this.Size; ++i)
-                {
-                    newTag.Add(NBTIO.WriteItem(new ItemStack(Item.Get(0), 0, 0), i));
-                }
-                entity.NamedTag.PutList(newTag);
-            }
-
-            ListTag items = entity.NamedTag.GetList("Armor");
-            for (int i = 0; i < this.Size; ++i)
-            {
-                ItemStack item = NBTIO.ReadItem((CompoundTag) items[i]);
-                this.SetItem(i, item, false);
-            }
         }
 
         public override int Size
@@ -49,6 +30,14 @@ namespace MineNET.Inventories
             get
             {
                 return ContainerIds.ARMOR.GetIndex();
+            }
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "Armor";
             }
         }
 
@@ -161,16 +150,6 @@ namespace MineNET.Inventories
             {
                 this.SetItem(EntityArmorInventory.SLOT_ARMOR_FEET, value.Clone());
             }
-        }
-
-        public override void SaveNBT()
-        {
-            ListTag inventory = new ListTag("Armor", NBTTagType.COMPOUND);
-            for (int i = 0; i < this.Size; ++i)
-            {
-                inventory.Add(NBTIO.WriteItem(this.GetItem(i), i));
-            }
-            this.Holder.NamedTag.PutList(inventory);
         }
     }
 }

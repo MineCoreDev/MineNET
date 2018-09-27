@@ -13,7 +13,7 @@ namespace MineNET.Network.MinecraftPackets
         public int Type { get; set; }
         public Vector3 Position { get; set; }
         public Vector3 Motion { get; set; }
-        public Vector2 Direction { get; set; }
+        public Vector3 Direction { get; set; }
         public EntityAttributeDictionary Attributes { get; set; }
         public EntityMetadataManager Metadata { get; set; }
         //public EntityLink[] Link = new EntityLink[0];
@@ -27,7 +27,7 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteUVarInt((uint) this.Type);
             this.WriteVector3(this.Position);
             this.WriteVector3(this.Motion);
-            this.WriteVector2(this.Direction);
+            this.WriteVector3(this.Direction);
             this.WriteAttributes(this.Attributes);
             this.WriteEntityMetadata(this.Metadata);
             this.WriteUVarInt(0); //TODO: EntityLink size

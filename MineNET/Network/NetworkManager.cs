@@ -487,9 +487,12 @@ namespace MineNET.Network
             string endPointStr = endPoint.ToString();
             if (!this.Players.ContainsKey(endPointStr))
             {
-                PlayerCreateEventArgs ev = new PlayerCreateEventArgs(new Player());
+                PlayerCreateEventArgs ev = new PlayerCreateEventArgs(null);
                 Server.Instance.Event.Player.OnPlayerCreate(this, ev);
-
+                if (ev.CustomPlayer == null)
+                {
+                    ev.CustomPlayer = new Player();
+                }
                 ev.CustomPlayer.EndPoint = endPoint;
 
                 this.Players.TryAdd(endPointStr, ev.CustomPlayer);

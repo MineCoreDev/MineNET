@@ -26,6 +26,15 @@ namespace MineNET.Inventories
             }
         }
 
+        public override string Name
+        {
+            get
+            {
+                return "CraftingGrid";
+            }
+        }
+
+
         public new Player Holder
         {
             get
@@ -37,11 +46,6 @@ namespace MineNET.Inventories
             {
                 base.Holder = value;
             }
-        }
-
-        public override void SaveNBT()
-        {
-
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using MineNET.Data;
+﻿using System.Collections.Generic;
+using MineNET.Data;
 using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.Items;
+using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
 
 namespace MineNET.Inventories
@@ -17,12 +19,6 @@ namespace MineNET.Inventories
 
         public EntityInventory(EntityLiving holder, int slot) : base(holder)
         {
-            if (!holder.NamedTag.Exist("Mainhand"))
-            {
-                holder.NamedTag.PutInt("Mainhand", 0);
-            }
-            this.mainHand = holder.NamedTag.GetInt("Mainhand");
-
             this.armor = new EntityArmorInventory(holder);
             this.offhand = new EntityOffhandInventory(holder);
 
@@ -42,6 +38,14 @@ namespace MineNET.Inventories
             get
             {
                 return ContainerIds.INVENTORY.GetIndex();
+            }
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "Inventory";
             }
         }
 
@@ -99,12 +103,12 @@ namespace MineNET.Inventories
         {
             get
             {
-                return this.PlayerOffhandInventory.OffHandItem;
+                return this.EntityOffhandInventory.OffHandItem;
             }
 
             set
             {
-                this.PlayerOffhandInventory.OffHandItem = value;
+                this.EntityOffhandInventory.OffHandItem = value;
             }
         }
 
@@ -168,7 +172,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public EntityOffhandInventory PlayerOffhandInventory
+        public EntityOffhandInventory EntityOffhandInventory
         {
             get
             {
@@ -190,12 +194,32 @@ namespace MineNET.Inventories
             }
         }
 
-        public override void SaveNBT()
+        public override void LoadNBT(CompoundTag nbt)
         {
-            this.Holder.NamedTag.PutInt("MainHand", this.MainHandSlot);
+            base.LoadNBT(nbt);
 
-            this.ArmorInventory.SaveNBT();
-            this.PlayerOffhandInventory.SaveNBT();
+            this.MainHandSlot = nbt.GetInt("MainHand");
+
+            this.ArmorInventory.LoadNBT(nbt);
+            this.EntityOffhandInventory.LoadNBT(nbt);
+        }
+
+        public override CompoundTag SaveNBT()
+        {
+            CompoundTag nbt = base.SaveNBT();
+            nbt.PutInt("MainHand", this.MainHandSlot);
+
+            Dictionary<string, Tag> tags = this.ArmorInventory.SaveNBT().Tags;
+            foreach (string key in tags.Keys)
+            {
+                nbt.PutTag(key, tags[key]);
+            }
+            tags = this.EntityOffhandInventory.SaveNBT().Tags;
+            foreach (string key in tags.Keys)
+            {
+                nbt.PutTag(key, tags[key]);
+            }
+            return nbt;
         }
     }
 }
