@@ -32,7 +32,7 @@ namespace MineNET.Inventories
         {
             get
             {
-                return "Inventory";
+                return "EntityOffhandInventory";
             }
         }
 

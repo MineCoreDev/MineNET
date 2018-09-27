@@ -405,7 +405,6 @@ namespace MineNET
             {
                 World world = World.GetMainWorld();
                 Position pos = world.GetWorldSpawn();
-                this.Logger.OutputLogger.Info("a");
                 nbt = new CompoundTag()
                     .PutLong("firstPlayed", DateTime.Now.ToBinary())
                     .PutLong("lastPlayed", DateTime.Now.ToBinary())

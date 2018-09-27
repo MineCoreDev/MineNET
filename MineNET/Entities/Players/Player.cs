@@ -104,9 +104,11 @@ namespace MineNET.Entities.Players
 
         public void SendMessage(string message)
         {
-            TextPacket pk = new TextPacket();
-            pk.Type = TextPacket.TYPE_RAW;
-            pk.Message = message;
+            TextPacket pk = new TextPacket
+            {
+                Type = TextPacket.TYPE_RAW,
+                Message = message
+            };
             this.SendPacket(pk);
         }
 
@@ -118,26 +120,32 @@ namespace MineNET.Entities.Players
                 list.Add(args[i].ToString());
             }
 
-            TextPacket pk = new TextPacket();
-            pk.Type = TextPacket.TYPE_TRANSLATION;
-            pk.NeedsTranslation = true;
-            pk.Message = message;
-            pk.Parameters = list.ToArray();
+            TextPacket pk = new TextPacket
+            {
+                Type = TextPacket.TYPE_TRANSLATION,
+                NeedsTranslation = true,
+                Message = message,
+                Parameters = list.ToArray()
+            };
             this.SendPacket(pk);
         }
 
         public void SendPlayStatus(int status, int flag = RakNetProtocol.FlagNormal)
         {
-            PlayStatusPacket pk = new PlayStatusPacket();
-            pk.Status = status;
+            PlayStatusPacket pk = new PlayStatusPacket
+            {
+                Status = status
+            };
 
             this.SendPacket(pk, flag: flag);
         }
 
         public void SendChunkRadiusUpdated(int radius)
         {
-            ChunkRadiusUpdatedPacket pk = new ChunkRadiusUpdatedPacket();
-            pk.Radius = radius;
+            ChunkRadiusUpdatedPacket pk = new ChunkRadiusUpdatedPacket
+            {
+                Radius = radius
+            };
 
             this.SendPacket(pk);
 
@@ -179,8 +187,10 @@ namespace MineNET.Entities.Players
 
         public void SendAvailableCommands()
         {
-            AvailableCommandsPacket availableCommandsPacket = new AvailableCommandsPacket();
-            availableCommandsPacket.Commands = MineNET_Registries.Command.ToDictionary();
+            AvailableCommandsPacket availableCommandsPacket = new AvailableCommandsPacket
+            {
+                Commands = MineNET_Registries.Command.ToDictionary()
+            };
             this.SendPacket(availableCommandsPacket);
         }
 

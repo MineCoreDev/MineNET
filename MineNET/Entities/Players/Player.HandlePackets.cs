@@ -192,21 +192,23 @@ namespace MineNET.Entities.Players
 
                 this.Load();
 
-                StartGamePacket startGamePacket = new StartGamePacket();
-                startGamePacket.EntityUniqueId = this.EntityID;
-                startGamePacket.EntityRuntimeId = this.EntityID;
-                startGamePacket.PlayerGamemode = this.GameMode;
-                startGamePacket.PlayerPosition = new Vector3(this.X, this.Y, this.Z);
-                startGamePacket.Direction = new Vector2(this.Yaw, this.Pitch);
+                StartGamePacket startGamePacket = new StartGamePacket
+                {
+                    EntityUniqueId = this.EntityID,
+                    EntityRuntimeId = this.EntityID,
+                    PlayerGamemode = this.GameMode,
+                    PlayerPosition = new Vector3(this.X, this.Y, this.Z),
+                    Direction = new Vector2(this.Yaw, this.Pitch),
 
-                startGamePacket.WorldGamemode = this.World.Gamemode;
-                startGamePacket.Difficulty = this.World.Difficulty;
-                startGamePacket.SpawnX = this.World.SpawnX;
-                startGamePacket.SpawnY = this.World.SpawnY;
-                startGamePacket.SpawnZ = this.World.SpawnZ;
-                startGamePacket.WorldName = this.World.Name;
+                    WorldGamemode = this.World.Gamemode,
+                    Difficulty = this.World.Difficulty,
+                    SpawnX = this.World.SpawnX,
+                    SpawnY = this.World.SpawnY,
+                    SpawnZ = this.World.SpawnZ,
+                    WorldName = this.World.Name,
 
-                startGamePacket.GameRules = new GameRules();
+                    GameRules = new GameRules()
+                };
                 startGamePacket.GameRules.Add(new GameRule<bool>("ShowCoordinates", true));
                 this.SendPacket(startGamePacket);
 
