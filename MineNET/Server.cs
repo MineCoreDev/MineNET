@@ -136,7 +136,7 @@ namespace MineNET
                     this.Dispose(sw);
                     this.Status = ServerStatus.Stop;
 
-                    Instance.Event.Server.OnServerStopped(this, new ServerStoppedEventArgs());
+                    this.Event.Server.OnServerStopped(this, new ServerStoppedEventArgs());
                     return true;
                 }
                 catch (Exception e)
@@ -170,7 +170,7 @@ namespace MineNET
 
             this.Status = ServerStatus.Stop;
 
-            Instance.Event.Server.OnServerStopped(this, new ServerStoppedEventArgs());
+            this.Event.Server.OnServerStopped(this, new ServerStoppedEventArgs());
         }
 
         public void StartUpdate()
