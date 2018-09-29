@@ -227,6 +227,11 @@ namespace MineNET.Entities
             return new Location(this.X, this.Y, this.Z, this.Yaw, this.Pitch, this.World);
         }
 
+        public Vector3 GetMotion()
+        {
+            return new Vector3(this.MotionX, this.MotionY, this.MotionZ);
+        }
+
         public Vector2 GetDirectionPlane()
         {
             return new Vector2((float) -Math.Cos(this.Yaw * Math.PI / 180 - Math.PI / 2),

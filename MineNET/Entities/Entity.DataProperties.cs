@@ -240,7 +240,7 @@ namespace MineNET.Entities
 
         public void SendDataProperties()
         {
-            foreach (Player player in Server.Instance.GetPlayers())
+            foreach (Player player in this.Viewers)
             {
                 this.DataProperties.Update(player);
             }

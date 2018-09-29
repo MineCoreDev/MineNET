@@ -8,6 +8,7 @@ using MineNET.Blocks;
 using MineNET.Data;
 using MineNET.Entities;
 using MineNET.Entities.Players;
+using MineNET.Events.BlockEvents;
 using MineNET.Events.PlayerEvents;
 using MineNET.IO;
 using MineNET.Items;
@@ -369,11 +370,11 @@ namespace MineNET.Worlds
                 return;
             }
 
-            PlayerInteractEventArgs playerInteractEvent = new PlayerInteractEventArgs(player, item, clicked, blockFace);
+            PlayerInteractEventArgs args = new PlayerInteractEventArgs(player, item, clicked, blockFace);
 
             if (player.IsAdventure)
             {
-                playerInteractEvent.IsCancel = true;
+                args.IsCancel = true;
             }
 
             /*if (Server.ServerConfig.SpawnProtection > 0 || player.Op)
@@ -381,11 +382,11 @@ namespace MineNET.Worlds
                 //TODO
             }*/
 
-            /*PlayerEvents.OnPlayerInteract(playerInteractEvent);
-            if (playerInteractEvent.IsCancel)
+            Server.Instance.Event.Player.OnPlayerInteract(this, args);
+            if (args.IsCancel)
             {
                 return;
-            }*/
+            }
 
             clicked.UpdateTick(World.BLOCK_UPDATE_TOUCH);
             if (!player.Sneaking && clicked.CanBeActivated && clicked.Activate(player, item))
@@ -420,22 +421,24 @@ namespace MineNET.Worlds
 
             //TODO : check can place on
 
-            //BlockPlaceEventArgs blockPlaceEvent = new BlockPlaceEventArgs(player, hand, replace, clicked, item);
+            BlockPlaceEventArgs args1 = new BlockPlaceEventArgs(player, hand, replace, clicked, item);
 
             //TODO : check spawn protection
 
-            /*BlockEvents.OnBlockPlace(blockPlaceEvent);
-            if (blockPlaceEvent.IsCancel)
+            Server.Instance.Event.Block.OnBlockPlace(this, args1);
+            if (args1.IsCancel)
             {
                 return;
-            }*/
+            }
             hand.Place(clicked, replace, blockFace, clickPos, player, item);
 
-            LevelSoundEventPacket pk = new LevelSoundEventPacket();
-            pk.Position = (Vector3) hand.Position;
-            pk.Sound = LevelSoundEventPacket.SOUND_PLACE;
-            pk.ExtraData = hand.RuntimeId;
-            pk.Pitch = 1;
+            LevelSoundEventPacket pk = new LevelSoundEventPacket
+            {
+                Position = (Vector3) hand.Position,
+                Sound = LevelSoundEventPacket.SOUND_PLACE,
+                ExtraData = hand.RuntimeId,
+                Pitch = 1
+            };
             player.SendPacket(pk); //TODO : near players
         }
 
@@ -448,7 +451,7 @@ namespace MineNET.Worlds
 
             Block block = this.GetBlock(pos);
 
-            //BlockBreakEventArgs blockBreakEvent = new BlockBreakEventArgs(player, block, item);
+            BlockBreakEventArgs args = new BlockBreakEventArgs(player, block, item);
 
             /*if (player.IsSurvival && !block.CanBreak)
             {
@@ -460,11 +463,11 @@ namespace MineNET.Worlds
                 //TODO
             }*/
 
-            /*BlockEvents.OnBlockBreak(blockBreakEvent);
-            if (blockBreakEvent.IsCancel)
+            Server.Instance.Event.Block.OnBlockBreak(this, args);
+            if (args.IsCancel)
             {
                 return;
-            }*/
+            }
 
             //ItemStack[] drops = blockBreakEvent.Drops;
             ItemStack[] drops = block.GetDrops(item);
