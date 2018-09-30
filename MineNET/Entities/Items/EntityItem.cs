@@ -28,6 +28,8 @@ namespace MineNET.Entities.Items
 
         protected override void EntityInit(CompoundTag nbt)
         {
+            base.EntityInit(nbt);
+
             this.Age = nbt.GetShort("Age");
             this.PickupDelay = nbt.GetShort("PickupDelay");
             this.Owner = nbt.GetString("Owner");

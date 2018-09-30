@@ -1,5 +1,4 @@
 ﻿using System;
-using MineNET.Entities;
 using MineNET.Entities.Items;
 
 namespace MineNET.Init
@@ -16,14 +15,14 @@ namespace MineNET.Init
 
         public void Init()
         {
-            this.Add(new string[] { "Item", "minecraft:item" }, new EntityItem(null, null));
+            this.Add(new string[] { "Item", "minecraft:item" }, typeof(EntityItem));
         }
 
-        public void Add(string[] keys, Entity entity)
+        public void Add(string[] keys, Type entity)
         {
             for (int i = 0; i < keys.Length; ++i)
             {
-                //MineNET_Registries.Entity.Add(keys[i], entity);
+                MineNET_Registries.Entity.Add(keys[i], entity);
             }
         }
 

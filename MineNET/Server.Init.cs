@@ -32,6 +32,7 @@ namespace MineNET
             new BlockInit();
             new ItemInit();
             new EffectInit();
+            new EntityInit();
         }
 
         private void OnServerStart()

@@ -7,6 +7,7 @@ using MineNET.Entities.Players;
 using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
+using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
 
@@ -15,6 +16,19 @@ namespace MineNET.Entities
     public abstract partial class Entity
     {
         private static long nextEntityId = 0;
+
+        public static Entity CreateEntity(string type, Chunk chunk, CompoundTag nbt)
+        {
+            if (MineNET_Registries.Entity.ContainsKey(type))
+            {
+                Type t = MineNET_Registries.Entity[type];
+                return FastActivator<Entity, Chunk, CompoundTag>.CreateInstance(t)(chunk, nbt);
+            }
+            else
+            {
+                throw new KeyNotFoundException(type);
+            }
+        }
 
         public abstract string Name { get; protected set; }
         public abstract int NetworkId { get; }
