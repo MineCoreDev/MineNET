@@ -17,4 +17,5 @@ MineCraftBE Server SoftWere
 [YamlDotNet](https://github.com/aaubry/YamlDotNet)  
 [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)  
 [SharpZipLib](https://github.com/icsharpcode/SharpZipLib)  
-[NLog](https://github.com/NLog/NLog)
+[NLog](https://github.com/NLog/NLog)   
+[SharpNoise](https://github.com/rthome/SharpNoise)
