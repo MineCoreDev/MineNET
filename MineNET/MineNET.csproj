@@ -229,6 +229,7 @@
     <Compile Include="Events\PlayerEvents\PlayerToggleSprintEventArgs.cs" />
     <Compile Include="Init\BlockInit.cs" />
     <Compile Include="Init\EffectInit.cs" />
+    <Compile Include="Init\EntityInit.cs" />
     <Compile Include="Init\ItemInit.cs" />
     <Compile Include="Inventories\BaseInventory.cs" />
     <Compile Include="Inventories\ChestInventory.cs" />

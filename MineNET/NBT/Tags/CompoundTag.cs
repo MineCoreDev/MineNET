@@ -282,6 +282,19 @@ namespace MineNET.NBT.Tags
             return this.tags.ContainsKey(name);
         }
 
+        public bool Exist(string name, NBTTagType type)
+        {
+            if (this.tags.ContainsKey(name))
+            {
+                Tag tag = this.GetTag(name);
+                if (tag.TagType == type)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public int Count
         {
             get

@@ -1,8 +1,8 @@
-﻿using MineNET.Entities;
+﻿using System;
 
 namespace MineNET.Registry
 {
-    public class EntityRegistry : DictionaryRegistryBase<int, Entity>
+    public class EntityRegistry : DictionaryRegistryBase<string, Type>
     {
 
     }
