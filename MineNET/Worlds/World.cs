@@ -144,6 +144,8 @@ namespace MineNET.Worlds
             {
                 this.Generator = GeneratorManager.GetGenerator("FLAT");
             }
+
+            //this.Generator = GeneratorManager.GetGenerator("INFINITE");
         }
 
         public void UpdateTick(long tick)

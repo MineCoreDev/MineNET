@@ -1,6 +1,6 @@
-﻿using MineNET.Blocks;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using MineNET.Blocks;
 using MineNET.IO;
 
 namespace MineNET.Worlds.Generators.Flat
@@ -24,13 +24,7 @@ namespace MineNET.Worlds.Generators.Flat
             public int height;
         }
 
-        public override string Name
-        {
-            get
-            {
-                return "FLAT";
-            }
-        }
+        public override string Name => "FLAT";
 
         public string FlatOptionsString { get; private set; } = null;
 

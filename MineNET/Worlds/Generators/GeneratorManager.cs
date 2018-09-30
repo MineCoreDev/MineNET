@@ -1,5 +1,6 @@
-﻿using MineNET.Worlds.Generators.Flat;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using MineNET.Worlds.Generators.Flat;
+using MineNET.Worlds.Generators.Infinite;
 
 namespace MineNET.Worlds.Generators
 {
@@ -10,6 +11,7 @@ namespace MineNET.Worlds.Generators
         static GeneratorManager()
         {
             RegisterGenerator(new FlatGenerator());
+            RegisterGenerator(new InfiniteGenerator());
         }
 
         public static void RegisterGenerator(IGenerator generator)
