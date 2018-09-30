@@ -1,9 +1,9 @@
-﻿using MineNET.Data;
+﻿using System;
+using MineNET.Data;
 using MineNET.Entities.Players;
 using MineNET.Items;
 using MineNET.Values;
 using MineNET.Worlds;
-using System;
 
 namespace MineNET.Blocks
 {

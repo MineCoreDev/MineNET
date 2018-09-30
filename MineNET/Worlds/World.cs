@@ -411,6 +411,7 @@ namespace MineNET.Worlds
             }
 
             Block hand = item.Item.Block;
+            hand.Damage = item.Damage;
             hand.Position = replace.Position;
 
             if (clicked.CanBeReplaced)

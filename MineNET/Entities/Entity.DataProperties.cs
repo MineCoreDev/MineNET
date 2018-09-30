@@ -244,6 +244,11 @@ namespace MineNET.Entities
             {
                 this.DataProperties.Update(player);
             }
+
+            if (this.IsPlayer)
+            {
+                this.DataProperties.Update((Player) this);
+            }
         }
 
         #region Property
