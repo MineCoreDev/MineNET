@@ -515,7 +515,6 @@
     <Compile Include="Utils\ArrayUtils.cs" />
     <Compile Include="Utils\Binary.cs" />
     <Compile Include="Utils\BinaryStream.cs" />
-    <Compile Include="Utils\FastActivator.cs" />
     <Compile Include="Utils\LinqExtention.cs" />
     <Compile Include="Utils\CryptoUtils.cs" />
     <Compile Include="Utils\TextContainerUtils.cs" />

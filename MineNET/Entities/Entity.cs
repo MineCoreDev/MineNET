@@ -7,7 +7,6 @@ using MineNET.Entities.Players;
 using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
-using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds;
 
@@ -22,7 +21,7 @@ namespace MineNET.Entities
             if (MineNET_Registries.Entity.ContainsKey(type))
             {
                 Type t = MineNET_Registries.Entity[type];
-                return FastActivator<Entity, Chunk, CompoundTag>.CreateInstance(t)(chunk, nbt);
+                return MineNET_Registries.Entity.GetExpression(type)(chunk, nbt);
             }
             else
             {
