@@ -60,529 +60,529 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import typespace="http://www.w3.org/XML/1998/typespace" />
-    <xsd:element type="root" msdata:IsDataSet="true">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
-          <xsd:element type="metadata">
+          <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element type="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute type="type" use="required" type="xsd:string" />
-              <xsd:attribute type="type" type="xsd:string" />
-              <xsd:attribute type="mimetype" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
               <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
-          <xsd:element type="assembly">
+          <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute type="alias" type="xsd:string" />
-              <xsd:attribute type="type" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
-          <xsd:element type="data">
+          <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element type="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element type="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute type="type" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute type="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute type="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
               <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
-          <xsd:element type="resheader">
+          <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element type="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute type="type" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
       </xsd:complexType>
     </xsd:element>
   </xsd:schema>
-  <resheader type="resmimetype">
+  <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
-  <resheader type="version">
+  <resheader name="version">
     <value>2.0</value>
   </resheader>
-  <resheader type="reader">
+  <resheader name="reader">
     <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <resheader type="writer">
+  <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data type="commands_banip_description" xml:space="preserve">
+  <data name="commands_banip_description" xml:space="preserve">
     <value>IP アドレスを BAN 一覧に追加します。</value>
   </data>
-  <data type="commands_banip_invalid" xml:space="preserve">
+  <data name="commands_banip_invalid" xml:space="preserve">
     <value>無効な IP アドレスが入力されたか、プレイヤーがオンラインになっていません</value>
   </data>
-  <data type="commands_banip_success" xml:space="preserve">
+  <data name="commands_banip_success" xml:space="preserve">
     <value>IP アドレス {0} をアクセス禁止にしました</value>
   </data>
-  <data type="commands_banip_success_players" xml:space="preserve">
+  <data name="commands_banip_success_players" xml:space="preserve">
     <value>{1} に属する IP アドレス {0} をアクセス禁止にしました</value>
   </data>
-  <data type="commands_ban_description" xml:space="preserve">
+  <data name="commands_ban_description" xml:space="preserve">
     <value>IP アドレスを BAN 一覧に追加します。</value>
   </data>
-  <data type="commands_ban_success" xml:space="preserve">
+  <data name="commands_ban_success" xml:space="preserve">
     <value>プレイヤー {0} をアクセス禁止にしました</value>
   </data>
-  <data type="commands_deop_description" xml:space="preserve">
+  <data name="commands_deop_description" xml:space="preserve">
     <value>プレイヤーからオペレーターのステータスを取り消す。</value>
   </data>
-  <data type="commands_deop_success" xml:space="preserve">
+  <data name="commands_deop_success" xml:space="preserve">
     <value>{0} からオペレーター権限を剥奪しました</value>
   </data>
-  <data type="commands_effect_description" xml:space="preserve">
+  <data name="commands_effect_description" xml:space="preserve">
     <value>ステータス効果を追加/除去します。</value>
   </data>
-  <data type="commands_effect_failure_notActive_all" xml:space="preserve">
+  <data name="commands_effect_failure_notActive_all" xml:space="preserve">
     <value>{0} は効果を受けていないので、除去できませんでした</value>
   </data>
-  <data type="commands_effect_failure_notAMob" xml:space="preserve">
+  <data name="commands_effect_failure_notAMob" xml:space="preserve">
     <value>{0} に効果を付与することはできません</value>
   </data>
-  <data type="commands_effect_success" xml:space="preserve">
+  <data name="commands_effect_success" xml:space="preserve">
     <value>{2} に {0} * {1} を {3} 秒間与えました</value>
   </data>
-  <data type="commands_effect_success_removed_all" xml:space="preserve">
+  <data name="commands_effect_success_removed_all" xml:space="preserve">
     <value>{0} からすべての効果を除去しました</value>
   </data>
-  <data type="commands_enchant_cantEnchant" xml:space="preserve">
+  <data name="commands_enchant_cantEnchant" xml:space="preserve">
     <value>選択中のエンチャントは対象のアイテムに付加できません: {0}</value>
   </data>
-  <data type="commands_enchant_description" xml:space="preserve">
+  <data name="commands_enchant_description" xml:space="preserve">
     <value>選択中のプレイヤーのアイテムにエンチャントを付与する。</value>
   </data>
-  <data type="commands_enchant_invalidLevel" xml:space="preserve">
+  <data name="commands_enchant_invalidLevel" xml:space="preserve">
     <value>{0} はレベル {1} に対応していません</value>
   </data>
-  <data type="commands_enchant_success" xml:space="preserve">
+  <data name="commands_enchant_success" xml:space="preserve">
     <value>{0} のエンチャントに成功しました</value>
   </data>
-  <data type="commands_gamemode_description" xml:space="preserve">
+  <data name="commands_gamemode_description" xml:space="preserve">
     <value>プレイヤーのゲーム モードを設定する。</value>
   </data>
-  <data type="commands_gamemode_fail_invalid" xml:space="preserve">
+  <data name="commands_gamemode_fail_invalid" xml:space="preserve">
     <value>§cゲーム モード '{0}' は無効です</value>
   </data>
-  <data type="commands_gamemode_success_other" xml:space="preserve">
+  <data name="commands_gamemode_success_other" xml:space="preserve">
     <value>{1} のゲームモードを {0} に設定しました</value>
   </data>
-  <data type="commands_gamemode_success_self" xml:space="preserve">
+  <data name="commands_gamemode_success_self" xml:space="preserve">
     <value>あなたのゲームモードを {0} に設定しました</value>
   </data>
-  <data type="commands_generic_noTargetMatch" xml:space="preserve">
+  <data name="commands_generic_noTargetMatch" xml:space="preserve">
     <value>§cセレクターに合う対象がありません </value>
   </data>
-  <data type="commands_generic_notimplemented" xml:space="preserve">
+  <data name="commands_generic_notimplemented" xml:space="preserve">
     <value>実装されていません</value>
   </data>
-  <data type="commands_generic_player_notFound" xml:space="preserve">
+  <data name="commands_generic_player_notFound" xml:space="preserve">
     <value>§c指定されたプレイヤーが見つかりません</value>
   </data>
-  <data type="commands_generic_targetNotPlayer" xml:space="preserve">
+  <data name="commands_generic_targetNotPlayer" xml:space="preserve">
     <value>§cセレクターはプレイヤーの型にする必要があります </value>
   </data>
-  <data type="commands_generic_unknown" xml:space="preserve">
+  <data name="commands_generic_unknown" xml:space="preserve">
     <value>§c不明なコマンド: {0}。このコマンドが存在し、これを使用する権限があることを確認してください</value>
   </data>
-  <data type="commands_give_description" xml:space="preserve">
+  <data name="commands_give_description" xml:space="preserve">
     <value>プレイヤーにアイテムを与える。</value>
   </data>
-  <data type="commands_give_success" xml:space="preserve">
+  <data name="commands_give_success" xml:space="preserve">
     <value>{2} に {0} を {1} 個与えました </value>
   </data>
-  <data type="commands_give_successRecipient" xml:space="preserve">
+  <data name="commands_give_successRecipient" xml:space="preserve">
     <value>{0} を {1}個受け取りました </value>
   </data>
-  <data type="commands_help_description" xml:space="preserve">
+  <data name="commands_help_description" xml:space="preserve">
     <value>コマンドのヘルプ/一覧を呼び出す。</value>
   </data>
-  <data type="commands_help_header" xml:space="preserve">
+  <data name="commands_help_header" xml:space="preserve">
     <value>--- ヘルプ ページの {0} ／ {1} ページを表示 (/help &lt;ページ番号&gt;) ---</value>
   </data>
-  <data type="commands_list_description" xml:space="preserve">
+  <data name="commands_list_description" xml:space="preserve">
     <value>サーバー上のプレイヤーの一覧を表示する。</value>
   </data>
-  <data type="commands_me_description" xml:space="preserve">
+  <data name="commands_me_description" xml:space="preserve">
     <value>あなたに関するメッセージを表示します。</value>
   </data>
-  <data type="commands_op_description" xml:space="preserve">
+  <data name="commands_op_description" xml:space="preserve">
     <value>プレイヤーにオペレーターのステータスを与える。</value>
   </data>
-  <data type="commands_op_success" xml:space="preserve">
+  <data name="commands_op_success" xml:space="preserve">
     <value>{0} にオペレーター権限を付与しました</value>
   </data>
-  <data type="commands_say_description" xml:space="preserve">
+  <data name="commands_say_description" xml:space="preserve">
     <value>チャットで他のプレイヤーにメッセージを送信する_</value>
   </data>
-  <data type="commands_stop_description" xml:space="preserve">
+  <data name="commands_stop_description" xml:space="preserve">
     <value>サーバーを停止する。</value>
   </data>
-  <data type="commands_tell_description" xml:space="preserve">
+  <data name="commands_tell_description" xml:space="preserve">
     <value>1 人または複数のプレイヤーにプライベート メッセージを送信する。</value>
   </data>
-  <data type="commands_unbanip_invalid" xml:space="preserve">
+  <data name="commands_unbanip_invalid" xml:space="preserve">
     <value>IPアドレスが無効です</value>
   </data>
-  <data type="commands_unbanip_success" xml:space="preserve">
+  <data name="commands_unbanip_success" xml:space="preserve">
     <value>IP アドレス {0} のアクセス禁止を解除しました</value>
   </data>
-  <data type="commands_unban_failed" xml:space="preserve">
+  <data name="commands_unban_failed" xml:space="preserve">
     <value>プレイヤー {0} のアクセス禁止を解除できませんでした</value>
   </data>
-  <data type="commands_unban_success" xml:space="preserve">
+  <data name="commands_unban_success" xml:space="preserve">
     <value>プレイヤー {0} のアクセス禁止を解除しました</value>
   </data>
-  <data type="commands_whitelist_add_success" xml:space="preserve">
+  <data name="commands_whitelist_add_success" xml:space="preserve">
     <value>{0} をホワイトリストに追加しました</value>
   </data>
-  <data type="commands_whitelist_description" xml:space="preserve">
+  <data name="commands_whitelist_description" xml:space="preserve">
     <value>サーバーのホワイトリストを管理する。</value>
   </data>
-  <data type="commands_whitelist_disabled" xml:space="preserve">
+  <data name="commands_whitelist_disabled" xml:space="preserve">
     <value>ホワイトリストを無効にしました</value>
   </data>
-  <data type="commands_whitelist_enabled" xml:space="preserve">
+  <data name="commands_whitelist_enabled" xml:space="preserve">
     <value>ホワイトリストを有効にしました</value>
   </data>
-  <data type="commands_whitelist_list" xml:space="preserve">
+  <data name="commands_whitelist_list" xml:space="preserve">
     <value>ホワイトリストには {0} 人 (サーバー全体では {1} 人) のプレイヤーがいます:</value>
   </data>
-  <data type="commands_whitelist_remove_success" xml:space="preserve">
+  <data name="commands_whitelist_remove_success" xml:space="preserve">
     <value>{0} をホワイトリストから削除しました</value>
   </data>
-  <data type="effect_absorption" xml:space="preserve">
+  <data name="effect_absorption" xml:space="preserve">
     <value>吸収</value>
   </data>
-  <data type="effect_blindness" xml:space="preserve">
+  <data name="effect_blindness" xml:space="preserve">
     <value>目つぶし</value>
   </data>
-  <data type="effect_fatal_poison" xml:space="preserve">
+  <data name="effect_fatal_poison" xml:space="preserve">
     <value>毒</value>
   </data>
-  <data type="effect_fire_resistance" xml:space="preserve">
+  <data name="effect_fire_resistance" xml:space="preserve">
     <value>耐火</value>
   </data>
-  <data type="effect_haste" xml:space="preserve">
+  <data name="effect_haste" xml:space="preserve">
     <value>勤勉</value>
   </data>
-  <data type="effect_health_boost" xml:space="preserve">
+  <data name="effect_health_boost" xml:space="preserve">
     <value>HPブースト</value>
   </data>
-  <data type="effect_hunger" xml:space="preserve">
+  <data name="effect_hunger" xml:space="preserve">
     <value>空腹</value>
   </data>
-  <data type="effect_instant_damage" xml:space="preserve">
+  <data name="effect_instant_damage" xml:space="preserve">
     <value>ダメージ</value>
   </data>
-  <data type="effect_instant_health" xml:space="preserve">
+  <data name="effect_instant_health" xml:space="preserve">
     <value>回復</value>
   </data>
-  <data type="effect_invisibility" xml:space="preserve">
+  <data name="effect_invisibility" xml:space="preserve">
     <value>不可視</value>
   </data>
-  <data type="effect_jump_boost" xml:space="preserve">
+  <data name="effect_jump_boost" xml:space="preserve">
     <value>跳躍</value>
   </data>
-  <data type="effect_levitation" xml:space="preserve">
+  <data name="effect_levitation" xml:space="preserve">
     <value>浮遊</value>
   </data>
-  <data type="effect_mining_fatigue" xml:space="preserve">
+  <data name="effect_mining_fatigue" xml:space="preserve">
     <value>疲労</value>
   </data>
-  <data type="effect_nausea" xml:space="preserve">
+  <data name="effect_nausea" xml:space="preserve">
     <value>目まい</value>
   </data>
-  <data type="effect_night_vision" xml:space="preserve">
+  <data name="effect_night_vision" xml:space="preserve">
     <value>暗視</value>
   </data>
-  <data type="effect_poison" xml:space="preserve">
+  <data name="effect_poison" xml:space="preserve">
     <value>毒</value>
   </data>
-  <data type="effect_regeneration" xml:space="preserve">
+  <data name="effect_regeneration" xml:space="preserve">
     <value>再生</value>
   </data>
-  <data type="effect_resistance" xml:space="preserve">
+  <data name="effect_resistance" xml:space="preserve">
     <value>耐性</value>
   </data>
-  <data type="effect_saturation" xml:space="preserve">
+  <data name="effect_saturation" xml:space="preserve">
     <value>飽和</value>
   </data>
-  <data type="effect_slowness" xml:space="preserve">
+  <data name="effect_slowness" xml:space="preserve">
     <value>鈍化</value>
   </data>
-  <data type="effect_speed" xml:space="preserve">
+  <data name="effect_speed" xml:space="preserve">
     <value>スピード</value>
   </data>
-  <data type="effect_strength" xml:space="preserve">
+  <data name="effect_strength" xml:space="preserve">
     <value>力</value>
   </data>
-  <data type="effect_water_breathing" xml:space="preserve">
+  <data name="effect_water_breathing" xml:space="preserve">
     <value>水中呼吸</value>
   </data>
-  <data type="effect_weakness" xml:space="preserve">
+  <data name="effect_weakness" xml:space="preserve">
     <value>弱体化</value>
   </data>
-  <data type="effect_wither" xml:space="preserve">
+  <data name="effect_wither" xml:space="preserve">
     <value>ウィザー</value>
   </data>
-  <data type="enchantment_aqua_affinity" xml:space="preserve">
+  <data name="enchantment_aqua_affinity" xml:space="preserve">
     <value>水中作業</value>
   </data>
-  <data type="enchantment_bane_of_arthropods" xml:space="preserve">
+  <data name="enchantment_bane_of_arthropods" xml:space="preserve">
     <value>虫殺し</value>
   </data>
-  <data type="enchantment_blast_protection" xml:space="preserve">
+  <data name="enchantment_blast_protection" xml:space="preserve">
     <value>爆発耐性</value>
   </data>
-  <data type="enchantment_depth_strider" xml:space="preserve">
+  <data name="enchantment_depth_strider" xml:space="preserve">
     <value>水中移動</value>
   </data>
-  <data type="enchantment_efficiency" xml:space="preserve">
+  <data name="enchantment_efficiency" xml:space="preserve">
     <value>効率</value>
   </data>
-  <data type="enchantment_feather_falling" xml:space="preserve">
+  <data name="enchantment_feather_falling" xml:space="preserve">
     <value>落下軽減</value>
   </data>
-  <data type="enchantment_fire_aspect" xml:space="preserve">
+  <data name="enchantment_fire_aspect" xml:space="preserve">
     <value>火属性</value>
   </data>
-  <data type="enchantment_fire_protection" xml:space="preserve">
+  <data name="enchantment_fire_protection" xml:space="preserve">
     <value>防火</value>
   </data>
-  <data type="enchantment_flame" xml:space="preserve">
+  <data name="enchantment_flame" xml:space="preserve">
     <value>火炎</value>
   </data>
-  <data type="enchantment_fortune" xml:space="preserve">
+  <data name="enchantment_fortune" xml:space="preserve">
     <value>幸運</value>
   </data>
-  <data type="enchantment_frost_walker" xml:space="preserve">
+  <data name="enchantment_frost_walker" xml:space="preserve">
     <value>氷上歩行</value>
   </data>
-  <data type="enchantment_infinity" xml:space="preserve">
+  <data name="enchantment_infinity" xml:space="preserve">
     <value>無限</value>
   </data>
-  <data type="enchantment_knockback" xml:space="preserve">
+  <data name="enchantment_knockback" xml:space="preserve">
     <value>ノックバック</value>
   </data>
-  <data type="enchantment_looting" xml:space="preserve">
+  <data name="enchantment_looting" xml:space="preserve">
     <value>アイテムボーナス</value>
   </data>
-  <data type="enchantment_luck_of_the_sea" xml:space="preserve">
+  <data name="enchantment_luck_of_the_sea" xml:space="preserve">
     <value>宝釣り</value>
   </data>
-  <data type="enchantment_lure" xml:space="preserve">
+  <data name="enchantment_lure" xml:space="preserve">
     <value>入れ食い</value>
   </data>
-  <data type="enchantment_mending" xml:space="preserve">
+  <data name="enchantment_mending" xml:space="preserve">
     <value>修繕</value>
   </data>
-  <data type="enchantment_power" xml:space="preserve">
+  <data name="enchantment_power" xml:space="preserve">
     <value>パワー</value>
   </data>
-  <data type="enchantment_projectile_protection" xml:space="preserve">
+  <data name="enchantment_projectile_protection" xml:space="preserve">
     <value>間接攻撃耐性</value>
   </data>
-  <data type="enchantment_protection" xml:space="preserve">
+  <data name="enchantment_protection" xml:space="preserve">
     <value>保護</value>
   </data>
-  <data type="enchantment_punch" xml:space="preserve">
+  <data name="enchantment_punch" xml:space="preserve">
     <value>衝撃</value>
   </data>
-  <data type="enchantment_respiration" xml:space="preserve">
+  <data name="enchantment_respiration" xml:space="preserve">
     <value>水中呼吸</value>
   </data>
-  <data type="enchantment_sharpness" xml:space="preserve">
+  <data name="enchantment_sharpness" xml:space="preserve">
     <value>鋭さ</value>
   </data>
-  <data type="enchantment_silk_touch" xml:space="preserve">
+  <data name="enchantment_silk_touch" xml:space="preserve">
     <value>シルクタッチ</value>
   </data>
-  <data type="enchantment_smite" xml:space="preserve">
+  <data name="enchantment_smite" xml:space="preserve">
     <value>聖なる力</value>
   </data>
-  <data type="enchantment_thorns" xml:space="preserve">
+  <data name="enchantment_thorns" xml:space="preserve">
     <value>とげ</value>
   </data>
-  <data type="enchantment_unbreaking" xml:space="preserve">
+  <data name="enchantment_unbreaking" xml:space="preserve">
     <value>耐久力</value>
   </data>
-  <data type="server_config_address" xml:space="preserve">
+  <data name="server_config_address" xml:space="preserve">
     <value>サーバーのIPアドレス</value>
   </data>
-  <data type="server_config_difficulty" xml:space="preserve">
+  <data name="server_config_difficulty" xml:space="preserve">
     <value>ゲームの難易度</value>
   </data>
-  <data type="server_config_flatGeneratorOptions" xml:space="preserve">
+  <data name="server_config_flatGeneratorOptions" xml:space="preserve">
     <value>フラットジェネレータの設定</value>
   </data>
-  <data type="server_config_gameMode" xml:space="preserve">
+  <data name="server_config_gameMode" xml:space="preserve">
     <value>ゲームモード</value>
   </data>
-  <data type="server_config_generateEnd" xml:space="preserve">
+  <data name="server_config_generateEnd" xml:space="preserve">
     <value>エンドの生成</value>
   </data>
-  <data type="server_config_generateNether" xml:space="preserve">
+  <data name="server_config_generateNether" xml:space="preserve">
     <value>ネザーの生成</value>
   </data>
-  <data type="server_config_hardcore" xml:space="preserve">
+  <data name="server_config_hardcore" xml:space="preserve">
     <value>ハードコアモードの有効化</value>
   </data>
-  <data type="server_config_loadError" xml:space="preserve">
+  <data name="server_config_loadError" xml:space="preserve">
     <value>設定ファイルの読み込みエラー</value>
   </data>
-  <data type="server_config_loadError_description" xml:space="preserve">
+  <data name="server_config_loadError_description" xml:space="preserve">
     <value>ファイル: {0} をバックアップして削除してから起動してください。{1}例外: {2}</value>
   </data>
-  <data type="server_config_loadWorldNames" xml:space="preserve">
+  <data name="server_config_loadWorldNames" xml:space="preserve">
     <value>読み込む サブワールド名 &lt;複数可&gt;</value>
   </data>
-  <data type="server_config_mainWorldGenerator" xml:space="preserve">
+  <data name="server_config_mainWorldGenerator" xml:space="preserve">
     <value>メインワールドのジェネレータ &lt;Default / Flat&gt;</value>
   </data>
-  <data type="server_config_mainWorldName" xml:space="preserve">
+  <data name="server_config_mainWorldName" xml:space="preserve">
     <value>読み込む/生成する メインワールド名</value>
   </data>
-  <data type="server_config_maxPlayer" xml:space="preserve">
+  <data name="server_config_maxPlayer" xml:space="preserve">
     <value>サーバーの最大接続台数</value>
   </data>
-  <data type="server_config_maxViewDistance" xml:space="preserve">
+  <data name="server_config_maxViewDistance" xml:space="preserve">
     <value>ワールドの最大描画距離</value>
   </data>
-  <data type="server_config_onlineMode" xml:space="preserve">
+  <data name="server_config_onlineMode" xml:space="preserve">
     <value>Xboxアカウントを使用した認証</value>
   </data>
-  <data type="server_config_port" xml:space="preserve">
+  <data name="server_config_port" xml:space="preserve">
     <value>サーバーのポート番号</value>
   </data>
-  <data type="server_config_pvp" xml:space="preserve">
+  <data name="server_config_pvp" xml:space="preserve">
     <value>PVPの有効化</value>
   </data>
-  <data type="server_config_serverMotd" xml:space="preserve">
+  <data name="server_config_serverMotd" xml:space="preserve">
     <value>サーバーの説明</value>
   </data>
-  <data type="server_config_spawnProtection" xml:space="preserve">
+  <data name="server_config_spawnProtection" xml:space="preserve">
     <value>スポーン地点の保護の範囲</value>
   </data>
-  <data type="server_config_whitelist" xml:space="preserve">
+  <data name="server_config_whitelist" xml:space="preserve">
     <value>ホワイトリストの有効化</value>
   </data>
-  <data type="server_constantClock_lowTickRate" xml:space="preserve">
+  <data name="server_constantClock_lowTickRate" xml:space="preserve">
     <value>クロックの低下を検知しました。 名前: {0}</value>
   </data>
-  <data type="server_error_stop" xml:space="preserve">
+  <data name="server_error_stop" xml:space="preserve">
     <value>リカバリー不可能なエラーが発生しました。</value>
   </data>
-  <data type="server_name" xml:space="preserve">
+  <data name="server_name" xml:space="preserve">
     <value>MineNET</value>
   </data>
-  <data type="server_network_dataPacket_notHandle" xml:space="preserve">
+  <data name="server_network_dataPacket_notHandle" xml:space="preserve">
     <value>ハンドルされていないデータパケット {0} を受信しました。</value>
   </data>
-  <data type="server_network_dataPacket_resend" xml:space="preserve">
+  <data name="server_network_dataPacket_resend" xml:space="preserve">
     <value>データパケットの再送信が行われました。</value>
   </data>
-  <data type="server_network_minecraft_notHandle" xml:space="preserve">
+  <data name="server_network_minecraft_notHandle" xml:space="preserve">
     <value>ハンドルされていないMinecraftパケット {0} を受信しました。</value>
   </data>
-  <data type="server_network_minecraft_receivePacket" xml:space="preserve">
+  <data name="server_network_minecraft_receivePacket" xml:space="preserve">
     <value>Minecraftパケット {0} を受信しました。 バイト長: {1}</value>
   </data>
-  <data type="server_network_minecraft_sendPacket" xml:space="preserve">
+  <data name="server_network_minecraft_sendPacket" xml:space="preserve">
     <value>Minecraftパケット {0} を送信しました。 バイト長: {1}</value>
   </data>
-  <data type="server_network_packetThreadAbort" xml:space="preserve">
+  <data name="server_network_packetThreadAbort" xml:space="preserve">
     <value>パケットの受信を強制終了しました。</value>
   </data>
-  <data type="server_network_raknet_notHandle" xml:space="preserve">
+  <data name="server_network_raknet_notHandle" xml:space="preserve">
     <value>ハンドルされていないRakNetパケット {0} を受信しました。</value>
   </data>
-  <data type="server_network_raknet_sessionClose" xml:space="preserve">
+  <data name="server_network_raknet_sessionClose" xml:space="preserve">
     <value>セッションが終了しました。&lt;{0}&gt;</value>
   </data>
-  <data type="server_network_raknet_sessionCreate" xml:space="preserve">
+  <data name="server_network_raknet_sessionCreate" xml:space="preserve">
     <value>セッションが作成されました。 &lt;{0}&gt; MTUサイズ: {1}</value>
   </data>
-  <data type="server_network_raknet_sessionCreated" xml:space="preserve">
+  <data name="server_network_raknet_sessionCreated" xml:space="preserve">
     <value>{0} は既にセッションが作成されています。</value>
   </data>
-  <data type="server_network_raknet_sessionDisconnect" xml:space="preserve">
+  <data name="server_network_raknet_sessionDisconnect" xml:space="preserve">
     <value>セッション &lt;{0}&gt; は {1} で終了しました。</value>
   </data>
-  <data type="server_network_raknet_sessionNotCreated" xml:space="preserve">
+  <data name="server_network_raknet_sessionNotCreated" xml:space="preserve">
     <value>{0} はセッションが作成されていません。</value>
   </data>
-  <data type="server_network_start" xml:space="preserve">
+  <data name="server_network_start" xml:space="preserve">
     <value>ポート番号 {0} でネットワークリスナーを開始しています。</value>
   </data>
-  <data type="server_network_start_done" xml:space="preserve">
+  <data name="server_network_start_done" xml:space="preserve">
     <value>ネットワークリスナーを開始しました。 起動経過時間: {0}</value>
   </data>
-  <data type="server_network_stop" xml:space="preserve">
+  <data name="server_network_stop" xml:space="preserve">
     <value>ネットワークリスナーを終了しました。 終了経過時間: {0}</value>
   </data>
-  <data type="server_player_requestChunkRadius" xml:space="preserve">
+  <data name="server_player_requestChunkRadius" xml:space="preserve">
     <value>{0} から {1} チャンクのリクエストを受け取りました。</value>
   </data>
-  <data type="server_player_updateChunkRadius" xml:space="preserve">
+  <data name="server_player_updateChunkRadius" xml:space="preserve">
     <value>{0} の リクエストチャンクを {1} から {2} に変更しました。</value>
   </data>
-  <data type="server_plugin_disable_library" xml:space="preserve">
+  <data name="server_plugin_disable_library" xml:space="preserve">
     <value>[{0}] ライブラリ {0} を無効にしました。</value>
   </data>
-  <data type="server_plugin_disable_package" xml:space="preserve">
+  <data name="server_plugin_disable_package" xml:space="preserve">
     <value>[{0}] パッケージ {0} を無効にしました。</value>
   </data>
-  <data type="server_plugin_disable_plugin" xml:space="preserve">
+  <data name="server_plugin_disable_plugin" xml:space="preserve">
     <value>[{0}] プラグイン {0} を無効にしました。</value>
   </data>
-  <data type="server_plugin_enable_library" xml:space="preserve">
+  <data name="server_plugin_enable_library" xml:space="preserve">
     <value>[{0}] ライブラリ {0} を有効にしました。</value>
   </data>
-  <data type="server_plugin_enable_package" xml:space="preserve">
+  <data name="server_plugin_enable_package" xml:space="preserve">
     <value>[{0}] パッケージ {0} を有効にしました。</value>
   </data>
-  <data type="server_plugin_enable_plugin" xml:space="preserve">
+  <data name="server_plugin_enable_plugin" xml:space="preserve">
     <value>[{0}] プラグイン {0} を有効にしました。</value>
   </data>
-  <data type="server_plugin_load_library" xml:space="preserve">
+  <data name="server_plugin_load_library" xml:space="preserve">
     <value>[{0}] ライブラリ {0} を読み込んでいます。</value>
   </data>
-  <data type="server_plugin_load_package" xml:space="preserve">
+  <data name="server_plugin_load_package" xml:space="preserve">
     <value>[{0}] パッケージ {0} を読み込んでいます。</value>
   </data>
-  <data type="server_plugin_load_plugin" xml:space="preserve">
+  <data name="server_plugin_load_plugin" xml:space="preserve">
     <value>[{0}] プラグイン {0} を読み込んでいます。</value>
   </data>
-  <data type="server_start" xml:space="preserve">
+  <data name="server_start" xml:space="preserve">
     <value>MineNET サーバーを開始しています。</value>
   </data>
-  <data type="server_start_done" xml:space="preserve">
+  <data name="server_start_done" xml:space="preserve">
     <value>サーバーが開始しました。</value>
   </data>
-  <data type="server_start_done2" xml:space="preserve">
+  <data name="server_start_done2" xml:space="preserve">
     <value>helpでコマンド確認して下さい。 起動経過時間: {0}</value>
   </data>
-  <data type="server_stoped" xml:space="preserve">
+  <data name="server_stoped" xml:space="preserve">
     <value>サーバーは終了しました。 終了経過時間: {0}</value>
   </data>
-  <data type="server_stopping" xml:space="preserve">
+  <data name="server_stopping" xml:space="preserve">
     <value>サーバーを終了しています。</value>
   </data>
-  <data type="server_world_create" xml:space="preserve">
+  <data name="server_world_create" xml:space="preserve">
     <value>ワールド "{0}" が作成されました。</value>
   </data>
-  <data type="server_world_load" xml:space="preserve">
+  <data name="server_world_load" xml:space="preserve">
     <value>ワールド "{0}" が読み込まれました。</value>
   </data>
 </root>
