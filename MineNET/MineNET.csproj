@@ -450,6 +450,7 @@
     <Compile Include="Plugins\PluginBase.cs" />
     <Compile Include="Plugins\PluginFlags.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="Registry\BlockEntityRegistry.cs" />
     <Compile Include="Registry\BlockRegistry.cs" />
     <Compile Include="Registry\CreativeItemRegistry.cs" />
     <Compile Include="Registry\DictionaryRegistryBase.cs" />

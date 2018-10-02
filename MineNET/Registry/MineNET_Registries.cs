@@ -4,7 +4,7 @@ namespace MineNET
 {
     public static class MineNET_Registries
     {
-        //BlockEntity
+        public static BlockEntityRegistry BlockEntity { get; } = new BlockEntityRegistry();
         public static BlockRegistry Block { get; } = new BlockRegistry();
         public static CommandRegistry Command { get; } = new CommandRegistry();
         public static CreativeItemRegistry Creative { get; } = new CreativeItemRegistry();
@@ -16,7 +16,7 @@ namespace MineNET
 
         public static void Init()
         {
-            //BlockEntity
+            MineNET_Registries.BlockEntity.Clear();
             MineNET_Registries.Block.Clear();
             MineNET_Registries.Command.Clear();
             MineNET_Registries.Creative.Clear();

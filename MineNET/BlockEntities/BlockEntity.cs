@@ -11,8 +11,6 @@ namespace MineNET.BlockEntities
     /// </summary>
     public abstract class BlockEntity : ICloneable<BlockEntity>, IPosition
     {
-        private static Dictionary<string, Type> registry = new Dictionary<string, Type>();
-
         public CompoundTag NamedTag { get; protected set; }
 
         public static void RegisterBlockEntity(BlockEntity block)
