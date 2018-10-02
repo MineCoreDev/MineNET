@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace MineNET.BlockEntities
 {
+    /// <summary>
+    /// Minecraft に存在するタイルエンティティを提供する抽象クラス。
+    /// </summary>
     public abstract class BlockEntity : ICloneable<BlockEntity>, IPosition
     {
         private static Dictionary<string, Type> registry = new Dictionary<string, Type>();
