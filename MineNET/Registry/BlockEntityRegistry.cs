@@ -1,12 +1,10 @@
-﻿using MineNET.BlockEntities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Reflection;
+using MineNET.BlockEntities;
 using MineNET.NBT.Tags;
 using MineNET.Worlds;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MineNET.Registry
 {
@@ -77,7 +75,7 @@ namespace MineNET.Registry
             var p1 = Expression.Parameter(typeof(Chunk));
             var p2 = Expression.Parameter(typeof(CompoundTag));
 
-            var lamda = Expression.Lambda<Func<Chunk, CompoundTag, Entity>>(Expression.New(constructor, p1, p2), p1, p2).Compile();
+            var lamda = Expression.Lambda<Func<Chunk, CompoundTag, BlockEntity>>(Expression.New(constructor, p1, p2), p1, p2).Compile();
             _expressionCache.Add(key, lamda);
         }
     }
