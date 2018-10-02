@@ -1,8 +1,8 @@
-﻿using MineNET.NBT.Tags;
+﻿using System;
+using System.Collections.Generic;
+using MineNET.NBT.Tags;
 using MineNET.Values;
 using MineNET.Worlds;
-using System;
-using System.Collections.Generic;
 
 namespace MineNET.BlockEntities
 {
@@ -13,21 +13,17 @@ namespace MineNET.BlockEntities
     {
         public CompoundTag NamedTag { get; protected set; }
 
-        public static void RegisterBlockEntity(BlockEntity block)
+        public static BlockEntity CreateBlockEntity(string type, Chunk chunk, CompoundTag nbt)
         {
-            Type type = block.GetType();
-            BlockEntity.registry[block.Name] = type;
-        }
-
-        public static BlockEntity CreateBlockEntity(string name, World world, CompoundTag nbt)
-        {
-            if (!BlockEntity.registry.ContainsKey(name))
+            if (MineNET_Registries.BlockEntity.ContainsKey(type))
             {
-                return null;
+                Type t = MineNET_Registries.BlockEntity[type];
+                return MineNET_Registries.BlockEntity.GetExpression(type)(chunk, nbt);
             }
-            Type type = BlockEntity.registry[name];
-            BlockEntity entity = (BlockEntity) System.Activator.CreateInstance(type, new Object[] { world, nbt });
-            return entity;
+            else
+            {
+                throw new KeyNotFoundException(type);
+            }
         }
 
         public BlockEntity(Position position, CompoundTag nbt = null)
@@ -43,17 +39,6 @@ namespace MineNET.BlockEntities
             nbt.PutInt("x", (int) this.X);
             nbt.PutInt("y", (int) this.Y);
             nbt.PutInt("z", (int) this.Z);
-            this.NamedTag = nbt;
-        }
-
-        public BlockEntity(World world, CompoundTag nbt)
-        {
-            this.World = world;
-
-            this.X = nbt.GetInt("x");
-            this.Y = nbt.GetInt("y");
-            this.Z = nbt.GetInt("z");
-
             this.NamedTag = nbt;
         }
 
