@@ -89,7 +89,7 @@ namespace MineNET.Data
             }
             else if (this.SourceType == NetworkInventoryAction.SOURCE_WORLD)
             {
-
+                return new DropItemAction(this.OldItem, this.NewItem);
             }
             else if (this.SourceType == NetworkInventoryAction.SOURCE_CREATIVE)
             {

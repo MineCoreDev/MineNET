@@ -14,8 +14,7 @@ namespace MineNET.Inventories.Transactions.Action
 
         public override bool IsValid(Player player)
         {
-            //return player.IsCreative;
-            return true;
+            return player.IsCreative;
         }
 
         public override bool Execute(Player player)

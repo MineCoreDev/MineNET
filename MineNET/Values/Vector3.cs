@@ -189,6 +189,16 @@ namespace MineNET.Values
             get { return Normalize(this); }
         }
 
+        public Vector3 Add(float x, float y = 0, float z = 0)
+        {
+            return new Vector3(this.X + x, this.Y + y, this.Z + z);
+        }
+
+        public Vector3 Multiply(float num)
+        {
+            return new Vector3(this.X * num, this.Y * num, this.Z * num);
+        }
+
         public static float Dot(Vector3 lhs, Vector3 rhs)
         {
             return lhs.X * rhs.X + lhs.Y * rhs.Y + lhs.Z * rhs.Z;

@@ -12,10 +12,20 @@ using MineNET.Worlds;
 
 namespace MineNET.Entities
 {
+    /// <summary>
+    /// Minecraft に存在するエンティティーを提供するクラス。
+    /// </summary>
     public abstract partial class Entity
     {
         private static long nextEntityId = 0;
 
+        /// <summary>
+        /// 定義されている　<see cref="Entity"/> を生成します。
+        /// </summary>
+        /// <param name="type"><see cref="Entity"/> のID</param>
+        /// <param name="chunk"><see cref="Entity"/> を設置するチャンク</param>
+        /// <param name="nbt"><see cref="Entity"/> のNBT</param>
+        /// <returns>取得した <see cref="Entity"/></returns>
         public static Entity CreateEntity(string type, Chunk chunk, CompoundTag nbt)
         {
             if (MineNET_Registries.Entity.ContainsKey(type))
@@ -29,41 +39,130 @@ namespace MineNET.Entities
             }
         }
 
-        public abstract string Name { get; protected set; }
+        /// <summary>
+        /// <see cref="Entity"/> を生成するために必要な <see cref="CompoundTag"/> を生成します
+        /// </summary>
+        /// <param name="pos"><see cref="Entity"/> の座標</param>
+        /// <param name="motion"><see cref="Entity"/> の動き</param>
+        /// <param name="rotation"><see cref="Entity"/> の向き</param>
+        /// <returns>取得した <see cref="CompoundTag"/></returns>
+        public static CompoundTag CreateEntityNBT(Vector3 pos, Vector3 motion = new Vector3(), Vector2 rotation = new Vector2())
+        {
+            CompoundTag nbt = new CompoundTag()
+                .PutList(new ListTag("Pos", NBTTagType.FLOAT)
+                    .Add(new FloatTag("", pos.X))
+                    .Add(new FloatTag("", pos.Y))
+                    .Add(new FloatTag("", pos.Z)))
+                .PutList(new ListTag("Motion", NBTTagType.FLOAT)
+                    .Add(new FloatTag("", motion.X))
+                    .Add(new FloatTag("", motion.Y))
+                    .Add(new FloatTag("", motion.Z)))
+                .PutList(new ListTag("Rotation", NBTTagType.FLOAT)
+                    .Add(new FloatTag("", motion.X))
+                    .Add(new FloatTag("", motion.Y)));
+            return nbt;
+        }
+
+        /// <summary>
+        /// <see cref="Entity"/>　のネットワークID
+        /// </summary>
         public abstract int NetworkId { get; }
 
+        /// <summary>
+        /// <see cref="Entity"/> の名前
+        /// </summary>
+        public abstract string Name { get; protected set; }
+        /// <summary>
+        /// <see cref="Entity"/> を<see cref="Worlds.World"/> に保存する際の保存ID
+        /// </summary>
+        public abstract string SaveId { get; }
+
+        /// <summary>
+        /// <see cref="Entity"/> の幅
+        /// </summary>
         public virtual float Width { get; }
+        /// <summary>
+        /// <see cref="Entity"/> の高さ
+        /// </summary>
         public virtual float Height { get; }
 
+        /// <summary>
+        /// <see cref="Entity"/> のX座標
+        /// </summary>
         public float X { get; set; }
+        /// <summary>
+        /// <see cref="Entity"/> のY座標
+        /// </summary>
         public float Y { get; set; }
+        /// <summary>
+        /// <see cref="Entity"/> のZ座標
+        /// </summary>
         public float Z { get; set; }
 
+        /// <summary>
+        /// <see cref="Entity"/> の存在する <see cref="Worlds.World"/>
+        /// </summary>
         public World World { get; protected set; }
 
+        /// <summary>
+        /// <see cref="Entity"/> の存在する <see cref="Worlds.Chunk"/>
+        /// </summary>
         public Chunk Chunk { get; private set; }
 
+        /// <summary>
+        /// <see cref="Entity"/> の横方向の角度
+        /// </summary>
         public float Yaw { get; set; }
+        /// <summary>
+        /// <see cref="Entity"/> の縦方向の角度
+        /// </summary>
         public float Pitch { get; set; }
 
+        /// <summary>
+        /// <see cref="Entity"/> の顔の横方向の角度
+        /// </summary>
         public float HeadYaw { get; set; }
 
+        /// <summary>
+        /// <see cref="Entity"/> のX座標へのモーション
+        /// </summary>
         public float MotionX { get; set; }
+        /// <summary>
+        /// <see cref="Entity"/> のY座標へのモーション
+        /// </summary>
         public float MotionY { get; set; }
+        /// <summary>
+        /// <see cref="Entity"/> のZ座標へのモーション
+        /// </summary>
         public float MotionZ { get; set; }
 
+        /// <summary>
+        /// <see cref="Entity"/> がスポーンするID
+        /// </summary>
         public long EntityID { get; }
 
+        /// <summary>
+        /// このクラスが <see cref="Player"/> の場合 <see langword="true"/> を、それ以外の場合は <see langword="false"/> を返します
+        /// </summary>
         public virtual bool IsPlayer
         {
             get { return false; }
         }
 
+        /// <summary>
+        /// <see cref="Entity"/> が既に削除されている場合は <see langword="true"/> を返します
+        /// </summary>
         public bool Closed { get; protected set; }
 
-        protected Dictionary<long, Player> _hasSpawned = new Dictionary<long, Player>();
+        private Dictionary<long, Player> _hasSpawned = new Dictionary<long, Player>();
 
+        /// <summary>
+        /// <see cref="Entity"/> のメタデータを取得します
+        /// </summary>
         public EntityMetadataManager DataProperties { get; private set; }
+        /// <summary>
+        /// <see cref="Entity"/> のHPなどのデータを取得します
+        /// </summary>
         public EntityAttributeDictionary Attributes { get; private set; }
 
         public Entity(Chunk chunk, CompoundTag nbt)
@@ -117,6 +216,8 @@ namespace MineNET.Entities
         public virtual CompoundTag SaveNBT()
         {
             CompoundTag nbt = new CompoundTag();
+
+            nbt.PutString("id", this.SaveId);
 
             nbt.PutList(new ListTag("Pos", NBTTagType.FLOAT)
                     .Add(new FloatTag("", this.X))
@@ -249,6 +350,17 @@ namespace MineNET.Entities
         {
             return new Vector2((float) -Math.Cos(this.Yaw * Math.PI / 180 - Math.PI / 2),
                 (float) -Math.Sin(this.Yaw * Math.PI / 180 - Math.PI / 2)).Normalized;
+        }
+
+        public Vector3 GetDirectionVector()
+        {
+            double pitch = ((this.Pitch + 90) * Math.PI) / 180;
+            double yaw = ((this.Yaw + 90) * Math.PI) / 180;
+            float x = (float) (Math.Sin(pitch) * Math.Cos(yaw));
+            float y = (float) (Math.Sin(pitch) * Math.Sin(yaw));
+            float z = (float) Math.Cos(pitch);
+            Vector3 vec = new Vector3(x, y, z);
+            return vec.Normalized;
         }
     }
 }

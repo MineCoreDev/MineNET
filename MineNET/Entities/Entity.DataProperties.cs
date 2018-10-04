@@ -59,16 +59,11 @@ namespace MineNET.Entities
         public const int DATA_MARK_VARIANT = 43; //int
         public const int DATA_CONTAINER_TYPE = 44; //byte (ContainerComponent) 
         public const int DATA_CONTAINER_BASE_SIZE = 45; //int (ContainerComponent) 
-
-        public const int
-            DATA_CONTAINER_EXTRA_SLOTS_PER_STRENGTH =
-                46; //int (used for llamas, inventory size is baseSize + thisProp * strength) 
-
+        public const int DATA_CONTAINER_EXTRA_SLOTS_PER_STRENGTH = 46; //int (used for llamas, inventory size is baseSize + thisProp * strength) 
         public const int DATA_BLOCK_TARGET = 47; //block coords (ender crystal)
         public const int DATA_WITHER_INVULNERABLE_TICKS = 48; //int
         public const int DATA_WITHER_TARGET_1 = 49; //long
         public const int DATA_WITHER_TARGET_2 = 50; //long
-
         public const int DATA_WITHER_TARGET_3 = 51; //long
 
         /* 52 (short) */
@@ -81,7 +76,6 @@ namespace MineNET.Entities
         public const int DATA_RIDER_MIN_ROTATION = 59; //float
         public const int DATA_AREA_EFFECT_CLOUD_RADIUS = 60; //float
         public const int DATA_AREA_EFFECT_CLOUD_WAITING = 61; //int
-
         public const int DATA_AREA_EFFECT_CLOUD_PARTICLE_ID = 62; //int
 
         /* 63 (int) shulker-related */
@@ -97,13 +91,11 @@ namespace MineNET.Entities
         public const int DATA_COMMAND_BLOCK_TRACK_OUTPUT = 72; //byte
         public const int DATA_CONTROLLING_RIDER_SEAT_NUMBER = 73; //byte
         public const int DATA_STRENGTH = 74; //int
-
         public const int DATA_MAX_STRENGTH = 75; //int
 
         /* 76 (int) */
         public const int DATA_LIMITED_LIFE = 77;
         public const int DATA_ARMOR_STAND_POSE_INDEX = 78; //int
-
         public const int DATA_ENDER_CRYSTAL_TIME_OFFSET = 79; //int
 
         /* 80 (byte) something to do with nametag visibility? */
@@ -165,12 +157,10 @@ namespace MineNET.Entities
         public const int DATA_FLAG_AFFECTED_BY_GRAVITY = 47;
         public const int DATA_FLAG_FIRE_IMMUNE = 48;
         public const int DATA_FLAG_DANCING = 49;
-
         public const int DATA_FLAG_ENCHANTED = 50;
 
         //51 is something to do with tridents
-        public const int
-            DATA_FLAG_CONTAINER_PRIVATE = 52; //inventory is private, doesn't drop contents when killed if true
+        public const int DATA_FLAG_CONTAINER_PRIVATE = 52; //inventory is private, doesn't drop contents when killed if true
 
         //53 TransformationComponent
         public const int DATA_FLAG_SPIN_ATTACK = 54;

@@ -8,14 +8,14 @@ namespace MineNET.Inventories.Transactions.Data
     {
         public int ActionType { get; set; }
         public int HotbarSlot { get; set; }
-        public ItemStack MainHandItem { get; set; }
+        public ItemStack ItemMainHand { get; set; }
         public Vector3 HeadRot { get; set; }
 
         public ReleaseItemData(InventoryTransactionPacket pk)
         {
             this.ActionType = (int) pk.ReadUVarInt();
             this.HotbarSlot = pk.ReadSVarInt();
-            this.MainHandItem = pk.ReadItem();
+            this.ItemMainHand = pk.ReadItem();
             this.HeadRot = pk.ReadVector3();
         }
     }

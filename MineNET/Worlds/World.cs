@@ -7,11 +7,13 @@ using MineNET.BlockEntities;
 using MineNET.Blocks;
 using MineNET.Data;
 using MineNET.Entities;
+using MineNET.Entities.Items;
 using MineNET.Entities.Players;
 using MineNET.Events.BlockEvents;
 using MineNET.Events.PlayerEvents;
 using MineNET.IO;
 using MineNET.Items;
+using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Values;
 using MineNET.Worlds.Dimensions;
@@ -213,6 +215,11 @@ namespace MineNET.Worlds
             {
                 this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos });
             }
+        }
+
+        public Chunk GetChunk(int x, int z)
+        {
+            return this.GetChunk(new Tuple<int, int>(x >> 4, z >> 4));
         }
 
         public Chunk GetChunk(Tuple<int, int> chunkPos)
@@ -574,6 +581,20 @@ namespace MineNET.Worlds
             }
 
             this._blockEntities.Remove(blockEntity);
+        }
+
+        public void DropItem(ItemStack item, Vector3 pos, Vector3 motion = new Vector3(), int delay = 10)
+        {
+            Chunk chunk = this.GetChunk(pos.FloorX, pos.FloorZ);
+            CompoundTag nbt = Entity.CreateEntityNBT(pos, motion);
+            nbt.PutShort("PickupDelay", (short) delay);
+
+            Entity entity = Entity.CreateEntity("Item", chunk, nbt);
+            if (entity is EntityItem)
+            {
+                ((EntityItem) entity).Item = item;
+            }
+            entity.SpawnToAll();
         }
 
         public void ScheduleUpdate(Block block, int tick)
