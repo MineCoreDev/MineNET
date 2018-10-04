@@ -6,6 +6,7 @@ using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Inventories;
+using MineNET.Items;
 using MineNET.NBT.Tags;
 using MineNET.Network;
 using MineNET.Network.MinecraftPackets;
@@ -26,6 +27,7 @@ namespace MineNET.Entities.Players
         public override int NetworkId { get; } = EntityIDs.PLAYER;
 
         public override string Name { get; protected set; }
+        public override string SaveId { get; } = "Player";
         public new string DisplayName { get; private set; }
 
         public IPEndPoint EndPoint { get; internal set; }
@@ -381,6 +383,17 @@ namespace MineNET.Entities.Players
             float dot1 = Vector2.Dot(dv, new Vector2(this.X, this.Z));
             float dot2 = Vector2.Dot(dv, new Vector2(pos.X, this.Z));
             return (dot2 - dot1) >= -0.5;
+        }
+
+        public bool DropItem(ItemStack item)
+        {
+            Vector3 pos = this.GetVector3().Add(0, 1.3f, 0);
+            Vector3 motion = this.GetDirectionVector().Multiply(0.4f);
+
+            this.World.DropItem(item, pos, motion);
+            this.Action = true;
+            this.SendDataProperties();
+            return true;
         }
     }
 }

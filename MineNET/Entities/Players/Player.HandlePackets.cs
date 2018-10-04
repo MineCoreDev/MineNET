@@ -223,7 +223,6 @@ namespace MineNET.Entities.Players
                     Name = this.DisplayName,
                     PlatForm = this.ClientData.DeviceOS,
                     Skin = this.Skin,
-                    UUID = this.Uuid,
                     XboxUserId = this.LoginData.XUID
                 };
                 this.PlayerListEntry.UpdateAll();
@@ -289,6 +288,14 @@ namespace MineNET.Entities.Players
         {
             Vector3 pos = pk.Position;
             Vector3 direction = pk.Direction;
+
+            SetEntityMotionPacket packet = new SetEntityMotionPacket
+            {
+                EntityRuntimeId = this.EntityID,
+                Motion = new Vector3(pos.X - this.X, pos.Y - this.Y, pos.Z - this.Z)
+            };
+            //this.SendPacketViewers(pk);
+
             this.X = pos.X;
             this.Y = pos.Y;
             this.Z = pos.Z;
@@ -379,6 +386,12 @@ namespace MineNET.Entities.Players
             }
             else if (pk.TransactionType == InventoryTransactionPacket.TYPE_RELEASE_ITEM)
             {
+                if (pk.TransactionData.ActionType == InventoryTransactionPacket.RELEASE_ITEM_ACTION_RELEASE)
+                {
+                }
+                else if (pk.TransactionData.ActionType == InventoryTransactionPacket.RELEASE_ITEM_ACTION_CONSUME)
+                {
+                }
             }
         }
 

@@ -43,7 +43,7 @@ namespace MineNET.Network.MinecraftPackets
             base.Encode();
 
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
-            this.WriteVarInt(this.Action);
+            this.WriteSVarInt(this.Action);
             this.WriteBlockVector3(this.Position);
             this.WriteBlockFace(this.Face);
         }
@@ -53,7 +53,7 @@ namespace MineNET.Network.MinecraftPackets
             base.Decode();
 
             this.EntityRuntimeId = this.ReadEntityRuntimeId();
-            this.Action = this.ReadVarInt();
+            this.Action = this.ReadSVarInt();
             this.Position = this.ReadBlockVector3();
             this.Face = this.ReadBlockFace();
         }

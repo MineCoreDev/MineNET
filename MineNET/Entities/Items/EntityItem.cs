@@ -12,6 +12,7 @@ namespace MineNET.Entities.Items
         public override int NetworkId { get; } = EntityIDs.ITEM;
 
         public override string Name { get; protected set; } = "Item";
+        public override string SaveId { get; } = "Item";
 
         public override float Width { get; } = 0.25f;
         public override float Height { get; } = 0.25f;
@@ -19,7 +20,7 @@ namespace MineNET.Entities.Items
         public short Age { get; set; }
         public short PickupDelay { get; set; }
         public string Owner { get; set; }
-        public ItemStack Item { get; protected set; }
+        public ItemStack Item { get; set; }
 
         public EntityItem(Chunk chunk, CompoundTag nbt) : base(chunk, nbt)
         {

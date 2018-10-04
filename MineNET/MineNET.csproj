@@ -251,6 +251,7 @@
     <Compile Include="Inventories\Recipe\ShapedRecipe.cs" />
     <Compile Include="Inventories\Recipe\ShapelessRecipe.cs" />
     <Compile Include="Inventories\Transactions\Action\CreativeInventoryAction.cs" />
+    <Compile Include="Inventories\Transactions\Action\DropItemAction.cs" />
     <Compile Include="Inventories\Transactions\Action\InventoryAction.cs" />
     <Compile Include="Inventories\Transactions\Action\SlotChangeAction.cs" />
     <Compile Include="Inventories\Transactions\Data\ReleaseItemData.cs" />
