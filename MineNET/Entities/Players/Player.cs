@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
@@ -156,15 +158,14 @@ namespace MineNET.Entities.Players
 
         public void SendChunk()
         {
-            //Task.Run(() =>
-            //{
-            //    Thread.CurrentThread.Name = "ChunkSendThread";
-            foreach (Chunk c in this.World.LoadChunks(this, this.RequestChunkRadius))
+            Task.Run(() =>
             {
-                c.SendChunk(this);
-            }
-
-            //});
+                Thread.CurrentThread.Name = "ChunkSendThread";
+                foreach (Chunk c in this.World.LoadChunks(this, this.RequestChunkRadius))
+                {
+                    c.SendChunk(this);
+                }
+            });
         }
 
         public void SendPacket(MinecraftPacket packet, int reliability = RakNetPacketReliability.RELIABLE, int flag = RakNetProtocol.FlagNormal)

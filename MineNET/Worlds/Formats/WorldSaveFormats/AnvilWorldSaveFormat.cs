@@ -50,6 +50,12 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
             int rx = chunkX >> 5;
             int rz = chunkZ >> 5;
             Tuple<int, int> regionPos = new Tuple<int, int>(rx, rz);
+            Tuple<int, int> chunkPos = new Tuple<int, int>(chunkX, chunkZ);
+
+            if (this._chunks.ContainsKey(chunkPos))
+            {
+                return this._chunks[chunkPos];
+            }
 
             string filePath = Path.Combine(this.WorldPath, $@"region\\r.{rx}.{rz}.mca");
             if (!File.Exists(filePath))
@@ -235,6 +241,11 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
             catch (Exception e)
             {
                 Logger.Error(e);
+            }
+            finally
+            {
+                this._chunks.Clear();
+                this._files.Clear();
             }
         }
     }

@@ -100,12 +100,19 @@ namespace MineNET.Entities.Players
                 return;
             }
 
+            //TODO: Auth MS Server
+
+            this.LoginData = pk.LoginData;
+            this.Name = pk.LoginData.DisplayName;
+            this.DisplayName = this.Name;
+            this.Uuid = this.LoginData.ClientUUID;
+
             Player[] players = Server.Instance.GetPlayers();
             for (int i = 0; i < players.Length; ++i)
             {
                 if (players[i].GetHashCode() != this.GetHashCode())
                 {
-                    if (players[i].Name == this.Name)
+                    if (!players[i].IsLoggedIn || players[i].Name == this.Name)
                     {
                         this.Close("disconnectionScreen.loggedinOtherLocation");
                         return;
@@ -119,13 +126,6 @@ namespace MineNET.Entities.Players
                 this.SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_SERVER_FULL, RakNetProtocol.FlagImmediate);
                 //this.Close("disconnectionScreen.outdatedServer");
             }
-
-            //TODO: Auth MS Server
-
-            this.LoginData = pk.LoginData;
-            this.Name = pk.LoginData.DisplayName;
-            this.DisplayName = this.Name;
-            this.Uuid = this.LoginData.ClientUUID;
 
             this.ClientData = pk.ClientData;
             this.Skin = this.ClientData.Skin;
@@ -245,7 +245,7 @@ namespace MineNET.Entities.Players
                 Player[] players = this.World.GetPlayers();
                 for (int i = 0; i < players.Length; ++i)
                 {
-                    if (players[i].Name == this.Name)
+                    if (!players[i].IsLoggedIn || players[i].Name == this.Name)
                     {
                         continue;
                     }
