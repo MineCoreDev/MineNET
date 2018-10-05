@@ -165,6 +165,11 @@ namespace MineNET.Entities
         /// </summary>
         public EntityAttributeDictionary Attributes { get; private set; }
 
+        /// <summary>
+        /// <see cref="Entity"/> クラスの新しいインスタンスを生成します
+        /// </summary>
+        /// <param name="chunk"> <see cref="Entity"/> を生成するための <see cref="Worlds.Chunk"/> </param>
+        /// <param name="nbt"> <see cref="Entity"/> を生成するための <see cref="CompoundTag"/> </param>
         public Entity(Chunk chunk, CompoundTag nbt)
         {
             this.EntityID = ++nextEntityId;
@@ -208,11 +213,19 @@ namespace MineNET.Entities
             return true;
         }
 
+        /// <summary>
+        /// <see cref="Entity"/> の存在する <see cref="Worlds.Chunk"/> を取得します
+        /// </summary>
+        /// <returns></returns>
         public Vector2 GetChunkVector()
         {
             return new Vector2(((int) this.X) >> 4, ((int) this.Z) >> 4);
         }
 
+        /// <summary>
+        /// <see cref="Entity"/> のNBTデータを取得します
+        /// </summary>
+        /// <returns> <see cref="Entity"/> のNBTを <see cref="CompoundTag"/> で取得します</returns>
         public virtual CompoundTag SaveNBT()
         {
             CompoundTag nbt = new CompoundTag();
@@ -233,6 +246,9 @@ namespace MineNET.Entities
             return nbt;
         }
 
+        /// <summary>
+        /// <see cref="Entity"/> を表示範囲内のプレイヤーに表示させます
+        /// </summary>
         public virtual void SpawnToAll()
         {
             if (this.Chunk == null || this.Closed)
@@ -254,6 +270,10 @@ namespace MineNET.Entities
             }
         }
 
+        /// <summary>
+        /// <see cref="Entity"/> を指定したプレイヤーに表示させます
+        /// </summary>
+        /// <param name="player"></param>
         public virtual void SpawnTo(Player player)
         {
             this.SendSpawnPacket(player);
@@ -264,6 +284,10 @@ namespace MineNET.Entities
             }
         }
 
+
+        /// <summary>
+        /// この <see cref="Entity"/> が表示されている全てのプレイヤーから表示されなくします
+        /// </summary>
         public virtual void DespawnFromAll()
         {
             Player[] players = this.Viewers;
@@ -273,10 +297,16 @@ namespace MineNET.Entities
             }
         }
 
+        /// <summary>
+        /// この <see cref="Entity"/> を指定したプレイヤーから表示されなくします
+        /// </summary>
+        /// <param name="player"></param>
         public virtual void DespawnFrom(Player player)
         {
-            RemoveEntityPacket pk = new RemoveEntityPacket();
-            pk.EntityUniqueId = this.EntityID;
+            RemoveEntityPacket pk = new RemoveEntityPacket
+            {
+                EntityUniqueId = this.EntityID
+            };
 
             player.SendPacket(pk);
 
