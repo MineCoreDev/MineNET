@@ -151,7 +151,7 @@ namespace MineNET.Blocks
         public virtual AxisAlignedBB BoundingBox { get; } = AxisAlignedBB.None;
 
         /// <summary>
-        /// <see cref="Block"/> が透明である場合は true を返します。
+        /// <see cref="Block"/> が透明である場合は <see langword="true"/> を返します。
         /// </summary>
         public virtual bool IsTransparent
         {
@@ -162,7 +162,7 @@ namespace MineNET.Blocks
         }
 
         /// <summary>
-        /// <see cref="Block"/> が個体である場合は true を返します。
+        /// <see cref="Block"/> が個体である場合は <see langword="true"/> を返します。
         /// </summary>
         public virtual bool IsSolid
         {
@@ -183,7 +183,7 @@ namespace MineNET.Blocks
         }
 
         /// <summary>
-        /// この <see cref="Block"/> が <see cref="Values.Position"/> を持っている場合 true を返します。
+        /// この <see cref="Block"/> が <see cref="Values.Position"/> を持っている場合 <see langword="true"/> を返します。
         /// </summary>
         /// <returns></returns>
         public bool HasPosition()
@@ -228,7 +228,7 @@ namespace MineNET.Blocks
         }
 
         /// <summary>
-        /// この <see cref="Block"/> を破壊できる場合 true を返します。
+        /// この <see cref="Block"/> を破壊できる場合 <see langword="true"/> を返します。
         /// </summary>
         public virtual bool CanBreak
         {
@@ -239,7 +239,7 @@ namespace MineNET.Blocks
         }
 
         /// <summary>
-        /// この <see cref="Block"/> に触れることができる場合 true を返します。
+        /// この <see cref="Block"/> に触れることができる場合 <see langword="true"/> を返します。
         /// </summary>
         public virtual bool CanBeActivated
         {
