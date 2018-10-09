@@ -12,7 +12,7 @@ namespace MineNET.BlockEntities
     public abstract class BlockEntity : IPosition
     {
         /// <summary>
-        /// この <see cref="BlockEntity"/> のデータタグです。 
+        /// この <see cref="BlockEntity"/> のNBTデータです。 
         /// </summary>
         public CompoundTag NamedTag { get; protected set; }
 
