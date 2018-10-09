@@ -3,6 +3,7 @@ using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Values;
+using MineNET.Worlds;
 
 namespace MineNET.BlockEntities
 {
@@ -18,7 +19,7 @@ namespace MineNET.BlockEntities
 
         public ChestInventory Inventory { get; protected set; }
 
-        public BlockEntityChest(Position position, CompoundTag nbt = null) : base(position, nbt)
+        public BlockEntityChest(Chunk chunk, CompoundTag nbt = null) : base(chunk, nbt)
         {
             this.Inventory = new ChestInventory(this);
 

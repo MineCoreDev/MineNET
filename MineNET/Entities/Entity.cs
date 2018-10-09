@@ -15,7 +15,7 @@ namespace MineNET.Entities
     /// <summary>
     /// Minecraft に存在するエンティティーを提供するクラス。
     /// </summary>
-    public abstract partial class Entity
+    public abstract partial class Entity : IPosition
     {
         private static long nextEntityId = 0;
 
@@ -25,7 +25,7 @@ namespace MineNET.Entities
         /// <param name="type"><see cref="Entity"/> のID</param>
         /// <param name="chunk"><see cref="Entity"/> を設置するチャンク</param>
         /// <param name="nbt"><see cref="Entity"/> のNBT</param>
-        /// <returns>取得した <see cref="Entity"/></returns>
+        /// <returns>生成した <see cref="Entity"/></returns>
         public static Entity CreateEntity(string type, Chunk chunk, CompoundTag nbt)
         {
             if (MineNET_Registries.Entity.ContainsKey(type))
@@ -137,7 +137,7 @@ namespace MineNET.Entities
         public float MotionZ { get; set; }
 
         /// <summary>
-        /// <see cref="Entity"/> がスポーンするID
+        /// <see cref="Entity"/> のランタイムなID
         /// </summary>
         public long EntityID { get; }
 
@@ -166,10 +166,10 @@ namespace MineNET.Entities
         public EntityAttributeDictionary Attributes { get; private set; }
 
         /// <summary>
-        /// <see cref="Entity"/> クラスの新しいインスタンスを生成します
+        /// <see cref="Entity"/> クラスの新しいインスタンスを作成します
         /// </summary>
-        /// <param name="chunk"> <see cref="Entity"/> を生成するための <see cref="Worlds.Chunk"/> </param>
-        /// <param name="nbt"> <see cref="Entity"/> を生成するための <see cref="CompoundTag"/> </param>
+        /// <param name="chunk"> <see cref="Entity"/> を作成するための <see cref="Worlds.Chunk"/> </param>
+        /// <param name="nbt"> <see cref="Entity"/> を作成するための <see cref="CompoundTag"/> </param>
         public Entity(Chunk chunk, CompoundTag nbt)
         {
             this.EntityID = ++nextEntityId;
@@ -315,7 +315,7 @@ namespace MineNET.Entities
                 this._hasSpawned.Remove(player.EntityID);
             }
         }
-
+        
         public virtual void SendSpawnPacket(Player player)
         {
             AddEntityPacket pk = new AddEntityPacket
