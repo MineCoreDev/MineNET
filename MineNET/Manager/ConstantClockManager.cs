@@ -27,7 +27,7 @@ namespace MineNET.Manager
         public ConstantClockManager()
         {
             this.Create("server.update", 1000 / 20);
-            this.Create("network.update", 1000 / 1000);
+            this.Create("network.update", 1000 / 100);
         }
 
         public void Create(string name, int time)

@@ -19,10 +19,7 @@ namespace MineNET.Worlds
 
         public Vector2 Vector2
         {
-            get
-            {
-                return new Vector2(this.X, this.Z);
-            }
+            get { return new Vector2(this.X, this.Z); }
         }
 
         public World World { get; private set; }
@@ -42,7 +39,8 @@ namespace MineNET.Worlds
         private List<BlockEntity> BlockEntities { get; } = new List<BlockEntity>();
         private ListTag BlockEntitiesTag { get; } = new ListTag(NBTTagType.COMPOUND);
 
-        public Chunk(int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null, short[] heightMap = null, ListTag entitiesTag = null, ListTag blockEntitiesTag = null)
+        public Chunk(int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null, short[] heightMap = null,
+            ListTag entitiesTag = null, ListTag blockEntitiesTag = null)
         {
             this.X = x;
             this.Z = z;
