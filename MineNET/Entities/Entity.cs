@@ -341,6 +341,15 @@ namespace MineNET.Entities
             player.SendPacket(pk);
         }
 
+        public void SendPacketViewers(MinecraftPacket packet)
+        {
+            Player[] players = this.Viewers;
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendPacket(packet);
+            }
+        }
+
         /// <summary>
         /// この <see cref="Entity"/> が表示されている <see cref="Player"/> の配列
         /// </summary>
@@ -359,7 +368,7 @@ namespace MineNET.Entities
         {
             this.Close();
         }
-        
+
         public virtual void Close()
         {
             this.Closed = true;

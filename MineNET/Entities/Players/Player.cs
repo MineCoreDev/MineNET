@@ -63,6 +63,9 @@ namespace MineNET.Entities.Players
 
         private GameMode gameMode;
 
+        /// <summary>
+        /// Minecraft に存在するプレイヤーを提供するクラス。
+        /// </summary>
         public Player() : base(World.GetMainWorld().GetChunk(new Tuple<int, int>(128 >> 4, 128 >> 4)), null)
         {
         }
@@ -177,15 +180,6 @@ namespace MineNET.Entities.Players
             }
 
             session.AddPacketBatchQueue(packet, reliability, flag);
-        }
-
-        public void SendPacketViewers(MinecraftPacket packet)
-        {
-            Player[] players = this.Viewers;
-            for (int i = 0; i < players.Length; ++i)
-            {
-                players[i].SendPacket(packet);
-            }
         }
 
         public void SendAvailableCommands()
