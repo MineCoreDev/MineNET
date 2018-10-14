@@ -216,6 +216,10 @@ namespace MineNET.Entities.Players
             {
                 this.HandleCommandRequestPacket((CommandRequestPacket) packet);
             }
+            else if (packet is PlayerSkinPacket) //0x5d
+            {
+                this.HandlePlayerSkinPacket((PlayerSkinPacket) packet);
+            }
             else if (packet is SetLocalPlayerAsInitializedPacket) //0x70
             {
                 this.HandleSetLocalPlayerAsInitializedPacket((SetLocalPlayerAsInitializedPacket) packet);
@@ -1483,7 +1487,22 @@ namespace MineNET.Entities.Players
 
         protected virtual void HandlePlayerSkinPacket(PlayerSkinPacket pk)
         {
+            PlayerSkinChangeEventArgs args = new PlayerSkinChangeEventArgs(this, this.Skin, pk.Skin);
+            Server.Instance.Event.Player.OnPlayerSkinChange(this, args);
+            if (args.IsCancel)
+            {
+                PlayerSkinPacket packet = new PlayerSkinPacket
+                {
+                    Uuid = this.Uuid,
+                    Skin = this.Skin
+                };
+                this.SendPacket(packet);
+                return;
+            }
+            this.Skin = pk.Skin;
 
+            this.SendPacket(pk);
+            this.SendPacketViewers(pk);
         }
 
         #endregion
