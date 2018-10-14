@@ -222,6 +222,7 @@
     <Compile Include="Events\NetworkEvents\RakNet\PacketSendEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerCreateEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerInteractEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerSkinChangeEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerStoppedEventArgs.cs" />
     <Compile Include="Events\ServerEvents\ServerStartedEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerPreLoginEventArgs.cs" />

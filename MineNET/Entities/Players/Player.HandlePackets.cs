@@ -4,6 +4,7 @@ using MineNET.Blocks;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Events.PlayerEvents;
+using MineNET.Inventories;
 using MineNET.Inventories.Transactions;
 using MineNET.Inventories.Transactions.Action;
 using MineNET.Inventories.Transactions.Data;
@@ -26,6 +27,26 @@ namespace MineNET.Entities.Players
             {
                 this.HandleLoginPacket((LoginPacket) packet);
             }
+            else if (packet is PlayStatusPacket) //0x02
+            {
+                this.HandlePlayStatusPacket((PlayStatusPacket) packet);
+            }
+            else if (packet is ServerToClientHandshakePacket) //0x03
+            {
+                this.HandleServerToClientHandshakePacket((ServerToClientHandshakePacket) packet);
+            }
+            else if (packet is ClientToServerHandshakePacket) //0x04
+            {
+                this.HandleClientToServerHandshakePacket((ClientToServerHandshakePacket) packet);
+            }
+            else if (packet is ResourcePacksInfoPacket) //0x06
+            {
+                this.HandleResourcePacksInfoPacket((ResourcePacksInfoPacket) packet);
+            }
+            else if (packet is ResourcePackStackPacket) //0x07
+            {
+                this.HandleResourcePackStackPacket((ResourcePackStackPacket) packet);
+            }
             else if (packet is ResourcePackClientResponsePacket) //0x08
             {
                 this.HandleResourcePackClientResponsePacket((ResourcePackClientResponsePacket) packet);
@@ -34,9 +55,85 @@ namespace MineNET.Entities.Players
             {
                 this.HandleTextPacket((TextPacket) packet);
             }
+            else if (packet is SetTimePacket) //0x0a
+            {
+                this.HandleSetTimePacket((SetTimePacket) packet);
+            }
+            else if (packet is StartGamePacket) //0x0b
+            {
+                this.HandleStartGamePacket((StartGamePacket) packet);
+            }
+            else if (packet is AddPlayerPacket) //0x0c
+            {
+                this.HandleAddPlayerPacket((AddPlayerPacket) packet);
+            }
+            else if (packet is AddEntityPacket) //0x0d
+            {
+                this.HandleAddEntityPacket((AddEntityPacket) packet);
+            }
+            else if (packet is RemoveEntityPacket) //0x0e
+            {
+                this.HandleRemoveEntityPacket((RemoveEntityPacket) packet);
+            }
+            else if (packet is AddItemEntityPacket) //0x0f
+            {
+                this.HandleAddItemEntityPacket((AddItemEntityPacket) packet);
+            }
+            else if (packet is AddHangingEntityPacket) //0x10
+            {
+                this.HandleAddItemEntityPacket((AddItemEntityPacket) packet);
+            }
+            else if (packet is TakeItemEntityPacket) //0x11
+            {
+                this.HandleTakeItemEntityPacket((TakeItemEntityPacket) packet);
+            }
+            else if (packet is MoveEntityAbsolutePacket) //0x12
+            {
+                this.HandleMoveEntityAbsolutePacket((MoveEntityAbsolutePacket) packet);
+            }
             else if (packet is MovePlayerPacket) //0x13
             {
                 this.HandleMovePlayerPacket((MovePlayerPacket) packet);
+            }
+            else if (packet is RiderJumpPacket) //0x14
+            {
+                this.HandleRiderJumpPacket((RiderJumpPacket) packet);
+            }
+            else if (packet is UpdateBlockPacket) //0x15
+            {
+                this.HandleUpdateBlockPacket((UpdateBlockPacket) packet);
+            }
+            else if (packet is AddPaintingPacket) //0x16
+            {
+                this.HandleAddPaintingPacket((AddPaintingPacket) packet);
+            }
+            else if (packet is ExplodePacket) //0x17
+            {
+                this.HandleExplodePacket((ExplodePacket) packet);
+            }
+            else if (packet is LevelSoundEventPacket) //0x18
+            {
+                this.HandleLevelSoundPacket((LevelSoundEventPacket) packet);
+            }
+            else if (packet is LevelEventPacket) //0x19
+            {
+                this.HandleLevelEventPacket((LevelEventPacket) packet);
+            }
+            else if (packet is BlockEventPacket) //0x1a
+            {
+                this.HandleBlockEventPacket((BlockEventPacket) packet);
+            }
+            else if (packet is EntityEventPacket) //0x1b
+            {
+                this.HandleEntityEventPacket((EntityEventPacket) packet);
+            }
+            else if (packet is MobEffectPacket) //0x1c
+            {
+                this.HandleMobEffectPacket((MobEffectPacket) packet);
+            }
+            else if (packet is UpdateAttributesPacket) //0x1d
+            {
+                this.HandleUpdateAttributesPacket((UpdateAttributesPacket) packet);
             }
             else if (packet is InventoryTransactionPacket) //0x1e
             {
@@ -46,18 +143,71 @@ namespace MineNET.Entities.Players
             {
                 this.MobEquipmentHandle((MobEquipmentPacket) packet);
             }
+            else if (packet is MobArmorEquipmentPacket) //0x20
+            {
+                this.HandleMobArmorEquipmentPacket((MobArmorEquipmentPacket) packet);
+            }
+            else if (packet is InteractPacket) //0x21
+            {
+                this.HandleInteractPacket((InteractPacket) packet);
+            }
             else if (packet is BlockPickRequestPacket) //0x22
             {
                 this.HandleBlockPickRequestPacket((BlockPickRequestPacket) packet);
+            }
+            else if (packet is EntityPickRequestPacket) //0x23
+            {
+                this.HandleEntityPickRequestPacket((EntityPickRequestPacket) packet);
             }
             else if (packet is PlayerActionPacket) //0x24
             {
                 this.HandlePlayerActionPacket((PlayerActionPacket) packet);
             }
+            else if (packet is EntityFallPacket) //0x25
+            {
+                this.HandleEntityFallPacket((EntityFallPacket) packet);
+            }
+            else if (packet is HurtArmorPacket) //0x26
+            {
+                this.HandleHurtArmorPacket((HurtArmorPacket) packet);
+            }
+            else if (packet is SetEntityDataPacket) //0x27
+            {
+                this.HandleSetEntityDataPacket((SetEntityDataPacket) packet);
+            }
+            else if (packet is SetEntityMotionPacket) //0x28
+            {
+                this.HandleSetEntityMotionPacket((SetEntityMotionPacket) packet);
+            }
+            else if (packet is SetEntityLinkPacket) //0x29
+            {
+                this.HandleSetEntityLinkPacket((SetEntityLinkPacket) packet);
+            }
+            else if (packet is SetHealthPacket) //0x2a
+            {
+                this.HandleSetHealthPacket((SetHealthPacket) packet);
+            }
+            else if (packet is SetSpawnPositionPacket) //0x2b
+            {
+                this.HandleSetSpawnPositionPacket((SetSpawnPositionPacket) packet);
+            }
             else if (packet is AnimatePacket) //0x2c
             {
                 this.HandleAnimatePacket((AnimatePacket) packet);
             }
+            else if (packet is RespawnPacket) //0x2d
+            {
+                this.HandleRespawnPacket((RespawnPacket) packet);
+            }
+            else if (packet is ContainerOpenPacket) //0x2e
+            {
+                this.HandleContainerOpenPacket((ContainerOpenPacket) packet);
+            }
+            else if (packet is ContainerClosePacket) //0x2f
+            {
+                this.HandleContainerClosePacket((ContainerClosePacket) packet);
+            }
+            //TODO
             else if (packet is RequestChunkRadiusPacket) //0x45
             {
                 this.HandleRequestChunkRadiusPacket((RequestChunkRadiusPacket) packet);
@@ -65,6 +215,10 @@ namespace MineNET.Entities.Players
             else if (packet is CommandRequestPacket) //0x4d
             {
                 this.HandleCommandRequestPacket((CommandRequestPacket) packet);
+            }
+            else if (packet is PlayerSkinPacket) //0x5d
+            {
+                this.HandlePlayerSkinPacket((PlayerSkinPacket) packet);
             }
             else if (packet is SetLocalPlayerAsInitializedPacket) //0x70
             {
@@ -100,19 +254,12 @@ namespace MineNET.Entities.Players
                 return;
             }
 
-            //TODO: Auth MS Server
-
-            this.LoginData = pk.LoginData;
-            this.Name = pk.LoginData.DisplayName;
-            this.DisplayName = this.Name;
-            this.Uuid = this.LoginData.ClientUUID;
-
             Player[] players = Server.Instance.GetPlayers();
             for (int i = 0; i < players.Length; ++i)
             {
                 if (players[i].GetHashCode() != this.GetHashCode())
                 {
-                    if (!players[i].IsLoggedIn || players[i].Name == this.Name)
+                    if (players[i].Name == this.Name)
                     {
                         this.Close("disconnectionScreen.loggedinOtherLocation");
                         return;
@@ -126,6 +273,13 @@ namespace MineNET.Entities.Players
                 this.SendPlayStatus(PlayStatusPacket.LOGIN_FAILED_SERVER_FULL, RakNetProtocol.FlagImmediate);
                 //this.Close("disconnectionScreen.outdatedServer");
             }
+
+            //TODO: Auth MS Server
+
+            this.LoginData = pk.LoginData;
+            this.Name = pk.LoginData.DisplayName;
+            this.DisplayName = this.Name;
+            this.Uuid = this.LoginData.ClientUUID;
 
             this.ClientData = pk.ClientData;
             this.Skin = this.ClientData.Skin;
@@ -145,6 +299,51 @@ namespace MineNET.Entities.Players
 
             ResourcePacksInfoPacket info = new ResourcePacksInfoPacket();
             this.SendPacket(info);
+        }
+
+        #endregion
+
+        #region PlayStatusPacket 0x02
+
+        protected virtual void HandlePlayStatusPacket(PlayStatusPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ServerToClientHandshakePacket 0x03
+
+        protected virtual void HandleServerToClientHandshakePacket(ServerToClientHandshakePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ClientToServerHandshakePacket 0x04
+
+        protected virtual void HandleClientToServerHandshakePacket(ClientToServerHandshakePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ResourcePacksInfoPacket 0x06
+
+        protected virtual void HandleResourcePacksInfoPacket(ResourcePacksInfoPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ResourcePackStackPacket 0x07
+
+        protected virtual void HandleResourcePackStackPacket(ResourcePackStackPacket pk)
+        {
+
         }
 
         #endregion
@@ -245,7 +444,7 @@ namespace MineNET.Entities.Players
                 Player[] players = this.World.GetPlayers();
                 for (int i = 0; i < players.Length; ++i)
                 {
-                    if (!players[i].IsLoggedIn || players[i].Name == this.Name)
+                    if (players[i].Name == this.Name)
                     {
                         continue;
                     }
@@ -282,6 +481,87 @@ namespace MineNET.Entities.Players
 
         #endregion
 
+        #region SetTimePacket 0x0a
+
+        protected virtual void HandleSetTimePacket(SetTimePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region StartGamePacket 0x0b
+
+        protected virtual void HandleStartGamePacket(StartGamePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region AddPlayerPacket 0x0c
+
+        protected virtual void HandleAddPlayerPacket(AddPlayerPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region AddEntityPacket 0x0d
+
+        protected virtual void HandleAddEntityPacket(AddEntityPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region RemoveEntityPacket 0x0e
+
+        protected virtual void HandleRemoveEntityPacket(RemoveEntityPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region AddItemEntityPacket 0x0f
+
+        protected virtual void HandleAddItemEntityPacket(AddItemEntityPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region AddHangingEntityPacket 0x10
+
+        protected virtual void HandleAddHangingEntityPacket(AddHangingEntityPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region TakeItemEntityPacket 0x11
+
+        protected virtual void HandleTakeItemEntityPacket(TakeItemEntityPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region MoveEntityAbsolutePacket 0x12
+
+        protected virtual void HandleMoveEntityAbsolutePacket(MoveEntityAbsolutePacket pk)
+        {
+
+        }
+
+        #endregion
+
         #region MovePlayerPacket 0x13
 
         protected virtual void HandleMovePlayerPacket(MovePlayerPacket pk)
@@ -303,6 +583,97 @@ namespace MineNET.Entities.Players
             this.Yaw = direction.Y;
 
             this.SendPacketViewers(pk.Clone());
+        }
+
+        #endregion
+
+        #region RiderJumpPacket 0x14
+
+        protected virtual void HandleRiderJumpPacket(RiderJumpPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region UpdateBlockPacket 0x15
+
+        protected virtual void HandleUpdateBlockPacket(UpdateBlockPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region AddPaintingPacket 0x16
+
+        protected virtual void HandleAddPaintingPacket(AddPaintingPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ExplodePacket 0x17
+
+        protected virtual void HandleExplodePacket(ExplodePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region LevelSoundPaclet 0x18
+
+        protected virtual void HandleLevelSoundPacket(LevelSoundEventPacket pk)
+        {
+            this.SendPacketViewers(pk);
+            this.SendPacket(pk);
+        }
+
+        #endregion
+
+        #region LevelEventPacket 0x19
+
+        protected virtual void HandleLevelEventPacket(LevelEventPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region BlockEventPacket 0x1a
+
+        protected virtual void HandleBlockEventPacket(BlockEventPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region EntityEventPacket 0x1b
+
+        protected virtual void HandleEntityEventPacket(EntityEventPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region MobEffectPacket 0x1c
+
+        protected virtual void HandleMobEffectPacket(MobEffectPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region UpdateAttributesPacket 0x1d
+
+        protected virtual void HandleUpdateAttributesPacket(UpdateAttributesPacket pk)
+        {
+
         }
 
         #endregion
@@ -407,32 +778,50 @@ namespace MineNET.Entities.Players
 
         #endregion
 
+        #region MobArmorEquipmentPacket 0x20
+
+        protected virtual void HandleMobArmorEquipmentPacket(MobArmorEquipmentPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region InteractPacket 0x21
+
+        protected virtual void HandleInteractPacket(InteractPacket pk)
+        {
+
+        }
+
+        #endregion
+
         #region BlockPickRequestPacket 0x22
 
         protected virtual void HandleBlockPickRequestPacket(BlockPickRequestPacket pk)
         {
-            if (!this.IsCreative)
-            {
-                return;
-            }
-
             Block block = this.World.GetBlock(pk.Position);
             ItemStack item = new ItemStack(block); //TODO : block entity nbt
-            PlayerBlockPickRequestEventArgs args = new PlayerBlockPickRequestEventArgs(this, item);
+            bool requestData = pk.AddUserData;
+
+            PlayerBlockPickRequestEventArgs args = new PlayerBlockPickRequestEventArgs(this, block, item, requestData);
             Server.Instance.Event.Player.OnPlayerBlockPickRequest(this, args);
             if (args.IsCancel)
             {
                 return;
             }
+            item = args.Item;
 
+            PlayerInventory inventory = this.Inventory;
             List<int> air = new List<int>();
+
             for (int i = 0; i < pk.HotbarSlot; ++i)
             {
-                ItemStack slot = this.Inventory.GetItem(i);
-                if (slot == item)
+                ItemStack slot = inventory.GetItem(i);
+                if (slot.Equals(item, true, false))
                 {
-                    this.Inventory.MainHandSlot = i;
-                    this.Inventory.SendMainHand(this);
+                    inventory.MainHandSlot = i;
+                    inventory.SendMainHand(this);
                     return;
                 }
 
@@ -442,16 +831,37 @@ namespace MineNET.Entities.Players
                 }
             }
 
-            if (air.Count == 0 || this.Inventory.MainHandItem.Item.ID == BlockIDs.AIR)
+            for (int i = 0; i < inventory.Size; ++i)
             {
-                this.Inventory.MainHandItem = item;
-                this.Inventory.SendMainHand(this);
+                ItemStack check = inventory.GetItem(i);
+                if (check.Equals(item, true, false))
+                {
+                    inventory.SetItem(i, inventory.MainHandItem);
+                    inventory.MainHandItem = check;
+                    inventory.SendMainHand(this);
+                    return;
+                }
+            }
+            if (this.IsCreative)
+            {
+                if (air.Count != 0)
+                {
+                    inventory.MainHandSlot = air[0];
+                }
+                inventory.AddItem(inventory.MainHandItem);
+                inventory.MainHandItem = item;
+                inventory.SendMainHand(this);
                 return;
             }
+        }
 
-            this.Inventory.MainHandSlot = air[0];
-            this.Inventory.MainHandItem = item;
-            this.Inventory.SendMainHand(this);
+        #endregion
+
+        #region EntityPickRequestPacket 0x23
+
+        protected virtual void HandleEntityPickRequestPacket(EntityPickRequestPacket pk)
+        {
+
         }
 
         #endregion
@@ -553,11 +963,290 @@ namespace MineNET.Entities.Players
 
         #endregion
 
+        #region EntityFallPacket 0x25
+
+        protected virtual void HandleEntityFallPacket(EntityFallPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region HurtArmorPacket 0x26
+
+        protected virtual void HandleHurtArmorPacket(HurtArmorPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetEntityDataPacket 0x27
+
+        protected virtual void HandleSetEntityDataPacket(SetEntityDataPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetEntityMotionPacket 0x28
+
+        protected virtual void HandleSetEntityMotionPacket(SetEntityMotionPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetEntityLinkPacket 0x29
+
+        protected virtual void HandleSetEntityLinkPacket(SetEntityLinkPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetHealthPacket 0x2a
+
+        protected virtual void HandleSetHealthPacket(SetHealthPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetSpawnPositionPacket 0x2b
+
+        protected virtual void HandleSetSpawnPositionPacket(SetSpawnPositionPacket pk)
+        {
+
+        }
+
+        #endregion
+
         #region AnimatePacket 0x2c
 
         protected virtual void HandleAnimatePacket(AnimatePacket pk)
         {
-            //Server.Instance.BroadcastPacket(pk, this.Viewers);
+            this.SendPacketViewers(pk);
+        }
+
+        #endregion
+
+        #region RespawnPacket 0x2d
+
+        protected virtual void HandleRespawnPacket(RespawnPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ContainerOpenPacket 0x2e
+
+        protected virtual void HandleContainerOpenPacket(ContainerOpenPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ContainerClosePacket 0x2f
+
+        protected virtual void HandleContainerClosePacket(ContainerClosePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region PlayerHotbarPacket 0x30
+
+        protected virtual void HandlePlayerHotbarPacket(PlayerHotbarPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region InventoryContentPacket 0x31
+
+        protected virtual void HandleInventoryContentPacket(InventoryContentPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region InventorySlotPacket 0x32
+
+        protected virtual void HandleInventorySlotPacket(InventorySlotPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ContainerSetDataPacket 0x33
+
+        protected virtual void HandleContainerSetDataPacket(ContainerSetDataPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region CraftingDataPacket 0x34
+
+        protected virtual void HandleCraftingDataPacket(CraftingDataPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region CraftingEventPacket 0x35
+
+        protected virtual void HandleCraftingEventPacket(CraftingEventPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region GuiDataPickItemPacket 0x36
+
+        protected virtual void HandleGuiDataPickItemPacket(GuiDataPickItemPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region AdventureSettingsPacket 0x37
+
+        protected virtual void HandleAdventureSettingsPacket(AdventureSettingsPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region BlockEntityDataPacket 0x38
+
+        protected virtual void HandleBlockEntityDataPacket(BlockEntityDataPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region PlayerInputPacket 0x39
+
+        protected virtual void HandlePlayerInputPacket(PlayerInputPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region FullChunkDataPacket 0x3a
+
+        protected virtual void HandleFullChunkDataPacket(FullChunkDataPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetCommandsEnabledPacket 0x3b
+
+        protected virtual void HandleSetCommandsEnabledPacket(SetCommandsEnabledPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetDifficultyPacket 0x3c
+
+        protected virtual void HandleSetDifficultyPacket(SetDifficultyPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ChangeDimensionPacket 0x3d
+
+        protected virtual void HandleChangeDimensionPacket(ChangeDimensionPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetPlayerGameTypePacket 0x3e
+
+        protected virtual void HandleSetPlayerGameTypePacket(SetPlayerGameTypePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region PlayerListPacket 0x3f
+
+        protected virtual void HandlePlayerListPacket(PlayerListPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SimpleEventPacket 0x40
+
+        protected virtual void HandleSimpleEventPacket(SimpleEventPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region EventPacket 0x41
+
+        protected virtual void HandleEventPacket(EventPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SpawnExperienceOrbPacket 0x42
+
+        protected virtual void HandleSpawnExperienceOrbPacket(SpawnExperienceOrbPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ClientboundMapItemDataPacket 0x43
+
+        protected virtual void HandleClientboundMapItemDataPacket(ClientboundMapItemDataPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region MapInfoRequestPacket 0x44
+
+        protected virtual void HandleMapInfoRequestPacket(MapInfoRequestPacket pk)
+        {
+
         }
 
         #endregion
@@ -585,6 +1274,69 @@ namespace MineNET.Entities.Players
 
         #endregion
 
+        #region ChunkRadiusUpdatedPacket 0x46
+
+        protected virtual void HandleChunkRadiusUpdatedPacket(ChunkRadiusUpdatedPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ItemFrameDropItemPacket 0x47
+
+        protected virtual void HandleItemFrameDropItemPacket(ItemFrameDropItemPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region GameRulesChangedPacket 0x48
+
+        protected virtual void HandleGameRulesChangedPacket(GameRulesChangedPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region CameraPacket 0x49
+
+        protected virtual void HandleCameraPacket(CameraPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region BossEventPacket 0x4a
+
+        protected virtual void HandleBossEventPacket(BossEventPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ShowCreditsPacket 0x4b
+
+        protected virtual void Handle(ShowCreditsPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region AvailableCommandsPacket 0x4c
+
+        protected virtual void HandleAvailableCommandsPacket(AvailableCommandsPacket pk)
+        {
+
+        }
+
+        #endregion
+
         #region CommandRequestPacket 0x4d
 
         protected virtual void HandleCommandRequestPacket(CommandRequestPacket pk)
@@ -596,10 +1348,358 @@ namespace MineNET.Entities.Players
 
         #endregion
 
-        #region SetLocalPlayerAsInitializedPacket 0x70
+        #region CommandBlockUpdatePacket 0x4e
+
+        protected virtual void HandleCommandBlockUpdatePacket(CommandBlockUpdatePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region CommandOutputPacket 0x4f
+
+        protected virtual void HandleCommandOutputPacket(CommandOutputPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region UpdateTradePacket 0x50
+
+        protected virtual void HandleUpdateTradePacket(UpdateTradePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region UpdateEquipPacket 0x51
+
+        protected virtual void HandleUpdateEquipPacket(UpdateEquipPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ResourcePackDataInfoPacket 0x52
+
+        protected virtual void HandleResourcePackDataInfoPacket(ResourcePackDataInfoPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ResourcePackChunkDataPacket 0x53
+
+        protected virtual void HandleResourcePackChunkDataPacket(ResourcePackChunkDataPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ResourcePackChunkRequestPacket 0x54
+
+        protected virtual void HandleResourcePackChunkRequestPacket(ResourcePackChunkRequestPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region TransferPacket 0x55
+
+        protected virtual void HandleTransferPacket(TransferPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region PlaySoundPacket 0x56
+
+        protected virtual void HandlePlaySoundPacket(PlaySoundPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region StopSoundPacket 0x57
+
+        protected virtual void HandleStopSoundPacket(StopSoundPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetTitlePacket 0x58
+
+        protected virtual void HandleSetTitlePacket(SetTitlePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region AddBehaviorTreePacket 0x59
+
+        protected virtual void HandleAddBehaviorTreePacket(AddBehaviorTreePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region StructureBlockUpdatePacket 0x5a
+
+        protected virtual void HandleStructureBlockUpdatePacket(StructureBlockUpdatePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ShowStoreOfferPacket 0x5b
+
+        protected virtual void HandleShowStoreOfferPacket(ShowStoreOfferPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region PurchaseReceiptPacket 0x5c
+
+        protected virtual void HandlePurchaseReceiptPacket(PurchaseReceiptPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region PlayerSkinPacket 0x5d
+
+        protected virtual void HandlePlayerSkinPacket(PlayerSkinPacket pk)
+        {
+            PlayerSkinChangeEventArgs args = new PlayerSkinChangeEventArgs(this, this.Skin, pk.Skin);
+            Server.Instance.Event.Player.OnPlayerSkinChange(this, args);
+            if (args.IsCancel)
+            {
+                PlayerSkinPacket packet = new PlayerSkinPacket
+                {
+                    Uuid = this.Uuid,
+                    Skin = this.Skin
+                };
+                this.SendPacket(packet);
+                return;
+            }
+            this.Skin = pk.Skin;
+
+            this.SendPacket(pk);
+            this.SendPacketViewers(pk);
+        }
+
+        #endregion
+
+        #region SubClientLoginPacket 0x5e
+
+        protected virtual void HandleSubClientLoginPacket(SubClientLoginPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region WSConnectPacket 0x5f
+
+        protected virtual void HandleWSConnectPacket(WSConnectPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetLastHurtByPacket 0x60
+
+        protected virtual void HandleSetLastHurtByPacket(SetLastHurtByPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region BookEditPacket 0x61
+
+        protected virtual void HandleBookEditPacket(BookEditPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region NpcRequestPacket 0x62
+
+        protected virtual void HandleNpcRequestPacket(NpcRequestPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region PhotoTransferPacket 0x63
+
+        protected virtual void HandlePhotoTransferPacket(PhotoTransferPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ModalFormRequestPacket 0x64
+
+        protected virtual void HandleModalFormRequestPacket(ModalFormRequestPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ModalFormResponsePacket 0x65
+
+        protected virtual void HandleModalFormResponsePacket(ModalFormResponsePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ServerSettingsRequestPacket 0x66
+
+        protected virtual void HandleServerSettingsRequestPacket(ServerSettingsRequestPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ServerSettingsResponsePacket 0x67
+
+        protected virtual void HandleServerSettingsResponsePacket(ServerSettingsResponsePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ShowProfilePacket 0x68
+
+        protected virtual void HandleShowProfilePacket(ShowProfilePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetDefaultGameTypePacket 0x69
+
+        protected virtual void HandleSetDefaultGameTypePacket(SetDefaultGameTypePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region RemoveObjectivePacket 0x6a
+
+        protected virtual void HandleRemoveObjectivePacket(RemoveObjectivePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetDisplayObjectivePacket 0x6b
+
+        protected virtual void HandleSetDisplayObjectivePacket(SetDisplayObjectivePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetScorePacket 0x6c
+
+        protected virtual void HandleSetScorePacket(SetScorePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region LabTablePacket 0x6d
+
+        protected virtual void HandleLabTablePacket(LabTablePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region UpdateBlockSyncedPacket 0x6e
+
+        protected virtual void HandleUpdateBlockSyncedPacket(UpdateBlockSyncedPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region MoveEntityDeltaPacket 0x6f
+
+        protected virtual void HandleMoveEntityDeltaPacket(MoveEntityDeltaPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetScoreboardIdentityPacket 0x70
+
+        protected virtual void HandleSetScoreboardIdentityPacket(SetScoreboardIdentityPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SetLocalPlayerAsInitializedPacket 0x71
 
         protected virtual void HandleSetLocalPlayerAsInitializedPacket(SetLocalPlayerAsInitializedPacket pk)
         {
+        }
+
+        #endregion
+
+        #region UpdateSoftEnumPacket 0x72
+
+        protected virtual void HandleUpdateSoftEnumPacket(UpdateSoftEnumPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region NetworkStackLatencyPacket 0x73
+
+        protected virtual void HandleNetworkStackLatencyPacket(NetworkStackLatencyPacket pk)
+        {
+
         }
 
         #endregion

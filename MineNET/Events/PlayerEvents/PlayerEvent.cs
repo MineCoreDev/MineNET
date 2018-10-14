@@ -52,6 +52,12 @@ namespace MineNET.Events.PlayerEvents
             this.PlayerPreLogin?.Invoke(sender, e);
         }
 
+        public event EventHandler<PlayerSkinChangeEventArgs> PlayerSkinChange;
+        public void OnPlayerSkinChange(object sender, PlayerSkinChangeEventArgs e)
+        {
+            this.PlayerSkinChange?.Invoke(sender, e);
+        }
+
         public event EventHandler<PlayerToggleGlideEventArgs> PlayerToggleGlide;
         public void OnPlayerToggleGlide(object sender, PlayerToggleGlideEventArgs e)
         {

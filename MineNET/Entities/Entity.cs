@@ -15,7 +15,7 @@ namespace MineNET.Entities
     /// <summary>
     /// Minecraft に存在するエンティティーを提供するクラス。
     /// </summary>
-    public abstract partial class Entity
+    public abstract partial class Entity : IPosition
     {
         private static long nextEntityId = 0;
 
@@ -25,7 +25,7 @@ namespace MineNET.Entities
         /// <param name="type"><see cref="Entity"/> のID</param>
         /// <param name="chunk"><see cref="Entity"/> を設置するチャンク</param>
         /// <param name="nbt"><see cref="Entity"/> のNBT</param>
-        /// <returns>取得した <see cref="Entity"/></returns>
+        /// <returns>生成した <see cref="Entity"/></returns>
         public static Entity CreateEntity(string type, Chunk chunk, CompoundTag nbt)
         {
             if (MineNET_Registries.Entity.ContainsKey(type))
@@ -137,7 +137,7 @@ namespace MineNET.Entities
         public float MotionZ { get; set; }
 
         /// <summary>
-        /// <see cref="Entity"/> がスポーンするID
+        /// <see cref="Entity"/> のランタイムなID
         /// </summary>
         public long EntityID { get; }
 
@@ -166,10 +166,10 @@ namespace MineNET.Entities
         public EntityAttributeDictionary Attributes { get; private set; }
 
         /// <summary>
-        /// <see cref="Entity"/> クラスの新しいインスタンスを生成します
+        /// <see cref="Entity"/> クラスの新しいインスタンスを作成します
         /// </summary>
-        /// <param name="chunk"> <see cref="Entity"/> を生成するための <see cref="Worlds.Chunk"/> </param>
-        /// <param name="nbt"> <see cref="Entity"/> を生成するための <see cref="CompoundTag"/> </param>
+        /// <param name="chunk"> <see cref="Entity"/> を作成するための <see cref="Worlds.Chunk"/> </param>
+        /// <param name="nbt"> <see cref="Entity"/> を作成するための <see cref="CompoundTag"/> </param>
         public Entity(Chunk chunk, CompoundTag nbt)
         {
             this.EntityID = ++nextEntityId;
@@ -185,6 +185,10 @@ namespace MineNET.Entities
             this.World.AddEntity(this);
         }
 
+        /// <summary>
+        /// <see cref="Entity"/> の初期化をします。
+        /// </summary>
+        /// <param name="nbt"><see cref="Entity"/> のNBTデータ</param>
         protected virtual void EntityInit(CompoundTag nbt)
         {
             ListTag list = nbt.GetList("Pos");
@@ -247,7 +251,7 @@ namespace MineNET.Entities
         }
 
         /// <summary>
-        /// <see cref="Entity"/> を表示範囲内のプレイヤーに表示させます
+        /// <see cref="Entity"/> を表示範囲内の <see cref="Player"/> に表示させます
         /// </summary>
         public virtual void SpawnToAll()
         {
@@ -271,7 +275,7 @@ namespace MineNET.Entities
         }
 
         /// <summary>
-        /// <see cref="Entity"/> を指定したプレイヤーに表示させます
+        /// <see cref="Entity"/> を指定した <see cref="Player"/> に表示させます
         /// </summary>
         /// <param name="player"></param>
         public virtual void SpawnTo(Player player)
@@ -286,7 +290,7 @@ namespace MineNET.Entities
 
 
         /// <summary>
-        /// この <see cref="Entity"/> が表示されている全てのプレイヤーから表示されなくします
+        /// この <see cref="Entity"/> が表示されている全ての <see cref="Player"/> から表示されなくします
         /// </summary>
         public virtual void DespawnFromAll()
         {
@@ -298,7 +302,7 @@ namespace MineNET.Entities
         }
 
         /// <summary>
-        /// この <see cref="Entity"/> を指定したプレイヤーから表示されなくします
+        /// この <see cref="Entity"/> を指定した <see cref="Player"/> から表示されなくします
         /// </summary>
         /// <param name="player"></param>
         public virtual void DespawnFrom(Player player)
@@ -316,6 +320,10 @@ namespace MineNET.Entities
             }
         }
 
+        /// <summary>
+        /// <see cref="Player"/> に <see cref="AddEntityPacket"/> を送信します。 
+        /// </summary>
+        /// <param name="player"></param>
         public virtual void SendSpawnPacket(Player player)
         {
             AddEntityPacket pk = new AddEntityPacket
@@ -333,6 +341,18 @@ namespace MineNET.Entities
             player.SendPacket(pk);
         }
 
+        public void SendPacketViewers(MinecraftPacket packet)
+        {
+            Player[] players = this.Viewers;
+            for (int i = 0; i < players.Length; ++i)
+            {
+                players[i].SendPacket(packet);
+            }
+        }
+
+        /// <summary>
+        /// この <see cref="Entity"/> が表示されている <see cref="Player"/> の配列
+        /// </summary>
         public Player[] Viewers
         {
             get
@@ -341,6 +361,9 @@ namespace MineNET.Entities
             }
         }
 
+        /// <summary>
+        /// この <see cref="Entity"/> を倒します。
+        /// </summary>
         public virtual void Kill()
         {
             this.Close();
