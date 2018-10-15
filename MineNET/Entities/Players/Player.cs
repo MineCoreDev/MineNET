@@ -219,7 +219,7 @@ namespace MineNET.Entities.Players
 
         internal override bool UpdateTick(long tick)
         {
-            if (tick % 20 == 0 && this.AnySendChunk)
+            if (tick % 20 == 0 && this.AnySendChunk && !this.Closed)
             {
                 this.SendChunk();
             }
@@ -265,6 +265,7 @@ namespace MineNET.Entities.Players
             }
 
             this.World?.UnLoadChunks(this);
+            this.World?.RemoveEntity(this);
 
             this.Closed = true;
         }

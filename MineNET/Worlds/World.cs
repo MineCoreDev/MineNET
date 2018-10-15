@@ -311,11 +311,11 @@ namespace MineNET.Worlds
         {
             lock (this.Chunks)
             {
-                foreach (Tuple<int, int> chunkKey in this.Chunks.Keys.ToArray())
+                foreach (Tuple<int, int> chunkKey in player.LoadedChunks.Keys)
                 {
-                    if (!player.LoadedChunks.ContainsKey(chunkKey))
+                    if (!this.HasChunkLoadedByPlayer(chunkKey, player))
                     {
-                        if (!this.HasChunkLoadedByPlayer(chunkKey, player))
+                        if (this.Chunks.ContainsKey(chunkKey))
                         {
                             this.Format.SetChunk(this.Chunks[chunkKey]);
                             this.Chunks.Remove(chunkKey);
