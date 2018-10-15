@@ -4,7 +4,8 @@
     {
         public BlockPlanks() : base(BlockIDs.PLANKS, "Planks")
         {
-
+            this.Hardness = 2.0f;
+            this.Resistance = 15f;
         }
     }
 }

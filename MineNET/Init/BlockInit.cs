@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using MineNET.Blocks;
+using MineNET.Items;
 
 namespace MineNET.Init
 {
@@ -16,20 +17,34 @@ namespace MineNET.Init
 
         public void Init()
         {
-            /*
             this.Add(new BlockAir());
-            this.Add(new BlockStone() { Hardness = 1.5f, Resistance = 30f });
-            this.Add(new BlockGrass() { Hardness = 0.6f, Resistance = 3f });
-            this.Add(new BlockDirt() { Hardness = 0.5f, Resistance = 2.5f });
-            this.Add(new Block(4, "Cobblestone") { Hardness = 2f, Resistance = 30f });
-            this.Add(new BlockPlanks() { Hardness = 2.0f, Resistance = 15f });
+            this.Add(new BlockStone());
+            this.Add(new BlockGrass());
+            this.Add(new BlockDirt());
+            this.Add(new Block(4, "Cobblestone") { Hardness = 2f, Resistance = 30f, ToolType = ItemToolType.PICKAXE });
+            this.Add(new BlockPlanks());
             this.Add(new BlockSapling());
             this.Add(new BlockEmptyDrops(7, "Bedrock") { Resistance = 18000000f });
-            this.Add(new BlockDynamicLiquid(8, "FlowingWater") { Hardness = 500f, LightOpacity = 3 });
-            this.Add(new BlockStaticLiquid(9, "Water") { Hardness = 500f, LightOpacity = 3 });
-            */
-            FieldInfo[] fields = new BlockIDs().GetType().GetFields(); //TODO
-            for (int i = 0; i < fields.Length; ++i)
+            this.Add(new BlockDynamicLiquid(8, "FlowingWater") { Resistance = 500f, LightOpacity = 3 });
+            this.Add(new BlockStaticLiquid(9, "Water") { Resistance = 500f, LightOpacity = 3 });
+            this.Add(new BlockDynamicLiquid(10, "FlowingLava") { Resistance = 500f, LightLevel = 15 });
+            this.Add(new BlockStaticLiquid(11, "Lava") { Resistance = 500f, LightLevel = 15 });
+            this.Add(new BlockSand());
+            this.Add(new BlockGravel());
+            this.Add(new BlockGoldOre());
+            this.Add(new BlockIronOre());
+            this.Add(new BlockCoalOre());
+            this.Add(new BlockLog());
+            this.Add(new BlockLeave(18, "Leaves"));
+            this.Add(new BlockSponge());
+            this.Add(new BlockGlass(20, "Glass"));
+            this.Add(new BlockLapisOre());
+            this.Add(new BlockSolid(22, "LapisBlock") { Hardness = 3f, Resistance = 15f, ToolType = ItemToolType.PICKAXE, ToolTier = ItemToolTier.STONE });
+            this.Add(new BlockDispenser());
+            this.Add(new BlockSandstone());
+
+            FieldInfo[] fields = new BlockIDs().GetType().GetFields();
+            for (int i = 25; i < fields.Length; ++i)
             {
                 FieldInfo field = fields[i];
                 this.Add(new Block((int) field.GetValue(null), field.Name));
@@ -39,6 +54,11 @@ namespace MineNET.Init
         public void Add(Block block)
         {
             MineNET_Registries.Block.Add(block.ID, block);
+        }
+
+        public void Set(Block block)
+        {
+            MineNET_Registries.Block[block.ID] = block;
         }
 
         public void Dispose()

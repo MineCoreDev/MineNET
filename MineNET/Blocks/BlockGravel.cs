@@ -2,10 +2,12 @@
 
 namespace MineNET.Blocks
 {
-    public class BlockGrass : BlockSolid
+    public class BlockGravel : BlockFalling
     {
-        public BlockGrass() : base(BlockIDs.GRASS, "Glass")
+        public BlockGravel() : base(BlockIDs.GRAVEL, "Gravel")
         {
+            this.IsSolid = true;
+
             this.Hardness = 0.6f;
             this.Resistance = 3f;
             this.ToolType = ItemToolType.SHOVEL;

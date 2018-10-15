@@ -34,6 +34,12 @@ namespace MineNET.Events.PlayerEvents
             this.PlayerInteract?.Invoke(sender, e);
         }
 
+        public event EventHandler<PlayerItemHeldEventArgs> PlayerItemHeld;
+        public void OnPlayerItemHeld(object sender, PlayerItemHeldEventArgs e)
+        {
+            this.PlayerItemHeld?.Invoke(sender, e);
+        }
+
         public event EventHandler<PlayerJumpEventArgs> PlayerJump;
         public void OnPlayerJump(object sender, PlayerJumpEventArgs e)
         {

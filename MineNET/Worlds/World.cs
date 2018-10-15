@@ -397,25 +397,6 @@ namespace MineNET.Worlds
                 return;
             }
 
-            //TODO Remove TestCode... 
-            /*CompoundTag nbt = new CompoundTag();
-            nbt.PutList(new ListTag("Pos", NBTTagType.FLOAT)
-                .Add(new FloatTag("", pos.X))
-                .Add(new FloatTag("", pos.Y + 2))
-                .Add(new FloatTag("", pos.Z)));
-            nbt.PutList(new ListTag("Motion", NBTTagType.FLOAT)
-                .Add(new FloatTag("", 0))
-                .Add(new FloatTag("", 0))
-                .Add(new FloatTag("", 0)));
-            nbt.PutList(new ListTag("Rotation", NBTTagType.FLOAT)
-                .Add(new FloatTag("", 0))
-                .Add(new FloatTag("", 0)));
-            nbt.PutCompound("Item", NBTIO.WriteItem(new ItemStack(Item.Get(ItemIDs.DIAMOND_SWORD))));
-            EntityItem entity = (EntityItem) Entity.CreateEntity("Item",
-                this.GetChunk(new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4)), nbt);
-            Logger.Info(entity.GetVector3());
-            entity.SpawnToAll();*/
-
             clicked.UpdateTick(World.BLOCK_UPDATE_TOUCH);
             if (!player.Sneaking && clicked.CanBeActivated && clicked.Activate(player, item))
             {

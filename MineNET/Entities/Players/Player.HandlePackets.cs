@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MineNET.Blocks;
 using MineNET.Commands;
 using MineNET.Data;
+using MineNET.Events.EntityEvents;
 using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
 using MineNET.Inventories.Transactions;
@@ -772,6 +773,15 @@ namespace MineNET.Entities.Players
 
         protected virtual void MobEquipmentHandle(MobEquipmentPacket pk)
         {
+            int hotbar = pk.HotbarSlot;
+            PlayerItemHeldEventArgs args = new PlayerItemHeldEventArgs(this, pk.Item, this.Inventory.MainHandSlot, hotbar);
+            Server.Instance.Event.Player.OnPlayerItemHeld(this, args);
+            if (args.IsCancel)
+            {
+                this.Inventory.SendMainHand(this); //TODO?
+                return;
+            }
+
             this.Inventory.MainHandSlot = pk.HotbarSlot;
             this.SetFlag(DATA_FLAGS, DATA_FLAG_ACTION, false, true);
         }
@@ -1030,6 +1040,12 @@ namespace MineNET.Entities.Players
 
         protected virtual void HandleAnimatePacket(AnimatePacket pk)
         {
+            EntityAnimationEventArgs args = new EntityAnimationEventArgs(this, pk.Action);
+            Server.Instance.Event.Entity.OnEntityAnimation(this, args);
+            if (args.IsCancel)
+            {
+                return;
+            }
             this.SendPacketViewers(pk);
         }
 

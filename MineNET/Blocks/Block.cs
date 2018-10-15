@@ -84,30 +84,69 @@ namespace MineNET.Blocks
         /// <summary>
         /// <see cref="Block"/> の名前。
         /// </summary>
-        public string Name { get; }
+        public virtual string Name { get; }
 
         /// <summary>
         /// <see cref="Block"/> の硬さ。
         /// </summary>
-        public float Hardness { get; set; } = 0;
+        public virtual float Hardness { get; set; } = 0;
         /// <summary>
         /// <see cref="Block"/> の耐性。
         /// </summary>
-        public float Resistance { get; set; } = 0;
+        public virtual float Resistance { get; set; } = 0;
 
         /// <summary>
         /// <see cref="Block"/> の光源レベル。
         /// </summary>
-        public float LightLevel { get; set; } = 0;
+        public virtual float LightLevel { get; set; } = 0;
         /// <summary>
         /// <see cref="Block"/> の透明度。
         /// </summary>
-        public float LightOpacity { get; set; } = 0;
+        public virtual float LightOpacity { get; set; } = 255;
 
         /// <summary>
         /// <see cref="Block"/> の <see cref="World"/> 上での <see cref="BlockColor"/>。
         /// </summary>
-        public Color MapColor { get; set; } = BlockColor.Air;
+        public virtual Color MapColor { get; set; } = BlockColor.Air;
+
+        /// <summary>
+        /// この <see cref="Block"/> を破壊する適正ツールを返します。
+        /// </summary>
+        public virtual ItemToolType ToolType { get; set; } = ItemToolType.NONE;
+        /// <summary>
+        /// この <see cref="Block"/> を破壊するために必要な適正ツールの鉱石の種類を返します。
+        /// </summary>
+        public virtual ItemToolTier ToolTier { get; set; } = ItemToolTier.NONE;
+
+        /// <summary>
+        /// <see cref="Block"/> が透明である場合は <see langword="true"/> を返します。
+        /// </summary>
+        public virtual bool IsTransparent { get; set; } = false;
+
+        /// <summary>
+        /// <see cref="Block"/> が個体である場合は <see langword="true"/> を返します。
+        /// </summary>
+        public virtual bool IsSolid { get; set; } = false;
+
+        /// <summary>
+        /// この <see cref="Block"/> を置くことができる場合 true を返します。
+        /// </summary>
+        public virtual bool CanBePlaced { get; set; } = true;
+
+        /// <summary>
+        /// この <see cref="Block"/> を置き換えることができる場合 true を返します。
+        /// </summary>
+        public virtual bool CanBeReplaced { get; set; } = false;
+
+        /// <summary>
+        /// この <see cref="Block"/> を破壊できる場合 <see langword="true"/> を返します。
+        /// </summary>
+        public virtual bool CanBreak { get; set; } = true;
+
+        /// <summary>
+        /// <see langword="true"/> にすると Activate が呼ばれるようになります。
+        /// </summary>
+        public virtual bool CanBeActivated { get; set; } = false;
 
         /// <summary>
         /// <see cref="Block"/> クラスの新しいインスタンスを作成します。
@@ -151,28 +190,6 @@ namespace MineNET.Blocks
         public virtual AxisAlignedBB BoundingBox { get; } = AxisAlignedBB.None;
 
         /// <summary>
-        /// <see cref="Block"/> が透明である場合は <see langword="true"/> を返します。
-        /// </summary>
-        public virtual bool IsTransparent
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// <see cref="Block"/> が個体である場合は <see langword="true"/> を返します。
-        /// </summary>
-        public virtual bool IsSolid
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
         /// <see cref="Block"/> が更新された時に呼び出されます。
         /// </summary>
         /// <param name="type">
@@ -206,50 +223,6 @@ namespace MineNET.Blocks
         }
 
         /// <summary>
-        /// この <see cref="Block"/> を置くことができる場合 true を返します。
-        /// </summary>
-        public virtual bool CanBePlaced
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// この <see cref="Block"/> を置き換えることができる場合 true を返します。
-        /// </summary>
-        public virtual bool CanBeReplaced
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// この <see cref="Block"/> を破壊できる場合 <see langword="true"/> を返します。
-        /// </summary>
-        public virtual bool CanBreak
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// この <see cref="Block"/> に触れることができる場合 <see langword="true"/> を返します。
-        /// </summary>
-        public virtual bool CanBeActivated
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
         /// この <see cref="Block"/> が配置された時に呼び出されます。
         /// </summary>
         /// <param name="clicked">クリックした <see cref="Block"/></param>
@@ -278,7 +251,7 @@ namespace MineNET.Blocks
         }
 
         /// <summary>
-        /// この <see cref="Block"/> にクリックされた時に呼び出されます。
+        /// この <see cref="Block"/> にクリックされた時にCanBeActivatedが <see langword="true"/> の時呼び出されます。
         /// </summary>
         /// <param name="player">クリック <see cref="Player"/></param>
         /// <param name="item">クリックした時に持っていた <see cref="Items.ItemStack"/></param>
@@ -312,6 +285,5 @@ namespace MineNET.Blocks
                 return new ItemStack(Item.Get(this.ID), this.Damage);
             }
         }
-
     }
 }
