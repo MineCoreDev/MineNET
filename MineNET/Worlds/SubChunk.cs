@@ -1,7 +1,7 @@
-﻿using MineNET.Blocks;
-using MineNET.Utils;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using MineNET.Blocks;
+using MineNET.Utils;
 
 namespace MineNET.Worlds
 {
@@ -46,7 +46,7 @@ namespace MineNET.Worlds
             {
                 bs.WriteByte(8);
 
-                int numberOfStores = 1;
+                int numberOfStores = 1;//TODO Support Multi Layer...
                 bs.WriteByte((byte) numberOfStores);
 
                 List<uint> palettes = new List<uint>(10);
