@@ -1,5 +1,4 @@
 ﻿using System;
-using MineNET.IO;
 using MineNET.Utils;
 
 namespace MineNET.Network.RakNetPackets
@@ -102,7 +101,6 @@ namespace MineNET.Network.RakNetPackets
                 if (this.Reliability <= RakNetPacketReliability.RELIABLE_SEQUENCED &&
                     this.Reliability != RakNetPacketReliability.RELIABLE)
                 {
-                    Logger.Info(this.OrderChannel + ":" + this.OrderIndex);
                     stream.WriteLTriad(this.OrderIndex);
                     stream.WriteByte((byte) this.OrderChannel);
                 }
