@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using MineNET.BlockEntities;
 using MineNET.Blocks;
 using MineNET.Entities;
-using MineNET.Entities.Players;
 using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
@@ -64,14 +63,14 @@ namespace MineNET.Worlds
             this.BlockEntitiesTag = blockEntitiesTag;
         }
 
-        public void SendChunk(Player player)
+        public FullChunkDataPacket ChunkData()
         {
             FullChunkDataPacket pk = new FullChunkDataPacket();
             pk.ChunkX = this.X;
             pk.ChunkY = this.Z;
             pk.Data = this.GetBytes();
 
-            player.SendPacket(pk);
+            return pk;
         }
 
         public int GetBlock(int bx, int by, int bz)

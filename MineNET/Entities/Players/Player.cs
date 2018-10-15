@@ -164,9 +164,15 @@ namespace MineNET.Entities.Players
             Task.Run(() =>
             {
                 Thread.CurrentThread.Name = "ChunkSendThread";
+                List<FullChunkDataPacket> Chunks = new List<FullChunkDataPacket>();
                 foreach (Chunk c in this.World.LoadChunks(this, this.RequestChunkRadius))
                 {
-                    c.SendChunk(this);
+                    Chunks.Add(c.ChunkData());
+                }
+
+                foreach (FullChunkDataPacket chunk in Chunks)
+                {
+                    this.SendPacket(chunk, RakNetPacketReliability.RELIABLE_ORDERED, RakNetProtocol.FlagImmediate);
                 }
             });
         }

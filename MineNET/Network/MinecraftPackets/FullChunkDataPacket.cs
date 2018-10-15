@@ -4,6 +4,8 @@
     {
         public override byte PacketID { get; } = MinecraftProtocol.FULL_CHUNK_DATA_PACKET;
 
+        public override int OrderChannel => CHANNEL_CHUNK;
+
         public int ChunkX { get; set; }
         public int ChunkY { get; set; }
 

@@ -581,12 +581,11 @@ namespace MineNET.Network
 
             pk = ev.Packet;
 
-            this.QueueConnectedPacket(pk, reliability, -1, flags);
+            this.QueueConnectedPacket(pk, reliability, packet.OrderChannel, flags);
         }
 
         public void AddToQueue(EncapsulatedPacket pk, int flags = RakNetProtocol.FlagNormal)
         {
-            flags = RakNetProtocol.FlagImmediate;
             if (flags == RakNetProtocol.FlagImmediate)
             {
                 DataPacket p = new DataPacket0();

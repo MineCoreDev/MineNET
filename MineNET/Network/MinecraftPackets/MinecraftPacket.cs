@@ -14,10 +14,12 @@ namespace MineNET.Network.MinecraftPackets
 {
     public abstract class MinecraftPacket : BinaryStream, ICloneable<MinecraftPacket>
     {
-        public abstract byte PacketID { get; }
+        public const int CHANNEL_NONE = 0;
+        public const int CHANNEL_IMMEDIATE = 1;
+        public const int CHANNEL_CHUNK = 2;
 
-        public byte Extra1 { get; set; }
-        public byte Extra2 { get; set; }
+        public abstract byte PacketID { get; }
+        public virtual int OrderChannel => CHANNEL_NONE;
 
         public virtual void Encode()
         {
