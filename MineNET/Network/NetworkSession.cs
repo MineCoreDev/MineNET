@@ -486,7 +486,7 @@ namespace MineNET.Network
             {
                 byte[][] buffers = Binary.SplitBytes(new MemorySpan(packet.Buffer), this.MTUSize - 60);
                 int splitID = ++this.SplitID % 65536;
-                for (int i = 0; i < buffers.Length; ++i)
+                for (int i = 0; i < buffers.Length; i++)
                 {
                     EncapsulatedPacket pk = new EncapsulatedPacket();
                     pk.SplitID = splitID;
@@ -502,6 +502,11 @@ namespace MineNET.Network
                     else
                     {
                         pk.MessageIndex = this.MessageIndex;
+                    }
+
+                    if (RakNetPacketReliability.IsOrdered(packet.Reliability))
+                    {
+                        pk.OrderIndex = packet.OrderIndex;
                     }
 
                     this.AddToQueue(pk, RakNetProtocol.FlagImmediate);
@@ -576,12 +581,11 @@ namespace MineNET.Network
 
             pk = ev.Packet;
 
-            this.QueueConnectedPacket(pk, reliability, -1, flags);
+            this.QueueConnectedPacket(pk, reliability, packet.OrderChannel, flags);
         }
 
         public void AddToQueue(EncapsulatedPacket pk, int flags = RakNetProtocol.FlagNormal)
         {
-            flags = RakNetProtocol.FlagImmediate;
             if (flags == RakNetProtocol.FlagImmediate)
             {
                 DataPacket p = new DataPacket0();
@@ -606,7 +610,7 @@ namespace MineNET.Network
             if (this.SendQueue.Packets?.Length > 0)
             {
                 this.SendDatagram(this.SendQueue);
-                this.SendQueue = new DataPacket0();
+                this.SendQueue = new DataPacket4();
             }
         }
 

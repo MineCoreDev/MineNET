@@ -1,5 +1,5 @@
-﻿using MineNET.Utils;
-using System;
+﻿using System;
+using MineNET.Utils;
 
 namespace MineNET.Network.RakNetPackets
 {

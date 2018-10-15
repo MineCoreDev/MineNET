@@ -571,6 +571,7 @@
     <Compile Include="Values\UUID.cs" />
     <Compile Include="Values\Vector2.cs" />
     <Compile Include="Values\Vector3.cs" />
+    <Compile Include="Worlds\Biomes\BiomeIDs.cs" />
     <Compile Include="Worlds\Chunk.cs" />
     <Compile Include="Worlds\Difficulty.cs" />
     <Compile Include="Worlds\Dimensions\DimensionIDs.cs" />

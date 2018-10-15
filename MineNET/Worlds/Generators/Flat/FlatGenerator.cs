@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MineNET.Blocks;
 using MineNET.IO;
+using MineNET.Worlds.Biomes;
 
 namespace MineNET.Worlds.Generators.Flat
 {
@@ -64,6 +65,7 @@ namespace MineNET.Worlds.Generators.Flat
                                 }
                                 chunk.SetBlock(i, y, j, (byte) layer.block.ID);
                                 chunk.SetMetadata(i, y, j, (byte) layer.block.Damage);
+                                chunk.SetBiome(i, j, BiomeIDs.Plains);
                                 y++;
                             }
                         }

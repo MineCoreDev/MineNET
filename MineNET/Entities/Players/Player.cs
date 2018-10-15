@@ -164,9 +164,15 @@ namespace MineNET.Entities.Players
             Task.Run(() =>
             {
                 Thread.CurrentThread.Name = "ChunkSendThread";
+                List<FullChunkDataPacket> Chunks = new List<FullChunkDataPacket>();
                 foreach (Chunk c in this.World.LoadChunks(this, this.RequestChunkRadius))
                 {
-                    c.SendChunk(this);
+                    Chunks.Add(c.ChunkData());
+                }
+
+                foreach (FullChunkDataPacket chunk in Chunks)
+                {
+                    this.SendPacket(chunk, RakNetPacketReliability.RELIABLE_ORDERED, RakNetProtocol.FlagImmediate);
                 }
             });
         }
@@ -219,7 +225,7 @@ namespace MineNET.Entities.Players
 
         internal override bool UpdateTick(long tick)
         {
-            if (tick % 20 == 0 && this.AnySendChunk)
+            if (tick % 20 == 0 && this.AnySendChunk && !this.Closed)
             {
                 this.SendChunk();
             }
@@ -265,6 +271,7 @@ namespace MineNET.Entities.Players
             }
 
             this.World?.UnLoadChunks(this);
+            this.World?.RemoveEntity(this);
 
             this.Closed = true;
         }

@@ -54,6 +54,10 @@ namespace MineNET.Network.RakNetPackets
                     EncapsulatedPacket pk = (EncapsulatedPacket) packet;
                     len += pk.GetTotalLength();
                 }
+                else
+                {
+                    len += ((byte[]) packet).Length;
+                }
             }
 
             return len;
