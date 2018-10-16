@@ -888,11 +888,11 @@ namespace MineNET.Entities.Players
                 Server.Instance.Event.Player.OnPlayerJump(this, args);
                 if (this.Sprinting)
                 {
-                    //this.AddExhaustion(0.8f, PlayerExhaustEventArgs.CAUSE_SPRINT_JUMPING);
+                    this.Exhaust(0.8f, PlayerExhaustEventArgs.CAUSE_SPRINT_JUMPING);
                 }
                 else
                 {
-                    //this.AddExhaustion(0.2f, PlayerExhaustEventArgs.CAUSE_JUMPING);
+                    this.Exhaust(0.2f, PlayerExhaustEventArgs.CAUSE_JUMPING);
                 }
             }
             else if (pk.Action == PlayerActionPacket.ACTION_START_SPRINT)

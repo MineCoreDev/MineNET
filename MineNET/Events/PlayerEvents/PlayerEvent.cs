@@ -28,6 +28,12 @@ namespace MineNET.Events.PlayerEvents
             this.PlayerCreate?.Invoke(sender, e);
         }
 
+        public event EventHandler<PlayerExhaustEventArgs> PlayerExhaust;
+        public void OnPlayerExhaust(object sender, PlayerExhaustEventArgs e)
+        {
+            this.PlayerExhaust?.Invoke(sender, e);
+        }
+
         public event EventHandler<PlayerInteractEventArgs> PlayerInteract;
         public void OnPlayerInteract(object sender, PlayerInteractEventArgs e)
         {

@@ -1,5 +1,4 @@
 ﻿using System;
-using MineNET.Utils;
 
 namespace MineNET.Entities.Attributes
 {

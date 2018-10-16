@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MineNET.Commands;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
+using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
 using MineNET.Items;
 using MineNET.NBT.Tags;
@@ -19,7 +20,7 @@ using MineNET.Worlds;
 
 namespace MineNET.Entities.Players
 {
-    public partial class Player : EntityLiving, CommandSender
+    public partial class Player : EntityHuman, CommandSender
     {
         public override bool IsPlayer
         {
@@ -38,8 +39,6 @@ namespace MineNET.Entities.Players
         public bool IsLoggedIn { get; private set; }
         public LoginData LoginData { get; private set; }
         public ClientData ClientData { get; private set; }
-        public Skin Skin { get; private set; }
-        public UUID Uuid { get; private set; }
 
         public PlayerListEntry PlayerListEntry { get; private set; }
         public AdventureSettingsEntry AdventureSettingsEntry { get; private set; }
@@ -95,6 +94,155 @@ namespace MineNET.Entities.Players
             this.AdventureSettingsEntry = new AdventureSettingsEntry();
 
             this.GameMode = GameModeExtention.FromIndex(nbt.GetInt("PlayerGameType"));
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の満腹度の最大値を取得します
+        /// </summary>
+        /// <returns></returns>
+        public virtual float GetMaxHunger()
+        {
+            return this.Attributes.GetAttribute(EntityAttribute.HUNGER.Name).MaxValue;
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の満腹度を取得します
+        /// </summary>
+        /// <returns></returns>
+        public virtual float GetHunger()
+        {
+            return this.Attributes.GetAttribute(EntityAttribute.HUNGER.Name).Value;
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の満腹度を設定します
+        /// </summary>
+        /// <param name="amount"></param>
+        public virtual void SetHunger(float amount)
+        {
+            EntityAttribute attribute = this.Attributes.GetAttribute(EntityAttribute.HUNGER.Name);
+            attribute.Value = amount;
+            this.Attributes.SetAttribute(attribute);
+            this.Attributes.Update(this);
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の満腹度を増やします
+        /// </summary>
+        /// <param name="amount"></param>
+        public virtual void AddHunger(float amount)
+        {
+            this.SetHunger(this.GetHunger() + amount);
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の満腹度を減らします
+        /// </summary>
+        /// <param name="amount"></param>
+        public virtual void ReduceHunger(float amount)
+        {
+            this.SetHunger(this.GetHunger() - amount);
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の隠し満腹度の最大値を取得します
+        /// </summary>
+        /// <returns></returns>
+        public virtual float GetMaxSaturation()
+        {
+            return this.Attributes.GetAttribute(EntityAttribute.SATURATION.Name).MaxValue;
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の隠し満腹度を取得します
+        /// </summary>
+        /// <returns></returns>
+        public virtual float GetSaturation()
+        {
+            return this.Attributes.GetAttribute(EntityAttribute.SATURATION.Name).Value;
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の隠し満腹度を設定します
+        /// </summary>
+        /// <param name="amount"></param>
+        public virtual void SetSaturation(float amount)
+        {
+            EntityAttribute attribute = this.Attributes.GetAttribute(EntityAttribute.SATURATION.Name);
+            attribute.Value = amount;
+            this.Attributes.SetAttribute(attribute);
+            this.Attributes.Update(this);
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の隠し満腹度を増やします
+        /// </summary>
+        /// <param name="amount"></param>
+        public virtual void AddSaturation(float amount)
+        {
+            this.SetSaturation(this.GetSaturation() + amount);
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の隠し満腹度を減らします
+        /// </summary>
+        /// <param name="amount"></param>
+        public virtual void ReduceSaturation(float amount)
+        {
+            this.SetSaturation(this.GetSaturation() - amount);
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の満腹度消耗値を取得します
+        /// </summary>
+        /// <returns></returns>
+        public virtual float GetExhaustion()
+        {
+            return this.Attributes.GetAttribute(EntityAttribute.EXHAUSTION.Name).Value;
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の満腹度消耗値を設定します
+        /// </summary>
+        /// <param name="amount"></param>
+        public virtual void SetExhaustion(float amount)
+        {
+            EntityAttribute attribute = this.Attributes.GetAttribute(EntityAttribute.EXHAUSTION.Name);
+            attribute.Value = amount;
+            this.Attributes.SetAttribute(attribute);
+            this.Attributes.Update(this);
+        }
+
+        public virtual void Exhaust(float amount, int cause)
+        {
+            PlayerExhaustEventArgs args = new PlayerExhaustEventArgs(this, amount, cause);
+            Server.Instance.Event.Player.OnPlayerExhaust(this, args);
+            if (args.IsCancel)
+            {
+                return;
+            }
+            amount = args.Amount;
+
+            float exhaustion = this.GetExhaustion() + amount;
+            while (exhaustion >= 4f)
+            {
+                exhaustion -= 4f;
+                float saturation = this.GetSaturation();
+                if (saturation > 0)
+                {
+                    saturation = Math.Max(0, saturation - 1f);
+                    this.SetSaturation(saturation);
+                }
+                else
+                {
+                    float hunger = this.GetHunger();
+                    if (hunger > 0)
+                    {
+                        this.SetHunger(hunger - 1);
+                    }
+                }
+            }
+            this.SetExhaustion(exhaustion);
         }
 
         public void SendMessage(TranslationContainer message)
@@ -204,23 +352,6 @@ namespace MineNET.Entities.Players
             this.Inventory.EntityOffhandInventory.SendContents(this);
             this.Inventory.PlayerCursorInventory.SendContents(this);
             this.Inventory.OpendInventory?.SendContents(this);
-        }
-
-        public override void SendSpawnPacket(Player player)
-        {
-            AddPlayerPacket pk = new AddPlayerPacket
-            {
-                Uuid = this.Uuid,
-                Username = this.Name,
-                EntityUniqueId = this.EntityID,
-                EntityRuntimeId = this.EntityID,
-                Position = this.GetVector3(),
-                Motion = new Vector3(),
-                Direction = new Vector3(this.Yaw, this.Pitch, this.HeadYaw),
-                Metadata = this.DataProperties
-            };
-
-            player.SendPacket(pk);
         }
 
         internal override bool UpdateTick(long tick)
