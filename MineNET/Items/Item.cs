@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using MineNET.Blocks;
 using MineNET.Data;
@@ -40,27 +41,23 @@ namespace MineNET.Items
                 int.TryParse(data[0], out id);
             }
 
-            try
+            ItemIDs factory = new ItemIDs();
+            FieldInfo info = factory.GetType().GetField(data[0]);
+            if (info != null)
             {
-                ItemIDs factory = new ItemIDs();
-                id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
+                id = (int) info.GetValue(factory);
             }
-            catch
+            else
             {
-                try
+                BlockIDs factory2 = new BlockIDs();
+                FieldInfo info2 = factory2.GetType().GetField(data[0]);
+                if (info2 != null)
                 {
-                    BlockIDs factory = new BlockIDs();
-                    id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
+                    id = (int) info2.GetValue(factory2);
                     if (id > 255)
                     {
-                        Server.Instance.Logger.OutputLogger.Info(id);
                         id = -id + 255;
-                        Server.Instance.Logger.OutputLogger.Info(id);
                     }
-                }
-                catch
-                {
-
                 }
             }
 
