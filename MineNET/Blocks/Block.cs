@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using MineNET.Data;
 using MineNET.Entities.Players;
 using MineNET.Items;
@@ -52,14 +53,11 @@ namespace MineNET.Blocks
                 int.TryParse(data[1], out meta);
             }
 
-            try
+            BlockIDs factory = new BlockIDs();
+            FieldInfo info = factory.GetType().GetField(data[0]);
+            if (info != null)
             {
-                BlockIDs factory = new BlockIDs();
-                id = (int) factory.GetType().GetField(data[0]).GetValue(factory);
-            }
-            catch
-            {
-
+                id = (int) info.GetValue(factory);
             }
 
             Block block = Block.Get(id);
