@@ -7,6 +7,9 @@ using MineNET.Worlds;
 
 namespace MineNET.BlockEntities
 {
+    /// <summary>
+    /// Minecraft に存在するチェストの <see cref="BlockEntity"/> です。
+    /// </summary>
     public class BlockEntityChest : BlockEntity, InventoryHolder
     {
         Inventory InventoryHolder.Inventory
@@ -19,6 +22,11 @@ namespace MineNET.BlockEntities
 
         public ChestInventory Inventory { get; protected set; }
 
+        /// <summary>
+        /// <see cref="BlockEntityChest"/> クラスの新しいインスタンスを作成します。
+        /// </summary>
+        /// <param name="chunk"></param>
+        /// <param name="nbt"></param>
         public BlockEntityChest(Chunk chunk, CompoundTag nbt = null) : base(chunk, nbt)
         {
             this.Inventory = new ChestInventory(this);
@@ -35,6 +43,9 @@ namespace MineNET.BlockEntities
             }
         }
 
+        /// <summary>
+        /// <see cref="BlockEntityChest"/> の名前
+        /// </summary>
         public override string Name
         {
             get

@@ -21,6 +21,7 @@ namespace MineNET
             MineNET_Registries.Command.Clear();
             MineNET_Registries.Creative.Clear();
             MineNET_Registries.Effect.Clear();
+            MineNET_Registries.Entity.Clear();
             MineNET_Registries.Item.Clear();
             MineNET_Registries.RakNetPacket.Clear();
             MineNET_Registries.MinecraftPacket.Clear();

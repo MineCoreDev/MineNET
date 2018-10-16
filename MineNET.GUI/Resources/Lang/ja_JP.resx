@@ -123,7 +123,7 @@
   <data name="app.config.showNews" xml:space="preserve">
     <value>起動時に最新のニュースを表示する</value>
   </data>
-  <data name="app.consoleControl.button" xml:space="preserve">
+  <data name="app.consoleControl.button1" xml:space="preserve">
     <value>送信</value>
   </data>
   <data name="app.consoleControl.button2" xml:space="preserve">

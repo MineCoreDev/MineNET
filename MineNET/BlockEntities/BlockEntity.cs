@@ -7,7 +7,7 @@ using MineNET.Worlds;
 namespace MineNET.BlockEntities
 {
     /// <summary>
-    /// Minecraft に存在するタイルエンティティを提供する抽象クラス。
+    /// Minecraft に存在するブロックエンティティを提供する抽象クラス。
     /// </summary>
     public abstract class BlockEntity : IPosition
     {
@@ -37,7 +37,7 @@ namespace MineNET.BlockEntities
         }
 
         /// <summary>
-        /// <see cref="BlockEntity"/> クラスの新しいインスタンスを作成します
+        /// <see cref="BlockEntity"/> クラスの新しいインスタンスを作成します。
         /// </summary>
         /// <param name="chunk"> <see cref="BlockEntity"/> を作成するための <see cref="Worlds.Chunk"/> </param>
         /// <param name="nbt"> <see cref="BlockEntity"/> を作成するための <see cref="CompoundTag"/> </param>
