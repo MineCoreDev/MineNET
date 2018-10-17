@@ -12,7 +12,7 @@ namespace MineNET.Data
             this.UUID = uuid;
         }
 
-        public PlayerListEntry(UUID uuid, long entityUniqueId, string name, int platForm, Skin skin, string xboxUserId)
+        public PlayerListEntry(UUID uuid, long entityUniqueId, string name, Skin skin, string xboxUserId)
         {
             this.UUID = uuid;
             this.EntityUniqueId = entityUniqueId;

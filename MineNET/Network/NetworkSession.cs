@@ -570,7 +570,13 @@ namespace MineNET.Network
             pk.Payload = st.ToArray();
 
             string endPointStr = this.EndPoint.ToString();
-            Player player = Server.Instance.Network.Players[endPointStr];
+            Player player = null;
+            Server.Instance.Network.Players.TryGetValue(endPointStr, out player);
+            if (player == null)
+            {
+                return;
+            }
+
             RakNetBatchPacketSendEventArgs ev = new RakNetBatchPacketSendEventArgs(this, player, pk);
             Server.Instance.Event.Network.OnRakNetBatchPacketSend(this, ev);
 
