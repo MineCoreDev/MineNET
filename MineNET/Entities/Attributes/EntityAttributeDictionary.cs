@@ -1,7 +1,7 @@
-﻿using MineNET.Entities.Players;
-using MineNET.Network.MinecraftPackets;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using MineNET.Entities.Players;
+using MineNET.Network.MinecraftPackets;
 
 namespace MineNET.Entities.Attributes
 {
@@ -22,6 +22,11 @@ namespace MineNET.Entities.Attributes
             {
                 this.Attributes[attributes[i].Name] = attributes[i];
             }
+        }
+
+        public void SetAttribute(EntityAttribute attribute)
+        {
+            this.Attributes[attribute.Name] = attribute;
         }
 
         public void RemoveAttribute(params string[] keys)
