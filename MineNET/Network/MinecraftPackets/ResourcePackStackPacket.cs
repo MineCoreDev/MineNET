@@ -21,6 +21,7 @@ namespace MineNET.Network.MinecraftPackets
                 IResourcePack entry = this.BehaviourPackEntries[i];
                 this.WriteString(entry.GetPackId());
                 this.WriteString(entry.GetPackVersion());
+                this.WriteString("");
             }
             this.WriteShort((short) this.ResourcePackEntries.Length);
             for (int i = 0; i < this.ResourcePackEntries.Length; ++i)
@@ -28,6 +29,7 @@ namespace MineNET.Network.MinecraftPackets
                 IResourcePack entry = this.ResourcePackEntries[i];
                 this.WriteString(entry.GetPackId());
                 this.WriteString(entry.GetPackVersion());
+                this.WriteString("");
             }
         }
     }

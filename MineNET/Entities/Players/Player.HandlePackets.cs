@@ -421,7 +421,6 @@ namespace MineNET.Entities.Players
                 {
                     EntityUniqueId = this.EntityID,
                     Name = this.DisplayName,
-                    PlatForm = this.ClientData.DeviceOS,
                     Skin = this.Skin,
                     XboxUserId = this.LoginData.XUID
                 };
@@ -468,7 +467,7 @@ namespace MineNET.Entities.Players
                 if (message != "" && message.Length < 256)
                 {
                     PlayerChatEventArgs args = new PlayerChatEventArgs(this, message);
-                    Server.Instance.Event.Player.OnPlayerChant(this, args);
+                    Server.Instance.Event.Player.OnPlayerChat(this, args);
                     if (args.IsCancel)
                     {
                         return;

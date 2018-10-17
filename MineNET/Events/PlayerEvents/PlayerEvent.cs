@@ -11,7 +11,7 @@ namespace MineNET.Events.PlayerEvents
         }
 
         public event EventHandler<PlayerChatEventArgs> PlayerChat;
-        public void OnPlayerChant(object sender, PlayerChatEventArgs e)
+        public void OnPlayerChat(object sender, PlayerChatEventArgs e)
         {
             this.PlayerChat?.Invoke(sender, e);
         }
