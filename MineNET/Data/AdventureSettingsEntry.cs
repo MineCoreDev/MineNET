@@ -47,7 +47,6 @@ namespace MineNET.Data
             pk.Entry = this;
             player.SendPacket(pk);
 
-            //TODO Send All....
             Player[] players = Server.Instance.GetPlayers();
             for (int i = 0; i < players.Length; i++)
             {
