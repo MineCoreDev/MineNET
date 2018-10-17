@@ -17,8 +17,6 @@
         public byte Type { get; set; }
         public bool NeedsTranslation { get; set; } = false;
         public string SourceName { get; set; } = "";
-        public string SourceThirdPartyName { get; set; } = "";
-        public int SourcePlatForm { get; set; } = 0;
         public string Message { get; set; }
         public string[] Parameters { get; set; }
         public string XboxUserId { get; set; } = "";
@@ -36,9 +34,6 @@
                 case TextPacket.TYPE_WHISPER:
                 case TextPacket.TYPE_ANNOUNCEMENT:
                     this.WriteString(this.SourceName);
-                    this.WriteString(this.SourceThirdPartyName);
-                    this.WriteSVarInt(this.SourcePlatForm);
-                    this.WriteString(this.Message);
                     break;
 
                 case TextPacket.TYPE_RAW:
@@ -75,9 +70,6 @@
                 case TextPacket.TYPE_WHISPER:
                 case TextPacket.TYPE_ANNOUNCEMENT:
                     this.SourceName = this.ReadString();
-                    this.SourceThirdPartyName = this.ReadString();
-                    this.SourcePlatForm = this.ReadVarInt();
-                    this.Message = this.ReadString();
                     break;
 
                 case TextPacket.TYPE_RAW:

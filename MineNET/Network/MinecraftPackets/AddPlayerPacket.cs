@@ -11,8 +11,6 @@ namespace MineNET.Network.MinecraftPackets
 
         public UUID Uuid { get; set; }
         public string Username { get; set; }
-        public string ThirdPartyName { get; set; } = "";
-        public int Platform { get; set; } = 0;
         public long EntityUniqueId { get; set; }
         public long EntityRuntimeId { get; set; }
         public string PlatformChatId { get; set; } = "";
@@ -34,8 +32,6 @@ namespace MineNET.Network.MinecraftPackets
 
             this.WriteUUID(this.Uuid);
             this.WriteString(this.Username);
-            this.WriteString(this.ThirdPartyName);
-            this.WriteSVarInt(this.Platform);
             this.WriteEntityUniqueId(this.EntityUniqueId);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteString(this.PlatformChatId);

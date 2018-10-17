@@ -59,12 +59,13 @@ namespace MineNET.Network.MinecraftPackets
         public bool HasLockedBehaviour { get; set; } = false;
         public bool HasLockedResourcePack { get; set; } = false;
         public bool IsFromLockedWorldTemplate { get; set; } = false;
+        public bool IsUsingMsaGamertagsOnly { get; set; } = false;
 
         public string LevelId { get; set; } = "";
         public string WorldName { get; set; } = "";
         public string PremiumWorldTemplateId { get; set; } = "";
 
-        public bool Unknown { get; set; } = false;
+        public bool IsTrial { get; set; } = true;
 
         public long CurrentTick { get; set; } = 0;
         public int EnchantmentSeed { get; set; } = 0;
@@ -113,7 +114,8 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteString(this.LevelId);
             this.WriteString(this.WorldName);
             this.WriteString(this.PremiumWorldTemplateId);
-            this.WriteBool(this.Unknown);
+            this.WriteBool(this.IsUsingMsaGamertagsOnly);
+            this.WriteBool(this.IsTrial);
             this.WriteLLong((ulong) this.CurrentTick);
             this.WriteSVarInt(this.EnchantmentSeed);
             this.WriteBytes(GlobalBlockPalette.PaletteBytes);

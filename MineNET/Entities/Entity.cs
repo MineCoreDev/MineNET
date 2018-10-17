@@ -207,7 +207,7 @@ namespace MineNET.Entities
             this.SetDataProperty(new EntityDataFloat(DATA_BOUNDING_BOX_HEIGHT, this.Height));
 
             this.SetFlag(DATA_FLAGS, DATA_FLAG_HAS_COLLISION);
-            this.SetFlag(DATA_FLAGS, DATA_FLAG_AFFECTED_BY_GRAVITY);
+            this.SetFlag(DATA_FLAGS, DATA_FLAG_GRAVITY);
 
             this.Attributes = new EntityAttributeDictionary(this.EntityID);
         }

@@ -3,7 +3,7 @@
     public static class MinecraftProtocol
     {
         public const string ClientVersion = "1.6.0";
-        public const int ClientProtocol = 282;
+        public const int ClientProtocol = 291;
 
         public const byte LOGIN_PACKET = 0x01;
         public const byte PLAY_STATUS_PACKET = 0x02;
