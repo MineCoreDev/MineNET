@@ -1,7 +1,7 @@
-﻿using MineNET.Entities.Players;
+﻿using System.Collections.Generic;
+using MineNET.Entities.Players;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Values;
-using System.Collections.Generic;
 
 namespace MineNET.Data
 {
@@ -12,12 +12,11 @@ namespace MineNET.Data
             this.UUID = uuid;
         }
 
-        public PlayerListEntry(UUID uuid, long entityUniqueId, string name, int platForm, Skin skin, string xboxUserId)
+        public PlayerListEntry(UUID uuid, long entityUniqueId, string name, Skin skin, string xboxUserId)
         {
             this.UUID = uuid;
             this.EntityUniqueId = entityUniqueId;
             this.Name = name;
-            this.PlatForm = platForm;
             this.Skin = skin;
             this.XboxUserId = xboxUserId;
         }
@@ -25,7 +24,6 @@ namespace MineNET.Data
         public UUID UUID { get; set; }
         public long EntityUniqueId { get; set; }
         public string Name { get; set; }
-        public int PlatForm { get; set; }
         public Skin Skin { get; set; }
         public string XboxUserId { get; set; }
 

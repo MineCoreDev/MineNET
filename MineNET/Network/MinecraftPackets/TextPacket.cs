@@ -16,10 +16,9 @@
 
         public byte Type { get; set; }
         public bool NeedsTranslation { get; set; } = false;
-        public string SourceName { get; set; } = "";
+        public string Source { get; set; } = "";
         public string Message { get; set; }
         public string[] Parameters { get; set; }
-        public string XboxUserId { get; set; } = "";
         public string PlatformChatId { get; set; } = "";
 
         public override void Encode()
@@ -33,7 +32,8 @@
                 case TextPacket.TYPE_CHAT:
                 case TextPacket.TYPE_WHISPER:
                 case TextPacket.TYPE_ANNOUNCEMENT:
-                    this.WriteString(this.SourceName);
+                    this.WriteString(this.Source);
+                    this.WriteString(this.Message);
                     break;
 
                 case TextPacket.TYPE_RAW:
@@ -54,7 +54,6 @@
                     break;
             }
 
-            this.WriteString(this.XboxUserId);
             this.WriteString(this.PlatformChatId);
         }
 
@@ -69,7 +68,8 @@
                 case TextPacket.TYPE_CHAT:
                 case TextPacket.TYPE_WHISPER:
                 case TextPacket.TYPE_ANNOUNCEMENT:
-                    this.SourceName = this.ReadString();
+                    this.Source = this.ReadString();
+                    this.Message = this.ReadString();
                     break;
 
                 case TextPacket.TYPE_RAW:
@@ -90,7 +90,6 @@
                     break;
             }
 
-            this.XboxUserId = this.ReadString();
             this.PlatformChatId = this.ReadString();
         }
     }

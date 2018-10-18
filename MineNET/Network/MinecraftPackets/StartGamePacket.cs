@@ -65,7 +65,7 @@ namespace MineNET.Network.MinecraftPackets
         public string WorldName { get; set; } = "";
         public string PremiumWorldTemplateId { get; set; } = "";
 
-        public bool IsTrial { get; set; } = true;
+        public bool IsTrial { get; set; } = false;
 
         public long CurrentTick { get; set; } = 0;
         public int EnchantmentSeed { get; set; } = 0;

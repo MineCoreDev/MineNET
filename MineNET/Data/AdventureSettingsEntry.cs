@@ -46,6 +46,17 @@ namespace MineNET.Data
             AdventureSettingsPacket pk = new AdventureSettingsPacket();
             pk.Entry = this;
             player.SendPacket(pk);
+
+            Player[] players = Server.Instance.GetPlayers();
+            for (int i = 0; i < players.Length; i++)
+            {
+                AdventureSettingsPacket p = new AdventureSettingsPacket();
+                AdventureSettingsPacket p2 = new AdventureSettingsPacket();
+                p.Entry = this;
+                p2.Entry = players[i].AdventureSettingsEntry;
+                players[i].SendPacket(p);
+                player.SendPacket(p2);
+            }
         }
     }
 }
