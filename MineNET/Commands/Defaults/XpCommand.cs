@@ -56,7 +56,9 @@ namespace MineNET.Commands.Defaults
                 sender.SendMessage("/xp [amount] [target]");
                 return false;
             }
-            if (!int.TryParse(args[0], out int amount))
+
+            int amount = 0;
+            if (!int.TryParse(args[0], out amount))
             {
                 sender.SendMessage("/xp [amount] [target]");
                 return false;
