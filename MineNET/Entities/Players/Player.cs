@@ -213,7 +213,12 @@ namespace MineNET.Entities.Players
             this.Attributes.Update(this);
         }
 
-        public virtual void Exhaust(float amount, int cause)
+        /// <summary>
+        /// <see cref="Player"/> の満腹度消耗値を増加させます
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="cause"></param>
+        public virtual void Exhaust(float amount, int cause = PlayerExhaustEventArgs.CAUSE_CUSTOM)
         {
             PlayerExhaustEventArgs args = new PlayerExhaustEventArgs(this, amount, cause);
             Server.Instance.Event.Player.OnPlayerExhaust(this, args);
@@ -244,6 +249,141 @@ namespace MineNET.Entities.Players
             }
             this.SetExhaustion(exhaustion);
         }
+
+        /// <summary>
+        /// <see cref="Player"/> の経験値レベルを取得します
+        /// </summary>
+        /// <returns></returns>
+        public int GetXpLevel()
+        {
+            return (int) this.Attributes.GetAttribute(EntityAttribute.EXPERIENCE_LEVEL.Name).Value;
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の経験値レベルを設定します
+        /// </summary>
+        /// <param name="amount"></param>
+        public void SetXpLevel(int amount)
+        {
+            int xp = this.GetNeedXp(amount) - this.GetNeedXp(this.GetXpLevel());
+            this.AddXp(xp);
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の経験値ゲージの割合を0～1で取得します
+        /// </summary>
+        /// <returns></returns>
+        public float GetXpProgress()
+        {
+            return this.Attributes.GetAttribute(EntityAttribute.EXPERIENCE.Name).Value;
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の経験値を増加させます
+        /// </summary>
+        /// <param name="amount"></param>
+        public void AddXp(int amount)
+        {
+            this.TotalXp += amount;
+            this.RecalculateXp();
+        }
+
+        /// <summary>
+        /// <see cref="Player"/> の経験値を総経験値量から計算しなおします
+        /// </summary>
+        public void RecalculateXp()
+        {
+            int level = this.GetLevel(this.TotalXp);
+            float progress = ((float) this.GetMaxXpBar(level)) / ((float) this.TotalXp - this.GetNeedXp(level - 1));
+            this.SetXpAndProgress(level, progress);
+        }
+
+        public int TotalXp { get; set; }
+
+        /// <summary>
+        /// 経験値の量から経験値レベルを取得します
+        /// </summary>
+        /// <param name="xp"></param>
+        /// <returns></returns>
+        public int GetLevel(int xp)
+        {
+            int level = 0;
+            int needXp = 7;
+            while (true)
+            {
+                if (needXp > xp)
+                {
+                    return level;
+                }
+                if (level < 17)
+                {
+                    needXp += needXp + 2;
+                }
+                else if (level < 32)
+                {
+                    needXp += needXp + 5;
+                }
+                else
+                {
+                    needXp += needXp + 9;
+                }
+                level++;
+            }
+        }
+
+        /// <summary>
+        /// 引数の数値のレベルまでに必要な経験値を返します
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public int GetNeedXp(int level)
+        {
+            if (level < 17)
+            {
+                return level * level + 6 * level;
+            }
+            else if (level < 32)
+            {
+                return (int) (2.5 * level * level - 40.5f * level + 360);
+            }
+            else
+            {
+                return (int) (4.5f * level * level - 162.5 * level + 2220);
+            }
+        }
+
+        /// <summary>
+        /// 経験値ゲージの最大値を返します
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public int GetMaxXpBar(int level)
+        {
+            return this.GetNeedXp(level) - this.GetNeedXp(level - 1);
+        }
+
+        /// <summary>
+        /// 経験値ゲージのゲージとレベルを設定します
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="progress"></param>
+        protected void SetXpAndProgress(int? level, float? progress)
+        {
+            if (level != null)
+            {
+                EntityAttribute attribute = this.Attributes.GetAttribute(EntityAttribute.EXPERIENCE_LEVEL.Name);
+                attribute.Value = (float) level;
+                this.Attributes.SetAttribute(attribute);
+            }
+            if (progress != null)
+            {
+                EntityAttribute attribute = this.Attributes.GetAttribute(EntityAttribute.EXPERIENCE.Name);
+                attribute.Value = (float) progress;
+                this.Attributes.SetAttribute(attribute);
+            }
+            this.Attributes.Update(this);
+        }
+
 
         public void SendMessage(TranslationContainer message)
         {

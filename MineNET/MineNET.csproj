@@ -158,6 +158,7 @@
     <Compile Include="Commands\Defaults\GameModeCommand.cs" />
     <Compile Include="Commands\Defaults\GiveCommand.cs" />
     <Compile Include="Commands\Defaults\StopCommand.cs" />
+    <Compile Include="Commands\Defaults\XpCommand.cs" />
     <Compile Include="Commands\Enums\CommandEnum.cs" />
     <Compile Include="Commands\Enums\CommandEnumBlocks.cs" />
     <Compile Include="Commands\Enums\CommandEnumBoolean.cs" />

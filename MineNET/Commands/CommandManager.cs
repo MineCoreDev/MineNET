@@ -99,6 +99,7 @@ namespace MineNET.Commands
             this.RegisterCommand(new StopCommand());
             this.RegisterCommand(new GiveCommand());
             this.RegisterCommand(new GameModeCommand());
+            this.RegisterCommand(new XpCommand());
         }
 
         public void Dispose()
