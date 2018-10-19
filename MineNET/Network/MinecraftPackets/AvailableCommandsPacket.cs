@@ -70,12 +70,12 @@ namespace MineNET.Network.MinecraftPackets
 
                     CommandOverload[] overloads = command.CommandOverloads;
                     stream.WriteUVarInt((uint) overloads.Length);
-                    for (int i = 0; i < overloads.Length; ++i)
+                    for (int i = 0; i < overloads.Length; i++)
                     {
                         CommandOverload overload = overloads[i];
                         List<CommandParameter> parameters = overload.Parameters;
                         stream.WriteUVarInt((uint) parameters.Count);
-                        for (int j = 0; j < parameters.Count; ++j)
+                        for (int j = 0; j < parameters.Count; j++)
                         {
                             CommandParameter parameter = parameters[j];
                             stream.WriteString(parameter.Name);
@@ -84,7 +84,7 @@ namespace MineNET.Network.MinecraftPackets
                             {
                                 CommandEnum commandEnum = parameter.CommandEnum;
                                 List<int> realValue = new List<int>();
-                                for (int k = 0; k < commandEnum.Values.Length; ++k)
+                                for (int k = 0; k < commandEnum.Values.Length; k++)
                                 {
                                     string value = commandEnum.Values[k];
                                     enumValues.Add(value);
@@ -98,7 +98,7 @@ namespace MineNET.Network.MinecraftPackets
                             {
                                 postFixes.Add(parameter.Postfix);
                                 int key = postFixes.Count - 1;
-                                type |= CommandParameter.ARG_FLAG_VALID | CommandParameter.ARG_FLAG_POSTFIX | key;
+                                type = CommandParameter.ARG_FLAG_POSTFIX | key;
                             }
                             else
                             {
@@ -113,24 +113,24 @@ namespace MineNET.Network.MinecraftPackets
             }
 
             this.WriteUVarInt((uint) enumValues.Count);
-            for (int i = 0; i < enumValues.Count; ++i)
+            for (int i = 0; i < enumValues.Count; i++)
             {
                 this.WriteString(enumValues[i]);
             }
 
             this.WriteUVarInt((uint) postFixes.Count);
-            for (int i = 0; i < postFixes.Count; ++i)
+            for (int i = 0; i < postFixes.Count; i++)
             {
                 this.WriteString(postFixes[i]);
             }
 
             this.WriteUVarInt((uint) enums.Count);
-            for (int i = 0; i < enums.Count; ++i)
+            for (int i = 0; i < enums.Count; i++)
             {
                 CommandEnumCash cash = enums[i];
                 this.WriteString(cash.Name);
                 this.WriteUVarInt((uint) cash.Index.Length);
-                for (int j = 0; j < cash.Index.Length; ++j)
+                for (int j = 0; j < cash.Index.Length; j++)
                 {
                     if (enumValues.Count < byte.MaxValue)
                     {
