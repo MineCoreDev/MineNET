@@ -265,8 +265,8 @@ namespace MineNET.Entities.Players
         /// <param name="amount"></param>
         public void SetXpLevel(int amount)
         {
-            int xp = this.GetNeedXp(amount) - this.GetNeedXp(this.GetXpLevel());
-            this.AddXp(xp);
+            this.TotalXp = this.GetNeedXp(amount) + (int) (this.GetXpFromLast(amount) * this.GetXpProgress());
+            this.SetXpAndProgress(amount, null);
         }
 
         /// <summary>
@@ -285,51 +285,23 @@ namespace MineNET.Entities.Players
         public void AddXp(int amount)
         {
             this.TotalXp += amount;
-            this.RecalculateXp();
-        }
-
-        /// <summary>
-        /// <see cref="Player"/> の経験値を総経験値量から計算しなおします
-        /// </summary>
-        public void RecalculateXp()
-        {
-            int level = this.GetLevel(this.TotalXp);
-            float progress = ((float) this.GetMaxXpBar(level)) / ((float) this.TotalXp - this.GetNeedXp(level - 1));
-            this.SetXpAndProgress(level, progress);
-        }
-
-        public int TotalXp { get; set; }
-
-        /// <summary>
-        /// 経験値の量から経験値レベルを取得します
-        /// </summary>
-        /// <param name="xp"></param>
-        /// <returns></returns>
-        public int GetLevel(int xp)
-        {
-            int level = 0;
-            int needXp = 7;
+            int level = this.GetXpLevel();
             while (true)
             {
-                if (needXp > xp)
+                if (this.GetNeedXp(level + 1) <= this.TotalXp)
                 {
-                    return level;
-                }
-                if (level < 17)
-                {
-                    needXp += needXp + 2;
-                }
-                else if (level < 32)
-                {
-                    needXp += needXp + 5;
+                    level++;
                 }
                 else
                 {
-                    needXp += needXp + 9;
+                    break;
                 }
-                level++;
             }
+            float progress = (this.TotalXp - this.GetNeedXp(level)) / (float) this.GetXpFromLast(level);
+            this.SetXpAndProgress(level, progress);
         }
+
+        public int TotalXp { get; protected set; }
 
         /// <summary>
         /// 引数の数値のレベルまでに必要な経験値を返します
@@ -353,13 +325,21 @@ namespace MineNET.Entities.Players
         }
 
         /// <summary>
-        /// 経験値ゲージの最大値を返します
+        /// 次のレベルまでに必要な経験値を返します
         /// </summary>
         /// <param name="level"></param>
         /// <returns></returns>
-        public int GetMaxXpBar(int level)
+        public int GetXpFromLast(int level)
         {
-            return this.GetNeedXp(level) - this.GetNeedXp(level - 1);
+            if (level < 16)
+            {
+                return 2 * level + 7;
+            }
+            if (level < 31)
+            {
+                return 5 * level - 38;
+            }
+            return 9 * level - 158;
         }
 
         /// <summary>

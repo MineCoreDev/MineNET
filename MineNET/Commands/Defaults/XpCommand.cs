@@ -19,7 +19,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "";
+                return "プレイヤーの経験値を増加/減少させます";
             }
         }
 
@@ -56,9 +56,18 @@ namespace MineNET.Commands.Defaults
                 sender.SendMessage("/xp [amount] [target]");
                 return false;
             }
+
+            bool isLevel = args[0].EndsWith("L");
+            args[0] = args[0].Trim('L');
             if (!int.TryParse(args[0], out int amount))
             {
                 sender.SendMessage("/xp [amount] [target]");
+                return false;
+            }
+
+            if (!isLevel && amount < 0)
+            {
+                sender.SendMessage("プレイヤーに負の経験値を与えることはできません");
                 return false;
             }
 
@@ -75,14 +84,11 @@ namespace MineNET.Commands.Defaults
                     return false;
                 }
             }
-
-            bool isLevel = args[0].EndsWith("L");
-            if (!isLevel && amount < 0)
+            else
             {
-                sender.SendMessage("プレイヤーに負の経験値を与えることはできません");
-                return false;
+                targets = this.GetPlayerFromSelector(args[1], sender);
             }
-            targets = this.GetPlayerFromSelector(args[1], sender);
+
             for (int i = 0; i < targets.Length; ++i)
             {
                 if (isLevel)
