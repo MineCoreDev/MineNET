@@ -26,6 +26,7 @@
     <FileAlignment>512</FileAlignment>
     <DocumentationFile>
     </DocumentationFile>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
