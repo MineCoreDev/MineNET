@@ -59,7 +59,8 @@ namespace MineNET.Commands.Defaults
 
             bool isLevel = args[0].EndsWith("L");
             args[0] = args[0].Trim('L');
-            if (!int.TryParse(args[0], out int amount))
+            int amount = 0;
+            if (!int.TryParse(args[0], out amount))
             {
                 sender.SendMessage("/xp [amount] [target]");
                 return false;
