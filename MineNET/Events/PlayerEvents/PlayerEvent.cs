@@ -46,6 +46,12 @@ namespace MineNET.Events.PlayerEvents
             this.PlayerItemHeld?.Invoke(sender, e);
         }
 
+        public event EventHandler<PlayerJoinEventArgs> PlayerJoin;
+        public void OnPlayerJoin(object sender, PlayerJoinEventArgs e)
+        {
+            this.PlayerJoin?.Invoke(sender, e);
+        }
+
         public event EventHandler<PlayerJumpEventArgs> PlayerJump;
         public void OnPlayerJump(object sender, PlayerJumpEventArgs e)
         {
@@ -62,6 +68,12 @@ namespace MineNET.Events.PlayerEvents
         public void OnPlayerPreLogin(object sender, PlayerPreLoginEventArgs e)
         {
             this.PlayerPreLogin?.Invoke(sender, e);
+        }
+
+        public event EventHandler<PlayerQuitEventArgs> PlayerQuit;
+        public void OnPlayerQuit(object sender, PlayerQuitEventArgs e)
+        {
+            this.PlayerQuit?.Invoke(sender, e);
         }
 
         public event EventHandler<PlayerSkinChangeEventArgs> PlayerSkinChange;

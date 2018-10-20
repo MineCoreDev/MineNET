@@ -64,7 +64,15 @@ namespace MineNET.Entities
             }
         }
 
-        public Inventory Inventory { get; protected set; }
+        public EntityInventory Inventory { get; protected set; }
+
+        Inventory InventoryHolder.Inventory
+        {
+            get
+            {
+                return this.Inventory;
+            }
+        }
 
         public bool HasEffect(int id)
         {

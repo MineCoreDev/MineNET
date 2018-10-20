@@ -96,9 +96,15 @@ namespace MineNET.Commands
 
         private void RegisterDefaultCommands()
         {
-            this.RegisterCommand(new StopCommand());
-            this.RegisterCommand(new GiveCommand());
+            this.RegisterCommand(new EffectCommand());
+            this.RegisterCommand(new EnchantCommand());
             this.RegisterCommand(new GameModeCommand());
+            this.RegisterCommand(new GiveCommand());
+            this.RegisterCommand(new ListCommand());
+            this.RegisterCommand(new MeCommand());
+            this.RegisterCommand(new SayCommand());
+            this.RegisterCommand(new StopCommand());
+            this.RegisterCommand(new TellCommand());
             this.RegisterCommand(new XpCommand());
         }
 

@@ -441,6 +441,19 @@ namespace MineNET.Entities.Players
                 this.Inventory.ArmorInventory.SendContents(this);
                 this.Inventory.SendCreativeItems();
 
+                PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, $"§e{this.Name} が世界にやってきました", "");
+                Server.Instance.Event.Player.OnPlayerJoin(this, playerJoinEvent);
+                if (playerJoinEvent.IsCancel)
+                {
+                    this.Close(playerJoinEvent.KickMessage);
+                    return;
+                }
+                if (!string.IsNullOrEmpty(playerJoinEvent.JoinMessage))
+                {
+                    Server.Instance.BroadcastMessage(playerJoinEvent.JoinMessage);
+                }
+                Logger.Info($"§e{this.Name} join the game");
+
                 Player[] players = this.World.GetPlayers();
                 for (int i = 0; i < players.Length; ++i)
                 {

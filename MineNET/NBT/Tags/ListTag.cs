@@ -36,8 +36,19 @@ namespace MineNET.NBT.Tags
                 this.list.Add(tag);
                 return this;
             }
-            else
-                throw new FormatException();
+            throw new FormatException();
+        }
+
+        public ListTag Remove(Tag tag)
+        {
+            this.list.Remove(tag);
+            return this;
+        }
+
+        public ListTag RemoveAt(int index)
+        {
+            this.list.RemoveAt(index);
+            return this;
         }
 
         public T GetTag<T>(int index) where T : Tag
@@ -46,8 +57,7 @@ namespace MineNET.NBT.Tags
             {
                 return (T) this[index];
             }
-            else
-                throw new IndexOutOfRangeException();
+            throw new IndexOutOfRangeException();
         }
 
         public bool Exist(int index)
@@ -71,8 +81,7 @@ namespace MineNET.NBT.Tags
                 {
                     return this.list[index];
                 }
-                else
-                    throw new IndexOutOfRangeException();
+                throw new IndexOutOfRangeException();
             }
 
             set
