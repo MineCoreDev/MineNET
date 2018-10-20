@@ -42,7 +42,7 @@ namespace MineNET.Commands.Defaults
                         new CommandParameterTarget("player", true)
                     ),
                     new CommandOverload(
-                        new CommandParameterInt("amount", false, "L"),
+                        new CommandParameterInt("amount", false, "l"),
                         new CommandParameterTarget("player", true)
                     )
                 };
