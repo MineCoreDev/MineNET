@@ -97,8 +97,6 @@ namespace MineNET.Network.MinecraftPackets
                             else if (!string.IsNullOrEmpty(parameter.Postfix))
                             {
                                 postFixes.Add(parameter.Postfix);
-                                postFixes.Add(parameter.Postfix);//Dummy
-                                postFixes.Add(parameter.Postfix);//Dummy
 
                                 int key = postFixes.Count - 1;
                                 type = CommandParameter.ARG_FLAG_POSTFIX | key;
