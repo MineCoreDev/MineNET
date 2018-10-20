@@ -97,6 +97,8 @@ namespace MineNET.Network.MinecraftPackets
                             else if (!string.IsNullOrEmpty(parameter.Postfix))
                             {
                                 postFixes.Add(parameter.Postfix);
+                                postFixes.Add(parameter.Postfix);//Dummy
+                                postFixes.Add(parameter.Postfix);//Dummy
 
                                 int key = postFixes.Count - 1;
                                 type = CommandParameter.ARG_FLAG_POSTFIX | key;
@@ -133,11 +135,11 @@ namespace MineNET.Network.MinecraftPackets
                 this.WriteUVarInt((uint) cash.Index.Length);
                 for (int j = 0; j < cash.Index.Length; ++j)
                 {
-                    if (enumValues.Count < byte.MaxValue)
+                    if (enumValues.Count < 0x100)
                     {
                         this.WriteByte((byte) cash.Index[j]);
                     }
-                    else if (enumValues.Count < ushort.MaxValue)
+                    else if (enumValues.Count < 0x10000)
                     {
                         this.WriteLShort((ushort) cash.Index[j]);
                     }
