@@ -9,6 +9,7 @@ using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Events.PlayerEvents;
 using MineNET.Inventories;
+using MineNET.IO;
 using MineNET.Items;
 using MineNET.NBT.Tags;
 using MineNET.Network;
@@ -501,6 +502,9 @@ namespace MineNET.Entities.Players
 
         public void Close(string reason)
         {
+            PlayerQuitEventArgs playerQuitEvent = new PlayerQuitEventArgs(this, $"§e{this.Name} が世界を去りました", reason);
+            Server.Instance.Event.Player.OnPlayerQuit(this, playerQuitEvent);
+            reason = playerQuitEvent.Reason;
             if (!string.IsNullOrEmpty(reason))
             {
                 DisconnectPacket pk = new DisconnectPacket();
@@ -508,6 +512,12 @@ namespace MineNET.Entities.Players
 
                 this.SendPacket(pk, flag: RakNetProtocol.FlagImmediate);
             }
+
+            if (!string.IsNullOrEmpty(playerQuitEvent.QuitMessage))
+            {
+                Server.Instance.BroadcastMessage(playerQuitEvent.QuitMessage);
+            }
+            Logger.Info($"§e{this.Name} left the game");
 
             this.Close();
 

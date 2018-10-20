@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using MineNET.Blocks;
+using MineNET.Items.Enchantments;
+using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 
@@ -107,14 +111,54 @@ namespace MineNET.Items
             return this.MemberwiseClone();
         }
 
-        public void AddCanPlaceOn(string v)
+        public ItemStack AddCanPlaceOn(params string[] blocks)
         {
-            throw new NotImplementedException();
+            List<string> canPlaceOn = this.CanPlaceOn.ToList();
+            for (int i = 0; i < blocks.Length; ++i)
+            {
+                canPlaceOn.Add(blocks[i]);
+            }
+            this.CanPlaceOn = canPlaceOn.ToArray();
+            return this;
         }
 
-        public void AddCanDestroy(string v)
+        public ItemStack RemoveCanPlaceOn(params string[] blocks)
         {
-            throw new NotImplementedException();
+            List<string> canPlaceOn = this.CanPlaceOn.ToList();
+            for (int i = 0; i < blocks.Length; ++i)
+            {
+                if (canPlaceOn.Contains(blocks[i]))
+                {
+                    canPlaceOn.Remove(blocks[i]);
+                }
+            }
+            this.CanPlaceOn = canPlaceOn.ToArray();
+            return this;
+        }
+
+        public ItemStack AddCanDestroy(params string[] blocks)
+        {
+            List<string> canDestroy = this.CanDestroy.ToList();
+            for (int i = 0; i < blocks.Length; ++i)
+            {
+                canDestroy.Add(blocks[i]);
+            }
+            this.CanDestroy = canDestroy.ToArray();
+            return this;
+        }
+
+        public ItemStack RemoveCanDestroy(params string[] blocks)
+        {
+            List<string> canDestroy = this.CanDestroy.ToList();
+            for (int i = 0; i < blocks.Length; ++i)
+            {
+                if (canDestroy.Contains(blocks[i]))
+                {
+                    canDestroy.Remove(blocks[i]);
+                }
+            }
+            this.CanDestroy = canDestroy.ToArray();
+            return this;
         }
 
         public void SetNamedTag(CompoundTag tag)
@@ -143,6 +187,366 @@ namespace MineNET.Items
 
             return this.Tags;
         }
+
+        #region NBT CustomName
+
+        public string GetCustomName()
+        {
+            if (!this.HasTags)
+            {
+                return "";
+            }
+
+            CompoundTag tag = this.GetNamedTag();
+            if (!tag.Exist("display"))
+            {
+                return "";
+            }
+            CompoundTag display = tag.GetCompound("display");
+            if (!display.Exist("Name"))
+            {
+                return "";
+            }
+            return display.GetString("Name");
+        }
+
+        public ItemStack SetCustomName(string name)
+        {
+            if (name == null || name == "")
+            {
+                this.ClearCustomName();
+            }
+            else
+            {
+                CompoundTag tag;
+                if (this.HasTags)
+                {
+                    tag = this.GetNamedTag();
+                }
+                else
+                {
+                    tag = new CompoundTag();
+                }
+                if (tag.Exist("display"))
+                {
+                    tag.GetCompound("display").PutString("Name", name);
+                }
+                else
+                {
+                    tag.PutCompound("display", new CompoundTag("display").PutString("Name", name));
+                }
+                this.SetNamedTag(tag);
+            }
+            return this;
+        }
+
+        public ItemStack ClearCustomName()
+        {
+            if (!this.HasTags)
+            {
+                return this;
+            }
+
+            CompoundTag tag = this.GetNamedTag();
+            if (!tag.Exist("display"))
+            {
+                return this;
+            }
+            CompoundTag display = tag.GetCompound("display");
+            if (display.Exist("Name"))
+            {
+                display.Remove("Name");
+            }
+            this.SetNamedTag(tag);
+            return this;
+        }
+
+        #endregion
+
+        #region NBT Lore
+
+        public string[] GetLore()
+        {
+            if (!this.HasTags)
+            {
+                return new string[0];
+            }
+
+            CompoundTag tag = this.GetNamedTag();
+            if (tag.Exist("display"))
+            {
+                return new string[0];
+            }
+            CompoundTag display = tag.GetCompound("display");
+            if (!display.Exist("Lore"))
+            {
+                return new string[0];
+            }
+            ListTag lores = display.GetList("Lore");
+            string[] data = new string[lores.Count];
+            for (int i = 0; i < lores.Count; ++i)
+            {
+                data[i] = ((StringTag) lores[i]).Data;
+            }
+            return data;
+        }
+
+        public ItemStack SetLore(params string[] lores)
+        {
+            if (lores == null || lores.Length < 1)
+            {
+                this.ClearLore();
+            }
+            else
+            {
+                CompoundTag tag;
+                if (this.HasTags)
+                {
+                    tag = this.GetNamedTag();
+                }
+                else
+                {
+                    tag = new CompoundTag();
+                }
+                ListTag list = new ListTag("Lore", NBTTagType.STRING);
+                for (int i = 0; i < lores.Length; ++i)
+                {
+                    list.Add(new StringTag(lores[i]));
+                }
+                if (tag.Exist("display"))
+                {
+                    tag.GetCompound("display").PutList(list);
+                }
+                else
+                {
+                    tag.PutCompound("display", new CompoundTag("display").PutList(list));
+                }
+                this.SetNamedTag(tag);
+            }
+            return this;
+        }
+
+        public ItemStack AddLore(params string[] lores)
+        {
+            if (lores == null || lores.Length < 1)
+            {
+                return this;
+            }
+            if (!this.HasTags || this.GetLore().Length < 1)
+            {
+                this.SetLore(lores);
+                return this;
+            }
+            CompoundTag tag = this.GetNamedTag();
+            ListTag list = tag.GetCompound("display").GetList("Lore");
+            for (int i = 0; i < lores.Length; ++i)
+            {
+                list.Add(new StringTag(lores[i]));
+            }
+            this.SetNamedTag(tag);
+            return this;
+        }
+
+        public ItemStack ClearLore()
+        {
+            if (!this.HasTags)
+            {
+                return this;
+            }
+
+            CompoundTag tag = this.GetNamedTag();
+            if (!tag.Exist("display"))
+            {
+                return this;
+            }
+            CompoundTag display = tag.GetCompound("display");
+            if (display.Exist("Lore"))
+            {
+                display.Remove("Lore");
+            }
+            this.SetNamedTag(tag);
+            return this;
+        }
+
+        #endregion
+
+        #region NBT Unbreakable
+
+        public bool GetUnbreakable()
+        {
+            if (!this.HasTags)
+            {
+                return false;
+            }
+
+            CompoundTag tag = this.GetNamedTag();
+            if (!tag.Exist("Unbreakable"))
+            {
+                return false;
+            }
+            return tag.GetBool("Unbreakable");
+        }
+
+        public void SetUnbreakable(bool value)
+        {
+            CompoundTag tag;
+            if (this.HasTags)
+            {
+                tag = this.GetNamedTag();
+            }
+            else
+            {
+                tag = new CompoundTag();
+            }
+            tag.PutBool("Unbreakable", value);
+            this.SetNamedTag(tag);
+        }
+
+        #endregion
+
+        #region NBT Enchantment
+
+        public bool HasEnchantment(int id)
+        {
+            if (!this.HasTags)
+            {
+                return false;
+            }
+            CompoundTag tag = this.GetNamedTag();
+            if (!tag.Exist("ench"))
+            {
+                return false;
+            }
+            ListTag list = tag.GetList("ench");
+            for (int i = 0; i < list.Count; ++i)
+            {
+                CompoundTag ench = (CompoundTag) list[i];
+                if (ench.GetShort("id") == id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Enchantment GetEnchantment(int id)
+        {
+            if (!this.HasEnchantment(id))
+            {
+                return null;
+            }
+            CompoundTag tag = this.GetNamedTag();
+            ListTag list = tag.GetList("ench");
+            for (int i = 0; i < list.Count; ++i)
+            {
+                CompoundTag ench = (CompoundTag) list[i];
+                if (ench.GetShort("id") == id)
+                {
+                    return Enchantment.GetEnchantment(id, ench.GetShort("lvl"));
+                }
+            }
+            return null;
+        }
+
+        public Enchantment[] GetEnchantments()
+        {
+            if (!this.HasTags)
+            {
+                return new Enchantment[0];
+            }
+            CompoundTag tag = this.GetNamedTag();
+            if (!tag.Exist("ench"))
+            {
+                return new Enchantment[0];
+            }
+            ListTag list = tag.GetList("ench");
+            List<Enchantment> enches = new List<Enchantment>();
+            for (int i = 0; i < list.Count; ++i)
+            {
+                CompoundTag ench = (CompoundTag) list[i];
+                enches.Add(Enchantment.GetEnchantment(ench.GetShort("id"), ench.GetShort("lvl")));
+            }
+            return enches.ToArray();
+        }
+
+        public ItemStack AddEnchantment(Enchantment enchantment)
+        {
+            CompoundTag tag;
+            if (this.HasTags)
+            {
+                tag = this.GetNamedTag();
+            }
+            else
+            {
+                tag = new CompoundTag();
+            }
+            ListTag list;
+            if (tag.Exist("ench"))
+            {
+                list = tag.GetList("ench");
+            }
+            else
+            {
+                list = new ListTag("ench", NBTTagType.COMPOUND);
+                tag.PutList(list);
+            }
+            for (int i = 0; i < list.Count; ++i)
+            {
+                if (((CompoundTag) list[i]).GetShort("id") == enchantment.ID)
+                {
+                    list[i] = new CompoundTag()
+                        .PutShort("id", (short) enchantment.ID)
+                        .PutShort("lvl", (short) enchantment.Level);
+                    this.SetNamedTag(tag);
+                    return this;
+                }
+            }
+            CompoundTag ench = new CompoundTag()
+                        .PutShort("id", (short) enchantment.ID)
+                        .PutShort("lvl", (short) enchantment.Level);
+            list.Add(ench);
+            this.SetNamedTag(tag);
+            return this;
+        }
+
+        public ItemStack RemoveEnchantment(Enchantment enchantment)
+        {
+            if (!this.HasTags)
+            {
+                return this;
+            }
+            CompoundTag tag = this.GetNamedTag();
+            if (!tag.Exist("ench"))
+            {
+                return this;
+            }
+            ListTag list = tag.GetList("ench");
+            for (int i = 0; i < list.Count; ++i)
+            {
+                if (((CompoundTag) list[i]).GetShort("id") == enchantment.ID)
+                {
+                    list.RemoveAt(i);
+                }
+            }
+            this.SetNamedTag(tag);
+            return this;
+        }
+
+        public ItemStack RemoveEnchantments()
+        {
+            if (!this.HasTags)
+            {
+                return this;
+            }
+            CompoundTag tag = this.GetNamedTag();
+            if (tag.Exist("ench"))
+            {
+                tag.Remove("ench");
+            }
+            return this;
+        }
+
+        #endregion
 
         public override bool Equals(object obj)
         {
