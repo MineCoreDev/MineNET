@@ -2,6 +2,7 @@
 using MineNET.Commands.Parameters;
 using MineNET.Data;
 using MineNET.Entities.Players;
+using MineNET.Text;
 
 namespace MineNET.Commands.Defaults
 {
@@ -19,7 +20,7 @@ namespace MineNET.Commands.Defaults
         {
             get
             {
-                return "プレイヤーの経験値を増加/減少させます";
+                return "%commands.xp.description";
             }
         }
 
@@ -49,11 +50,11 @@ namespace MineNET.Commands.Defaults
             }
         }
 
-        public override bool OnExecute(CommandSender sender, params string[] args)
+        public override bool OnExecute(CommandSender sender, string command, params string[] args)
         {
             if (args.Length < 1)
             {
-                sender.SendMessage("/xp [amount] [target]");
+                this.SendLengthErrorMessage(sender, command, args, args.Length);
                 return false;
             }
 
@@ -62,13 +63,13 @@ namespace MineNET.Commands.Defaults
             int amount = 0;
             if (!int.TryParse(args[0], out amount))
             {
-                sender.SendMessage("/xp [amount] [target]");
+                this.SendLengthErrorMessage(sender, command, args, 0);
                 return false;
             }
 
             if (!isLevel && amount < 0)
             {
-                sender.SendMessage("プレイヤーに負の経験値を与えることはできません");
+                sender.SendMessage(new TranslationContainer("commands.xp.failure.widthdrawXp"));
                 return false;
             }
 
@@ -81,7 +82,7 @@ namespace MineNET.Commands.Defaults
                 }
                 else
                 {
-                    sender.SendMessage("/xp [amount] [target]");
+                    this.SendLengthErrorMessage(sender, command, args, 1);
                     return false;
                 }
             }
@@ -97,17 +98,17 @@ namespace MineNET.Commands.Defaults
                     targets[i].SetXpLevel(targets[i].GetXpLevel() + amount);
                     if (amount > 0)
                     {
-                        sender.SendMessage($"{targets[i].Name} に {amount} レベルを付与しました");
+                        sender.SendMessage(new TranslationContainer("commands.xp.success.levels", amount, targets[i].Name));
                     }
                     else
                     {
-                        sender.SendMessage($"{targets[i].Name} から {amount} レベルを剥奪しました");
+                        sender.SendMessage(new TranslationContainer("commands.xp.success.negative.levels", amount, targets[i].Name));
                     }
                 }
                 else
                 {
                     targets[i].AddXp(amount);
-                    sender.SendMessage($"{targets[i].Name} に経験値 {amount} を付与しました");
+                    sender.SendMessage(new TranslationContainer("commands.xp.success", amount, targets[i].Name));
                 }
             }
             return true;

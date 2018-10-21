@@ -3,6 +3,7 @@ using MineNET.Commands;
 using MineNET.Commands.Data;
 using MineNET.Commands.Enums;
 using MineNET.Commands.Parameters;
+using MineNET.IO;
 using MineNET.Utils;
 
 namespace MineNET.Network.MinecraftPackets
@@ -54,17 +55,42 @@ namespace MineNET.Network.MinecraftPackets
                     int enumIndex = -1;
                     if (command.Aliases != null && command.Aliases.Length > 0)
                     {
+                        string name = command.Name;
                         List<int> aliases = new List<int>();
                         for (int i = 0; i < command.Aliases.Length; ++i)
                         {
-                            enumValues.Add(command.Aliases[i]);
-                            aliases.Add(enumValues.Count - 1);
+                            string alias = command.Aliases[i];
+                            if (enumValues.Contains(alias))
+                            {
+                                aliases.Add(enumValues.IndexOf(alias));
+                            }
+                            else
+                            {
+                                enumValues.Add(alias);
+                                aliases.Add(enumValues.IndexOf(alias));
+                            }
                         }
-                        enumValues.Add(command.Name);
-                        aliases.Add(enumValues.Count - 1);
 
-                        enums.Add(new CommandEnumCash($"{command.Name}CommandAliases", aliases.ToArray()));
-                        enumIndex = enums.Count - 1;
+                        if (enumValues.Contains(name))
+                        {
+                            aliases.Add(enumValues.IndexOf(name));
+                        }
+                        else
+                        {
+                            enumValues.Add(name);
+                            aliases.Add(enumValues.IndexOf(name));
+                        }
+
+                        CommandEnumCash c = new CommandEnumCash($"{name}CommandAliases", aliases.ToArray());
+                        if (enums.Contains(c))
+                        {
+                            enumIndex = enums.IndexOf(c);
+                        }
+                        else
+                        {
+                            enums.Add(c);
+                            enumIndex = enums.IndexOf(c);
+                        }
                     }
                     stream.WriteLInt((uint) enumIndex);
 
@@ -87,11 +113,27 @@ namespace MineNET.Network.MinecraftPackets
                                 for (int k = 0; k < commandEnum.Values.Length; ++k)
                                 {
                                     string value = commandEnum.Values[k];
-                                    enumValues.Add(value);
-                                    realValue.Add(enumValues.Count - 1);
+                                    if (enumValues.Contains(value))
+                                    {
+                                        realValue.Add(enumValues.IndexOf(value));
+                                    }
+                                    else
+                                    {
+                                        enumValues.Add(value);
+                                        realValue.Add(enumValues.IndexOf(value));
+                                    }
                                 }
-                                enums.Add(new CommandEnumCash(commandEnum.Name, realValue.ToArray()));
-                                enumIndex = enums.Count - 1;
+
+                                CommandEnumCash c = new CommandEnumCash(commandEnum.Name, realValue.ToArray());
+                                if (enums.Contains(c))
+                                {
+                                    enumIndex = enums.IndexOf(c);
+                                }
+                                else
+                                {
+                                    enums.Add(c);
+                                    enumIndex = enums.IndexOf(c);
+                                }
                                 type = CommandParameter.ARG_FLAG_ENUM | CommandParameter.ARG_FLAG_VALID | enumIndex;
                             }
                             else if (!string.IsNullOrEmpty(parameter.Postfix))
@@ -130,6 +172,7 @@ namespace MineNET.Network.MinecraftPackets
             {
                 CommandEnumCash cash = enums[i];
                 this.WriteString(cash.Name);
+                Logger.Info(cash.Name);
                 this.WriteUVarInt((uint) cash.Index.Length);
                 for (int j = 0; j < cash.Index.Length; ++j)
                 {
@@ -145,6 +188,7 @@ namespace MineNET.Network.MinecraftPackets
                     {
                         this.WriteLInt((uint) cash.Index[j]);
                     }
+                    Logger.Info(cash.Index[j] + ":" + enumValues[cash.Index[j]]);
                 }
             }
 

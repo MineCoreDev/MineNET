@@ -2,7 +2,7 @@
 {
     public class CommandEnumBoolean : CommandEnum
     {
-        public CommandEnumBoolean() : base("Boolean", "")
+        public CommandEnumBoolean() : base("Boolean", "true")
         {
 
         }

@@ -2,7 +2,7 @@
 {
     public class CommandEnumGameMode : CommandEnum
     {
-        public CommandEnumGameMode() : base("GameMode", "")
+        public CommandEnumGameMode() : base("GameMode", "a")
         {
 
         }

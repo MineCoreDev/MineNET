@@ -44,9 +44,24 @@ namespace MineNET.Values
             }
         }
 
+        public Vector3 GetVector3()
+        {
+            return new Vector3(this.X, this.Y, this.Z);
+        }
+
+        public Vector2 GetVector2()
+        {
+            return new Vector2(this.X, this.Z);
+        }
+
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return this.X.GetHashCode() ^ this.Y.GetHashCode() << 2 ^ this.Z.GetHashCode() >> 2 ^ this.World.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"Position: World = {this.World.Name}, X = {this.X}, Y = {this.Y}, Z = {this.Z}";
         }
 
         public override bool Equals(object other)

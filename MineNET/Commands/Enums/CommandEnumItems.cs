@@ -2,7 +2,7 @@
 {
     public class CommandEnumItems : CommandEnum
     {
-        public CommandEnumItems() : base("Item", "")
+        public CommandEnumItems() : base("Item", "air")
         {
 
         }

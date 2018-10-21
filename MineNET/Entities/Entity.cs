@@ -15,7 +15,7 @@ namespace MineNET.Entities
     /// <summary>
     /// Minecraft に存在するエンティティーを提供するクラス。
     /// </summary>
-    public abstract partial class Entity : IPosition
+    public abstract partial class Entity : ILocation
     {
         private static long nextEntityId = 0;
 
@@ -374,7 +374,7 @@ namespace MineNET.Entities
             this.Closed = true;
         }
 
-        public Vector2 GetDirection()
+        public Vector2 GetRotateVector2()
         {
             return new Vector2(this.Yaw, this.Pitch);
         }
@@ -382,6 +382,11 @@ namespace MineNET.Entities
         public Vector3 GetVector3()
         {
             return new Vector3(this.X, this.Y, this.Z);
+        }
+
+        public Vector2 GetVector2()
+        {
+            return new Vector2(this.X, this.Z);
         }
 
         public Position GetPosition()

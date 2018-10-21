@@ -86,7 +86,17 @@ namespace MineNET.BlockEntities
         {
             get;
         }
-        
+
+        public Vector3 GetVector3()
+        {
+            return new Vector3(this.X, this.Y, this.Z);
+        }
+
+        public Vector2 GetVector2()
+        {
+            return new Vector2(this.X, this.Z);
+        }
+
         internal virtual void OnUpdate()
         {
 

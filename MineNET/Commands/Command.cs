@@ -7,6 +7,7 @@ using MineNET.Entities;
 using MineNET.Entities.Players;
 using MineNET.Text;
 using MineNET.Utils;
+using MineNET.Values;
 using Random = MineNET.Utils.Random;
 
 namespace MineNET.Commands
@@ -23,7 +24,7 @@ namespace MineNET.Commands
         public virtual CommandOverload[] CommandOverloads { get; } = new CommandOverload[]
             {new CommandOverload(new CommandParameterString("args"))};
 
-        public abstract bool OnExecute(CommandSender sender, params string[] args);
+        public abstract bool OnExecute(CommandSender sender, string command, params string[] args);
 
         public Command Clone()
         {
@@ -39,13 +40,27 @@ namespace MineNET.Commands
             }
             else if (selector == "@e")
             {
+
             }
             else if (selector == "@p")
             {
-                //TODO:
-                if (sender.IsPlayer)
+                if (sender is IPosition)
                 {
-                    players.Add((Player) sender);
+                    IPosition originSender = (IPosition) sender;
+                    Player[] near = originSender.World.GetPlayers();
+                    Player min = null;
+                    float minDist = int.MaxValue;
+                    for (int i = 0; i < near.Length; ++i)
+                    {
+                        float nowDist = Vector3.Distance(near[i].GetVector3(), originSender.GetVector3());
+                        if (minDist > nowDist)
+                        {
+                            minDist = nowDist;
+                            min = near[i];
+                        }
+                    }
+
+                    players.Add(min);
                 }
             }
             else if (selector == "@r")
@@ -89,10 +104,23 @@ namespace MineNET.Commands
             }
             else if (selector == "@p")
             {
-                //TODO:
-                if (sender.IsPlayer)
+                if (sender is IPosition)
                 {
-                    entities.Add((Player) sender);
+                    IPosition originSender = (IPosition) sender;
+                    Player[] near = originSender.World.GetPlayers();
+                    Player min = null;
+                    float minDist = int.MaxValue;
+                    for (int i = 0; i < near.Length; ++i)
+                    {
+                        float nowDist = Vector3.Distance(near[i].GetVector3(), originSender.GetVector3());
+                        if (minDist > nowDist)
+                        {
+                            minDist = nowDist;
+                            min = near[i];
+                        }
+                    }
+
+                    entities.Add(min);
                 }
             }
             else if (selector == "@r")
@@ -133,9 +161,45 @@ namespace MineNET.Commands
             sender.SendMessage(new TranslationContainer(TextFormat.RED, "commands.generic.targetNotPlayer"));
         }
 
-        public void SendSyntaxMessage(CommandSender sender)
+        public void SendSyntaxErrorMessage(CommandSender sender, string command, string[] args, int error)
         {
-            sender.SendMessage(new TranslationContainer(TextFormat.RED, "commands.generic.syntax")); //TODO
+            string errorArgStr = args[error];
+            string commandStr = $"/{command} ";
+            string lastStr = "";
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (i == error)
+                {
+                    continue;
+                }
+                else if (i > error)
+                {
+                    lastStr += args[i] + " ";
+                }
+                else
+                {
+                    commandStr += args[i] + " ";
+                }
+            }
+
+            if (lastStr.Length > 0)
+            {
+                lastStr = lastStr.Remove(lastStr.Length - 1);
+            }
+
+            sender.SendMessage(new TranslationContainer(TextFormat.RED, "commands.generic.syntax", commandStr, errorArgStr, lastStr));
+        }
+
+        public void SendLengthErrorMessage(CommandSender sender, string command, string[] args, int len)
+        {
+            string errorArgStr = "";
+            string commandStr = $"/{command} ";
+            for (int i = 0; i < args.Length; i++)
+            {
+                commandStr += args[i] + " ";
+            }
+
+            sender.SendMessage(new TranslationContainer(TextFormat.RED, "commands.generic.syntax", commandStr, errorArgStr, ""));
         }
 
         object ICloneable.Clone()

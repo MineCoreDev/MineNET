@@ -61,25 +61,18 @@ namespace MineNET.Commands.Defaults
             }
         }
 
-        public override bool OnExecute(CommandSender sender, params string[] args)
+        public override bool OnExecute(CommandSender sender, string command, params string[] args)
         {
             if (args.Length < 1)
             {
-                if (!sender.IsPlayer)
-                {
-                    sender.SendMessage("/gamemode <int> <target>");
-                }
-                else
-                {
-                    sender.SendMessage("/gamemode <int/string> [target]");
-                }
+                this.SendLengthErrorMessage(sender, command, args, args.Length);
                 return false;
             }
             else if (args.Length < 2)
             {
                 if (!sender.IsPlayer)
                 {
-                    sender.SendMessage("/gamemode <int> <target>");
+                    this.SendLengthErrorMessage(sender, command, args, args.Length);
                     return false;
                 }
 

@@ -55,12 +55,11 @@ namespace MineNET.Commands.Defaults
             }
         }
 
-        public override bool OnExecute(CommandSender sender, params string[] args)
+        public override bool OnExecute(CommandSender sender, string command, params string[] args)
         {
             if (args.Length < 2)
             {
-                sender.SendMessage("/effect [target] clear");
-                sender.SendMessage("/effect [target] [effect] [seconds] [amplifier] [true:false]");
+                this.SendLengthErrorMessage(sender, command, args, args.Length);
                 return false;
             }
 
@@ -105,7 +104,7 @@ namespace MineNET.Commands.Defaults
             Effect effect = Effect.GetEffect(args[1]);
             if (effect == null)
             {
-                this.SendSyntaxMessage(sender);
+                this.SendSyntaxErrorMessage(sender, command, args, 1);
                 return false;
             }
 
@@ -114,7 +113,7 @@ namespace MineNET.Commands.Defaults
             {
                 if (!int.TryParse(args[2], out seconds))
                 {
-                    this.SendSyntaxMessage(sender);
+                    this.SendSyntaxErrorMessage(sender, command, args, 2);
                     return false;
                 }
             }
@@ -125,7 +124,7 @@ namespace MineNET.Commands.Defaults
             {
                 if (!int.TryParse(args[3], out amplifier))
                 {
-                    this.SendSyntaxMessage(sender);
+                    this.SendSyntaxErrorMessage(sender, command, args, 3);
                     return false;
                 }
             }
@@ -136,7 +135,7 @@ namespace MineNET.Commands.Defaults
             {
                 if (!bool.TryParse(args[4], out visible))
                 {
-                    this.SendSyntaxMessage(sender);
+                    this.SendSyntaxErrorMessage(sender, command, args, 4);
                     return false;
                 }
             }

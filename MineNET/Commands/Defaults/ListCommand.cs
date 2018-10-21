@@ -29,7 +29,7 @@ namespace MineNET.Commands.Defaults
             }
         }
 
-        public override bool OnExecute(CommandSender sender, params string[] args)
+        public override bool OnExecute(CommandSender sender, string command, params string[] args)
         {
             Server server = Server.Instance;
             sender.SendMessage($"{server.GetPlayers().Length} / {server.ServerProperty.MaxPlayers} のプレイヤーがオンラインです");

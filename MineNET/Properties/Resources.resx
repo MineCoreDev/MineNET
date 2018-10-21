@@ -585,4 +585,19 @@
   <data name="server_world_load" xml:space="preserve">
     <value>ワールド "{0}" が読み込まれました。</value>
   </data>
+  <data name="commands_xp_description" xml:space="preserve">
+    <value>プレイヤーの経験値を増加/減少させます</value>
+  </data>
+  <data name="commands_xp_failure_widthdrawXp" xml:space="preserve">
+    <value>プレイヤーに負の経験値を与えることはできません</value>
+  </data>
+  <data name="commands_xp_success" xml:space="preserve">
+    <value>{1} に経験値 {0} を与えまし</value>
+  </data>
+  <data name="commands_xp_success_levels" xml:space="preserve">
+    <value>{1} に {0} レベルを付与しました</value>
+  </data>
+  <data name="commands_xp_success_negative_levels" xml:space="preserve">
+    <value>{1} から {0} レベルを剥奪しました</value>
+  </data>
 </root>

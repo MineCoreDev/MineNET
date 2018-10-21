@@ -1,5 +1,5 @@
-﻿using MineNET.Utils;
-using System;
+﻿using System;
+using MineNET.Utils;
 
 namespace MineNET.Values
 {
@@ -64,7 +64,7 @@ namespace MineNET.Values
 
         public override string ToString()
         {
-            return $"X: {this.X} Y: {this.Y}";
+            return $"Vector3: X = {this.X}, Y = {this.Y}";
         }
 
         public static Vector2 Lerp(Vector2 a, Vector2 b, float t)

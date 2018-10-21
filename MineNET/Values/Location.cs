@@ -60,7 +60,27 @@ namespace MineNET.Values
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return this.X.GetHashCode() ^ this.Y.GetHashCode() << 2 ^ this.Z.GetHashCode() >> 2 ^ this.World.GetHashCode() ^ this.Yaw.GetHashCode() << 2 ^ this.Pitch.GetHashCode() >> 2;
+        }
+
+        public override string ToString()
+        {
+            return $"Location: World = {this.World.Name}, X = {this.X}, Y = {this.Y}, Z = {this.Z}, Yaw = {this.Yaw}, Pitch = {this.Pitch}";
+        }
+
+        public Vector3 GetVector3()
+        {
+            return new Vector3(this.X, this.Y, this.Z);
+        }
+
+        public Vector2 GetVector2()
+        {
+            return new Vector2(this.X, this.Z);
+        }
+
+        public Vector2 GetRotateVector2()
+        {
+            return new Vector2(this.Yaw, this.Pitch);
         }
 
         public override bool Equals(object other)

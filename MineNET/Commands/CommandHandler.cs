@@ -40,7 +40,7 @@ namespace MineNET.Commands
             Command command = this.Manager.GetCommand(data.Command);
             if (command != null)
             {
-                command.OnExecute(data.Sender, data.Args);
+                command.OnExecute(data.Sender, data.Command, data.Args);
             }
             else
             {

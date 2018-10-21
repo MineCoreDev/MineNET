@@ -4,5 +4,7 @@
     {
         float Yaw { get; }
         float Pitch { get; }
+
+        Vector2 GetRotateVector2();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MineNET.Data;
+using MineNET.Text;
 
 namespace MineNET.Commands.Defaults
 {
@@ -28,7 +29,7 @@ namespace MineNET.Commands.Defaults
             }
         }
 
-        public override bool OnExecute(CommandSender sender, params string[] args)
+        public override bool OnExecute(CommandSender sender, string command, params string[] args)
         {
             string msg = "";
             if (args.Length == 1)
@@ -36,7 +37,7 @@ namespace MineNET.Commands.Defaults
                 msg = args[0];
             }
 
-            //Server.Instance.BroadcastMessage(new TranslationMessage("commands.stop.start"));
+            Server.Instance.BroadcastMessage(new TranslationContainer("commands.stop.start"));
 
             Server.Instance.Stop();//TODO: msg
             return true;

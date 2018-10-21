@@ -55,11 +55,11 @@ namespace MineNET.Commands.Defaults
             }
         }
 
-        public override bool OnExecute(CommandSender sender, params string[] args)
+        public override bool OnExecute(CommandSender sender, string command, params string[] args)
         {
             if (args.Length < 2)
             {
-                this.SendSyntaxMessage(sender);
+                this.SendLengthErrorMessage(sender, command, args, args.Length);
                 return false;
             }
 

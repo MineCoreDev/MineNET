@@ -125,6 +125,16 @@
             }
         }
 
+        public override int GetHashCode()
+        {
+            return this.R ^ this.G << 2 ^ this.B >> 2 ^ this.A;
+        }
+
+        public override string ToString()
+        {
+            return $"Color: R = {this.R}, G = {this.G}, B = {this.B}, A = {this.A}";
+        }
+
         public static Color White
         {
             get

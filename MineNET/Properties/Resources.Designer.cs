@@ -493,6 +493,51 @@ namespace MineNET.Properties {
         }
         
         /// <summary>
+        ///   プレイヤーの経験値を増加/減少させます に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string commands_xp_description {
+            get {
+                return ResourceManager.GetString("commands_xp_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プレイヤーに負の経験値を与えることはできません に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string commands_xp_failure_widthdrawXp {
+            get {
+                return ResourceManager.GetString("commands_xp_failure_widthdrawXp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {1} に経験値 {0} を与えまし に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string commands_xp_success {
+            get {
+                return ResourceManager.GetString("commands_xp_success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {1} に {0} レベルを付与しました に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string commands_xp_success_levels {
+            get {
+                return ResourceManager.GetString("commands_xp_success_levels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {1} から {0} レベルを剥奪しました に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string commands_xp_success_negative_levels {
+            get {
+                return ResourceManager.GetString("commands_xp_success_negative_levels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   吸収 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string effect_absorption {
