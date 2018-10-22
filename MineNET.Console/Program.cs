@@ -15,7 +15,8 @@ namespace MineNET.Console
             }
             catch (Exception e)
             {
-                server.ErrorStop(e);
+                server?.ErrorStop(e);
+                System.Console.WriteLine(e);
             }
         }
     }
