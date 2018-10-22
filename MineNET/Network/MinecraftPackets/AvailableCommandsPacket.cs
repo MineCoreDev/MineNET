@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MineNET.Commands;
 using MineNET.Commands.Data;
 using MineNET.Commands.Enums;
 using MineNET.Commands.Parameters;
-using MineNET.IO;
 using MineNET.Utils;
 
 namespace MineNET.Network.MinecraftPackets
@@ -13,6 +13,7 @@ namespace MineNET.Network.MinecraftPackets
         public override byte PacketID { get; } = MinecraftProtocol.AVAILABLE_COMMANDS_PACKET;
 
         public Dictionary<string, Command> Commands { get; set; } = new Dictionary<string, Command>();
+        public int CommandCount { get; private set; }
         public Dictionary<string, List<string>> SoftEnums { get; set; } = new Dictionary<string, List<string>>();
 
         public override void Encode()
@@ -22,6 +23,7 @@ namespace MineNET.Network.MinecraftPackets
             List<CommandEnumCash> enums = new List<CommandEnumCash>();
             List<string> enumValues = new List<string>();
             List<string> postFixes = new List<string>();
+            this.CommandCount = 0;
 
             byte[] result = null;
             using (BinaryStream stream = new BinaryStream())
@@ -29,6 +31,11 @@ namespace MineNET.Network.MinecraftPackets
                 foreach (Command command in this.Commands.Values)
                 {
                     if (command.Name == "help")
+                    {
+                        continue;
+                    }
+
+                    if (command.IsAliasesCommand)
                     {
                         continue;
                     }
@@ -71,18 +78,8 @@ namespace MineNET.Network.MinecraftPackets
                             }
                         }
 
-                        if (enumValues.Contains(name))
-                        {
-                            aliases.Add(enumValues.IndexOf(name));
-                        }
-                        else
-                        {
-                            enumValues.Add(name);
-                            aliases.Add(enumValues.IndexOf(name));
-                        }
-
                         CommandEnumCash c = new CommandEnumCash($"{name}CommandAliases", aliases.ToArray());
-                        if (enums.Contains(c))
+                        if (enums.Contains(c, new CommandEnumCashComparer()))
                         {
                             enumIndex = enums.IndexOf(c);
                         }
@@ -125,7 +122,7 @@ namespace MineNET.Network.MinecraftPackets
                                 }
 
                                 CommandEnumCash c = new CommandEnumCash(commandEnum.Name, realValue.ToArray());
-                                if (enums.Contains(c))
+                                if (enums.Contains(c, new CommandEnumCashComparer()))
                                 {
                                     enumIndex = enums.IndexOf(c);
                                 }
@@ -151,6 +148,8 @@ namespace MineNET.Network.MinecraftPackets
                             stream.WriteBool(parameter.Optional);
                         }
                     }
+
+                    this.CommandCount++;
                 }
                 result = stream.ToArray();
             }
@@ -172,7 +171,6 @@ namespace MineNET.Network.MinecraftPackets
             {
                 CommandEnumCash cash = enums[i];
                 this.WriteString(cash.Name);
-                Logger.Info(cash.Name);
                 this.WriteUVarInt((uint) cash.Index.Length);
                 for (int j = 0; j < cash.Index.Length; ++j)
                 {
@@ -188,11 +186,10 @@ namespace MineNET.Network.MinecraftPackets
                     {
                         this.WriteLInt((uint) cash.Index[j]);
                     }
-                    Logger.Info(cash.Index[j] + ":" + enumValues[cash.Index[j]]);
                 }
             }
 
-            this.WriteUVarInt((uint) this.Commands.Count);
+            this.WriteUVarInt((uint) this.CommandCount);
             this.WriteBytes(result);
 
             this.WriteUVarInt((uint) this.SoftEnums.Count);
@@ -218,6 +215,19 @@ namespace MineNET.Network.MinecraftPackets
         {
             this.Name = name;
             this.Index = index;
+        }
+    }
+
+    internal class CommandEnumCashComparer : IEqualityComparer<CommandEnumCash>
+    {
+        public bool Equals(CommandEnumCash x, CommandEnumCash y)
+        {
+            return x?.Name == y?.Name;
+        }
+
+        public int GetHashCode(CommandEnumCash obj)
+        {
+            return obj.Name.GetHashCode() ^ obj.Index.GetHashCode() << 2;
         }
     }
 }

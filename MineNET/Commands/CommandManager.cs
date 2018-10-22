@@ -51,7 +51,9 @@ namespace MineNET.Commands
                 {
                     if (!MineNET_Registries.Command.ContainsKey(cmd.Aliases[i]))
                     {
-                        MineNET_Registries.Command.Add(cmd.Aliases[i], cmd);
+                        Command c = cmd.Clone();
+                        c.IsAliasesCommand = true;
+                        MineNET_Registries.Command.Add(cmd.Aliases[i], c);
                     }
                 }
 

@@ -20,6 +20,7 @@ namespace MineNET.Commands
         public virtual string Permission { get; } = null;
         public virtual PlayerPermissions PermissionLevel { get; } = PlayerPermissions.VISITOR;
         public virtual int Flag { get; } = 0;
+        public bool IsAliasesCommand { get; set; }
 
         public virtual CommandOverload[] CommandOverloads { get; } = new CommandOverload[]
             {new CommandOverload(new CommandParameterString("args"))};
