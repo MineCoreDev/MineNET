@@ -15,8 +15,23 @@ namespace MineNET.Console
             }
             catch (Exception e)
             {
-                server?.ErrorStop(e);
-                System.Console.WriteLine(e);
+                if (server != null)
+                {
+                    try
+                    {
+                        server.ErrorStop(e);
+                    }
+                    catch (Exception e2)
+                    {
+                        System.Console.WriteLine(e);
+                        System.Console.Read();
+                    }
+                }
+                else
+                {
+                    System.Console.WriteLine(e);
+                    System.Console.Read();
+                }
             }
         }
     }
