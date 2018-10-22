@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MineNET.Blocks;
+using MineNET.Commands.Enums;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
@@ -392,6 +393,72 @@ namespace MineNET.Network.MinecraftPackets
             for (int i = 0; i < message.Parameters.Length; ++i)
             {
                 this.WriteString(message.Parameters[i]);
+            }
+        }
+
+        public void WriteEnumValues(List<string> enumValues)
+        {
+            this.WriteUVarInt((uint) enumValues.Count);
+            for (int i = 0; i < enumValues.Count; ++i)
+            {
+                this.WriteString(enumValues[i]);
+            }
+        }
+
+        public void WritePostfixes(List<string> postFixes)
+        {
+            this.WriteUVarInt((uint) postFixes.Count);
+            for (int i = 0; i < postFixes.Count; ++i)
+            {
+                this.WriteString(postFixes[i]);
+            }
+        }
+
+        public void WriteEnums(List<CommandEnum> enums, List<string> enumValues)
+        {
+            this.WriteUVarInt((uint) enums.Count);
+            for (int i = 0; i < enums.Count; ++i)
+            {
+                CommandEnum enumData = enums[i];
+                int count = enumData.Values.Length;
+                string name = enumData.Name;
+                if (string.IsNullOrEmpty(name))
+                {
+                    continue;
+                }
+
+                this.WriteString(name);
+                this.WriteUVarInt((uint) count);
+                for (int j = 0; j < count; ++j)
+                {
+                    if (enumValues.Count < 0x100)
+                    {
+                        this.WriteByte((byte) enumValues.IndexOf(enumData.Values[j]));
+                    }
+                    else if (enumValues.Count < 0x10000)
+                    {
+                        this.WriteLShort((ushort) enumValues.IndexOf(enumData.Values[j]));
+                    }
+                    else
+                    {
+                        this.WriteLInt((uint) enumValues.IndexOf(enumData.Values[j]));
+                    }
+                }
+            }
+        }
+
+        public void WriteSoftEnums(Dictionary<string, List<string>> softEnums)
+        {
+            this.WriteUVarInt((uint) softEnums.Count);
+            foreach (KeyValuePair<string, List<string>> softEnum in softEnums)
+            {
+                int count = softEnum.Value.Count;
+                this.WriteString(softEnum.Key);
+                this.WriteUVarInt((uint) count);
+                for (int i = 0; i < count; ++i)
+                {
+                    this.WriteString(softEnum.Value[i]);
+                }
             }
         }
 

@@ -171,6 +171,7 @@
     <Compile Include="Commands\Enums\CommandEnumBoolean.cs" />
     <Compile Include="Commands\Enums\CommandEnumGameMode.cs" />
     <Compile Include="Commands\Enums\CommandEnumItems.cs" />
+    <Compile Include="Commands\Enums\CommandEnumRValueParam.cs" />
     <Compile Include="Commands\ICommandHandler.cs" />
     <Compile Include="Commands\Parameters\CommandParameter.cs" />
     <Compile Include="Commands\Parameters\CommandParameterCommand.cs" />

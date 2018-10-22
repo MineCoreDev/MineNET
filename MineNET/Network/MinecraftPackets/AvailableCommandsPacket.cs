@@ -12,18 +12,19 @@ namespace MineNET.Network.MinecraftPackets
     {
         public override byte PacketID { get; } = MinecraftProtocol.AVAILABLE_COMMANDS_PACKET;
 
-        public Dictionary<string, Command> Commands { get; set; } = new Dictionary<string, Command>();
         public int CommandCount { get; private set; }
+        public Dictionary<string, Command> Commands { get; set; } = new Dictionary<string, Command>();
+        public List<CommandEnum> Enums { get; set; } = new List<CommandEnum>();
         public Dictionary<string, List<string>> SoftEnums { get; set; } = new Dictionary<string, List<string>>();
+        public List<string> PostFixes { get; set; } = new List<string>();
 
         public override void Encode()
         {
             base.Encode();
 
-            List<CommandEnumCash> enums = new List<CommandEnumCash>();
             List<string> enumValues = new List<string>();
-            List<string> postFixes = new List<string>();
             this.CommandCount = 0;
+            this.InitEnums(enumValues);
 
             byte[] result = null;
             using (BinaryStream stream = new BinaryStream())
@@ -40,194 +41,187 @@ namespace MineNET.Network.MinecraftPackets
                         continue;
                     }
 
-                    stream.WriteString(command.Name);
-                    if (!string.IsNullOrEmpty(command.Description))
-                    {
-                        if (command.Description[0] == '%')
-                        {
-                            stream.WriteString(command.Description.Remove(0, 1));
-                        }
-                        else
-                        {
-                            stream.WriteString(command.Description);
-                        }
-                    }
-                    else
-                    {
-                        stream.WriteString(command.Description);
-                    }
-                    stream.WriteByte((byte) command.Flag);
-                    stream.WriteByte((byte) command.PermissionLevel);
-
-                    int enumIndex = -1;
-                    if (command.Aliases != null && command.Aliases.Length > 0)
-                    {
-                        string name = command.Name;
-                        List<int> aliases = new List<int>();
-                        for (int i = 0; i < command.Aliases.Length; ++i)
-                        {
-                            string alias = command.Aliases[i];
-                            if (enumValues.Contains(alias))
-                            {
-                                aliases.Add(enumValues.IndexOf(alias));
-                            }
-                            else
-                            {
-                                enumValues.Add(alias);
-                                aliases.Add(enumValues.IndexOf(alias));
-                            }
-                        }
-
-                        CommandEnumCash c = new CommandEnumCash($"{name}CommandAliases", aliases.ToArray());
-                        if (enums.Contains(c, new CommandEnumCashComparer()))
-                        {
-                            enumIndex = enums.IndexOf(c);
-                        }
-                        else
-                        {
-                            enums.Add(c);
-                            enumIndex = enums.IndexOf(c);
-                        }
-                    }
-                    stream.WriteLInt((uint) enumIndex);
-
-                    CommandOverload[] overloads = command.CommandOverloads;
-                    stream.WriteUVarInt((uint) overloads.Length);
-                    for (int i = 0; i < overloads.Length; ++i)
-                    {
-                        CommandOverload overload = overloads[i];
-                        List<CommandParameter> parameters = overload.Parameters;
-                        stream.WriteUVarInt((uint) parameters.Count);
-                        for (int j = 0; j < parameters.Count; ++j)
-                        {
-                            CommandParameter parameter = parameters[j];
-                            stream.WriteString(parameter.Name);
-                            int type = parameter.Type;
-                            if (parameter.CommandEnum != null && parameter.CommandEnum.Values.Length > 0)
-                            {
-                                CommandEnum commandEnum = parameter.CommandEnum;
-                                List<int> realValue = new List<int>();
-                                for (int k = 0; k < commandEnum.Values.Length; ++k)
-                                {
-                                    string value = commandEnum.Values[k];
-                                    if (enumValues.Contains(value))
-                                    {
-                                        realValue.Add(enumValues.IndexOf(value));
-                                    }
-                                    else
-                                    {
-                                        enumValues.Add(value);
-                                        realValue.Add(enumValues.IndexOf(value));
-                                    }
-                                }
-
-                                CommandEnumCash c = new CommandEnumCash(commandEnum.Name, realValue.ToArray());
-                                if (enums.Contains(c, new CommandEnumCashComparer()))
-                                {
-                                    enumIndex = enums.IndexOf(c);
-                                }
-                                else
-                                {
-                                    enums.Add(c);
-                                    enumIndex = enums.IndexOf(c);
-                                }
-                                type = CommandParameter.ARG_FLAG_ENUM | CommandParameter.ARG_FLAG_VALID | enumIndex;
-                            }
-                            else if (!string.IsNullOrEmpty(parameter.Postfix))
-                            {
-                                postFixes.Add(parameter.Postfix);
-
-                                int key = postFixes.Count - 1;
-                                type = CommandParameter.ARG_FLAG_POSTFIX | key;
-                            }
-                            else
-                            {
-                                type |= CommandParameter.ARG_FLAG_VALID;
-                            }
-                            stream.WriteLInt((uint) type);
-                            stream.WriteBool(parameter.Optional);
-                        }
-                    }
-
+                    this.WriteCommand(command, enumValues, stream);
                     this.CommandCount++;
                 }
                 result = stream.ToArray();
             }
 
-            this.WriteUVarInt((uint) enumValues.Count);
-            for (int i = 0; i < enumValues.Count; ++i)
-            {
-                this.WriteString(enumValues[i]);
-            }
-
-            this.WriteUVarInt((uint) postFixes.Count);
-            for (int i = 0; i < postFixes.Count; ++i)
-            {
-                this.WriteString(postFixes[i]);
-            }
-
-            this.WriteUVarInt((uint) enums.Count);
-            for (int i = 0; i < enums.Count; ++i)
-            {
-                CommandEnumCash cash = enums[i];
-                this.WriteString(cash.Name);
-                this.WriteUVarInt((uint) cash.Index.Length);
-                for (int j = 0; j < cash.Index.Length; ++j)
-                {
-                    if (enumValues.Count < 0x100)
-                    {
-                        this.WriteByte((byte) cash.Index[j]);
-                    }
-                    else if (enumValues.Count < 0x10000)
-                    {
-                        this.WriteLShort((ushort) cash.Index[j]);
-                    }
-                    else
-                    {
-                        this.WriteLInt((uint) cash.Index[j]);
-                    }
-                }
-            }
+            this.WriteEnumValues(enumValues);
+            this.WritePostfixes(this.PostFixes);
+            this.WriteEnums(this.Enums, enumValues);
 
             this.WriteUVarInt((uint) this.CommandCount);
             this.WriteBytes(result);
 
-            this.WriteUVarInt((uint) this.SoftEnums.Count);
-            foreach (KeyValuePair<string, List<string>> softEnum in this.SoftEnums)
+            this.WriteSoftEnums(this.SoftEnums);
+        }
+
+        private void WriteCommand(Command command, List<string> enumValues, BinaryStream stream)
+        {
+            stream.WriteString(command.Name);
+            if (command.Description.Length > 0)
             {
-                int count = softEnum.Value.Count;
-                this.WriteString(softEnum.Key);
-                this.WriteUVarInt((uint) count);
-                for (int i = 0; i < count; ++i)
+                string desc = command.Description;
+                if (command.Description[0] == '%')
                 {
-                    this.WriteString(softEnum.Value[i]);
+                    desc = desc.Remove(0, 1);
+                }
+
+                stream.WriteString(desc);
+            }
+            else
+            {
+                stream.WriteString(command.Description);
+            }
+
+            stream.WriteByte((byte) command.Flag);
+            stream.WriteByte((byte) command.PermissionLevel);
+
+            int enumIndex = -1;
+            if (command.Aliases != null && command.Aliases.Length > 0)
+            {
+                string name = command.Name;
+                List<string> aliases = new List<string>();
+                for (int i = 0; i < command.Aliases.Length; ++i)
+                {
+                    string alias = command.Aliases[i];
+                    if (enumValues.Contains(alias))
+                    {
+                        aliases.Add(alias);
+                    }
+                    else
+                    {
+                        enumValues.Add(alias);
+                        aliases.Add(alias);
+                    }
+                }
+
+                CommandEnum c = new CommandEnum($"{name}CommandAliases", aliases.ToArray());
+                if (this.Enums.Contains(c, new CommandEnumComparer()))
+                {
+                    enumIndex = this.Enums.IndexOf(c);
+                }
+                else
+                {
+                    this.Enums.Add(c);
+                    enumIndex = this.Enums.IndexOf(c);
+                }
+            }
+            stream.WriteLInt((uint) enumIndex);
+            this.WriteCommandOverloads(command.CommandOverloads, enumValues, stream);
+        }
+
+        private void WriteCommandOverloads(CommandOverload[] overloads, List<string> enumValues, BinaryStream stream)
+        {
+            stream.WriteUVarInt((uint) overloads.Length);
+            for (int i = 0; i < overloads.Length; ++i)
+            {
+                CommandOverload overload = overloads[i];
+                List<CommandParameter> parameters = overload.Parameters;
+                this.WriteCommandParameters(parameters, enumValues, stream);
+            }
+        }
+
+        private void WriteCommandParameters(List<CommandParameter> parameters, List<string> enumValues, BinaryStream stream)
+        {
+            stream.WriteUVarInt((uint) parameters.Count);
+            for (int j = 0; j < parameters.Count; ++j)
+            {
+                CommandParameter parameter = parameters[j];
+                this.WriteCommandParameter(parameter, enumValues, stream);
+            }
+        }
+
+        private void WriteCommandParameter(CommandParameter parameter, List<string> enumValues, BinaryStream stream)
+        {
+            stream.WriteString(parameter.Name);
+            int type = parameter.Type;
+            if (parameter.CommandEnum != null && parameter.CommandEnum.Values.Length > 0)
+            {
+                CommandEnum commandEnum = parameter.CommandEnum;
+                List<string> realValue = new List<string>();
+                for (int k = 0; k < commandEnum.Values.Length; ++k)
+                {
+                    string value = commandEnum.Values[k];
+                    if (enumValues.Contains(value))
+                    {
+                        realValue.Add(value);
+                    }
+                    else
+                    {
+                        enumValues.Add(value);
+                        realValue.Add(value);
+                    }
+                }
+
+                CommandEnum c = new CommandEnum(commandEnum.Name, realValue.ToArray());
+                int enumIndex = -1;
+                if (this.Enums.Contains(c, new CommandEnumComparer()))
+                {
+                    enumIndex = this.Enums.IndexOf(c) & 0xffff;
+                }
+                else
+                {
+                    this.Enums.Add(c);
+                    enumIndex = this.Enums.IndexOf(c) & 0xffff;
+                }
+                type = CommandParameter.ARG_FLAG_ENUM | CommandParameter.ARG_FLAG_VALID | enumIndex;
+            }
+            else if (!string.IsNullOrEmpty(parameter.Postfix))
+            {
+                int key = -1;
+                string postFix = parameter.Postfix;
+                if (this.PostFixes.Contains(postFix))
+                {
+                    key = this.PostFixes.IndexOf(postFix) & 0xffff;
+                }
+                else
+                {
+                    this.PostFixes.Add(postFix);
+                    key = this.PostFixes.IndexOf(postFix) & 0xffff;
+                }
+                type = CommandParameter.ARG_FLAG_POSTFIX | CommandParameter.ARG_FLAG_VALID | key;
+            }
+            else
+            {
+                type |= CommandParameter.ARG_FLAG_VALID;
+            }
+            stream.WriteLInt((uint) type);
+            stream.WriteBool(parameter.Optional);
+        }
+
+        private void InitEnums(List<string> enumValues)
+        {
+            this.Enums.Add(new CommandEnumGameMode());
+            //this.Enums.Add(new CommandEnum("", "name", "type"));
+            //this.Enums.Add(new CommandEnumRValueParam());
+
+            for (int i = 0; i < this.Enums.Count; ++i)
+            {
+                CommandEnum enumData = this.Enums[i];
+                for (int j = 0; j < enumData.Values.Length; ++j)
+                {
+                    string val = enumData.Values[j];
+                    if (!enumValues.Contains(val))
+                    {
+                        enumValues.Add(val);
+                    }
                 }
             }
         }
     }
 
-    internal class CommandEnumCash
+    internal class CommandEnumComparer : IEqualityComparer<CommandEnum>
     {
-        public string Name { get; }
-        public int[] Index { get; }
-
-        public CommandEnumCash(string name, params int[] index)
-        {
-            this.Name = name;
-            this.Index = index;
-        }
-    }
-
-    internal class CommandEnumCashComparer : IEqualityComparer<CommandEnumCash>
-    {
-        public bool Equals(CommandEnumCash x, CommandEnumCash y)
+        public bool Equals(CommandEnum x, CommandEnum y)
         {
             return x?.Name == y?.Name;
         }
 
-        public int GetHashCode(CommandEnumCash obj)
+        public int GetHashCode(CommandEnum obj)
         {
-            return obj.Name.GetHashCode() ^ obj.Index.GetHashCode() << 2;
+            return obj.Name.GetHashCode() ^ obj.Values.GetHashCode() << 2;
         }
     }
 }
