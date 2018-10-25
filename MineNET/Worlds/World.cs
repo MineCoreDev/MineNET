@@ -564,6 +564,11 @@ namespace MineNET.Worlds
             this._blockEntities.Remove(blockEntity);
         }
 
+        public BlockEntity GetBlockEntity(BlockCoordinate3D pos)
+        {
+            return null;
+        }
+
         public void DropItem(ItemStack item, Vector3 pos, Vector3 motion = new Vector3(), int delay = 10)
         {
             Chunk chunk = this.GetChunk(pos.FloorX, pos.FloorZ);

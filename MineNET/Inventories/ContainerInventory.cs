@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using MineNET.Entities.Players;
 using MineNET.Items;
+using MineNET.NBT.Data;
+using MineNET.NBT.IO;
+using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Values;
 
@@ -32,6 +35,38 @@ namespace MineNET.Inventories
             player.SendPacket(pk);
 
             base.OnClose(player);
+        }
+
+        public override void LoadNBT(CompoundTag nbt)
+        {
+            if (!nbt.Exist(this.Name))
+            {
+                ListTag list = new ListTag("items", NBTTagType.COMPOUND);
+                for (int i = 0; i < this.Size; ++i)
+                {
+                    list.Add(NBTIO.WriteItem(new ItemStack(Item.Get(0), 0, 0)));
+                }
+                nbt.PutList(list);
+            }
+
+            ListTag items = nbt.GetList(this.Name);
+            for (int i = 0; i < this.Size; ++i)
+            {
+                ItemStack item = NBTIO.ReadItem((CompoundTag) items[i]);
+                this.SetItem(i, item, false);
+            }
+        }
+
+        public override CompoundTag SaveNBT()
+        {
+            CompoundTag nbt = new CompoundTag();
+            ListTag list = new ListTag("items", NBTTagType.COMPOUND);
+            for (int i = 0; i < this.Size; ++i)
+            {
+                list.Add(NBTIO.WriteItem(this.GetItem(i), i));
+            }
+            nbt.PutList(list);
+            return nbt;
         }
     }
 }

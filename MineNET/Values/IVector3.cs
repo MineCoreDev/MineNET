@@ -1,9 +1,7 @@
 ﻿namespace MineNET.Values
 {
-    public interface IVector3
+    public interface IVector3 : IVector2
     {
-        float X { get; }
-        float Y { get; }
         float Z { get; }
     }
 }

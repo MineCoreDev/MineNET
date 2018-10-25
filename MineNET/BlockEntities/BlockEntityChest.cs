@@ -1,8 +1,5 @@
 ﻿using MineNET.Inventories;
-using MineNET.NBT.Data;
-using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
-using MineNET.Values;
 using MineNET.Worlds;
 
 namespace MineNET.BlockEntities
@@ -12,14 +9,6 @@ namespace MineNET.BlockEntities
     /// </summary>
     public class BlockEntityChest : BlockEntity, InventoryHolder
     {
-        Inventory InventoryHolder.Inventory
-        {
-            get
-            {
-                return this.Inventory;
-            }
-        }
-
         public ChestInventory Inventory { get; protected set; }
 
         /// <summary>
@@ -30,17 +19,6 @@ namespace MineNET.BlockEntities
         public BlockEntityChest(Chunk chunk, CompoundTag nbt = null) : base(chunk, nbt)
         {
             this.Inventory = new ChestInventory(this);
-
-            if (!this.NamedTag.Exist("items"))
-            {
-                this.NamedTag.PutList(new ListTag("items", NBTTagType.COMPOUND));
-            }
-
-            ListTag items = this.NamedTag.GetList("items");
-            for (int i = 0; i < items.Count; ++i)
-            {
-                this.Inventory.SetItem(i, NBTIO.ReadItem((CompoundTag) items[i]));
-            }
         }
 
         /// <summary>
@@ -53,5 +31,26 @@ namespace MineNET.BlockEntities
                 return "Chest";
             }
         }
+
+        public override CompoundTag SaveNBT()
+        {
+            CompoundTag nbt = base.SaveNBT();
+            CompoundTag items = this.Inventory.SaveNBT();
+            foreach (string name in items.Tags.Keys)
+            {
+                Tag tag = items.GetTag(name);
+                nbt.PutTag(name, tag);
+            }
+            return nbt;
+        }
+
+        Inventory InventoryHolder.Inventory
+        {
+            get
+            {
+                return this.Inventory;
+            }
+        }
+
     }
 }

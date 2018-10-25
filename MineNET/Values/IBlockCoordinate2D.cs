@@ -1,9 +1,8 @@
 ﻿namespace MineNET.Values
 {
-    public interface IVector3i
+    public interface IBlockCoordinate2D
     {
         int X { get; set; }
         int Y { get; set; }
-        int Z { get; set; }
     }
 }

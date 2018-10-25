@@ -123,7 +123,9 @@
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Blocks\BlockAir.cs" />
     <Compile Include="Blocks\BlockBush.cs" />
+    <Compile Include="Blocks\BlockChest.cs" />
     <Compile Include="Blocks\BlockCoalOre.cs" />
+    <Compile Include="Blocks\BlockContainer.cs" />
     <Compile Include="Blocks\BlockDirt.cs" />
     <Compile Include="Blocks\BlockDispenser.cs" />
     <Compile Include="Blocks\BlockDynamicLiquid.cs" />
@@ -604,10 +606,12 @@
     <Compile Include="Values\BlockCoordinate2D.cs" />
     <Compile Include="Values\BlockCoordinate3D.cs" />
     <Compile Include="Values\Color.cs" />
+    <Compile Include="Values\IBlockCoordinate2D.cs" />
+    <Compile Include="Values\IBlockCoordinate3D.cs" />
     <Compile Include="Values\ILocation.cs" />
     <Compile Include="Values\IPosition.cs" />
+    <Compile Include="Values\IVector2.cs" />
     <Compile Include="Values\IVector3.cs" />
-    <Compile Include="Values\IVector3i.cs" />
     <Compile Include="Values\Location.cs" />
     <Compile Include="Values\Position.cs" />
     <Compile Include="Values\UUID.cs" />

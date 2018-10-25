@@ -3,7 +3,7 @@ using MineNET.Utils;
 
 namespace MineNET.Values
 {
-    public struct Vector2
+    public struct Vector2 : IVector2
     {
         public float X { get; set; }
         public float Y { get; set; }
