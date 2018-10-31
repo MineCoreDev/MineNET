@@ -7,15 +7,18 @@
         public bool HideDisconnectionScreen { get; set; } = false;
         public string Message { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteBool(this.HideDisconnectionScreen);
             if (!this.HideDisconnectionScreen)
             {
                 this.WriteString(this.Message);
             }
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

@@ -13,10 +13,8 @@ namespace MineNET.Network.MinecraftPackets
         public string OldSkinName { get; set; } = "";
         public bool Premium { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteUUID(this.Uuid);
             this.WriteString(this.Skin.SkinId);
             this.WriteString(this.NewSkinName);
@@ -28,10 +26,8 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteBool(this.Premium);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Uuid = this.ReadUUID();
             string skinId = this.ReadString();
             this.NewSkinName = this.ReadString();

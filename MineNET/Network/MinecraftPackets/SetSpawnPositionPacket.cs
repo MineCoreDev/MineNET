@@ -10,19 +10,15 @@ namespace MineNET.Network.MinecraftPackets
         public BlockCoordinate3D Position { get; set; }
         public bool SpawnForced { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteVarInt(this.SpawnType);
             this.WriteBlockVector3(this.Position);
             this.WriteBool(this.SpawnForced);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.SpawnType = this.ReadVarInt();
             this.Position = this.ReadBlockVector3();
             this.SpawnForced = this.ReadBool();

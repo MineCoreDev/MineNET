@@ -9,12 +9,15 @@ namespace MineNET.Network.MinecraftPackets
         public long EntityRuntimeId { get; set; }
         public EntityMetadataManager EntityData { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteEntityMetadata(this.EntityData);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

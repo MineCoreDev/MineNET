@@ -6,11 +6,14 @@
 
         public long EntityUniqueId { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityUniqueId(this.EntityUniqueId);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

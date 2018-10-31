@@ -27,10 +27,13 @@ namespace MineNET.Network.MinecraftPackets
         public NetworkInventoryAction[] Actions { get; set; }
         public TransactionData TransactionData { get; set; }
 
-        public override void Decode()
+        protected override void EncodePayload()
         {
-            base.Decode();
 
+        }
+
+        protected override void DecodePayload()
+        {
             this.TransactionType = (int) this.ReadUVarInt();
 
             this.Actions = new NetworkInventoryAction[this.ReadUVarInt()];

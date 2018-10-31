@@ -18,10 +18,8 @@ namespace MineNET.Network.MinecraftPackets
         public EntityMetadataManager Metadata { get; set; }
         //public EntityLink[] Link = new EntityLink[0];
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityUniqueId(this.EntityUniqueId);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteUVarInt((uint) this.Type);
@@ -32,6 +30,11 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteEntityMetadata(this.Metadata);
             this.WriteUVarInt(0); //TODO: EntityLink size
             //TODO: WriteEntityLink
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

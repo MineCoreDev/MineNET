@@ -9,5 +9,15 @@
 
         public byte Type { get; set; }
         //public ScorePacketEntry Entry { get; set; } 
+
+        protected override void EncodePayload()
+        {
+
+        }
+
+        protected override void DecodePayload()
+        {
+
+        }
     }
 }

@@ -18,10 +18,13 @@ namespace MineNET.Network.MinecraftPackets
 
         public bool Result { get; private set; } = true;
 
-        public override void Decode()
+        protected override void EncodePayload()
         {
-            base.Decode();
 
+        }
+
+        protected override void DecodePayload()
+        {
             this.Protocol = this.ReadInt();
 
             this.LoginData = new LoginData();

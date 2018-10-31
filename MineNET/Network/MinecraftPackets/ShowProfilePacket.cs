@@ -6,11 +6,14 @@
 
         public string Xuid { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.Xuid);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

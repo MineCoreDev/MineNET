@@ -7,12 +7,15 @@
         public int FormId { get; set; }
         public string FormData { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteVarInt(this.FormId);
             this.WriteString(this.FormData);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

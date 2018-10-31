@@ -10,15 +10,18 @@
         public long EntityUniqueId { get; set; }
         public byte[] Namedtag { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteByte(this.WindowId);
             this.WriteByte(this.WindowType);
             this.WriteVarInt(this.UnknownVarInt);
             this.WriteEntityUniqueId(this.EntityUniqueId);
             this.WriteBytes(this.Namedtag);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

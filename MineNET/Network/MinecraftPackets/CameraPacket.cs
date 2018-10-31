@@ -7,12 +7,15 @@
         public long CameraUniqueId { get; set; }
         public long PlayerUniqueId { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityUniqueId(this.CameraUniqueId);
             this.WriteEntityUniqueId(this.PlayerUniqueId);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

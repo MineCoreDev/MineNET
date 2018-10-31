@@ -11,20 +11,16 @@ namespace MineNET.Network.MinecraftPackets
         public BlockCoordinate3D Position { get; set; }
         public long EntityId { get; set; } = -1;
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteByte(this.WindowId);
             this.WriteByte(this.Type);
             this.WriteBlockVector3(this.Position);
             this.WriteEntityUniqueId(this.EntityId);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.WindowId = this.ReadByte();
             this.Type = this.ReadByte();
             this.Position = this.ReadBlockVector3();

@@ -23,10 +23,8 @@
         public uint Color { get; set; }
         public uint Overlay { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityUniqueId(this.BossEid);
             this.WriteUVarInt(this.EventType);
             switch (this.EventType)
@@ -65,10 +63,8 @@
             }
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.BossEid = this.ReadEntityUniqueId();
             this.EventType = this.ReadUVarInt();
             switch (this.EventType)

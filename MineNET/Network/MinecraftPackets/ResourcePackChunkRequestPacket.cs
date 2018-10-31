@@ -7,18 +7,14 @@
         public string PackId { get; set; }
         public uint ChunkIndex { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.PackId);
             this.WriteLInt(this.ChunkIndex);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.PackId = this.ReadString();
             this.ChunkIndex = this.ReadLInt();
         }

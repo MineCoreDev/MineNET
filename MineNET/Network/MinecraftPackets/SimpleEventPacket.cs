@@ -9,17 +9,13 @@
 
         public ushort EventType { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteLShort(this.EventType);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.EventType = this.ReadLShort();
         }
     }

@@ -19,10 +19,8 @@
         public float YRot { get; set; } = 0;
         public float ZRot { get; set; } = 0;
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteByte(this.Flags);
             this.MaybeWriteCoord(MoveEntityDeltaPacket.FLAG_HAS_X, this.XDiff);
             this.MaybeWriteCoord(MoveEntityDeltaPacket.FLAG_HAS_Y, this.YDiff);
@@ -32,10 +30,8 @@
             this.MaybeWriteRotation(MoveEntityDeltaPacket.FLAG_HAS_ROT_Z, this.ZRot);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Flags = this.ReadByte();
             this.XDiff = this.MaybeReadCoord(MoveEntityDeltaPacket.FLAG_HAS_X);
             this.YDiff = this.MaybeReadCoord(MoveEntityDeltaPacket.FLAG_HAS_Y);

@@ -8,17 +8,13 @@ namespace MineNET.Network.MinecraftPackets
 
         public GameMode GameMode { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteSVarInt((int) this.GameMode);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.GameMode = (GameMode) this.ReadSVarInt();
         }
     }

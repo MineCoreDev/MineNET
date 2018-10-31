@@ -10,12 +10,15 @@
         public long EntityRuntimeId { get; set; }
         public int Status { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteVarInt(this.Status);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

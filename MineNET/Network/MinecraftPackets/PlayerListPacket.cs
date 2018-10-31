@@ -13,11 +13,14 @@ namespace MineNET.Network.MinecraftPackets
 
         public PlayerListEntry[] Entries { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WritePlayerListEntries(this.Entries, this.Type);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

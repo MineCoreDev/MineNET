@@ -20,10 +20,8 @@
         public string Author { get; set; }
         public string Xuid { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteByte(this.Type);
             this.WriteByte(this.InventorySlot);
             switch (this.Type)
@@ -49,10 +47,8 @@
             }
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Type = this.ReadByte();
             this.InventorySlot = this.ReadByte();
 

@@ -17,10 +17,8 @@ namespace MineNET.Network.MinecraftPackets
         public string Name { get; set; }
         public bool ShouldTrackOutput { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteBool(this.IsBlock);
             if (this.IsBlock)
             {
@@ -39,10 +37,8 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteBool(this.ShouldTrackOutput);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.IsBlock = this.ReadBool();
             if (this.IsBlock)
             {

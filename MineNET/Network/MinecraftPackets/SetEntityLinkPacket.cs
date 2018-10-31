@@ -13,14 +13,17 @@
         public byte Type { get; set; }
         public bool Immediate { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityUniqueId(this.RiddenEid);
             this.WriteEntityUniqueId(this.RiderEid);
             this.WriteByte(this.Type);
             this.WriteBool(this.Immediate);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

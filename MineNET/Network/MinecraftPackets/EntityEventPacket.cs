@@ -57,19 +57,15 @@
         public byte EventId { get; set; }
         public int Data { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteByte(this.EventId);
             this.WriteSVarInt(this.Data);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.EntityRuntimeId = this.ReadEntityRuntimeId();
             this.EventId = this.ReadByte();
             this.Data = this.ReadSVarInt();

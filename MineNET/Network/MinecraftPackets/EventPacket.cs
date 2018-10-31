@@ -19,19 +19,15 @@
         public int EventData { get; set; }
         public byte Type { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityRuntimeId(this.PlayerRuntimeId);
             this.WriteVarInt(this.EventData);
             this.WriteByte(this.Type);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.PlayerRuntimeId = this.ReadEntityRuntimeId();
             this.EventData = this.ReadVarInt();
             this.Type = this.ReadByte();

@@ -10,10 +10,8 @@ namespace MineNET.Network.MinecraftPackets
         public IResourcePack[] BehaviourPackEntries { get; set; } = new IResourcePack[0];
         public IResourcePack[] ResourcePackEntries { get; set; } = new IResourcePack[0];
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteBool(this.MustAccept);
             this.WriteShort((short) this.BehaviourPackEntries.Length);
             for (int i = 0; i < this.BehaviourPackEntries.Length; ++i)

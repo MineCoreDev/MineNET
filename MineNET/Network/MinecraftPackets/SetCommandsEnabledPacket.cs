@@ -6,11 +6,14 @@
 
         public bool Enabled { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteBool(this.Enabled);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

@@ -10,19 +10,15 @@ namespace MineNET.Network.MinecraftPackets
         public byte WindowId { get; set; } = (byte) ContainerIds.INVENTORY;
         public bool SelectHotbarSlot { get; set; } = true;
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteUVarInt(this.SelectedHotbarSlot);
             this.WriteByte(this.WindowId);
             this.WriteBool(this.SelectHotbarSlot);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.SelectedHotbarSlot = this.ReadUVarInt();
             this.WindowId = this.ReadByte();
             this.SelectHotbarSlot = this.ReadBool();

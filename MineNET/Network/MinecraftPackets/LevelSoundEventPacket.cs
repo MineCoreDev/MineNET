@@ -253,10 +253,8 @@ namespace MineNET.Network.MinecraftPackets
         public bool IsBabyMob { get; set; } = false;
         public bool IsGlobal { get; set; } = false;
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteByte(this.Sound);
             this.WriteVector3(this.Position);
             this.WriteSVarInt(this.ExtraData);
@@ -265,10 +263,8 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteBool(this.IsGlobal);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Sound = this.ReadByte();
             this.Position = this.ReadVector3();
             this.ExtraData = this.ReadSVarInt();

@@ -18,10 +18,8 @@ namespace MineNET.Network.MinecraftPackets
         public Dictionary<string, List<string>> SoftEnums { get; set; } = new Dictionary<string, List<string>>();
         public List<string> PostFixes { get; set; } = new List<string>();
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             List<string> enumValues = new List<string>();
             this.CommandCount = 0;
             this.InitEnums(enumValues);
@@ -55,6 +53,11 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteBytes(result);
 
             this.WriteSoftEnums(this.SoftEnums);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
 
         private void WriteCommand(Command command, List<string> enumValues, BinaryStream stream)

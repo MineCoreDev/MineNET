@@ -10,16 +10,19 @@ namespace MineNET.Network.MinecraftPackets
 
         public ItemStack[] Items { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteUVarInt(this.InventoryId);
             this.WriteUVarInt((uint) this.Items.Length);
             for (int i = 0; i < this.Items.Length; ++i)
             {
                 this.WriteItem(this.Items[i]);
             }
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

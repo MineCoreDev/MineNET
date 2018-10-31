@@ -8,17 +8,13 @@ namespace MineNET.Network.MinecraftPackets
 
         public String ServerUri { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.ServerUri);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.ServerUri = this.ReadString();
         }
     }

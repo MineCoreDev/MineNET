@@ -7,18 +7,14 @@
         public string OfferId { get; set; }
         public bool ShowAll { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.OfferId);
             this.WriteBool(this.ShowAll);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.OfferId = this.ReadString();
             this.ShowAll = this.ReadBool();
         }

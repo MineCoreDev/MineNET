@@ -11,10 +11,8 @@
 
         public byte[] Data { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteSVarInt(this.ChunkX);
             this.WriteSVarInt(this.ChunkY);
 
@@ -22,5 +20,9 @@
             this.WriteBytes(this.Data);
         }
 
+        protected override void DecodePayload()
+        {
+
+        }
     }
 }

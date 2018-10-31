@@ -11,14 +11,17 @@ namespace MineNET.Network.MinecraftPackets
         public float Volume { get; set; }
         public float Pitch { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.Name);
             this.WriteBlockVector3(this.Position);
             this.WriteLFloat(this.Volume);
             this.WriteLFloat(this.Pitch);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

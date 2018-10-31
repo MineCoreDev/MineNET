@@ -72,7 +72,7 @@ namespace MineNET.Network.MinecraftPackets
 
         public string MultiplayerCorrelationId { get; set; } = "";
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
             base.Encode();
 
@@ -120,6 +120,11 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteSVarInt(this.EnchantmentSeed);
             this.WriteBytes(GlobalBlockPalette.PaletteBytes);
             this.WriteString(this.MultiplayerCorrelationId);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

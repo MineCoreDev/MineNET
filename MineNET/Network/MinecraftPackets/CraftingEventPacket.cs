@@ -20,10 +20,13 @@ namespace MineNET.Network.MinecraftPackets
         public ItemStack[] Input { get; set; }
         public ItemStack[] Output { get; set; }
 
-        public override void Decode()
+        protected override void EncodePayload()
         {
-            base.Decode();
 
+        }
+
+        protected override void DecodePayload()
+        {
             this.WindowId = this.ReadByte();
             this.Type = this.ReadSVarInt();
             this.UUID = this.ReadUUID();

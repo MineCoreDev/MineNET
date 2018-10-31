@@ -6,17 +6,13 @@
 
         public string BehaviorTreeJson { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.BehaviorTreeJson);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.BehaviorTreeJson = this.ReadString();
         }
     }

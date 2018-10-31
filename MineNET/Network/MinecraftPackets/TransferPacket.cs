@@ -7,12 +7,15 @@
         public string Address { get; set; }
         public ushort Port { get; set; } = 19132;
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.Address);
             this.WriteLShort(this.Port);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

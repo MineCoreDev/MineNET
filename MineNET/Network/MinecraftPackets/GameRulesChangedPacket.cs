@@ -8,11 +8,14 @@ namespace MineNET.Network.MinecraftPackets
 
         public GameRules GameRules { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteGameRules(this.GameRules);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

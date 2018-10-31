@@ -10,19 +10,15 @@ namespace MineNET.Network.MinecraftPackets
         public int EventType { get; set; }
         public int EventData { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteBlockVector3(this.Position);
             this.WriteVarInt(this.EventType);
             this.WriteVarInt(this.EventData);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Position = this.ReadBlockVector3();
             this.EventType = this.ReadVarInt();
             this.EventData = this.ReadVarInt();

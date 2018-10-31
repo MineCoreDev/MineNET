@@ -22,10 +22,8 @@ namespace MineNET.Network.MinecraftPackets
         public int TeleportCuase { get; set; } = 0;
         public int TeleportItem { get; set; } = 0;
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteUVarLong((ulong) this.EntityRuntimeId);
             this.WriteVector3(this.Position);
             this.WriteVector3(this.Direction);
@@ -39,10 +37,8 @@ namespace MineNET.Network.MinecraftPackets
             }
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.EntityRuntimeId = (long) this.ReadUVarLong();
             this.Position = this.ReadVector3();
             this.Direction = this.ReadVector3();

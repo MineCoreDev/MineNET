@@ -9,12 +9,17 @@ namespace MineNET.Network.MinecraftPackets
         public long EntityRuntimeId { get; set; }
         public Vector3 Motion { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
             base.Encode();
 
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteVector3(this.Motion);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

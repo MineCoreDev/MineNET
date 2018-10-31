@@ -16,10 +16,8 @@ namespace MineNET.Network.MinecraftPackets
         public EntityMetadataManager Metadata { get; set; }
         public bool IsFromFishing { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityUniqueId(this.EntityUniqueId);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteItem(this.ItemStack);
@@ -27,6 +25,11 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteVector3(this.Motion);
             this.WriteEntityMetadata(this.Metadata);
             this.WriteBool(this.IsFromFishing);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

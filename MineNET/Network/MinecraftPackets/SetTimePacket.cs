@@ -6,11 +6,14 @@
 
         public int Time { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteVarInt(this.Time);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

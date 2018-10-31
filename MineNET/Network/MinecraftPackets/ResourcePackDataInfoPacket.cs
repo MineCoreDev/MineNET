@@ -10,7 +10,7 @@
         public ulong CompressedPackSize { get; set; }
         public byte[] Sha256 { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
             base.Encode();
 
@@ -19,6 +19,11 @@
             this.WriteLInt(this.ChunkCount);
             this.WriteLLong(this.CompressedPackSize);
             this.WriteBytes(this.Sha256);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

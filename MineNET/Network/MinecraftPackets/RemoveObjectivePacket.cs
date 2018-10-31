@@ -6,17 +6,13 @@
 
         public string ObjectiveName { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.ObjectiveName);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.ObjectiveName = this.ReadString();
         }
     }

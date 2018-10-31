@@ -9,18 +9,14 @@ namespace MineNET.Network.MinecraftPackets
         public BlockCoordinate3D Position { get; set; }
         public byte[] Namedtag { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteBlockVector3(this.Position);
             this.WriteBytes(this.Namedtag);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Position = this.ReadBlockVector3();
             this.Namedtag = this.ReadBytes();
         }

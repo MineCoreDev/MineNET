@@ -15,11 +15,14 @@
 
         public int Status { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteInt(this.Status);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

@@ -12,10 +12,8 @@ namespace MineNET.Network.MinecraftPackets
         public CommandOutputMessage[] Messages { get; set; }
         public string UnknownString { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteCommandOriginData(this.OriginData);
             this.WriteByte(this.OutputType);
             this.WriteUVarInt(this.SuccessCount);
@@ -32,10 +30,8 @@ namespace MineNET.Network.MinecraftPackets
             }
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.OriginData = this.ReadCommandOriginData();
             this.OutputType = this.ReadByte();
             this.SuccessCount = this.ReadUVarInt();

@@ -22,15 +22,21 @@ namespace MineNET.Network.MinecraftPackets
         public abstract byte PacketID { get; }
         public virtual int OrderChannel => CHANNEL_NONE;
 
-        public virtual void Encode()
+        public void Encode()
         {
             this.WriteByte(this.PacketID);
+            this.EncodePayload();
         }
 
-        public virtual void Decode()
+        protected abstract void EncodePayload();
+
+        public void Decode()
         {
             this.ReadByte();
+            this.DecodePayload();
         }
+
+        protected abstract void DecodePayload();
 
         public new MinecraftPacket Clone()
         {

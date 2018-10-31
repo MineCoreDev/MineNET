@@ -8,17 +8,13 @@ namespace MineNET.Network.MinecraftPackets
 
         public Difficulty Difficulty { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteUVarInt((uint) this.Difficulty);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Difficulty = (Difficulty) this.ReadUVarInt();
         }
     }

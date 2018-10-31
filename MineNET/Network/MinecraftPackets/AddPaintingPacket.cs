@@ -12,15 +12,18 @@ namespace MineNET.Network.MinecraftPackets
         public int Direction { get; set; }
         public string Title { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityUniqueId(this.EntityUniqueId);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteBlockVector3(this.Position);
             this.WriteVarInt(this.Direction);
             this.WriteString(this.Title);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

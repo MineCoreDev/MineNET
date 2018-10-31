@@ -8,17 +8,13 @@ namespace MineNET.Network.MinecraftPackets
 
         public Vector3 Position { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteVector3(this.Position);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Position = this.ReadVector3();
         }
     }

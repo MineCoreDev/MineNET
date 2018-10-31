@@ -8,17 +8,13 @@ namespace MineNET.Network.MinecraftPackets
 
         public BlockCoordinate3D Position { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteBlockVector3(this.Position);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Position = this.ReadBlockVector3();
         }
     }

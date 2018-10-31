@@ -9,12 +9,15 @@ namespace MineNET.Network.MinecraftPackets
         public int Dimension { get; set; }
         public Vector3 Position { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteVarInt(this.Dimension);
             this.WriteVector3(this.Position);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

@@ -6,17 +6,13 @@
 
         public string ConnectionRequestData { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.ConnectionRequestData);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.ConnectionRequestData = this.ReadString();
         }
     }

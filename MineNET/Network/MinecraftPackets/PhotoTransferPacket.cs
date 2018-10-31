@@ -8,19 +8,15 @@
         public string PhotoData { get; set; }
         public string BookId { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.PhotoName);
             this.WriteString(this.PhotoData);
             this.WriteString(this.BookId);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.PhotoName = this.ReadString();
             this.PhotoData = this.ReadString();
             this.BookId = this.ReadString();

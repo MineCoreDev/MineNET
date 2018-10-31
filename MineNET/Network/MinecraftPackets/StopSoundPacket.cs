@@ -7,12 +7,15 @@
         public string SoundName { get; set; }
         public bool StopAll { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.SoundName);
             this.WriteBool(this.StopAll);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

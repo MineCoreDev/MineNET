@@ -10,10 +10,13 @@ namespace MineNET.Network.MinecraftPackets
         public CommandOriginData OriginData { get; set; }
         public bool IsInternal { get; set; }
 
-        public override void Decode()
+        protected override void EncodePayload()
         {
-            base.Decode();
 
+        }
+
+        protected override void DecodePayload()
+        {
             this.Command = this.ReadString();
             this.OriginData = this.ReadCommandOriginData();
             this.IsInternal = this.ReadBool();

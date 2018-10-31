@@ -6,17 +6,13 @@
 
         public byte WindowId { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteByte(this.WindowId);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.WindowId = this.ReadByte();
         }
     }

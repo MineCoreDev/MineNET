@@ -6,10 +6,8 @@
 
         public string[] Entries { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteUVarInt((uint) this.Entries.Length);
             for (int i = 0; i < this.Entries.Length; ++i)
             {
@@ -17,10 +15,8 @@
             }
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Entries = new string[this.ReadUVarInt()];
             for (int i = 0; i < this.Entries.Length; ++i)
             {

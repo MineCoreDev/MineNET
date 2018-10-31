@@ -18,13 +18,16 @@
         public int Property { get; set; }
         public int Value { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteByte(this.WindowId);
             this.WriteVarInt(this.Property);
             this.WriteVarInt(this.Value);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

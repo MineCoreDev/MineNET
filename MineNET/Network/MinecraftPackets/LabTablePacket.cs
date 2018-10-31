@@ -10,19 +10,15 @@ namespace MineNET.Network.MinecraftPackets
         public BlockCoordinate3D Position { get; set; }
         public byte ReactionType { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteByte(this.UselessByte);
             this.WriteSBlockVector3(this.Position);
             this.WriteByte(this.ReactionType);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.UselessByte = this.ReadByte();
             this.Position = this.ReadSBlockVector3();
             this.ReactionType = this.ReadByte();

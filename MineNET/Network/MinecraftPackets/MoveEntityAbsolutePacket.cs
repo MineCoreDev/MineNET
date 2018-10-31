@@ -16,10 +16,8 @@ namespace MineNET.Network.MinecraftPackets
         public float YRot { get; set; }
         public float ZRot { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteByte(this.Flags);
             this.WriteVector3(this.Position);
@@ -28,10 +26,8 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteByteRotation(this.ZRot);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.EntityRuntimeId = this.ReadEntityRuntimeId();
             this.Flags = this.ReadByte();
             this.Position = this.ReadVector3();

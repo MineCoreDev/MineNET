@@ -9,20 +9,16 @@
         public string CommandString { get; set; }
         public byte ActionType { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteByte(this.RequestType);
             this.WriteString(this.CommandString);
             this.WriteByte(this.ActionType);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.EntityRuntimeId = this.ReadEntityRuntimeId();
             this.RequestType = this.ReadByte();
             this.CommandString = this.ReadString();

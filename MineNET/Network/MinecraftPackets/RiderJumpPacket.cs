@@ -6,17 +6,13 @@
 
         public int JumpStrength { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteVarInt(this.JumpStrength);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.JumpStrength = this.ReadVarInt();
         }
     }

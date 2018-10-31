@@ -15,10 +15,8 @@ namespace MineNET.Network.MinecraftPackets
         public long EntityRuntimeId { get; set; }
         public Vector3 Position { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteByte(this.Action);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
 
@@ -28,10 +26,8 @@ namespace MineNET.Network.MinecraftPackets
             }
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Action = this.ReadByte();
             this.EntityRuntimeId = this.ReadEntityRuntimeId();
 

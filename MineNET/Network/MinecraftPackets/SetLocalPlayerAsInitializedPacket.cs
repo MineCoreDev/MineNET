@@ -6,17 +6,13 @@
 
         public long EntityRuntimeId { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.EntityRuntimeId = this.ReadEntityRuntimeId();
         }
     }

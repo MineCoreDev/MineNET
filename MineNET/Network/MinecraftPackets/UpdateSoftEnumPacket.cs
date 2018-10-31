@@ -12,10 +12,8 @@
         public string[] Values { get; set; }
         public byte Type { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.EnumName);
             this.WriteUVarInt((uint) this.Values.Length);
             for (int i = 0; i < this.Values.Length; ++i)
@@ -25,10 +23,8 @@
             this.WriteByte(this.Type);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.EnumName = this.ReadString();
             this.Values = new string[this.ReadUVarInt()];
             for (int i = 0; i < this.Values.Length; ++i)

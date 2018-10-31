@@ -10,10 +10,13 @@ namespace MineNET.Network.MinecraftPackets
         public bool AddUserData { get; set; }
         public byte HotbarSlot { get; set; }
 
-        public override void Decode()
+        protected override void EncodePayload()
         {
-            base.Decode();
 
+        }
+
+        protected override void DecodePayload()
+        {
             this.Position = this.ReadSBlockVector3();
             this.AddUserData = this.ReadBool();
             this.HotbarSlot = this.ReadByte();

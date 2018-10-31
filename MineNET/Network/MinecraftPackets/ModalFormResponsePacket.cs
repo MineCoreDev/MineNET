@@ -7,10 +7,13 @@
         public int FormId { get; set; }
         public string FormData { get; set; }
 
-        public override void Decode()
+        protected override void EncodePayload()
         {
-            base.Decode();
 
+        }
+
+        protected override void DecodePayload()
+        {
             this.FormId = this.ReadVarInt();
             this.FormData = this.ReadString();
         }

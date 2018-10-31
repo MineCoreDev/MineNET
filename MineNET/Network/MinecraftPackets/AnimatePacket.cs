@@ -16,10 +16,8 @@
         public long EntityRuntimeId { get; set; }
         public float Unknown { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteSVarInt(this.Action);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             if ((this.Action & 0x80) != 0)
@@ -28,10 +26,8 @@
             }
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Action = this.ReadSVarInt();
             this.EntityRuntimeId = this.ReadEntityRuntimeId();
             if ((this.Action & 0x80) != 0)

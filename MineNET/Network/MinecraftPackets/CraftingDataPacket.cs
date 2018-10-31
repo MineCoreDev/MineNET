@@ -19,16 +19,19 @@ namespace MineNET.Network.MinecraftPackets
         public List<IRecipe> Entries { get; set; } = new List<IRecipe>();
         public bool CleanRecipes { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteUVarInt((uint) this.Entries.Count);
             for (int i = 0; i < this.Entries.Count; ++i)
             {
                 this.Entries[i].Write(this);
             }
             this.WriteBool(this.CleanRecipes);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

@@ -15,7 +15,7 @@
         public bool Particles { get; set; }
         public int Duration { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
             base.Encode();
 
@@ -25,6 +25,11 @@
             this.WriteSVarInt(this.Amplifier);
             this.WriteBool(this.Particles);
             this.WriteSVarInt(this.Duration);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

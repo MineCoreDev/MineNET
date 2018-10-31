@@ -12,10 +12,13 @@
         public byte ResponseStatus { get; set; }
         public string[] PackIds { get; set; }
 
-        public override void Decode()
+        protected override void EncodePayload()
         {
-            base.Decode();
 
+        }
+
+        protected override void DecodePayload()
+        {
             this.ResponseStatus = this.ReadByte();
             this.PackIds = new string[this.ReadShort()];
             for (int i = 0; i < this.PackIds.Length; ++i)

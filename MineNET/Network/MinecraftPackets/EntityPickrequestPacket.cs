@@ -7,18 +7,14 @@
         public long EntityUniqueId { get; set; }
         public byte HotbarSlot { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteLLong((ulong) this.EntityUniqueId);
             this.WriteByte(this.HotbarSlot);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.EntityUniqueId = (long) this.ReadLLong();
             this.HotbarSlot = this.ReadByte();
         }

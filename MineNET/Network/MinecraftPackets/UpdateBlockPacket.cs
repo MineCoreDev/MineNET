@@ -23,14 +23,17 @@ namespace MineNET.Network.MinecraftPackets
         public uint Flags { get; set; }
         public uint DataLayerId { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteBlockVector3(this.Position);
             this.WriteUVarInt(this.RuntimeId);
             this.WriteUVarInt(this.Flags);
             this.WriteUVarInt(this.DataLayerId);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

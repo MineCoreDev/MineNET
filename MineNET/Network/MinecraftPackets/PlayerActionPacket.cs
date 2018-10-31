@@ -38,20 +38,16 @@ namespace MineNET.Network.MinecraftPackets
         public BlockCoordinate3D Position { get; set; }
         public BlockFace Face { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteSVarInt(this.Action);
             this.WriteBlockVector3(this.Position);
             this.WriteBlockFace(this.Face);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.EntityRuntimeId = this.ReadEntityRuntimeId();
             this.Action = this.ReadSVarInt();
             this.Position = this.ReadBlockVector3();

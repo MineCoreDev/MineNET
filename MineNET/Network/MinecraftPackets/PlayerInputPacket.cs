@@ -9,7 +9,7 @@
         public bool Jumping { get; set; }
         public bool Sneaking { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
             base.Encode();
 
@@ -19,7 +19,7 @@
             this.WriteBool(this.Sneaking);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
             base.Decode();
 

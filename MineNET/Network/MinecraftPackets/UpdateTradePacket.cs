@@ -14,10 +14,8 @@
         public string DisplayName { get; set; }
         public byte[] Offers { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteByte(this.WindowId);
             this.WriteByte(this.WindowType);
             this.WriteVarInt(this.VarInt1);
@@ -27,6 +25,11 @@
             this.WriteEntityUniqueId(this.PlayerUniqueId);
             this.WriteString(this.DisplayName);
             this.WriteBytes(this.Offers);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

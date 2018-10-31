@@ -6,17 +6,13 @@
 
         public ulong Timestamp { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteLLong(this.Timestamp);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Timestamp = this.ReadLLong();
         }
     }

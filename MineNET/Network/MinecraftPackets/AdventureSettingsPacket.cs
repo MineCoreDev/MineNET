@@ -1,5 +1,4 @@
 ﻿using MineNET.Data;
-using MineNET.Entities.Players;
 
 namespace MineNET.Network.MinecraftPackets
 {
@@ -29,10 +28,8 @@ namespace MineNET.Network.MinecraftPackets
 
         public AdventureSettingsEntry Entry { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteUVarInt(this.Entry.Flags);
             this.WriteUVarInt((uint) this.Entry.CommandPermission);
             this.WriteUVarInt(this.Entry.Flags2);
@@ -41,10 +38,8 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteLLong((ulong) this.Entry.EntityUniqueId);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Entry = new AdventureSettingsEntry();
             this.Entry.Flags = this.ReadUVarInt();
             this.Entry.CommandPermission = (PlayerPermissions) this.ReadUVarInt();

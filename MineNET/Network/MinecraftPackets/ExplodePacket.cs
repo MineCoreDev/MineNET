@@ -10,10 +10,8 @@ namespace MineNET.Network.MinecraftPackets
         public float Radius { get; set; }
         public BlockCoordinate3D[] Records { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteVector3(this.Position);
             this.WriteVarInt((int) (this.Radius * 32));
             this.WriteUVarInt((uint) this.Records.Length);
@@ -23,10 +21,8 @@ namespace MineNET.Network.MinecraftPackets
             }
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Position = this.ReadVector3();
             this.Radius = this.ReadVarInt() / 32;
             this.Records = new BlockCoordinate3D[this.ReadUVarInt()];

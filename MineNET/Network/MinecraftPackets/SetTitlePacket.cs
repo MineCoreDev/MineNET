@@ -17,15 +17,18 @@
         public int StayTime { get; set; } = 0;
         public int FadeOutTime { get; set; } = 0;
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteVarInt(this.Type);
             this.WriteString(this.Text);
             this.WriteVarInt(this.FadeInTime);
             this.WriteVarInt(this.StayTime);
             this.WriteVarInt(this.FadeOutTime);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

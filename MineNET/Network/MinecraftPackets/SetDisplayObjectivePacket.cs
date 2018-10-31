@@ -10,26 +10,22 @@
         public string CriteriaName { get; set; }
         public int SortOrder { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.DisplaySlot);
             this.WriteString(this.ObjectiveName);
             this.WriteString(this.DisplayName);
             this.WriteString(this.CriteriaName);
-            this.WriteVarInt(this.SortOrder);
+            this.WriteSVarInt(this.SortOrder);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.DisplaySlot = this.ReadString();
             this.ObjectiveName = this.ReadString();
             this.DisplayName = this.ReadString();
             this.CriteriaName = this.ReadString();
-            this.SortOrder = this.ReadVarInt();
+            this.SortOrder = this.ReadSVarInt();
         }
     }
 }

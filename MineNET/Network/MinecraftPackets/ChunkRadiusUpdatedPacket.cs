@@ -6,11 +6,14 @@
 
         public int Radius { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteSVarInt(this.Radius);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

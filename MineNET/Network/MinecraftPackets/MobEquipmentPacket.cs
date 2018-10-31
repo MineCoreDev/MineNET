@@ -12,10 +12,8 @@ namespace MineNET.Network.MinecraftPackets
         public byte HotbarSlot { get; set; }
         public byte WindowId { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteItem(this.Item);
             this.WriteByte(this.InventorySlot);
@@ -23,10 +21,8 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteByte(this.WindowId);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.EntityRuntimeId = this.ReadEntityRuntimeId();
             this.Item = this.ReadItem();
             this.InventorySlot = this.ReadByte();

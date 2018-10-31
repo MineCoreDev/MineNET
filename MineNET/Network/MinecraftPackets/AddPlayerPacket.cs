@@ -26,10 +26,8 @@ namespace MineNET.Network.MinecraftPackets
         public int PermissionLevel { get; set; } = PlayerPermissions.MEMBER.GetIndex();
         public int StoredCustomPermissions { get; set; } = 0;
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteUUID(this.Uuid);
             this.WriteString(this.Username);
             this.WriteEntityUniqueId(this.EntityUniqueId);
@@ -50,6 +48,11 @@ namespace MineNET.Network.MinecraftPackets
 
             this.WriteUVarInt(0); //TODO: EntityLink size
             //TODO: WriteEntityLink
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

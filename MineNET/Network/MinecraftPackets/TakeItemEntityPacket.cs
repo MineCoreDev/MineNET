@@ -7,12 +7,15 @@
         public long TargetRuntimeId { get; set; }
         public long EntityRuntimeId { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityRuntimeId(this.TargetRuntimeId);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }

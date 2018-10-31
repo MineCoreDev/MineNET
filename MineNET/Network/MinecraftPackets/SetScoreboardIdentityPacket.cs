@@ -12,10 +12,8 @@ namespace MineNET.Network.MinecraftPackets
         public byte Type { get; set; }
         public ScoreboardIdentityPacketEntry[] Entries { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteByte(this.Type);
             this.WriteUVarInt((uint) this.Entries.Length);
             for (int i = 0; i < this.Entries.Length; ++i)
@@ -28,10 +26,8 @@ namespace MineNET.Network.MinecraftPackets
             }
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.Type = this.ReadByte();
             this.Entries = new ScoreboardIdentityPacketEntry[this.ReadUVarInt()];
             for (int i = 0; i < this.Entries.Length; ++i)

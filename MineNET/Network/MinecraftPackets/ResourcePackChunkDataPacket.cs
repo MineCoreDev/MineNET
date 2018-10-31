@@ -9,10 +9,8 @@
         public ulong Progress { get; set; }
         public byte[] Data { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.PackId);
             this.WriteLInt(this.ChunkIndex);
             this.WriteLLong(this.Progress);
@@ -20,10 +18,8 @@
             this.WriteBytes(this.Data);
         }
 
-        public override void Decode()
+        protected override void DecodePayload()
         {
-            base.Decode();
-
             this.PackId = this.ReadString();
             this.ChunkIndex = this.ReadLInt();
             this.Progress = this.ReadLLong();

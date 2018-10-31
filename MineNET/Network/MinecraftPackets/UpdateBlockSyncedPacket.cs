@@ -7,12 +7,15 @@
         public ulong Unknown1 { get; set; }
         public ulong Unknown2 { get; set; }
 
-        public override void Encode()
+        protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteUVarLong(this.Unknown1);
             this.WriteUVarLong(this.Unknown2);
+        }
+
+        protected override void DecodePayload()
+        {
+
         }
     }
 }
