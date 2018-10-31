@@ -24,6 +24,7 @@ namespace MineNET.Console
                     catch (Exception e2)
                     {
                         System.Console.WriteLine(e);
+                        System.Console.WriteLine(e2);
                         System.Console.Read();
                     }
                 }

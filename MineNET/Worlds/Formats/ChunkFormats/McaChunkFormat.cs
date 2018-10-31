@@ -100,8 +100,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
             BlockEntity[] blockEntities = chunk.GetBlockEntities();
             for (int i = 0; i < blockEntities.Length; ++i)
             {
-                blockEntities[i].SaveNBT();
-                blockEntitiesTag.Add(blockEntities[i].NamedTag);
+                blockEntitiesTag.Add(blockEntities[i].SaveNBT());
             }
             tag.PutList(blockEntitiesTag);
 

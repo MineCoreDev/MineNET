@@ -12,11 +12,6 @@ namespace MineNET.BlockEntities
     public abstract class BlockEntity : IPosition
     {
         /// <summary>
-        /// この <see cref="BlockEntity"/> のNBTデータです。 
-        /// </summary>
-        public CompoundTag NamedTag { get; protected set; }
-
-        /// <summary>
         /// 定義されている <see cref="BlockEntity"/> を生成します。
         /// </summary>
         /// <param name="type"><see cref="BlockEntity"/> のID</param>
@@ -49,12 +44,18 @@ namespace MineNET.BlockEntities
             {
                 throw new ArgumentNullException(nameof(nbt));
             }
-
             this.X = nbt.GetInt("x");
             this.Y = nbt.GetInt("y");
             this.Z = nbt.GetInt("z");
 
-            this.NamedTag = nbt;
+            this.Init(nbt);
+
+            this.World.AddBlockEntity(this);
+        }
+
+        protected virtual void Init(CompoundTag nbt)
+        {
+
         }
 
         /// <summary>
@@ -82,10 +83,7 @@ namespace MineNET.BlockEntities
         /// <summary>
         /// <see cref="BlockEntity"/> の名前
         /// </summary>
-        public abstract string Name
-        {
-            get;
-        }
+        public abstract string Name { get; }
 
         public Vector3 GetVector3()
         {
@@ -103,11 +101,16 @@ namespace MineNET.BlockEntities
         }
 
         /// <summary>
-        /// 
+        /// <see cref="BlockEntity"/> を保存するNBTを返します
         /// </summary>
-        public virtual void SaveNBT()
+        public virtual CompoundTag SaveNBT()
         {
-
+            CompoundTag nbt = new CompoundTag();
+            nbt.PutString("id", this.Name);
+            nbt.PutInt("x", (int) this.X);
+            nbt.PutInt("y", (int) this.Y);
+            nbt.PutInt("z", (int) this.Z);
+            return nbt;
         }
     }
 }

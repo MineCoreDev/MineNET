@@ -16,6 +16,8 @@ namespace MineNET.Inventories
         private List<Player> viewers = new List<Player>();
 
         protected Dictionary<int, ItemStack> slots = new Dictionary<int, ItemStack>();
+        
+        public InventoryHolder Holder { get; protected set; }
 
         public BaseInventory(InventoryHolder holder, Dictionary<int, ItemStack> items = null)
         {
@@ -282,8 +284,6 @@ namespace MineNET.Inventories
                 player.SendPacket(pk);
             }
         }
-
-        public InventoryHolder Holder { get; protected set; }
 
         public List<Player> Viewers
         {

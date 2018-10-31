@@ -403,8 +403,7 @@ namespace MineNET.Worlds
                 return;
             }
 
-            if (!player.Sneaking && item.Item.CanBeActivate &&
-                item.Item.Activate(player, this, clicked, blockFace, clickPos))
+            if (!player.Sneaking && item.Item.CanBeActivate && item.Item.Activate(player, this, clicked, blockFace, clickPos))
             {
                 if (item.Count <= 0)
                 {
@@ -562,6 +561,19 @@ namespace MineNET.Worlds
             }
 
             this._blockEntities.Remove(blockEntity);
+        }
+
+        public BlockEntity GetBlockEntity(BlockCoordinate3D pos)
+        {
+            for (int i = 0; i < this._blockEntities.Count; ++i)
+            {
+                BlockEntity blockEntity = this._blockEntities[i];
+                if (blockEntity.X == pos.X && blockEntity.Y == pos.Y && blockEntity.Z == pos.Z)
+                {
+                    return blockEntity;
+                }
+            }
+            return null;
         }
 
         public void DropItem(ItemStack item, Vector3 pos, Vector3 motion = new Vector3(), int delay = 10)

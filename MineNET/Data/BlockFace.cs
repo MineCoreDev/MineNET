@@ -136,5 +136,30 @@ namespace MineNET.Data
                 return BlockFace.UP;
             }
         }
+
+        public static int GetHorizontalIndex(this BlockFace face)
+        {
+            if (face == BlockFace.DOWN || face == BlockFace.UP)
+            {
+                return -1;
+            }
+            else if (face == BlockFace.NORTH)
+            {
+                return 2;
+            }
+            else if (face == BlockFace.SOUTH)
+            {
+                return 0;
+            }
+            else if (face == BlockFace.WEST)
+            {
+                return 1;
+            }
+            else if (face == BlockFace.EAST)
+            {
+                return 3;
+            }
+            return -1;
+        }
     }
 }

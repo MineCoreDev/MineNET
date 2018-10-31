@@ -221,7 +221,7 @@ namespace MineNET.Entities.Players
             {
                 this.HandlePlayerSkinPacket((PlayerSkinPacket) packet);
             }
-            else if (packet is SetLocalPlayerAsInitializedPacket) //0x70
+            else if (packet is SetLocalPlayerAsInitializedPacket) //0x71
             {
                 this.HandleSetLocalPlayerAsInitializedPacket((SetLocalPlayerAsInitializedPacket) packet);
             }
@@ -440,31 +440,6 @@ namespace MineNET.Entities.Players
                 this.Inventory.SendMainHand(this);
                 this.Inventory.ArmorInventory.SendContents(this);
                 this.Inventory.SendCreativeItems();
-
-                PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, $"§e{this.Name} が世界にやってきました", "");
-                Server.Instance.Event.Player.OnPlayerJoin(this, playerJoinEvent);
-                if (playerJoinEvent.IsCancel)
-                {
-                    this.Close(playerJoinEvent.KickMessage);
-                    return;
-                }
-                if (!string.IsNullOrEmpty(playerJoinEvent.JoinMessage))
-                {
-                    Server.Instance.BroadcastMessage(playerJoinEvent.JoinMessage);
-                }
-                Logger.Info($"§e{this.Name} join the game");
-
-                Player[] players = this.World.GetPlayers();
-                for (int i = 0; i < players.Length; ++i)
-                {
-                    if (players[i].Name == this.Name)
-                    {
-                        continue;
-                    }
-                    players[i].SpawnTo(this);
-                }
-
-                this.SpawnToAll();
             }
         }
 
@@ -1710,6 +1685,25 @@ namespace MineNET.Entities.Players
 
         protected virtual void HandleSetLocalPlayerAsInitializedPacket(SetLocalPlayerAsInitializedPacket pk)
         {
+            Player[] players = this.World.GetPlayers();
+            for (int i = 0; i < players.Length; ++i)
+            {
+                if (players[i].Name == this.Name)
+                {
+                    continue;
+                }
+                players[i].SpawnTo(this);
+            }
+
+            this.SpawnToAll();
+
+            PlayerJoinEventArgs playerJoinEvent = new PlayerJoinEventArgs(this, $"§e{this.Name} が世界にやってきました");
+            Server.Instance.Event.Player.OnPlayerJoin(this, playerJoinEvent);
+            if (!string.IsNullOrEmpty(playerJoinEvent.JoinMessage))
+            {
+                Server.Instance.BroadcastMessage(playerJoinEvent.JoinMessage);
+            }
+            Logger.Info($"§e{this.Name} join the game");
         }
 
         #endregion

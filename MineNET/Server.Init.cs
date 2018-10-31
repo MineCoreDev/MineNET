@@ -30,6 +30,7 @@ namespace MineNET
         {
             MineNET_Registries.Init();
             new BlockInit();
+            new BlockEntityInit();
             new ItemInit();
             new EffectInit();
             new EntityInit();
