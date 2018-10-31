@@ -7,7 +7,7 @@ namespace MineNET.BlockEntities
     /// <summary>
     /// Minecraft に存在するチェストの <see cref="BlockEntity"/> です。
     /// </summary>
-    public class BlockEntityChest : BlockEntity, InventoryHolder
+    public class BlockEntityChest : BlockEntitySpawnable, InventoryHolder
     {
         public ChestInventory Inventory { get; protected set; }
 
@@ -18,7 +18,15 @@ namespace MineNET.BlockEntities
         /// <param name="nbt"></param>
         public BlockEntityChest(Chunk chunk, CompoundTag nbt = null) : base(chunk, nbt)
         {
+            
+        }
+
+        protected override void Init(CompoundTag nbt)
+        {
             this.Inventory = new ChestInventory(this);
+            this.Inventory.LoadNBT(nbt);
+
+            base.Init(nbt);
         }
 
         /// <summary>

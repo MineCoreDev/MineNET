@@ -1,4 +1,6 @@
-﻿namespace MineNET.Values
+﻿using System;
+
+namespace MineNET.Values
 {
     public struct BlockCoordinate3D : IBlockCoordinate3D
     {
@@ -11,6 +13,13 @@
             this.X = x;
             this.Y = y;
             this.Z = z;
+        }
+
+        public BlockCoordinate3D(float x, float y, float z)
+        {
+            this.X = (int) Math.Floor(x);
+            this.Y = (int) Math.Floor(y);
+            this.Z = (int) Math.Floor(z);
         }
 
         public static explicit operator BlockCoordinate3D(Vector3 v)

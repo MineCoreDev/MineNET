@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
 using MineNET.Entities.Players;
@@ -402,6 +403,33 @@ namespace MineNET.Entities
         public Vector3 GetMotion()
         {
             return new Vector3(this.MotionX, this.MotionY, this.MotionZ);
+        }
+
+        public BlockFace GetDirection()
+        {
+            float rotation = this.Yaw % 360;
+            if (rotation < 0)
+            {
+                rotation += 360;
+            }
+
+            if ((0 <= rotation && rotation < 45) || (315 <= rotation && rotation < 360))
+            {
+                return BlockFace.SOUTH;
+            }
+            else if (45 <= rotation && rotation < 135)
+            {
+                return BlockFace.WEST;
+            }
+            else if (135 <= rotation && rotation < 225)
+            {
+                return BlockFace.NORTH;
+            }
+            else if (225 <= rotation && rotation < 315)
+            {
+                return BlockFace.EAST;
+            }
+            return BlockFace.NORTH;
         }
 
         public Vector2 GetDirectionPlane()

@@ -263,6 +263,7 @@
     <Compile Include="Events\PlayerEvents\PlayerToggleGlideEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerToggleSneakEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerToggleSprintEventArgs.cs" />
+    <Compile Include="Init\BlockEntityInit.cs" />
     <Compile Include="Init\BlockInit.cs" />
     <Compile Include="Init\EffectInit.cs" />
     <Compile Include="Init\EntityInit.cs" />

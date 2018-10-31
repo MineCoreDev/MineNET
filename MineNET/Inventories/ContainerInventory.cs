@@ -39,7 +39,7 @@ namespace MineNET.Inventories
 
         public override void LoadNBT(CompoundTag nbt)
         {
-            if (!nbt.Exist(this.Name))
+            if (!nbt.Exist("items"))
             {
                 ListTag list = new ListTag("items", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
@@ -49,7 +49,7 @@ namespace MineNET.Inventories
                 nbt.PutList(list);
             }
 
-            ListTag items = nbt.GetList(this.Name);
+            ListTag items = nbt.GetList("items");
             for (int i = 0; i < this.Size; ++i)
             {
                 ItemStack item = NBTIO.ReadItem((CompoundTag) items[i]);

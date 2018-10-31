@@ -12,30 +12,44 @@ namespace MineNET.Registry
     {
         private readonly Dictionary<string, Func<Chunk, CompoundTag, Entity>> _expressionCache = new Dictionary<string, Func<Chunk, CompoundTag, Entity>>();
 
+        public override Type this[string key]
+        {
+            get
+            {
+                return this.Dictionary[key];
+            }
+
+            set
+            {
+                this.Dictionary[key] = value;
+                this.CreateExpression(key, value);
+            }
+        }
+
         public override void Add(string key, Type value)
         {
             base.Add(key, value);
 
-            CreateExpression(key, value);
+            this.CreateExpression(key, value);
         }
 
         public override void Add(KeyValuePair<string, Type> item)
         {
             base.Add(item);
 
-            CreateExpression(item.Key, item.Value);
+            this.CreateExpression(item.Key, item.Value);
         }
 
         public override bool Remove(string key)
         {
-            _expressionCache.Remove(key);
+            this._expressionCache.Remove(key);
 
             return base.Remove(key);
         }
 
         public override bool Remove(KeyValuePair<string, Type> item)
         {
-            _expressionCache.Remove(item.Key);
+            this._expressionCache.Remove(item.Key);
 
             return base.Remove(item);
         }
@@ -44,23 +58,23 @@ namespace MineNET.Registry
         {
             base.Clear();
 
-            _expressionCache.Clear();
+            this._expressionCache.Clear();
         }
 
         public void UpdateExpression()
         {
-            _expressionCache.Clear();
-            foreach (KeyValuePair<string, Type> pair in Dictionary)
+            this._expressionCache.Clear();
+            foreach (KeyValuePair<string, Type> pair in this.Dictionary)
             {
-                CreateExpression(pair.Key, pair.Value);
+                this.CreateExpression(pair.Key, pair.Value);
             }
         }
 
         public Func<Chunk, CompoundTag, Entity> GetExpression(string key)
         {
-            if (ContainsKey(key))
+            if (this.ContainsKey(key))
             {
-                return _expressionCache[key];
+                return this._expressionCache[key];
             }
             else
             {
@@ -76,7 +90,7 @@ namespace MineNET.Registry
             var p2 = Expression.Parameter(typeof(CompoundTag));
 
             var lamda = Expression.Lambda<Func<Chunk, CompoundTag, Entity>>(Expression.New(constructor, p1, p2), p1, p2).Compile();
-            _expressionCache.Add(key, lamda);
+            this._expressionCache.Add(key, lamda);
         }
     }
 }

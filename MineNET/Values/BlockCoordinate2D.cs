@@ -1,4 +1,6 @@
-﻿namespace MineNET.Values
+﻿using System;
+
+namespace MineNET.Values
 {
     public struct BlockCoordinate2D : IBlockCoordinate2D
     {
@@ -9,6 +11,12 @@
         {
             this.X = x;
             this.Y = y;
+        }
+
+        public BlockCoordinate2D(float x, float y)
+        {
+            this.X = (int) Math.Floor(x);
+            this.Y = (int) Math.Floor(y);
         }
     }
 }

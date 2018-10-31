@@ -81,6 +81,7 @@ namespace MineNET.Inventories
         internal void OpenInventory(Inventory inventory)
         {
             this.OpendInventory = inventory;
+            inventory.Open(this.Holder);
         }
 
         internal void CloseInventory()

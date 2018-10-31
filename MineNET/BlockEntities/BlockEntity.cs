@@ -44,10 +44,18 @@ namespace MineNET.BlockEntities
             {
                 throw new ArgumentNullException(nameof(nbt));
             }
-
             this.X = nbt.GetInt("x");
             this.Y = nbt.GetInt("y");
             this.Z = nbt.GetInt("z");
+
+            this.Init(nbt);
+
+            this.World.AddBlockEntity(this);
+        }
+
+        protected virtual void Init(CompoundTag nbt)
+        {
+
         }
 
         /// <summary>
