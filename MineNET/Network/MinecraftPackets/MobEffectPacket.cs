@@ -17,8 +17,6 @@
 
         protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteByte((byte) this.EventId);
             this.WriteSVarInt(this.EffectId);

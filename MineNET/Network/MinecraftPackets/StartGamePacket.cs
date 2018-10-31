@@ -74,8 +74,6 @@ namespace MineNET.Network.MinecraftPackets
 
         protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityUniqueId(this.EntityUniqueId);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteSVarInt(this.PlayerGamemode.GetIndex());

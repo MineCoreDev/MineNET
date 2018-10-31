@@ -11,8 +11,6 @@ namespace MineNET.Network.MinecraftPackets
 
         protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
             this.WriteVector3(this.Motion);
         }

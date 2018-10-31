@@ -11,8 +11,6 @@
 
         protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteLFloat(this.MotionX);
             this.WriteLFloat(this.MotionY);
             this.WriteBool(this.Jumping);
@@ -21,8 +19,6 @@
 
         protected override void DecodePayload()
         {
-            base.Decode();
-
             this.MotionX = this.ReadLFloat();
             this.MotionY = this.ReadLFloat();
             this.Jumping = this.ReadBool();

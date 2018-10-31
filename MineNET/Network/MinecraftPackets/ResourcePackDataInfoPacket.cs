@@ -12,8 +12,6 @@
 
         protected override void EncodePayload()
         {
-            base.Encode();
-
             this.WriteString(this.PackId);
             this.WriteLInt(this.MaxChunkSize);
             this.WriteLInt(this.ChunkCount);
