@@ -62,14 +62,19 @@ namespace MineNET.Inventories
             }
         }
 
-        public override void OnSlotChange(int index, ItemStack item, bool send)
+        public override void SendSlot(int index, params Player[] players)
         {
-            base.OnSlotChange(index, item, send);
-
-            if (send && index == this.MainHandSlot)
+            base.SendSlot(index, players);
+            if (index == this.MainHandSlot)
             {
-                //this.SendMainHand(this.Holder.Viewers);
+                this.SendMainHand(this.Holder.Viewers);
             }
+        }
+
+        public override void SendContents(params Player[] players)
+        {
+            base.SendContents(players);
+            this.SendMainHand(this.Holder.Viewers);
         }
 
         public int MainHandSlot
@@ -82,7 +87,7 @@ namespace MineNET.Inventories
             set
             {
                 this.mainHand = value;
-                //this.SendMainHand(this.Holder.Viewers);
+                this.SendMainHand(this.Holder.Viewers);
             }
         }
 
@@ -95,7 +100,7 @@ namespace MineNET.Inventories
 
             set
             {
-                this.SetItem(this.mainHand, value.Clone());
+                this.SetItem(this.mainHand, value);
             }
         }
 
@@ -184,12 +189,14 @@ namespace MineNET.Inventories
         {
             for (int i = 0; i < players.Length; ++i)
             {
-                MobEquipmentPacket pk = new MobEquipmentPacket();
-                pk.EntityRuntimeId = this.Holder.EntityID;
-                pk.Item = this.MainHandItem;
-                pk.InventorySlot = (byte) this.MainHandSlot;
-                pk.HotbarSlot = (byte) this.MainHandSlot;
-                pk.WindowId = this.Type;
+                MobEquipmentPacket pk = new MobEquipmentPacket
+                {
+                    EntityRuntimeId = this.Holder.EntityID,
+                    Item = this.MainHandItem,
+                    InventorySlot = (byte)this.MainHandSlot,
+                    HotbarSlot = (byte)this.MainHandSlot,
+                    WindowId = this.Type
+                };
                 players[i].SendPacket(pk);
             }
         }

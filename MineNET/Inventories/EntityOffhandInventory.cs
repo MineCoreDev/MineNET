@@ -36,18 +36,19 @@ namespace MineNET.Inventories
             }
         }
 
-        public override void OnSlotChange(int index, ItemStack item, bool send)
+        public override void SendSlot(int index, params Player[] players)
         {
-            base.OnSlotChange(index, item, send);
-
+            base.SendSlot(index, players);
             if (index == 0)
             {
-                if (this.Holder is Player)
-                {
-                    this.SendOffHand((Player) this.Holder);
-                }
-                //this.SendOffHand(this.Holder.Viewers);
+                this.SendOffHand(this.Holder.Viewers);
             }
+        }
+
+        public override void SendContents(params Player[] players)
+        {
+            base.SendContents(players);
+            this.SendOffHand(this.Holder.Viewers);
         }
 
         public ItemStack OffHandItem
@@ -80,11 +81,13 @@ namespace MineNET.Inventories
         {
             for (int i = 0; i < players.Length; ++i)
             {
-                MobEquipmentPacket pk = new MobEquipmentPacket();
-                pk.EntityRuntimeId = this.Holder.EntityID;
-                pk.Item = this.OffHandItem;
-                pk.InventorySlot = 0;
-                pk.WindowId = this.Type;
+                MobEquipmentPacket pk = new MobEquipmentPacket
+                {
+                    EntityRuntimeId = this.Holder.EntityID,
+                    Item = this.OffHandItem,
+                    InventorySlot = 0,
+                    WindowId = this.Type
+                };
                 players[i].SendPacket(pk);
             }
         }
