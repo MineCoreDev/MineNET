@@ -95,7 +95,7 @@ namespace MineNET.BlockEntities
             return new Vector2(this.X, this.Z);
         }
 
-        internal virtual void OnUpdate()
+        internal virtual void OnUpdate(long tick)
         {
 
         }

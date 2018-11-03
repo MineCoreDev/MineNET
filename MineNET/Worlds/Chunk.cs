@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MineNET.BlockEntities;
 using MineNET.Blocks;
 using MineNET.Entities;
 using MineNET.NBT.Data;
+using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Utils;
@@ -34,13 +36,12 @@ namespace MineNET.Worlds
 
         public SubChunk[] SubChunks { get; set; } = ArrayUtils.CreateArray<SubChunk>(16);
         private List<Entity> Entities { get; } = new List<Entity>();
-        private ListTag EntitiesTag { get; } = new ListTag(NBTTagType.COMPOUND);
-        private List<BlockEntity> BlockEntities { get; } = new List<BlockEntity>();
-        private ListTag BlockEntitiesTag { get; } = new ListTag(NBTTagType.COMPOUND);
+        private Dictionary<BlockCoordinate3D, BlockEntity> BlockEntities { get; } = new Dictionary<BlockCoordinate3D, BlockEntity>();
 
-        public Chunk(int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null, short[] heightMap = null,
+        public Chunk(World world, int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null, short[] heightMap = null,
             ListTag entitiesTag = null, ListTag blockEntitiesTag = null)
         {
+            this.World = world;
             this.X = x;
             this.Z = z;
 
@@ -59,8 +60,17 @@ namespace MineNET.Worlds
                 this.SubChunks = chunkDatas;
             }
 
-            this.EntitiesTag = entitiesTag;
-            this.BlockEntitiesTag = blockEntitiesTag;
+            for (int i = 0; i < entitiesTag?.Count; ++i)
+            {
+                CompoundTag entity = (CompoundTag) entitiesTag[i];
+                this.AddEntity(Entity.CreateEntity(entity.GetString("id"), this, entity));
+            }
+
+            for (int i = 0; i < blockEntitiesTag?.Count; ++i)
+            {
+                CompoundTag blockEntity = (CompoundTag) blockEntitiesTag[i];
+                this.AddBlockEntity(BlockEntity.CreateBlockEntity(blockEntity.GetString("id").ToLower(), this, blockEntity));
+            }
         }
 
         public FullChunkDataPacket ChunkData()
@@ -105,7 +115,7 @@ namespace MineNET.Worlds
             return this.Biomes[(bz << 4) + (bx)];
         }
 
-        /* public byte GetBlocklight(int bx, int by, int bz)
+        /*public byte GetBlocklight(int bx, int by, int bz)
          {
              SubChunk chunk = this.subChunks[by >> 4];
              return chunk.GetBlocklight(bx, by - 16 * (by >> 4), bz);
@@ -129,14 +139,37 @@ namespace MineNET.Worlds
             chunk.SetMetaData(bx, by - 16 * (by >> 4), bz, data);
         }
 
+        public void AddEntity(Entity entity)
+        {
+            this.Entities.Add(entity);
+        }
+
         public Entity[] GetEntities()
         {
             return this.Entities.ToArray();
         }
 
+        public void AddBlockEntity(BlockEntity blockEntity)
+        {
+            if (this.BlockEntities.ContainsKey(blockEntity.ToBlockCoordinate3D()))
+            {
+                return;
+            }
+
+            this.BlockEntities.Add(blockEntity.ToBlockCoordinate3D(), blockEntity);
+        }
+
+        public void RemoveBlockEntity(BlockEntity blockEntity)
+        {
+            if (this.BlockEntities.ContainsKey(blockEntity.ToBlockCoordinate3D()))
+            {
+                this.BlockEntities.Remove(blockEntity.ToBlockCoordinate3D());
+            }
+        }
+
         public BlockEntity[] GetBlockEntities()
         {
-            return this.BlockEntities.ToArray();
+            return this.BlockEntities.Values.ToArray();
         }
 
         public int GetBlockHighest(Vector2 pos)
@@ -178,15 +211,16 @@ namespace MineNET.Worlds
                 stream.WriteBytes(b1);
                 stream.WriteBytes(this.Biomes);
                 stream.WriteByte(0);
-                stream.WriteSVarInt(0);
+                stream.WriteSVarInt(0);//TODO Extra Data
+
+                foreach (KeyValuePair<BlockCoordinate3D, BlockEntity> blockEntity in this.BlockEntities)
+                {
+                    BlockEntitySpawnable s = blockEntity.Value as BlockEntitySpawnable;
+                    stream.WriteBytes(NBTIO.WriteTag(s?.SaveNBT(), NBTEndian.LITTLE_ENDIAN, true));
+                }
 
                 return stream.ToArray();
             }
-        }
-
-        internal void InternalSetWorld(World world)
-        {
-            this.World = world;
         }
     }
 }

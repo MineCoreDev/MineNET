@@ -8,6 +8,13 @@ namespace MineNET.Worlds.Formats.ChunkFormats
 {
     public class McaChunkFormat : IChunkFormat
     {
+        public World World { get; }
+
+        public McaChunkFormat(World world)
+        {
+            this.World = world;
+        }
+
         public Chunk NBTDeserialize(CompoundTag tag)
         {
             CompoundTag level = (CompoundTag) tag["Level"];
@@ -36,7 +43,7 @@ namespace MineNET.Worlds.Formats.ChunkFormats
                 cast[i] = (short) heightMap[i];
             }
 
-            Chunk chunk = new Chunk(x, z, subChunks, biomes, cast, level.GetList("Entities"), level.GetList("TileEntities"));
+            Chunk chunk = new Chunk(this.World, x, z, subChunks, biomes, cast, level.GetList("Entities"), level.GetList("TileEntities"));
             chunk.LastUpdate = level.GetLong("LastUpdate");
             chunk.InhabitedTime = level.GetLong("InhabitedTime");
             chunk.LightPopulated = level.GetByte("LightPopulated") == 1;

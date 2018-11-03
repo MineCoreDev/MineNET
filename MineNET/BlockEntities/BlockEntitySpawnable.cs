@@ -12,7 +12,7 @@ namespace MineNET.BlockEntities
     {
         public BlockEntitySpawnable(Chunk chunk, CompoundTag nbt) : base(chunk, nbt)
         {
-            
+
         }
 
         protected override void Init(CompoundTag nbt)
@@ -35,7 +35,7 @@ namespace MineNET.BlockEntities
         {
             BlockEntityDataPacket pk = new BlockEntityDataPacket
             {
-                Position = new BlockCoordinate3D((int)this.X, (int)this.Y, (int)this.Z),
+                Position = new BlockCoordinate3D((int) this.X, (int) this.Y, (int) this.Z),
                 Namedtag = NBTIO.WriteTag(this.SaveNBT(), NBTEndian.LITTLE_ENDIAN, true)
             };
             player.SendPacket(pk);

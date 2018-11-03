@@ -44,6 +44,7 @@ namespace MineNET.Worlds
         public static void CreateWorld(string worldName, IWorldSaveFormat format)
         {
             World world = new World(worldName, format);
+            format.SetWorld(world);
             world.Format.WorldData.Create(world);
 
             Server.Instance.Worlds.Add(worldName, world);
@@ -59,6 +60,7 @@ namespace MineNET.Worlds
             if (World.Exists(worldName))
             {
                 World world = new World(worldName, format);
+                format.SetWorld(world);
                 world.Format.WorldData.Load(world);
 
                 Server.Instance.Worlds.Add(worldName, world);
@@ -132,7 +134,7 @@ namespace MineNET.Worlds
 
         private Dictionary<long, Player> _players = new Dictionary<long, Player>();
         private Dictionary<long, Entity> _entities = new Dictionary<long, Entity>();
-        private List<BlockEntity> _blockEntities = new List<BlockEntity>();
+        private Dictionary<BlockCoordinate3D, BlockEntity> _blockEntities = new Dictionary<BlockCoordinate3D, BlockEntity>();
 
         private ConcurrentDictionary<Block, int> updateQueue = new ConcurrentDictionary<Block, int>();
 
@@ -159,10 +161,10 @@ namespace MineNET.Worlds
                 entities[i].UpdateTick(tick);
             }
 
-            BlockEntity[] blockEntities = this._blockEntities.ToArray();
+            BlockEntity[] blockEntities = this._blockEntities.Values.ToArray();
             for (int i = 0; i < blockEntities.Length; ++i)
             {
-                //blockEntities[i].OnUpdate(tick);
+                blockEntities[i].OnUpdate(tick);
             }
 
             foreach (KeyValuePair<Block, int> pair in this.updateQueue)
@@ -233,8 +235,6 @@ namespace MineNET.Worlds
             {
                 chunk = this.Format.GetChunk(chunkPos.Item1, chunkPos.Item2);
             }
-
-            chunk.InternalSetWorld(this);
 
             return chunk;
         }
@@ -546,32 +546,31 @@ namespace MineNET.Worlds
 
         public void AddBlockEntity(BlockEntity blockEntity)
         {
-            if (blockEntity.World.Name != this.Name)
+            if (this._blockEntities.ContainsKey(blockEntity.ToBlockCoordinate3D()) || blockEntity.World.Name != this.Name)
             {
                 return;
             }
-            this._blockEntities.Add(blockEntity);
+            this._blockEntities.Add(blockEntity.ToBlockCoordinate3D(), blockEntity);
+            blockEntity.Chunk.AddBlockEntity(blockEntity);
         }
 
         public void RemoveBlockEntity(BlockEntity blockEntity)
         {
-            if (!this._blockEntities.Contains(blockEntity))
+            BlockCoordinate3D pos = blockEntity.ToBlockCoordinate3D();
+            if (!this._blockEntities.ContainsKey(pos))
             {
                 return;
             }
 
-            this._blockEntities.Remove(blockEntity);
+            blockEntity.Chunk.RemoveBlockEntity(blockEntity);
+            this._blockEntities.Remove(pos);
         }
 
         public BlockEntity GetBlockEntity(BlockCoordinate3D pos)
         {
-            for (int i = 0; i < this._blockEntities.Count; ++i)
+            if (this._blockEntities.ContainsKey(pos))
             {
-                BlockEntity blockEntity = this._blockEntities[i];
-                if (blockEntity.X == pos.X && blockEntity.Y == pos.Y && blockEntity.Z == pos.Z)
-                {
-                    return blockEntity;
-                }
+                return this._blockEntities[pos];
             }
             return null;
         }
