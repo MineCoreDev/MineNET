@@ -26,15 +26,15 @@ namespace MineNET.Blocks
         {
             int[] faces = { 2, 5, 3, 4};
             this.Damage = faces[player.GetDirection().GetHorizontalIndex()];
-            this.Position.World.SetBlock((Vector3)this.Position, this, true);
+            this.World.SetBlock(this.ToVector3(), this, true);
 
             CompoundTag nbt = new CompoundTag();
             nbt.PutList(new ListTag(NBTTagType.COMPOUND));
-            nbt.PutInt("x", (int)this.Position.X);
-            nbt.PutInt("y", (int)this.Position.Y);
-            nbt.PutInt("z", (int)this.Position.Z);
+            nbt.PutInt("x", this.X);
+            nbt.PutInt("y", this.Y);
+            nbt.PutInt("z", this.Z);
 
-            Chunk chunk = this.Position.World.GetChunk(new Tuple<int, int>((int) this.Position.X >> 4, (int) this.Position.Z >> 4));
+            Chunk chunk = this.World.GetChunk(new Tuple<int, int>(this.X >> 4, this.Z >> 4));
 
             BlockEntity.CreateBlockEntity("chest", chunk, nbt);
             return true;
@@ -42,16 +42,16 @@ namespace MineNET.Blocks
 
         public override bool Activate(Player player, ItemStack item)
         {
-            BlockEntity blockEntity = this.Position.World.GetBlockEntity(new BlockCoordinate3D(this.Position.X, this.Position.Y, this.Position.Z));
+            BlockEntity blockEntity = this.World.GetBlockEntity(this.ToBlockCoordinate3D());
             if (!(blockEntity is BlockEntityChest))
             {
                 CompoundTag nbt = new CompoundTag();
                 nbt.PutList(new ListTag(NBTTagType.COMPOUND));
-                nbt.PutInt("x", (int)this.Position.X);
-                nbt.PutInt("y", (int)this.Position.Y);
-                nbt.PutInt("z", (int)this.Position.Z);
+                nbt.PutInt("x", this.X);
+                nbt.PutInt("y", this.Y);
+                nbt.PutInt("z", this.Z);
 
-                Chunk chunk = this.Position.World.GetChunk(new Tuple<int, int>((int)this.Position.X >> 4, (int)this.Position.Z >> 4));
+                Chunk chunk = this.World.GetChunk(new Tuple<int, int>(this.X >> 4, this.Z >> 4));
 
                 blockEntity = BlockEntity.CreateBlockEntity("chest", chunk, nbt);
             }

@@ -3,6 +3,7 @@ using MineNET.Items;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
+using MineNET.Values;
 using MineNET.Worlds;
 
 namespace MineNET.Entities.Items
@@ -16,6 +17,9 @@ namespace MineNET.Entities.Items
 
         public override float Width { get; } = 0.25f;
         public override float Height { get; } = 0.25f;
+
+        public float Gravityu { get; } = 0.04f;
+        public float Drag { get; } = 0.02f;
 
         public short Age { get; set; }
         public short PickupDelay { get; set; }
@@ -58,7 +62,7 @@ namespace MineNET.Entities.Items
                 EntityUniqueId = this.EntityID,
                 EntityRuntimeId = this.EntityID,
                 ItemStack = this.Item,
-                Position = this.GetVector3(),
+                Position = this.ToVector3(),
                 Motion = this.GetMotion(),
                 Metadata = this.DataProperties,
                 IsFromFishing = false

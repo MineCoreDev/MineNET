@@ -11,7 +11,7 @@ namespace MineNET.Blocks
     /// <summary>
     /// Minecraft に存在するブロックを提供するクラス。
     /// </summary>
-    public class Block : ICloneable<Block>
+    public class Block : IBlockCoordinate3D, ICloneable<Block>
     {
         /// <summary>
         /// 定義されている　<see cref="Block"/> をデータ値から取得します。
@@ -77,7 +77,10 @@ namespace MineNET.Blocks
         /// <summary>
         /// <see cref="Block"/> の位置。
         /// </summary>
-        public Position Position { get; internal set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Z { get; set; }
+        public World World { get; set; }
 
         /// <summary>
         /// <see cref="Block"/> の名前。
@@ -203,7 +206,24 @@ namespace MineNET.Blocks
         /// <returns></returns>
         public bool HasPosition()
         {
-            return this.Position != null;
+            return this.World != null;
+        }
+
+        internal void SetPosition(Position pos)
+        {
+            this.X = (int) pos.X;
+            this.Y = (int) pos.Y;
+            this.Z = (int) pos.Z;
+            this.World = pos.World;
+        }
+
+        /// <summary>
+        /// <see cref="Block"/> の座標を <see cref="Position"/> で返します
+        /// </summary>
+        /// <returns></returns>
+        public Position GetPosition()
+        {
+            return new Position(this.X, this.Y, this.Z, this.World);
         }
 
         /// <summary>
@@ -215,7 +235,7 @@ namespace MineNET.Blocks
         {
             if (this.HasPosition())
             {
-                return this.Position.World.GetBlock((Vector3) this.Position + face.GetPosition());
+                return this.World.GetBlock(this.ToVector3() + face.GetPosition());
             }
             return null;
         }
@@ -232,7 +252,7 @@ namespace MineNET.Blocks
         /// <returns></returns>
         public virtual bool Place(Block clicked, Block replace, BlockFace face, Vector3 clickPos, Player player, ItemStack item)
         {
-            this.Position.World.SetBlock((Vector3) this.Position, this, true);
+            this.World.SetBlock(this.ToVector3(), this, true);
             return true;
         }
 
@@ -244,7 +264,7 @@ namespace MineNET.Blocks
         /// <returns></returns>
         public virtual bool Break(Player player, ItemStack item)
         {
-            this.Position.World.SetBlock((Vector3) this.Position, new BlockAir(), true);
+            this.World.SetBlock(this.ToVector3(), new BlockAir(), true);
             return true;
         }
 

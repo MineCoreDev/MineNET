@@ -53,7 +53,7 @@ namespace MineNET.Commands
                     float minDist = int.MaxValue;
                     for (int i = 0; i < near.Length; ++i)
                     {
-                        float nowDist = Vector3.Distance(near[i].GetVector3(), originSender.GetVector3());
+                        float nowDist = Vector3.Distance(near[i].ToVector3(), originSender.ToVector3());
                         if (minDist > nowDist)
                         {
                             minDist = nowDist;
@@ -113,7 +113,7 @@ namespace MineNET.Commands
                     float minDist = int.MaxValue;
                     for (int i = 0; i < near.Length; ++i)
                     {
-                        float nowDist = Vector3.Distance(near[i].GetVector3(), originSender.GetVector3());
+                        float nowDist = Vector3.Distance(near[i].ToVector3(), originSender.ToVector3());
                         if (minDist > nowDist)
                         {
                             minDist = nowDist;

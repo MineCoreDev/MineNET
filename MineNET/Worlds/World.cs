@@ -189,7 +189,7 @@ namespace MineNET.Worlds
             byte meta = chunk.GetMetadata(pos.FloorX & 0x0f, (int) pos.Y & 0xff, pos.FloorZ & 0x0f);
 
             Block block = Block.Get(id, meta);
-            block.Position = pos.Position(this);
+            block.SetPosition(pos.Position(this));
 
             return block;
         }
@@ -374,7 +374,7 @@ namespace MineNET.Worlds
             Block clicked = this.GetBlock(pos);
             Block replace = clicked.GetSideBlock(blockFace);
 
-            if (clicked.Position.Y > 255 || clicked.Position.Y < 0 || clicked.ID == BlockIDs.AIR)
+            if (clicked.Y > 255 || clicked.Y < 0 || clicked.ID == BlockIDs.AIR)
             {
                 return;
             }
@@ -418,12 +418,12 @@ namespace MineNET.Worlds
 
             Block hand = item.Item.Block;
             hand.Damage = item.Damage;
-            hand.Position = replace.Position;
+            hand.SetPosition(replace.GetPosition());
 
             if (clicked.CanBeReplaced)
             {
                 replace = clicked;
-                hand.Position = replace.Position;
+                hand.SetPosition(replace.GetPosition());
             }
 
             //TODO : near by entity check
@@ -443,7 +443,7 @@ namespace MineNET.Worlds
 
             LevelSoundEventPacket pk = new LevelSoundEventPacket
             {
-                Position = (Vector3) hand.Position,
+                Position = hand.ToVector3(),
                 Sound = LevelSoundEventPacket.SOUND_PLACE,
                 ExtraData = hand.RuntimeId,
                 Pitch = 1

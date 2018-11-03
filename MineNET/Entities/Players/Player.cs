@@ -637,7 +637,7 @@ namespace MineNET.Entities.Players
 
         public bool CanInteract(Vector3 pos, double maxDistance)
         {
-            if (Vector3.DistanceSquared(this.GetVector3(), pos) > maxDistance * maxDistance)
+            if (Vector3.DistanceSquared(this.ToVector3(), pos) > maxDistance * maxDistance)
             {
                 return false;
             }
@@ -650,7 +650,7 @@ namespace MineNET.Entities.Players
 
         public bool DropItem(ItemStack item)
         {
-            Vector3 pos = this.GetVector3().Add(0, 1.3f, 0);
+            Vector3 pos = this.ToVector3().Add(0, 1.3f, 0);
             Vector3 motion = this.GetDirectionVector().Multiply(0.4f);
 
             this.World.DropItem(item, pos, motion);
