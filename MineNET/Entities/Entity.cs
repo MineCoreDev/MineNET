@@ -332,7 +332,7 @@ namespace MineNET.Entities
                 EntityUniqueId = this.EntityID,
                 EntityRuntimeId = this.EntityID,
                 Type = this.NetworkId,
-                Position = this.GetVector3(),
+                Position = this.ToVector3(),
                 Motion = new Vector3(),
                 Direction = new Vector3(this.Yaw, this.Pitch, this.HeadYaw),
                 Attributes = this.Attributes,
@@ -378,26 +378,6 @@ namespace MineNET.Entities
         public Vector2 GetRotateVector2()
         {
             return new Vector2(this.Yaw, this.Pitch);
-        }
-
-        public Vector3 GetVector3()
-        {
-            return new Vector3(this.X, this.Y, this.Z);
-        }
-
-        public Vector2 GetVector2()
-        {
-            return new Vector2(this.X, this.Z);
-        }
-
-        public Position GetPosition()
-        {
-            return new Position(this.X, this.Y, this.Z, this.World);
-        }
-
-        public Location GetLocation()
-        {
-            return new Location(this.X, this.Y, this.Z, this.Yaw, this.Pitch, this.World);
         }
 
         public Vector3 GetMotion()

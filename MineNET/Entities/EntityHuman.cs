@@ -26,7 +26,7 @@ namespace MineNET.Entities
                 Username = this.Name,
                 EntityUniqueId = this.EntityID,
                 EntityRuntimeId = this.EntityID,
-                Position = this.GetVector3(),
+                Position = this.ToVector3(),
                 Motion = new Vector3(),
                 Direction = new Vector3(this.Yaw, this.Pitch, this.HeadYaw),
                 Metadata = this.DataProperties

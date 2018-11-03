@@ -4,7 +4,13 @@
     {
         float Yaw { get; }
         float Pitch { get; }
+    }
 
-        Vector2 GetRotateVector2();
+    public static class ILocationExtensions
+    {
+        public static Location ToLocation(this ILocation location)
+        {
+            return new Location(location.X, location.Y, location.Z, location.Yaw, location.Pitch, location.World);
+        }
     }
 }

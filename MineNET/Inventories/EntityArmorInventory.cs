@@ -41,30 +41,27 @@ namespace MineNET.Inventories
             }
         }
 
-        public override void OnSlotChange(int index, ItemStack item, bool send)
-        {
-            this.SendSlot(index, this.Viewers.ToArray());
-            //this.SendArmorContents(this.Holder.Viewers);
-        }
-
         public override void SendSlot(int index, params Player[] players)
         {
             base.SendSlot(index, players);
+            this.SendArmorContents(this.Holder.Viewers);
         }
 
         public override void SendContents(params Player[] players)
         {
             base.SendContents(players);
-            this.SendArmorContents(players);
+            this.SendArmorContents(this.Holder.Viewers);
         }
 
         public void SendArmorContents(params Player[] players)
         {
             for (int i = 0; i < players.Length; ++i)
             {
-                MobArmorEquipmentPacket pk = new MobArmorEquipmentPacket();
-                pk.EntityRuntimeId = players[i].EntityID;
-                pk.Items = this.GetArmorContents();
+                MobArmorEquipmentPacket pk = new MobArmorEquipmentPacket
+                {
+                    EntityRuntimeId = this.Holder.EntityID,
+                    Items = this.GetArmorContents()
+                };
                 players[i].SendPacket(pk);
             }
         }
@@ -109,7 +106,7 @@ namespace MineNET.Inventories
 
             set
             {
-                this.SetItem(EntityArmorInventory.SLOT_ARMOR_HEAD, value.Clone());
+                this.SetItem(EntityArmorInventory.SLOT_ARMOR_HEAD, value);
             }
         }
 
@@ -122,7 +119,7 @@ namespace MineNET.Inventories
 
             set
             {
-                this.SetItem(EntityArmorInventory.SLOT_ARMOR_CHEST, value.Clone());
+                this.SetItem(EntityArmorInventory.SLOT_ARMOR_CHEST, value);
             }
         }
 
@@ -135,7 +132,7 @@ namespace MineNET.Inventories
 
             set
             {
-                this.SetItem(EntityArmorInventory.SLOT_ARMOR_LEGS, value.Clone());
+                this.SetItem(EntityArmorInventory.SLOT_ARMOR_LEGS, value);
             }
         }
 
@@ -148,7 +145,7 @@ namespace MineNET.Inventories
 
             set
             {
-                this.SetItem(EntityArmorInventory.SLOT_ARMOR_FEET, value.Clone());
+                this.SetItem(EntityArmorInventory.SLOT_ARMOR_FEET, value);
             }
         }
     }
