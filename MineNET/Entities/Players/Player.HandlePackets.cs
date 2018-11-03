@@ -698,6 +698,7 @@ namespace MineNET.Entities.Players
                 if (!transaction.Execute())
                 {
                     Logger.Info($"Failed to execute inventory transaction from {this.Name} with actions");
+                    this.SendAllInventories();
                 }
             }
             else if (pk.TransactionType == InventoryTransactionPacket.TYPE_MISMATCH)

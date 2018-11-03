@@ -16,22 +16,61 @@ namespace MineNET.Inventories
 
         }
 
+        public override void SendSlot(int index, params Player[] players)
+        {
+            InventorySlotPacket pk = new InventorySlotPacket
+            {
+                Slot = (uint)index,
+                Item = this.GetItem(index)
+            };
+            for (int i = 0; i < players.Length; ++i)
+            {
+                Player player = players[i];
+                pk.InventoryId = player.Inventory.OpendWindowId;
+                player.SendPacket(pk);
+            }
+        }
+
+        public override void SendContents(params Player[] players)
+        {
+            InventoryContentPacket pk = new InventoryContentPacket
+            {
+                Items = new ItemStack[this.Size]
+            };
+            for (int i = 0; i < this.Size; ++i)
+            {
+                pk.Items[i] = this.GetItem(i);
+            }
+            for (int i = 0; i < players.Length; ++i)
+            {
+                Player player = players[i];
+                pk.InventoryId = player.Inventory.OpendWindowId;
+                player.SendPacket(pk);
+            }
+        }
+
         public override void OnOpen(Player player)
         {
             base.OnOpen(player);
 
-            ContainerOpenPacket pk = new ContainerOpenPacket();
-            pk.WindowId = this.Type;
-            pk.Type = this.Type;
+            ContainerOpenPacket pk = new ContainerOpenPacket
+            {
+                WindowId = player.Inventory.OpendWindowId,
+                Type = this.Type
+            };
             InventoryHolder holder = this.Holder;
             pk.Position = new BlockCoordinate3D((int) holder.X, (int) holder.Y, (int) holder.Z);
             player.SendPacket(pk);
+
+            this.SendContents(player);
         }
 
         public override void OnClose(Player player)
         {
-            ContainerClosePacket pk = new ContainerClosePacket();
-            pk.WindowId = this.Type;
+            ContainerClosePacket pk = new ContainerClosePacket
+            {
+                WindowId = player.Inventory.OpendWindowId
+            };
             player.SendPacket(pk);
 
             base.OnClose(player);

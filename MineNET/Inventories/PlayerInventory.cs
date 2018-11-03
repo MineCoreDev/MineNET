@@ -13,6 +13,8 @@ namespace MineNET.Inventories
         public PlayerEnderChestInventory PlayerEnderChestInventory { get; }
         public Inventory OpendInventory { get; private set; } = null;
 
+        public byte OpendWindowId { get; private set; } = 4;
+
         public CraftingGridInventory CraftingGridInventory { get; }
 
         public PlayerInventory(Player player) : base(player, 36)
@@ -25,18 +27,22 @@ namespace MineNET.Inventories
 
         public override void SendSlot(int index, params Player[] players)
         {
-            InventorySlotPacket pk = new InventorySlotPacket();
-            pk.Slot = (uint) index;
-            pk.Item = this.GetItem(index);
-            pk.InventoryId = this.Type;
+            InventorySlotPacket pk = new InventorySlotPacket
+            {
+                Slot = (uint)index,
+                Item = this.GetItem(index),
+                InventoryId = this.Type
+            };
             Player player = this.Holder;
             player.SendPacket(pk);
         }
 
         public override void SendContents(params Player[] players)
         {
-            InventoryContentPacket pk = new InventoryContentPacket();
-            pk.Items = new ItemStack[this.Size];
+            InventoryContentPacket pk = new InventoryContentPacket
+            {
+                Items = new ItemStack[this.Size]
+            };
             for (int i = 0; i < this.Size; ++i)
             {
                 pk.Items[i] = this.GetItem(i);
@@ -72,9 +78,11 @@ namespace MineNET.Inventories
         public void SendCreativeItems()
         {
             Player player = this.Holder;
-            InventoryContentPacket pk = new InventoryContentPacket();
-            pk.InventoryId = ContainerIds.CREATIVE.GetIndex();
-            pk.Items = Item.GetCreativeItems();
+            InventoryContentPacket pk = new InventoryContentPacket
+            {
+                InventoryId = ContainerIds.CREATIVE.GetIndex(),
+                Items = Item.GetCreativeItems()
+            };
             player.SendPacket(pk);
         }
 
@@ -107,7 +115,7 @@ namespace MineNET.Inventories
             {
                 return this.ArmorInventory;
             }
-            else if (id == this.OpendInventory.Type)
+            else if (id == this.OpendWindowId)
             {
                 return this.OpendInventory;
             }

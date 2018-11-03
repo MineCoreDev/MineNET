@@ -45,7 +45,15 @@ namespace MineNET.Blocks
             BlockEntity blockEntity = this.Position.World.GetBlockEntity(new BlockCoordinate3D(this.Position.X, this.Position.Y, this.Position.Z));
             if (!(blockEntity is BlockEntityChest))
             {
-                return false;
+                CompoundTag nbt = new CompoundTag();
+                nbt.PutList(new ListTag(NBTTagType.COMPOUND));
+                nbt.PutInt("x", (int)this.Position.X);
+                nbt.PutInt("y", (int)this.Position.Y);
+                nbt.PutInt("z", (int)this.Position.Z);
+
+                Chunk chunk = this.Position.World.GetChunk(new Tuple<int, int>((int)this.Position.X >> 4, (int)this.Position.Z >> 4));
+
+                blockEntity = BlockEntity.CreateBlockEntity("chest", chunk, nbt);
             }
 
             Inventory inventory = ((BlockEntityChest) blockEntity).Inventory;

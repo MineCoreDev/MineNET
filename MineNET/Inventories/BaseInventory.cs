@@ -258,9 +258,11 @@ namespace MineNET.Inventories
 
         public virtual void SendSlot(int index, params Player[] players)
         {
-            InventorySlotPacket pk = new InventorySlotPacket();
-            pk.Slot = (uint) index;
-            pk.Item = this.GetItem(index);
+            InventorySlotPacket pk = new InventorySlotPacket
+            {
+                Slot = (uint)index,
+                Item = this.GetItem(index)
+            };
             for (int i = 0; i < players.Length; ++i)
             {
                 Player player = players[i];
@@ -271,8 +273,10 @@ namespace MineNET.Inventories
 
         public virtual void SendContents(params Player[] players)
         {
-            InventoryContentPacket pk = new InventoryContentPacket();
-            pk.Items = new ItemStack[this.Size];
+            InventoryContentPacket pk = new InventoryContentPacket
+            {
+                Items = new ItemStack[this.Size]
+            };
             for (int i = 0; i < this.Size; ++i)
             {
                 pk.Items[i] = this.GetItem(i);

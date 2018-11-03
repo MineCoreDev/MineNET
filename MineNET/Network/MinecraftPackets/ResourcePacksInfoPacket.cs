@@ -36,5 +36,10 @@ namespace MineNET.Network.MinecraftPackets
                 this.WriteString("");//TODO:
             }
         }
+
+        protected override void DecodePayload()
+        {
+
+        }
     }
 }
