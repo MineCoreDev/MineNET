@@ -13,8 +13,9 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
 {
     public class AnvilWorldSaveFormat : IWorldSaveFormat
     {
-        public IChunkFormat ChunkFormat => new McaChunkFormat();
+        public IChunkFormat ChunkFormat { get; private set; }
         public IWorldDataFormat WorldData => new LevelDBFormat();
+        public World World { get; private set; }
 
         public string WorldName { get; }
         public string WorldPath { get; }
@@ -38,8 +39,14 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
                 Directory.CreateDirectory(this.RegionPath);
             }
 
-            this.WorldName = worldName;
+            this.WorldName = WorldName;
             this.LevelDataFilePath = $"{this.WorldPath}\\level.dat";
+        }
+
+        public void SetWorld(World world)
+        {
+            this.ChunkFormat = new McaChunkFormat(world);
+            this.World = world;
         }
 
         public Chunk GetChunk(int chunkX, int chunkZ)
@@ -60,7 +67,7 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
             string filePath = Path.Combine(this.WorldPath, $@"region\\r.{rx}.{rz}.mca");
             if (!File.Exists(filePath))
             {
-                return new Chunk(chunkX, chunkZ);
+                return new Chunk(this.World, chunkX, chunkZ);
             }
 
             if (!_files.ContainsKey(regionPos))
@@ -98,7 +105,7 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
 
             if (offset == 0 || length == 0)
             {
-                return new Chunk(chunkX, chunkZ);
+                return new Chunk(this.World, chunkX, chunkZ);
             }
 
             regionFile.Seek(offset, SeekOrigin.Begin);

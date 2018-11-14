@@ -1,4 +1,5 @@
-﻿using MineNET.Inventories;
+﻿using MineNET.Blocks;
+using MineNET.Inventories;
 using MineNET.NBT.Tags;
 using MineNET.Worlds;
 
@@ -18,7 +19,7 @@ namespace MineNET.BlockEntities
         /// <param name="nbt"></param>
         public BlockEntityChest(Chunk chunk, CompoundTag nbt = null) : base(chunk, nbt)
         {
-            
+
         }
 
         protected override void Init(CompoundTag nbt)
@@ -37,6 +38,14 @@ namespace MineNET.BlockEntities
             get
             {
                 return "Chest";
+            }
+        }
+
+        internal override void OnUpdate(long tick)
+        {
+            if (this.World.GetBlock(this.GetVector3()).ID != BlockIDs.CHEST)
+            {
+                this.World.RemoveBlockEntity(this);
             }
         }
 
