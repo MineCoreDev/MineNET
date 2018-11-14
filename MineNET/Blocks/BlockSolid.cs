@@ -6,22 +6,8 @@ namespace MineNET.Blocks
     {
         public BlockSolid(int id, string name) : base(id, name)
         {
-        }
-
-        public override bool IsSolid
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public override AxisAlignedBB BoundingBox
-        {
-            get
-            {
-                return new AxisAlignedBB(Vector3.One, Vector3.One);
-            }
+            this.IsSolid = true;
+            this.BoundingBoxes = new AxisAlignedBB[] { new AxisAlignedBB(Vector3.Zero, Vector3.One) };
         }
     }
 }

@@ -565,12 +565,13 @@ namespace MineNET.Entities.Players
             //this.SendPacketViewers(pk);
 
             this.X = pos.X;
-            this.Y = pos.Y;
+            this.Y = pos.Y -= this.BaseOffset;
             this.Z = pos.Z;
             this.Pitch = direction.X;
             this.Yaw = direction.Y;
+            this.HeadYaw = direction.Z;
 
-            this.SendPacketViewers(pk.Clone());
+            this.SendPacketViewers(pk);
         }
 
         #endregion

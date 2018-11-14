@@ -13,6 +13,8 @@ namespace MineNET.Entities
 
         public Skin Skin { get; set; }
 
+        public override float BaseOffset { get; } = 1.62f;
+
         public EntityHuman(Chunk chunk, CompoundTag nbt) : base(chunk, nbt)
         {
 

@@ -171,7 +171,7 @@ namespace MineNET.Values
             return Zero;
         }
 
-        public void Normalize()
+        public Vector3 Normalize()
         {
             float num = this.Magnitude;
             if (num > 1E-05f)
@@ -182,6 +182,7 @@ namespace MineNET.Values
             {
                 this = Zero;
             }
+            return new Vector3(this.X, this.Y, this.Z);
         }
 
         public Vector3 Normalized
@@ -192,6 +193,21 @@ namespace MineNET.Values
         public Vector3 Add(float x, float y = 0, float z = 0)
         {
             return new Vector3(this.X + x, this.Y + y, this.Z + z);
+        }
+
+        public Vector3 Add(IVector3 vector)
+        {
+            return this.Add(vector.X, vector.Y, vector.Z);
+        }
+
+        public Vector3 Subtract(float x, float y = 0, float z = 0)
+        {
+            return this.Add(-x, -y, -z);
+        }
+
+        public Vector3 Subtract(IVector3 vector)
+        {
+            return this.Add(-vector.X, -vector.Y, -vector.Z);
         }
 
         public Vector3 Multiply(float num)

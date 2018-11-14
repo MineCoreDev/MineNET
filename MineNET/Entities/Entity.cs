@@ -5,6 +5,7 @@ using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
 using MineNET.Entities.Players;
+using MineNET.IO;
 using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Network.MinecraftPackets;
@@ -86,6 +87,14 @@ namespace MineNET.Entities
         /// <see cref="Entity"/> の高さ
         /// </summary>
         public virtual float Height { get; }
+        /// <summary>
+        /// <see cref="Entity"/> の重力
+        /// </summary>
+        public virtual float Gravity { get; }
+        /// <summary>
+        /// <see cref="Entity"/> のモーションの摩擦
+        /// </summary>
+        public virtual float Drag { get; }
 
         /// <summary>
         /// <see cref="Entity"/> のX座標
@@ -125,6 +134,11 @@ namespace MineNET.Entities
         public float HeadYaw { get; set; }
 
         /// <summary>
+        /// <see cref="Entity"/> の当たり判定の大きさ
+        /// </summary>
+        public AxisAlignedBB BoundingBox { get; protected set; } = AxisAlignedBB.None;
+
+        /// <summary>
         /// <see cref="Entity"/> のX座標へのモーション
         /// </summary>
         public float MotionX { get; set; }
@@ -137,10 +151,21 @@ namespace MineNET.Entities
         /// </summary>
         public float MotionZ { get; set; }
 
+        public Vector3 LastMotion { get; protected set; }
+        public Location LastLocation { get; protected set; }
+
         /// <summary>
         /// <see cref="Entity"/> のランタイムなID
         /// </summary>
         public long EntityID { get; }
+
+        public virtual float StepHeight { get; }
+
+        public float YSize { get; protected set; }
+
+        public virtual float BaseOffset { get; }
+
+        public virtual bool ApplyDragBeforeGravity { get; } = false;
 
         /// <summary>
         /// このクラスが <see cref="Player"/> の場合 <see langword="true"/> を、それ以外の場合は <see langword="false"/> を返します
@@ -196,6 +221,16 @@ namespace MineNET.Entities
             this.X = ((FloatTag) list[0]).Data;
             this.Y = ((FloatTag) list[1]).Data;
             this.Z = ((FloatTag) list[2]).Data;
+            list = nbt.GetList("Motion");
+            this.MotionX = ((FloatTag) list[0]).Data;
+            this.MotionY = ((FloatTag) list[1]).Data;
+            this.MotionZ = ((FloatTag) list[2]).Data;
+            list = nbt.GetList("Rotation");
+            this.Yaw = ((FloatTag) list[0]).Data;
+            this.Pitch = ((FloatTag) list[1]).Data;
+
+            this.ResetLastMovements();
+            this.RecalculateBoundingBox();
 
             this.DataProperties = new EntityMetadataManager(this.EntityID);
             this.SetDataProperty(new EntityDataLong(DATA_FLAGS, 0));
@@ -213,8 +248,50 @@ namespace MineNET.Entities
             this.Attributes = new EntityAttributeDictionary(this.EntityID);
         }
 
+        protected void ResetLastMovements()
+        {
+            this.LastLocation = this.ToLocation();
+            this.LastMotion = this.GetMotion();
+        }
+
         internal virtual bool UpdateTick(long tick)
         {
+            if (this.Closed)
+            {
+                return false;
+            }
+
+            Logger.Info($"x {this.X} : y {this.Y} : z {this.Z}");
+            
+            this.TryChangeMovement();
+            if (Math.Abs(this.MotionX) <= 0.00001f)
+            {
+                this.MotionX = 0;
+            }
+            if (Math.Abs(this.MotionY) <= 0.00001f)
+            {
+                this.MotionY = 0;
+            }
+            if (Math.Abs(this.MotionZ) <= 0.00001f)
+            {
+                this.MotionZ = 0;
+            }
+            if (this.MotionX != 0 || this.MotionY != 0 || this.MotionZ != 0)
+            {
+                this.Move(this.MotionX, this.MotionY, this.MotionZ);
+            }
+            this.UpdateMovement();
+            this.EntityBaseTick(tick);
+            return true;
+        }
+
+        protected virtual bool EntityBaseTick(long tick = 1)
+        {
+            if (this.Y <= -16)
+            {
+                this.Kill(); //TODO
+                return false;
+            }
             return true;
         }
 
@@ -375,6 +452,182 @@ namespace MineNET.Entities
             this.Closed = true;
         }
 
+        public void RecalculateBoundingBox()
+        {
+            float half = this.Width / 2;
+            this.BoundingBox = this.BoundingBox.SetBounds(this.X - half, this.Y, this.Z - half, this.X + half, this.Y + this.Height, this.Z + half);
+        }
+
+        protected void TryChangeMovement()
+        {
+            float friction = 1f - this.Drag;
+
+            if (this.ApplyDragBeforeGravity)
+            {
+                this.MotionY *= friction;
+            }
+
+            this.MotionY -= this.Gravity;
+
+            if (!this.ApplyDragBeforeGravity)
+            {
+                this.MotionY *= friction;
+            }
+
+            //TODO : OnGround
+
+            this.MotionX *= friction;
+            this.MotionZ *= friction;
+        }
+
+        public void Move(float x, float y, float z)
+        {
+            float movX = x;
+            float movY = y;
+            float movZ = z;
+
+            this.YSize *= 0.4f;
+            AxisAlignedBB bb = this.BoundingBox;
+
+            AxisAlignedBB[] boundingboxes = this.World.GetCollisionCubes(this, this.BoundingBox = this.BoundingBox.Offset(x, y, z), false);
+            
+            for (int i = 0; i < boundingboxes.Length; ++i)
+            {
+                y = boundingboxes[i].CalculateYOffset(this.BoundingBox, y);
+            }
+            this.BoundingBox = this.BoundingBox.Offset(0, y, 0);
+
+            for (int i = 0; i < boundingboxes.Length; ++i)
+            {
+                x = boundingboxes[i].CalculateXOffset(this.BoundingBox, x);
+            }
+            this.BoundingBox = this.BoundingBox.Offset(x, 0, 0);
+
+            for (int i = 0; i < boundingboxes.Length; ++i)
+            {
+                z = boundingboxes[i].CalculateZOffset(this.BoundingBox, z);
+            }
+            this.BoundingBox = this.BoundingBox.Offset(0, 0, z);
+
+            if (this.StepHeight > 0 && this.YSize < 0.05f && (movX != x || movZ != z))
+            {
+                float cx = x;
+                float cy = y;
+                float cz = z;
+                x = movX;
+                y = movY;
+                z = movZ;
+
+                AxisAlignedBB bb1 = this.BoundingBox;
+                this.BoundingBox = bb;
+
+                boundingboxes = this.World.GetCollisionCubes(this, this.BoundingBox = this.BoundingBox.AddCoord(x, y, z), false);
+
+                for (int i = 0; i < boundingboxes.Length; ++i)
+                {
+                    y = boundingboxes[i].CalculateYOffset(this.BoundingBox, y);
+                }
+                this.BoundingBox = this.BoundingBox.Offset(0, y, 0);
+
+                for (int i = 0; i < boundingboxes.Length; ++i)
+                {
+                    x = boundingboxes[i].CalculateXOffset(this.BoundingBox, x);
+                }
+                this.BoundingBox = this.BoundingBox.Offset(x, 0, 0);
+
+                for (int i = 0; i < boundingboxes.Length; ++i)
+                {
+                    z = boundingboxes[i].CalculateZOffset(this.BoundingBox, z);
+                }
+                this.BoundingBox = this.BoundingBox.Offset(0, 0, z);
+
+                if ((cx * cx + cz * cz) >= (x * x + z * z))
+                {
+                    x = cx;
+                    y = cy;
+                    z = cz;
+                    this.BoundingBox = bb1;
+                }
+                else
+                {
+                    this.YSize += 0.5f;
+                }
+            }
+
+            this.X = (this.BoundingBox.Position.X + this.BoundingBox.Size.X) / 2;
+            this.Y = this.BoundingBox.Position.Y - this.YSize;
+            this.Z = (this.BoundingBox.Position.Z + this.BoundingBox.Size.Z) / 2;
+
+            if (movX != x)
+            {
+                this.MotionX = 0;
+            }
+            if (movY != y)
+            {
+                this.MotionY = 0;
+            }
+            if (movZ != z)
+            {
+                this.MotionZ = 0;
+            }
+        }
+
+        public void UpdateMovement(bool teleport = false)
+        {
+            float diffPosition = this.DistanceSquared(this.LastLocation);
+            float yaw = this.Yaw - this.LastLocation.Yaw;
+            float pitch = this.Pitch - this.LastLocation.Pitch;
+            float diffRotation = (yaw * yaw) + (pitch * pitch);
+
+            float diffMotion = this.GetMotion().Subtract(this.LastMotion).LengthSquared();
+
+            if (teleport || diffPosition > 0.0001f || diffRotation > 1f)
+            {
+                this.LastLocation = this.ToLocation();
+                this.BroadcastMovement(teleport);
+            }
+
+            if (diffMotion > 0.0025f || (diffMotion > 0.0001 && this.GetMotion().LengthSquared() <= 0.0001f))
+            {
+                this.LastMotion = this.GetMotion();
+                this.BoradcastMotion();
+            }
+        }
+
+        public Vector3 GetOffsetPosition(Vector3 pos)
+        {
+            return new Vector3(pos.X, pos.Y + this.BaseOffset, pos.Z);
+        }
+
+        protected void BroadcastMovement(bool teleport = false)
+        {
+            MoveEntityAbsolutePacket pk = new MoveEntityAbsolutePacket
+            {
+                EntityRuntimeId = this.EntityID,
+                Position = this.GetOffsetPosition(this.ToVector3()),
+                XRot = this.Yaw,
+                YRot = this.Pitch,
+                ZRot = this.HeadYaw
+            };
+
+            if (teleport)
+            {
+                pk.Flags |= MoveEntityAbsolutePacket.FLAG_TELEPORT;
+            }
+            //TODO : OnGround
+            this.SendPacketViewers(pk);
+        }
+
+        protected void BoradcastMotion()
+        {
+            SetEntityMotionPacket pk = new SetEntityMotionPacket
+            {
+                EntityRuntimeId = this.EntityID,
+                Motion = this.GetMotion()
+            };
+            this.SendPacketViewers(pk);
+        }
+
         public Vector2 GetRotateVector2()
         {
             return new Vector2(this.Yaw, this.Pitch);
@@ -420,13 +673,11 @@ namespace MineNET.Entities
 
         public Vector3 GetDirectionVector()
         {
-            double pitch = ((this.Pitch + 90) * Math.PI) / 180;
-            double yaw = ((this.Yaw + 90) * Math.PI) / 180;
-            float x = (float) (Math.Sin(pitch) * Math.Cos(yaw));
-            float y = (float) (Math.Sin(pitch) * Math.Sin(yaw));
-            float z = (float) Math.Cos(pitch);
-            Vector3 vec = new Vector3(x, y, z);
-            return vec.Normalized;
+            float y = (float) -Math.Sin(this.Pitch * (Math.PI / 180));
+            double xz = Math.Cos(this.Pitch * (Math.PI / 180));
+            float x = (float) (-xz * Math.Sin(this.Yaw * (Math.PI / 180)));
+            float z = (float) (xz * Math.Cos(this.Yaw * (Math.PI / 180)));
+            return new Vector3(x, y, z).Normalize();
         }
     }
 }

@@ -18,8 +18,10 @@ namespace MineNET.Entities.Items
         public override float Width { get; } = 0.25f;
         public override float Height { get; } = 0.25f;
 
-        public float Gravityu { get; } = 0.04f;
-        public float Drag { get; } = 0.02f;
+        public override float BaseOffset { get; } = 0.125f;
+
+        public override float Gravity { get; } = 0.04f;
+        public override float Drag { get; } = 0.02f;
 
         public short Age { get; set; }
         public short PickupDelay { get; set; }

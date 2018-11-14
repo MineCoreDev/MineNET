@@ -180,6 +180,23 @@ namespace MineNET.Worlds
             }
         }
 
+        public Block GetBlock(int x, int y, int z)
+        {
+            Tuple<int, int> chunkPos = new Tuple<int, int>(x >> 4, z >> 4);
+            Chunk chunk = this.GetChunk(chunkPos);
+
+            int id = chunk.GetBlock(x & 0x0f, y & 0xff, z & 0x0f);
+            byte meta = chunk.GetMetadata(x & 0x0f, y & 0xff, z & 0x0f);
+
+            Block block = Block.Get(id, meta);
+            block.X = x;
+            block.Y = y;
+            block.Z = z;
+            block.World = this;
+
+            return block;
+        }
+
         public Block GetBlock(Vector3 pos)
         {
             Tuple<int, int> chunkPos = new Tuple<int, int>((int) pos.X >> 4, (int) pos.Z >> 4);
@@ -588,6 +605,72 @@ namespace MineNET.Worlds
                 ((EntityItem) entity).Item = item;
             }
             entity.SpawnToAll();
+        }
+
+        public AxisAlignedBB[] GetCollisionCubes(Entity entity, AxisAlignedBB bb, bool entities = true)
+        {
+            List<AxisAlignedBB> collides = new List<AxisAlignedBB>();
+
+            int minX = (int) Math.Floor(bb.Position.X - 1);
+            int minY = (int) Math.Floor(bb.Position.Y - 1);
+            int minZ = (int) Math.Floor(bb.Position.Z - 1);
+            int maxX = (int) Math.Floor(bb.Size.X + 1);
+            int maxY = (int) Math.Floor(bb.Size.Y + 1);
+            int maxZ = (int) Math.Floor(bb.Size.Z + 1);
+
+            for (int z = minZ; z <= maxZ; ++z)
+            {
+                for (int x = minX; x <= maxX; ++x)
+                {
+                    for (int y = minY; y <= maxY; ++y)
+                    {
+                        Block block = this.GetBlock(x, y, z);
+                        //if (block.CanPassThrough())
+                        AxisAlignedBB[] boundingBoxes = block.GetCollisionBoxes();
+                        for (int i = 0; i < boundingBoxes.Length; ++i)
+                        {
+                            if (boundingBoxes[i].IntersectsWith(bb))
+                            {
+                                collides.Add(boundingBoxes[i]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (entities)
+            {
+                Entity[] boundEntities = this.GetCollidingEntities(bb.Expand(0.25f, 0.25f, 0.25f), entity);
+                for (int i = 0; i < boundEntities.Length; ++i)
+                {
+                    collides.Add(boundEntities[i].BoundingBox);
+                }
+            }
+
+            return collides.ToArray();
+        }
+
+        public Entity[] GetCollidingEntities(AxisAlignedBB bb, Entity entity = null)
+        {
+            List<Entity> nearby = new List<Entity>();
+
+            if (entity == null) //TODO : if (entity == null || entity.CanCollide) 
+            {
+                int minX = (int) Math.Floor(bb.Position.X - 2) >> 4;
+                int minZ = (int) Math.Floor(bb.Position.Z - 2) >> 4;
+                int maxX = (int) Math.Floor(bb.Size.X + 2) >> 4;
+                int maxZ = (int) Math.Floor(bb.Size.Z + 2) >> 4;
+
+                for (int x = minX; x <= maxX; ++x)
+                {
+                    for (int z = minZ; z <= maxZ; ++z)
+                    {
+                        //TODO
+                    }
+                }
+            }
+
+            return nearby.ToArray();
         }
 
         public void ScheduleUpdate(Block block, int tick)

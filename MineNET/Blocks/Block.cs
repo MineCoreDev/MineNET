@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using MineNET.Data;
 using MineNET.Entities.Players;
@@ -111,6 +112,11 @@ namespace MineNET.Blocks
         public virtual Color MapColor { get; set; } = BlockColor.Air;
 
         /// <summary>
+        /// <see cref="Block"/> の当たり判定。
+        /// </summary>
+        protected virtual AxisAlignedBB[] BoundingBoxes { get; set; } = new AxisAlignedBB[0];
+
+        /// <summary>
         /// この <see cref="Block"/> を破壊する適正ツールを返します。
         /// </summary>
         public virtual ItemToolType ToolType { get; set; } = ItemToolType.NONE;
@@ -184,11 +190,6 @@ namespace MineNET.Blocks
         {
             return this.MemberwiseClone();
         }
-
-        /// <summary>
-        /// <see cref="Block"/> の当たり判定。
-        /// </summary>
-        public virtual AxisAlignedBB BoundingBox { get; } = AxisAlignedBB.None;
 
         /// <summary>
         /// <see cref="Block"/> が更新された時に呼び出されます。
@@ -302,6 +303,21 @@ namespace MineNET.Blocks
             {
                 return new ItemStack(Item.Get(this.ID), this.Damage);
             }
+        }
+
+        /// <summary>
+        /// <see cref="Block"/> の座標からの当たり判定を返します 
+        /// </summary>
+        /// <returns></returns>
+        public AxisAlignedBB[] GetCollisionBoxes()
+        {
+            List<AxisAlignedBB> collisions = new List<AxisAlignedBB>();
+            AxisAlignedBB[] bbs = this.BoundingBoxes;
+            for (int i = 0; i < bbs.Length; ++i)
+            {
+                collisions.Add(bbs[i].Offset(this.X, this.Y, this.Z));
+            }
+            return collisions.ToArray();
         }
     }
 }
