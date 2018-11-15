@@ -1,6 +1,7 @@
 ﻿using MineNET.Blocks;
 using MineNET.Inventories;
 using MineNET.NBT.Tags;
+using MineNET.Values;
 using MineNET.Worlds;
 
 namespace MineNET.BlockEntities
@@ -43,7 +44,7 @@ namespace MineNET.BlockEntities
 
         internal override void OnUpdate(long tick)
         {
-            if (this.World.GetBlock(this.GetVector3()).ID != BlockIDs.CHEST)
+            if (this.World.GetBlock(this.ToVector3()).ID != BlockIDs.CHEST)
             {
                 this.World.RemoveBlockEntity(this);
             }

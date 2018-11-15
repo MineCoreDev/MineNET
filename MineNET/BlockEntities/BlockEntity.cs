@@ -85,7 +85,7 @@ namespace MineNET.BlockEntities
         /// </summary>
         public abstract string Name { get; }
 
-        internal virtual void OnUpdate()
+        internal virtual void OnUpdate(long tick)
         {
 
         }
