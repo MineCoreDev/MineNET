@@ -9,6 +9,7 @@ namespace MineNET.Network.MinecraftPackets
         public bool MustAccept { get; set; } = false;
         public IResourcePack[] BehaviourPackEntries { get; set; } = new IResourcePack[0];
         public IResourcePack[] ResourcePackEntries { get; set; } = new IResourcePack[0];
+        public bool IsExperimental { get; set; } = false;
 
         protected override void EncodePayload()
         {
@@ -29,6 +30,8 @@ namespace MineNET.Network.MinecraftPackets
                 this.WriteString(entry.GetPackVersion());
                 this.WriteString("");
             }
+
+            this.WriteBool(this.IsExperimental);
         }
 
         protected override void DecodePayload()

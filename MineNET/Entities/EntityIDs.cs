@@ -48,7 +48,7 @@
         public const int ENDER_DRAGON = 53;
         public const int SHULKER = 54;
         public const int ENDERMITE = 55;
-        public const int LEARN_TO_CODE_MASCOT = 56;
+        public const int AGENT = 56;
         public const int VINDICATOR = 57;
         public const int PHANTOM = 58;
 
@@ -66,7 +66,7 @@
         public const int FIREWORKS_ROCKET = 72;
         public const int THROWN_TRIDENT = 73;
         public const int TURTLE = 74;
-
+        public const int CAT = 75;
         public const int SHULKER_BULLET = 76;
         public const int FISHING_HOOK = 77;
         public const int CHALKBOARD = 78;
@@ -104,5 +104,6 @@
         public const int DROWNED = 110;
         public const int TROPICAL_FISH = 111;
         public const int COD = 112;
+        public const int PANDA = 113;
     }
 }

@@ -33,6 +33,7 @@ namespace MineNET
             new BlockEntityInit();
             new ItemInit();
             new EffectInit();
+            new EntityIdentityInit();
             new EntityInit();
         }
 

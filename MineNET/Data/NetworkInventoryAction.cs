@@ -13,6 +13,7 @@ namespace MineNET.Data
 
         public const int SOURCE_WORLD = 2;
         public const int SOURCE_CREATIVE = 3;
+        public const int SOURCE_CRAFT_SLOT = 100;
         public const int SOURCE_TODO = 99999;
 
         public const int SOURCE_TYPE_CRAFTING_ADD_INGREDIENT = -2;
@@ -67,7 +68,7 @@ namespace MineNET.Data
             {
 
             }
-            else if (this.SourceType == NetworkInventoryAction.SOURCE_TODO)
+            else if (this.SourceType == NetworkInventoryAction.SOURCE_CRAFT_SLOT || this.SourceType == NetworkInventoryAction.SOURCE_TODO)
             {
                 this.WindowId = pk.ReadSVarInt();
             }

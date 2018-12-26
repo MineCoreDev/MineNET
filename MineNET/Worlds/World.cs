@@ -462,8 +462,7 @@ namespace MineNET.Worlds
             {
                 Position = hand.ToVector3(),
                 Sound = LevelSoundEventPacket.SOUND_PLACE,
-                ExtraData = hand.RuntimeId,
-                Pitch = 1
+                ExtraData = hand.RuntimeId
             };
             player.SendPacket(pk); //TODO : near players
         }

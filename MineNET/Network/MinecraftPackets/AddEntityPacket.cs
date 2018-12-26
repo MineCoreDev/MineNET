@@ -22,7 +22,7 @@ namespace MineNET.Network.MinecraftPackets
         {
             this.WriteEntityUniqueId(this.EntityUniqueId);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
-            this.WriteUVarInt((uint) this.Type);
+            this.WriteString(MineNET_Registries.EntityIdentity[this.Type]);
             this.WriteVector3(this.Position);
             this.WriteVector3(this.Motion);
             this.WriteVector3(this.Direction);

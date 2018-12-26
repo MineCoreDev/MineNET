@@ -444,6 +444,11 @@ namespace MineNET.Entities.Players
                     this.SendPacket(chunk, RakNetPacketReliability.RELIABLE_ORDERED, RakNetProtocol.FlagImmediate);
                 }
             });
+
+            NetworkChunkPublisherUpdatePacket networkChunkPublisher = new NetworkChunkPublisherUpdatePacket();
+            networkChunkPublisher.Position = new BlockCoordinate3D(this.X, this.Y, this.Z);
+            networkChunkPublisher.Radius = (uint)((this.RequestChunkRadius + 1) << 4);
+            this.SendPacket(networkChunkPublisher);
         }
 
         public void SendPacket(MinecraftPacket packet, int reliability = RakNetPacketReliability.RELIABLE, int flag = RakNetProtocol.FlagNormal)

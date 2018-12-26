@@ -4,6 +4,7 @@ namespace MineNET.Network.MinecraftPackets
 {
     public class LevelSoundEventPacket : MinecraftPacket
     {
+
         public const int SOUND_ITEM_USE_ON = 0;
         public const int SOUND_HIT = 1;
         public const int SOUND_STEP = 2;
@@ -118,7 +119,7 @@ namespace MineNET.Network.MinecraftPackets
         public const int SOUND_RECORD_11 = 111;
         public const int SOUND_RECORD_WAIT = 112;
         public const int SOUND_STOP_RECORD = 113; //Not really a sound
-        public const int SOUND_FLOP = 114;
+        public const int SOUND_GUARDIAN_FLOP = 114;
         public const int SOUND_ELDERGUARDIAN_CURSE = 115;
         public const int SOUND_MOB_WARNING = 116;
         public const int SOUND_MOB_WARNING_BABY = 117;
@@ -155,7 +156,7 @@ namespace MineNET.Network.MinecraftPackets
         public const int SOUND_IMITATE_ELDER_GUARDIAN = 148;
         public const int SOUND_IMITATE_ENDER_DRAGON = 149;
         public const int SOUND_IMITATE_ENDERMAN = 150;
-        public const int SOUND_IMITATE_ENDERMITE = 151;
+
         public const int SOUND_IMITATE_EVOCATION_ILLAGER = 152;
         public const int SOUND_IMITATE_GHAST = 153;
         public const int SOUND_IMITATE_HUSK = 154;
@@ -190,6 +191,7 @@ namespace MineNET.Network.MinecraftPackets
         public const int SOUND_ITEM_TRIDENT_THROW = 183;
         public const int SOUND_ITEM_TRIDENT_THUNDER = 184;
         public const int SOUND_ITEM_TRIDENT_HIT_GROUND = 185;
+        public const int SOUND_DEFAULT = 186;
 
         public const int SOUND_ELEMCONSTRUCT_OPEN = 188;
         public const int SOUND_ICEBOMB_HIT = 189;
@@ -198,10 +200,7 @@ namespace MineNET.Network.MinecraftPackets
         public const int SOUND_LT_REACTION_BLEACH = 192;
         public const int SOUND_LT_REACTION_EPASTE = 193;
         public const int SOUND_LT_REACTION_EPASTE2 = 194;
-        public const int SOUND_LT_REACTION_GLOWSTICK = 195;
-        public const int SOUND_LT_REACTION_GLOWSTICK2 = 196;
-        public const int SOUND_LT_REACTION_LUMINOL = 197;
-        public const int SOUND_LT_REACTION_SALT = 198;
+
         public const int SOUND_LT_REACTION_FERTILIZER = 199;
         public const int SOUND_LT_REACTION_FIREBALL = 200;
         public const int SOUND_LT_REACTION_MGSALT = 201;
@@ -217,50 +216,64 @@ namespace MineNET.Network.MinecraftPackets
         public const int SOUND_CONVERT_TO_DROWNED = 211;
         public const int SOUND_BUCKET_FILL_FISH = 212;
         public const int SOUND_BUCKET_EMPTY_FISH = 213;
-        public const int SOUND_BUBBLE_COLUMN_UPWARDS = 214;
-        public const int SOUND_BUBBLE_COLUMN_DOWNWARDS = 215;
+        public const int SOUND_BUBBLE_UP = 214;
+        public const int SOUND_BUBBLE_DOWN = 215;
         public const int SOUND_BUBBLE_POP = 216;
-        public const int SOUND_BUBBLE_UP_INSIDE = 217;
-        public const int SOUND_BUBBLE_DOWN_INSIDE = 218;
+        public const int SOUND_BUBBLE_UPINSIDE = 217;
+        public const int SOUND_BUBBLE_DOWNINSIDE = 218;
         public const int SOUND_HURT_BABY = 219;
         public const int SOUND_DEATH_BABY = 220;
         public const int SOUND_STEP_BABY = 221;
-        public const int SOUND_SPAWN_BABY = 222;
         public const int SOUND_BORN = 223;
-        public const int SOUND_TURTLE_EGG_BREAK = 224;
-        public const int SOUND_TURTLE_EGG_CRACK = 225;
-        public const int SOUND_TURTLE_EGG_HATCHED = 226;
-        public const int SOUND_LAY_EGG = 227;
-        public const int SOUND_TURTLE_EGG_ATTACKED = 228;
+        public const int SOUND_BLOCK_TURTLE_EGG_BREAK = 224;
+        public const int SOUND_BLOCK_TURTLE_EGG_CRACK = 225;
+        public const int SOUND_BLOCK_TURTLE_EGG_HATCH = 226;
+        public const int SOUND_BLOCK_TURTLE_EGG_ATTACK = 228;
         public const int SOUND_BEACON_ACTIVATE = 229;
         public const int SOUND_BEACON_AMBIENT = 230;
         public const int SOUND_BEACON_DEACTIVATE = 231;
         public const int SOUND_BEACON_POWER = 232;
-        public const int SOUND_COUDUIT_ACTIVATE = 233;
-        public const int SOUND_COUDUIT_AMBIENT = 234;
-        public const int SOUND_COUDUIT_ATTACK = 235;
-        public const int SOUND_COUDUIT_DEACTIVATE = 236;
-        public const int SOUND_COUDUIT_SHORT = 237;
-        public const int SOUND_DEFAULT = 238;
-        public const int SOUND_UNDEFINED = 239;
+        public const int SOUND_CONDUIT_ACTIVATE = 233;
+        public const int SOUND_CONDUIT_AMBIENT = 234;
+        public const int SOUND_CONDUIT_ATTACK = 235;
+        public const int SOUND_CONDUIT_DEACTIVATE = 236;
+        public const int SOUND_CONDUIT_SHORT = 237;
+        public const int SOUND_SWOOP = 238;
+        public const int SOUND_BLOCK_BAMBOO_SAPLING_PLACE = 239;
+        public const int SOUND_PRESNEEZE = 240;
+        public const int SOUND_SNEEZE = 241;
+        public const int SOUND_AMBIENT_TAME = 242;
+        public const int SOUND_SCARED = 243;
+        public const int SOUND_BLOCK_SCAFFOLDING_CLIMB = 244;
+        public const int SOUND_CROSSBOW_LOADING_START = 245;
+        public const int SOUND_CROSSBOW_LOADING_MIDDLE = 246;
+        public const int SOUND_CROSSBOW_LOADING_END = 247;
+        public const int SOUND_CROSSBOW_SHOOT = 248;
+        public const int SOUND_CROSSBOW_QUICK_CHARGE_START = 249;
+        public const int SOUND_CROSSBOW_QUICK_CHARGE_MIDDLE = 250;
+        public const int SOUND_CROSSBOW_QUICK_CHARGE_END = 251;
+        public const int SOUND_AMBIENT_AGGRESSIVE = 252;
+        public const int SOUND_AMBIENT_WORRIED = 253;
+        public const int SOUND_CANT_BREED = 254;
+        public const int SOUND_UNDEFINED = 255;
 
         public override byte PacketID { get; } = MinecraftProtocol.LEVEL_SOUND_EVENT_PACKET;
 
         public byte Sound { get; set; }
         public Vector3 Position { get; set; }
         public int ExtraData { get; set; } = -1;
-        public int Pitch { get; set; } = 1;
+        public string EntityType { get; set; } = ":";
         public bool IsBabyMob { get; set; } = false;
-        public bool IsGlobal { get; set; } = false;
+        public bool DisableRelativeVolume { get; set; } = false;
 
         protected override void EncodePayload()
         {
             this.WriteByte(this.Sound);
             this.WriteVector3(this.Position);
             this.WriteSVarInt(this.ExtraData);
-            this.WriteSVarInt(this.Pitch);
+            this.WriteString(this.EntityType);
             this.WriteBool(this.IsBabyMob);
-            this.WriteBool(this.IsGlobal);
+            this.WriteBool(this.DisableRelativeVolume);
         }
 
         protected override void DecodePayload()
@@ -268,9 +281,9 @@ namespace MineNET.Network.MinecraftPackets
             this.Sound = this.ReadByte();
             this.Position = this.ReadVector3();
             this.ExtraData = this.ReadSVarInt();
-            this.Pitch = this.ReadSVarInt();
+            this.EntityType = this.ReadString();
             this.IsBabyMob = this.ReadBool();
-            this.IsGlobal = this.ReadBool();
+            this.DisableRelativeVolume = this.ReadBool();
         }
     }
 }

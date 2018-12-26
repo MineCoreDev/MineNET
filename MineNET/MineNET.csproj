@@ -266,6 +266,7 @@
     <Compile Include="Init\BlockEntityInit.cs" />
     <Compile Include="Init\BlockInit.cs" />
     <Compile Include="Init\EffectInit.cs" />
+    <Compile Include="Init\EntityIdentityInit.cs" />
     <Compile Include="Init\EntityInit.cs" />
     <Compile Include="Init\ItemInit.cs" />
     <Compile Include="Inventories\BaseInventory.cs" />
@@ -363,6 +364,8 @@
     <Compile Include="Network\MinecraftPackets\AdventureSettingsPacket.cs" />
     <Compile Include="Network\MinecraftPackets\AnimatePacket.cs" />
     <Compile Include="Network\MinecraftPackets\AvailableCommandsPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\AvailableEntityIdentifiersPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\BiomeDefinitionListPacket.cs" />
     <Compile Include="Network\MinecraftPackets\BlockEntityDataPacket.cs" />
     <Compile Include="Network\MinecraftPackets\BlockEventPacket.cs" />
     <Compile Include="Network\MinecraftPackets\BlockPickRequestPacket.cs" />
@@ -399,6 +402,7 @@
     <Compile Include="Network\MinecraftPackets\LabTablePacket.cs" />
     <Compile Include="Network\MinecraftPackets\LevelEventPacket.cs" />
     <Compile Include="Network\MinecraftPackets\LevelSoundEventPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\LevelSoundEventPacketV1.cs" />
     <Compile Include="Network\MinecraftPackets\LoginPacket.cs" />
     <Compile Include="Network\MinecraftPackets\MapInfoRequestPacket.cs" />
     <Compile Include="Network\MinecraftPackets\MinecraftPacket.cs" />
@@ -411,6 +415,7 @@
     <Compile Include="Network\MinecraftPackets\MoveEntityAbsolutePacket.cs" />
     <Compile Include="Network\MinecraftPackets\MoveEntityDeltaPacket.cs" />
     <Compile Include="Network\MinecraftPackets\MovePlayerPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\NetworkChunkPublisherUpdatePacket.cs" />
     <Compile Include="Network\MinecraftPackets\NetworkStackLatencyPacket.cs" />
     <Compile Include="Network\MinecraftPackets\NpcRequestPacket.cs" />
     <Compile Include="Network\MinecraftPackets\PhotoTransferPacket.cs" />
@@ -433,6 +438,7 @@
     <Compile Include="Network\MinecraftPackets\ResourcePackStackPacket.cs" />
     <Compile Include="Network\MinecraftPackets\RespawnPacket.cs" />
     <Compile Include="Network\MinecraftPackets\RiderJumpPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\ScriptCustomEventPacket.cs" />
     <Compile Include="Network\MinecraftPackets\ServerSettingsRequestPacket.cs" />
     <Compile Include="Network\MinecraftPackets\ServerSettingsResponsePacket.cs" />
     <Compile Include="Network\MinecraftPackets\ServerToClientHandshakePacket.cs" />
@@ -457,6 +463,7 @@
     <Compile Include="Network\MinecraftPackets\ShowStoreOfferPacket.cs" />
     <Compile Include="Network\MinecraftPackets\SimpleEventPacket.cs" />
     <Compile Include="Network\MinecraftPackets\SpawnExperienceOrbPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\SpawnParticleEffectPacket.cs" />
     <Compile Include="Network\MinecraftPackets\StartGamePacket.cs" />
     <Compile Include="Network\MinecraftPackets\StopSoundPacket.cs" />
     <Compile Include="Network\MinecraftPackets\StructureBlockUpdatePacket.cs" />
@@ -522,6 +529,7 @@
     <Compile Include="Registry\CreativeItemRegistry.cs" />
     <Compile Include="Registry\DictionaryRegistryBase.cs" />
     <Compile Include="Registry\EffectRegistry.cs" />
+    <Compile Include="Registry\EntityIdentityRegistry.cs" />
     <Compile Include="Registry\EntityRegistry.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\ICancelable.cs" />

@@ -9,6 +9,7 @@ namespace MineNET
         public static CommandRegistry Command { get; } = new CommandRegistry();
         public static CreativeItemRegistry Creative { get; } = new CreativeItemRegistry();
         public static EffectRegistry Effect { get; } = new EffectRegistry();
+        public static EntityIdentityRegistry EntityIdentity { get; } = new EntityIdentityRegistry();
         public static EntityRegistry Entity { get; } = new EntityRegistry();
         public static ItemRegistry Item { get; } = new ItemRegistry();
         public static RakNetPacketRegistry RakNetPacket { get; } = new RakNetPacketRegistry();
@@ -21,6 +22,7 @@ namespace MineNET
             MineNET_Registries.Command.Clear();
             MineNET_Registries.Creative.Clear();
             MineNET_Registries.Effect.Clear();
+            MineNET_Registries.EntityIdentity.Clear();
             MineNET_Registries.Entity.Clear();
             MineNET_Registries.Item.Clear();
             MineNET_Registries.RakNetPacket.Clear();

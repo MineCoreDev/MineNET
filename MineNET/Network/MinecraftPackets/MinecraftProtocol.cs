@@ -2,8 +2,8 @@
 {
     public static class MinecraftProtocol
     {
-        public const string ClientVersion = "1.7.0";
-        public const int ClientProtocol = 291;
+        public const string ClientVersion = "1.8.0";
+        public const int ClientProtocol = 313;
 
         public const byte LOGIN_PACKET = 0x01;
         public const byte PLAY_STATUS_PACKET = 0x02;
@@ -28,7 +28,7 @@
         public const byte UPDATE_BLOCK_PACKET = 0x15;
         public const byte ADD_PAINTING_PACKET = 0x16;
         public const byte EXPLODE_PACKET = 0x17;
-        public const byte LEVEL_SOUND_EVENT_PACKET = 0x18;
+        public const byte LEVEL_SOUND_EVENT_PACKET_V1 = 0x18;
         public const byte LEVEL_EVENT_PACKET = 0x19;
         public const byte BLOCK_EVENT_PACKET = 0x1a;
         public const byte ENTITY_EVENT_PACKET = 0x1b;
@@ -120,5 +120,12 @@
         public const byte SET_LOCAL_PLAYER_AS_INITIALIZED_PACKET = 0x71;
         public const byte UPDATE_SOFT_ENUM_PACKET = 0x72;
         public const byte NETWORK_STACK_LATENCY_PACKET = 0x73;
+
+        public const byte SCRIPT_CUSTOM_EVENT_PACKET = 0x75;
+        public const byte SPAWN_PARTICLE_EFFECT_PACKET = 0x76;
+        public const byte AVAILABLE_ENTITY_IDENTIFIERS_PACKET = 0x77;
+        public const byte LEVEL_SOUND_EVENT_PACKET = 0x78;
+        public const byte NETWORK_CHUNK_PUBLISHER_UPDATE_PACKET = 0x79;
+        public const byte BIOME_DEFINITION_LIST_PACKET = 0x7a;
     }
 }

@@ -412,9 +412,12 @@ namespace MineNET.Entities.Players
                 startGamePacket.GameRules.Add(new GameRule<bool>("ShowCoordinates", true));
                 this.SendPacket(startGamePacket);
 
+                this.SendPacket(new AvailableEntityIdentifiersPacket());
+
                 this.SendAvailableCommands();
 
                 this.SendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
+
                 this.HasSpawned = true;
 
                 this.PlayerListEntry = new PlayerListEntry(this.LoginData.ClientUUID)
