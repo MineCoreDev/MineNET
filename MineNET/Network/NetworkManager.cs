@@ -196,7 +196,7 @@ namespace MineNET.Network
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.PURCHASE_RECEIPT_PACKET, new PurchaseReceiptPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.PLAYER_SKIN_PACKET, new PlayerSkinPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.SUB_CLIENT_LOGIN_PACKET, new SubClientLoginPacket());
-            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.W_S_CONNECT_PACKET, new WSConnectPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.AUTOMATION_CLIENT_CONNECT_PACKET, new AutomationClientConnectPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.SET_LAST_HURT_BY_PACKET, new SetLastHurtByPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.BOOK_EDIT_PACKET, new BookEditPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.NPC_REQUEST_PACKET, new NpcRequestPacket());
@@ -224,6 +224,8 @@ namespace MineNET.Network
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.LEVEL_SOUND_EVENT_PACKET, new LevelSoundEventPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.NETWORK_CHUNK_PUBLISHER_UPDATE_PACKET, new NetworkChunkPublisherUpdatePacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.BIOME_DEFINITION_LIST_PACKET, new BiomeDefinitionListPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.LECTERN_UPDATE_PACKET, new LecternUpdatePacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.VIDEO_STREAM_CONNECT_PACKET, new VideoStreamConnectPacket());
         }
 
         #endregion

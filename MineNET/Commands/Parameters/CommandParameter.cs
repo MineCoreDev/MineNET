@@ -18,22 +18,26 @@ namespace MineNET.Commands.Parameters
         public const int ARG_TYPE_TARGET = 0x06;
         public const int ARG_TYPE_WILDCARD_TARGET = 0x07;
 
-        public const int ARG_TYPE_UNKNOWN = 0x10;
+        public const int ARG_TYPE_FILE_PATH = 14;
 
-        public const int ARG_TYPE_STRING = 0x18;
+        public const int ARG_TYPE_INT_RANGE = 18;
 
-        public const int ARG_TYPE_POSITION = 0x1a;
+        public const int ARG_TYPE_STRING = 27;
 
-        public const int ARG_TYPE_MESSAGE = 0x1d;
-        public const int ARG_TYPE_TEXT = 0x1f;
+        public const int ARG_TYPE_POSITION = 29;
 
-        public const int ARG_TYPE_JSON = 0x22;
+        public const int ARG_TYPE_MESSAGE = 32;
 
-        public const int ARG_TYPE_COMMAND = 0x29;
+        public const int ARG_TYPE_TEXT = 34;
+
+        public const int ARG_TYPE_JSON = 37;
+
+        public const int ARG_TYPE_COMMAND = 44;
 
         public string Name { get; set; }
         public int Type { get; set; }
         public bool Optional { get; set; }
+        public byte UnknownByte { get; set; }
         public CommandEnum CommandEnum { get; set; }
         public string Postfix { get; set; }
 

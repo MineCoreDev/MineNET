@@ -151,6 +151,7 @@
     <Compile Include="Blocks\BlockStaticLiquid.cs" />
     <Compile Include="Blocks\BlockStone.cs" />
     <Compile Include="Blocks\BlockTransparent.cs" />
+    <Compile Include="Blocks\BlockUnknown.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CommandData.cs" />
     <Compile Include="Commands\CommandHandler.cs" />
@@ -334,6 +335,7 @@
     <Compile Include="Items\ItemStack.cs" />
     <Compile Include="Items\ItemToolTier.cs" />
     <Compile Include="Items\ItemToolType.cs" />
+    <Compile Include="Items\ItemUnknown.cs" />
     <Compile Include="NBT\Data\NBTEndian.cs" />
     <Compile Include="NBT\Data\NBTTagType.cs" />
     <Compile Include="NBT\IO\NBTIO.cs" />
@@ -400,6 +402,7 @@
     <Compile Include="Network\MinecraftPackets\InventoryTransactionPacket.cs" />
     <Compile Include="Network\MinecraftPackets\ItemFrameDropItemPacket.cs" />
     <Compile Include="Network\MinecraftPackets\LabTablePacket.cs" />
+    <Compile Include="Network\MinecraftPackets\LecternUpdatePacket.cs" />
     <Compile Include="Network\MinecraftPackets\LevelEventPacket.cs" />
     <Compile Include="Network\MinecraftPackets\LevelSoundEventPacket.cs" />
     <Compile Include="Network\MinecraftPackets\LevelSoundEventPacketV1.cs" />
@@ -477,7 +480,8 @@
     <Compile Include="Network\MinecraftPackets\UpdateEquipPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateSoftEnumPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateTradePacket.cs" />
-    <Compile Include="Network\MinecraftPackets\WSConnectPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\VideoStreamConnectPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\AutomationClientConnectPacket.cs" />
     <Compile Include="Network\RakNetPackets\Ack.cs" />
     <Compile Include="Network\RakNetPackets\AcknowledgePacket.cs" />
     <Compile Include="Network\RakNetPackets\BatchPacket.cs" />

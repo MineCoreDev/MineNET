@@ -192,6 +192,7 @@ namespace MineNET.Network.MinecraftPackets
             }
             stream.WriteLInt((uint) type);
             stream.WriteBool(parameter.Optional);
+            stream.WriteByte(parameter.UnknownByte);
         }
 
         private void InitEnums(List<string> enumValues)

@@ -2,9 +2,9 @@
 
 namespace MineNET.Network.MinecraftPackets
 {
-    public class WSConnectPacket : MinecraftPacket
+    public class AutomationClientConnectPacket : MinecraftPacket
     {
-        public override byte PacketID { get; } = MinecraftProtocol.W_S_CONNECT_PACKET;
+        public override byte PacketID { get; } = MinecraftProtocol.AUTOMATION_CLIENT_CONNECT_PACKET;
 
         public String ServerUri { get; set; }
 

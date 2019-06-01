@@ -1526,7 +1526,7 @@ namespace MineNET.Entities.Players
 
         #region WSConnectPacket 0x5f
 
-        protected virtual void HandleWSConnectPacket(WSConnectPacket pk)
+        protected virtual void HandleWSConnectPacket(AutomationClientConnectPacket pk)
         {
 
         }

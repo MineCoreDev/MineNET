@@ -2,8 +2,8 @@
 {
     public static class MinecraftProtocol
     {
-        public const string ClientVersion = "1.8.0";
-        public const int ClientProtocol = 313;
+        public const string ClientVersion = "1.9.0";
+        public const int ClientProtocol = 354;
 
         public const byte LOGIN_PACKET = 0x01;
         public const byte PLAY_STATUS_PACKET = 0x02;
@@ -99,7 +99,7 @@
         public const byte PURCHASE_RECEIPT_PACKET = 0x5c;
         public const byte PLAYER_SKIN_PACKET = 0x5d;
         public const byte SUB_CLIENT_LOGIN_PACKET = 0x5e;
-        public const byte W_S_CONNECT_PACKET = 0x5f;
+        public const byte AUTOMATION_CLIENT_CONNECT_PACKET = 0x5f;
         public const byte SET_LAST_HURT_BY_PACKET = 0x60;
         public const byte BOOK_EDIT_PACKET = 0x61;
         public const byte NPC_REQUEST_PACKET = 0x62;
@@ -124,8 +124,13 @@
         public const byte SCRIPT_CUSTOM_EVENT_PACKET = 0x75;
         public const byte SPAWN_PARTICLE_EFFECT_PACKET = 0x76;
         public const byte AVAILABLE_ENTITY_IDENTIFIERS_PACKET = 0x77;
-        public const byte LEVEL_SOUND_EVENT_PACKET = 0x78;
+        public const byte LEVEL_SOUND_EVENT_PACKET_V2 = 0x78;
         public const byte NETWORK_CHUNK_PUBLISHER_UPDATE_PACKET = 0x79;
         public const byte BIOME_DEFINITION_LIST_PACKET = 0x7a;
+        public const byte LEVEL_SOUND_EVENT_PACKET = 0x7b;
+        public const byte LECTERN_UPDATE_PACKET = 0x7c;
+        public const byte VIDEO_STREAM_CONNECT_PACKET = 0x7d;
+        public const byte MAP_CREATE_LOCKED_COPY_PACKET = 0x7e;
+        public const byte ON_SCREEN_TEXTURE_ANIMATION_PACKET = 0x7f;
     }
 }

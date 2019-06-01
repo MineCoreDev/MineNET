@@ -1,10 +1,10 @@
+using System;
+using System.IO;
+using System.IO.Compression;
 using MineNET.Items;
 using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
-using System;
-using System.IO;
-using System.IO.Compression;
 
 namespace MineNET.NBT.IO
 {

@@ -1,4 +1,7 @@
 ﻿using System;
+using MineNET.IO;
+using MineNET.NBT.IO;
+using MineNET.NBT.Tags;
 
 namespace MineNET.Network.MinecraftPackets
 {
@@ -10,6 +13,8 @@ namespace MineNET.Network.MinecraftPackets
 
         protected override void EncodePayload()
         {
+            //CompoundTag t = NBTIO.ReadTag(this.Tag, NBT.Data.NBTEndian.BIG_ENDIAN);
+            //Logger.Info(t.ToString());
             this.WriteBytes(this.Tag);
         }
 

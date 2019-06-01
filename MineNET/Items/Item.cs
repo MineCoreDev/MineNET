@@ -27,7 +27,8 @@ namespace MineNET.Items
             }
             else
             {
-                return new ItemBlock(Block.Get(BlockIDs.AIR));
+                return new ItemUnknown(id);
+                //return new ItemBlock(Block.Get(BlockIDs.AIR));
             }
         }
 

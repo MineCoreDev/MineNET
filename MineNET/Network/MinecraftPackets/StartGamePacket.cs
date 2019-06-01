@@ -9,6 +9,12 @@ namespace MineNET.Network.MinecraftPackets
 {
     public class StartGamePacket : MinecraftPacket
     {
+        public const int GAME_PUBLISH_SETTING_NO_MULTI_PLAY = 0;
+        public const int GAME_PUBLISH_SETTING_INVITE_ONLY = 1;
+        public const int GAME_PUBLISH_SETTING_FRIENDS_ONLY = 2;
+        public const int GAME_PUBLISH_SETTING_FRIENDS_OF_FRIENDS = 3;
+        public const int GAME_PUBLISH_SETTING_PUBLIC = 4;
+
         public override byte PacketID { get; } = MinecraftProtocol.START_GAME_PACKET;
 
         public long EntityUniqueId { get; set; }
@@ -37,9 +43,11 @@ namespace MineNET.Network.MinecraftPackets
         public float RainLevel { get; set; } = 0;
         public float LightningLevel { get; set; } = 0;
 
+        public bool HasConfirmedPlatformLockedContent { get; set; } = false;
         public bool MultiplayerGame { get; set; } = true;
         public bool BroadcastToLAN { get; set; } = true;
-        public bool BroadcastToXboxLive { get; set; } = true;
+        public int XblBroadcastIntent { get; set; } = StartGamePacket.GAME_PUBLISH_SETTING_PUBLIC;
+        public int PlatformBroadcastIntent { get; set; }  = StartGamePacket.GAME_PUBLISH_SETTING_PUBLIC;
         public bool CommandsEnabled { get; set; } = true;
         public bool IsTexturePacksRequired { get; set; } = false;
 
@@ -47,15 +55,10 @@ namespace MineNET.Network.MinecraftPackets
 
         public bool BonusChest { get; set; } = false;
         public bool StartWithMap { get; set; } = false;
-        public bool TrustPlayers { get; set; } = false;
 
         public PlayerPermissions PermissionLevel { get; set; } = PlayerPermissions.MEMBER;
-        public int GamePublish { get; set; } = 3;
         public int ServerChunkTickRadius { get; set; } = 4;
-
-        public bool HasPlatformBroadcast { get; set; } = false;
-        public int PlatformBroadcastMode { get; set; } = 0;
-        public bool XboxLiveBroadcastIntent { get; set; } = false;
+        
         public bool HasLockedBehaviour { get; set; } = false;
         public bool HasLockedResourcePack { get; set; } = false;
         public bool IsFromLockedWorldTemplate { get; set; } = false;
@@ -93,21 +96,18 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteBool(this.HasEduFeaturesEnabled);
             this.WriteLFloat(this.RainLevel);
             this.WriteLFloat(this.LightningLevel);
+            this.WriteBool(this.HasConfirmedPlatformLockedContent);
             this.WriteBool(this.MultiplayerGame);
             this.WriteBool(this.BroadcastToLAN);
-            this.WriteBool(this.BroadcastToXboxLive);
+            this.WriteVarInt(this.XblBroadcastIntent);
+            this.WriteVarInt(this.PlatformBroadcastIntent);
             this.WriteBool(this.CommandsEnabled);
             this.WriteBool(this.IsTexturePacksRequired);
             this.WriteGameRules(this.GameRules);
             this.WriteBool(this.BonusChest);
             this.WriteBool(this.StartWithMap);
-            this.WriteBool(this.TrustPlayers);
             this.WriteSVarInt((int) this.PermissionLevel);
-            this.WriteSVarInt(this.GamePublish);
             this.WriteLInt((uint) this.ServerChunkTickRadius);
-            this.WriteBool(this.HasPlatformBroadcast);
-            this.WriteSVarInt(this.PlatformBroadcastMode);
-            this.WriteBool(this.XboxLiveBroadcastIntent);
             this.WriteBool(this.HasLockedBehaviour);
             this.WriteBool(this.HasLockedResourcePack);
             this.WriteBool(this.IsFromLockedWorldTemplate);

@@ -28,8 +28,9 @@ namespace MineNET.Blocks
                 b.Damage = meta;
                 return b;
             }
-
-            return new BlockAir();
+            Block u = new BlockUnknown(id);
+            u.Damage = meta;
+            return u;
         }
 
         /// <summary>

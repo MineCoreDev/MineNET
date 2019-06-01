@@ -52,59 +52,55 @@ namespace MineNET.Entities
         public const int DATA_POTION_AUX_VALUE = 36; //short
         public const int DATA_LEAD_HOLDER_EID = 37; //long
         public const int DATA_SCALE = 38; //float
-        public const int DATA_INTERACTIVE_TAG = 39; //string (button text)
-        public const int DATA_NPC_SKIN_ID = 40; //string
-        public const int DATA_URL_TAG = 41; //string
-        public const int DATA_MAX_AIR = 42; //short
-        public const int DATA_MARK_VARIANT = 43; //int
-        public const int DATA_CONTAINER_TYPE = 44; //byte (ContainerComponent) 
-        public const int DATA_CONTAINER_BASE_SIZE = 45; //int (ContainerComponent) 
-        public const int DATA_CONTAINER_EXTRA_SLOTS_PER_STRENGTH = 46; //int (used for llamas, inventory size is baseSize + thisProp * strength) 
-        public const int DATA_BLOCK_TARGET = 47; //block coords (ender crystal)
-        public const int DATA_WITHER_INVULNERABLE_TICKS = 48; //int
-        public const int DATA_WITHER_TARGET_1 = 49; //long
-        public const int DATA_WITHER_TARGET_2 = 50; //long
-        public const int DATA_WITHER_TARGET_3 = 51; //long
+        public const int DATA_INTERACTIVE_TAG = 39; //string (button text)    public const int DATA_SKIN_ID = 40; // int ???
+        public const int DATA_NPC_SKIN_ID = 41; //string
+        public const int DATA_URL_TAG = 42; //string
+        public const int DATA_MAX_AIR = 43; //short
+        public const int DATA_MARK_VARIANT = 44; //int
+        public const int DATA_CONTAINER_TYPE = 45; //byte
+        public const int DATA_CONTAINER_BASE_SIZE = 46; //int
+        public const int DATA_CONTAINER_EXTRA_SLOTS_PER_STRENGTH = 47; //int
+        public const int DATA_BLOCK_TARGET = 48; //block coords (ender crystal)
+        public const int DATA_WITHER_INVULNERABLE_TICKS = 49; //int
+        public const int DATA_WITHER_TARGET_1 = 50; //long
+        public const int DATA_WITHER_TARGET_2 = 51; //long
+        public const int DATA_WITHER_TARGET_3 = 52; //long
+                                                           /* 53 (short) */
+        public const int DATA_BOUNDING_BOX_WIDTH = 54; //float
+        public const int DATA_BOUNDING_BOX_HEIGHT = 55; //float
+        public const int DATA_FUSE_LENGTH = 56; //int
+        public const int DATA_RIDER_SEAT_POSITION = 57; //vector3f
+        public const int DATA_RIDER_ROTATION_LOCKED = 58; //byte
+        public const int DATA_RIDER_MAX_ROTATION = 59; //float
+        public const int DATA_RIDER_MIN_ROTATION = 60; //float
+        public const int DATA_AREA_EFFECT_CLOUD_RADIUS = 61; //float
+        public const int DATA_AREA_EFFECT_CLOUD_WAITING = 62; //int
+        public const int DATA_AREA_EFFECT_CLOUD_PARTICLE_ID = 63; //int
+                                                                         /* 64 (int) shulker-related */
+        public const int DATA_SHULKER_ATTACH_FACE = 65; //byte
+                                                               /* 66 (short) shulker-related */
+        public const int DATA_SHULKER_ATTACH_POS = 67; //block coords
+        public const int DATA_TRADING_PLAYER_EID = 68; //long
 
-        /* 52 (short) */
-        public const int DATA_BOUNDING_BOX_WIDTH = 53; //float
-        public const int DATA_BOUNDING_BOX_HEIGHT = 54; //float
-        public const int DATA_FUSE_LENGTH = 55; //int
-        public const int DATA_RIDER_SEAT_POSITION = 56; //vector3f
-        public const int DATA_RIDER_ROTATION_LOCKED = 57; //byte
-        public const int DATA_RIDER_MAX_ROTATION = 58; //float
-        public const int DATA_RIDER_MIN_ROTATION = 59; //float
-        public const int DATA_AREA_EFFECT_CLOUD_RADIUS = 60; //float
-        public const int DATA_AREA_EFFECT_CLOUD_WAITING = 61; //int
-        public const int DATA_AREA_EFFECT_CLOUD_PARTICLE_ID = 62; //int
+        /* 70 (byte) command-block */
+        public const int DATA_COMMAND_BLOCK_COMMAND = 71; //string
+        public const int DATA_COMMAND_BLOCK_LAST_OUTPUT = 72; //string
+        public const int DATA_COMMAND_BLOCK_TRACK_OUTPUT = 73; //byte
+        public const int DATA_CONTROLLING_RIDER_SEAT_NUMBER = 74; //byte
+        public const int DATA_STRENGTH = 75; //int
+        public const int DATA_MAX_STRENGTH = 76; //int
+                                                        // 77 (int)
+        public const int DATA_LIMITED_LIFE = 78;
+        public const int DATA_ARMOR_STAND_POSE_INDEX = 79; // int
+        public const int DATA_ENDER_CRYSTAL_TIME_OFFSET = 80; // int
+        public const int DATA_ALWAYS_SHOW_NAMETAG = 81; // byte
+        public const int DATA_COLOR_2 = 82; // byte
+                                                   // 83 unknown
+        public const int DATA_SCORE_TAG = 84; //String
+        public const int DATA_BALLOON_ATTACHED_ENTITY = 85; // long
+        public const int DATA_PUFFERFISH_SIZE = 86;
 
-        /* 63 (int) shulker-related */
-        public const int DATA_SHULKER_ATTACH_FACE = 64; //byte
-
-        /* 65 (short) shulker-related */
-        public const int DATA_SHULKER_ATTACH_POS = 66; //block coords
-        public const int DATA_TRADING_PLAYER_EID = 67; //long
-
-        /* 69 (byte) command-block */
-        public const int DATA_COMMAND_BLOCK_COMMAND = 70; //string
-        public const int DATA_COMMAND_BLOCK_LAST_OUTPUT = 71; //string
-        public const int DATA_COMMAND_BLOCK_TRACK_OUTPUT = 72; //byte
-        public const int DATA_CONTROLLING_RIDER_SEAT_NUMBER = 73; //byte
-        public const int DATA_STRENGTH = 74; //int
-        public const int DATA_MAX_STRENGTH = 75; //int
-
-        /* 76 (int) */
-        public const int DATA_LIMITED_LIFE = 77;
-        public const int DATA_ARMOR_STAND_POSE_INDEX = 78; //int
-        public const int DATA_ENDER_CRYSTAL_TIME_OFFSET = 79; //int
-
-        /* 80 (byte) something to do with nametag visibility? */
-        public const int DATA_COLOR_2 = 81; //byte
-
-        /* 82 (unknown) */
-        public const int DATA_SCORE_TAG = 83; //string
-        public const int DATA_BALLOON_ATTACHED_ENTITY = 84; //int64, entity unique ID of owner
-        public const int DATA_PUFFERFISH_SIZE = 85; //byte
+        public const int DATA_FLAGS_EXTENDED = 92;
 
 
         public const int DATA_FLAG_ONFIRE = 0;

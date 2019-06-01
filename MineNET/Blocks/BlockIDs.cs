@@ -294,9 +294,61 @@
         public const int SEA_PICKLE = 411;
         public const int CONDUIT = 412;
 
-        public const int TURTLE_EGG = 414;
+        public const int TURTLE_EGG = 414; //-159
         public const int BUBBLE_COLUMN = 415;
         public const int BARRIER = 416;
+        public const int STONE_SLAB3 = 417;
+        public const int BAMBOO = 418;
+        public const int BAMBOO_SAPLING = 419;
+        public const int SCAFFOLDING = 420;
+        public const int STONE_SLAB4 = 421;
+        public const int DOUBLE_STONE_SLAB3 = 422;
+        public const int DOUBLE_STONE_SLAB4 = 423;
+        public const int GRANITE_STAIRS = 424;
+        public const int DIORITE_STAIRS = 425;
+        public const int ANDESITE_STAIRS = 426;
+        public const int POLISHED_ANDESITE_STAIRS = 427;
+        public const int POLISHED_DIORITE_STAIRS = 428;
+        public const int POLISHED_GRANITE_STAIRS = 429;
+        public const int MOSSY_STONE_BRICK_STAIRS = 430;
+        public const int SMOOTH_RED_SANDSTONE_STAIRS = 431;
+        public const int SMOOTH_SANDSTONE_STAIRS = 432;
+        public const int END_BRICK_STAIRS = 433;
+        public const int MOSSY_COBBLESTONE_STAIRS = 434;
+        public const int NORMAL_STONE_STAIRS = 435;
+        public const int SPRUCE_STANDING_SIGN = 436;
+        public const int SPRUCE_WALL_SIGN = 437;
+        public const int SMOOTH_STONE = 438;
+        public const int RED_NETHER_BRICK_STAIRS = 439;
+        public const int SMOOTH_QUARTZ_STAIRS = 440;
+        public const int BIRCH_STANDING_SIGN = 441;
+        public const int BIRCH_WALL_SIGN = 442;
+        public const int JUNGLE_STANDING_SIGN = 443;
+        public const int JUNGLE_WALL_SIGN = 444;
+        public const int ACACIA_STANDING_SIGN = 445;
+        public const int ACACIA_WALL_SIGN = 446;
+        public const int DARKOAK_STANDING_SIGN = 447;
+        public const int DARKOAK_WALL_SIGN = 448;
+        public const int LECTERN = 449;
+        public const int GRINDSTONE = 450;
+        public const int BLAST_FURNACE = 451;
+        public const int STONECUTTER_BLOCK = 452;
+        public const int SMOKER = 453;
+
+        public const int CARTOGRAPHY_TABLE = 455;
+        public const int FLETCHING_TABLE = 456;
+        public const int SMITHING_TABLE = 457;
+        public const int BARREL = 458;
+        public const int LOOM = 459;
+
+        public const int BELL = 461;
+        public const int SWEET_BERRY_BUSH = 462;
+        public const int LANTERN = 463;
+        public const int CAMPFIRE = 464;
+        public const int LAVA_CAULDRON = 465;
+        public const int JIGSAW = 466;
+        public const int WOOD = 467;
+        public const int COMPOSTER = 468;
 
         /*#region Education Edition constant
         public const int ELEMENT_0 = 36;
