@@ -3,6 +3,7 @@ using NLog;
 using NLog.Config;
 using System;
 using System.IO;
+using NLog.Layouts;
 
 namespace MineNET.IO
 {
@@ -13,18 +14,27 @@ namespace MineNET.IO
 
         public Logger()
         {
-            LogManager.Configuration = new XmlLoggingConfiguration(Environment.CurrentDirectory + "\\NLog.config");
+            LoggingConfiguration conf = new LoggingConfiguration();
 
-            this.OutputLogger = LogManager.GetCurrentClassLogger();
             this.InputLogger = new Input();
+
             try
             {
                 Console.Title = "MineNET";
+                conf.AddTarget("console", new MineNetConsoleTarget((Input) this.InputLogger)
+                {
+                    Layout = new SimpleLayout(
+                        "[${longdate}] [${threadname} /${uppercase:${level:padding=5}}] ${message}")
+                });
+                conf.AddRule(LogLevel.Debug, LogLevel.Fatal, "console");
             }
             catch (IOException)
             {
-
             }
+
+            LogManager.Configuration = conf;
+
+            this.OutputLogger = LogManager.GetCurrentClassLogger();
         }
 
         public static void Debug(object text)

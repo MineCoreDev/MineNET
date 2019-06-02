@@ -13,6 +13,8 @@ namespace MineNET.IO
         public bool IsRunning { get; private set; }
         public bool UsingGUI { get; private set; }
 
+        public int InputStartTop { get; internal set; }
+
         public ConcurrentQueue<string> InputQueue { get; private set; } = new ConcurrentQueue<string>();
 
         public Input()
@@ -26,6 +28,7 @@ namespace MineNET.IO
                 this.UsingGUI = true;
                 return;
             }
+
             this.IsRunning = true;
 
             this.InputThread = new Thread(this.OnUpdate);
@@ -52,7 +55,9 @@ namespace MineNET.IO
         {
             while (this.IsRunning)
             {
-                string inputText = Console.ReadLine();
+                InputStartTop = Console.CursorTop;
+                ReadLine.HistoryEnabled = true;
+                string inputText = ReadLine.Read("> ");
                 if (!string.IsNullOrWhiteSpace(inputText))
                 {
                     this.AddInputQueue(inputText);
