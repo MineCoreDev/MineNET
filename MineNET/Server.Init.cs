@@ -24,6 +24,8 @@ namespace MineNET
             this.LoadWorlds(sw);
 
             this.StartNetwork(sw);
+
+            this.Plugin.EnableAll();
         }
 
         private void InitRegistries()
@@ -47,8 +49,8 @@ namespace MineNET
 
             this.Event = new EventManager();
             IO.Logger.Info("%server.start");
-            this.Plugin = new PluginManager();
             this.Command = new CommandManager();
+            this.Plugin = new PluginManager();
 
             this.Event.Server.OnServerStart(this, new ServerStartEventArgs());
         }
