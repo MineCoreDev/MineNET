@@ -126,7 +126,7 @@ namespace MineNET.Inventories.Transactions
                 List<SlotChangeAction> originalList = new List<SlotChangeAction>(list);
 
                 SlotChangeAction originalAction = null;
-                ItemStack lastTargetItem = new ItemStack(Item.Get(BlockIDs.AIR));
+                ItemStack lastTargetItem = null;
 
                 for (int i = 0; i < list.Count; ++i)
                 {
@@ -195,7 +195,7 @@ namespace MineNET.Inventories.Transactions
                 InventoryAction action = this.Actions[i];
                 if (action.TargetItem.Item.ID != BlockIDs.AIR && action.TargetItem.Count > 0)
                 {
-                    needItems.Add(action.TargetItem);
+                    needItems.Add(action.TargetItem.Clone());
                 }
                 if (!action.IsValid(this.Player))
                 {
@@ -203,7 +203,7 @@ namespace MineNET.Inventories.Transactions
                 }
                 if (action.SourceItem.Item.ID != BlockIDs.AIR && action.SourceItem.Count > 0)
                 {
-                    haveItems.Add(action.SourceItem);
+                    haveItems.Add(action.SourceItem.Clone());
                 }
             }
 

@@ -106,7 +106,7 @@ namespace MineNET.Commands.Defaults
                 string tag = args[4];
                 try
                 {
-                    item.NamedTag = NBTJsonSerializer.Deserialize(JObject.Parse(tag));
+                    item.SetNamedTag(NBTJsonSerializer.Deserialize(JObject.Parse(tag)));
                 }
                 catch
                 {
@@ -117,9 +117,9 @@ namespace MineNET.Commands.Defaults
 
             for (int i = 0; i < players.Length; ++i)
             {
-                players[i].Inventory.AddItem(item);
-                players[i].SendMessage(new TranslationContainer("commands.give.successRecipient", item.Name, item.Count));
-                Server.Instance.BroadcastMessageAndLoggerSend(new TranslationContainer("commands.give.success", item.Name, item.Count, players[i].Name));
+                players[i].Inventory.AddItem(item.Clone());
+                players[i].SendMessage(new TranslationContainer("commands.give.successRecipient", item.Item.Name, item.Count));
+                Server.Instance.BroadcastMessageAndLoggerSend(new TranslationContainer("commands.give.success", item.Item.Name, item.Count, players[i].Name));
             }
 
             return true;

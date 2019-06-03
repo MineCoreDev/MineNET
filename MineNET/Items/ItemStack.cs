@@ -96,22 +96,6 @@ namespace MineNET.Items
 
         #endregion
 
-        public int ID
-        {
-            get
-            {
-                return this.Item.ID;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return this.Item.GetName(this.Damage);
-            }
-        }
-
         #region Components
 
         public ItemStack AddCanPlaceOn(params string[] blocks)
