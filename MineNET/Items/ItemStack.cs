@@ -37,7 +37,7 @@ namespace MineNET.Items
 
         }
 
-        public ItemStack(Item item, int damage, int count, byte[] nbt) : this(item, damage, count, nbt != null ? NBTIO.ReadTag(nbt) : null)
+        public ItemStack(Item item, int damage, int count, byte[] nbt) : this(item, damage, count, NBTIO.ReadTag(nbt))
         {
 
         }
@@ -45,8 +45,8 @@ namespace MineNET.Items
         public ItemStack(Item item, int damage, int count, CompoundTag tag)
         {
             this.Item = item;
-            this.Damage = damage;
-            this.Count = count;
+            this.Damage = 0;
+            this.Count = 1;
 
             this.CanPlaceOn = new string[0];
             this.CanDestroy = new string[0];
