@@ -28,7 +28,7 @@ namespace MineNET.Plugins
             }
 
             DirectoryInfo dir = new DirectoryInfo(folder);
-            foreach (FileInfo file in dir.GetFiles())//Check Lib
+            foreach (FileInfo file in dir.GetFiles()) //Check Lib
             {
                 if (file.Extension == PluginManager.Library)
                 {
@@ -36,7 +36,7 @@ namespace MineNET.Plugins
                 }
             }
 
-            foreach (FileInfo file in dir.GetFiles())//Check Lib
+            foreach (FileInfo file in dir.GetFiles()) //Check Lib
             {
                 if (file.Extension == PluginManager.Package || file.Extension == PluginManager.Package_Sub)
                 {
@@ -44,18 +44,17 @@ namespace MineNET.Plugins
                 }
             }
 
-            foreach (FileInfo file in dir.GetFiles())//Check Lib
+            foreach (FileInfo file in dir.GetFiles()) //Check Lib
             {
                 if (file.Extension == PluginManager.Plugin)
                 {
                     this.LoadPlugin(file.FullName);
                 }
             }
-
-            this.EnableAll();
         }
 
         #region Load Method
+
         public void LoadLibrary(string path)
         {
             Assembly asm = Assembly.LoadFile(path);
@@ -152,6 +151,7 @@ namespace MineNET.Plugins
                 }
             }
         }
+
         #endregion
 
         public void EnableAll()
@@ -195,7 +195,7 @@ namespace MineNET.Plugins
                 plugin.OnDisable();
             }
         }
-        
+
         public void Dispose()
         {
             this.DisableAll();
