@@ -13,7 +13,7 @@ namespace MineNET.Init
             ItemInit.In = this;
             this.Init();
 
-            CreativeItemManager.LoadCreativeItems();
+            Item.LoadCreativeItems();
         }
 
         public void Init()
