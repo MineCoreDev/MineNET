@@ -3,7 +3,9 @@ using NLog;
 using NLog.Config;
 using System;
 using System.IO;
+using System.Text;
 using NLog.Layouts;
+using NLog.Targets;
 
 namespace MineNET.IO
 {
@@ -32,14 +34,10 @@ namespace MineNET.IO
             {
             }
 
+            this.SetLogFileConfig(conf);
             LogManager.Configuration = conf;
 
             this.OutputLogger = LogManager.GetCurrentClassLogger();
-        }
-
-        public void StartInputThread()
-        {
-            this.InputLogger.Start();
         }
 
         public static void Debug(object text)
@@ -156,6 +154,36 @@ namespace MineNET.IO
         public void Dispose()
         {
             this.InputLogger.Dispose();
+        }
+
+        private void SetLogFileConfig(LoggingConfiguration conf)
+        {
+            conf.AddTarget("event", new FileTarget()
+            {
+                Encoding = Encoding.UTF8,
+                LineEnding = LineEndingMode.LF,
+                Layout = new SimpleLayout("[${longdate}] [${threadname} /${uppercase:${level:padding=5}}] ${message}"),
+                FileName = new SimpleLayout("${basedir}/logs/event.log"),
+                ArchiveNumbering = ArchiveNumberingMode.Date,
+                ArchiveFileName = new SimpleLayout("${basedir}/logs/{#}-event.log"),
+                ArchiveEvery = FileArchivePeriod.Day,
+                ArchiveDateFormat = "yyyyMMdd",
+                MaxArchiveFiles = 8
+            });
+            conf.AddRule(LogLevel.Debug, LogLevel.Fatal, "event");
+
+            conf.AddTarget("error", new FileTarget()
+            {
+                Encoding = Encoding.UTF8,
+                LineEnding = LineEndingMode.LF,
+                Layout = new SimpleLayout("[${longdate}] [${threadname} /${uppercase:${level:padding=5}}] ${message}"),
+                FileName = new SimpleLayout("${basedir}/logs/error.log"),
+                ArchiveNumbering = ArchiveNumberingMode.Date,
+                ArchiveFileName = new SimpleLayout("${basedir}/logs/{#}-error.log"),
+                ArchiveEvery = FileArchivePeriod.Day,
+                ArchiveDateFormat = "yyyyMMdd"
+            });
+            conf.AddRule(LogLevel.Error, LogLevel.Fatal, "error");
         }
     }
 }

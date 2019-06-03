@@ -13,11 +13,11 @@ namespace MineNET.IO
         public bool IsRunning { get; private set; }
         public bool UsingGUI { get; private set; }
 
-        public int InputStartTop { get; internal set; }
+        public int InputStartTop { get; internal set; } = -1;
 
         public ConcurrentQueue<string> InputQueue { get; private set; } = new ConcurrentQueue<string>();
 
-        public void Start()
+        public Input()
         {
             try
             {
