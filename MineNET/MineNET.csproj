@@ -307,6 +307,7 @@
     <Compile Include="IO\IServerLogger.cs" />
     <Compile Include="IO\MineNetConsoleTarget.cs" />
     <Compile Include="IServerListInfo.cs" />
+    <Compile Include="Items\ItemList.cs" />
     <Compile Include="Items\Utils\CreativeItemList.cs" />
     <Compile Include="Items\Enchantments\Enchantment.cs" />
     <Compile Include="Items\Enchantments\EnchantmentAquaAffinity.cs" />
@@ -347,7 +348,7 @@
     <Compile Include="Items\Tools\ItemFlintAndSteel.cs" />
     <Compile Include="Items\Foods\ItemFood.cs" />
     <Compile Include="Items\Tools\Hoes\ItemHoe.cs" />
-    <Compile Include="Items\ItemIDs.cs" />
+    <Compile Include="Items\Datas\ItemIDs.cs" />
     <Compile Include="Items\Tools\Axes\ItemIronAxe.cs" />
     <Compile Include="Items\Tools\Pickaxes\ItemIronPickaxe.cs" />
     <Compile Include="Items\Tools\Shovels\ItemIronShovel.cs" />

@@ -24,7 +24,7 @@ namespace MineNET.Items
 
         public ItemStack(Item item) : this(item, 0)
         {
-
+            
         }
 
         public ItemStack(Item item, int damage) : this(item, damage, 1)
@@ -37,7 +37,7 @@ namespace MineNET.Items
 
         }
 
-        public ItemStack(Item item, int damage, int count, byte[] nbt) : this(item, damage, count, nbt != null ? NBTIO.ReadTag(nbt) : null)
+        public ItemStack(Item item, int damage, int count, byte[] nbt) : this(item, damage, count, nbt != null && nbt.Length > 0 ? NBTIO.ReadTag(nbt) : null)
         {
 
         }

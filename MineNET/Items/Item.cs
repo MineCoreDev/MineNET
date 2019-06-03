@@ -8,7 +8,7 @@ using MineNET.Worlds;
 
 namespace MineNET.Items
 {
-    public abstract class Item
+    public abstract partial class Item
     {
         #region Item Getter
 
