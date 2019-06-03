@@ -29,6 +29,8 @@ namespace MineNET.IO
                         "[${longdate}] [${threadname} /${uppercase:${level:padding=5}}] ${message}")
                 });
                 conf.AddRule(LogLevel.Debug, LogLevel.Fatal, "console");
+
+                Console.CancelKeyPress += ConsoleOnCancelKeyPress;
             }
             catch (IOException)
             {
@@ -184,6 +186,15 @@ namespace MineNET.IO
                 ArchiveDateFormat = "yyyyMMdd"
             });
             conf.AddRule(LogLevel.Error, LogLevel.Fatal, "error");
+        }
+
+        private void ConsoleOnCancelKeyPress(object sender, ConsoleCancelEventArgs e)
+        {
+            e.Cancel = true;
+            if (Server.Instance.Status == ServerStatus.Running)
+            {
+                Server.Instance.Stop();
+            }
         }
     }
 }
