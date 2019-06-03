@@ -307,7 +307,6 @@
     <Compile Include="IO\IServerLogger.cs" />
     <Compile Include="IO\MineNetConsoleTarget.cs" />
     <Compile Include="IServerListInfo.cs" />
-    <Compile Include="Items\CreativeItemManager.cs" />
     <Compile Include="Items\Enchantments\Enchantment.cs" />
     <Compile Include="Items\Enchantments\EnchantmentAquaAffinity.cs" />
     <Compile Include="Items\Enchantments\EnchantmentBaneOfArthropods.cs" />
@@ -340,8 +339,8 @@
     <Compile Include="Items\ItemBlock.cs" />
     <Compile Include="Items\ItemIDs.cs" />
     <Compile Include="Items\ItemStack.cs" />
-    <Compile Include="Items\Datas\ItemToolTier.cs" />
-    <Compile Include="Items\Datas\ItemToolType.cs" />
+    <Compile Include="Items\ItemToolTier.cs" />
+    <Compile Include="Items\ItemToolType.cs" />
     <Compile Include="Items\ItemUnknown.cs" />
     <Compile Include="NBT\Data\NBTEndian.cs" />
     <Compile Include="NBT\Data\NBTTagType.cs" />

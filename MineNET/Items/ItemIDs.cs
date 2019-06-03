@@ -210,9 +210,6 @@
         public const int SCUTE = 468;
         public const int TURTLE_SHELL = 469;
         public const int PHANTOM_MEMBRANE = 470;
-        public const int CROSSBOW = 471;
-
-        public const int SWEET_BERRIES = 477;
 
         public const int RECORD_13 = 500;
         public const int RECORD_CAT = 501;
@@ -226,7 +223,5 @@
         public const int RECORD_WARD = 509;
         public const int RECORD_11 = 510;
         public const int RECORD_WAIT = 511;
-
-        public const int SHIELD = 513;
     }
 }
