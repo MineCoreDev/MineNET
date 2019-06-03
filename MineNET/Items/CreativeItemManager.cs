@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    public class CreativeItemList
+    public class CreativeItemManager
     {
-        private CreativeItemList()
+        private CreativeItemManager()
         {
 
         }
@@ -34,7 +34,7 @@ namespace MineNET.Items
         {
             for (int i = 0; i < items.Length; ++i)
             {
-                CreativeItemList.AddCreativeItem(items[i]);
+                CreativeItemManager.AddCreativeItem(items[i]);
             }
         }
 
@@ -64,7 +64,7 @@ namespace MineNET.Items
                     nbt = tags.Chunks(2).Select(x => Convert.ToByte(new string(x.ToArray()), 16)).ToArray();
                 }
 
-                CreativeItemList.AddCreativeItem(new ItemStack(Item.Get(id), damage, 1, nbt));
+                CreativeItemManager.AddCreativeItem(new ItemStack(Item.Get(id), damage, 1, nbt));
             }
         }
     }
