@@ -7,5 +7,7 @@ namespace MineNET.IO
     {
         ILogger OutputLogger { get; }
         InputInterface InputLogger { get; }
+
+        void StartInputThread();
     }
 }

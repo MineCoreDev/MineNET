@@ -37,6 +37,11 @@ namespace MineNET.IO
             this.OutputLogger = LogManager.GetCurrentClassLogger();
         }
 
+        public void StartInputThread()
+        {
+            this.InputLogger.Start();
+        }
+
         public static void Debug(object text)
         {
             Server.Instance?.Logger.OutputLogger.Debug(CheckLocalizationFormat(text, null));

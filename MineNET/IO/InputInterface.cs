@@ -7,6 +7,7 @@ namespace MineNET.IO
     {
         ConcurrentQueue<string> InputQueue { get; }
 
+        void Start();
         void InputAction(string inputText);
         void AddInputQueue(string inputText);
         void GetInputQueue();

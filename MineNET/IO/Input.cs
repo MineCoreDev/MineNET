@@ -17,7 +17,7 @@ namespace MineNET.IO
 
         public ConcurrentQueue<string> InputQueue { get; private set; } = new ConcurrentQueue<string>();
 
-        public Input()
+        public void Start()
         {
             try
             {
