@@ -8,7 +8,7 @@ using MineNET.Worlds;
 
 namespace MineNET.Items
 {
-    public class Item
+    public abstract class Item
     {
         #region Item Getter
 
@@ -61,17 +61,11 @@ namespace MineNET.Items
 
         #endregion
 
-        private Block block = null;
+        public abstract int ID { get; }
 
-        public int ID { get; }
+        public abstract string GetName(int damage);
 
-        public Item(string name, int id)
-        {
-            this.Name = name;
-            this.ID = id;
-        }
-
-        public virtual string Name { get; } = "Unknown";
+        public virtual Block Block { get; } = Block.Get(BlockIDs.AIR);
 
         public virtual byte MaxStackSize { get; } = 64;
 
@@ -84,34 +78,24 @@ namespace MineNET.Items
             return false;
         }
 
-        public virtual bool BlockDestroyed(Block block, EntityLiving entity)
+        public virtual bool ClickAir(Player player)
         {
             return false;
         }
 
-        public virtual bool HitEntity(EntityLiving attacker, EntityLiving target)
+        public virtual bool ReleaseUsing(Player player)
         {
             return false;
         }
 
-        public Block Block
+        public virtual bool DestroyBlock(Block block, EntityLiving entity)
         {
-            get
-            {
-                if (this.block == null)
-                {
-                    return Block.Get(BlockIDs.AIR);
-                }
-                else
-                {
-                    return this.block.Clone();
-                }
-            }
+            return false;
+        }
 
-            set
-            {
-                this.block = value;
-            }
+        public virtual bool AttackEntity(EntityLiving attacker, EntityLiving target)
+        {
+            return false;
         }
 
         public virtual bool CanBeConsumed { get; } = false;
@@ -127,6 +111,8 @@ namespace MineNET.Items
         public virtual bool CanBeActivate { get; } = false;
 
         public virtual int AttackDamage { get; } = 1;
+
+        public virtual int FuelTime { get; } = 0;
 
         public override bool Equals(object obj)
         {

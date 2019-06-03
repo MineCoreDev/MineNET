@@ -4,9 +4,24 @@ namespace MineNET.Items
 {
     public class ItemBlock : Item
     {
-        public ItemBlock(Block block) : base(block.Name, block.ID < 256 ? block.ID : -block.ID + 255)
+        private Block block;
+
+        public ItemBlock(Block block)
         {
-            this.Block = block.Clone();
+            this.block = block;
+        }
+
+        public override int ID
+        {
+            get
+            {
+                return this.block.ID < 256 ? this.block.ID : -this.block.ID + 255;
+            }
+        }
+
+        public override string GetName(int damage)
+        {
+            return this.Block.Name;
         }
     }
 }
