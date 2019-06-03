@@ -313,6 +313,7 @@ namespace MineNET
                     return worlds[i];
                 }
             }
+
             return null;
         }
 
@@ -408,7 +409,6 @@ namespace MineNET
                 nbt = new CompoundTag()
                     .PutLong("firstPlayed", DateTime.Now.ToBinary())
                     .PutLong("lastPlayed", DateTime.Now.ToBinary())
-
                     .PutList(new ListTag("Pos", NBTTagType.FLOAT)
                         .Add(new FloatTag("", pos.X))
                         .Add(new FloatTag("", pos.Y))
@@ -421,15 +421,11 @@ namespace MineNET
                         .Add(new FloatTag("", 0))
                         .Add(new FloatTag("", 0)))
                     .PutString("World", pos.World.Name)
-
                     .PutInt("Dimension", DimensionIDs.OverWorld)
                     .PutInt("PlayerGameType", Server.Instance.ServerProperty.GameMode.GetIndex())
-
-
                     .PutInt("SpawnX", world.SpawnX)
                     .PutInt("SpawnY", world.SpawnY)
                     .PutInt("SpawnZ", world.SpawnZ)
-
                     .PutInt("Score", 0);
 
                 this.SaveOfflinePlayerData(xuid, nbt);
@@ -438,6 +434,7 @@ namespace MineNET
             {
                 nbt = NBTIO.ReadGZIPFile(path, NBTEndian.BIG_ENDIAN);
             }
+
             return nbt;
         }
 

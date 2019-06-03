@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MineNET Development Group")]
 [assembly: AssemblyProduct("MineNET")]
-[assembly: AssemblyCopyright("Copyright ©MineNET  2018")]
+[assembly: AssemblyCopyright("Copyright ©MineNET  2018 - 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -35,4 +35,3 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.1.0.0")]
 [assembly: AssemblyFileVersion("1.1.0.0")]
 [assembly: NeutralResourcesLanguage("ja-JP")]
-

@@ -117,6 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="commands_ban_description" xml:space="preserve">
+    <value>IP アドレスを BAN 一覧に追加します。</value>
+  </data>
+  <data name="commands_ban_success" xml:space="preserve">
+    <value>プレイヤー {0} をアクセス禁止にしました</value>
+  </data>
   <data name="commands_banip_description" xml:space="preserve">
     <value>IP アドレスを BAN 一覧に追加します。</value>
   </data>
@@ -128,12 +138,6 @@
   </data>
   <data name="commands_banip_success_players" xml:space="preserve">
     <value>{1} に属する IP アドレス {0} をアクセス禁止にしました</value>
-  </data>
-  <data name="commands_ban_description" xml:space="preserve">
-    <value>IP アドレスを BAN 一覧に追加します。</value>
-  </data>
-  <data name="commands_ban_success" xml:space="preserve">
-    <value>プレイヤー {0} をアクセス禁止にしました</value>
   </data>
   <data name="commands_deop_description" xml:space="preserve">
     <value>プレイヤーからオペレーターのステータスを取り消す。</value>
@@ -231,17 +235,17 @@
   <data name="commands_tell_description" xml:space="preserve">
     <value>1 人または複数のプレイヤーにプライベート メッセージを送信する。</value>
   </data>
-  <data name="commands_unbanip_invalid" xml:space="preserve">
-    <value>IPアドレスが無効です</value>
-  </data>
-  <data name="commands_unbanip_success" xml:space="preserve">
-    <value>IP アドレス {0} のアクセス禁止を解除しました</value>
-  </data>
   <data name="commands_unban_failed" xml:space="preserve">
     <value>プレイヤー {0} のアクセス禁止を解除できませんでした</value>
   </data>
   <data name="commands_unban_success" xml:space="preserve">
     <value>プレイヤー {0} のアクセス禁止を解除しました</value>
+  </data>
+  <data name="commands_unbanip_invalid" xml:space="preserve">
+    <value>IPアドレスが無効です</value>
+  </data>
+  <data name="commands_unbanip_success" xml:space="preserve">
+    <value>IP アドレス {0} のアクセス禁止を解除しました</value>
   </data>
   <data name="commands_whitelist_add_success" xml:space="preserve">
     <value>{0} をホワイトリストに追加しました</value>
@@ -260,6 +264,21 @@
   </data>
   <data name="commands_whitelist_remove_success" xml:space="preserve">
     <value>{0} をホワイトリストから削除しました</value>
+  </data>
+  <data name="commands_xp_description" xml:space="preserve">
+    <value>プレイヤーの経験値を増加/減少させます</value>
+  </data>
+  <data name="commands_xp_failure_widthdrawXp" xml:space="preserve">
+    <value>プレイヤーに負の経験値を与えることはできません</value>
+  </data>
+  <data name="commands_xp_success" xml:space="preserve">
+    <value>{1} に経験値 {0} を与えまし</value>
+  </data>
+  <data name="commands_xp_success_levels" xml:space="preserve">
+    <value>{1} に {0} レベルを付与しました</value>
+  </data>
+  <data name="commands_xp_success_negative_levels" xml:space="preserve">
+    <value>{1} から {0} レベルを剥奪しました</value>
   </data>
   <data name="effect_absorption" xml:space="preserve">
     <value>吸収</value>
@@ -585,19 +604,10 @@
   <data name="server_world_load" xml:space="preserve">
     <value>ワールド "{0}" が読み込まれました。</value>
   </data>
-  <data name="commands_xp_description" xml:space="preserve">
-    <value>プレイヤーの経験値を増加/減少させます</value>
+  <data name="server_z" xml:space="preserve">
+    <value>test</value>
   </data>
-  <data name="commands_xp_failure_widthdrawXp" xml:space="preserve">
-    <value>プレイヤーに負の経験値を与えることはできません</value>
-  </data>
-  <data name="commands_xp_success" xml:space="preserve">
-    <value>{1} に経験値 {0} を与えまし</value>
-  </data>
-  <data name="commands_xp_success_levels" xml:space="preserve">
-    <value>{1} に {0} レベルを付与しました</value>
-  </data>
-  <data name="commands_xp_success_negative_levels" xml:space="preserve">
-    <value>{1} から {0} レベルを剥奪しました</value>
+  <data name="" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
 </root>
