@@ -24,13 +24,17 @@ namespace MineNET.IO
             int left = Console.CursorLeft;
             int inputTop = _input.InputStartTop;
             int width = Console.BufferWidth;
-            string[] lines = msg.Split(Environment.NewLine.ToCharArray());
+            string[] lines = msg.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
             if (inputTop != -1)
             {
                 int lineOverflow = 0;
+                StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < lines.Length; i++)
                 {
+                    if (lines[i].Length <= 0)
+                        continue;
+
                     Console.Write(lines[i]);
 
                     int leftTmp = Console.CursorLeft;
@@ -38,8 +42,8 @@ namespace MineNET.IO
                     lineOverflow += topTmp - top;
 
                     Console.SetCursorPosition(left, top);
-                    StringBuilder builder = new StringBuilder();
-                    for (int j = 0; j < left + 1 + (topTmp * width); j++)
+                    builder.Clear();
+                    for (int j = 0; j < leftTmp + ((topTmp - top) * width); j++)
                     {
                         builder.Append(" ");
                     }
