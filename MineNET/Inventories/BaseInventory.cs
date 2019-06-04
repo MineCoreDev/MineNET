@@ -62,7 +62,6 @@ namespace MineNET.Inventories
 
         public virtual bool SetItem(int index, ItemStack item, bool send = true)
         {
-            item = item.Clone();
             if (index < 0 || this.Size <= index)
             {
                 return false;
@@ -84,7 +83,7 @@ namespace MineNET.Inventories
             {
                 if (items[i].Item.ID != BlockIDs.AIR && items[i].Count > 0)
                 {
-                    itemSlots.Add(items[i].Clone());
+                    itemSlots.Add(items[i]);
                 }
             }
 
@@ -131,7 +130,7 @@ namespace MineNET.Inventories
                         int amount = Math.Min(slot.Item.MaxStackSize, slot.Count);
                         amount = Math.Min(amount, this.MaxStackSize);
                         slot.Count -= amount;
-                        ItemStack item = slot.Clone();
+                        ItemStack item = slot;
                         item.Count = amount;
                         this.SetItem(emptySlots[i], item);
                         if (slot.Count <= 0)
@@ -146,7 +145,6 @@ namespace MineNET.Inventories
 
         public virtual bool CanAddItem(ItemStack item)
         {
-            item = item.Clone();
             for (int i = 0; i < this.Size; ++i)
             {
                 ItemStack slot = this.GetItem(i);
@@ -178,7 +176,7 @@ namespace MineNET.Inventories
             {
                 if (items[i].Item.ID != BlockIDs.AIR && items[i].Count > 0)
                 {
-                    itemSlots.Add(items[i].Clone());
+                    itemSlots.Add(items[i]);
                 }
             }
 
@@ -194,7 +192,9 @@ namespace MineNET.Inventories
                     if (itemSlots[j].Equals(item))
                     {
                         int amount = Math.Min(item.Count, itemSlots[i].Count);
-                        itemSlots[i].Count -= amount;
+                        ItemStack slot = itemSlots[i];
+                        slot.Count -= amount;
+                        itemSlots[i] = slot;
                         item.Count -= amount;
                         this.SetItem(i, item);
                         if (itemSlots[i].Count <= 0)

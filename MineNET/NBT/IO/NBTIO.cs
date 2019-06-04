@@ -218,9 +218,9 @@ namespace MineNET.NBT.IO
             {
                 nbt.PutByte("slot", (byte) slot);
             }
-            if (itemStack.HasTags)
+            if (itemStack.NamedTag.Count != 0)
             {
-                nbt.PutCompound("tag", itemStack.GetNamedTag());
+                nbt.PutCompound("tag", itemStack.NamedTag);
             }
             string[] canPlaceOn = itemStack.CanPlaceOn;
             if (canPlaceOn.Length > 0)
@@ -252,7 +252,7 @@ namespace MineNET.NBT.IO
             {
                 CompoundTag tag = (CompoundTag) nbt.GetCompound("tag").Clone();
                 tag.Name = "";
-                item.SetNamedTag(tag);
+                item.NamedTag = tag;
             }
             if (nbt.Exist("CanPlaceOn"))
             {

@@ -507,7 +507,7 @@ namespace MineNET.Worlds
 
             block.Break(player, item);
 
-            item.Item.BlockDestroyed(block, player);
+            item.Item.DestroyBlock(block, player);
 
             //TODO : item drop
         }
