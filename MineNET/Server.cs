@@ -81,7 +81,6 @@ namespace MineNET
 
                     IO.Logger.Info("%server.start.done");
                     IO.Logger.Info("%server.start.done2", sw.Elapsed.ToString(@"mm\:ss\.fff"));
-                    IO.Logger.Info(new StackTrace());
                     this.Status = ServerStatus.Running;
 
                     //TODO: ServerStartedEvent...
