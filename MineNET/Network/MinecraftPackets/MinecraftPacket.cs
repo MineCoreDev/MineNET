@@ -217,7 +217,8 @@ namespace MineNET.Network.MinecraftPackets
 
         public Skin ReadSkin()
         {
-            return new Skin(this.ReadString(), this.ReadByteData(), this.ReadByteData(), this.ReadString(), this.ReadString());
+            return new Skin(this.ReadString(), this.ReadByteData(), this.ReadByteData(), this.ReadString(),
+                this.ReadString());
         }
 
         public void WriteSkin(Skin skin)
@@ -236,12 +237,14 @@ namespace MineNET.Network.MinecraftPackets
             {
                 return new ItemStack(Item.Get(BlockIDs.AIR), 0, 0);
             }
+
             int auxValue = this.ReadSVarInt();
             int data = auxValue >> 8;
             if (data == short.MaxValue)
             {
                 data = -1;
             }
+
             int cnt = auxValue & 0xff;
 
             int nbtLen = this.ReadLShort();
@@ -282,6 +285,7 @@ namespace MineNET.Network.MinecraftPackets
                 this.WriteSVarInt(0);
                 return;
             }
+
             this.WriteSVarInt(id);
             int auxValue = ((item.Damage & 0x7fff) << 8) | (item.Count & 0xff);
             this.WriteSVarInt(auxValue);
@@ -359,10 +363,12 @@ namespace MineNET.Network.MinecraftPackets
             commandOriginData.Type = this.ReadUVarInt();
             commandOriginData.Uuid = this.ReadUUID();
             commandOriginData.RequestId = this.ReadString();
-            if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE || commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
+            if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE ||
+                commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
             {
                 commandOriginData.VarLong1 = this.ReadVarLong();
             }
+
             return commandOriginData;
         }
 
@@ -371,7 +377,8 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteUVarInt(commandOriginData.Type);
             this.WriteUUID(commandOriginData.Uuid);
             this.WriteString(commandOriginData.RequestId);
-            if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE || commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
+            if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE ||
+                commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
             {
                 this.WriteVarLong(commandOriginData.VarLong1);
             }

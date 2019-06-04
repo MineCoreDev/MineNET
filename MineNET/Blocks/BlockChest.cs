@@ -22,21 +22,22 @@ namespace MineNET.Blocks
             this.CanBeActivated = true;
         }
 
-        public override bool Place(Block clicked, Block replace, BlockFace face, Vector3 clickPos, Player player, ItemStack item)
+        public override bool Place(Block clicked, Block replace, BlockFace face, Vector3 clickPos, Player player,
+            ItemStack item)
         {
-            int[] faces = { 2, 5, 3, 4};
+            int[] faces = {2, 5, 3, 4};
             this.Damage = faces[player.GetDirection().GetHorizontalIndex()];
             this.World.SetBlock(this.ToVector3(), this, true);
 
             CompoundTag nbt = new CompoundTag();
-            nbt.PutList(new ListTag(NBTTagType.COMPOUND));
             nbt.PutInt("x", this.X);
             nbt.PutInt("y", this.Y);
             nbt.PutInt("z", this.Z);
 
             Chunk chunk = this.World.GetChunk(new Tuple<int, int>(this.X >> 4, this.Z >> 4));
 
-            BlockEntity.CreateBlockEntity("chest", chunk, nbt);
+            BlockEntity blockEntity = BlockEntity.CreateBlockEntity("chest", chunk, nbt);
+            ((BlockEntitySpawnable) blockEntity).SpawnToAll();
             return true;
         }
 
@@ -46,7 +47,6 @@ namespace MineNET.Blocks
             if (!(blockEntity is BlockEntityChest))
             {
                 CompoundTag nbt = new CompoundTag();
-                nbt.PutList(new ListTag(NBTTagType.COMPOUND));
                 nbt.PutInt("x", this.X);
                 nbt.PutInt("y", this.Y);
                 nbt.PutInt("z", this.Z);
@@ -54,6 +54,7 @@ namespace MineNET.Blocks
                 Chunk chunk = this.World.GetChunk(new Tuple<int, int>(this.X >> 4, this.Z >> 4));
 
                 blockEntity = BlockEntity.CreateBlockEntity("chest", chunk, nbt);
+                ((BlockEntitySpawnable) blockEntity).SpawnToAll();
             }
 
             Inventory inventory = ((BlockEntityChest) blockEntity).Inventory;
