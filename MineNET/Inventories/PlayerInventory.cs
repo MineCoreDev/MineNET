@@ -81,7 +81,7 @@ namespace MineNET.Inventories
             InventoryContentPacket pk = new InventoryContentPacket
             {
                 InventoryId = ContainerIds.CREATIVE.GetIndex(),
-                Items = Item.GetCreativeItems()
+                Items = CreativeItemList.GetCreativeItems()
             };
             player.SendPacket(pk);
         }
