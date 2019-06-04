@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace MineNET.Items
 {
-    public class Item
+    public abstract partial class Item
     {
         private Block block = null;
 

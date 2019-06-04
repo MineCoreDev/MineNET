@@ -38,7 +38,7 @@ namespace MineNET.Items
 
         private CompoundTag Tags { get; set; } = null;
 
-        public ItemStack(Item item)
+        public ItemStack(Item item, int damage, int count, byte[] nbt) : this(item, damage, count, nbt != null && nbt.Length > 0 ? NBTIO.ReadTag(nbt) : null)
         {
             this.Item = item;
         }
