@@ -7,6 +7,7 @@ using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
 using MineNET.Items;
+using MineNET.NBT.IO;
 using MineNET.Utils;
 using MineNET.Values;
 using MineNET.Worlds.Rule;
@@ -285,7 +286,7 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteSVarInt(id);
             int auxValue = ((item.Damage & 0x7fff) << 8) | (item.Count & 0xff);
             this.WriteSVarInt(auxValue);
-            byte[] nbt = item.BinaryTags;
+            byte[] nbt = NBTIO.WriteTag(item.NamedTag);
             this.WriteLShort((ushort) nbt.Length);
             this.WriteBytes(nbt);
 
