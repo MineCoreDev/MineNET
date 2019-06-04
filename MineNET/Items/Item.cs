@@ -1,23 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+﻿using System.Reflection;
 using MineNET.Blocks;
 using MineNET.Data;
 using MineNET.Entities;
 using MineNET.Entities.Players;
-using MineNET.Resources;
 using MineNET.Values;
 using MineNET.Worlds;
-using Newtonsoft.Json.Linq;
 
 namespace MineNET.Items
 {
     public class Item
     {
-        private Block block = null;
-
-        public int ID { get; }
+        #region Item Getter
 
         public static Item Get(int id)
         {
@@ -46,7 +39,7 @@ namespace MineNET.Items
             FieldInfo info = factory.GetType().GetField(data[0]);
             if (info != null)
             {
-                id = (int) info.GetValue(factory);
+                id = (int)info.GetValue(factory);
             }
             else
             {
@@ -54,7 +47,7 @@ namespace MineNET.Items
                 FieldInfo info2 = factory2.GetType().GetField(data[0]);
                 if (info2 != null)
                 {
-                    id = (int) info2.GetValue(factory2);
+                    id = (int)info2.GetValue(factory2);
                     if (id > 255)
                     {
                         id = -id + 255;
@@ -66,58 +59,11 @@ namespace MineNET.Items
             return item;
         }
 
-        public static void AddCreativeItem(ItemStack item)
-        {
-            MineNET_Registries.Creative.Add(item);
-        }
+        #endregion
 
-        public static void RemoveCreativeItem(ItemStack item)
-        {
-            MineNET_Registries.Creative.Remove(item);
-        }
+        private Block block = null;
 
-        public static void RemoveCreativeItem(int index)
-        {
-            MineNET_Registries.Creative.RemoveAt(index);
-        }
-
-        public static void AddCreativeItems(params ItemStack[] items)
-        {
-            for (int i = 0; i < items.Length; ++i)
-            {
-                Item.AddCreativeItem(items[i]);
-            }
-        }
-
-        public static void RemoveAllCreativeItems()
-        {
-            MineNET_Registries.Creative.Clear();
-        }
-
-        public static ItemStack[] GetCreativeItems()
-        {
-            return MineNET_Registries.Creative.ToArray();
-        }
-
-        public static void LoadCreativeItems()
-        {
-            string data = Encoding.UTF8.GetString(Resource.CreativeItems);
-            JObject json = JObject.Parse(data);
-            JToken items = json.GetValue("items");
-            foreach (JObject item in items)
-            {
-                int id = item.Value<int>("id");
-                int damage = item.Value<int>("damage");
-                string tags = item.Value<string>("nbt_hex");
-                byte[] nbt = null;
-                if (!string.IsNullOrEmpty(tags))
-                {
-                    nbt = tags.Chunks(2).Select(x => Convert.ToByte(new string(x.ToArray()), 16)).ToArray();
-                }
-
-                Item.AddCreativeItem(new ItemStack(Item.Get(id), damage, 1, nbt));
-            }
-        }
+        public int ID { get; }
 
         public Item(string name, int id)
         {
@@ -127,117 +73,11 @@ namespace MineNET.Items
 
         public virtual string Name { get; } = "Unknown";
 
-        public virtual byte MaxStackSize
-        {
-            get
-            {
-                return 64;
-            }
-        }
+        public virtual byte MaxStackSize { get; } = 64;
 
-        public virtual bool IsTool
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public virtual bool IsTool { get; } = false;
 
-        public virtual bool IsPickaxe
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public virtual bool IsAxe
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public virtual bool IsSword
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public virtual bool IsShovel
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public virtual bool IsHoe
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public virtual bool IsShears
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public virtual bool IsFlintAndSteel
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public virtual bool IsArmor
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public virtual bool IsHemlet
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public virtual bool IsChestplate
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public virtual bool IsLeggings
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public virtual bool IsBoots
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public virtual bool IsArmor { get; } = false;
 
         public virtual bool Activate(Player player, World world, Block clicked, BlockFace blockFace, Vector3 clickPos)
         {
@@ -274,13 +114,7 @@ namespace MineNET.Items
             }
         }
 
-        public virtual bool CanBeConsumed
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public virtual bool CanBeConsumed { get; } = false;
 
         public virtual bool CanBePlace
         {
@@ -290,21 +124,9 @@ namespace MineNET.Items
             }
         }
 
-        public virtual bool CanBeActivate
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public virtual bool CanBeActivate { get; } = false;
 
-        public virtual int AttackDamage
-        {
-            get
-            {
-                return 1;
-            }
-        }
+        public virtual int AttackDamage { get; } = 1;
 
         public override bool Equals(object obj)
         {
