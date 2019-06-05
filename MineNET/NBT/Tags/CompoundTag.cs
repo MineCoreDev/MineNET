@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MineNET.IO;
 using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 
@@ -9,22 +10,17 @@ namespace MineNET.NBT.Tags
     {
         public override NBTTagType TagType
         {
-            get
-            {
-                return NBTTagType.COMPOUND;
-            }
+            get { return NBTTagType.COMPOUND; }
         }
 
         readonly Dictionary<string, Tag> tags = new Dictionary<string, Tag>();
 
         public CompoundTag() : base("")
         {
-
         }
 
         public CompoundTag(string name) : base(name)
         {
-
         }
 
         public byte GetByte(string name)
@@ -292,15 +288,13 @@ namespace MineNET.NBT.Tags
                     return true;
                 }
             }
+
             return false;
         }
 
         public int Count
         {
-            get
-            {
-                return this.tags.Count;
-            }
+            get { return this.tags.Count; }
         }
 
         public Tag this[string key]
@@ -328,10 +322,7 @@ namespace MineNET.NBT.Tags
 
         public Dictionary<string, Tag> Tags
         {
-            get
-            {
-                return this.tags;
-            }
+            get { return this.tags; }
         }
 
         public override string ToString()
@@ -341,6 +332,7 @@ namespace MineNET.NBT.Tags
             {
                 data += $"{Environment.NewLine}{tag.ToString()}";
             }
+
             return $"CompoundTag : Name {this.Name} : Data {data}";
         }
 
@@ -350,6 +342,7 @@ namespace MineNET.NBT.Tags
             {
                 t.WriteTag(stream);
             }
+
             stream.WriteByte((byte) NBTTagType.END);
         }
 
@@ -417,6 +410,7 @@ namespace MineNET.NBT.Tags
                         {
                             b[i] = stream.ReadByte();
                         }
+
                         this.PutByteArray(tagName, b);
                         break;
 
@@ -428,7 +422,14 @@ namespace MineNET.NBT.Tags
                     case NBTTagType.LIST:
                         tagName = stream.ReadString();
                         ListTag listtag = new ListTag(NBTTagType.BYTE);
-                        listtag.Read(stream);
+                        try
+                        {
+                            listtag.Read(stream);
+                        }
+                        catch
+                        {
+                        }
+
                         listtag.Name = tagName;
                         this.PutList(listtag);
                         break;
@@ -436,7 +437,14 @@ namespace MineNET.NBT.Tags
                     case NBTTagType.COMPOUND:
                         tagName = stream.ReadString();
                         CompoundTag comp = new CompoundTag();
-                        comp.Read(stream);
+                        try
+                        {
+                            comp.Read(stream);
+                        }
+                        catch
+                        {
+                        }
+
                         this.PutCompound(tagName, comp);
                         break;
 
@@ -448,6 +456,7 @@ namespace MineNET.NBT.Tags
                         {
                             n[i] = stream.ReadInt();
                         }
+
                         this.PutIntArray(tagName, n);
                         break;
 
@@ -459,6 +468,7 @@ namespace MineNET.NBT.Tags
                         {
                             l[i] = stream.ReadLong();
                         }
+
                         this.PutLongArray(tagName, l);
                         break;
 
@@ -481,26 +491,31 @@ namespace MineNET.NBT.Tags
             {
                 return false;
             }
+
             CompoundTag tag = (CompoundTag) obj;
             if (this.Name != tag.Name)
             {
                 return false;
             }
+
             if (this.tags.Count != tag.tags.Count)
             {
                 return false;
             }
+
             foreach (string key in this.tags.Keys)
             {
                 if (!tag.tags.ContainsKey(key))
                 {
                     return false;
                 }
+
                 if (!this.tags[key].Equals(tag.tags[key]))
                 {
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -510,10 +525,12 @@ namespace MineNET.NBT.Tags
             {
                 return true;
             }
+
             if ((object) A == null || (object) B == null)
             {
                 return false;
             }
+
             return A.Equals(B);
         }
 
@@ -523,10 +540,12 @@ namespace MineNET.NBT.Tags
             {
                 return false;
             }
+
             if ((object) A == null || (object) B == null)
             {
                 return true;
             }
+
             return !A.Equals(B);
         }
 
