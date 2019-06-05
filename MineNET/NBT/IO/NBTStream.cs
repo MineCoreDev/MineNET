@@ -178,7 +178,7 @@ namespace MineNET.NBT.IO
             int len = 0;
             if (this.Network)
             {
-                len = this.ReadSVarInt();
+                len = (int) this.ReadUVarInt();
             }
             else
             {

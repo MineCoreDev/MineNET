@@ -260,17 +260,15 @@ namespace MineNET.Network.MinecraftPackets
             else if (nbtLen == ushort.MaxValue)
             {
                 int count = (int) this.ReadUVarInt();
-                int offset = this.Offset;
+                int tmpOffset = this.Offset;
                 for (int i = 0; i < count; i++)
                 {
                     byte[] buf = this.ReadBytes();
-                    CompoundTag tag = NBTIO.ReadTag(buf, NBTEndian.LITTLE_ENDIAN, true);
+
+                    CompoundTag tag = NBTIO.ReadTag(buf, out int offset, NBTEndian.LITTLE_ENDIAN, true);
                     nbt = NBTIO.WriteTag(tag);
 
-                    Logger.Info(BitConverter.ToString(buf));
-
-                    this.Offset = offset;
-                    this.Offset += nbt.Length;
+                    this.Offset = tmpOffset + offset;
                 }
             }
 

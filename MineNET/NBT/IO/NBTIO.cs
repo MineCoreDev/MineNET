@@ -220,6 +220,28 @@ namespace MineNET.NBT.IO
             return tag;
         }
 
+        public static CompoundTag ReadTag(byte[] bytes, out int offset, NBTEndian endian = NBTEndian.LITTLE_ENDIAN,
+            bool isNetwork = false)
+        {
+            CompoundTag tag = new CompoundTag();
+            NBTStream stream = new NBTStream(bytes, endian);
+            try
+            {
+                stream.Network = isNetwork;
+                tag.ReadTag(stream);
+            }
+            catch
+            {
+            }
+            finally
+            {
+                offset = stream.Offset;
+                stream.Dispose();
+            }
+
+            return tag;
+        }
+
         public static CompoundTag WriteItem(ItemStack itemStack, int slot = -1)
         {
             CompoundTag nbt = new CompoundTag()

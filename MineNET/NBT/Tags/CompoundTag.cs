@@ -422,7 +422,14 @@ namespace MineNET.NBT.Tags
                     case NBTTagType.LIST:
                         tagName = stream.ReadString();
                         ListTag listtag = new ListTag(NBTTagType.BYTE);
-                        listtag.Read(stream);
+                        try
+                        {
+                            listtag.Read(stream);
+                        }
+                        catch
+                        {
+                        }
+
                         listtag.Name = tagName;
                         this.PutList(listtag);
                         break;
@@ -430,7 +437,14 @@ namespace MineNET.NBT.Tags
                     case NBTTagType.COMPOUND:
                         tagName = stream.ReadString();
                         CompoundTag comp = new CompoundTag();
-                        comp.Read(stream);
+                        try
+                        {
+                            comp.Read(stream);
+                        }
+                        catch
+                        {
+                        }
+
                         this.PutCompound(tagName, comp);
                         break;
 
