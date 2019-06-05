@@ -6,7 +6,9 @@ using MineNET.Commands.Enums;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
+using MineNET.IO;
 using MineNET.Items;
+using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
@@ -251,9 +253,23 @@ namespace MineNET.Network.MinecraftPackets
 
             int nbtLen = this.ReadLShort();
             byte[] nbt = new byte[0];
-            if (nbtLen > 0)
+            if (nbtLen < ushort.MaxValue)
             {
                 nbt = this.ReadBytes(nbtLen);
+            }
+            else if (nbtLen == ushort.MaxValue)
+            {
+                int count = (int) this.ReadUVarInt();
+                int tmpOffset = this.Offset;
+                for (int i = 0; i < count; i++)
+                {
+                    byte[] buf = this.ReadBytes();
+
+                    CompoundTag tag = NBTIO.ReadTag(buf, out int offset, NBTEndian.LITTLE_ENDIAN, true);
+                    nbt = NBTIO.WriteTag(tag);
+
+                    this.Offset = tmpOffset + offset;
+                }
             }
 
             ItemStack item = new ItemStack(Item.Get(id), data, cnt, nbt);
@@ -298,6 +314,7 @@ namespace MineNET.Network.MinecraftPackets
                 tag.Name = "";
                 nbt = NBTIO.WriteTag(tag);
             }
+
             this.WriteLShort((ushort) nbt.Length);
             this.WriteBytes(nbt);
 
