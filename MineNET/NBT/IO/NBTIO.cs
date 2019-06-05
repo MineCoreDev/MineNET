@@ -53,6 +53,7 @@ namespace MineNET.NBT.IO
                     {
                         Array.Reverse(sumBytes);
                     }
+
                     ms.Write(sumBytes, 0, sumBytes.Length);
 
                     File.WriteAllBytes(fileName, ms.ToArray());
@@ -82,6 +83,7 @@ namespace MineNET.NBT.IO
                     {
                         Array.Reverse(sumBytes);
                     }
+
                     ms.Write(sumBytes, 0, sumBytes.Length);
 
                     return ms.ToArray();
@@ -99,6 +101,7 @@ namespace MineNET.NBT.IO
                 {
                     throw new FormatException();
                 }
+
                 ms.ReadByte();
                 using (ZlibStream ds = new ZlibStream(ms, CompressionMode.Decompress, false))
                 {
@@ -127,6 +130,7 @@ namespace MineNET.NBT.IO
                 {
                     throw new FormatException();
                 }
+
                 ms.ReadByte();
                 using (ZlibStream ds = new ZlibStream(ms, CompressionMode.Decompress, false))
                 {
@@ -186,7 +190,8 @@ namespace MineNET.NBT.IO
             }
         }
 
-        public static byte[] WriteTag(CompoundTag tag, NBTEndian endian = NBTEndian.LITTLE_ENDIAN, bool isNetwork = false)
+        public static byte[] WriteTag(CompoundTag tag, NBTEndian endian = NBTEndian.LITTLE_ENDIAN,
+            bool isNetwork = false)
         {
             using (NBTStream stream = new NBTStream(endian))
             {
@@ -196,13 +201,20 @@ namespace MineNET.NBT.IO
             }
         }
 
-        public static CompoundTag ReadTag(byte[] bytes, NBTEndian endian = NBTEndian.LITTLE_ENDIAN, bool isNetwork = false)
+        public static CompoundTag ReadTag(byte[] bytes, NBTEndian endian = NBTEndian.LITTLE_ENDIAN,
+            bool isNetwork = false)
         {
             CompoundTag tag = new CompoundTag();
-            using (NBTStream stream = new NBTStream(bytes, endian))
+            try
             {
-                stream.Network = isNetwork;
-                tag.ReadTag(stream);
+                using (NBTStream stream = new NBTStream(bytes, endian))
+                {
+                    stream.Network = isNetwork;
+                    tag.ReadTag(stream);
+                }
+            }
+            catch
+            {
             }
 
             return tag;
@@ -218,10 +230,12 @@ namespace MineNET.NBT.IO
             {
                 nbt.PutByte("slot", (byte) slot);
             }
+
             if (itemStack.NamedTag.Count != 0)
             {
                 nbt.PutCompound("tag", itemStack.NamedTag);
             }
+
             string[] canPlaceOn = itemStack.CanPlaceOn;
             if (canPlaceOn.Length > 0)
             {
@@ -230,8 +244,10 @@ namespace MineNET.NBT.IO
                 {
                     list.Add(new StringTag(canPlaceOn[i]));
                 }
+
                 nbt.PutList(list);
             }
+
             string[] canDestroy = itemStack.CanDestroy;
             if (canDestroy.Length > 0)
             {
@@ -240,8 +256,10 @@ namespace MineNET.NBT.IO
                 {
                     list.Add(new StringTag(canDestroy[i]));
                 }
+
                 nbt.PutList(list);
             }
+
             return nbt;
         }
 
@@ -254,6 +272,7 @@ namespace MineNET.NBT.IO
                 tag.Name = "";
                 item.NamedTag = tag;
             }
+
             if (nbt.Exist("CanPlaceOn"))
             {
                 ListTag list = nbt.GetList("CanPlaceOn");
@@ -262,6 +281,7 @@ namespace MineNET.NBT.IO
                     item.AddCanPlaceOn(((StringTag) list[i]).Data);
                 }
             }
+
             if (nbt.Exist("CanDestroy"))
             {
                 ListTag list = nbt.GetList("CanDestroy");
@@ -270,6 +290,7 @@ namespace MineNET.NBT.IO
                     item.AddCanDestroy(((StringTag) list[i]).Data);
                 }
             }
+
             return item;
         }
     }

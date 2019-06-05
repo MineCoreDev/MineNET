@@ -2,6 +2,7 @@
 using MineNET.Utils;
 using System;
 using System.Text;
+using MineNET.IO;
 
 namespace MineNET.NBT.IO
 {
@@ -17,12 +18,10 @@ namespace MineNET.NBT.IO
 
         public NBTStream(NBTEndian endian = NBTEndian.LITTLE_ENDIAN) : this(new byte[0], endian)
         {
-
         }
 
         public NBTStream(byte[] buffer) : this(buffer, NBTEndian.LITTLE_ENDIAN)
         {
-
         }
 
         public NBTStream(byte[] buffer, NBTEndian endian)
@@ -62,6 +61,7 @@ namespace MineNET.NBT.IO
             {
                 return this.ReadSVarInt();
             }
+
             if (this.Swap)
             {
                 return (int) this.ReadLInt();
@@ -79,6 +79,7 @@ namespace MineNET.NBT.IO
                 this.WriteSVarInt(value);
                 return;
             }
+
             if (this.Swap)
             {
                 this.WriteLInt((uint) value);
@@ -95,6 +96,7 @@ namespace MineNET.NBT.IO
             {
                 return this.ReadSVarLong();
             }
+
             if (this.Swap)
             {
                 return (long) this.ReadLLong();
@@ -112,6 +114,7 @@ namespace MineNET.NBT.IO
                 this.WriteSVarLong(value);
                 return;
             }
+
             if (this.Swap)
             {
                 this.WriteLLong((ulong) value);
@@ -170,54 +173,6 @@ namespace MineNET.NBT.IO
             }
         }
 
-        public new int ReadSVarInt()
-        {
-            if (this.Swap)
-            {
-                return ~base.ReadSVarInt();
-            }
-            else
-            {
-                return base.ReadSVarInt();
-            }
-        }
-
-        public new void WriteSVarInt(int value)
-        {
-            if (this.Swap)
-            {
-                base.WriteSVarInt(~value);
-            }
-            else
-            {
-                base.WriteSVarInt(value);
-            }
-        }
-
-        public new long ReadSVarLong()
-        {
-            if (this.Swap)
-            {
-                return ~base.ReadSVarLong();
-            }
-            else
-            {
-                return base.ReadSVarLong();
-            }
-        }
-
-        public new void WriteSVarLong(long value)
-        {
-            if (this.Swap)
-            {
-                base.WriteSVarLong(~value);
-            }
-            else
-            {
-                base.WriteSVarLong(value);
-            }
-        }
-
         public new string ReadString()
         {
             int len = 0;
@@ -245,6 +200,7 @@ namespace MineNET.NBT.IO
                 {
                     this.WriteShort(0);
                 }
+
                 return;
             }
 
@@ -257,6 +213,7 @@ namespace MineNET.NBT.IO
             {
                 this.WriteShort((short) buffer.Length);
             }
+
             this.WriteBytes(buffer);
         }
 

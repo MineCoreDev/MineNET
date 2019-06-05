@@ -6,7 +6,9 @@ using MineNET.Commands.Enums;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
+using MineNET.IO;
 using MineNET.Items;
+using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
 using MineNET.Utils;
@@ -219,7 +221,8 @@ namespace MineNET.Network.MinecraftPackets
 
         public Skin ReadSkin()
         {
-            return new Skin(this.ReadString(), this.ReadByteData(), this.ReadByteData(), this.ReadString(), this.ReadString());
+            return new Skin(this.ReadString(), this.ReadByteData(), this.ReadByteData(), this.ReadString(),
+                this.ReadString());
         }
 
         public void WriteSkin(Skin skin)
@@ -238,19 +241,37 @@ namespace MineNET.Network.MinecraftPackets
             {
                 return new ItemStack(Item.Get(BlockIDs.AIR), 0, 0);
             }
+
             int auxValue = this.ReadSVarInt();
             int data = auxValue >> 8;
             if (data == short.MaxValue)
             {
                 data = -1;
             }
+
             int cnt = auxValue & 0xff;
 
             int nbtLen = this.ReadLShort();
             byte[] nbt = new byte[0];
-            if (nbtLen > 0)
+            if (nbtLen < ushort.MaxValue)
             {
                 nbt = this.ReadBytes(nbtLen);
+            }
+            else if (nbtLen == ushort.MaxValue)
+            {
+                int count = (int) this.ReadUVarInt();
+                int offset = this.Offset;
+                for (int i = 0; i < count; i++)
+                {
+                    byte[] buf = this.ReadBytes();
+                    CompoundTag tag = NBTIO.ReadTag(buf, NBTEndian.LITTLE_ENDIAN, true);
+                    nbt = NBTIO.WriteTag(tag);
+
+                    Logger.Info(BitConverter.ToString(buf));
+
+                    this.Offset = offset;
+                    this.Offset += nbt.Length;
+                }
             }
 
             ItemStack item = new ItemStack(Item.Get(id), data, cnt, nbt);
@@ -284,6 +305,7 @@ namespace MineNET.Network.MinecraftPackets
                 this.WriteSVarInt(0);
                 return;
             }
+
             this.WriteSVarInt(id);
             int auxValue = ((item.Damage & 0x7fff) << 8) | (item.Count & 0xff);
             this.WriteSVarInt(auxValue);
@@ -294,6 +316,7 @@ namespace MineNET.Network.MinecraftPackets
                 tag.Name = "";
                 nbt = NBTIO.WriteTag(tag);
             }
+
             this.WriteLShort((ushort) nbt.Length);
             this.WriteBytes(nbt);
 
@@ -367,10 +390,12 @@ namespace MineNET.Network.MinecraftPackets
             commandOriginData.Type = this.ReadUVarInt();
             commandOriginData.Uuid = this.ReadUUID();
             commandOriginData.RequestId = this.ReadString();
-            if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE || commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
+            if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE ||
+                commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
             {
                 commandOriginData.VarLong1 = this.ReadVarLong();
             }
+
             return commandOriginData;
         }
 
@@ -379,7 +404,8 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteUVarInt(commandOriginData.Type);
             this.WriteUUID(commandOriginData.Uuid);
             this.WriteString(commandOriginData.RequestId);
-            if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE || commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
+            if (commandOriginData.Type == CommandOriginData.ORIGIN_DEV_CONSOLE ||
+                commandOriginData.Type == CommandOriginData.ORIGIN_TEST)
             {
                 this.WriteVarLong(commandOriginData.VarLong1);
             }
