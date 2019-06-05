@@ -13,7 +13,7 @@ namespace MineNET.Init
             ItemInit.In = this;
             this.Init();
 
-            Item.LoadCreativeItems();
+            CreativeItemList.LoadCreativeItems();
         }
 
         public void Init()
@@ -31,7 +31,7 @@ namespace MineNET.Init
             for (int i = 0; i < fields.Length; ++i)
             {
                 FieldInfo field = fields[i];
-                this.Add(new Item(field.Name, (int) field.GetValue(null)));
+                this.Add(new ItemUnknown((int) field.GetValue(null), field.Name));
             }
         }
 

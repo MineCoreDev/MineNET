@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MineNET.Blocks;
@@ -10,106 +9,110 @@ using MineNET.NBT.Tags;
 
 namespace MineNET.Items
 {
-    public class ItemStack : ICloneable<ItemStack>
+    public struct ItemStack
     {
         public Item Item { get; }
-        public int Damage { get; set; } = 0;
-        public int Count { get; set; } = 1;
+        public int Damage { get; set; }
+        public int Count { get; set; }
 
-        public byte[] BinaryTags { get; private set; } = new byte[0];
+        public string[] CanPlaceOn { get; private set; }
+        public string[] CanDestroy { get; private set; }
 
-        public bool HasTags
+        public CompoundTag NamedTag { get; set; }
+
+        #region Constructor
+
+        public ItemStack(Item item) : this(item, 0)
+        {
+
+        }
+
+        public ItemStack(Item item, int damage) : this(item, damage, 1)
+        {
+
+        }
+
+        public ItemStack(Item item, int damage, int count) : this(item, damage, count, new CompoundTag())
+        {
+
+        }
+
+        public ItemStack(Item item, int damage, int count, byte[] nbt) : this(item, damage, count, nbt != null && nbt.Length > 0 ? NBTIO.ReadTag(nbt) : null)
+        {
+
+        }
+
+        public ItemStack(Item item, int damage, int count, CompoundTag tag)
+        {
+            this.Item = item;
+            this.Damage = damage;
+            this.Count = count;
+
+            this.CanPlaceOn = new string[0];
+            this.CanDestroy = new string[0];
+
+            if (tag == null)
+            {
+                tag = new CompoundTag();
+            }
+            this.NamedTag = tag;
+        }
+
+        public ItemStack(Block block) : this(block, block.Damage)
+        {
+
+        }
+
+        public ItemStack(Block block, int damage) : this(block, damage, 1)
+        {
+
+        }
+
+        public ItemStack(Block block, int damage, int count) : this(block, damage, count, new CompoundTag())
+        {
+
+        }
+
+        public ItemStack(Block block, int damage, int count, byte[] nbt) : this(block, damage, count, NBTIO.ReadTag(nbt))
+        {
+
+        }
+
+        public ItemStack(Block block, int damage, int count, CompoundTag tag)
+        {
+            this.Item = new ItemBlock(block);
+            this.Damage = damage;
+            this.Count = count;
+
+            this.CanPlaceOn = new string[0];
+            this.CanDestroy = new string[0];
+
+            if (tag == null)
+            {
+                tag = new CompoundTag();
+            }
+            this.NamedTag = tag;
+        }
+
+        #endregion
+
+        public int ID
         {
             get
             {
-                if (this.BinaryTags != null)
-                {
-                    return this.BinaryTags.Length > 0;
-                }
-                else
-                {
-                    return false;
-                }
+                return this.Item.ID;
             }
         }
 
-        public string[] CanPlaceOn { get; private set; } = new string[0];
-        public string[] CanDestroy { get; private set; } = new string[0];
-
-        private CompoundTag Tags { get; set; } = null;
-
-        public ItemStack(Item item)
+        public string Name
         {
-            this.Item = item;
-        }
-
-        public ItemStack(Item item, int damage) : this(item)
-        {
-            this.Damage = damage;
-        }
-
-        public ItemStack(Item item, int damage, int count) : this(item, damage)
-        {
-            this.Count = count;
-        }
-
-        public ItemStack(Item item, int damage, int count, byte[] nbt) : this(item, damage, count)
-        {
-            if (nbt != null)
+            get
             {
-                this.BinaryTags = nbt;
+                return this.Item.GetName(this.Damage);
             }
         }
 
-        public ItemStack(Item item, int damage, int count, CompoundTag tag) : this(item, damage, count)
-        {
-            if (tag != null)
-            {
-                this.Tags = tag;
-            }
-        }
-
-        public ItemStack(Block block)
-        {
-            this.Item = new ItemBlock(block);
-            this.Damage = block.Damage;
-        }
-
-        public ItemStack(Block block, int damage) : this(block)
-        {
-            this.Damage = damage;
-        }
-
-        public ItemStack(Block block, int damage, int count) : this(block, damage)
-        {
-            this.Count = count;
-        }
-
-        public ItemStack(Block block, int damage, int count, byte[] nbt) : this(block, damage, count)
-        {
-            if (nbt != null)
-            {
-                this.BinaryTags = nbt;
-            }
-        }
-
-        public ItemStack(Block block, int damage, int count, CompoundTag tag) : this(block, damage, count)
-        {
-            if (tag != null)
-            {
-                this.Tags = tag;
-            }
-        }
-
-        public ItemStack Clone()
-        {
-            return (ItemStack) this.MemberwiseClone();
-        }
-
-        object ICloneable.Clone()
-        {
-            return this.MemberwiseClone();
-        }
+        #region Components
 
         public ItemStack AddCanPlaceOn(params string[] blocks)
         {
@@ -161,47 +164,18 @@ namespace MineNET.Items
             return this;
         }
 
-        public void SetNamedTag(CompoundTag tag)
-        {
-            tag.Name = "";
-            this.Tags = tag;
-            this.BinaryTags = NBTIO.WriteTag(tag);
-        }
-
-        public CompoundTag GetNamedTag()
-        {
-            if (!this.HasTags)
-            {
-                return new CompoundTag();
-            }
-
-            if (this.Tags == null)
-            {
-                this.Tags = NBTIO.ReadTag(this.BinaryTags);
-            }
-
-            if (this.Tags != null)
-            {
-                this.Tags.Name = "";
-            }
-
-            return this.Tags;
-        }
+        #endregion
 
         #region NBT CustomName
 
         public string GetCustomName()
         {
-            if (!this.HasTags)
-            {
-                return "";
-            }
-
-            CompoundTag tag = this.GetNamedTag();
+            CompoundTag tag = this.NamedTag;
             if (!tag.Exist("display"))
             {
                 return "";
             }
+
             CompoundTag display = tag.GetCompound("display");
             if (!display.Exist("Name"))
             {
@@ -215,49 +189,36 @@ namespace MineNET.Items
             if (name == null || name == "")
             {
                 this.ClearCustomName();
+                return this;
+            }
+
+            CompoundTag tag = this.NamedTag;
+            if (tag.Exist("display"))
+            {
+                tag.GetCompound("display").PutString("Name", name);
             }
             else
             {
-                CompoundTag tag;
-                if (this.HasTags)
-                {
-                    tag = this.GetNamedTag();
-                }
-                else
-                {
-                    tag = new CompoundTag();
-                }
-                if (tag.Exist("display"))
-                {
-                    tag.GetCompound("display").PutString("Name", name);
-                }
-                else
-                {
-                    tag.PutCompound("display", new CompoundTag("display").PutString("Name", name));
-                }
-                this.SetNamedTag(tag);
+                tag.PutCompound("display", new CompoundTag("display").PutString("Name", name));
             }
+            this.NamedTag = tag;
             return this;
         }
 
         public ItemStack ClearCustomName()
         {
-            if (!this.HasTags)
-            {
-                return this;
-            }
-
-            CompoundTag tag = this.GetNamedTag();
+            CompoundTag tag = this.NamedTag;
             if (!tag.Exist("display"))
             {
                 return this;
             }
+
             CompoundTag display = tag.GetCompound("display");
             if (display.Exist("Name"))
             {
                 display.Remove("Name");
             }
-            this.SetNamedTag(tag);
+            this.NamedTag = tag;
             return this;
         }
 
@@ -267,21 +228,18 @@ namespace MineNET.Items
 
         public string[] GetLore()
         {
-            if (!this.HasTags)
-            {
-                return new string[0];
-            }
-
-            CompoundTag tag = this.GetNamedTag();
+            CompoundTag tag = this.NamedTag;
             if (tag.Exist("display"))
             {
                 return new string[0];
             }
+
             CompoundTag display = tag.GetCompound("display");
             if (!display.Exist("Lore"))
             {
                 return new string[0];
             }
+
             ListTag lores = display.GetList("Lore");
             string[] data = new string[lores.Count];
             for (int i = 0; i < lores.Count; ++i)
@@ -296,33 +254,25 @@ namespace MineNET.Items
             if (lores == null || lores.Length < 1)
             {
                 this.ClearLore();
+                return this;
+            }
+
+            CompoundTag tag = this.NamedTag;
+            ListTag list = new ListTag("Lore", NBTTagType.STRING);
+            for (int i = 0; i < lores.Length; ++i)
+            {
+                list.Add(new StringTag(lores[i]));
+            }
+
+            if (tag.Exist("display"))
+            {
+                tag.GetCompound("display").PutList(list);
             }
             else
             {
-                CompoundTag tag;
-                if (this.HasTags)
-                {
-                    tag = this.GetNamedTag();
-                }
-                else
-                {
-                    tag = new CompoundTag();
-                }
-                ListTag list = new ListTag("Lore", NBTTagType.STRING);
-                for (int i = 0; i < lores.Length; ++i)
-                {
-                    list.Add(new StringTag(lores[i]));
-                }
-                if (tag.Exist("display"))
-                {
-                    tag.GetCompound("display").PutList(list);
-                }
-                else
-                {
-                    tag.PutCompound("display", new CompoundTag("display").PutList(list));
-                }
-                this.SetNamedTag(tag);
+                tag.PutCompound("display", new CompoundTag("display").PutList(list));
             }
+            this.NamedTag = tag;
             return this;
         }
 
@@ -332,39 +282,36 @@ namespace MineNET.Items
             {
                 return this;
             }
-            if (!this.HasTags || this.GetLore().Length < 1)
+            if (this.GetLore().Length < 1)
             {
                 this.SetLore(lores);
                 return this;
             }
-            CompoundTag tag = this.GetNamedTag();
+
+            CompoundTag tag = this.NamedTag;
             ListTag list = tag.GetCompound("display").GetList("Lore");
             for (int i = 0; i < lores.Length; ++i)
             {
                 list.Add(new StringTag(lores[i]));
             }
-            this.SetNamedTag(tag);
+            this.NamedTag = tag;
             return this;
         }
 
         public ItemStack ClearLore()
         {
-            if (!this.HasTags)
-            {
-                return this;
-            }
-
-            CompoundTag tag = this.GetNamedTag();
+            CompoundTag tag = this.NamedTag;
             if (!tag.Exist("display"))
             {
                 return this;
             }
+
             CompoundTag display = tag.GetCompound("display");
             if (display.Exist("Lore"))
             {
                 display.Remove("Lore");
             }
-            this.SetNamedTag(tag);
+            this.NamedTag = tag;
             return this;
         }
 
@@ -374,12 +321,7 @@ namespace MineNET.Items
 
         public bool GetUnbreakable()
         {
-            if (!this.HasTags)
-            {
-                return false;
-            }
-
-            CompoundTag tag = this.GetNamedTag();
+            CompoundTag tag = this.NamedTag;
             if (!tag.Exist("Unbreakable"))
             {
                 return false;
@@ -387,19 +329,12 @@ namespace MineNET.Items
             return tag.GetBool("Unbreakable");
         }
 
-        public void SetUnbreakable(bool value)
+        public ItemStack SetUnbreakable(bool value)
         {
-            CompoundTag tag;
-            if (this.HasTags)
-            {
-                tag = this.GetNamedTag();
-            }
-            else
-            {
-                tag = new CompoundTag();
-            }
+            CompoundTag tag = this.NamedTag;
             tag.PutBool("Unbreakable", value);
-            this.SetNamedTag(tag);
+            this.NamedTag = tag;
+            return this;
         }
 
         #endregion
@@ -408,15 +343,12 @@ namespace MineNET.Items
 
         public bool HasEnchantment(int id)
         {
-            if (!this.HasTags)
-            {
-                return false;
-            }
-            CompoundTag tag = this.GetNamedTag();
+            CompoundTag tag = this.NamedTag;
             if (!tag.Exist("ench"))
             {
                 return false;
             }
+
             ListTag list = tag.GetList("ench");
             for (int i = 0; i < list.Count; ++i)
             {
@@ -435,7 +367,8 @@ namespace MineNET.Items
             {
                 return null;
             }
-            CompoundTag tag = this.GetNamedTag();
+
+            CompoundTag tag = this.NamedTag;
             ListTag list = tag.GetList("ench");
             for (int i = 0; i < list.Count; ++i)
             {
@@ -450,15 +383,12 @@ namespace MineNET.Items
 
         public Enchantment[] GetEnchantments()
         {
-            if (!this.HasTags)
-            {
-                return new Enchantment[0];
-            }
-            CompoundTag tag = this.GetNamedTag();
+            CompoundTag tag = this.NamedTag;
             if (!tag.Exist("ench"))
             {
                 return new Enchantment[0];
             }
+
             ListTag list = tag.GetList("ench");
             List<Enchantment> enches = new List<Enchantment>();
             for (int i = 0; i < list.Count; ++i)
@@ -471,15 +401,7 @@ namespace MineNET.Items
 
         public ItemStack AddEnchantment(Enchantment enchantment)
         {
-            CompoundTag tag;
-            if (this.HasTags)
-            {
-                tag = this.GetNamedTag();
-            }
-            else
-            {
-                tag = new CompoundTag();
-            }
+            CompoundTag tag = this.NamedTag;
             ListTag list;
             if (tag.Exist("ench"))
             {
@@ -497,7 +419,7 @@ namespace MineNET.Items
                     list[i] = new CompoundTag()
                         .PutShort("id", (short) enchantment.ID)
                         .PutShort("lvl", (short) enchantment.Level);
-                    this.SetNamedTag(tag);
+                    this.NamedTag = tag;
                     return this;
                 }
             }
@@ -505,17 +427,13 @@ namespace MineNET.Items
                         .PutShort("id", (short) enchantment.ID)
                         .PutShort("lvl", (short) enchantment.Level);
             list.Add(ench);
-            this.SetNamedTag(tag);
+            this.NamedTag = tag;
             return this;
         }
 
         public ItemStack RemoveEnchantment(Enchantment enchantment)
         {
-            if (!this.HasTags)
-            {
-                return this;
-            }
-            CompoundTag tag = this.GetNamedTag();
+            CompoundTag tag = this.NamedTag;
             if (!tag.Exist("ench"))
             {
                 return this;
@@ -528,17 +446,13 @@ namespace MineNET.Items
                     list.RemoveAt(i);
                 }
             }
-            this.SetNamedTag(tag);
+            this.NamedTag = tag;
             return this;
         }
 
         public ItemStack RemoveEnchantments()
         {
-            if (!this.HasTags)
-            {
-                return this;
-            }
-            CompoundTag tag = this.GetNamedTag();
+            CompoundTag tag = this.NamedTag;
             if (tag.Exist("ench"))
             {
                 tag.Remove("ench");
@@ -576,19 +490,9 @@ namespace MineNET.Items
                 return false;
             }
 
-            if (checkNBT)
+            if (checkNBT && this.NamedTag != stack.NamedTag)
             {
-                if (this.HasTags != stack.HasTags)
-                {
-                    return false;
-                }
-                else
-                {
-                    if (this.HasTags && this.GetNamedTag() != stack.GetNamedTag())
-                    {
-                        return false;
-                    }
-                }
+                return false;
             }
 
             if (checkComponents)
