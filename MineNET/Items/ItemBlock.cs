@@ -23,5 +23,13 @@ namespace MineNET.Items
         {
             return this.Block.Name;
         }
+
+        public override Block Block
+        {
+            get
+            {
+                return this.block;
+            }
+        }
     }
 }

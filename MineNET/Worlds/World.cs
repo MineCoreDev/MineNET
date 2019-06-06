@@ -434,12 +434,12 @@ namespace MineNET.Worlds
                 }
             }
 
-            if (!item.Item.CanBePlace)
+            Block hand = item.Item.Block;
+            if (hand.ID == BlockIDs.AIR)
             {
                 return;
             }
 
-            Block hand = item.Item.Block;
             hand.Damage = item.Damage;
             hand.SetPosition(replace.GetPosition());
 
