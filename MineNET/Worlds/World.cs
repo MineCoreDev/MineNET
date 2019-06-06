@@ -175,7 +175,7 @@ namespace MineNET.Worlds
                 Block block = pair.Key;
                 if (time < 1)
                 {
-                    block.UpdateTick(World.BLOCK_UPDATE_SCHEDULED);
+                    block.OnScheduledUpdate();
                     this.updateQueue.TryRemove(block, out time);
                     continue;
                 }
@@ -418,7 +418,7 @@ namespace MineNET.Worlds
                 return;
             }
 
-            clicked.UpdateTick(World.BLOCK_UPDATE_TOUCH);
+            clicked.OnTouchUpdate();
             if (!player.Sneaking && clicked.CanBeActivated && clicked.Activate(player, item))
             {
                 return;
