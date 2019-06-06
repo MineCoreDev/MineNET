@@ -193,13 +193,35 @@ namespace MineNET.Blocks
         }
 
         /// <summary>
-        /// <see cref="Block"/> が更新された時に呼び出されます。
+        /// <see cref="Player"/>にタッチされたときに呼び出されます
         /// </summary>
-        /// <param name="type">
-        /// 詳細は <see cref="World"/> クラスを参照してください。
-        /// </param>
-        public void UpdateTick(int type)
+        public virtual void OnTouchUpdate()
         {
+
+        }
+
+        /// <summary>
+        /// 周囲の<see cref="Block"/> が更新されたときに呼び出されます
+        /// </summary>
+        public virtual void OnNearByBlockChange()
+        {
+
+        }
+
+        /// <summary>
+        /// ランダムアップデートで呼び出されます
+        /// </summary>
+        public virtual void OnRandomTick()
+        {
+
+        }
+
+        /// <summary>
+        /// スケジューラーによるアップデートで呼び出されます
+        /// </summary>
+        public virtual void OnScheduledUpdate()
+        {
+
         }
 
         /// <summary>
