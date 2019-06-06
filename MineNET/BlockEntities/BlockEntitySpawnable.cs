@@ -29,12 +29,20 @@ namespace MineNET.BlockEntities
             BlockEntityDataPacket pk = new BlockEntityDataPacket
             {
                 Position = new BlockCoordinate3D((int) this.X, (int) this.Y, (int) this.Z),
-                Namedtag = NBTIO.WriteTag(this.SaveNBT(), NBTEndian.LITTLE_ENDIAN, true)
+                Namedtag = NBTIO.WriteTag(this.SpawnCompound(), NBTEndian.LITTLE_ENDIAN, true)
             };
             player.SendPacket(pk);
+        }
 
-            Logger.Info("Spawn!!");
-            Logger.Info(this.SaveNBT());
+        public virtual CompoundTag SpawnCompound()
+        {
+            CompoundTag nbt = new CompoundTag();
+            nbt.PutString("id", this.Name);
+            nbt.PutInt("x", (int) this.X);
+            nbt.PutInt("y", (int) this.Y);
+            nbt.PutInt("z", (int) this.Z);
+
+            return nbt;
         }
     }
 }

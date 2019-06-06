@@ -314,7 +314,6 @@ namespace MineNET.Worlds
                         }
 
                         this.SpawnEntity(player, chunk);
-                        this.SpawnBlockEntity(player, chunk);
 
                         player.LoadedChunks.TryAdd(pair.Key, pair.Value);
                         this.Generator.ChunkGeneration(chunk);
@@ -707,15 +706,6 @@ namespace MineNET.Worlds
             foreach (Entity entity in chunk.GetEntities())
             {
                 entity.SpawnTo(player);
-            }
-        }
-
-        private void SpawnBlockEntity(Player player, Chunk chunk)
-        {
-            foreach (BlockEntity entity in chunk.GetBlockEntities())
-            {
-                if (entity is BlockEntitySpawnable spawnable)
-                    spawnable.SpawnTo(player);
             }
         }
     }

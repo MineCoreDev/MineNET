@@ -64,7 +64,7 @@ namespace MineNET.Values
 
         public override string ToString()
         {
-            return $"Vector3: X = {this.X}, Y = {this.Y}";
+            return $"Vector2: X = {this.X}, Y = {this.Y}";
         }
 
         public static Vector2 Lerp(Vector2 a, Vector2 b, float t)

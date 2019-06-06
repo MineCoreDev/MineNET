@@ -194,7 +194,7 @@ namespace MineNET.NBT.IO
             {
                 if (this.Network)
                 {
-                    this.WriteSVarInt(0);
+                    this.WriteUVarInt(0);
                 }
                 else
                 {
@@ -207,7 +207,7 @@ namespace MineNET.NBT.IO
             byte[] buffer = Encoding.UTF8.GetBytes(value);
             if (this.Network)
             {
-                this.WriteSVarInt((int) buffer.Length);
+                this.WriteUVarInt((uint) buffer.Length);
             }
             else
             {

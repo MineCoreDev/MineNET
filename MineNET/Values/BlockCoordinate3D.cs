@@ -26,5 +26,10 @@ namespace MineNET.Values
         {
             return new BlockCoordinate3D(v.FloorX, v.FloorY, v.FloorZ);
         }
+
+        public override string ToString()
+        {
+            return $"BlockCoordinate3D: X = {this.X}, Y = {this.Y}, Z = {this.Z}";
+        }
     }
 }
