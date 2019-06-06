@@ -134,7 +134,9 @@ namespace MineNET.Worlds
 
         private Dictionary<long, Player> _players = new Dictionary<long, Player>();
         private Dictionary<long, Entity> _entities = new Dictionary<long, Entity>();
-        private Dictionary<BlockCoordinate3D, BlockEntity> _blockEntities = new Dictionary<BlockCoordinate3D, BlockEntity>();
+
+        private Dictionary<BlockCoordinate3D, BlockEntity> _blockEntities =
+            new Dictionary<BlockCoordinate3D, BlockEntity>();
 
         private ConcurrentDictionary<Block, int> updateQueue = new ConcurrentDictionary<Block, int>();
 
@@ -228,11 +230,11 @@ namespace MineNET.Worlds
 
             if (flagAll)
             {
-                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos }, UpdateBlockPacket.FLAG_ALL_PRIORITY);
+                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] {pos}, UpdateBlockPacket.FLAG_ALL_PRIORITY);
             }
             else
             {
-                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] { pos });
+                this.SendBlocks(Server.Instance.GetPlayers(), new Vector3[] {pos});
             }
         }
 
@@ -310,6 +312,8 @@ namespace MineNET.Worlds
                         {
                             this.Chunks.Add(pair.Key, chunk);
                         }
+
+                        this.SpawnEntity(player, chunk);
 
                         player.LoadedChunks.TryAdd(pair.Key, pair.Value);
                         this.Generator.ChunkGeneration(chunk);
@@ -420,7 +424,8 @@ namespace MineNET.Worlds
                 return;
             }
 
-            if (!player.Sneaking && item.Item.CanBeActivate && item.Item.Activate(player, this, clicked, blockFace, clickPos))
+            if (!player.Sneaking && item.Item.CanBeActivate &&
+                item.Item.Activate(player, this, clicked, blockFace, clickPos))
             {
                 if (item.Count <= 0)
                 {
@@ -456,6 +461,7 @@ namespace MineNET.Worlds
             {
                 return;
             }
+
             hand.Place(clicked, replace, blockFace, clickPos, player, item);
 
             LevelSoundEventPacket pk = new LevelSoundEventPacket
@@ -518,6 +524,7 @@ namespace MineNET.Worlds
             {
                 return;
             }
+
             this._entities[entity.EntityID] = entity;
             if (entity.IsPlayer)
             {
@@ -531,6 +538,7 @@ namespace MineNET.Worlds
             {
                 return;
             }
+
             this._entities.Remove(entity.EntityID);
             if (entity.IsPlayer)
             {
@@ -557,15 +565,18 @@ namespace MineNET.Worlds
             {
                 return this._entities[entityID];
             }
+
             return null;
         }
 
         public void AddBlockEntity(BlockEntity blockEntity)
         {
-            if (this._blockEntities.ContainsKey(blockEntity.ToBlockCoordinate3D()) || blockEntity.World.Name != this.Name)
+            if (this._blockEntities.ContainsKey(blockEntity.ToBlockCoordinate3D()) ||
+                blockEntity.World.Name != this.Name)
             {
                 return;
             }
+
             this._blockEntities.Add(blockEntity.ToBlockCoordinate3D(), blockEntity);
             blockEntity.Chunk.AddBlockEntity(blockEntity);
         }
@@ -588,6 +599,7 @@ namespace MineNET.Worlds
             {
                 return this._blockEntities[pos];
             }
+
             return null;
         }
 
@@ -602,6 +614,7 @@ namespace MineNET.Worlds
             {
                 ((EntityItem) entity).Item = item;
             }
+
             entity.SpawnToAll();
         }
 
@@ -686,6 +699,14 @@ namespace MineNET.Worlds
             this.SpawnX = spawn.FloorX;
             this.SpawnY = spawn.FloorY;
             this.SpawnZ = spawn.FloorZ;
+        }
+
+        private void SpawnEntity(Player player, Chunk chunk)
+        {
+            foreach (Entity entity in chunk.GetEntities())
+            {
+                entity.SpawnTo(player);
+            }
         }
     }
 }

@@ -36,9 +36,12 @@ namespace MineNET.Worlds
 
         public SubChunk[] SubChunks { get; set; } = ArrayUtils.CreateArray<SubChunk>(16);
         private List<Entity> Entities { get; } = new List<Entity>();
-        private Dictionary<BlockCoordinate3D, BlockEntity> BlockEntities { get; } = new Dictionary<BlockCoordinate3D, BlockEntity>();
 
-        public Chunk(World world, int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null, short[] heightMap = null,
+        private Dictionary<BlockCoordinate3D, BlockEntity> BlockEntities { get; } =
+            new Dictionary<BlockCoordinate3D, BlockEntity>();
+
+        public Chunk(World world, int x, int z, SubChunk[] chunkDatas = null, byte[] biomes = null,
+            short[] heightMap = null,
             ListTag entitiesTag = null, ListTag blockEntitiesTag = null)
         {
             this.World = world;
@@ -69,7 +72,8 @@ namespace MineNET.Worlds
             for (int i = 0; i < blockEntitiesTag?.Count; ++i)
             {
                 CompoundTag blockEntity = (CompoundTag) blockEntitiesTag[i];
-                this.AddBlockEntity(BlockEntity.CreateBlockEntity(blockEntity.GetString("id").ToLower(), this, blockEntity));
+                this.AddBlockEntity(BlockEntity.CreateBlockEntity(blockEntity.GetString("id").ToLower(), this,
+                    blockEntity));
             }
         }
 
@@ -211,12 +215,12 @@ namespace MineNET.Worlds
                 stream.WriteBytes(b1);
                 stream.WriteBytes(this.Biomes);
                 stream.WriteByte(0);
-                stream.WriteSVarInt(0);//TODO Extra Data
+                stream.WriteSVarInt(0); //TODO Extra Data
 
                 foreach (KeyValuePair<BlockCoordinate3D, BlockEntity> blockEntity in this.BlockEntities)
                 {
                     BlockEntitySpawnable s = blockEntity.Value as BlockEntitySpawnable;
-                    stream.WriteBytes(NBTIO.WriteTag(s?.SaveNBT(), NBTEndian.LITTLE_ENDIAN, true));
+                    stream.WriteBytes(NBTIO.WriteTag(s?.SpawnCompound(), NBTEndian.LITTLE_ENDIAN, true));
                 }
 
                 return stream.ToArray();

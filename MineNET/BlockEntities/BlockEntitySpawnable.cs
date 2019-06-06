@@ -1,4 +1,5 @@
 ﻿using MineNET.Entities.Players;
+using MineNET.IO;
 using MineNET.NBT.Data;
 using MineNET.NBT.IO;
 using MineNET.NBT.Tags;
@@ -12,14 +13,6 @@ namespace MineNET.BlockEntities
     {
         public BlockEntitySpawnable(Chunk chunk, CompoundTag nbt) : base(chunk, nbt)
         {
-
-        }
-
-        protected override void Init(CompoundTag nbt)
-        {
-            base.Init(nbt);
-
-            this.SpawnToAll();
         }
 
         public void SpawnToAll()
@@ -36,9 +29,20 @@ namespace MineNET.BlockEntities
             BlockEntityDataPacket pk = new BlockEntityDataPacket
             {
                 Position = new BlockCoordinate3D((int) this.X, (int) this.Y, (int) this.Z),
-                Namedtag = NBTIO.WriteTag(this.SaveNBT(), NBTEndian.LITTLE_ENDIAN, true)
+                Namedtag = NBTIO.WriteTag(this.SpawnCompound(), NBTEndian.LITTLE_ENDIAN, true)
             };
             player.SendPacket(pk);
+        }
+
+        public virtual CompoundTag SpawnCompound()
+        {
+            CompoundTag nbt = new CompoundTag();
+            nbt.PutString("id", this.Name);
+            nbt.PutInt("x", (int) this.X);
+            nbt.PutInt("y", (int) this.Y);
+            nbt.PutInt("z", (int) this.Z);
+
+            return nbt;
         }
     }
 }
