@@ -49,6 +49,7 @@ namespace MineNET.IO
                     }
 
                     Console.Write(builder.ToString());
+                    Console.SetCursorPosition(left, top);
                 }
 
                 Console.MoveBufferArea(0, inputTop, width, top - inputTop + 1, 0,
