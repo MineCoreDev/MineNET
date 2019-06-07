@@ -163,7 +163,7 @@ namespace MineNET.IO
             conf.AddTarget("event", new FileTarget()
             {
                 Encoding = Encoding.UTF8,
-                LineEnding = LineEndingMode.LF,
+                LineEnding = LineEndingMode.CRLF,
                 Layout = new SimpleLayout("[${longdate}] [${threadname} /${uppercase:${level:padding=5}}] ${message}"),
                 FileName = new SimpleLayout("${basedir}/logs/event.log"),
                 ArchiveNumbering = ArchiveNumberingMode.Date,
@@ -177,7 +177,7 @@ namespace MineNET.IO
             conf.AddTarget("error", new FileTarget()
             {
                 Encoding = Encoding.UTF8,
-                LineEnding = LineEndingMode.LF,
+                LineEnding = LineEndingMode.CRLF,
                 Layout = new SimpleLayout("[${longdate}] [${threadname} /${uppercase:${level:padding=5}}] ${message}"),
                 FileName = new SimpleLayout("${basedir}/logs/error.log"),
                 ArchiveNumbering = ArchiveNumberingMode.Date,
