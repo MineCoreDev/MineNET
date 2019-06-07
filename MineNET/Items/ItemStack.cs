@@ -22,6 +22,31 @@ namespace MineNET.Items
 
         #region Constructor
 
+        public ItemStack(int id) : this(Item.Get(id))
+        {
+
+        }
+
+        public ItemStack(int id, int damage) : this(Item.Get(id), damage)
+        {
+
+        }
+
+        public ItemStack(int id, int damage, int count) : this(Item.Get(id), damage, count)
+        {
+
+        }
+
+        public ItemStack(int id, int damage, int count, byte[] nbt) : this(Item.Get(id), damage, count, nbt)
+        {
+
+        }
+
+        public ItemStack(int id, int damage, int count, CompoundTag nbt) : this(Item.Get(id), damage, count, nbt)
+        {
+
+        }
+
         public ItemStack(Item item) : this(item, 0)
         {
 

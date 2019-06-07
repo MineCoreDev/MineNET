@@ -307,7 +307,6 @@
     <Compile Include="IO\IServerLogger.cs" />
     <Compile Include="IO\MineNetConsoleTarget.cs" />
     <Compile Include="IServerListInfo.cs" />
-    <Compile Include="Items\ItemList.cs" />
     <Compile Include="Items\Utils\CreativeItemList.cs" />
     <Compile Include="Items\Enchantments\Enchantment.cs" />
     <Compile Include="Items\Enchantments\EnchantmentAquaAffinity.cs" />
