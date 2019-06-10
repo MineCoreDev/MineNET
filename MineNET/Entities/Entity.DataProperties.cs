@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
 using MineNET.Entities.Players;
 
@@ -303,6 +304,13 @@ namespace MineNET.Entities
             set
             {
                 this.SetFlag(DATA_FLAGS, DATA_FLAG_SPRINTING, value);
+                EntityAttribute attribute = this.Attributes.GetAttribute(EntityAttribute.MOVEMENT_SPEED.Name);
+                attribute.Value = value ? attribute.Value * 1.3f : attribute.Value / 1.3f;
+                this.Attributes.SetAttribute(attribute);
+                if (this.IsPlayer)
+                {
+                    this.Attributes.Update((Player) this);
+                }
             }
         }
 
