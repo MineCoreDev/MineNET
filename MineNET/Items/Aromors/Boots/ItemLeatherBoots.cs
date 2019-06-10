@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    public class ItemFlintAndSteel : ItemTool
+    public class ItemLeatherBoots : ItemBoots
     {
-        public override int ID { get; } = ItemIDs.FLINT_AND_STEEL;
+        public override int ID { get; } = ItemIDs.LEATHER_BOOTS;
 
         public override string GetName(int damage)
         {
-            return "Flint And Steel";
+            return "Leather Boots";
         }
-
-        public override ItemToolType ToolType { get; } = ItemToolType.FLINT_AND_STEEL;
 
         public override int MaxDurability { get; } = 65;
     }

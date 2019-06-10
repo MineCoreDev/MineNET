@@ -8,6 +8,6 @@ namespace MineNET.Items
 {
     public abstract class ItemPickaxe : ItemTool
     {
-        public override bool IsPickaxe { get; } = true;
+        public override ItemToolType ToolType { get; } = ItemToolType.PICKAXE;
     }
 }

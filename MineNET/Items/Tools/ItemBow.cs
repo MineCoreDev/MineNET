@@ -15,6 +15,8 @@ namespace MineNET.Items
             return "Bow";
         }
 
-        public override bool IsBow { get; } = true;
+        public override ItemToolType ToolType { get; } = ItemToolType.BOW;
+
+        public override int MaxDurability { get; } = 385;
     }
 }

@@ -9,5 +9,9 @@ namespace MineNET.Items
     public abstract class ItemArmor : Item
     {
         public override bool IsArmor { get; } = true;
+
+        public virtual ItemArmorType ArmorType { get; } = ItemArmorType.NONE;
+
+        public virtual int MaxDurability { get; } = 0;
     }
 }

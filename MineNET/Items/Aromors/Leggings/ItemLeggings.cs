@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    public abstract class ItemAxe : ItemTool
+    public abstract class ItemLeggings : ItemArmor
     {
-        public override ItemToolType ToolType { get; } = ItemToolType.AXE;
+        public override ItemArmorType ArmorType { get; } = ItemArmorType.LEGGINGS;
     }
 }

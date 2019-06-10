@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    public abstract class ItemAxe : ItemTool
+    public enum ItemArmorType
     {
-        public override ItemToolType ToolType { get; } = ItemToolType.AXE;
+        NONE = 0,
+        HELMET = 1,
+        CHESTPLATE = 2,
+        LEGGINGS = 3,
+        BOOTS = 4
     }
 }
