@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MineNET.Blocks;
@@ -9,14 +10,14 @@ using MineNET.NBT.Tags;
 
 namespace MineNET.Items
 {
-    public struct ItemStack
+    public class ItemStack : ICloneable<ItemStack>
     {
         public Item Item { get; }
         public int Damage { get; set; }
         public int Count { get; set; }
 
-        public string[] CanPlaceOn { get; private set; }
-        public string[] CanDestroy { get; private set; }
+        public string[] CanPlaceOn { get; private set; } = new string[0];
+        public string[] CanDestroy { get; private set; } = new string[0];
 
         public CompoundTag NamedTag { get; set; }
 
@@ -73,9 +74,6 @@ namespace MineNET.Items
             this.Damage = damage;
             this.Count = count;
 
-            this.CanPlaceOn = new string[0];
-            this.CanDestroy = new string[0];
-
             if (tag == null)
             {
                 tag = new CompoundTag();
@@ -108,9 +106,6 @@ namespace MineNET.Items
             this.Item = new ItemBlock(block);
             this.Damage = damage;
             this.Count = count;
-
-            this.CanPlaceOn = new string[0];
-            this.CanDestroy = new string[0];
 
             if (tag == null)
             {
@@ -483,6 +478,20 @@ namespace MineNET.Items
                 tag.Remove("ench");
             }
             return this;
+        }
+
+        #endregion
+
+        #region Clone method
+
+        public ItemStack Clone()
+        {
+            return (ItemStack) this.MemberwiseClone();
+        }
+
+        object ICloneable.Clone()
+        {
+            return this.MemberwiseClone();
         }
 
         #endregion

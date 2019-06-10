@@ -27,8 +27,8 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
 
         public AnvilWorldSaveFormat(string worldName)
         {
-            this.WorldPath = $"{Server.ExecutePath}\\worlds\\{worldName}";
-            this.RegionPath = $"{this.WorldPath}\\" + "region";
+            this.WorldPath = $"{Server.ExecutePath}/worlds/{worldName}";
+            this.RegionPath = $"{this.WorldPath}/" + "region";
             if (!Directory.Exists(this.WorldPath))
             {
                 Directory.CreateDirectory(this.WorldPath);
@@ -40,7 +40,7 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
             }
 
             this.WorldName = WorldName;
-            this.LevelDataFilePath = $"{this.WorldPath}\\level.dat";
+            this.LevelDataFilePath = $"{this.WorldPath}/level.dat";
         }
 
         public void SetWorld(World world)
@@ -64,7 +64,7 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
                 return this._chunks[chunkPos];
             }
 
-            string filePath = Path.Combine(this.WorldPath, $@"region\\r.{rx}.{rz}.mca");
+            string filePath = Path.Combine(this.WorldPath, $@"region/r.{rx}.{rz}.mca");
             if (!File.Exists(filePath))
             {
                 return new Chunk(this.World, chunkX, chunkZ);
@@ -135,7 +135,7 @@ namespace MineNET.Worlds.Formats.WorldSaveFormats
             int rx = chunk.X >> 5;
             int rz = chunk.Z >> 5;
 
-            string filePath = Path.Combine(this.WorldPath, $@"region\\r.{rx}.{rz}.mca");
+            string filePath = Path.Combine(this.WorldPath, $@"region/r.{rx}.{rz}.mca");
             if (!File.Exists(filePath))
             {
                 Directory.CreateDirectory(this.RegionPath);

@@ -13,18 +13,19 @@ namespace MineNET.Plugins
         public virtual PluginFlags Flag { get; } = PluginFlags.Package;
         public virtual string[] PremisePlugins { get; set; } = null;
 
-        public YamlConfig Config { get; private set; }//TODO:
+        public YamlConfig Config { get; private set; } //TODO:
 
         public PluginBase()
         {
-            string saveFolder = this.GetPluginPath() + "\\" + this.Name;
-            string saveFile = saveFolder + "\\" + "config.yml";
+            string saveFolder = this.GetPluginPath() + "/" + this.Name;
+            string saveFile = saveFolder + "/config.yml";
             if (this.Flag.HasFlag(PluginFlags.GenerateConfig))
             {
                 if (!Directory.Exists(saveFolder))
                 {
                     Directory.CreateDirectory(saveFolder);
                 }
+
                 this.Config = YamlConfig.Load(saveFile);
             }
         }

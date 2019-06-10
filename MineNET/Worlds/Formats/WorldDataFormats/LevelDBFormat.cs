@@ -12,12 +12,12 @@ namespace MineNET.Worlds.Formats.WorldDataFormats
             CompoundTag tag = new CompoundTag("");
             tag.PutCompound("Data", this.CreateData(world));
 
-            NBTIO.WriteGZIPFile($"{Server.ExecutePath}\\worlds\\{world.Name}\\level.dat", tag);
+            NBTIO.WriteGZIPFile($"{Server.ExecutePath}/worlds/{world.Name}/level.dat", tag);
         }
 
         public void Load(World world)
         {
-            CompoundTag tag = NBTIO.ReadGZIPFile($"{Server.ExecutePath}\\worlds\\{world.Name}\\level.dat");
+            CompoundTag tag = NBTIO.ReadGZIPFile($"{Server.ExecutePath}/worlds/{world.Name}/level.dat");
 
             CompoundTag data = tag.GetCompound("Data");
         }
@@ -26,7 +26,7 @@ namespace MineNET.Worlds.Formats.WorldDataFormats
         {
             /*CompoundTag tag = new CompoundTag();
 
-            NBTIO.WriteGZIPFile($"{Server.ExecutePath}\\worlds\\{world.Name}\\level.dat", tag);*/
+            NBTIO.WriteGZIPFile($"{Server.ExecutePath}/worlds/{world.Name}/level.dat", tag);*/
         }
 
         public CompoundTag CreateData(World world)
