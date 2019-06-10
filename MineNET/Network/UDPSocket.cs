@@ -7,12 +7,10 @@ namespace MineNET.Network
     public sealed class UDPSocket : INetworkSocket
     {
         private UdpClient client;
+
         public UdpClient Socket
         {
-            get
-            {
-                return this.client;
-            }
+            get { return this.client; }
         }
 
         public void Init(IPEndPoint point)
@@ -30,8 +28,7 @@ namespace MineNET.Network
                 uint IOC_VENDOR = 0x18000000;
                 uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
 
-                this.client.Client.IOControl((int) SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
-
+                //this.client.Client.IOControl((int) SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
             }
             catch (SocketException e1)
             {
