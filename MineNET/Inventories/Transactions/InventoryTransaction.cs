@@ -127,7 +127,7 @@ namespace MineNET.Inventories.Transactions
                 List<SlotChangeAction> originalList = new List<SlotChangeAction>(list);
 
                 SlotChangeAction originalAction = null;
-                ItemStack lastTargetItem = new ItemStack(Item.Get(BlockIDs.AIR));
+                ItemStack lastTargetItem = null;
 
                 for (int i = 0; i < list.Count; ++i)
                 {
@@ -196,7 +196,7 @@ namespace MineNET.Inventories.Transactions
                 InventoryAction action = this.Actions[i];
                 if (action.TargetItem.Item.ID != BlockIDs.AIR && action.TargetItem.Count > 0)
                 {
-                    needItems.Add(action.TargetItem);
+                    needItems.Add(action.TargetItem.Clone());
                 }
                 if (!action.IsValid(this.Player))
                 {
@@ -204,7 +204,7 @@ namespace MineNET.Inventories.Transactions
                 }
                 if (action.SourceItem.Item.ID != BlockIDs.AIR && action.SourceItem.Count > 0)
                 {
-                    haveItems.Add(action.SourceItem);
+                    haveItems.Add(action.SourceItem.Clone());
                 }
             }
 
@@ -227,39 +227,21 @@ namespace MineNET.Inventories.Transactions
                     if (haveItem.Equals(needItem, true, false))
                     {
                         int amount = Math.Min(haveItem.Count, needItem.Count);
-                        if (amount < 1)
-                        {
-                            continue;
-                        }
-
                         haveItem.Count -= amount;
                         needItem.Count -= amount;
-                        haveItems[i] = haveItem;
-                        needItems[j] = needItem;
+                        if (haveItem.Count == 0)
+                        {
+                            haveItems.Remove(haveItem);
+                        }
+                        if (needItem.Count == 0)
+                        {
+                            needItems.Remove(needItem);
+                        }
                     }
                 }
             }
 
-            while (haveItems.Count > 0)
-            {
-                ItemStack stack = haveItems[0];
-                if (stack.Count != 0)
-                {
-                    return false;
-                }
-                haveItems.RemoveAt(0);
-            }
-            while (needItems.Count > 0)
-            {
-                ItemStack stack = needItems[0];
-                if (stack.Count != 0)
-                {
-                    return false;
-                }
-                needItems.RemoveAt(0);
-            }
-
-            return true;
+            return haveItems.Count == 0 && needItems.Count == 0;
         }
 
         public virtual void SendInventories()
