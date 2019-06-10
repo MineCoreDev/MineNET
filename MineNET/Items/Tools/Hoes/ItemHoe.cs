@@ -8,6 +8,6 @@ namespace MineNET.Items
 {
     public abstract class ItemHoe : ItemTool
     {
-        public override bool IsHoe { get; } = true;
+        public override ItemToolType ToolType { get; } = ItemToolType.HOE;
     }
 }

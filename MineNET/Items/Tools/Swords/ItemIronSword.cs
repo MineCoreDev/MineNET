@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace MineNET.Items
 {
-    public class ItemIronAxe : ItemAxe
+    public class ItemIronSword : ItemSword
     {
-        public override int ID { get; } = ItemIDs.IRON_AXE;
+        public override int ID { get; } = ItemIDs.IRON_SWORD;
 
         public override string GetName(int damage)
         {
-            return "Iron Axe";
+            return "Iron Sword";
         }
 
         public override ItemToolTier ToolTier { get; } = ItemToolTier.IRON;

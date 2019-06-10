@@ -12,21 +12,10 @@ namespace MineNET.Items
 
         public override bool IsTool { get; } = true;
 
+        public virtual ItemToolType ToolType { get; } = ItemToolType.NONE;
 
-        public virtual bool IsSword { get; } = false;
+        public virtual ItemToolTier ToolTier { get; } = ItemToolTier.NONE;
 
-        public virtual bool IsShovel { get; } = false;
-
-        public virtual bool IsPickaxe { get; } = false;
-
-        public virtual bool IsAxe { get; } = false;
-
-        public virtual bool IsHoe { get; } = false;
-
-        public virtual bool IsBow { get; } = false;
-
-        public virtual bool IsShears { get; } = false;
-
-        public virtual bool IsFlintAndSteel { get; } = false;
+        public virtual int MaxDurability { get; } = 0;
     }
 }

@@ -14,5 +14,9 @@ namespace MineNET.Items
         {
             return "Iron Shovel";
         }
+
+        public override ItemToolTier ToolTier { get; } = ItemToolTier.IRON;
+
+        public override int MaxDurability { get; } = 251;
     }
 }
