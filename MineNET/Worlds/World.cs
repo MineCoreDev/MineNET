@@ -101,9 +101,9 @@ namespace MineNET.Worlds
 
         public static bool Exists(string worldName)
         {
-            if (Directory.Exists($"{Server.ExecutePath}\\worlds\\{worldName}"))
+            if (Directory.Exists($"{Server.ExecutePath}/worlds/{worldName}"))
             {
-                if (File.Exists($"{Server.ExecutePath}\\worlds\\{worldName}\\level.dat"))
+                if (File.Exists($"{Server.ExecutePath}/worlds/{worldName}/level.dat"))
                 {
                     return true;
                 }

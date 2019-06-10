@@ -76,7 +76,7 @@ namespace MineNET
 
         private void LoadWorlds(Stopwatch sw)
         {
-            string worldFolder = ExecutePath + "\\worlds";
+            string worldFolder = ExecutePath + "/worlds";
             if (Directory.Exists(worldFolder))
             {
                 Directory.CreateDirectory(worldFolder);
@@ -112,8 +112,8 @@ namespace MineNET
 
         private void LoadConfigs()
         {
-            this.Config = YamlStaticConfig.Load<MineNETConfig>($"{ExecutePath}\\MineNET.yml");
-            this.ServerProperty = YamlStaticConfig.Load<ServerConfig>($"{ExecutePath}\\ServerProperties.yml");
+            this.Config = YamlStaticConfig.Load<MineNETConfig>($"{ExecutePath}/MineNET.yml");
+            this.ServerProperty = YamlStaticConfig.Load<ServerConfig>($"{ExecutePath}/ServerProperties.yml");
         }
 
         private void LoadFiles()

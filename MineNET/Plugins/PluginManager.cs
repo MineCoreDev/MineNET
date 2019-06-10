@@ -21,7 +21,7 @@ namespace MineNET.Plugins
         public PluginManager()
         {
             string path = Server.ExecutePath;
-            string folder = path + "\\plugins";
+            string folder = path + "/plugins";
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);

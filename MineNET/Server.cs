@@ -30,7 +30,7 @@ namespace MineNET
     public partial class Server : IDisposable
     {
         public static string ExecutePath { get; } = Environment.CurrentDirectory;
-        public static string PlayerDataPath { get; } = $"{ExecutePath}\\players";
+        public static string PlayerDataPath { get; } = $"{ExecutePath}/players";
 
         public static Server Instance { get; private set; }
 
@@ -400,7 +400,7 @@ namespace MineNET
 
         public CompoundTag GetOfflinePlayerData(string xuid)
         {
-            string path = $"{Server.PlayerDataPath}\\{xuid}.dat";
+            string path = $"{Server.PlayerDataPath}/{xuid}.dat";
             CompoundTag nbt;
             if (!File.Exists(path))
             {
@@ -440,7 +440,7 @@ namespace MineNET
 
         public void SaveOfflinePlayerData(string xuid, CompoundTag nbt)
         {
-            string path = $"{Server.PlayerDataPath}\\{xuid}.dat";
+            string path = $"{Server.PlayerDataPath}/{xuid}.dat";
             NBTIO.WriteGZIPFile(path, nbt, NBTEndian.BIG_ENDIAN);
         }
 
