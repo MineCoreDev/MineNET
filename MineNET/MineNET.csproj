@@ -103,6 +103,7 @@
     <Reference Include="SharpNoise, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpNoise.0.12.0\lib\netstandard2.0\SharpNoise.dll</HintPath>
     </Reference>
+    <Reference Include="netstandard" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
