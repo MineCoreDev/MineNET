@@ -118,9 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
   <data name="commands_ban_description" xml:space="preserve">
     <value>IP アドレスを BAN 一覧に追加します。</value>
   </data>
@@ -606,8 +603,5 @@
   </data>
   <data name="server_z" xml:space="preserve">
     <value>test</value>
-  </data>
-  <data name="" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
   </data>
 </root>
