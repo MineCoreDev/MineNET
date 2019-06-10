@@ -21,8 +21,8 @@ namespace MineNET.Network
             {
                 this.client = new UdpClient(point);
 
-                this.client.Client.ReceiveBufferSize = int.MaxValue;
-                this.client.Client.SendBufferSize = int.MaxValue;
+                //this.client.Client.ReceiveBufferSize = int.MaxValue;
+                //this.client.Client.SendBufferSize = int.MaxValue;
                 this.client.DontFragment = false;
                 this.client.EnableBroadcast = false;
 
