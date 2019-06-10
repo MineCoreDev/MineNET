@@ -38,8 +38,8 @@ namespace MineNET.Reports
         public static CrashReport ExportReport(string title, Exception cause, bool debugReport = false)
         {
             DateTime time = DateTime.Now;
-            string path = Server.ExecutePath + "\\reports\\crash";
-            string file = path + "\\report-" + time.ToString("yyyy_M_d H_mm_ss") + ".report";
+            string path = Server.ExecutePath + "/reports/crash";
+            string file = path + "/report-" + time.ToString("yyyy_M_d H_mm_ss") + ".report";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -55,6 +55,7 @@ namespace MineNET.Reports
             {
                 data = new CrashReport(title, cause.ToString(), time);
             }
+
             report.Set("reportData", data);
             report.Save();
 
@@ -64,8 +65,8 @@ namespace MineNET.Reports
         public static CrashReport ExportReport(string title, string cause)
         {
             DateTime time = DateTime.Now;
-            string path = Server.ExecutePath + "\\reports\\crash";
-            string file = path + "\\report-" + time.ToString("yyyy_M_d H_mm_ss") + ".report";
+            string path = Server.ExecutePath + "/reports/crash";
+            string file = path + "/report-" + time.ToString("yyyy_M_d H_mm_ss") + ".report";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
