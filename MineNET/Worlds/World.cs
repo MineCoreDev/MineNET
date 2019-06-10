@@ -459,6 +459,7 @@ namespace MineNET.Worlds
             Server.Instance.Event.Block.OnBlockPlace(this, args1);
             if (args1.IsCancel)
             {
+                this.SendBlocks(Server.Instance.GetOnlinePlayers(), new Vector3[] { hand.ToVector3() });
                 return;
             }
 
@@ -470,7 +471,7 @@ namespace MineNET.Worlds
                 Sound = LevelSoundEventPacket.SOUND_PLACE,
                 ExtraData = hand.RuntimeId
             };
-            player.SendPacket(pk); //TODO : near players
+            Server.Instance.BroadcastSendPacket(pk); //TODO : near players
         }
 
         public void UseBreak(Vector3 pos, ItemStack item, Player player)
@@ -497,6 +498,7 @@ namespace MineNET.Worlds
             Server.Instance.Event.Block.OnBlockBreak(this, args);
             if (args.IsCancel)
             {
+                this.SendBlocks(Server.Instance.GetOnlinePlayers(), new Vector3[] { block.ToVector3() });
                 return;
             }
 
@@ -509,7 +511,7 @@ namespace MineNET.Worlds
             pk.EventId = LevelEventPacket.EVENT_PARTICLE_DESTROY;
             pk.Position = pos + new Vector3(0.5f, 0.5f, 0.5f);
             pk.Data = block.RuntimeId;
-            player.SendPacket(pk); //TODO : near players
+            Server.Instance.BroadcastSendPacket(pk); //TODO : near players
 
             block.Break(player, item);
 
