@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public class ItemBread : ItemFood
     {
@@ -14,5 +8,9 @@ namespace MineNET.Items
         {
             return "Bread";
         }
+
+        public override int FoodRestore => 5;
+
+        public override float SaturationRestore => 6;
     }
 }

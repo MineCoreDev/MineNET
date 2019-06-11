@@ -14,5 +14,9 @@ namespace MineNET.Items
         {
             return "Apple";
         }
+
+        public override int FoodRestore => 4;
+
+        public override float SaturationRestore => 2.4f;
     }
 }

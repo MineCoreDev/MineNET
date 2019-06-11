@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using MineNET.Blocks;
 using MineNET.Commands;
 using MineNET.Data;
@@ -15,6 +13,8 @@ using MineNET.Network.MinecraftPackets;
 using MineNET.Network.RakNetPackets;
 using MineNET.Values;
 using MineNET.Worlds.Rule;
+using System;
+using System.Collections.Generic;
 
 namespace MineNET.Entities.Players
 {
@@ -228,6 +228,8 @@ namespace MineNET.Entities.Players
 
             packet.Dispose();
         }
+
+        #endregion
 
         #region LoginPacket 0x01
 
@@ -647,7 +649,8 @@ namespace MineNET.Entities.Players
 
         protected virtual void HandleEntityEventPacket(EntityEventPacket pk)
         {
-
+            this.SendPacket(pk);
+            Server.Instance.BroadcastSendPacket(pk, this.Viewers);
         }
 
         #endregion
@@ -727,6 +730,10 @@ namespace MineNET.Entities.Players
 
                     //Send MainHand
                 }
+                else if (data.ActionType == InventoryTransactionPacket.USE_ITEM_ACTION_CLICK_AIR)
+                {
+
+                }
                 else if (data.ActionType == InventoryTransactionPacket.USE_ITEM_ACTION_BREAK_BLOCK)
                 {
                     ItemStack item = this.Inventory.MainHandItem;
@@ -750,11 +757,38 @@ namespace MineNET.Entities.Players
             }
             else if (pk.TransactionType == InventoryTransactionPacket.TYPE_RELEASE_ITEM)
             {
+                ReleaseItemData data = (ReleaseItemData) pk.TransactionData;
                 if (pk.TransactionData.ActionType == InventoryTransactionPacket.RELEASE_ITEM_ACTION_RELEASE)
                 {
+                    ItemStack stack = this.Inventory.MainHandItem;
+                    Item item = stack.Item;
+                    item.ReleaseUsing(this);
                 }
                 else if (pk.TransactionData.ActionType == InventoryTransactionPacket.RELEASE_ITEM_ACTION_CONSUME)
                 {
+                    if (this.Inventory.MainHandItem != data.ItemMainHand || this.Inventory.MainHandSlot != data.HotbarSlot)
+                    {
+                        this.Inventory.SendMainHand(this);
+                        return;
+                    }
+
+                    ItemStack stack = this.Inventory.MainHandItem;
+                    Item item = stack.Item;
+                    if (!(item is IConsumeable))
+                    {
+                        this.Inventory.SendMainHand(this);
+                        return;
+                    }
+
+                    IConsumeable consume = (IConsumeable) item;
+                    PlayerItemConsumeEventArgs args = new PlayerItemConsumeEventArgs(this, stack, consume);
+                    Server.Instance.Event.Player.OnPlayerItemConsume(this, args);
+                    if (args.IsCancel)
+                    {
+                        this.Inventory.SendMainHand(this);
+                        return;
+                    }
+                    consume.OnConsume(this, stack);
                 }
             }
         }
@@ -1728,8 +1762,6 @@ namespace MineNET.Entities.Players
         {
 
         }
-
-        #endregion
 
         #endregion
     }
