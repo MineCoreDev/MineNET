@@ -32,7 +32,8 @@ namespace MineNET.Plugins
             }
 
             // Danger!! 黒魔術コード (クソ遅い)
-            MethodInfo[] methods = GetType().GetMethods();
+            MethodInfo[] methods =
+                GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
             foreach (MethodInfo method in methods)
             {
                 // Attributeを探す

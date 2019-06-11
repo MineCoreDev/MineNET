@@ -64,7 +64,7 @@ namespace MineNET.TestPlugin
         }
 
         [EventHandler]
-        public void Server_ServerCommand(object sender, Events.ServerEvents.ServerCommandEventArgs e)
+        private void Server_ServerCommand(object sender, Events.ServerEvents.ServerCommandEventArgs e)
         {
             Logger.Info(e.GetType().Name);
         }
