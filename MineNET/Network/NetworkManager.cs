@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading;
-using MineNET.Entities.Players;
+﻿using MineNET.Entities.Players;
 using MineNET.Events.NetworkEvents;
 using MineNET.Events.NetworkEvents.RakNet;
 using MineNET.Events.PlayerEvents;
 using MineNET.IO;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Network.RakNetPackets;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
 
 namespace MineNET.Network
 {
@@ -221,11 +221,14 @@ namespace MineNET.Network
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.SCRIPT_CUSTOM_EVENT_PACKET, new ScriptCustomEventPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.SPAWN_PARTICLE_EFFECT_PACKET, new SpawnParticleEffectPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.AVAILABLE_ENTITY_IDENTIFIERS_PACKET, new AvailableEntityIdentifiersPacket());
-            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.LEVEL_SOUND_EVENT_PACKET, new LevelSoundEventPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.LEVEL_SOUND_EVENT_PACKET_V2, new LevelSoundEventPacketV2());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.NETWORK_CHUNK_PUBLISHER_UPDATE_PACKET, new NetworkChunkPublisherUpdatePacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.BIOME_DEFINITION_LIST_PACKET, new BiomeDefinitionListPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.LEVEL_SOUND_EVENT_PACKET, new LevelSoundEventPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.LECTERN_UPDATE_PACKET, new LecternUpdatePacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.VIDEO_STREAM_CONNECT_PACKET, new VideoStreamConnectPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.MAP_CREATE_LOCKED_COPY_PACKET, new MapCreateLockedCopyPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.ON_SCREEN_TEXTURE_ANIMATION_PACKET, new OnScreenTextureAnimationPacket());
         }
 
         #endregion

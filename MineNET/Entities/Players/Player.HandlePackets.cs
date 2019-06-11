@@ -112,9 +112,9 @@ namespace MineNET.Entities.Players
             {
                 this.HandleExplodePacket((ExplodePacket) packet);
             }
-            else if (packet is LevelSoundEventPacket) //0x18
+            else if (packet is LevelSoundEventPacketV1) //0x18
             {
-                this.HandleLevelSoundPacket((LevelSoundEventPacket) packet);
+                this.HandleLevelSoundPacketV1((LevelSoundEventPacketV1) packet);
             }
             else if (packet is LevelEventPacket) //0x19
             {
@@ -617,9 +617,9 @@ namespace MineNET.Entities.Players
 
         #endregion
 
-        #region LevelSoundPaclet 0x18
+        #region LevelSoundPacletV1 0x18
 
-        protected virtual void HandleLevelSoundPacket(LevelSoundEventPacket pk)
+        protected virtual void HandleLevelSoundPacketV1(LevelSoundEventPacketV1 pk)
         {
             this.SendPacketViewers(pk);
             this.SendPacket(pk);
@@ -1759,6 +1759,105 @@ namespace MineNET.Entities.Players
         #region NetworkStackLatencyPacket 0x73
 
         protected virtual void HandleNetworkStackLatencyPacket(NetworkStackLatencyPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ScriptCustomEventPacket 0x75
+
+        protected virtual void HandleScriptCustomEventPacket(ScriptCustomEventPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SpawnParticleEffectPacket 0x76
+
+        protected virtual void HandleSpawnParticleEffectPacket(SpawnParticleEffectPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region AvailableEntityIdentifiersPacket 0x77
+
+        protected virtual void HandleAvailableEntityIdentifiersPacket(AvailableEntityIdentifiersPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region LevelSoundEventPacketV2 0x78
+
+        protected virtual void HandleLevelSoundEventPacketV2(LevelSoundEventPacketV2 pk)
+        {
+
+        }
+
+        #endregion
+
+        #region NetworkChunkPublisherUpdatePacket 0x79
+
+        protected virtual void HandleNetworkChunkPublisherUpdatePacket(NetworkChunkPublisherUpdatePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region BiomeDefinitionListPacket 0x7a
+
+        protected virtual void HandleBiomeDefinitionListPacket(BiomeDefinitionListPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region LevelSoundEventPacket 0x7b
+
+        protected virtual void HandleLevelSoundEventPacket(LevelSoundEventPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region LecternUpdatePacket 0x7c
+
+        protected virtual void HandleLecternUpdatePacket(LecternUpdatePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region VideoStreamConnectPacket 0x7d
+
+        protected virtual void HandleVideoStreamConnectPacket(VideoStreamConnectPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region MapCreateLockedCopyPacket 0x7e
+
+        protected virtual void HandleMapCreateLockedCopyPacket(MapCreateLockedCopyPacket pk)
+        {
+            
+        }
+
+        #endregion
+
+        #region OnScreenTextureAnimationPacket 0x7f
+
+        protected virtual void HandleOnScreenTextureAnimationPacket(OnScreenTextureAnimationPacket pk)
         {
 
         }
