@@ -141,9 +141,8 @@ namespace MineNET.Network
                     if (pk.SendTimedOut < 0)
                     {
                         DataPacket remove;
-                        this.SendedPacket.TryRemove(pk.SeqNumber, out remove);
                         this.ResendQueue.Enqueue(pk);
-                        return;
+                        this.SendedPacket.TryRemove(pk.SeqNumber, out remove);
                     }
 
                     --pk.SendTimedOut;
@@ -459,8 +458,8 @@ namespace MineNET.Network
                     {
                         DataPacket pk = this.SendedPacket[p];
                         DataPacket remove;
-                        this.SendedPacket.TryRemove(p, out remove);
                         this.ResendQueue.Enqueue(pk);
+                        this.SendedPacket.TryRemove(p, out remove);
                     }
                 }
             }
@@ -595,13 +594,14 @@ namespace MineNET.Network
             if (flags == RakNetProtocol.FlagImmediate)
             {
                 DataPacket p = new DataPacket0();
-                p.Packets = new object[] { pk };
+                p.Packets = new object[] {pk};
                 this.SendDatagram(p);
                 return;
             }
 
             int length = this.SendQueue.GetLength();
-            if (length + pk.GetTotalLength() > this.MTUSize - 36)//IP header (20 bytes) + UDP header (8 bytes) + RakNet weird (8 bytes) = 36 bytes
+            if (length + pk.GetTotalLength() > this.MTUSize - 36
+            ) //IP header (20 bytes) + UDP header (8 bytes) + RakNet weird (8 bytes) = 36 bytes
             {
                 this.SendQueuePacket();
             }
@@ -633,7 +633,7 @@ namespace MineNET.Network
             pk = ev.Packet;
 
             pk.SeqNumber = this.LastSendSeqNumber++;
-            this.SendedPacket.TryAdd(pk.SeqNumber, (DataPacket) pk);
+            this.SendedPacket.TryAdd(pk.SeqNumber, pk);
             this.SendPacket(pk.Clone());
         }
 
