@@ -236,6 +236,7 @@
     <Compile Include="Events\EntityEvents\EntityAnimationEventArgs.cs" />
     <Compile Include="Events\EntityEvents\EntityEvent.cs" />
     <Compile Include="Events\EntityEvents\EntityEventArgs.cs" />
+    <Compile Include="Events\EventHandlerAttribute.cs" />
     <Compile Include="Events\PlayerEvents\PlayerBlockPickRequestEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerChatEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerEatFoodEventArgs.cs" />

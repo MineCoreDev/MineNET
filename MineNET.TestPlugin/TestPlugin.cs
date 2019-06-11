@@ -1,4 +1,5 @@
-﻿using MineNET.IO;
+﻿using MineNET.Events;
+using MineNET.IO;
 using MineNET.Plugins;
 
 namespace MineNET.TestPlugin
@@ -7,26 +8,17 @@ namespace MineNET.TestPlugin
     {
         public override string Name
         {
-            get
-            {
-                return "MineNET_TestPlugin";
-            }
+            get { return "MineNET_TestPlugin"; }
         }
 
         public override string Description
         {
-            get
-            {
-                return "MineNET Test Plugin.";
-            }
+            get { return "MineNET Test Plugin."; }
         }
 
         public override PluginFlags Flag
         {
-            get
-            {
-                return base.Flag | PluginFlags.GenerateConfig;
-            }
+            get { return base.Flag | PluginFlags.GenerateConfig; }
         }
 
         public override void OnLoad()
@@ -56,7 +48,7 @@ namespace MineNET.TestPlugin
             Server.Instance.Event.Player.PlayerCommand += Player_PlayerCommand;
             Server.Instance.Event.Player.PlayerCreate += Player_PlayerCreate;
 
-            Server.Instance.Event.Server.ServerCommand += Server_ServerCommand;
+            //Server.Instance.Event.Server.ServerCommand += Server_ServerCommand;
             Server.Instance.Event.Server.ServerStart += Server_ServerStart;
             Server.Instance.Event.Server.ServerStop += Server_ServerStop;
         }
@@ -71,9 +63,10 @@ namespace MineNET.TestPlugin
             Logger.Trace(e.GetType().Name);
         }
 
-        private void Server_ServerCommand(object sender, Events.ServerEvents.ServerCommandEventArgs e)
+        [EventHandler]
+        public void Server_ServerCommand(object sender, Events.ServerEvents.ServerCommandEventArgs e)
         {
-            Logger.Trace(e.GetType().Name);
+            Logger.Info(e.GetType().Name);
         }
 
         private void Player_PlayerCreate(object sender, Events.PlayerEvents.PlayerCreateEventArgs e)
@@ -91,17 +84,20 @@ namespace MineNET.TestPlugin
             Logger.Trace(e.GetType().Name);
         }
 
-        private void Network_RakNetPacketReceive(object sender, Events.NetworkEvents.RakNet.RakNetPacketReceiveEventArgs e)
+        private void Network_RakNetPacketReceive(object sender,
+            Events.NetworkEvents.RakNet.RakNetPacketReceiveEventArgs e)
         {
             Logger.Trace(e.GetType().Name);
         }
 
-        private void Network_RakNetDataPacketSend(object sender, Events.NetworkEvents.RakNet.RakNetDataPacketSendEventArgs e)
+        private void Network_RakNetDataPacketSend(object sender,
+            Events.NetworkEvents.RakNet.RakNetDataPacketSendEventArgs e)
         {
             Logger.Trace(e.GetType().Name);
         }
 
-        private void Network_RakNetDataPacketReceive(object sender, Events.NetworkEvents.RakNet.RakNetDataPacketReceiveEventArgs e)
+        private void Network_RakNetDataPacketReceive(object sender,
+            Events.NetworkEvents.RakNet.RakNetDataPacketReceiveEventArgs e)
         {
             Logger.Trace(e.GetType().Name);
         }
