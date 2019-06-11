@@ -238,7 +238,9 @@
     <Compile Include="Events\EntityEvents\EntityEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerBlockPickRequestEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerChatEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerEatFoodEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerExhaustEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents\PlayerItemConsumeEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerItemHeldEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerJoinEventArgs.cs" />
     <Compile Include="Events\PlayerEvents\PlayerJumpEventArgs.cs" />
@@ -313,8 +315,9 @@
     <Compile Include="Items\Aromors\Helmets\ItemHelmet.cs" />
     <Compile Include="Items\Aromors\Leggings\ItemLeggings.cs" />
     <Compile Include="Items\Datas\ItemArmorType.cs" />
+    <Compile Include="Items\Datas\IConsumeable.cs" />
     <Compile Include="Items\ItemBowl.cs" />
-    <Compile Include="Items\ItemBread.cs" />
+    <Compile Include="Items\Foods\ItemBread.cs" />
     <Compile Include="Items\Aromors\Boots\ItemChainmailBoots.cs" />
     <Compile Include="Items\Aromors\Chestplate\ItemChainmailChestplate.cs" />
     <Compile Include="Items\Aromors\Helmets\ItemChainmailHelmet.cs" />

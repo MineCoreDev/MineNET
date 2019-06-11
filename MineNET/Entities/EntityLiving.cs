@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
+using MineNET.Entities.Players;
 using MineNET.Inventories;
 using MineNET.NBT.Tags;
 using MineNET.Values;

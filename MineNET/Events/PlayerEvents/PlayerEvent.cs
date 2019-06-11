@@ -28,6 +28,12 @@ namespace MineNET.Events.PlayerEvents
             this.PlayerCreate?.Invoke(sender, e);
         }
 
+        public event EventHandler<PlayerEatFoodEventArgs> PlayerEatFood;
+        public void OnPlayerEatFood(object sender, PlayerEatFoodEventArgs e)
+        {
+            this.PlayerEatFood?.Invoke(sender, e);
+        }
+
         public event EventHandler<PlayerExhaustEventArgs> PlayerExhaust;
         public void OnPlayerExhaust(object sender, PlayerExhaustEventArgs e)
         {
@@ -38,6 +44,12 @@ namespace MineNET.Events.PlayerEvents
         public void OnPlayerInteract(object sender, PlayerInteractEventArgs e)
         {
             this.PlayerInteract?.Invoke(sender, e);
+        }
+
+        public event EventHandler<PlayerItemConsumeEventArgs> PlayerItemConsume;
+        public void OnPlayerItemConsume(object sender, PlayerItemConsumeEventArgs e)
+        {
+            this.PlayerItemConsume?.Invoke(sender, e);
         }
 
         public event EventHandler<PlayerItemHeldEventArgs> PlayerItemHeld;

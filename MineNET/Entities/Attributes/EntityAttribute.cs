@@ -78,10 +78,18 @@ namespace MineNET.Entities.Attributes
 
             set
             {
-                if (this.minValue <= value && value <= this.maxValue)
+                if (value < this.minValue)
                 {
-                    this.value = value;
+                    this.value = this.MinValue;
+                    return;
                 }
+                if (this.maxValue < value)
+                {
+                    this.value = this.MaxValue;
+                    return;
+                }
+
+                this.value = value;
             }
         }
 

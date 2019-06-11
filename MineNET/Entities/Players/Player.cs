@@ -97,6 +97,23 @@ namespace MineNET.Entities.Players
             this.GameMode = GameModeExtention.FromIndex(nbt.GetInt("PlayerGameType"));
         }
 
+        public override bool Sprinting
+        {
+            get
+            {
+                return this.GetFlag(DATA_FLAGS, DATA_FLAG_SPRINTING);
+            }
+
+            set
+            {
+                this.SetFlag(DATA_FLAGS, DATA_FLAG_SPRINTING, value);
+                EntityAttribute attribute = this.Attributes.GetAttribute(EntityAttribute.MOVEMENT_SPEED.Name);
+                attribute.Value = value ? attribute.Value * 1.3f : attribute.Value / 1.3f;
+                this.Attributes.SetAttribute(attribute);
+                this.Attributes.Update(this);
+            }
+        }
+
         /// <summary>
         /// <see cref="Player"/> の満腹度の最大値を取得します
         /// </summary>
