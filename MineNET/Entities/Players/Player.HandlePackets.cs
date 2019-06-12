@@ -112,9 +112,9 @@ namespace MineNET.Entities.Players
             {
                 this.HandleExplodePacket((ExplodePacket) packet);
             }
-            else if (packet is LevelSoundEventPacket) //0x18
+            else if (packet is LevelSoundEventPacketV1) //0x18
             {
-                this.HandleLevelSoundPacket((LevelSoundEventPacket) packet);
+                this.HandleLevelSoundPacketV1((LevelSoundEventPacketV1) packet);
             }
             else if (packet is LevelEventPacket) //0x19
             {
@@ -208,22 +208,321 @@ namespace MineNET.Entities.Players
             {
                 this.HandleContainerClosePacket((ContainerClosePacket) packet);
             }
-            //TODO
+            else if (packet is PlayerHotbarPacket) //0x30
+            {
+                this.HandlePlayerHotbarPacket((PlayerHotbarPacket) packet);
+            }
+            else if (packet is InventoryContentPacket) //0x31
+            {
+                this.HandleInventoryContentPacket((InventoryContentPacket) packet);
+            }
+            else if (packet is InventorySlotPacket) //0x32
+            {
+                this.HandleInventorySlotPacket((InventorySlotPacket) packet);
+            }
+            else if (packet is ContainerSetDataPacket) //0x33
+            {
+                this.HandleContainerSetDataPacket((ContainerSetDataPacket) packet);
+            }
+            else if (packet is CraftingDataPacket) //0x34
+            {
+                this.HandleCraftingDataPacket((CraftingDataPacket) packet);
+            }
+            else if (packet is CraftingEventPacket) //0x35
+            {
+                this.HandleCraftingEventPacket((CraftingEventPacket) packet);
+            }
+            else if (packet is GuiDataPickItemPacket) //0x36
+            {
+                this.HandleGuiDataPickItemPacket((GuiDataPickItemPacket) packet);
+            }
+            else if (packet is AdventureSettingsPacket) //0x37
+            {
+                this.HandleAdventureSettingsPacket((AdventureSettingsPacket) packet);
+            }
+            else if (packet is BlockEntityDataPacket) //0x38
+            {
+                this.HandleBlockEntityDataPacket((BlockEntityDataPacket) packet);
+            }
+            else if (packet is PlayerInputPacket) //0x39
+            {
+                this.HandlePlayerInputPacket((PlayerInputPacket) packet);
+            }
+            else if (packet is FullChunkDataPacket) //0x3a
+            {
+                this.HandleFullChunkDataPacket((FullChunkDataPacket) packet);
+            }
+            else if (packet is SetCommandsEnabledPacket) //0x3b
+            {
+                this.HandleSetCommandsEnabledPacket((SetCommandsEnabledPacket) packet);
+            }
+            else if (packet is SetDifficultyPacket) //0x3c
+            {
+                this.HandleSetDifficultyPacket((SetDifficultyPacket) packet);
+            }
+            else if (packet is ChangeDimensionPacket) //0x3d
+            {
+                this.HandleChangeDimensionPacket((ChangeDimensionPacket) packet);
+            }
+            else if (packet is SetPlayerGameTypePacket) //0x3e
+            {
+                this.HandleSetPlayerGameTypePacket((SetPlayerGameTypePacket) packet);
+            }
+            else if (packet is PlayerListPacket) //0x3f
+            {
+                this.HandlePlayerListPacket((PlayerListPacket) packet);
+            }
+            else if (packet is SimpleEventPacket) //0x40
+            {
+                this.HandleSimpleEventPacket((SimpleEventPacket) packet);
+            }
+            else if (packet is EventPacket) //0x41
+            {
+                this.HandleEventPacket((EventPacket) packet);
+            }
+            else if (packet is SpawnExperienceOrbPacket) //0x42
+            {
+                this.HandleSpawnExperienceOrbPacket((SpawnExperienceOrbPacket) packet);
+            }
+            else if (packet is ClientboundMapItemDataPacket) //0x43
+            {
+                this.HandleClientboundMapItemDataPacket((ClientboundMapItemDataPacket) packet);
+            }
+            else if (packet is MapInfoRequestPacket) //0x44
+            {
+                this.HandleMapInfoRequestPacket((MapInfoRequestPacket) packet);
+            }
             else if (packet is RequestChunkRadiusPacket) //0x45
             {
                 this.HandleRequestChunkRadiusPacket((RequestChunkRadiusPacket) packet);
+            }
+            else if (packet is ChunkRadiusUpdatedPacket) //0x46
+            {
+                this.HandleChunkRadiusUpdatedPacket((ChunkRadiusUpdatedPacket) packet);
+            }
+            else if (packet is ItemFrameDropItemPacket) //0x47
+            {
+                this.HandleItemFrameDropItemPacket((ItemFrameDropItemPacket) packet);
+            }
+            else if (packet is GameRulesChangedPacket) //0x48
+            {
+                this.HandleGameRulesChangedPacket((GameRulesChangedPacket) packet);
+            }
+            else if (packet is CameraPacket) //0x49
+            {
+                this.HandleCameraPacket((CameraPacket) packet);
+            }
+            else if (packet is BossEventPacket) //0x4a
+            {
+                this.HandleBossEventPacket((BossEventPacket) packet);
+            }
+            else if (packet is ShowCreditsPacket) //0x4b
+            {
+                this.HandleShowCreditsPacket((ShowCreditsPacket) packet);
+            }
+            else if (packet is AvailableCommandsPacket) //0x4c
+            {
+                this.HandleAvailableCommandsPacket((AvailableCommandsPacket) packet);
             }
             else if (packet is CommandRequestPacket) //0x4d
             {
                 this.HandleCommandRequestPacket((CommandRequestPacket) packet);
             }
+            else if (packet is CommandBlockUpdatePacket) //0x4e
+            {
+                this.HandleCommandBlockUpdatePacket((CommandBlockUpdatePacket) packet);
+            }
+            else if (packet is CommandOutputPacket) //0x4f
+            {
+                this.HandleCommandOutputPacket((CommandOutputPacket) packet);
+            }
+            else if (packet is UpdateTradePacket) //0x50
+            {
+                this.HandleUpdateTradePacket((UpdateTradePacket) packet);
+            }
+            else if (packet is UpdateEquipmentPacket) //0x51
+            {
+                this.HandleUpdateEquipPacket((UpdateEquipmentPacket) packet);
+            }
+            else if (packet is ResourcePackChunkDataPacket) //0x52
+            {
+                this.HandleResourcePackDataInfoPacket((ResourcePackDataInfoPacket) packet);
+            }
+            else if (packet is ResourcePackChunkDataPacket) //0x53
+            {
+                this.HandleResourcePackChunkDataPacket((ResourcePackChunkDataPacket) packet);
+            }
+            else if (packet is ResourcePackChunkRequestPacket) //0x54
+            {
+                this.HandleResourcePackChunkRequestPacket((ResourcePackChunkRequestPacket) packet);
+            }
+            else if (packet is TransferPacket) //0x55
+            {
+                this.HandleTransferPacket((TransferPacket) packet);
+            }
+            else if (packet is PlaySoundPacket) //0x56
+            {
+                this.HandlePlaySoundPacket((PlaySoundPacket) packet);
+            }
+            else if (packet is StopSoundPacket) //0x57
+            {
+                this.HandleStopSoundPacket((StopSoundPacket) packet);
+            }
+            else if (packet is SetTitlePacket) //0x58
+            {
+                this.HandleSetTitlePacket((SetTitlePacket) packet);
+            }
+            else if (packet is AddBehaviorTreePacket) //0x59
+            {
+                this.HandleAddBehaviorTreePacket((AddBehaviorTreePacket) packet);
+            }
+            else if (packet is StructureBlockUpdatePacket) //0x5a
+            {
+                this.HandleStructureBlockUpdatePacket((StructureBlockUpdatePacket) packet);
+            }
+            else if (packet is ShowStoreOfferPacket) //0x5b
+            {
+                this.HandleShowStoreOfferPacket((ShowStoreOfferPacket) packet);
+            }
+            else if (packet is PurchaseReceiptPacket) //0x5c
+            {
+                this.HandlePurchaseReceiptPacket((PurchaseReceiptPacket) packet);
+            }
             else if (packet is PlayerSkinPacket) //0x5d
             {
                 this.HandlePlayerSkinPacket((PlayerSkinPacket) packet);
             }
+            else if (packet is SubClientLoginPacket) //0x5e
+            {
+                this.HandleSubClientLoginPacket((SubClientLoginPacket) packet);
+            }
+            else if (packet is AutomationClientConnectPacket) //0x5f
+            {
+                this.HandleAutomationClientConnectPacket((AutomationClientConnectPacket) packet);
+            }
+            else if (packet is SetLastHurtByPacket) //0x60
+            {
+                this.HandleSetLastHurtByPacket((SetLastHurtByPacket) packet);
+            }
+            else if (packet is BookEditPacket) //0x61
+            {
+                this.HandleBookEditPacket((BookEditPacket) packet);
+            }
+            else if (packet is NpcRequestPacket) //0x62
+            {
+                this.HandleNpcRequestPacket((NpcRequestPacket) packet);
+            }
+            else if (packet is PhotoTransferPacket) //0x63
+            {
+                this.HandlePhotoTransferPacket((PhotoTransferPacket) packet);
+            }
+            else if (packet is ModalFormRequestPacket) //0x64
+            {
+                this.HandleModalFormRequestPacket((ModalFormRequestPacket) packet);
+            }
+            else if (packet is ModalFormResponsePacket) //0x65
+            {
+                this.HandleModalFormResponsePacket((ModalFormResponsePacket) packet);
+            }
+            else if (packet is ServerSettingsRequestPacket) //0x66
+            {
+                this.HandleServerSettingsRequestPacket((ServerSettingsRequestPacket) packet);
+            }
+            else if (packet is ServerSettingsResponsePacket) //0x67
+            {
+                this.HandleServerSettingsResponsePacket((ServerSettingsResponsePacket) packet);
+            }
+            else if (packet is ShowProfilePacket) //0x68
+            {
+                this.HandleShowProfilePacket((ShowProfilePacket) packet);
+            }
+            else if (packet is SetDefaultGameTypePacket) //0x69
+            {
+                this.HandleSetDefaultGameTypePacket((SetDefaultGameTypePacket) packet);
+            }
+            else if (packet is RemoveObjectivePacket) //0x6a
+            {
+                this.HandleRemoveObjectivePacket((RemoveObjectivePacket) packet);
+            }
+            else if (packet is SetDisplayObjectivePacket) //0x6b
+            {
+                this.HandleSetDisplayObjectivePacket((SetDisplayObjectivePacket) packet);
+            }
+            else if (packet is SetScorePacket) //0x6c
+            {
+                this.HandleSetScorePacket((SetScorePacket) packet);
+            }
+            else if (packet is LabTablePacket) //0x6d
+            {
+                this.HandleLabTablePacket((LabTablePacket) packet);
+            }
+            else if (packet is UpdateBlockSyncedPacket) //0x6e
+            {
+                this.HandleUpdateBlockSyncedPacket((UpdateBlockSyncedPacket) packet);
+            }
+            else if (packet is MoveEntityDeltaPacket) //0x6f
+            {
+                this.HandleMoveEntityDeltaPacket((MoveEntityDeltaPacket) packet);
+            }
+            else if (packet is SetScoreboardIdentityPacket) //0x70
+            {
+                this.HandleSetScoreboardIdentityPacket((SetScoreboardIdentityPacket) packet);
+            }
             else if (packet is SetLocalPlayerAsInitializedPacket) //0x71
             {
                 this.HandleSetLocalPlayerAsInitializedPacket((SetLocalPlayerAsInitializedPacket) packet);
+            }
+            else if (packet is UpdateSoftEnumPacket) //0x72
+            {
+                this.HandleUpdateSoftEnumPacket((UpdateSoftEnumPacket) packet);
+            }
+            else if (packet is NetworkStackLatencyPacket) //0x73
+            {
+                this.HandleNetworkStackLatencyPacket((NetworkStackLatencyPacket) packet);
+            }
+            else if (packet is ScriptCustomEventPacket) //0x75
+            {
+                this.HandleScriptCustomEventPacket((ScriptCustomEventPacket) packet);
+            }
+            else if (packet is SpawnParticleEffectPacket) //0x76
+            {
+                this.HandleSpawnParticleEffectPacket((SpawnParticleEffectPacket) packet);
+            }
+            else if (packet is AvailableEntityIdentifiersPacket) //0x77
+            {
+                this.HandleAvailableEntityIdentifiersPacket((AvailableEntityIdentifiersPacket) packet);
+            }
+            else if (packet is LevelSoundEventPacketV2) //0x78
+            {
+                this.HandleLevelSoundEventPacketV2((LevelSoundEventPacketV2) packet);
+            }
+            else if (packet is NetworkChunkPublisherUpdatePacket) //0x79
+            {
+                this.HandleNetworkChunkPublisherUpdatePacket((NetworkChunkPublisherUpdatePacket) packet);
+            }
+            else if (packet is BiomeDefinitionListPacket) //0x7a
+            {
+                this.HandleBiomeDefinitionListPacket((BiomeDefinitionListPacket) packet);
+            }
+            else if (packet is LevelSoundEventPacket) //0x7b
+            {
+                this.HandleLevelSoundEventPacket((LevelSoundEventPacket) packet);
+            }
+            else if (packet is LecternUpdatePacket) //0x7c
+            {
+                this.HandleLecternUpdatePacket((LecternUpdatePacket) packet);
+            }
+            else if (packet is VideoStreamConnectPacket) //0x7d
+            {
+                this.HandleVideoStreamConnectPacket((VideoStreamConnectPacket) packet);
+            }
+            else if (packet is MapCreateLockedCopyPacket) //0x7e
+            {
+                this.HandleMapCreateLockedCopyPacket((MapCreateLockedCopyPacket) packet);
+            }
+            else if (packet is OnScreenTextureAnimationPacket) //0x7f
+            {
+                this.HandleOnScreenTextureAnimationPacket((OnScreenTextureAnimationPacket) packet);
             }
 
             packet.Dispose();
@@ -617,9 +916,9 @@ namespace MineNET.Entities.Players
 
         #endregion
 
-        #region LevelSoundPaclet 0x18
+        #region LevelSoundPacketV1 0x18
 
-        protected virtual void HandleLevelSoundPacket(LevelSoundEventPacket pk)
+        protected virtual void HandleLevelSoundPacketV1(LevelSoundEventPacketV1 pk)
         {
             this.SendPacketViewers(pk);
             this.SendPacket(pk);
@@ -1363,7 +1662,7 @@ namespace MineNET.Entities.Players
 
         #region ShowCreditsPacket 0x4b
 
-        protected virtual void Handle(ShowCreditsPacket pk)
+        protected virtual void HandleShowCreditsPacket(ShowCreditsPacket pk)
         {
 
         }
@@ -1419,7 +1718,7 @@ namespace MineNET.Entities.Players
 
         #region UpdateEquipPacket 0x51
 
-        protected virtual void HandleUpdateEquipPacket(UpdateEquipPacket pk)
+        protected virtual void HandleUpdateEquipPacket(UpdateEquipmentPacket pk)
         {
 
         }
@@ -1558,9 +1857,9 @@ namespace MineNET.Entities.Players
 
         #endregion
 
-        #region WSConnectPacket 0x5f
+        #region AutomationClientConnectPacket 0x5f
 
-        protected virtual void HandleWSConnectPacket(AutomationClientConnectPacket pk)
+        protected virtual void HandleAutomationClientConnectPacket(AutomationClientConnectPacket pk)
         {
 
         }
@@ -1759,6 +2058,105 @@ namespace MineNET.Entities.Players
         #region NetworkStackLatencyPacket 0x73
 
         protected virtual void HandleNetworkStackLatencyPacket(NetworkStackLatencyPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region ScriptCustomEventPacket 0x75
+
+        protected virtual void HandleScriptCustomEventPacket(ScriptCustomEventPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region SpawnParticleEffectPacket 0x76
+
+        protected virtual void HandleSpawnParticleEffectPacket(SpawnParticleEffectPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region AvailableEntityIdentifiersPacket 0x77
+
+        protected virtual void HandleAvailableEntityIdentifiersPacket(AvailableEntityIdentifiersPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region LevelSoundEventPacketV2 0x78
+
+        protected virtual void HandleLevelSoundEventPacketV2(LevelSoundEventPacketV2 pk)
+        {
+
+        }
+
+        #endregion
+
+        #region NetworkChunkPublisherUpdatePacket 0x79
+
+        protected virtual void HandleNetworkChunkPublisherUpdatePacket(NetworkChunkPublisherUpdatePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region BiomeDefinitionListPacket 0x7a
+
+        protected virtual void HandleBiomeDefinitionListPacket(BiomeDefinitionListPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region LevelSoundEventPacket 0x7b
+
+        protected virtual void HandleLevelSoundEventPacket(LevelSoundEventPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region LecternUpdatePacket 0x7c
+
+        protected virtual void HandleLecternUpdatePacket(LecternUpdatePacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region VideoStreamConnectPacket 0x7d
+
+        protected virtual void HandleVideoStreamConnectPacket(VideoStreamConnectPacket pk)
+        {
+
+        }
+
+        #endregion
+
+        #region MapCreateLockedCopyPacket 0x7e
+
+        protected virtual void HandleMapCreateLockedCopyPacket(MapCreateLockedCopyPacket pk)
+        {
+            
+        }
+
+        #endregion
+
+        #region OnScreenTextureAnimationPacket 0x7f
+
+        protected virtual void HandleOnScreenTextureAnimationPacket(OnScreenTextureAnimationPacket pk)
         {
 
         }

@@ -1,6 +1,6 @@
 ﻿namespace MineNET.Network.MinecraftPackets
 {
-    public class UpdateEquipPacket : MinecraftPacket
+    public class UpdateEquipmentPacket : MinecraftPacket
     {
         public override byte PacketID { get; } = MinecraftProtocol.UPDATE_EQUIPMENT_PACKET;
 

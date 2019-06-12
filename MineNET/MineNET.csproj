@@ -493,7 +493,9 @@
     <Compile Include="Network\MinecraftPackets\LevelEventPacket.cs" />
     <Compile Include="Network\MinecraftPackets\LevelSoundEventPacket.cs" />
     <Compile Include="Network\MinecraftPackets\LevelSoundEventPacketV1.cs" />
+    <Compile Include="Network\MinecraftPackets\LevelSoundEventPacketV2.cs" />
     <Compile Include="Network\MinecraftPackets\LoginPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\MapCreateLockedCopyPacket.cs" />
     <Compile Include="Network\MinecraftPackets\MapInfoRequestPacket.cs" />
     <Compile Include="Network\MinecraftPackets\MinecraftPacket.cs" />
     <Compile Include="Network\MinecraftPackets\MinecraftProtocol.cs" />
@@ -508,6 +510,7 @@
     <Compile Include="Network\MinecraftPackets\NetworkChunkPublisherUpdatePacket.cs" />
     <Compile Include="Network\MinecraftPackets\NetworkStackLatencyPacket.cs" />
     <Compile Include="Network\MinecraftPackets\NpcRequestPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\OnScreenTextureAnimationPacket.cs" />
     <Compile Include="Network\MinecraftPackets\PhotoTransferPacket.cs" />
     <Compile Include="Network\MinecraftPackets\PlayerActionPacket.cs" />
     <Compile Include="Network\MinecraftPackets\PlayerHotbarPacket.cs" />
@@ -564,7 +567,7 @@
     <Compile Include="Network\MinecraftPackets\UpdateAttributesPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateBlockPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateBlockSyncedPacket.cs" />
-    <Compile Include="Network\MinecraftPackets\UpdateEquipPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\UpdateEquipmentPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateSoftEnumPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateTradePacket.cs" />
     <Compile Include="Network\MinecraftPackets\VideoStreamConnectPacket.cs" />
