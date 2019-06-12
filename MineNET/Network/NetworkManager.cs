@@ -182,7 +182,7 @@ namespace MineNET.Network
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.COMMAND_BLOCK_UPDATE_PACKET, new CommandBlockUpdatePacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.COMMAND_OUTPUT_PACKET, new CommandOutputPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.UPDATE_TRADE_PACKET, new UpdateTradePacket());
-            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.UPDATE_EQUIPMENT_PACKET, new UpdateEquipPacket());
+            MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.UPDATE_EQUIPMENT_PACKET, new UpdateEquipmentPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.RESOURCE_PACK_DATA_INFO_PACKET, new ResourcePackDataInfoPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.RESOURCE_PACK_CHUNK_DATA_PACKET, new ResourcePackChunkDataPacket());
             MineNET_Registries.MinecraftPacket.Add(MinecraftProtocol.RESOURCE_PACK_CHUNK_REQUEST_PACKET, new ResourcePackChunkRequestPacket());

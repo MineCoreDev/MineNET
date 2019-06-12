@@ -566,7 +566,7 @@
     <Compile Include="Network\MinecraftPackets\UpdateAttributesPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateBlockPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateBlockSyncedPacket.cs" />
-    <Compile Include="Network\MinecraftPackets\UpdateEquipPacket.cs" />
+    <Compile Include="Network\MinecraftPackets\UpdateEquipmentPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateSoftEnumPacket.cs" />
     <Compile Include="Network\MinecraftPackets\UpdateTradePacket.cs" />
     <Compile Include="Network\MinecraftPackets\VideoStreamConnectPacket.cs" />
