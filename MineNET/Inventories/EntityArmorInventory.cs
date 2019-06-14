@@ -66,9 +66,9 @@ namespace MineNET.Inventories
             }
         }
 
-        public ItemStack[] GetArmorContents()
+        public Item[] GetArmorContents()
         {
-            return new ItemStack[] {
+            return new Item[] {
                 this.Helmet,
                 this.ChestPlate,
                 this.Leggings,
@@ -76,7 +76,7 @@ namespace MineNET.Inventories
             };
         }
 
-        public void SetArmorContents(ItemStack[] items)
+        public void SetArmorContents(Item[] items)
         {
             for (int i = 0; i < items.Length; ++i)
             {
@@ -97,7 +97,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public ItemStack Helmet
+        public Item Helmet
         {
             get
             {
@@ -110,7 +110,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public ItemStack ChestPlate
+        public Item ChestPlate
         {
             get
             {
@@ -123,7 +123,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public ItemStack Leggings
+        public Item Leggings
         {
             get
             {
@@ -136,7 +136,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public ItemStack Boots
+        public Item Boots
         {
             get
             {

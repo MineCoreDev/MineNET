@@ -17,7 +17,7 @@ namespace MineNET.Network.MinecraftPackets
         public Vector3 Position { get; set; }
         public Vector3 Motion { get; set; }
         public Vector3 Direction { get; set; }
-        public ItemStack ItemStack { get; set; } = new ItemStack(Item.Get(0));
+        public Item ItemStack { get; set; } = Item.Get(0);
         public EntityMetadataManager Metadata { get; set; }
 
         public int Flag { get; set; } = 0;

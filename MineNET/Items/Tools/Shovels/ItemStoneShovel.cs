@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public class ItemStoneShovel : ItemShovel
     {
-        public override int ID { get; } = ItemIDs.STONE_SHOVEL;
+        public override int ID => ItemIDs.STONE_SHOVEL;
 
-        public override string GetName(int damage)
-        {
-            return "Stone Shovel";
-        }
+        public override string Name => "Stone Shovel";
 
-        public override ItemToolTier ToolTier { get; } = ItemToolTier.STONE;
+        public override ItemToolTier ToolTier => ItemToolTier.STONE;
 
-        public override int MaxDurability { get; } = 132;
+        public override int MaxDurability => 132;
     }
 }

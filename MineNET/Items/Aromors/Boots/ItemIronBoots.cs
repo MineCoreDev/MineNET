@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public class ItemIronBoots : ItemBoots
     {
-        public override int ID { get; } = ItemIDs.IRON_BOOTS;
+        public override int ID => ItemIDs.IRON_BOOTS;
 
-        public override string GetName(int damage)
-        {
-            return "Iron Boots";
-        }
+        public override string Name => "Iron Boots";
 
-        public override int MaxDurability { get; } = 195;
+        public override int MaxDurability => 195;
     }
 }

@@ -8,7 +8,7 @@ namespace MineNET.Network.MinecraftPackets
 
         public long EntityRuntimeId { get; set; }
 
-        public ItemStack[] Items { get; set; } = new ItemStack[4];
+        public Item[] Items { get; set; } = new Item[4];
 
         protected override void EncodePayload()
         {

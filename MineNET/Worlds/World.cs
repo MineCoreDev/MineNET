@@ -390,7 +390,7 @@ namespace MineNET.Worlds
             }
         }
 
-        public void UseItem(Vector3 pos, ItemStack item, BlockFace blockFace, Vector3 clickPos, Player player)
+        public void UseItem(Vector3 pos, Item item, BlockFace blockFace, Vector3 clickPos, Player player)
         {
             Block clicked = this.GetBlock(pos);
             Block replace = clicked.GetSideBlock(blockFace);
@@ -424,8 +424,7 @@ namespace MineNET.Worlds
                 return;
             }
 
-            if (!player.Sneaking && item.Item.CanBeActivate &&
-                item.Item.Activate(player, this, clicked, blockFace, clickPos))
+            if (!player.Sneaking && item.Activate(player, this, clicked, blockFace, clickPos))
             {
                 if (item.Count <= 0)
                 {
@@ -433,7 +432,7 @@ namespace MineNET.Worlds
                 }
             }
 
-            Block hand = item.Item.Block;
+            Block hand = item.Block;
             if (hand.ID == BlockIDs.AIR)
             {
                 return;
@@ -474,7 +473,7 @@ namespace MineNET.Worlds
             Server.Instance.BroadcastSendPacket(pk); //TODO : near players
         }
 
-        public void UseBreak(Vector3 pos, ItemStack item, Player player)
+        public void UseBreak(Vector3 pos, Item item, Player player)
         {
             if (player.IsSpectator)
             {
@@ -502,8 +501,8 @@ namespace MineNET.Worlds
                 return;
             }
 
-            //ItemStack[] drops = blockBreakEvent.Drops;
-            ItemStack[] drops = block.GetDrops(item);
+            //Item[] drops = blockBreakEvent.Drops;
+            Item[] drops = block.GetDrops(item);
 
             //TODO : can destroy
 
@@ -515,7 +514,7 @@ namespace MineNET.Worlds
 
             block.Break(player, item);
 
-            item.Item.DestroyBlock(block, player);
+            item.DestroyBlock(block, player);
 
             //TODO : item drop
         }
@@ -605,7 +604,7 @@ namespace MineNET.Worlds
             return null;
         }
 
-        public void DropItem(ItemStack item, Vector3 pos, Vector3 motion = new Vector3(), int delay = 10)
+        public void DropItem(Item item, Vector3 pos, Vector3 motion = new Vector3(), int delay = 10)
         {
             Chunk chunk = this.GetChunk(pos.FloorX, pos.FloorZ);
             CompoundTag nbt = Entity.CreateEntityNBT(pos, motion);

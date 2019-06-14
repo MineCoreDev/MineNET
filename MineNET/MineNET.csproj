@@ -333,7 +333,7 @@
     <Compile Include="Items\Foods\ItemCookedPorkchop.cs" />
     <Compile Include="Items\ItemClock.cs" />
     <Compile Include="Items\ItemCompass.cs" />
-    <Compile Include="Items\ItemCookedFish.cs" />
+    <Compile Include="Items\Foods\ItemCookedFish.cs" />
     <Compile Include="Items\ItemDye.cs" />
     <Compile Include="Items\ItemDiamond.cs" />
     <Compile Include="Items\Foods\ItemMushroomStew.cs" />
@@ -449,7 +449,6 @@
     <Compile Include="Items\Tools\Shovels\ItemIronShovel.cs" />
     <Compile Include="Items\Tools\Pickaxes\ItemPickaxe.cs" />
     <Compile Include="Items\Tools\Shovels\ItemShovel.cs" />
-    <Compile Include="Items\ItemStack.cs" />
     <Compile Include="Items\Datas\ItemToolTier.cs" />
     <Compile Include="Items\Datas\ItemToolType.cs" />
     <Compile Include="Items\Tools\Swords\ItemSword.cs" />

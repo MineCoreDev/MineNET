@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public class ItemChainmailChestplate : ItemChestplate
     {
-        public override int ID { get; } = ItemIDs.CHAINMAIL_CHESTPLATE;
+        public override int ID => ItemIDs.CHAINMAIL_CHESTPLATE;
 
-        public override string GetName(int damage)
-        {
-            return "Chainmail Chestplate";
-        }
+        public override string Name => "Chainmail Chestplate";
 
-        public override int MaxDurability { get; } = 241;
+        public override int MaxDurability => 241;
     }
 }

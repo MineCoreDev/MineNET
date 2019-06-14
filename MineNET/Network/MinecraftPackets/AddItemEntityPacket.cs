@@ -10,7 +10,7 @@ namespace MineNET.Network.MinecraftPackets
 
         public long EntityUniqueId { get; set; }
         public long EntityRuntimeId { get; set; }
-        public ItemStack ItemStack { get; set; }
+        public Item Item { get; set; }
         public Vector3 Position { get; set; }
         public Vector3 Motion { get; set; }
         public EntityMetadataManager Metadata { get; set; }
@@ -20,7 +20,7 @@ namespace MineNET.Network.MinecraftPackets
         {
             this.WriteEntityUniqueId(this.EntityUniqueId);
             this.WriteEntityRuntimeId(this.EntityRuntimeId);
-            this.WriteItem(this.ItemStack);
+            this.WriteItem(this.Item);
             this.WriteVector3(this.Position);
             this.WriteVector3(this.Motion);
             this.WriteEntityMetadata(this.Metadata);

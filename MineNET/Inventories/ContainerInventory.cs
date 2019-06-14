@@ -11,7 +11,7 @@ namespace MineNET.Inventories
 {
     public abstract class ContainerInventory : BaseInventory
     {
-        public ContainerInventory(InventoryHolder holder, Dictionary<int, ItemStack> items = null) : base(holder, items)
+        public ContainerInventory(InventoryHolder holder, Dictionary<int, Item> items = null) : base(holder, items)
         {
 
         }
@@ -35,7 +35,7 @@ namespace MineNET.Inventories
         {
             InventoryContentPacket pk = new InventoryContentPacket
             {
-                Items = new ItemStack[this.Size]
+                Items = new Item[this.Size]
             };
             for (int i = 0; i < this.Size; ++i)
             {
@@ -83,7 +83,7 @@ namespace MineNET.Inventories
                 ListTag list = new ListTag("items", NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
-                    list.Add(NBTIO.WriteItem(new ItemStack(Item.Get(0), 0, 0)));
+                    list.Add(NBTIO.WriteItem(Item.Get(0, 0, 0)));
                 }
                 nbt.PutList(list);
             }
@@ -91,7 +91,7 @@ namespace MineNET.Inventories
             ListTag items = nbt.GetList("items");
             for (int i = 0; i < this.Size; ++i)
             {
-                ItemStack item = NBTIO.ReadItem((CompoundTag) items[i]);
+                Item item = NBTIO.ReadItem((CompoundTag) items[i]);
                 this.SetItem(i, item, false);
             }
         }

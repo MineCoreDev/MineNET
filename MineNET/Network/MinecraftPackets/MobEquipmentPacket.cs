@@ -7,7 +7,7 @@ namespace MineNET.Network.MinecraftPackets
         public override byte PacketID { get; } = MinecraftProtocol.MOB_EQUIPMENT_PACKET;
 
         public long EntityRuntimeId { get; set; }
-        public ItemStack Item { get; set; }
+        public Item Item { get; set; }
         public byte InventorySlot { get; set; }
         public byte HotbarSlot { get; set; }
         public byte WindowId { get; set; }

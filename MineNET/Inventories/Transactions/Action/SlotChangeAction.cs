@@ -8,7 +8,7 @@ namespace MineNET.Inventories.Transactions.Action
         public Inventory Inventory { get; protected set; }
         public int InventorySlot { get; protected set; }
 
-        public SlotChangeAction(Inventory inventory, int inventorySlot, ItemStack sourceItem, ItemStack targetItem) : base(sourceItem, targetItem)
+        public SlotChangeAction(Inventory inventory, int inventorySlot, Item sourceItem, Item targetItem) : base(sourceItem, targetItem)
         {
             this.Inventory = inventory;
             this.InventorySlot = inventorySlot;

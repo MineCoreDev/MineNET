@@ -11,25 +11,10 @@ namespace MineNET.Items
             this.block = block;
         }
 
-        public override int ID
-        {
-            get
-            {
-                return this.block.ID < 256 ? this.block.ID : -this.block.ID + 255;
-            }
-        }
+        public override int ID => this.block.ID < 256 ? this.block.ID : -this.block.ID + 255;
 
-        public override string GetName(int damage)
-        {
-            return this.Block.Name;
-        }
+        public override string Name => this.block.Name;
 
-        public override Block Block
-        {
-            get
-            {
-                return this.block;
-            }
-        }
+        public override Block Block => this.block.Clone();
     }
 }

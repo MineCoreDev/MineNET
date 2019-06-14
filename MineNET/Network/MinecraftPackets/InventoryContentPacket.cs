@@ -8,7 +8,7 @@ namespace MineNET.Network.MinecraftPackets
 
         public uint InventoryId { get; set; }
 
-        public ItemStack[] Items { get; set; }
+        public Item[] Items { get; set; }
 
         protected override void EncodePayload()
         {

@@ -10,7 +10,7 @@ namespace MineNET.Network.MinecraftPackets
 
         public uint Slot { get; set; }
 
-        public ItemStack Item { get; set; }
+        public Item Item { get; set; }
 
         protected override void EncodePayload()
         {

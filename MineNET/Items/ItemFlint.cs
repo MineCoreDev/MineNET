@@ -2,11 +2,8 @@
 {
     public class ItemFlint : Item
     {
-        public override int ID { get; } = ItemIDs.FLINT;
+        public override int ID => ItemIDs.FLINT;
 
-        public override string GetName(int damage)
-        {
-            return "Flint";
-        }
+        public override string Name => "Flint";
     }
 }

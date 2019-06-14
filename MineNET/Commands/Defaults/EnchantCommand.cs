@@ -89,8 +89,8 @@ namespace MineNET.Commands.Defaults
                         sender.SendMessage(new TranslationContainer(TextFormat.RED, "commands.enchant.invalidLevel", new object[] { enchant.Name, level }));
                         continue;
                     }
-                    ItemStack item = entity.Inventory.MainHandItem;
-                    if (item.Item.IsTool)
+                    Item item = entity.Inventory.MainHandItem;
+                    if (item.IsTool)
                     {
                         item.AddEnchantment(enchant);
                         entity.Inventory.MainHandItem = item;

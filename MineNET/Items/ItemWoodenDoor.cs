@@ -4,19 +4,10 @@ namespace MineNET.Items
 {
     public class ItemWoodenDoor : Item
     {
-        public override int ID { get; } = ItemIDs.WOODEN_DOOR;
+        public override int ID => ItemIDs.WOODEN_DOOR;
 
-        public override string GetName(int damage)
-        {
-            return "Wooden Door";
-        }
+        public override string Name => "Wooden Door";
 
-        public override Block Block
-        {
-            get
-            {
-                return Block.Get(BlockIDs.WOODEN_DOOR);
-            }
-        }
+        public override Block Block => Block.Get(BlockIDs.WOODEN_DOOR);
     }
 }

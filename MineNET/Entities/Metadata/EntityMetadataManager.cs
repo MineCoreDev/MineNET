@@ -1,8 +1,8 @@
-﻿using MineNET.Entities.Players;
+﻿using System.Collections.Generic;
+using MineNET.Entities.Players;
 using MineNET.Items;
 using MineNET.Network.MinecraftPackets;
 using MineNET.Values;
-using System.Collections.Generic;
 
 namespace MineNET.Entities.Metadata
 {
@@ -83,12 +83,12 @@ namespace MineNET.Entities.Metadata
             return this;
         }
 
-        public ItemStack GetSlot(int id)
+        public Item GetSlot(int id)
         {
             return ((EntityDataSlot) this.EntityData[id]).Data;
         }
 
-        public EntityMetadataManager PutSlot(int id, ItemStack item)
+        public EntityMetadataManager PutSlot(int id, Item item)
         {
             this.EntityData[id] = new EntityDataSlot(id, item);
             return this;

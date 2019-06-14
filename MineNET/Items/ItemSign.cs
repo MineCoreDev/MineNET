@@ -6,25 +6,10 @@ namespace MineNET.Items
     {
         public override int ID { get; } = ItemIDs.SIGN;
 
-        public override string GetName(int damage)
-        {
-            return "Sign";
-        }
+        public override string Name => "Sign";
 
-        public override byte MaxStackSize
-        {
-            get
-            {
-                return 16;
-            }
-        }
+        public override byte MaxStackSize => 16;
 
-        public override Block Block
-        {
-            get
-            {
-                return Block.Get(BlockIDs.STANDING_SIGN);
-            }
-        }
+        public override Block Block => Block.Get(BlockIDs.STANDING_SIGN);
     }
 }

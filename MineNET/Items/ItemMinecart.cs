@@ -2,19 +2,10 @@
 {
     public class ItemMinecart : Item
     {
-        public override int ID { get; } = ItemIDs.MINECART;
+        public override int ID => ItemIDs.MINECART;
 
-        public override string GetName(int damage)
-        {
-            return "Minecart";
-        }
+        public override string Name => "Minecart";
 
-        public override byte MaxStackSize
-        {
-            get
-            {
-                return 1;
-            }
-        }
+        public override byte MaxStackSize => 1;
     }
 }

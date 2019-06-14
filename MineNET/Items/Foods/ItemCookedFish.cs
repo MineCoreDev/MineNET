@@ -2,12 +2,9 @@
 {
     public class ItemCookedFish : ItemFood
     {
-        public override int ID { get; } = ItemIDs.COOKED_FISH;
+        public override int ID => ItemIDs.COOKED_FISH;
 
-        public override string GetName(int damage)
-        {
-            return "Cooked Fish";
-        }
+        public override string Name => "Cooked Fish";
 
         public override int FoodRestore => 5;
 

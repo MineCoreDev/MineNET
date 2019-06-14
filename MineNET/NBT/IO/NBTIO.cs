@@ -242,23 +242,23 @@ namespace MineNET.NBT.IO
             return tag;
         }
 
-        public static CompoundTag WriteItem(ItemStack itemStack, int slot = -1)
+        public static CompoundTag WriteItem(Item item, int slot = -1)
         {
             CompoundTag nbt = new CompoundTag()
-                .PutShort("id", (short) itemStack.Item.ID)
-                .PutShort("damage", (short) itemStack.Damage)
-                .PutByte("count", (byte) itemStack.Count);
+                .PutShort("id", (short) item.ID)
+                .PutShort("damage", (short) item.Damage)
+                .PutByte("count", (byte) item.Count);
             if (slot != -1)
             {
                 nbt.PutByte("slot", (byte) slot);
             }
 
-            if (itemStack.NamedTag.Count != 0)
+            if (item.NamedTag.Count != 0)
             {
-                nbt.PutCompound("tag", itemStack.NamedTag);
+                nbt.PutCompound("tag", item.NamedTag);
             }
 
-            string[] canPlaceOn = itemStack.CanPlaceOn;
+            string[] canPlaceOn = item.CanPlaceOn;
             if (canPlaceOn.Length > 0)
             {
                 ListTag list = new ListTag("CanPlaceOn", NBTTagType.STRING);
@@ -270,7 +270,7 @@ namespace MineNET.NBT.IO
                 nbt.PutList(list);
             }
 
-            string[] canDestroy = itemStack.CanDestroy;
+            string[] canDestroy = item.CanDestroy;
             if (canDestroy.Length > 0)
             {
                 ListTag list = new ListTag("CanDestroy", NBTTagType.STRING);
@@ -285,9 +285,9 @@ namespace MineNET.NBT.IO
             return nbt;
         }
 
-        public static ItemStack ReadItem(CompoundTag nbt)
+        public static Item ReadItem(CompoundTag nbt)
         {
-            ItemStack item = new ItemStack(Item.Get(nbt.GetShort("id")), nbt.GetShort("damage"), nbt.GetByte("count"));
+            Item item = Item.Get(nbt.GetShort("id"), nbt.GetShort("damage"), nbt.GetByte("count"));
             if (nbt.Exist("tag"))
             {
                 CompoundTag tag = (CompoundTag) nbt.GetCompound("tag").Clone();

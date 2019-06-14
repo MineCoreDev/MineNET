@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public class ItemFlintAndSteel : ItemTool
     {
-        public override int ID { get; } = ItemIDs.FLINT_AND_STEEL;
+        public override int ID => ItemIDs.FLINT_AND_STEEL;
 
-        public override string GetName(int damage)
-        {
-            return "Flint And Steel";
-        }
+        public override string Name => "Flint And Steel";
 
-        public override ItemToolType ToolType { get; } = ItemToolType.FLINT_AND_STEEL;
+        public override ItemToolType ToolType => ItemToolType.FLINT_AND_STEEL;
 
-        public override int MaxDurability { get; } = 65;
+        public override int MaxDurability => 65;
     }
 }

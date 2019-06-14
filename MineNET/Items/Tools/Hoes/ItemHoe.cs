@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public abstract class ItemHoe : ItemTool
     {
-        public override ItemToolType ToolType { get; } = ItemToolType.HOE;
+        public override ItemToolType ToolType => ItemToolType.HOE;
     }
 }

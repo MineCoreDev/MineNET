@@ -2,11 +2,8 @@
 {
     public class ItemGlowstoneDust : Item
     {
-        public override int ID { get; } = ItemIDs.GLOWSTONE_DUST;
+        public override int ID => ItemIDs.GLOWSTONE_DUST;
 
-        public override string GetName(int damage)
-        {
-            return "Glowstone Dust";
-        }
+        public override string Name => "Glowstone Dust";
     }
 }

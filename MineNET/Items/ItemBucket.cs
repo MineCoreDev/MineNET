@@ -2,19 +2,10 @@
 {
     public class ItemBucket : Item
     {
-        public override int ID { get; } = ItemIDs.BUCKET;
+        public override int ID => ItemIDs.BUCKET;
 
-        public override string GetName(int damage)
-        {
-            return "Bucket";
-        }
+        public override string Name => "Bucket";
 
-        public override byte MaxStackSize
-        {
-            get
-            {
-                return 16;
-            }
-        }
+        public override byte MaxStackSize => 16;
     }
 }

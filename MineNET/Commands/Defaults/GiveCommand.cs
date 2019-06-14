@@ -82,7 +82,7 @@ namespace MineNET.Commands.Defaults
                 return false;
             }
 
-            ItemStack item = new ItemStack(Item.Get(args[1]));
+            Item item = Item.Get(args[1]);
             if (args.Length > 2)
             {
                 int count;

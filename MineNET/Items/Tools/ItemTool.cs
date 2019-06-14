@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public abstract class ItemTool : Item
     {
-        public override byte MaxStackSize { get; } = 1;
+        public override byte MaxStackSize => 1;
 
-        public override bool IsTool { get; } = true;
+        public override bool IsTool => true;
 
-        public virtual ItemToolType ToolType { get; } = ItemToolType.NONE;
+        public virtual ItemToolType ToolType => ItemToolType.NONE;
 
-        public virtual ItemToolTier ToolTier { get; } = ItemToolTier.NONE;
+        public virtual ItemToolTier ToolTier => ItemToolTier.NONE;
 
-        public virtual int MaxDurability { get; } = 0;
+        public virtual int MaxDurability => 0;
     }
 }

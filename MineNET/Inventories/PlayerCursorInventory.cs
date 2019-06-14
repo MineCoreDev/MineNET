@@ -34,7 +34,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public ItemStack Curosr
+        public Item Curosr
         {
             get
             {

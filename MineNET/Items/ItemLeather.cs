@@ -2,11 +2,8 @@
 {
     public class ItemLeather : Item
     {
-        public override int ID { get; } = ItemIDs.LEATHER;
+        public override int ID => ItemIDs.LEATHER;
 
-        public override string GetName(int damage)
-        {
-            return "Leather";
-        }
+        public override string Name => "Leather";
     }
 }

@@ -5,11 +5,11 @@ namespace MineNET.Inventories.Transactions.Action
 {
     public abstract class InventoryAction
     {
-        public ItemStack SourceItem { get; protected set; }
+        public Item SourceItem { get; protected set; }
 
-        public ItemStack TargetItem { get; protected set; }
+        public Item TargetItem { get; protected set; }
 
-        public InventoryAction(ItemStack sourceItem, ItemStack targetItem)
+        public InventoryAction(Item sourceItem, Item targetItem)
         {
             this.SourceItem = sourceItem;
             this.TargetItem = targetItem;

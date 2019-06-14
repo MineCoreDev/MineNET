@@ -7,15 +7,14 @@ namespace MineNET.Items
 {
     public abstract class ItemFood : Item, IConsumeable
     {
-        public override bool CanBeConsumed { get; } = true;
-
         public abstract int FoodRestore { get; }
 
         public abstract float SaturationRestore { get; }
 
-        public virtual void OnConsume(Player player, ItemStack food)
+        public virtual void OnConsume(Player player)
         {
-            PlayerEatFoodEventArgs args = new PlayerEatFoodEventArgs(player, food, this, this.Residue);
+            Item food = this.Clone();
+            PlayerEatFoodEventArgs args = new PlayerEatFoodEventArgs(player, (ItemFood) food, this.Residue);
             Server.Instance.Event.Player.OnPlayerEatFood(this, args);
             if (args.IsCancel)
             {
@@ -40,23 +39,23 @@ namespace MineNET.Items
             food.Count--;
             if (food.Count < 1)
             {
-                food = new ItemStack(BlockIDs.AIR);
+                food = Item.Get(BlockIDs.AIR);
             }
             player.Inventory.SetItem(player.Inventory.MainHandSlot, food);
 
-            ItemStack stack = new ItemStack(args.Residue);
-            if (stack.ID == BlockIDs.AIR)
+            Item residue = args.Residue;
+            if (residue.ID == BlockIDs.AIR)
             {
                 return;
             }
 
             if (food.ID == BlockIDs.AIR)
             {
-                player.Inventory.SetItem(player.Inventory.MainHandSlot, stack);
+                player.Inventory.SetItem(player.Inventory.MainHandSlot, residue);
             }
             else
             {
-                player.Inventory.AddItem(stack);
+                player.Inventory.AddItem(residue);
             }
         }
 

@@ -9,7 +9,7 @@ namespace MineNET.Inventories.Transactions.Data
         public long EntityRuntimeId { get; set; }
         public int ActionType { get; set; }
         public int HotbarSlot { get; set; }
-        public ItemStack ItemMainHand { get; set; }
+        public Item ItemMainHand { get; set; }
         public Vector3 PlayerPos { get; set; }
         public Vector3 ClickPos { get; set; }
 

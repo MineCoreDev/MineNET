@@ -6,7 +6,7 @@ namespace MineNET.Inventories.Transactions.Action
 {
     public class DropItemAction : InventoryAction
     {
-        public DropItemAction(ItemStack sourceItem, ItemStack targetItem) : base(sourceItem, targetItem)
+        public DropItemAction(Item sourceItem, Item targetItem) : base(sourceItem, targetItem)
         {
 
         }
@@ -18,7 +18,7 @@ namespace MineNET.Inventories.Transactions.Action
 
         public override bool IsValid(Player player)
         {
-            return this.SourceItem.Item.ID == BlockIDs.AIR || this.SourceItem.Count <= 0;
+            return this.SourceItem.ID == BlockIDs.AIR || this.SourceItem.Count <= 0;
         }
 
         public override void OnExecuteFail(Player player)

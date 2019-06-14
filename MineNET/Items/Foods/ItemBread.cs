@@ -2,12 +2,9 @@
 {
     public class ItemBread : ItemFood
     {
-        public override int ID { get; } = ItemIDs.BREAD;
+        public override int ID => ItemIDs.BREAD;
 
-        public override string GetName(int damage)
-        {
-            return "Bread";
-        }
+        public override string Name => "Bread";
 
         public override int FoodRestore => 5;
 

@@ -26,7 +26,7 @@ namespace MineNET.Entities.Items
         public short Age { get; set; }
         public short PickupDelay { get; set; }
         public string Owner { get; set; }
-        public ItemStack Item { get; set; }
+        public Item Item { get; set; }
 
         public EntityItem(Chunk chunk, CompoundTag nbt) : base(chunk, nbt)
         {
@@ -63,7 +63,7 @@ namespace MineNET.Entities.Items
             {
                 EntityUniqueId = this.EntityID,
                 EntityRuntimeId = this.EntityID,
-                ItemStack = this.Item,
+                Item = this.Item,
                 Position = this.ToVector3(),
                 Motion = this.GetMotion(),
                 Metadata = this.DataProperties,

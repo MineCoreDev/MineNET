@@ -1,10 +1,8 @@
-﻿using MineNET.Resources;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using MineNET.Resources;
+using Newtonsoft.Json.Linq;
 
 namespace MineNET.Items
 {
@@ -15,12 +13,12 @@ namespace MineNET.Items
 
         }
 
-        public static void AddCreativeItem(ItemStack item)
+        public static void AddCreativeItem(Item item)
         {
             MineNET_Registries.Creative.Add(item);
         }
 
-        public static void RemoveCreativeItem(ItemStack item)
+        public static void RemoveCreativeItem(Item item)
         {
             MineNET_Registries.Creative.Remove(item);
         }
@@ -30,7 +28,7 @@ namespace MineNET.Items
             MineNET_Registries.Creative.RemoveAt(index);
         }
 
-        public static void AddCreativeItems(params ItemStack[] items)
+        public static void AddCreativeItems(params Item[] items)
         {
             for (int i = 0; i < items.Length; ++i)
             {
@@ -43,7 +41,7 @@ namespace MineNET.Items
             MineNET_Registries.Creative.Clear();
         }
 
-        public static ItemStack[] GetCreativeItems()
+        public static Item[] GetCreativeItems()
         {
             return MineNET_Registries.Creative.ToArray();
         }
@@ -64,7 +62,7 @@ namespace MineNET.Items
                     nbt = tags.Chunks(2).Select(x => Convert.ToByte(new string(x.ToArray()), 16)).ToArray();
                 }
 
-                CreativeItemList.AddCreativeItem(new ItemStack(Item.Get(id), damage, 1, nbt));
+                CreativeItemList.AddCreativeItem(Item.Get(id, damage, 1, nbt));
             }
         }
     }
