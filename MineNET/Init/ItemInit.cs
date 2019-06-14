@@ -95,6 +95,38 @@ namespace MineNET.Init
             this.Set(new ItemGoldenChestplate()); //315
             this.Set(new ItemGoldenLeggings()); //316
             this.Set(new ItemGoldenBoots()); //317
+            this.Set(new ItemFlint()); //318
+            this.Set(new ItemPorkchop()); //319
+            this.Set(new ItemCookedPorkchop()); //320
+            this.Set(new ItemPainting()); //321
+            this.Set(new ItemGoldenApple()); //322
+            this.Set(new ItemSign()); //323
+            this.Set(new ItemWoodenDoor()); //324
+            this.Set(new ItemBucket()); //325
+
+            this.Set(new ItemMinecart()); //328
+            this.Set(new ItemSaddle()); //329
+            this.Set(new ItemIronDoor()); //330
+            this.Set(new ItemRedstone()); //331
+            this.Set(new ItemSnowball()); //332
+            this.Set(new ItemBoat()); //333
+            this.Set(new ItemLeather()); //334
+            this.Set(new ItemBrick()); //335
+            this.Set(new ItemClayBall()); //336
+            this.Set(new ItemReeds()); //337
+            this.Set(new ItemPaper()); //338
+            this.Set(new ItemBook()); //339
+            this.Set(new ItemSlimeBall()); //340
+            this.Set(new ItemChestMinecart()); //341
+            this.Set(new ItemEgg()); //342
+            this.Set(new ItemCompass()); //343
+            this.Set(new ItemFishingRod()); //344
+            this.Set(new ItemClock()); //345
+            this.Set(new ItemGlowstoneDust()); //346
+            this.Set(new ItemFish()); //347
+            this.Set(new ItemCookedFish()); //348
+            this.Set(new ItemDye()); //349
+            this.Set(new ItemBone()); //350
         }
 
         public void Set(Item item)
