@@ -49,8 +49,8 @@ namespace MineNET.Data
         public int WindowId { get; set; }
         public long Unknown { get; set; }
         public int InventorySlot { get; set; }
-        public ItemStack OldItem { get; set; }
-        public ItemStack NewItem { get; set; }
+        public Item OldItem { get; set; }
+        public Item NewItem { get; set; }
 
         public NetworkInventoryAction(InventoryTransactionPacket pk)
         {

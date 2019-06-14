@@ -4,7 +4,6 @@ using MineNET.Data;
 using MineNET.Entities.Players;
 using MineNET.Inventories;
 using MineNET.Items;
-using MineNET.NBT.Data;
 using MineNET.NBT.Tags;
 using MineNET.Values;
 using MineNET.Worlds;
@@ -23,7 +22,7 @@ namespace MineNET.Blocks
         }
 
         public override bool Place(Block clicked, Block replace, BlockFace face, Vector3 clickPos, Player player,
-            ItemStack item)
+            Item item)
         {
             int[] faces = {2, 5, 3, 4};
             this.Damage = faces[player.GetDirection().GetHorizontalIndex()];
@@ -41,7 +40,7 @@ namespace MineNET.Blocks
             return true;
         }
 
-        public override bool Activate(Player player, ItemStack item)
+        public override bool Activate(Player player, Item item)
         {
             BlockEntity blockEntity = this.World.GetBlockEntity(this.ToBlockCoordinate3D());
             if (!(blockEntity is BlockEntityChest))
@@ -62,7 +61,7 @@ namespace MineNET.Blocks
             return true;
         }
 
-        public override bool Break(Player player, ItemStack item)
+        public override bool Break(Player player, Item item)
         {
             return base.Break(player, item);
         }

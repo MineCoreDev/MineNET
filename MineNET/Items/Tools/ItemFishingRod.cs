@@ -2,11 +2,8 @@
 {
     public class ItemFishingRod : ItemTool
     {
-        public override int ID { get; } = ItemIDs.FISHING_ROD;
+        public override int ID => ItemIDs.FISHING_ROD;
 
-        public override string GetName(int damage)
-        {
-            return "Fishing Rod";
-        }
+        public override string Name => "Fishing Rod";
     }
 }

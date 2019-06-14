@@ -670,7 +670,7 @@ namespace MineNET.Entities.Players
             return (dot2 - dot1) >= -0.5;
         }
 
-        public bool DropItem(ItemStack item)
+        public bool DropItem(Item item)
         {
             Vector3 pos = this.ToVector3().Add(0, 1.3f, 0);
             Vector3 motion = this.GetDirectionVector().Multiply(0.4f);

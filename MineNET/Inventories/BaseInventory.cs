@@ -15,11 +15,11 @@ namespace MineNET.Inventories
     {
         private List<Player> viewers = new List<Player>();
 
-        protected Dictionary<int, ItemStack> slots = new Dictionary<int, ItemStack>();
+        protected Dictionary<int, Item> slots = new Dictionary<int, Item>();
         
         public InventoryHolder Holder { get; protected set; }
 
-        public BaseInventory(InventoryHolder holder, Dictionary<int, ItemStack> items = null)
+        public BaseInventory(InventoryHolder holder, Dictionary<int, Item> items = null)
         {
             this.Holder = holder;
             if (items != null)
@@ -38,7 +38,7 @@ namespace MineNET.Inventories
             get;
         }
 
-        public abstract String Name
+        public abstract string Name
         {
             get;
         }
@@ -51,38 +51,38 @@ namespace MineNET.Inventories
             }
         }
 
-        public virtual ItemStack GetItem(int index)
+        public virtual Item GetItem(int index)
         {
             if (!this.slots.ContainsKey(index))
             {
-                return new ItemStack(Item.Get(BlockIDs.AIR), 0, 0);
+                return Item.Get(BlockIDs.AIR, 0, 0);
             }
             return this.slots[index];
         }
 
-        public virtual bool SetItem(int index, ItemStack item, bool send = true)
+        public virtual bool SetItem(int index, Item item, bool send = true)
         {
             if (index < 0 || this.Size <= index)
             {
                 return false;
             }
-            else if (item.Item.ID == BlockIDs.AIR)
+            else if (item.ID == BlockIDs.AIR)
             {
                 return this.Clear(index, send);
             }
 
-            ItemStack old = this.GetItem(index);
+            Item old = this.GetItem(index);
             this.slots[index] = item.Clone();
             this.OnSlotChange(index, old, send);
             return true;
         }
 
-        public virtual ItemStack[] AddItem(params ItemStack[] items)
+        public virtual Item[] AddItem(params Item[] items)
         {
-            List<ItemStack> itemSlots = new List<ItemStack>();
+            List<Item> itemSlots = new List<Item>();
             for (int i = 0; i < items.Length; ++i)
             {
-                if (items[i].Item.ID != BlockIDs.AIR && items[i].Count > 0)
+                if (items[i].ID != BlockIDs.AIR && items[i].Count > 0)
                 {
                     itemSlots.Add(items[i].Clone());
                 }
@@ -91,18 +91,18 @@ namespace MineNET.Inventories
             List<int> emptySlots = new List<int>();
             for (int i = 0; i < this.Size; ++i)
             {
-                ItemStack item = this.GetItem(i);
-                if (item.Item.ID == BlockIDs.AIR || item.Count <= 0)
+                Item item = this.GetItem(i);
+                if (item.ID == BlockIDs.AIR || item.Count <= 0)
                 {
                     emptySlots.Add(i);
                 }
 
                 for (int j = 0; j < itemSlots.Count; ++j)
                 {
-                    ItemStack slot = itemSlots[j];
-                    if (slot.Equals(item, true, false) && item.Count < item.Item.MaxStackSize)
+                    Item slot = itemSlots[j];
+                    if (slot.Equals(item, true, false) && item.Count < item.MaxStackSize)
                     {
-                        int amount = Math.Min(item.Item.MaxStackSize - item.Count, slot.Count);
+                        int amount = Math.Min(item.MaxStackSize - item.Count, slot.Count);
                         amount = Math.Min(amount, this.MaxStackSize);
                         if (amount > 0)
                         {
@@ -127,11 +127,11 @@ namespace MineNET.Inventories
                 {
                     if (itemSlots.Count > 0)
                     {
-                        ItemStack slot = itemSlots[0];
-                        int amount = Math.Min(slot.Item.MaxStackSize, slot.Count);
+                        Item slot = itemSlots[0];
+                        int amount = Math.Min(slot.MaxStackSize, slot.Count);
                         amount = Math.Min(amount, this.MaxStackSize);
                         slot.Count -= amount;
-                        ItemStack item = slot.Clone();
+                        Item item = slot.Clone();
                         item.Count = amount;
                         this.SetItem(emptySlots[i], item);
                         if (slot.Count <= 0)
@@ -144,21 +144,21 @@ namespace MineNET.Inventories
             return itemSlots.ToArray();
         }
 
-        public virtual bool CanAddItem(ItemStack item)
+        public virtual bool CanAddItem(Item item)
         {
             item = item.Clone();
             for (int i = 0; i < this.Size; ++i)
             {
-                ItemStack slot = this.GetItem(i);
+                Item slot = this.GetItem(i);
                 if (item.Equals(slot))
                 {
                     int diff;
-                    if ((diff = slot.Item.MaxStackSize - slot.Count) > 0)
+                    if ((diff = slot.MaxStackSize - slot.Count) > 0)
                     {
                         item.Count -= diff;
                     }
                 }
-                else if (slot.Item.ID == BlockIDs.AIR)
+                else if (slot.ID == BlockIDs.AIR)
                 {
                     item.Count -= this.MaxStackSize;
                 }
@@ -171,12 +171,12 @@ namespace MineNET.Inventories
             return false;
         }
 
-        public virtual ItemStack[] RemoveItem(params ItemStack[] items)
+        public virtual Item[] RemoveItem(params Item[] items)
         {
-            List<ItemStack> itemSlots = new List<ItemStack>();
+            List<Item> itemSlots = new List<Item>();
             for (int i = 0; i < this.Size; ++i)
             {
-                if (items[i].Item.ID != BlockIDs.AIR && items[i].Count > 0)
+                if (items[i].ID != BlockIDs.AIR && items[i].Count > 0)
                 {
                     itemSlots.Add(items[i].Clone());
                 }
@@ -184,8 +184,8 @@ namespace MineNET.Inventories
 
             for (int i = 0; i < this.Size; ++i)
             {
-                ItemStack item = this.GetItem(i);
-                if (item.Item.ID == BlockIDs.AIR || item.Count <= 0)
+                Item item = this.GetItem(i);
+                if (item.ID == BlockIDs.AIR || item.Count <= 0)
                 {
                     continue;
                 }
@@ -211,10 +211,10 @@ namespace MineNET.Inventories
             return itemSlots.ToArray();
         }
 
-        public virtual bool Contains(ItemStack item)
+        public virtual bool Contains(Item item)
         {
             int count = Math.Max(1, item.Count);
-            foreach (ItemStack slot in this.slots.Values)
+            foreach (Item slot in this.slots.Values)
             {
                 if (item.Equals(slot))
                 {
@@ -234,8 +234,8 @@ namespace MineNET.Inventories
             {
                 return true;
             }
-            ItemStack old = this.GetItem(index);
-            this.slots[index] = new ItemStack(Item.Get(0), 0, 0);
+            Item old = this.GetItem(index);
+            this.slots[index] = Item.Get(0, 0, 0);
             this.OnSlotChange(index, old, send);
             return true;
         }
@@ -248,7 +248,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public virtual void OnSlotChange(int index, ItemStack item, bool send)
+        public virtual void OnSlotChange(int index, Item item, bool send)
         {
             if (send)
             {
@@ -275,7 +275,7 @@ namespace MineNET.Inventories
         {
             InventoryContentPacket pk = new InventoryContentPacket
             {
-                Items = new ItemStack[this.Size]
+                Items = new Item[this.Size]
             };
             for (int i = 0; i < this.Size; ++i)
             {
@@ -333,7 +333,7 @@ namespace MineNET.Inventories
                 ListTag list = new ListTag(this.Name, NBTTagType.COMPOUND);
                 for (int i = 0; i < this.Size; ++i)
                 {
-                    list.Add(NBTIO.WriteItem(new ItemStack(Item.Get(0), 0, 0)));
+                    list.Add(NBTIO.WriteItem(Item.Get(0, 0, 0)));
                 }
                 nbt.PutList(list);
             }
@@ -341,7 +341,7 @@ namespace MineNET.Inventories
             ListTag items = nbt.GetList(this.Name);
             for (int i = 0; i < this.Size; ++i)
             {
-                ItemStack item = NBTIO.ReadItem((CompoundTag) items[i]);
+                Item item = NBTIO.ReadItem((CompoundTag) items[i]);
                 this.SetItem(i, item, false);
             }
         }

@@ -2,12 +2,9 @@
 {
     public class ItemMushroomStew : ItemFood
     {
-        public override int ID { get; } = ItemIDs.MUSHROOM_STEW;
+        public override int ID => ItemIDs.MUSHROOM_STEW;
 
-        public override string GetName(int damage)
-        {
-            return "Mushroom Stew";
-        }
+        public override string Name => "Mushroom Stew";
 
         public override byte MaxStackSize => 1;
 

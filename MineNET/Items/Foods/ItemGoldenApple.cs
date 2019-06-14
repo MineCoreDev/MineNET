@@ -2,12 +2,9 @@
 {
     public class ItemGoldenApple : ItemFood
     {
-        public override int ID { get; } = ItemIDs.GOLDEN_APPLE;
+        public override int ID => ItemIDs.GOLDEN_APPLE;
 
-        public override string GetName(int damage)
-        {
-            return "Golden Apple";
-        }
+        public override string Name => "Golden Apple";
 
         public override int FoodRestore => 4;
 

@@ -2,11 +2,8 @@
 {
     public class ItemCompass : Item
     {
-        public override int ID { get; } = ItemIDs.COMPASS;
+        public override int ID => ItemIDs.COMPASS;
 
-        public override string GetName(int damage)
-        {
-            return "Compass";
-        }
+        public override string Name => "Compass";
     }
 }

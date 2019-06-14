@@ -2,7 +2,7 @@
 
 namespace MineNET.Registry
 {
-    public class CreativeItemRegistry : ListRegistryBase<ItemStack>
+    public class CreativeItemRegistry : ListRegistryBase<Item>
     {
 
     }

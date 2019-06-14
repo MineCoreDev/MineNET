@@ -51,7 +51,7 @@ namespace MineNET.Inventories
             this.SendOffHand(this.Holder.Viewers);
         }
 
-        public ItemStack OffHandItem
+        public Item OffHandItem
         {
             get
             {

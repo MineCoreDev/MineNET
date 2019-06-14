@@ -2,9 +2,9 @@
 
 namespace MineNET.Entities.Metadata
 {
-    public class EntityDataSlot : EntityDataProperty<ItemStack>
+    public class EntityDataSlot : EntityDataProperty<Item>
     {
-        public EntityDataSlot(int id, ItemStack data) : base(id, data)
+        public EntityDataSlot(int id, Item data) : base(id, data)
         {
 
         }

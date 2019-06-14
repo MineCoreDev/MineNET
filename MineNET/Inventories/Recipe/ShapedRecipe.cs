@@ -9,8 +9,8 @@ namespace MineNET.Inventories.Recipe
         public int Width { get; }
         public int Height { get; }
 
-        public ItemStack[] RecipeItems { get; }
-        public ItemStack[] Output { get; }
+        public Item[] RecipeItems { get; }
+        public Item[] Output { get; }
 
         public UUID UUID { get; }
 
@@ -22,7 +22,7 @@ namespace MineNET.Inventories.Recipe
             }
         }
 
-        public ShapedRecipe(int width, int height, ItemStack[] recipeItems, ItemStack[] output, UUID uuid = new UUID())
+        public ShapedRecipe(int width, int height, Item[] recipeItems, Item[] output, UUID uuid = new UUID())
         {
             this.Width = width;
             this.Height = height;

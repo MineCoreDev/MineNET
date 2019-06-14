@@ -41,7 +41,7 @@ namespace MineNET.Inventories
         {
             InventoryContentPacket pk = new InventoryContentPacket
             {
-                Items = new ItemStack[this.Size]
+                Items = new Item[this.Size]
             };
             for (int i = 0; i < this.Size; ++i)
             {
@@ -52,7 +52,7 @@ namespace MineNET.Inventories
             player.SendPacket(pk);
         }
 
-        public override void OnSlotChange(int index, ItemStack item, bool send)
+        public override void OnSlotChange(int index, Item item, bool send)
         {
             base.OnSlotChange(index, item, send);
 

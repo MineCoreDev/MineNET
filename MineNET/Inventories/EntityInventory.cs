@@ -91,7 +91,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public ItemStack MainHandItem
+        public Item MainHandItem
         {
             get
             {
@@ -104,7 +104,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public ItemStack OffHandItem
+        public Item OffHandItem
         {
             get
             {
@@ -117,7 +117,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public ItemStack Helmet
+        public Item Helmet
         {
             get
             {
@@ -130,7 +130,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public ItemStack ChestPlate
+        public Item ChestPlate
         {
             get
             {
@@ -143,7 +143,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public ItemStack Leggings
+        public Item Leggings
         {
             get
             {
@@ -156,7 +156,7 @@ namespace MineNET.Inventories
             }
         }
 
-        public ItemStack Boots
+        public Item Boots
         {
             get
             {

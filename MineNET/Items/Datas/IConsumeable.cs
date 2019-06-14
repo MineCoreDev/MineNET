@@ -5,7 +5,7 @@ namespace MineNET.Items
 {
     public interface IConsumeable
     {
-        void OnConsume(Player player, ItemStack food);
+        void OnConsume(Player player);
 
         Effect[] AdditionalEffects { get; }
 

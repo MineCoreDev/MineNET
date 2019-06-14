@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public class ItemGoldenPickaxe : ItemPickaxe
     {
-        public override int ID { get; } = ItemIDs.GOLDEN_PICKAXE;
+        public override int ID => ItemIDs.GOLDEN_PICKAXE;
 
-        public override string GetName(int damage)
-        {
-            return "Golden Pickaxe";
-        }
+        public override string Name => "Golden Pickaxe";
 
-        public override ItemToolTier ToolTier { get; } = ItemToolTier.GOLD;
+        public override ItemToolTier ToolTier => ItemToolTier.GOLD;
 
-        public override int MaxDurability { get; } = 33;
+        public override int MaxDurability => 33;
     }
 }

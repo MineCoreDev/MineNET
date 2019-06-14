@@ -7,57 +7,39 @@ namespace MineNET.Inventories
 {
     public interface Inventory
     {
-        int Size
-        {
-            get;
-        }
+        int Size { get; }
 
-        byte Type
-        {
-            get;
-        }
+        byte Type { get; }
 
-        int MaxStackSize
-        {
-            get;
-        }
+        int MaxStackSize { get; }
 
-        string Name
-        {
-            get;
-        }
+        string Name { get; }
 
-        ItemStack GetItem(int index);
+        Item GetItem(int index);
 
-        bool SetItem(int index, ItemStack item, bool send = true);
+        bool SetItem(int index, Item item, bool send = true);
 
-        ItemStack[] AddItem(params ItemStack[] items);
+        Item[] AddItem(params Item[] items);
 
-        bool CanAddItem(ItemStack item);
+        bool CanAddItem(Item item);
 
-        ItemStack[] RemoveItem(params ItemStack[] items);
+        Item[] RemoveItem(params Item[] items);
 
-        bool Contains(ItemStack item);
+        bool Contains(Item item);
 
         bool Clear(int index, bool send);
 
         void ClearAll();
 
-        void OnSlotChange(int index, ItemStack item, bool send);
+        void OnSlotChange(int index, Item item, bool send);
 
         void SendSlot(int index, params Player[] players);
 
         void SendContents(params Player[] players);
 
-        InventoryHolder Holder
-        {
-            get;
-        }
+        InventoryHolder Holder { get; }
 
-        List<Player> Viewers
-        {
-            get;
-        }
+        List<Player> Viewers { get; }
 
 
         bool Open(Player player);

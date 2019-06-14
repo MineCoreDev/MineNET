@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public class ItemIronAxe : ItemAxe
     {
-        public override int ID { get; } = ItemIDs.IRON_AXE;
+        public override int ID => ItemIDs.IRON_AXE;
 
-        public override string GetName(int damage)
-        {
-            return "Iron Axe";
-        }
+        public override string Name => "Iron Axe";
 
-        public override ItemToolTier ToolTier { get; } = ItemToolTier.IRON;
+        public override ItemToolTier ToolTier => ItemToolTier.IRON;
 
-        public override int MaxDurability { get; } = 251;
+        public override int MaxDurability => 251;
     }
 }

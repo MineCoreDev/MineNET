@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public abstract class ItemShovel : ItemTool
     {
-        public override ItemToolType ToolType { get; } = ItemToolType.SHOVEL;
+        public override ItemToolType ToolType => ItemToolType.SHOVEL;
     }
 }

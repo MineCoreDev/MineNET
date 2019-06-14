@@ -16,17 +16,8 @@
             this.name = name;
         }
 
-        public override int ID
-        {
-            get
-            {
-                return this.id;
-            }
-        }
+        public override int ID => this.id;
 
-        public override string GetName(int damage)
-        {
-            return this.name;
-        }
+        public override string Name => this.name;
     }
 }

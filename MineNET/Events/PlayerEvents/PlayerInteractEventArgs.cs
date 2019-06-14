@@ -7,13 +7,13 @@ namespace MineNET.Events.PlayerEvents
 {
     public class PlayerInteractEventArgs : PlayerEventArgs, ICancelable
     {
-        public ItemStack Item { get; }
+        public Item Item { get; }
         public Block Target { get; }
         public BlockFace BlockFace { get; }
 
         public bool IsCancel { get; set; }
 
-        public PlayerInteractEventArgs(Player player, ItemStack item, Block target, BlockFace face) : base(player)
+        public PlayerInteractEventArgs(Player player, Item item, Block target, BlockFace face) : base(player)
         {
             this.Item = item;
             this.Target = target;

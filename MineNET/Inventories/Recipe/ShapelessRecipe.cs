@@ -6,8 +6,8 @@ namespace MineNET.Inventories.Recipe
 {
     public class ShapelessRecipe : IRecipe
     {
-        public ItemStack[] RecipeItems { get; }
-        public ItemStack[] Output { get; }
+        public Item[] RecipeItems { get; }
+        public Item[] Output { get; }
 
         public UUID UUID { get; }
 
@@ -19,7 +19,7 @@ namespace MineNET.Inventories.Recipe
             }
         }
 
-        public ShapelessRecipe(ItemStack[] recipeItems, ItemStack[] output, UUID uuid = new UUID())
+        public ShapelessRecipe(Item[] recipeItems, Item[] output, UUID uuid = new UUID())
         {
             this.RecipeItems = recipeItems;
             this.Output = output;

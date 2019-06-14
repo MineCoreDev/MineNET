@@ -17,8 +17,8 @@ namespace MineNET.Network.MinecraftPackets
         public byte WindowId { get; set; }
         public int Type { get; set; }
         public UUID UUID { get; set; }
-        public ItemStack[] Input { get; set; }
-        public ItemStack[] Output { get; set; }
+        public Item[] Input { get; set; }
+        public Item[] Output { get; set; }
 
         protected override void EncodePayload()
         {
@@ -31,13 +31,13 @@ namespace MineNET.Network.MinecraftPackets
             this.Type = this.ReadSVarInt();
             this.UUID = this.ReadUUID();
 
-            this.Input = new ItemStack[this.ReadUVarInt()];
+            this.Input = new Item[this.ReadUVarInt()];
             for (int i = 0; i < this.Input.Length; ++i)
             {
                 this.Input[i] = this.ReadItem();
             }
 
-            this.Output = new ItemStack[this.ReadUVarInt()];
+            this.Output = new Item[this.ReadUVarInt()];
             for (int i = 0; i < this.Output.Length; ++i)
             {
                 this.Output[i] = this.ReadItem();

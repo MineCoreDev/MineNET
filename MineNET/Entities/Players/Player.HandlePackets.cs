@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using MineNET.Blocks;
 using MineNET.Commands;
 using MineNET.Data;
@@ -13,8 +15,6 @@ using MineNET.Network.MinecraftPackets;
 using MineNET.Network.RakNetPackets;
 using MineNET.Values;
 using MineNET.Worlds.Rule;
-using System;
-using System.Collections.Generic;
 
 namespace MineNET.Entities.Players
 {
@@ -1023,7 +1023,7 @@ namespace MineNET.Entities.Players
                     this.SetFlag(DATA_FLAGS, DATA_FLAG_ACTION, false, true);
                     if (this.CanInteract(blockPos + new Vector3(0.5f, 0.5f, 0.5f), this.IsCreative ? 13 : 7))
                     {
-                        ItemStack item = this.Inventory.MainHandItem;
+                        Item item = this.Inventory.MainHandItem;
                         this.World.UseItem(blockPos, item, face, data.ClickPos, this);
                     }
 
@@ -1035,7 +1035,7 @@ namespace MineNET.Entities.Players
                 }
                 else if (data.ActionType == InventoryTransactionPacket.USE_ITEM_ACTION_BREAK_BLOCK)
                 {
-                    ItemStack item = this.Inventory.MainHandItem;
+                    Item item = this.Inventory.MainHandItem;
                     if (this.CanInteract(blockPos + new Vector3(0.5f, 0.5f, 0.5f), this.IsCreative ? 13 : 7))
                     {
                         this.World.UseBreak(data.BlockPos, item, this);
@@ -1059,8 +1059,7 @@ namespace MineNET.Entities.Players
                 ReleaseItemData data = (ReleaseItemData) pk.TransactionData;
                 if (pk.TransactionData.ActionType == InventoryTransactionPacket.RELEASE_ITEM_ACTION_RELEASE)
                 {
-                    ItemStack stack = this.Inventory.MainHandItem;
-                    Item item = stack.Item;
+                    Item item = this.Inventory.MainHandItem;
                     item.ReleaseUsing(this);
                 }
                 else if (pk.TransactionData.ActionType == InventoryTransactionPacket.RELEASE_ITEM_ACTION_CONSUME)
@@ -1071,8 +1070,7 @@ namespace MineNET.Entities.Players
                         return;
                     }
 
-                    ItemStack stack = this.Inventory.MainHandItem;
-                    Item item = stack.Item;
+                    Item item = this.Inventory.MainHandItem;
                     if (!(item is IConsumeable))
                     {
                         this.Inventory.SendMainHand(this);
@@ -1080,14 +1078,14 @@ namespace MineNET.Entities.Players
                     }
 
                     IConsumeable consume = (IConsumeable) item;
-                    PlayerItemConsumeEventArgs args = new PlayerItemConsumeEventArgs(this, stack, consume);
+                    PlayerItemConsumeEventArgs args = new PlayerItemConsumeEventArgs(this, item, consume);
                     Server.Instance.Event.Player.OnPlayerItemConsume(this, args);
                     if (args.IsCancel)
                     {
                         this.Inventory.SendMainHand(this);
                         return;
                     }
-                    consume.OnConsume(this, stack);
+                    consume.OnConsume(this);
                 }
             }
         }
@@ -1136,7 +1134,7 @@ namespace MineNET.Entities.Players
         protected virtual void HandleBlockPickRequestPacket(BlockPickRequestPacket pk)
         {
             Block block = this.World.GetBlock(pk.Position);
-            ItemStack item = new ItemStack(block); //TODO : block entity nbt
+            Item item = block.Item; //TODO : block entity nbt
             bool requestData = pk.AddUserData;
 
             PlayerBlockPickRequestEventArgs args = new PlayerBlockPickRequestEventArgs(this, block, item, requestData);
@@ -1152,7 +1150,7 @@ namespace MineNET.Entities.Players
 
             for (int i = 0; i < pk.HotbarSlot; ++i)
             {
-                ItemStack slot = inventory.GetItem(i);
+                Item slot = inventory.GetItem(i);
                 if (slot.Equals(item, true, false))
                 {
                     inventory.MainHandSlot = i;
@@ -1160,7 +1158,7 @@ namespace MineNET.Entities.Players
                     return;
                 }
 
-                if (slot.Item.ID == BlockIDs.AIR)
+                if (slot.ID == BlockIDs.AIR)
                 {
                     air.Add(i);
                 }
@@ -1168,7 +1166,7 @@ namespace MineNET.Entities.Players
 
             for (int i = 0; i < inventory.Size; ++i)
             {
-                ItemStack check = inventory.GetItem(i);
+                Item check = inventory.GetItem(i);
                 if (check.Equals(item, true, false))
                 {
                     inventory.SetItem(i, inventory.MainHandItem);

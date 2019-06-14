@@ -274,7 +274,7 @@ namespace MineNET.Blocks
         /// <param name="player">配置した <see cref="Player"/></param>
         /// <param name="item">クリックした時に持っていた <see cref="Items.ItemStack"/></param>
         /// <returns></returns>
-        public virtual bool Place(Block clicked, Block replace, BlockFace face, Vector3 clickPos, Player player, ItemStack item)
+        public virtual bool Place(Block clicked, Block replace, BlockFace face, Vector3 clickPos, Player player, Item item)
         {
             this.World.SetBlock(this.ToVector3(), this, true);
             return true;
@@ -286,7 +286,7 @@ namespace MineNET.Blocks
         /// <param name="player">破壊した <see cref="Player"/></param>
         /// <param name="item">破壊した時に持っていた <see cref="Items.ItemStack"/></param>
         /// <returns></returns>
-        public virtual bool Break(Player player, ItemStack item)
+        public virtual bool Break(Player player, Item item)
         {
             this.World.SetBlock(this.ToVector3(), new BlockAir(), true);
             return true;
@@ -298,7 +298,7 @@ namespace MineNET.Blocks
         /// <param name="player">クリック <see cref="Player"/></param>
         /// <param name="item">クリックした時に持っていた <see cref="Items.ItemStack"/></param>
         /// <returns></returns>
-        public virtual bool Activate(Player player, ItemStack item)
+        public virtual bool Activate(Player player, Item item)
         {
             return false;
         }
@@ -308,23 +308,19 @@ namespace MineNET.Blocks
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public virtual ItemStack[] GetDrops(ItemStack item)
+        public virtual Item[] GetDrops(Item item)
         {
-            if (this.ID < 1)
-            {
-                return new ItemStack[] { new ItemStack(Item.Get(BlockIDs.AIR)) };
-            }
-            return new ItemStack[] { this.ItemStack };
+            return new Item[] { this.Item };
         }
 
         /// <summary>
         /// この <see cref="Block"/> に関連した <see cref="Items.ItemStack"/> クラスの新しいインスタンスを作成します。
         /// </summary>
-        public virtual ItemStack ItemStack
+        public virtual Item Item
         {
             get
             {
-                return new ItemStack(Item.Get(this.ID), this.Damage);
+                return Item.Get(this.ID, this.Damage);
             }
         }
 

@@ -9,11 +9,11 @@ namespace MineNET.Events.BlockEvents
         public Player Player { get; set; }
         public Block Replace { get; set; }
         public Block Clicked { get; set; }
-        public ItemStack Item { get; set; }
+        public Item Item { get; set; }
 
         public bool IsCancel { get; set; }
 
-        public BlockPlaceEventArgs(Player player, Block place, Block replace, Block clicked, ItemStack item) : base(place)
+        public BlockPlaceEventArgs(Player player, Block place, Block replace, Block clicked, Item item) : base(place)
         {
             this.Player = player;
             this.Replace = replace;

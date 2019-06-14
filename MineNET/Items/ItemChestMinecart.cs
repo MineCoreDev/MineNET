@@ -2,11 +2,8 @@
 {
     public class ItemChestMinecart : Item
     {
-        public override int ID { get; } = ItemIDs.CHEST_MINECART;
+        public override int ID => ItemIDs.CHEST_MINECART;
 
-        public override string GetName(int damage)
-        {
-            return "Chest Minecart";
-        }
+        public override string Name => "Chest Minecart";
     }
 }

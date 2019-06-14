@@ -4,7 +4,6 @@ using System.Linq;
 using MineNET.Blocks;
 using MineNET.Entities.Players;
 using MineNET.Inventories.Transactions.Action;
-using MineNET.IO;
 using MineNET.Items;
 
 namespace MineNET.Inventories.Transactions
@@ -127,7 +126,7 @@ namespace MineNET.Inventories.Transactions
                 List<SlotChangeAction> originalList = new List<SlotChangeAction>(list);
 
                 SlotChangeAction originalAction = null;
-                ItemStack lastTargetItem = null;
+                Item lastTargetItem = null;
 
                 for (int i = 0; i < list.Count; ++i)
                 {
@@ -154,7 +153,7 @@ namespace MineNET.Inventories.Transactions
                     {
                         SlotChangeAction action = list[i];
 
-                        ItemStack actionSource = action.SourceItem;
+                        Item actionSource = action.SourceItem;
                         if (actionSource == lastTargetItem)
                         {
                             lastTargetItem = action.TargetItem;
@@ -189,12 +188,12 @@ namespace MineNET.Inventories.Transactions
 
         public bool MatchItems()
         {
-            List<ItemStack> haveItems = new List<ItemStack>();
-            List<ItemStack> needItems = new List<ItemStack>();
+            List<Item> haveItems = new List<Item>();
+            List<Item> needItems = new List<Item>();
             for (int i = 0; i < this.Actions.Count; ++i)
             {
                 InventoryAction action = this.Actions[i];
-                if (action.TargetItem.Item.ID != BlockIDs.AIR && action.TargetItem.Count > 0)
+                if (action.TargetItem.ID != BlockIDs.AIR && action.TargetItem.Count > 0)
                 {
                     needItems.Add(action.TargetItem.Clone());
                 }
@@ -202,18 +201,18 @@ namespace MineNET.Inventories.Transactions
                 {
                     return false;
                 }
-                if (action.SourceItem.Item.ID != BlockIDs.AIR && action.SourceItem.Count > 0)
+                if (action.SourceItem.ID != BlockIDs.AIR && action.SourceItem.Count > 0)
                 {
                     haveItems.Add(action.SourceItem.Clone());
                 }
             }
 
-            List<ItemStack> have = new List<ItemStack>();
+            List<Item> have = new List<Item>();
             for (int i = 0; i < haveItems.Count; ++i)
             {
                 have.Add(haveItems[i]);
             }
-            List<ItemStack> need = new List<ItemStack>();
+            List<Item> need = new List<Item>();
             for (int i = 0; i < needItems.Count; ++i)
             {
                 need.Add(needItems[i]);
@@ -222,8 +221,8 @@ namespace MineNET.Inventories.Transactions
             {
                 for (int j = 0; j < need.Count; ++j)
                 {
-                    ItemStack haveItem = have[i];
-                    ItemStack needItem = need[j];
+                    Item haveItem = have[i];
+                    Item needItem = need[j];
                     if (haveItem.Equals(needItem, true, false))
                     {
                         int amount = Math.Min(haveItem.Count, needItem.Count);

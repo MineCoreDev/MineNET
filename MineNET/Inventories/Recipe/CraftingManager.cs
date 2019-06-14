@@ -17,10 +17,10 @@ namespace MineNET.Inventories.Recipe
 
         public void RegisterRecipe()
         {
-            this.AddShapedRecipe(new ItemStack[] { new ItemStack(Item.Get(5), 0, 4) }, new object[] { new string[] { "#" }, "#", Item.Get(17) });
+            this.AddShapedRecipe(new Item[] { Item.Get(5, 0, 4) }, new object[] { new string[] { "#" }, "#", Item.Get(17) });
         }
 
-        public ShapedRecipe AddShapedRecipe(ItemStack[] output, object[] recipeComponents)
+        public ShapedRecipe AddShapedRecipe(Item[] output, object[] recipeComponents)
         {
             if (!(recipeComponents[0] is string[]))
             {
@@ -38,13 +38,13 @@ namespace MineNET.Inventories.Recipe
                 }
             }
 
-            Dictionary<string, ItemStack> registry = new Dictionary<string, ItemStack>();
-            registry.Add(" ", new ItemStack(Item.Get(0)));
+            Dictionary<string, Item> registry = new Dictionary<string, Item>();
+            registry.Add(" ", Item.Get(0));
             for (int i = 1; i < recipeComponents.Length; i += 2)
             {
                 try
                 {
-                    registry.Add((string) recipeComponents[i], (ItemStack) recipeComponents[i + 1]);
+                    registry.Add((string) recipeComponents[i], (Item) recipeComponents[i + 1]);
                 }
                 catch
                 {
@@ -52,7 +52,7 @@ namespace MineNET.Inventories.Recipe
                 }
             }
 
-            ItemStack[] recipeItems = new ItemStack[height * width];
+            Item[] recipeItems = new Item[height * width];
 
             for (int i = 0; i < height; ++i)
             {
@@ -72,7 +72,7 @@ namespace MineNET.Inventories.Recipe
             return recipe;
         }
 
-        public ShapelessRecipe AddShapelessRecipe(ItemStack[] output, ItemStack[] recipeItems)
+        public ShapelessRecipe AddShapelessRecipe(Item[] output, Item[] recipeItems)
         {
             ShapelessRecipe recipe = new ShapelessRecipe(recipeItems, output);
             this.Recipes.Add(recipe);

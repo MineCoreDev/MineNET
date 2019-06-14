@@ -7,7 +7,7 @@ namespace MineNET.Inventories.Transactions.Action
     {
         public int ActionType { get; protected set; }
 
-        public CreativeInventoryAction(ItemStack sourceItem, ItemStack targetItem, int actionType) : base(sourceItem, targetItem)
+        public CreativeInventoryAction(Item sourceItem, Item targetItem, int actionType) : base(sourceItem, targetItem)
         {
             this.ActionType = actionType;
         }

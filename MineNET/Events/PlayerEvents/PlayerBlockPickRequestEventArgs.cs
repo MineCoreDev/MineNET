@@ -7,12 +7,12 @@ namespace MineNET.Events.PlayerEvents
     public class PlayerBlockPickRequestEventArgs : PlayerEventArgs, ICancelable
     {
         public Block Block { get; }
-        public ItemStack Item { get; set; }
+        public Item Item { get; set; }
         public bool RequestBlockData { get; }
 
         public bool IsCancel { get; set; }
 
-        public PlayerBlockPickRequestEventArgs(Player player, Block block, ItemStack item, bool requestBlockData) : base(player)
+        public PlayerBlockPickRequestEventArgs(Player player, Block block, Item item, bool requestBlockData) : base(player)
         {
             this.Block = block;
             this.Item = item;

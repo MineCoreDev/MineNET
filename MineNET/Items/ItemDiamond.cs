@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineNET.Items
+﻿namespace MineNET.Items
 {
     public class ItemDiamond : Item
     {
-        public override int ID { get; } = ItemIDs.DIAMOND;
+        public override int ID => ItemIDs.DIAMOND;
 
-        public override string GetName(int damage)
-        {
-            return "Diamond";
-        }
+        public override string Name => "Diamond";
     }
 }

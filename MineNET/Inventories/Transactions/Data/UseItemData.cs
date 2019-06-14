@@ -11,7 +11,7 @@ namespace MineNET.Inventories.Transactions.Data
         public BlockCoordinate3D BlockPos { get; set; }
         public BlockFace Face { get; set; }
         public int HotbarSlot { get; set; }
-        public ItemStack ItemMainHand { get; set; }
+        public Item ItemMainHand { get; set; }
         public Vector3 PlayerPos { get; set; }
         public Vector3 ClickPos { get; set; }
 

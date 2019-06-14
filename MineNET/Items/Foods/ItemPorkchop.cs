@@ -2,12 +2,9 @@
 {
     public class ItemPorkchop : ItemFood
     {
-        public override int ID { get; } = ItemIDs.PORKCHOP;
+        public override int ID => ItemIDs.PORKCHOP;
 
-        public override string GetName(int damage)
-        {
-            return "Porkchop";
-        }
+        public override string Name => "Porkshop";
 
         public override int FoodRestore => 3;
 

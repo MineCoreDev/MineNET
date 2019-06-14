@@ -6,7 +6,6 @@ using MineNET.Commands.Enums;
 using MineNET.Data;
 using MineNET.Entities.Attributes;
 using MineNET.Entities.Metadata;
-using MineNET.IO;
 using MineNET.Items;
 using MineNET.NBT.Data;
 using MineNET.NBT.IO;
@@ -234,12 +233,12 @@ namespace MineNET.Network.MinecraftPackets
             this.WriteString(skin.GeometryData);
         }
 
-        public ItemStack ReadItem()
+        public Item ReadItem()
         {
             int id = this.ReadSVarInt();
             if (id == 0)
             {
-                return new ItemStack(Item.Get(BlockIDs.AIR), 0, 0);
+                return Item.Get(BlockIDs.AIR, 0, 0);
             }
 
             int auxValue = this.ReadSVarInt();
@@ -272,7 +271,7 @@ namespace MineNET.Network.MinecraftPackets
                 }
             }
 
-            ItemStack item = new ItemStack(Item.Get(id), data, cnt, nbt);
+            Item item = Item.Get(id, data, cnt, nbt);
 
             int canPlaceOn = this.ReadSVarInt();
             if (canPlaceOn > 0)
@@ -295,16 +294,15 @@ namespace MineNET.Network.MinecraftPackets
             return item;
         }
 
-        public void WriteItem(ItemStack item)
+        public void WriteItem(Item item)
         {
-            int id = item.Item.ID;
-            if (item == null || id == 0)
+            if (item == null || item.ID == 0)
             {
                 this.WriteSVarInt(0);
                 return;
             }
 
-            this.WriteSVarInt(id);
+            this.WriteSVarInt(item.ID);
             int auxValue = ((item.Damage & 0x7fff) << 8) | (item.Count & 0xff);
             this.WriteSVarInt(auxValue);
             byte[] nbt = new byte[0];

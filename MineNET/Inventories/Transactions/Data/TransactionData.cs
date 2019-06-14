@@ -6,6 +6,6 @@ namespace MineNET.Inventories.Transactions.Data
     {
         int ActionType { get; set; }
         int HotbarSlot { get; set; }
-        ItemStack ItemMainHand { get; set; }
+        Item ItemMainHand { get; set; }
     }
 }

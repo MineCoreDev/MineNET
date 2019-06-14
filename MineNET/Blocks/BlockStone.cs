@@ -43,7 +43,7 @@ namespace MineNET.Blocks
             }
         }
 
-        public override ItemStack[] GetDrops(ItemStack item)
+        public override Item[] GetDrops(Item item)
         {
             return base.GetDrops(item);
         }
