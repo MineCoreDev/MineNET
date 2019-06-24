@@ -1,4 +1,4 @@
-﻿namespace MineNET.Network.RakNet
+﻿namespace MineNET.Network.RakNet.Interfaces
 {
     public interface IRakNetSession
     {

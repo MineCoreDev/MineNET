@@ -45,17 +45,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factories\FactoryManager.cs" />
-    <Compile Include="Factories\IFactoryManager.cs" />
-    <Compile Include="IServerManager.cs" />
-    <Compile Include="Network\INetworkManager.cs" />
-    <Compile Include="Network\IPlayerList.cs" />
-    <Compile Include="Network\IRakNetServerManager.cs" />
-    <Compile Include="Network\IServerListInfo.cs" />
+    <Compile Include="Factories\Interfaces\IFactoryManager.cs" />
+    <Compile Include="Interfaces\IServerManager.cs" />
+    <Compile Include="Network\Interfaces\INetworkManager.cs" />
+    <Compile Include="Network\Interfaces\IPlayerList.cs" />
+    <Compile Include="Network\Interfaces\IRakNetServerManager.cs" />
+    <Compile Include="Network\Interfaces\IServerListInfo.cs" />
     <Compile Include="Network\NetworkManager.cs" />
     <Compile Include="Network\PlayerList.cs" />
     <Compile Include="Network\RakNetServerManager.cs" />
-    <Compile Include="Network\RakNet\IRakNetServer.cs" />
-    <Compile Include="Network\RakNet\IRakNetSession.cs" />
+    <Compile Include="Network\RakNet\Interfaces\IRakNetServer.cs" />
+    <Compile Include="Network\RakNet\Interfaces\IRakNetSession.cs" />
     <Compile Include="Network\RakNet\RakNetServer.cs" />
     <Compile Include="Network\RakNet\RakNetSession.cs" />
     <Compile Include="Network\ServerListInfo.cs" />
@@ -66,6 +66,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

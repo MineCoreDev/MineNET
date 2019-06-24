@@ -1,4 +1,4 @@
-﻿namespace MineNET.Factories
+﻿namespace MineNET.Factories.Interfaces
 {
     public interface IFactoryManager
     {
