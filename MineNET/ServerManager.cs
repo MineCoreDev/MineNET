@@ -1,4 +1,5 @@
-﻿using MineNET.Network;
+﻿using MineNET.Interfaces;
+using MineNET.Network;
 using MineNET.Network.Interfaces;
 
 namespace MineNET

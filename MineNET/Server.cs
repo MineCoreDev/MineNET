@@ -1,4 +1,6 @@
-﻿namespace MineNET
+﻿using MineNET.Interfaces;
+
+namespace MineNET
 {
     public class Server
     {

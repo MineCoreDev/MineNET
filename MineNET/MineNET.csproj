@@ -44,6 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Interfaces\IEntity.cs" />
+    <Compile Include="Entities\Interfaces\IEntityDamageable.cs" />
+    <Compile Include="Entities\Interfaces\IEntityHuman.cs" />
+    <Compile Include="Entities\Interfaces\IEntityLiving.cs" />
+    <Compile Include="Entities\Interfaces\IEntityMonster.cs" />
+    <Compile Include="Entities\Interfaces\IPlayer.cs" />
     <Compile Include="Factories\FactoryManager.cs" />
     <Compile Include="Factories\Interfaces\IFactoryManager.cs" />
     <Compile Include="Interfaces\IServerManager.cs" />

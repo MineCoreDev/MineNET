@@ -1,7 +1,6 @@
-﻿using MineNET.Network;
-using MineNET.Network.Interfaces;
+﻿using MineNET.Network.Interfaces;
 
-namespace MineNET
+namespace MineNET.Interfaces
 {
     public interface IServerManager
     {
