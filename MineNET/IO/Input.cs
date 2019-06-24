@@ -1,8 +1,8 @@
-﻿using MineNET.Commands;
-using MineNET.Events.IOEvents;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Threading;
+using MineNET.Commands;
+using MineNET.Events.IOEvents;
 
 namespace MineNET.IO
 {
@@ -57,7 +57,7 @@ namespace MineNET.IO
             {
                 InputStartTop = Console.CursorTop;
                 ReadLine.HistoryEnabled = true;
-                string inputText = ReadLine.Read("> ");
+                string inputText = ReadLine.Read("");
                 if (!string.IsNullOrWhiteSpace(inputText))
                 {
                     this.AddInputQueue(inputText);
