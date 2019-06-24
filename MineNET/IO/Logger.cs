@@ -1,9 +1,9 @@
-﻿using MineNET.Text;
-using NLog;
-using NLog.Config;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
+using MineNET.Text;
+using NLog;
+using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
 
@@ -23,14 +23,14 @@ namespace MineNET.IO
             try
             {
                 Console.Title = "MineNET";
-                conf.AddTarget("console", new MineNetConsoleTarget((Input) this.InputLogger)
+                Console.CancelKeyPress += ConsoleOnCancelKeyPress;
+
+                conf.AddTarget("console", new MineNetSimpleConsoleTarget
                 {
                     Layout = new SimpleLayout(
                         "[${longdate}] [${threadname} /${uppercase:${level:padding=5}}] ${message}")
                 });
                 conf.AddRule(LogLevel.Debug, LogLevel.Fatal, "console");
-
-                Console.CancelKeyPress += ConsoleOnCancelKeyPress;
             }
             catch (IOException)
             {

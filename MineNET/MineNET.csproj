@@ -310,6 +310,7 @@
     <Compile Include="IO\InputInterface.cs" />
     <Compile Include="IO\IServerLogger.cs" />
     <Compile Include="IO\MineNetConsoleTarget.cs" />
+    <Compile Include="IO\MineNetSimpleConsoleTarget.cs" />
     <Compile Include="IServerListInfo.cs" />
     <Compile Include="Items\Aromors\Boots\ItemBoots.cs" />
     <Compile Include="Items\Aromors\Chestplate\ItemChestplate.cs" />
