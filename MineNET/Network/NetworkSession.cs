@@ -35,9 +35,6 @@ namespace MineNET.Network
         public ConcurrentDictionary<int, int> ACKQueue { get; private set; } = new ConcurrentDictionary<int, int>();
         public ConcurrentDictionary<int, int> NACKQueue { get; private set; } = new ConcurrentDictionary<int, int>();
 
-        public ConcurrentDictionary<int, DataPacket> PacketToSend { get; private set; } =
-            new ConcurrentDictionary<int, DataPacket>();
-
         public int WindowStart { get; private set; }
         public int WindowEnd { get; private set; } = WindowSize;
 
@@ -48,7 +45,7 @@ namespace MineNET.Network
         public int LastSendSeqNumber { get; private set; } = 0;
 
         public int SplitID { get; private set; }
-        public int OrderIndex { get; private set; }
+        public ConcurrentDictionary<int, int> OrderIndexes { get; private set; } = new ConcurrentDictionary<int, int>();
 
         public DataPacket SendQueue { get; private set; } = new DataPacket4();
 
@@ -77,6 +74,11 @@ namespace MineNET.Network
             this.MTUSize = mtuSize;
 
             this.LastUpdateTime = TimedOutTime;
+
+            for (int i = 0; i < 32; i++)
+            {
+                this.OrderIndexes.TryAdd(i, 0);
+            }
         }
 
         public void OnUpdate()
@@ -474,9 +476,9 @@ namespace MineNET.Network
             if (RakNetPacketReliability.IsReliable(packet.Reliability))
             {
                 packet.MessageIndex = this.MessageIndex++;
-                if (RakNetPacketReliability.IsSequencedOrOrdered(packet.Reliability))
+                if (RakNetPacketReliability.IsOrdered(packet.Reliability))
                 {
-                    packet.OrderIndex = this.OrderIndex++;
+                    packet.OrderIndex = this.OrderIndexes[packet.OrderChannel]++;
                 }
             }
 
@@ -504,6 +506,7 @@ namespace MineNET.Network
 
                     if (RakNetPacketReliability.IsOrdered(packet.Reliability))
                     {
+                        pk.OrderChannel = packet.OrderChannel;
                         pk.OrderIndex = packet.OrderIndex;
                     }
 
@@ -512,11 +515,6 @@ namespace MineNET.Network
             }
             else
             {
-                if (RakNetPacketReliability.IsReliable(packet.Reliability))
-                {
-                    packet.MessageIndex = this.MessageIndex++;
-                }
-
                 this.AddToQueue(packet, flags);
             }
         }
