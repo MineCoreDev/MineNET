@@ -34,8 +34,17 @@
     <Reference Include="BinaryIO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\BinaryIO.1.1.5\lib\netstandard2.0\BinaryIO.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c">
+      <HintPath>..\packages\NLog.4.6.5\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,6 +62,10 @@
     <Compile Include="Entities\Interfaces\IPlayer.cs" />
     <Compile Include="Factories\FactoryManager.cs" />
     <Compile Include="Factories\Interfaces\IFactoryManager.cs" />
+    <Compile Include="I18n\Interfaces\ITextContainer.cs" />
+    <Compile Include="I18n\StringManager.cs" />
+    <Compile Include="I18n\TextContainer.cs" />
+    <Compile Include="I18n\TranslationContainer.cs" />
     <Compile Include="Interfaces\IServerManager.cs" />
     <Compile Include="Network\Interfaces\INetworkManager.cs" />
     <Compile Include="Network\Interfaces\IPlayerList.cs" />
@@ -72,6 +85,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="I18n\Strings_ja-jp.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
