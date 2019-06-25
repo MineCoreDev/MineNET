@@ -35,9 +35,6 @@ namespace MineNET.Network
         public ConcurrentDictionary<int, int> ACKQueue { get; private set; } = new ConcurrentDictionary<int, int>();
         public ConcurrentDictionary<int, int> NACKQueue { get; private set; } = new ConcurrentDictionary<int, int>();
 
-        public ConcurrentDictionary<int, DataPacket> PacketToSend { get; private set; } =
-            new ConcurrentDictionary<int, DataPacket>();
-
         public int WindowStart { get; private set; }
         public int WindowEnd { get; private set; } = WindowSize;
 
@@ -48,7 +45,7 @@ namespace MineNET.Network
         public int LastSendSeqNumber { get; private set; } = 0;
 
         public int SplitID { get; private set; }
-        public int OrderIndex { get; private set; }
+        public ConcurrentDictionary<int, int> OrderIndexes { get; private set; } = new ConcurrentDictionary<int, int>();
 
         public DataPacket SendQueue { get; private set; } = new DataPacket4();
 
@@ -77,6 +74,11 @@ namespace MineNET.Network
             this.MTUSize = mtuSize;
 
             this.LastUpdateTime = TimedOutTime;
+
+            for (int i = 0; i < 32; i++)
+            {
+                this.OrderIndexes.TryAdd(i, 0);
+            }
         }
 
         public void OnUpdate()
@@ -471,14 +473,13 @@ namespace MineNET.Network
 
         public void AddEncapsulatedToQueue(EncapsulatedPacket packet, int flags = RakNetProtocol.FlagNormal)
         {
-            if (RakNetPacketReliability.IsOrdered(packet.Reliability))
+            if (RakNetPacketReliability.IsReliable(packet.Reliability))
             {
-                packet.OrderIndex = this.OrderIndex++;
-            }
-            else if (RakNetPacketReliability.IsSequenced(packet.Reliability))
-            {
-                packet.OrderIndex = this.OrderIndex++;
                 packet.MessageIndex = this.MessageIndex++;
+                if (RakNetPacketReliability.IsOrdered(packet.Reliability))
+                {
+                    packet.OrderIndex = this.OrderIndexes[packet.OrderChannel]++;
+                }
             }
 
             if (packet.GetTotalLength() + 4 > this.MTUSize)
@@ -491,7 +492,7 @@ namespace MineNET.Network
                     pk.SplitID = splitID;
                     pk.HasSplit = true;
                     pk.SplitCount = buffers.Length;
-                    pk.Reliability = RakNetPacketReliability.UNRELIABLE;
+                    pk.Reliability = packet.Reliability;
                     pk.SplitIndex = i;
                     pk.Buffer = buffers[i];
                     if (i > 0)
@@ -500,11 +501,12 @@ namespace MineNET.Network
                     }
                     else
                     {
-                        pk.MessageIndex = this.MessageIndex;
+                        pk.MessageIndex = packet.MessageIndex;
                     }
 
                     if (RakNetPacketReliability.IsOrdered(packet.Reliability))
                     {
+                        pk.OrderChannel = packet.OrderChannel;
                         pk.OrderIndex = packet.OrderIndex;
                     }
 
@@ -513,11 +515,6 @@ namespace MineNET.Network
             }
             else
             {
-                if (RakNetPacketReliability.IsReliable(packet.Reliability))
-                {
-                    packet.MessageIndex = this.MessageIndex++;
-                }
-
                 this.AddToQueue(packet, flags);
             }
         }
