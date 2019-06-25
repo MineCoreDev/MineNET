@@ -471,14 +471,13 @@ namespace MineNET.Network
 
         public void AddEncapsulatedToQueue(EncapsulatedPacket packet, int flags = RakNetProtocol.FlagNormal)
         {
-            if (RakNetPacketReliability.IsOrdered(packet.Reliability))
+            if (RakNetPacketReliability.IsReliable(packet.Reliability))
             {
-                packet.OrderIndex = this.OrderIndex++;
-            }
-            else if (RakNetPacketReliability.IsSequenced(packet.Reliability))
-            {
-                packet.OrderIndex = this.OrderIndex++;
                 packet.MessageIndex = this.MessageIndex++;
+                if (RakNetPacketReliability.IsSequencedOrOrdered(packet.Reliability))
+                {
+                    packet.OrderIndex = this.OrderIndex++;
+                }
             }
 
             if (packet.GetTotalLength() + 4 > this.MTUSize)
@@ -491,7 +490,7 @@ namespace MineNET.Network
                     pk.SplitID = splitID;
                     pk.HasSplit = true;
                     pk.SplitCount = buffers.Length;
-                    pk.Reliability = RakNetPacketReliability.UNRELIABLE;
+                    pk.Reliability = packet.Reliability;
                     pk.SplitIndex = i;
                     pk.Buffer = buffers[i];
                     if (i > 0)
@@ -500,7 +499,7 @@ namespace MineNET.Network
                     }
                     else
                     {
-                        pk.MessageIndex = this.MessageIndex;
+                        pk.MessageIndex = packet.MessageIndex;
                     }
 
                     if (RakNetPacketReliability.IsOrdered(packet.Reliability))
