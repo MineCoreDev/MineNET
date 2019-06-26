@@ -211,7 +211,14 @@ namespace MineNET
                     Action action = null;
                     if (this.InvokeMainThreadActions.TryDequeue(out action))
                     {
-                        action();
+                        try
+                        {
+                            action();
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.OutputLogger.Error(e);
+                        }
                     }
                 }
             }
@@ -400,7 +407,7 @@ namespace MineNET
 
         public CompoundTag GetOfflinePlayerData(string xuid)
         {
-            string path = $"{Server.PlayerDataPath}/{xuid}.dat";
+            string path = $"{PlayerDataPath}/{xuid}.dat";
             CompoundTag nbt;
             if (!File.Exists(path))
             {
@@ -422,7 +429,7 @@ namespace MineNET
                         .Add(new FloatTag("", 0)))
                     .PutString("World", pos.World.Name)
                     .PutInt("Dimension", DimensionIDs.OverWorld)
-                    .PutInt("PlayerGameType", Server.Instance.ServerProperty.GameMode.GetIndex())
+                    .PutInt("PlayerGameType", Instance.ServerProperty.GameMode.GetIndex())
                     .PutInt("SpawnX", world.SpawnX)
                     .PutInt("SpawnY", world.SpawnY)
                     .PutInt("SpawnZ", world.SpawnZ)
@@ -440,7 +447,7 @@ namespace MineNET
 
         public void SaveOfflinePlayerData(string xuid, CompoundTag nbt)
         {
-            string path = $"{Server.PlayerDataPath}/{xuid}.dat";
+            string path = $"{PlayerDataPath}/{xuid}.dat";
             NBTIO.WriteGZIPFile(path, nbt, NBTEndian.BIG_ENDIAN);
         }
 
