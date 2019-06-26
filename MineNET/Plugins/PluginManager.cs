@@ -1,8 +1,8 @@
-﻿using MineNET.IO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using MineNET.IO;
 
 namespace MineNET.Plugins
 {
@@ -30,25 +30,49 @@ namespace MineNET.Plugins
             DirectoryInfo dir = new DirectoryInfo(folder);
             foreach (FileInfo file in dir.GetFiles()) //Check Lib
             {
-                if (file.Extension == PluginManager.Library)
+                if (file.Extension == Library)
                 {
-                    this.LoadLibrary(file.FullName);
+                    try
+                    {
+                        this.LoadLibrary(file.FullName);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Warn("%server.plugin.load_error", file.Name);
+                        Logger.Error(e);
+                    }
                 }
             }
 
             foreach (FileInfo file in dir.GetFiles()) //Check Lib
             {
-                if (file.Extension == PluginManager.Package || file.Extension == PluginManager.Package_Sub)
+                if (file.Extension == Package || file.Extension == Package_Sub)
                 {
-                    this.LoadPackage(file.FullName);
+                    try
+                    {
+                        this.LoadPackage(file.FullName);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Warn("%server.plugin.load_error", file.Name);
+                        Logger.Error(e);
+                    }
                 }
             }
 
             foreach (FileInfo file in dir.GetFiles()) //Check Lib
             {
-                if (file.Extension == PluginManager.Plugin)
+                if (file.Extension == Plugin)
                 {
-                    this.LoadPlugin(file.FullName);
+                    try
+                    {
+                        this.LoadPlugin(file.FullName);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Warn("%server.plugin.load_error", file.Name);
+                        Logger.Error(e);
+                    }
                 }
             }
         }
@@ -67,7 +91,7 @@ namespace MineNET.Plugins
                     bool versionCheck = false;
                     if (plugin.Flag.HasFlag(PluginFlags.ApiVersionCheck))
                     {
-                        if (plugin.ApiVersion == PluginManager.NowVersion)
+                        if (plugin.ApiVersion == NowVersion)
                         {
                             versionCheck = true;
                         }
@@ -100,7 +124,7 @@ namespace MineNET.Plugins
                     bool versionCheck = false;
                     if (plugin.Flag.HasFlag(PluginFlags.ApiVersionCheck))
                     {
-                        if (plugin.ApiVersion == PluginManager.NowVersion)
+                        if (plugin.ApiVersion == NowVersion)
                         {
                             versionCheck = true;
                         }
@@ -132,7 +156,7 @@ namespace MineNET.Plugins
                     bool versionCheck = false;
                     if (plugin.Flag.HasFlag(PluginFlags.ApiVersionCheck))
                     {
-                        if (plugin.ApiVersion == PluginManager.NowVersion)
+                        if (plugin.ApiVersion == NowVersion)
                         {
                             versionCheck = true;
                         }
@@ -158,20 +182,41 @@ namespace MineNET.Plugins
         {
             foreach (IPlugin plugin in this.Libraries)
             {
-                Logger.Info("%server.plugin.enable_library", plugin.Name);
-                plugin.OnEnable();
+                try
+                {
+                    Logger.Info("%server.plugin.enable_library", plugin.Name);
+                    plugin.OnEnable();
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e);
+                }
             }
 
             foreach (IPlugin plugin in this.Plugins)
             {
-                Logger.Info("%server.plugin.enable_plugin", plugin.Name);
-                plugin.OnEnable();
+                try
+                {
+                    Logger.Info("%server.plugin.enable_plugin", plugin.Name);
+                    plugin.OnEnable();
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e);
+                }
             }
 
             foreach (IPlugin plugin in this.Packages)
             {
-                Logger.Info("%server.plugin.enable_package", plugin.Name);
-                plugin.OnEnable();
+                try
+                {
+                    Logger.Info("%server.plugin.enable_package", plugin.Name);
+                    plugin.OnEnable();
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e);
+                }
             }
         }
 
@@ -179,20 +224,41 @@ namespace MineNET.Plugins
         {
             foreach (IPlugin plugin in this.Libraries)
             {
-                Logger.Info("%server.plugin.disable_library", plugin.Name);
-                plugin.OnDisable();
+                try
+                {
+                    Logger.Info("%server.plugin.disable_library", plugin.Name);
+                    plugin.OnDisable();
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e);
+                }
             }
 
             foreach (IPlugin plugin in this.Plugins)
             {
-                Logger.Info("%server.plugin.disable_plugin", plugin.Name);
-                plugin.OnDisable();
+                try
+                {
+                    Logger.Info("%server.plugin.disable_plugin", plugin.Name);
+                    plugin.OnDisable();
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e);
+                }
             }
 
             foreach (IPlugin plugin in this.Packages)
             {
-                Logger.Info("%server.plugin.disable_package", plugin.Name);
-                plugin.OnDisable();
+                try
+                {
+                    Logger.Info("%server.plugin.disable_package", plugin.Name);
+                    plugin.OnDisable();
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e);
+                }
             }
         }
 
